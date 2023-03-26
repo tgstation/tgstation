@@ -603,9 +603,30 @@ SUBSYSTEM_DEF(air)
 			EG.dismantle()
 			CHECK_TICK
 
+		log_active_turfs() // invoke this here so we can count the time it takes to run this proc as "wasted time", quite simple honestly.
+
 		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer, 0.00001)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
 		to_chat(world, span_boldannounce("[msg]"))
 		warning(msg)
+
+/// Logs all active turfs at roundstart to the mapping log so it can be readily accessed.
+/datum/controller/subsystem/air/proc/log_active_turfs()
+// sadly this has to be here because we can't realistically expect that all active turfs will be resolved in every possible situation when running through CI.
+// In an ideal world, we would have absolutely zero active turfs 99.99% of the time, but that's not the case. `log_mapping()` during world initialize triggers a CI fail.
+#ifdef UNIT_TESTS
+	return
+#endif
+	log_mapping("All that follows is a turf with an active air difference at roundstart. To clear this, make sure that all of the turfs listed below are connected to a turf with the same air contents.\n\
+	In an ideal world, this list should have enough information to help you locate the active turf(s) in question. Unfortunately, this might not be an ideal world.\n\
+	If the round is still ongoing, you can use the \"Mapping -> Show roundstart AT list\" verb to see exactly what active turfs were detected. Otherwise, good luck.")
+
+	for(var/turf/active_turf as anything in GLOB.active_turfs_startlist)
+		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
+		var/area/turf_area = get_area(active_turf)
+		log_mapping("Active turf: [AREACOORD(active_turf)] ([area.type]).")
+
+	log_mapping("End of active turf list.")
+
 
 /turf/open/proc/resolve_active_graph()
 	. = list()
