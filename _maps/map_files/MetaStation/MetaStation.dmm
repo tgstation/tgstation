@@ -10128,11 +10128,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
-"dPw" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/open/misc/asteroid/basalt/airless,
-/area/space/nearstation)
 "dPy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -116155,7 +116150,7 @@ kwZ
 aWa
 eoU
 lMJ
-dPw
+nYJ
 lMJ
 rrt
 rrt
