@@ -694,5 +694,4 @@
 		/datum/job_department/service,
 	)
 
-	for(var/department_type in department_types)
-		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
+	create_separatist_nation_list(department_types, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)

@@ -2,6 +2,8 @@
 	name = "nation destruction"
 	explanation_text = "Make sure no member of the enemy nation escapes alive!"
 	team_explanation_text = "Make sure no member of the enemy nation escapes alive!"
+
+	///The team the nation has to destroy.
 	var/datum/team/nation/target_team
 
 /datum/objective/destroy_nation/New(text, target_department)
@@ -11,7 +13,7 @@
 
 /datum/objective/destroy_nation/Destroy()
 	target_team = null
-	. = ..()
+	return ..()
 
 
 /datum/objective/destroy_nation/update_explanation_text()
@@ -36,7 +38,7 @@
 /datum/objective/separatist_fluff
 
 /datum/objective/separatist_fluff/New(text, nation_name)
-	explanation_text = pick(list(
+	text = pick(list(
 		"The rest of the station must be taxed for their use of [nation_name]'s services.",
 		"Make statues everywhere of your glorious leader of [nation_name]. If you have nobody, crown one amongst yourselves!",
 		"[nation_name] must be absolutely blinged out.",
@@ -47,7 +49,7 @@
 		"Save the station when it needs you most. [nation_name] will be remembered as the protectors.",
 		"Arm up. The citizens of [nation_name] have a right to bear arms.",
 	))
-	..()
+	return ..()
 
 /datum/objective/separatist_fluff/check_completion()
 	return TRUE
