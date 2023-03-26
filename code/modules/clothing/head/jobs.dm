@@ -172,7 +172,7 @@
 	name = "generic head of security hat"
 	desc = "Please contact the NanoTrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
