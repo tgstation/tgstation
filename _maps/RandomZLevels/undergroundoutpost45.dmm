@@ -11262,7 +11262,7 @@
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
-/area/space/nearstation)
+/area/awaymission/undergroundoutpost45/research)
 "NT" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid{

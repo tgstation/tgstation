@@ -58,10 +58,7 @@
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(former_jellyperson)
 	former_jellyperson.RemoveElement(/datum/element/soft_landing)
-	
-	if(ishuman(former_jellyperson))
-		new_species.update_mail_goodies(former_jellyperson)
-	
+
 	return ..()
 
 /datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
