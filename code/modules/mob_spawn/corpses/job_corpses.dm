@@ -59,6 +59,11 @@
 	outfit = /datum/outfit/job/assistant
 	icon_state = "corpsegreytider"
 
+/obj/effect/mob_spawn/corpse/human/roboticist
+	name = "Roboticist"
+	outfit = /datum/outfit/job/roboticist
+	icon_state = "corpseroboticist"
+
 /obj/effect/mob_spawn/corpse/human/assistant/beesease_infection/special(mob/living/spawned_mob)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/beesease)
