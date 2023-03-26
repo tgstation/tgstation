@@ -842,6 +842,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isethereal(M))
 		M.blood_volume += 1 * delta_time
+	..()
 
 /datum/reagent/consumable/liquidelectricity/enriched
 	name = "Enriched Liquid Electricity"
