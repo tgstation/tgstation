@@ -52,7 +52,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(1, 2)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -78,7 +78,7 @@
 		/datum/job/lawyer,
 		/datum/job/mime,
 	)
-	alive_bonus = 1
+	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/common/assistant
 	progression_minimum = 0 MINUTES
@@ -91,7 +91,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(3, 4)
+	telecrystal_reward = list(1, 2)
 
 	target_jobs = list(
 		// Cargo
@@ -101,13 +101,13 @@
 		// Service
 		/datum/job/cook,
 	)
-	alive_bonus = 1
+	alive_bonus = 3
 
 /datum/traitor_objective/kidnapping/rare
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(4, 5)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -120,17 +120,17 @@
 		/datum/job/security_officer,
 		/datum/job/warden,
 	)
-	alive_bonus = 2
+	alive_bonus = 4
 
 /datum/traitor_objective/kidnapping/captain
 	progression_minimum = 30 MINUTES
 	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(5, 6)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
 	)
-	alive_bonus = 2
+	alive_bonus = 5
 
 /datum/traitor_objective/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
