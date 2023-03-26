@@ -388,12 +388,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
-"gK" = (
-/obj/machinery/power/port_gen/pacman/super{
-	anchored = 1
-	},
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "gT" = (
 /obj/structure/sink/kitchen/directional/south{
 	dir = 8;
@@ -4517,7 +4511,7 @@ pK
 iJ
 iJ
 iJ
-gK
+iJ
 pK
 pK
 pK
