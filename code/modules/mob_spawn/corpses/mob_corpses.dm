@@ -323,4 +323,5 @@
 	outfit = /datum/outfit/prey_pod_victim
 
 /datum/outfit/prey_pod_victim
+	name = "Prey Pod Victim"
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
