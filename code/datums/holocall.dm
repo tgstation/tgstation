@@ -522,7 +522,7 @@
 	SAY Well, if you are that basic, lets make it ask for a Banana Pie.
 	DELAY 20
 	NAME Aron Blue
-	SAY Gateway to Planetside Pagliacci 15's is open.
+	SAY Gateway to Planetside Pagliacci 15 is open.
 	DELAY 20
 	NAME Aron Blue
 	SAY Feels appropriate.
