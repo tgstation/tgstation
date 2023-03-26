@@ -165,7 +165,7 @@
 		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		O.reagents.remove_all(ROUND_UP(O.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
-		setOrganDamage(healto) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
+		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
 		return
 
 	// Cutting out skill chips.
@@ -197,7 +197,7 @@
 	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
 		user.do_attack_animation(src)
 		playsound(loc, 'sound/effects/meatslap.ogg', 50)
-		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+		set_organ_damage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message(span_danger("[user] hits [src] with [O]!"))
 		to_chat(user, span_danger("You hit [src] with [O]!"))
 
@@ -227,7 +227,7 @@
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	var/target_has_brain = C.getorgan(/obj/item/organ/internal/brain)
+	var/target_has_brain = C.get_organ_by_type(/obj/item/organ/internal/brain)
 
 	if(!target_has_brain && C.is_eyes_covered())
 		to_chat(user, span_warning("You're going to need to remove [C.p_their()] head cover first!"))
@@ -346,10 +346,10 @@
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
-		setOrganDamage(0)
+		set_organ_damage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	else
-		setOrganDamage(BRAIN_DAMAGE_DEATH)
+		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
@@ -493,7 +493,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
@@ -512,7 +512,7 @@
 
 /// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
 /obj/item/organ/internal/brain/replace_into(mob/living/carbon/new_owner)
-	var/obj/item/organ/internal/brain/old_brain = new_owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
 	qdel(old_brain)
 	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)

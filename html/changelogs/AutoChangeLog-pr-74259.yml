@@ -1,0 +1,5 @@
+author: "spockye"
+delete-after: True
+changes:
+  - bugfix: "fixed some tiles missing nearstation on Metastation"
+  - bugfix: "fixed some tiles having spacetiles with nearstation on Metastation"

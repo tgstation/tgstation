@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Changes the universal click cooldown of the tendril hammer from the goliath infusion into an internal cooldown just for the special heavy attack."
