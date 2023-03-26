@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(modular_computers)
  * * log_string - The message being logged
  */
 /datum/controller/subsystem/modular_computers/proc/add_log(log_string)
-	set waitfor = FALSE // so process keeps running
 	var/list/log_text = list()
 	log_text += "\[[station_time_timestamp()]\]"
 	log_text += "*SYSTEM* - "
