@@ -113,6 +113,7 @@
 	toolspeed = 0.1
 	/// Amount of damage we deal to the mining and boss factions.
 	var/mining_bonus_force = 80
+	/// Our cooldown declare for our special knockback hit
 	COOLDOWN_DECLARE(tendril_hammer_cd)
 
 /obj/item/goliath_infuser_hammer/Initialize(mapload)
