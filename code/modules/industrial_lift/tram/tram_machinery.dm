@@ -611,7 +611,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
 		GLOB.tram_signs += src
 
-	sign_states = list("[base_icon_state][DESTINATION_WEST_ACTIVE]",
+	sign_states = list(
+		"[base_icon_state][DESTINATION_WEST_ACTIVE]",
 		"[base_icon_state][DESTINATION_WEST_IDLE]",
 		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
 		"[base_icon_state][DESTINATION_EAST_IDLE]",
