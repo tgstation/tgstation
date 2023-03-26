@@ -494,7 +494,7 @@
 
 	else if(card_reader_installed && !isnull((id = W.GetID())))
 		if(broken)
-			balloon_alert(user, "its broken!")
+			balloon_alert(user, "it's broken!")
 			return TRUE
 		if(isnull(electronics))
 			balloon_alert(user, "missing electronics!")
