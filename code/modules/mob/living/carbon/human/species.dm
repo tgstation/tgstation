@@ -394,19 +394,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Check for an existing organ, and if there is one check to see if we should remove it
 		var/health_pct = 1
 		var/remove_existing = !isnull(existing_organ) && !(existing_organ.zone in excluded_zones) && !(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
-
-			if(remove_existing)
-				health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
-				if(slot == ORGAN_SLOT_BRAIN)
-					var/obj/item/organ/internal/brain/existing_brain = existing_organ
-					if(!existing_brain.decoy_override)
-						existing_brain.before_organ_replacement(new_organ)
-						existing_brain.Remove(organ_holder, special = TRUE, no_id_transfer = TRUE)
-						QDEL_NULL(existing_organ)
-				else
-					existing_organ.before_organ_replacement(new_organ)
-					existing_organ.Remove(organ_holder, special = TRUE)
+		if(remove_existing)
+			health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
+			if(slot == ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/internal/brain/existing_brain = existing_organ
+				if(!existing_brain.decoy_override)
+					existing_brain.before_organ_replacement(new_organ)
+					existing_brain.Remove(organ_holder, special = TRUE, no_id_transfer = TRUE)
 					QDEL_NULL(existing_organ)
+			else
+				existing_organ.before_organ_replacement(new_organ)
+				existing_organ.Remove(organ_holder, special = TRUE)
+				QDEL_NULL(existing_organ)
 
 		if(!isnull(existing_organ))
 			existing_organ.set_organ_damage(0)
@@ -601,8 +600,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			quirk.mail_goodies = list()
 			return
 
-			
-	// The default case if no species implementation exists. Set quirk's mail_goodies to initial. 
+
+	// The default case if no species implementation exists. Set quirk's mail_goodies to initial.
 	var/datum/quirk/readable_quirk = new quirk.type
 	quirk.mail_goodies = readable_quirk.mail_goodies
 	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
