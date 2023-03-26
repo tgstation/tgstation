@@ -574,6 +574,11 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+//Mass-driver hub ruin
+/area/ruin/space/massdriverhub
+	name = "\improper Mass Driver Router"
+	always_unpowered = FALSE
+
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
