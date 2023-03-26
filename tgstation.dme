@@ -2633,6 +2633,7 @@
 #include "code\modules\antagonists\traitor\objectives\sabotage_machinery.dm"
 #include "code\modules\antagonists\traitor\objectives\sleeper_protocol.dm"
 #include "code\modules\antagonists\traitor\objectives\steal.dm"
+#include "code\modules\antagonists\traitor\objectives\abstract\target_player.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\battlecruiser.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\final_objective.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\infect_ai.dm"
