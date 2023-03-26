@@ -618,7 +618,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
 		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
 		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
-		)
+	)
 
 /obj/machinery/destination_sign/Destroy()
 	GLOB.tram_signs -= src
