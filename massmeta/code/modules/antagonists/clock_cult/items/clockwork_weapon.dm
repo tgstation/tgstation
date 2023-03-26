@@ -76,7 +76,7 @@
 	clockwork_desc = "Острое, как бритва, копье из латуни. Он гудит от едва сдерживаемой энергии. Наносит мощный урон при броске на Риби."
 	icon_state = "ratvarian_spear"
 	embedding = list("embedded_impact_pain_multiplier" = 3)
-	force = 25
+	force = 18
 	throwforce = 36
 	armour_penetration = 24
 	clockwork_hint = "Бросок копья нанесет дополнительный урон, пока находится на Риби."
@@ -86,7 +86,7 @@
 	desc = "Латунный молот, светящийся энергией."
 	clockwork_desc = "Латунный молот, светящийся энергией. Позволяет лупить по врагам с невероятной силой."
 	icon_state = "ratvarian_hammer"
-	force = 25
+	force = 15
 	throwforce = 25
 	armour_penetration = 6
 	sharpness = NONE
@@ -95,7 +95,7 @@
 
 /obj/item/clockwork/weapon/brass_battlehammer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=28, block_power_wielded=25)
+	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, block_power_wielded=25)
 
 /obj/item/clockwork/weapon/brass_battlehammer/hit_effect(mob/living/target, mob/living/user, thrown=FALSE)
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -106,7 +106,7 @@
 	desc = "Большой меч из латуни."
 	clockwork_desc = "Большой меч из латуни. Может поражать электронику мощным электромагнитным импульсом."
 	icon_state = "ratvarian_sword"
-	force = 26
+	force = 19
 	throwforce = 20
 	armour_penetration = 12
 	attack_verb_simple = list("атакует", "рубит", "режет", "рвёт", "протыкает")
