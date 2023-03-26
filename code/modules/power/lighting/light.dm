@@ -518,47 +518,47 @@
 		// create a light tube/bulb item and put it in the user's hand
 		drop_light_tube(user)
 		return
-	var/protection_amount = 0
-	var/mob/living/carbon/human/electrician = user
 
-	if(istype(electrician))
-		var/obj/item/organ/internal/stomach/maybe_stomach = electrician.getorganslot(ORGAN_SLOT_STOMACH)
+	var/protected = FALSE
+
+	if(istype(user))
+		var/obj/item/organ/internal/stomach/maybe_stomach = user.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.drain_time > world.time)
 				return
-			to_chat(electrician, span_notice("You start channeling some power through the [fitting] into your body."))
+			to_chat(user, span_notice("You start channeling some power through the [fitting] into your body."))
 			stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 			while(do_after(user, LIGHT_DRAIN_TIME, target = src))
 				stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(istype(stomach))
-					to_chat(electrician, span_notice("You receive some charge from the [fitting]."))
+					to_chat(user, span_notice("You receive some charge from the [fitting]."))
 					stomach.adjust_charge(LIGHT_POWER_GAIN)
 				else
-					to_chat(electrician, span_warning("You can't receive charge from the [fitting]!"))
+					to_chat(user, span_warning("You can't receive charge from the [fitting]!"))
 			return
 
-		if(electrician.gloves)
-			var/obj/item/clothing/gloves/electrician_gloves = electrician.gloves
-			if(electrician_gloves.max_heat_protection_temperature)
-				protection_amount = (electrician_gloves.max_heat_protection_temperature > 360)
+		if(user.gloves)
+			var/obj/item/clothing/gloves/electrician_gloves = user.gloves
+			if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
+				protected = TRUE
 	else
-		protection_amount = 1
+		protected = TRUE
 
-	if(protection_amount > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+	if(protected || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
 	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 	else
-		var/obj/item/bodypart/affecting = electrician.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+		var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 		if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
-			electrician.update_damage_overlays()
+			user.update_damage_overlays()
 		if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
-			to_chat(user, span_notice("You feel like you're burning, but you can push through."))
+			to_chat(user, span_notice("You feel your [affecting] burning, and the light beginning to budge."))
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
 			if(affecting?.receive_damage( 0, 10 )) // 10 more burn damage
-				electrician.update_damage_overlays()
+				user.update_damage_overlays()
 			to_chat(user, span_notice("You manage to remove the light [fitting], shattering it in process."))
 			break_light_tube()
 		else

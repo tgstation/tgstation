@@ -104,7 +104,7 @@
 
 	return TRUE
 
-/obj/machinery/dna_scannernew/open_machine(density_to_set = FALSE)
+/obj/machinery/dna_scannernew/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
