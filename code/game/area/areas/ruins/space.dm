@@ -208,6 +208,11 @@
 /area/ruin/space/has_grav/dangerous_research/maint
 	name = "\improper ASRC Maintenance"
 
+//Interdyne Ruin
+
+/area/ruin/space/has_grav/interdyne
+	name = "\improper Interdyne Research Base"
+
 //Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/ancientstation
@@ -574,3 +579,5 @@
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
+
+

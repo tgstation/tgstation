@@ -361,3 +361,9 @@
 	suffix = "prey_pod.dmm"
 	name = "Crashed Mimic Escape Pod"
 	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/Interdyne
+	id = "interdyne"
+	suffix = "interdyne.dmm"
+	name = "Interdyne Spinward Research Base"
+	description = "An Interdyne facility abandoned due to the accidental discovery of Romerol"
