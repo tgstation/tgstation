@@ -19517,6 +19517,12 @@
 	},
 /turf/open/floor/engine/hull,
 /area/station/solars/port)
+"fyb" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area)
 "fyc" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /turf/open/floor/iron,
@@ -23890,10 +23896,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "hlh" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4
 	},
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "hli" = (
@@ -32915,6 +32921,7 @@
 /turf/open/floor/glass,
 /area/station/commons/fitness/recreation)
 "kGG" = (
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/research/anomaly_refinery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
@@ -33212,10 +33219,11 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
 "kLM" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "kLV" = (
@@ -44637,6 +44645,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"oYh" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/red,
+/turf/open/floor/iron/dark,
+/area)
 "oYs" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -63461,13 +63476,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
 "vDd" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/box,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/testlab)
+/turf/closed/wall/r_wall,
+/area)
 "vDE" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -121766,8 +121776,8 @@ aaa
 aaa
 aaa
 frV
-frV
-frV
+vDd
+vDd
 frV
 frV
 frV
@@ -122023,8 +122033,8 @@ aaa
 aaa
 aaa
 frV
-pyG
-vDd
+fyb
+qCz
 mzQ
 iGL
 bZp
@@ -122280,8 +122290,8 @@ aaa
 aaa
 aaa
 frV
-kLM
-vDd
+pyG
+qCz
 wMz
 okA
 mPV
@@ -122538,7 +122548,7 @@ aaa
 aaa
 frV
 hlh
-qCz
+kLM
 qHj
 qME
 qME
@@ -122794,7 +122804,7 @@ aaa
 aaa
 aaa
 ign
-tBa
+oYh
 qCz
 kNE
 nMB
@@ -123051,8 +123061,8 @@ aaa
 aac
 aac
 ign
+tBa
 kGG
-qCz
 nMB
 nMB
 nMB
