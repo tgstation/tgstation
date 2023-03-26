@@ -42,7 +42,7 @@
 
 /obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [on ? "off" : "on"]"
 	if(!held_item)
 		return CONTEXTUAL_SCREENTIP_SET
 	switch(held_item.tool_behaviour)
@@ -72,7 +72,7 @@
 	else
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("<b>Ctrl-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
 		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
@@ -187,7 +187,7 @@
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/CtrlClick(mob/user)
+/obj/machinery/electrolyzer/AltClick(mob/user)
 	. = ..()
 	if(panel_open)
 		balloon_alert(user, "close panel!")
