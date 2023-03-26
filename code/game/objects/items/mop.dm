@@ -34,7 +34,6 @@
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src
-	RemoveElement(/datum/element/liquids_interaction)
 	return ..()
 
 /obj/item/mop/proc/attack_on_liquids_turf(obj/item/mop/the_mop, turf/T, mob/user, obj/effect/abstract/liquid_turf/liquids)
