@@ -13,8 +13,6 @@
 	var/update = TRUE
 	///Is this pipeline being reconstructed?
 	var/building = FALSE
-	///What pipeline process id last ran us?
-	var/pipeline_cycle = 0
 
 /datum/pipeline/New()
 	other_airs = list()

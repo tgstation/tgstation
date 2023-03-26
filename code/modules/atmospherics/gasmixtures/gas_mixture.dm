@@ -289,6 +289,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		// Sort of a sideways way of doing ADD_GAS()
 		// Faster tho, gotta save those cpu cycles
 		copy_gases[id] = cached_gases[id].Copy()
+		copy_gases[id][ARCHIVE] = 0
 
 	return copy
 
@@ -306,6 +307,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	temperature = sample.temperature
 	for(var/id in sample_gases)
 		cached_gases[id] = sample_gases[id].Copy()
+		copy_gases[id][ARCHIVE] = 0
 
 	return TRUE
 
