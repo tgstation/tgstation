@@ -643,7 +643,7 @@ SUBSYSTEM_DEF(air)
 		var/datum/space_level/level = SSmapping.z_list[turf_z]
 		var/list/level_traits = list()
 		for(var/trait in level.traits)
-			if(trait in tally_by_level_trait)
+			if(!isnull(tally_by_level_trait[trait]))
 				level_traits += trait
 				tally_by_level_trait[trait]++
 
