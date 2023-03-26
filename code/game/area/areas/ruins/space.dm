@@ -578,3 +578,6 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+/area/ruin/space/infested_frigate
+    name = "SYN-C Brutus"

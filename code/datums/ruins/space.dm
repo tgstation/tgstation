@@ -367,3 +367,9 @@
 	suffix = "travelers_rest.dmm"
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/infested_frigate
+	id = "infested_frigate"
+	suffix = "infested_frigate.dmm"
+	name = "SYN-C Brutus"
+	description = "This wasn't an outbreak, this was a repelled attack."

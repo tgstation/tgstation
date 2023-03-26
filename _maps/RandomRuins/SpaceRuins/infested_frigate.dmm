@@ -42,9 +42,7 @@
 "aB" = (
 /obj/item/shard,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "aI" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
@@ -430,7 +428,6 @@
 /obj/effect/mob_spawn/corpse/human/clown{
 	dir = 4
 	},
-/mob/living/basic/viscerator,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
@@ -477,9 +474,7 @@
 "fM" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "fX" = (
 /obj/structure/toilet{
 	dir = 4
@@ -524,16 +519,12 @@
 "gG" = (
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "gP" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
@@ -564,9 +555,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -888,9 +877,7 @@
 	icon_state = "pile"
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "lU" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "u_madman_l"
@@ -1109,9 +1096,7 @@
 	pixel_x = 15
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "qb" = (
 /obj/effect/turf_decal{
 	dir = 8
@@ -1205,12 +1190,8 @@
 /obj/item/clothing/mask/facehugger/toy,
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis,
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
-/mob/living/basic/viscerator,
-/mob/living/basic/viscerator,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "qR" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
@@ -1270,9 +1251,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "rL" = (
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
@@ -1374,9 +1353,7 @@
 "sT" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "sZ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1613,9 +1590,7 @@
 	amount = 25
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "wt" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -1714,9 +1689,7 @@
 /obj/effect/spawner/random/trash,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "xo" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
@@ -1959,9 +1932,7 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "zV" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal{
@@ -2079,9 +2050,7 @@
 	icon_state = "singular"
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Bh" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -2206,9 +2175,7 @@
 "Eg" = (
 /obj/item/stack/rods,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Er" = (
 /obj/effect/turf_decal{
 	icon_state = "arrows_red";
@@ -2428,9 +2395,7 @@
 	icon_state = "pile"
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Hc" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "larva_chest_s"
@@ -2802,9 +2767,7 @@
 /obj/item/ammo_casing/spent,
 /obj/structure/alien/weeds,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Ln" = (
 /obj/effect/decal/cleanable/glass,
 /obj/item/ammo_casing/spent,
@@ -3016,9 +2979,7 @@
 	amount = 23
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Ou" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -3222,9 +3183,7 @@
 	icon_state = "pile"
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "QA" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -3310,9 +3269,7 @@
 	icon_state = "singular"
 	},
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "RS" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -3346,9 +3303,7 @@
 "RY" = (
 /obj/effect/spawner/random/trash,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "Sr" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -3555,9 +3510,7 @@
 "VR" = (
 /obj/item/tank/internals/oxygen/empty,
 /turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
+/area/template_noop)
 "VU" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/vomit/old,
@@ -3842,11 +3795,6 @@
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
-"ZM" = (
-/turf/open/space/basic,
-/area/ruin/space/infested_frigate{
-	has_gravity = 1
-	})
 "ZN" = (
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gibup"
@@ -3927,19 +3875,19 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 xt
 SB
 xR
-ZM
+fl
 xR
 xt
 SB
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -3954,8 +3902,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 xt
 wP
@@ -3965,8 +3913,8 @@ bZ
 wP
 xt
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -3981,7 +3929,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 In
 wP
 wP
@@ -3993,7 +3941,7 @@ bZ
 wP
 wP
 wX
-ZM
+fl
 fl
 fl
 "}
@@ -4008,7 +3956,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 fX
 wP
@@ -4020,7 +3968,7 @@ wP
 wP
 eZ
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4035,7 +3983,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 Mm
 mG
 wP
@@ -4047,7 +3995,7 @@ wP
 ef
 jf
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4062,7 +4010,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 EQ
 wP
@@ -4074,7 +4022,7 @@ LF
 kw
 Po
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4089,7 +4037,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 qu
 wP
@@ -4101,7 +4049,7 @@ LF
 Ar
 kT
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4116,7 +4064,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 KF
 wP
@@ -4128,7 +4076,7 @@ LF
 Ux
 bg
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4143,7 +4091,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 Ln
 wP
@@ -4155,7 +4103,7 @@ AH
 yt
 YW
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4170,7 +4118,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 vj
 yJ
 wP
@@ -4182,7 +4130,7 @@ ki
 Zp
 di
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4197,7 +4145,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 vj
 OC
 OC
@@ -4209,7 +4157,7 @@ Et
 KA
 RG
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4224,7 +4172,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 vj
 xp
 ab
@@ -4236,7 +4184,7 @@ SX
 xT
 qC
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4251,7 +4199,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 vj
 Ez
 Jx
@@ -4263,7 +4211,7 @@ tU
 hB
 xB
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4275,10 +4223,10 @@ fl
 fl
 fl
 gG
-ZM
 fl
 fl
-ZM
+fl
+fl
 wP
 nN
 rd
@@ -4290,7 +4238,7 @@ Qg
 Ah
 Xa
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4301,9 +4249,9 @@ fl
 WS
 fl
 fl
-ZM
+fl
 qJ
-ZM
+fl
 sT
 In
 BO
@@ -4328,10 +4276,10 @@ fl
 fl
 fl
 fl
-ZM
+fl
 fM
-ZM
-ZM
+fl
+fl
 sT
 Gn
 xi
@@ -4356,9 +4304,9 @@ fl
 fl
 fl
 RQ
-ZM
+fl
 Or
-ZM
+fl
 rB
 zN
 gP
@@ -4382,11 +4330,11 @@ fl
 fl
 fl
 RY
-ZM
-ZM
-ZM
+fl
+fl
+fl
 lO
-ZM
+fl
 pq
 wq
 Pb
@@ -4409,11 +4357,11 @@ fl
 fl
 fl
 fl
-ZM
-ZM
-ZM
+fl
+fl
+fl
 Eg
-ZM
+fl
 hx
 Ft
 Qm
@@ -4436,11 +4384,11 @@ fl
 fl
 qF
 aB
-ZM
+fl
 Qu
-ZM
-ZM
-ZM
+fl
+fl
+fl
 ZI
 KW
 Fi
@@ -4452,7 +4400,7 @@ wP
 oW
 wP
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4466,8 +4414,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 EL
 yP
@@ -4479,7 +4427,7 @@ Jx
 lU
 Rx
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4506,7 +4454,7 @@ Im
 iy
 IC
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4521,7 +4469,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 vj
 YV
 Er
@@ -4533,7 +4481,7 @@ wP
 iL
 nm
 vj
-ZM
+fl
 fl
 fl
 "}
@@ -4548,7 +4496,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 wP
 bM
 Ne
@@ -4560,7 +4508,7 @@ wP
 UX
 Sr
 wP
-ZM
+fl
 fl
 fl
 "}
@@ -4575,7 +4523,7 @@ fl
 fl
 fl
 fl
-ZM
+fl
 hm
 wP
 MW
@@ -4587,7 +4535,7 @@ wP
 XG
 wP
 li
-ZM
+fl
 fl
 fl
 "}
@@ -4602,8 +4550,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 nu
 wP
@@ -4613,8 +4561,8 @@ Jw
 wP
 Qp
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4629,8 +4577,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 bD
 wP
@@ -4640,8 +4588,8 @@ IO
 wP
 wu
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4656,8 +4604,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 CK
 wP
@@ -4667,8 +4615,8 @@ Cp
 wP
 Zt
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4683,8 +4631,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 hu
 wP
@@ -4694,8 +4642,8 @@ wP
 wP
 ye
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4710,8 +4658,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 Bw
 ip
@@ -4721,8 +4669,8 @@ YT
 Ai
 KC
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4737,8 +4685,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 HA
 Cm
@@ -4748,8 +4696,8 @@ jA
 Jx
 AM
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4764,8 +4712,8 @@ ta
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 vM
 wP
@@ -4775,8 +4723,8 @@ wP
 wP
 OK
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4791,8 +4739,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 cX
 wP
@@ -4802,8 +4750,8 @@ gi
 wP
 OK
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4818,8 +4766,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 iS
 wP
@@ -4829,8 +4777,8 @@ wO
 wP
 oV
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4845,8 +4793,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 vj
 KK
 wP
@@ -4856,8 +4804,8 @@ NX
 wP
 oo
 vj
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4872,8 +4820,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 af
 yZ
@@ -4883,8 +4831,8 @@ yZ
 yZ
 sE
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4899,8 +4847,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 zE
 rL
@@ -4910,8 +4858,8 @@ aY
 ie
 Pa
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4926,8 +4874,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 Yd
 hA
@@ -4937,8 +4885,8 @@ yG
 nG
 UV
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4953,8 +4901,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 qb
 cB
@@ -4964,8 +4912,8 @@ hK
 LO
 MG
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -4980,8 +4928,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 QA
 SE
@@ -4991,8 +4939,8 @@ Cm
 wj
 Iu
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -5007,8 +4955,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 QA
 ZN
@@ -5018,8 +4966,8 @@ Kl
 kg
 uC
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -5034,8 +4982,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 wP
 ON
 Oy
@@ -5045,8 +4993,8 @@ Mp
 Bh
 ka
 wP
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -5061,8 +5009,8 @@ fl
 fl
 fl
 fl
-ZM
-ZM
+fl
+fl
 hm
 wP
 cP
@@ -5072,8 +5020,8 @@ RW
 oj
 wP
 li
-ZM
-ZM
+fl
+fl
 fl
 fl
 "}
@@ -5088,19 +5036,19 @@ fl
 fl
 fl
 fl
-ZM
-ZM
-ZM
-ZM
-ZM
-ZM
-ZM
+fl
+fl
+fl
+fl
+fl
+fl
+fl
 VR
-ZM
-ZM
-ZM
-ZM
-ZM
+fl
+fl
+fl
+fl
+fl
 fl
 fl
 "}
