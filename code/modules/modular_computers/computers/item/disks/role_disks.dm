@@ -108,8 +108,7 @@
 	desc = "Removable disk used to download ordnance-related tablet apps."
 	icon_state = "datadisk5"
 	starting_programs = list(
-		/datum/computer_file/program/signal_commander,
-		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/signal_commander
 	)
 
 /**

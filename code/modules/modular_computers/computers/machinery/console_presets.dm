@@ -32,7 +32,6 @@
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/ai_restorer,
 		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/scipaper_program,
 	)
 
 // ===== COMMAND CONSOLE =====

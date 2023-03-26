@@ -266,11 +266,8 @@
 	update_appearance()
 	banked_cash = 0
 	if((gauss_real >= gauss_major)) //Major Success.
-		if(SSresearch.techweb_nodes_experimental.len > 0)
-			say("Experiment concluded with major success. New technology node discovered on technology disc.")
-			new /obj/item/disk/tech_disk/major(dropturf,1)
-			return
-		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
+		say("Experiment concluded with major success. New technology node discovered on technology disc.")
+		new /obj/item/disk/tech_disk/major(dropturf,1)
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward = pick(minor_rewards)
 		new reward(dropturf)

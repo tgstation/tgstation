@@ -32,10 +32,6 @@
 	var/list/research_costs = list()
 	/// The category of the node
 	var/category = "Misc"
-	/// The list of experiments required to research the node
-	var/list/required_experiments = list()
-	/// If completed, these experiments give a specific point amount discount to the node.area
-	var/list/discount_experiments = list()
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
 
@@ -77,18 +73,13 @@
 
 	var/list/actual_costs = research_costs.Copy()
 
-	for(var/cost_type in actual_costs)
-		for(var/experiment_type in discount_experiments)
-			if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
-				actual_costs[cost_type] -= discount_experiments[experiment_type]
-
-	if(host.boosted_nodes[id]) // Boosts should be subservient to experiments. Discount from boosts are capped when costs fall below 250.
+	if(host.boosted_nodes[id]) // Discount from boosts are capped when costs fall below 250.
 		var/list/boostlist = host.boosted_nodes[id]
 		for(var/booster in boostlist)
 			if(actual_costs[booster])
 				var/delta = max(0, actual_costs[booster] - 250)
 				actual_costs[booster] -= min(boostlist[booster], delta)
-	
+
 	return actual_costs
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)

@@ -640,7 +640,6 @@
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
 		/obj/item/biopsy_tool,
-		/obj/item/experi_scanner,
 		/obj/item/storage/bag/bio,
 		/obj/item/melee/baton/telescopic,
 	)

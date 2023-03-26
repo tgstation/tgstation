@@ -422,16 +422,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/destructive_scanner
-	name = "Destructive Scanner Board"
-	desc = "The circuit board for an experimental destructive scanner."
-	id = "destructive_scanner"
-	build_path = /obj/item/circuitboard/machine/destructive_scanner
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/doppler_array
 	name = "Tachyon-Doppler Research Array Board"
 	desc = "The circuit board for a tachyon-doppler research array"
@@ -447,16 +437,6 @@
 	desc = "The circuit board for an anomaly refinery"
 	id = "anomaly_refinery"
 	build_path = /obj/item/circuitboard/machine/anomaly_refinery
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/tank_compressor
-	name = "Tank Compressor Board"
-	desc = "The circuit board for a tank compressor"
-	id = "tank_compressor"
-	build_path = /obj/item/circuitboard/machine/tank_compressor
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
 	)
