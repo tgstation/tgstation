@@ -625,7 +625,8 @@ SUBSYSTEM_DEF(air)
 	for(var/turf/active_turf as anything in GLOB.active_turfs_startlist)
 		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
 		var/area/turf_area = get_area(active_turf)
-		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type])."
+		var/datum/space_level/level = SSmapping.z_list[active_turf.z]
+		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Z-Level has traits: [english_list(level.traits)]."
 
 	message_to_log += "End of active turf list."
 	log_mapping(message_to_log.Join("\n"))
