@@ -68,7 +68,7 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 11
+	weight = 9
 	cost = 5
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
@@ -197,7 +197,7 @@
 	required_candidates = 1
 	weight = 8
 	cost = 6
-	requirements = list(101,101,50,10,10,10,10,10,10,10)
+	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()
@@ -235,9 +235,9 @@
 	)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 1
-	weight = 5
+	weight = 6
 	cost = 10
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(60,50,40,30,30,20,20,10,10,10)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/latejoin/bloodsucker/execute()
