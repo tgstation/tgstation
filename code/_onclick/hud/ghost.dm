@@ -108,7 +108,7 @@
 	using = new /atom/movable/screen/ghost/dm()
 	using.screen_loc = ui_ghost_dm
 	using.hud = src
-	toggleable_inventory += using
+	static_inventory += using
 
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
 	// don't show this HUD if observing; show the HUD of the observee

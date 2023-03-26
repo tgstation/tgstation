@@ -682,7 +682,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "es" = (
-/obj/effect/landmark/deathmatch_map_spawn,
+/obj/effect/landmark/deathmatch_map_spawn{
+	height = 41;
+	width = 41;
+	x_offset = 20;
+	y_offset = 20
+	},
 /turf/open/space/basic,
 /area/space)
 "et" = (
@@ -31630,7 +31635,7 @@ aa
 aa
 aa
 aa
-aa
+es
 aa
 aa
 aa
@@ -34171,7 +34176,7 @@ aa
 aa
 aa
 aa
-es
+aa
 aa
 aa
 aa
