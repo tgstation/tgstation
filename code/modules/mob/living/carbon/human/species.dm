@@ -393,12 +393,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// Check for an existing organ, and if there is one check to see if we should remove it
 		var/health_pct = 1
-		var/remove_existing = !isnull(existing_organ)
-		if(remove_existing)
-			if(existing_organ.zone in excluded_zones)
-				remove_existing = FALSE
-			else if(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
-				remove_existing = FALSE
+		var/remove_existing = !isnull(existing_organ) && !(existing_organ.zone in excluded_zones) && !(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
 
 			if(remove_existing)
 				health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
