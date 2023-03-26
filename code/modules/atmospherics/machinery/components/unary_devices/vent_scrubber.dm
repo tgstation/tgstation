@@ -26,22 +26,22 @@
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
 
-	//Enables the use of plunger_act for ending the vent clog random event
+	///Enables the use of plunger_act for ending the vent clog random event
 	var/clogged = FALSE
+	///The area this scrubber is assigned to
+	var/area/assigned_area
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
+
 	for(var/to_filter in filter_types)
 		if(istext(to_filter))
 			filter_types -= to_filter
 			filter_types += gas_id2path(to_filter)
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
-	. = ..()
 
 	assign_to_area()
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -60,20 +60,27 @@
 	if (old_area == new_area)
 		return
 
-	disconnect_from_area()
-	assign_to_area()
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on_enter_area(datum/source, area/area_to_register)
 	assign_to_area(area_to_register)
 	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area(area/target_area = get_area(src))
-	if(!isnull(target_area))
-		target_area.air_scrubbers += src
-		update_appearance(UPDATE_NAME)
+	//this scrubber is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
+		return
+	assigned_area = target_area
+	assigned_area.air_scrubbers += src
+	update_appearance(UPDATE_NAME)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area(area/target_area = get_area(src))
-	target_area?.air_scrubbers -= src
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_scrubbers -= src
+	assigned_area = null
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()

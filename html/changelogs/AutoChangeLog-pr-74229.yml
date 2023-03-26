@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "lizards with blood deficiency now receive the type 'L' blood packs instead of an unhelpful type 'O-' one."

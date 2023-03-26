@@ -142,12 +142,6 @@ The areas used here are STRICTLY on the CC Z level.
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-/area/centcom/tdome/arena_source
-	name = "Thunderdome Arena Template"
-	icon_state = "thunder"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
-
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
 	icon_state = "thunder_team_one"

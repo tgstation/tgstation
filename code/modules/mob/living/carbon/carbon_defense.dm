@@ -758,4 +758,52 @@
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 
+/// Randomise a body part and organ of this mob
+/mob/living/carbon/proc/bioscramble(scramble_source)
+	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
+		return FALSE
+
+	if (!length(GLOB.bioscrambler_valid_organs) || !length(GLOB.bioscrambler_valid_parts))
+		init_bioscrambler_lists()
+
+	var/changed_something = FALSE
+	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
+	var/obj/item/organ/replaced = getorganslot(initial(new_organ.slot))
+	if (!(replaced?.organ_flags & ORGAN_SYNTHETIC))
+		changed_something = TRUE
+		new_organ = new new_organ()
+		new_organ.replace_into(src)
+
+	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
+	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
+	if (!(picked_user_part?.bodytype & BODYTYPE_ROBOTIC))
+		changed_something = TRUE
+		new_part = new new_part()
+		new_part.replace_limb(src, special = TRUE)
+		if (picked_user_part)
+			qdel(picked_user_part)
+
+	if (!changed_something)
+		to_chat(src, span_notice("Your augmented body protects you from [scramble_source]!"))
+		return FALSE
+	update_body(TRUE)
+	balloon_alert(src, "something has changed about you")
+	return TRUE
+
+/// Fill in the lists of things we can bioscramble into people
+/mob/living/carbon/proc/init_bioscrambler_lists()
+	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
+	for (var/obj/item/bodypart/part as anything in body_parts)
+		if (!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && !(initial(part.bodytype) & BODYTYPE_ROBOTIC))
+			continue
+		body_parts -= part
+	GLOB.bioscrambler_valid_parts = body_parts
+
+	var/list/organs = subtypesof(/obj/item/organ/internal) + subtypesof(/obj/item/organ/external)
+	for (var/obj/item/organ/organ_type as anything in organs)
+		if (!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_SYNTHETIC))
+			continue
+		organs -= organ_type
+	GLOB.bioscrambler_valid_organs = organs
+
 #undef SHAKE_ANIMATION_OFFSET
