@@ -21,8 +21,6 @@
 	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
-	/// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD and NTNET_COMMUNICATION)
-	var/requires_ntnet_feature = 0
 	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
@@ -52,7 +50,6 @@
 	temp.filedesc = filedesc
 	temp.program_icon_state = program_icon_state
 	temp.requires_ntnet = requires_ntnet
-	temp.requires_ntnet_feature = requires_ntnet_feature
 	temp.usage_flags = usage_flags
 	return temp
 
@@ -61,11 +58,11 @@
 	if(computer)
 		computer.update_appearance()
 
-// Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
+///Attempts to generate an Ntnet log, returns the log on success, FALSE otherwise.
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
-	return 0
+	return FALSE
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
@@ -153,10 +150,10 @@
  **/
 /datum/computer_file/program/proc/on_start(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(can_run(user, 1))
+	if(can_run(user, loud = TRUE))
 		if(requires_ntnet)
 			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
-			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
+			generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
 	return FALSE

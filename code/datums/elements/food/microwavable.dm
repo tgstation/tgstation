@@ -72,4 +72,7 @@
 /datum/element/microwavable/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("[source] could be <b>microwaved</b> into \a [initial(result_typepath.name)].")
+	if(initial(result_typepath.gender) == PLURAL)
+		examine_list += span_notice("[source] can be [span_bold("microwaved")] into some [initial(result_typepath.name)].")
+	else
+		examine_list += span_notice("[source] can be [span_bold("microwaved")] into \a [initial(result_typepath.name)].")

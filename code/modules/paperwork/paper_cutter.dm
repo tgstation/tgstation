@@ -116,6 +116,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
 	if(burn_paper_product_attackby_check(I, user))
