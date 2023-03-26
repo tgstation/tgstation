@@ -72,7 +72,7 @@
 	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
-		
+
 	return FALSE
 
 /datum/surgery/organ_manipulation/mechanic/soft
@@ -147,7 +147,7 @@
 		preop_sound = 'sound/surgery/hemostat1.ogg'
 		success_sound = 'sound/surgery/organ2.ogg'
 		target_organ = tool
-		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
+		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
@@ -172,7 +172,7 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/unfiltered_organs = target.getorganszone(target_zone)
+		var/list/unfiltered_organs = target.get_organs_for_zone(target_zone)
 		var/list/organs = list()
 		for(var/organ in unfiltered_organs)
 			if(can_use_organ(user, organ))

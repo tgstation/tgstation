@@ -456,7 +456,7 @@
 
 /obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/obj/item/organ/organ in contents)
-		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
+		organ.apply_organ_damage(-repair_rate * organ.maxHealth * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()

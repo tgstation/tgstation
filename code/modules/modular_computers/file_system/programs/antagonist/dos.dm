@@ -46,7 +46,7 @@
 		return
 	switch(action)
 		if("PRG_target_relay")
-			for(var/obj/machinery/ntnet_relay/relays as anything in SSmodular_computers.ntnet_relays)
+			for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
 				if(relays.uid == params["targid"])
 					target = relays
 					break
@@ -63,7 +63,7 @@
 				executed = TRUE
 				target.dos_sources.Add(src)
 				if(SSmodular_computers.intrusion_detection_enabled)
-					SSnetworks.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
+					SSmodular_computers.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
 					SSmodular_computers.intrusion_detection_alarm = TRUE
 			return TRUE
 
@@ -80,7 +80,7 @@
 	else
 		data["target"] = FALSE
 		data["relays"] = list()
-		for(var/obj/machinery/ntnet_relay/relays as anything in SSmodular_computers.ntnet_relays)
+		for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
 			data["relays"] += list(list("id" = relays.uid))
 		data["focus"] = target ? target.uid : null
 

@@ -34,7 +34,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -390,9 +390,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "iv" = (
@@ -640,7 +638,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -721,9 +719,7 @@
 /area/centcom/ctf)
 "oH" = (
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "oO" = (
@@ -1309,7 +1305,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1824,7 +1820,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/ctf)
@@ -1944,9 +1940,7 @@
 /area/centcom/ctf)
 "QW" = (
 /obj/effect/turf_decal/trimline/blue/line,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Rj" = (
@@ -2200,9 +2194,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 10
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Xj" = (

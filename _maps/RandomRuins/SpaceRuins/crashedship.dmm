@@ -305,14 +305,14 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "om" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
@@ -576,7 +576,7 @@
 /obj/structure/closet/crate/large,
 /obj/structure/canister_frame/machine/finished_canister_frame,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
@@ -592,7 +592,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
