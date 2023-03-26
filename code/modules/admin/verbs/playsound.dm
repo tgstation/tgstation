@@ -110,9 +110,7 @@
 		music_extra_data["album"] = data["album"]
 		var/duration = data["duration"] * 1 SECONDS
 		if (duration > 10 MINUTES)
-			duration = tgui_alert(usr, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel"))
-		switch(duration)
-			if("No", "Cancel", null)
+			if((tgui_alert(usr, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel")) != "Yes"))
 				return
 		var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]", "Show Info?", list("Yes", "No", "Cancel"))
 		switch(res)
@@ -143,13 +141,15 @@
 		message_admins("[key_name(usr)] played web sound: [input]")
 	else
 		//pressed ok with blank
-		log_admin("[key_name(usr)] stopped web sound")
-		message_admins("[key_name(usr)] stopped web sound")
+		log_admin("[key_name(usr)] stopped web sounds.")
+
+		message_admins("[key_name(usr)] stopped web sounds.")
 		web_sound_url = null
 		stop_web_sounds = TRUE
 	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
-		to_chat(usr, span_boldwarning("BLOCKED: Content URL not using http(s) protocol"), confidential = TRUE)
-		to_chat(usr, span_warning("The media provider returned a content URL that isn't using the HTTP or HTTPS protocol"), confidential = TRUE)
+		tgui_alert(usr, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
+		to_chat(usr, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
+
 		return
 	if(web_sound_url || stop_web_sounds)
 		for(var/m in GLOB.player_list)
@@ -181,7 +181,7 @@
 		web_sound_input = trim(web_sound_input)
 		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
 			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
-			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website."), confidential = TRUE)
+			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
 		var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 		web_sound(usr, shell_scrubbed_input)

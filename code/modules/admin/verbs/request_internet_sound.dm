@@ -10,7 +10,7 @@
 		to_chat(usr, span_danger("This server has disabled internet sound requests."), confidential = TRUE)
 		return
 
-	var/request_url = tgui_input_text(usr.client, "Please Input a URL", "Only certian sites are allowed, such as youtube, soundcloud, and bandcamp", "")
+	var/request_url = tgui_input_text(usr, "Please Input a URL", "Only certain sites are allowed, such as YouTube, SoundCloud, and Bandcamp.", "")
 	if(!request_url)
 		return
 
