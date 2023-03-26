@@ -800,9 +800,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
-/obj/machinery/mineral/processing_unit_console{
-	!INVALID_VAR! = 8
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "cE" = (
@@ -1048,9 +1046,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "df" = (
-/obj/machinery/mineral/stacking_unit_console{
-	!INVALID_VAR! = 8
-	},
+/obj/machinery/mineral/stacking_unit_console,
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "dg" = (
