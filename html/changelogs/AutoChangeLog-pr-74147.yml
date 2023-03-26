@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "You can no longer print Technology data disks. You can still print Tech disks, which hold techweb information on it, just not the one that holds up to 5 nodes."
+  - balance: "^ Because of this, there's no way to download nodes from an RD console and upload them to an Autolathe to bypass departmental restrictions, you have to go through a Techfab/Circuit imprinter for your needs."
+  - balance: "Ones that are found cannot have anything uploaded/deleted off of them either, you can only upload them to the Web."
+  - code_imp: "Every individual Bepis disk no longer create an entire techweb"

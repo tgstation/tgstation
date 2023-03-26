@@ -25,7 +25,7 @@
 /datum/status_effect/strandling/proc/on_breathe(mob/living/source)
 	SIGNAL_HANDLER
 
-	if(source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+	if(source.get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
 		return
 
 	source.losebreath++

@@ -27593,6 +27593,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
+"iKN" = (
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 8
+	},
+/turf/open/space/openspace,
+/area/space)
 "iKY" = (
 /obj/item/experi_scanner{
 	pixel_x = 5
@@ -144802,7 +144808,7 @@ jhd
 jhd
 jhd
 jhd
-jhd
+iKN
 jhd
 jhd
 jhd
