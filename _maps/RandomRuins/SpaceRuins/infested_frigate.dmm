@@ -71,7 +71,7 @@
 	pixel_x = -6;
 	pixel_y = -21
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -697,7 +697,7 @@
 /obj/structure/door_assembly/door_assembly_ext{
 	anchored = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1195,7 +1195,7 @@
 "qR" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
@@ -1688,7 +1688,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/template_noop)
 "xo" = (
 /obj/effect/decal/cleanable/glass,
@@ -1931,7 +1931,7 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "zV" = (
 /obj/machinery/suit_storage_unit/open,
@@ -2766,7 +2766,7 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/structure/alien/weeds,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/template_noop)
 "Ln" = (
 /obj/effect/decal/cleanable/glass,
@@ -3581,7 +3581,7 @@
 	pixel_y = 19;
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/infested_frigate{
 	has_gravity = 1
 	})
