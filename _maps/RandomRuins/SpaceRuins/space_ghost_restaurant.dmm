@@ -66,6 +66,12 @@
 "kf" = (
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
+"kX" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/obj/item/clothing/mask/balaclava,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
 "lb" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/cafeteria/airless,
@@ -300,7 +306,7 @@
 /area/ruin/space/space_ghost_restaurant)
 "Xn" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
+/obj/item/bedsheet/yellow,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/space_ghost_restaurant)
 "ZS" = (
@@ -516,7 +522,7 @@ dm
 Ck
 Ck
 Ck
-Xn
+kX
 Xn
 Ck
 bY
