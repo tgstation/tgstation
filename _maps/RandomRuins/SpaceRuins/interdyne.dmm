@@ -65,9 +65,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "cJ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/glass/plastitanium,
+/obj/structure/shipping_container/interdyne,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "cK" = (
@@ -247,10 +246,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"jh" = (
-/obj/effect/mob_spawn/corpse/human/cargo_tech,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "jm" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
@@ -286,10 +281,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "kg" = (
-/obj/machinery/power/apc{
-	pixel_y = 5
+/obj/item/toy/plush/beeplushie{
+	desc = "How did this get here?"
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "kk" = (
 /obj/structure/table/optable,
@@ -533,10 +528,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "rr" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "rs" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -673,11 +667,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "yt" = (
-/obj/structure/table/reinforced/ctf,
-/obj/structure/table/reinforced/ctf,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 8
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "yN" = (
@@ -798,11 +791,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "DP" = (
-/obj/structure/table/reinforced/ctf,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "Eh" = (
@@ -928,7 +921,6 @@
 "JH" = (
 /obj/structure/rack,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
@@ -1026,7 +1018,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "MB" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/blacklight/directional/east,
@@ -1156,7 +1147,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "RF" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1309,7 +1299,6 @@
 /area/ruin/space/has_grav/interdyne)
 "WU" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -1381,7 +1370,6 @@ bW
 bW
 bW
 bW
-bW
 Me
 Rn
 Me
@@ -1408,7 +1396,6 @@ bW
 bW
 "}
 (2,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1444,7 +1431,6 @@ bW
 bW
 "}
 (3,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1484,7 +1470,6 @@ bW
 bW
 bW
 bW
-bW
 zx
 Rn
 Zi
@@ -1516,7 +1501,6 @@ Lx
 Me
 "}
 (5,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1556,7 +1540,6 @@ bW
 bW
 bW
 bW
-bW
 Lx
 Rn
 PC
@@ -1588,7 +1571,6 @@ Rn
 Lx
 "}
 (7,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1627,7 +1609,6 @@ Me
 bW
 bW
 bW
-bW
 zx
 Rn
 Rn
@@ -1650,7 +1631,7 @@ gV
 Ej
 fu
 pE
-Uo
+fu
 rC
 QD
 Zi
@@ -1660,7 +1641,6 @@ Rn
 Kz
 "}
 (9,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1699,7 +1679,6 @@ bW
 bW
 bW
 bW
-bW
 Rn
 Rn
 Rn
@@ -1732,7 +1711,6 @@ Me
 bW
 "}
 (11,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1771,7 +1749,6 @@ bW
 bW
 bW
 bW
-bW
 Lx
 Rn
 Rn
@@ -1804,7 +1781,6 @@ bW
 bW
 "}
 (13,1,1) = {"
-bW
 bW
 bW
 bW
@@ -1841,7 +1817,6 @@ bW
 "}
 (14,1,1) = {"
 bW
-bW
 Rn
 Rn
 Rn
@@ -1876,7 +1851,6 @@ Me
 bW
 "}
 (15,1,1) = {"
-bW
 bW
 bW
 Rn
@@ -1915,7 +1889,6 @@ bW
 bW
 bW
 bW
-bW
 Rn
 Rn
 Rn
@@ -1951,13 +1924,12 @@ bW
 bW
 bW
 bW
-bW
 Me
 Rn
 Rn
 Zi
 fu
-fu
+rr
 Nb
 Bj
 HF
@@ -1987,13 +1959,12 @@ bW
 bW
 bW
 bW
-bW
 Me
 Rn
 Rn
 Zi
+QD
 cK
-jh
 QD
 QD
 mx
@@ -2020,7 +1991,6 @@ Me
 bW
 "}
 (19,1,1) = {"
-bW
 bW
 bW
 bW
@@ -2059,7 +2029,6 @@ bW
 bW
 bW
 bW
-bW
 Me
 Rn
 Rn
@@ -2092,7 +2061,6 @@ Me
 bW
 "}
 (21,1,1) = {"
-bW
 Rn
 Rn
 Rn
@@ -2100,15 +2068,15 @@ Rn
 Rn
 Rn
 Zi
-cK
-tx
+QD
+cJ
 mQ
 QD
 vd
 Te
 Zi
 LB
-cJ
+Nb
 Sy
 cj
 oO
@@ -2128,7 +2096,6 @@ KP
 bW
 "}
 (22,1,1) = {"
-bW
 bW
 Rn
 Rn
@@ -2166,13 +2133,12 @@ bW
 (23,1,1) = {"
 bW
 bW
-bW
 Me
 Me
 Rn
 Rn
 Zi
-QD
+kg
 QD
 aF
 QD
@@ -2190,7 +2156,7 @@ CW
 Bx
 vg
 Aw
-kg
+Zi
 Zi
 Zi
 Rn
@@ -2200,7 +2166,6 @@ Rn
 bW
 "}
 (24,1,1) = {"
-bW
 bW
 bW
 KP
@@ -2237,7 +2202,6 @@ bW
 "}
 (25,1,1) = {"
 bW
-bW
 Me
 Me
 Rn
@@ -2246,7 +2210,7 @@ Rn
 Zi
 TC
 fu
-Uo
+fu
 fu
 RF
 oO
@@ -2273,7 +2237,6 @@ bW
 "}
 (26,1,1) = {"
 bW
-bW
 Me
 Rn
 Rn
@@ -2297,7 +2260,7 @@ Zi
 XS
 iR
 aY
-rr
+Vi
 DP
 yt
 Zi
@@ -2308,7 +2271,6 @@ Me
 bW
 "}
 (27,1,1) = {"
-bW
 bW
 Me
 Me
@@ -2346,7 +2308,6 @@ bW
 (28,1,1) = {"
 bW
 bW
-bW
 Kz
 Rn
 Rn
@@ -2382,7 +2343,6 @@ bW
 (29,1,1) = {"
 bW
 bW
-bW
 Me
 Me
 Rn
@@ -2416,7 +2376,6 @@ bW
 bW
 "}
 (30,1,1) = {"
-bW
 bW
 bW
 bW
@@ -2458,7 +2417,6 @@ bW
 bW
 bW
 bW
-bW
 Me
 Me
 Me
@@ -2488,7 +2446,6 @@ bW
 bW
 "}
 (32,1,1) = {"
-bW
 bW
 bW
 bW
@@ -2534,45 +2491,8 @@ bW
 bW
 bW
 bW
-bW
 Rn
 Rn
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-"}
-(34,1,1) = {"
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
-bW
 bW
 bW
 bW
