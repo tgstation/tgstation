@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Xenomorphs will now be properly teamed together again, and will show up together on the roundend report."
