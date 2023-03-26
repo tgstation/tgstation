@@ -1,0 +1,4 @@
+author: "Moth-lantern"
+delete-after: True
+changes:
+  - bugfix: "Anomalies will no longer spawn at the bomb testing range satellite."

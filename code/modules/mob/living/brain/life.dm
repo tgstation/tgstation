@@ -20,7 +20,7 @@
 	else if(istype(loc, /obj/item/organ/internal/brain))
 		BR = loc
 	if(BR)
-		BR.setOrganDamage(BRAIN_DAMAGE_DEATH) //beaten to a pulp
+		BR.set_organ_damage(BRAIN_DAMAGE_DEATH) //beaten to a pulp
 
 /mob/living/brain/proc/handle_emp_damage(delta_time, times_fired)
 	if(!emp_damage)
