@@ -269,6 +269,7 @@
 	minimum_players = 25
 	weight = 2
 	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
 
@@ -313,6 +314,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
@@ -348,6 +350,7 @@
 	required_candidates = 5
 	weight = 5
 	cost = 7
+	requirements = list(7,7,7,7,7,7,7,7,7,7)
 	minimum_round_time = 50 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
@@ -396,6 +399,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 8
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	minimum_players = 25
 	repeatable = TRUE
 
@@ -427,6 +431,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	minimum_players = 25
 	repeatable = TRUE
 
@@ -460,6 +465,7 @@
 	minimum_round_time = 40 MINUTES
 	weight = 5
 	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	minimum_players = 25
 	repeatable = TRUE
 	var/list/vents = list()
@@ -501,6 +507,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 5
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	minimum_players = 15
 	repeatable = TRUE
 	var/list/spawn_locs = list()
@@ -541,6 +548,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 7
+	requirements = list(7,7,7,7,7,7,7,7,7,7)
 	minimum_players = 25
 	repeatable = TRUE
 	var/list/spawn_locs = list()
@@ -581,6 +589,7 @@
 	required_applicants = 2
 	weight = 4
 	cost = 7
+	requirements = list(7,7,7,7,7,7,7,7,7,7)
 	minimum_players = 25
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
@@ -614,6 +623,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 8
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	minimum_players = 25
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
@@ -649,6 +659,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 8
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	minimum_players = 25
 	repeatable = TRUE
 	var/spawncount = 2
@@ -666,6 +677,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 5
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	minimum_players = 15
 	repeatable = TRUE
 	var/dead_mobs_required = 20
@@ -712,6 +724,7 @@
 	minimum_players = 25
 	weight = 4
 	cost = 8
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
@@ -731,6 +744,7 @@
 	required_candidates = 0
 	weight = 4
 	cost = 8
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	minimum_players = 25
 	repeatable = TRUE
 
@@ -754,10 +768,10 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
 	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
+	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_living/obsessed/trim_candidates()
@@ -791,6 +805,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 7
+	requirements = list(7,7,7,7,7,7,7,7,7,7)
 	minimum_players = 15
 	repeatable = TRUE
 
@@ -815,6 +830,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 3
+	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 	var/list/possible_spawns = list() ///places the antag can spawn
 
@@ -888,6 +904,7 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
