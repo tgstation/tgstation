@@ -102,7 +102,7 @@
 		liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE, liverless=TRUE)
 		return
 
-	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
@@ -124,7 +124,7 @@
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 	if(liver_damage)
-		applyOrganDamage(min(liver_damage * delta_time , MAX_TOXIN_LIVER_DAMAGE * delta_time))
+		apply_organ_damage(min(liver_damage * delta_time , MAX_TOXIN_LIVER_DAMAGE * delta_time))
 
 	if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
@@ -190,7 +190,7 @@
 		return
 
 	var/mob/living/carbon/human/humie_owner = owner
-	if(!humie_owner.getorganslot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
+	if(!humie_owner.get_organ_slot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)

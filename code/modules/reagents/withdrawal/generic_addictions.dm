@@ -126,8 +126,8 @@
 	var/obj/item/organ/internal/liver/empowered_liver = affected_human.getorgan(/obj/item/organ/internal/liver)
 	if(empowered_liver)
 		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
-
-	var/obj/item/organ/internal/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/internal/eyes)
+		
+	var/obj/item/organ/internal/eyes/empowered_eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
 	if(empowered_eyes)
 		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 		empowered_eyes?.refresh()
@@ -155,7 +155,7 @@
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
 	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-	var/obj/item/organ/internal/eyes/eyes = affected_human.getorgan(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/internal/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
 	eyes.refresh()
 
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
@@ -195,7 +195,7 @@
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
 		possibilities += /datum/hallucination/fake_alert/cold
 
-	var/obj/item/organ/internal/lungs/lungs = affected_carbon.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = affected_carbon.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs)
 		if(lungs.safe_oxygen_min)
 			possibilities += /datum/hallucination/fake_alert/need_oxygen

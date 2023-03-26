@@ -162,7 +162,7 @@
 /datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
 	. = ..()
 	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
+	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(infection)
 		qdel(infection)
 
@@ -173,7 +173,7 @@
 	// Infection organ needs to be handled separately from mutant_organs
 	// because it persists through species transitions
 	var/obj/item/organ/internal/zombie_infection/infection
-	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
+	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(C)
