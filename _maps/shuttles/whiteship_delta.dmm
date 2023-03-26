@@ -537,9 +537,7 @@
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bo" = (
@@ -551,9 +549,7 @@
 /obj/item/storage/wallet/random,
 /obj/item/clothing/under/rank/centcom/official,
 /obj/item/clothing/under/rank/centcom/commander,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bp" = (
@@ -823,7 +819,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/recharger,
 /obj/structure/spider/stickyweb,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "bT" = (
@@ -876,7 +874,7 @@
 	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
@@ -950,7 +948,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
@@ -981,7 +979,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
@@ -1027,7 +1025,7 @@
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
@@ -1128,7 +1126,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cv" = (
@@ -1266,7 +1266,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
@@ -1276,7 +1276,7 @@
 /obj/item/defibrillator,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)

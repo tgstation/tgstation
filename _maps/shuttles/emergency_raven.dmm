@@ -70,13 +70,13 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "am" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -106,7 +106,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -129,7 +129,9 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aw" = (
@@ -580,31 +582,25 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bG" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bH" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -718,20 +714,16 @@
 /area/shuttle/escape)
 "bW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bX" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -741,16 +733,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bZ" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "cb" = (
@@ -975,19 +963,23 @@
 "cH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/west,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cJ" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cK" = (
@@ -1008,13 +1000,15 @@
 /area/shuttle/escape)
 "cN" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cP" = (
@@ -1675,7 +1669,7 @@
 	req_access = list("command")
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

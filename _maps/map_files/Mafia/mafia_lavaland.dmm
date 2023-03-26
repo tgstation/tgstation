@@ -4,7 +4,7 @@
 /area/centcom/mafia)
 "ab" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
@@ -356,13 +356,13 @@
 /turf/closed/indestructible/reinforced,
 /area/centcom/mafia)
 "aZ" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"WQ" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+"GL" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 
@@ -652,9 +652,9 @@ ap
 aY
 ap
 ap
-WQ
+GL
 aR
-ab
+ae
 ap
 ap
 aY
@@ -678,7 +678,7 @@ aC
 aP
 ap
 aq
-ae
+ab
 aq
 ap
 aq

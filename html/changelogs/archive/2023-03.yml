@@ -866,3 +866,73 @@
   - rscadd: 'adds new blood bag types: TOX (slimepeople), H2O (podpeople), S (snail)'
   - bugfix: fixed blood deficiency quirk causing wild fluctuations in blood volume
       on the analyzer, giving more accurate readings
+2023-03-25:
+  13spacemen:
+  - qol: It is now obvious when examining volume pumps that you can multitool them
+      to overclock them to disable pressure limits and spill gas out. Overclocked
+      volume pumps flash lights
+  Hatterhat:
+  - bugfix: Thrown reagent containers (beakers, molotovs) hitting mobs no longer fully
+      splash their target with their contents, as this was unintended behavior. The
+      intended behavior was 0-50% of the splashed reagents being ignored. Throwing
+      stuff at floors/walls is unaffected.
+  LT3:
+  - code_imp: Access key rings added to list on creation
+  - code_imp: Access keys unregister signal when destroyed
+  Rhials:
+  - code_imp: splits up spacevine.dm into four files in the events folder, and a __defines
+      file.
+  - code_imp: Lightbulb removal code is a little bit easier to read
+  - spellcheck: The lightbulb remover skillchip implant (which I know you guys LOVE
+      to use) has a slightly different message now.
+  SyncIt21:
+  - bugfix: broken sprites in RCD UI
+  Thunder12345:
+  - rscadd: Added skirt variants of the galaxy suits
+  Timberpoes:
+  - bugfix: DNA Scanners, Sleepers, Abductor Experimentors, Skill Stations and Mod
+      Installers now appropriately release their contents when opened, fixing an issue
+      where they could permanently absorb players and items until admins intervened.
+  - bugfix: Cyborg recharge stations should be much more usable again.
+  cats4gold:
+  - qol: adds the weight class 'tiny' to paper slips
+  timothymtorres:
+  - rscadd: Add crafting recipe for basketballs (leather sheets) and basketball hoops
+      (metal, rods, and durathread)
+  - rscadd: Add new basketball minigame for 2-7 players.  There are 4 different courts
+      and teams by default with more planned to be added later.
+  - rscadd: New basketball mechanics that uses stamina.  Shoot with RMB, pass with
+      LMB, and dunk by clicking the hoop while adjacent.  Spinning while holding the
+      ball decreases the chance for someone to steal the ball, but it decreases your
+      shooting accuracy.  Shooting from 2 tiles away lets you score 3 points.
+  - qol: Basketballs now play a buzzer sound when someone scores. CtrlClick will reset
+      the scorecard and AltClick with a wrench will rotate the hoop.
+  - qol: Dunking and shooting animations for basketball.
+  - soundadd: Added basketball bounce sound with credits attribution
+  - imageadd: Added basketball icon to minigames. Move baseball and dodgeball icons
+      to toy/balls.dmi
+2023-03-26:
+  Chlorotrifluoride:
+  - imageadd: prettified all RTD icons
+  - imageadd: prettified in hand RLD icons
+  - imageadd: subtly improved the RSF icons
+  NamelessFairy:
+  - bugfix: Tram's Ordnance Freezer is now piped correctly.
+  PositiveEntropy:
+  - imageadd: Redoes The Safes!
+  Timberpoes:
+  - bugfix: Having your severed, brain-filled head reattached to a body no longer
+      teleports your brain to the mythical Gem Room.
+  VladinXXV:
+  - bugfix: The intern who was recording Etheral crewmembers' bloodtypes as random
+      human bloodtypes has been replaced with an intern who has seen the example made
+      of the previous one.
+  ZephyrTFA:
+  - bugfix: You can no longer use Pocket Protectors to pull items out of nullspace
+  mc-oofert:
+  - refactor: Stickers use a component and an element now to do their sticking
+  san7890:
+  - bugfix: Tile decals are no longer fucked on all stations.
+  vinylspiders:
+  - bugfix: fixed blood deficiency quirk sending the wrong blood pack to roundstart
+      species who have exotic blood
