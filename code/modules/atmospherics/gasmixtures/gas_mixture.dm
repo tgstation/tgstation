@@ -307,7 +307,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	temperature = sample.temperature
 	for(var/id in sample_gases)
 		cached_gases[id] = sample_gases[id].Copy()
-		copy_gases[id][ARCHIVE] = 0
+		cached_gases[id][ARCHIVE] = 0
 
 	return TRUE
 
