@@ -535,7 +535,6 @@
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
-	network_root_id = STATION_NETWORK_ROOT
 
 //ABANDONED BOX WHITESHIP
 
@@ -570,3 +569,11 @@
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
 	ambientsounds = list('sound/ambience/clown.ogg')
+
+//DERELICT SULACO
+/area/ruin/space/has_grav/derelictsulaco
+	name = "\improper Derelict Sulaco"
+
+// The abandoned capsule 'The Traveler's Rest'
+/area/ruin/space/has_grav/travelers_rest
+	name = "\improper Traveler's Rest"

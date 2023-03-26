@@ -56,9 +56,8 @@
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
-#define RESPIRATION_CO2 (1 << 1)
-#define RESPIRATION_N2 (1 << 2)
-#define RESPIRATION_PLASMA (1 << 3)
+#define RESPIRATION_N2 (1 << 1)
+#define RESPIRATION_PLASMA (1 << 2)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC 1

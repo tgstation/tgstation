@@ -165,7 +165,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
-	)
+	),
+	DYE_LAWYER_SPECIAL_SKIRT = list(
+		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/skirt,
+		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red/skirt
+	),
 ))
 
 /obj/machinery/washing_machine
@@ -416,7 +420,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 
-/obj/machinery/washing_machine/open_machine(drop = 1)
-	..()
+/obj/machinery/washing_machine/open_machine(drop = TRUE, density_to_set = FALSE)
+	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null

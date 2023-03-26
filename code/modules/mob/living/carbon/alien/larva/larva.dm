@@ -74,3 +74,7 @@
 
 /mob/living/carbon/alien/larva/canBeHandcuffed()
 	return TRUE
+
+/// Don't scramble a larva's body parts, it doesn't have any
+/mob/living/carbon/alien/larva/bioscramble(scramble_source)
+	return TRUE

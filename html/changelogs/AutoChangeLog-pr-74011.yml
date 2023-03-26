@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - qol: "When inspecting syndicate bombs the text that tells you how long is on the timer stands out more."
-  - qol: "Inspecting an active syndicate bomb will give you a balloon alert on the bomb itself when inspected."

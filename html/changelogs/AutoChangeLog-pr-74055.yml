@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed a few internal organs acting wonky on inserting/removing (some xenomorph organs, abductor glands, flashlight eyes, demon/cursed hearts)"
