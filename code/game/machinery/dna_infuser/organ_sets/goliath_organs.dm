@@ -123,25 +123,25 @@
 	. = ..()
 	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna by <b>right-clicking</b> them with the arm."
 
-/obj/item/goliath_infuser_hammer/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 
 	//If we're on cooldown, we'll do a normal attack.
 	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))
-		return SECONDARY_ATTACK_CALL_NORMAL
+		return
 
 	//do a normal attack if our target isn't living, since we're gonna define them after this.
 	if(!isliving(target))
-		return SECONDARY_ATTACK_CALL_NORMAL
+		return
 
 	var/mob/living/fresh_pancake = target
 
 	// Check for nemesis factions on the target.
 	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
 		// Target is not a nemesis, so attack normally.
-		return SECONDARY_ATTACK_CALL_NORMAL
+		return
 
 	// Apply nemesis-specific effects.
 	nemesis_effects(user, fresh_pancake)
@@ -149,8 +149,6 @@
 	// Target is a nemesis, and so now we do the extra big damage and go on cooldown
 	fresh_pancake.apply_damage(mining_bonus_force, damtype) //smush
 	COOLDOWN_START(src, tendril_hammer_cd, 2 SECONDS)
-
-	return SECONDARY_ATTACK_CALL_NORMAL //we're still doing a normal attack!
 
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
