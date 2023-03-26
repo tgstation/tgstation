@@ -735,6 +735,7 @@
 /area/station/service/kitchen/coldroom)
 "apw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/food/mashed_potatoes,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "apz" = (
@@ -13406,6 +13407,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/item/food/mac_balls,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "eWo" = (
@@ -17061,6 +17063,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Captain's Office"
 	},
+/obj/item/food/grown/mushroom/glowshroom,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "gqj" = (
@@ -18137,6 +18140,7 @@
 /area/station/security/prison)
 "gLe" = (
 /obj/structure/cable,
+/obj/item/food/grown/mushroom/glowshroom,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "gLo" = (
@@ -18413,6 +18417,9 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/food/meatloaf,
+/obj/item/food/meatloaf_slice,
+/obj/item/food/meatloaf_slice,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "gPX" = (
@@ -22295,6 +22302,10 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"iju" = (
+/obj/item/gun/ballistic/automatic/plastikov,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain/private)
 "ijv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33724,6 +33735,7 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/food/meatloaf,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "lZV" = (
@@ -38893,6 +38905,8 @@
 	pixel_x = 9;
 	pixel_y = -9
 	},
+/obj/item/food/grown/mushroom/glowshroom,
+/obj/item/food/grown/mushroom/glowshroom,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "nOv" = (
@@ -51660,6 +51674,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
+/obj/item/food/meatclown,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "snz" = (
@@ -56286,6 +56301,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"tQN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/food/gumball,
+/obj/item/food/gumball,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain/private)
 "tRb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -61001,6 +61022,7 @@
 "vwP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/food/gumball,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "vwS" = (
@@ -62774,6 +62796,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"wcO" = (
+/obj/item/food/moonfish_eggs,
+/obj/item/food/moonfish_demiglace,
+/obj/item/food/moonfish_caviar,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/captain/private)
 "wde" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -67046,6 +67074,7 @@
 /area/station/tcommsat/computer)
 "xDa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/food/mac_balls,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "xDu" = (
@@ -98327,7 +98356,7 @@ dho
 syo
 syo
 sSx
-syo
+wcO
 eDL
 lSz
 tst
@@ -98839,7 +98868,7 @@ aPs
 cUX
 pnW
 nOq
-xDa
+tQN
 vwP
 xDa
 xXN
@@ -99098,7 +99127,7 @@ njP
 gLe
 cSg
 uYl
-hlD
+iju
 syo
 ilH
 qin
