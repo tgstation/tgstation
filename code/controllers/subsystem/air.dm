@@ -645,10 +645,11 @@ SUBSYSTEM_DEF(air)
 		var/list/level_traits = level.traits
 		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Z-Level has traits: [english_list(level_traits)]."
 
-		if(!(turf_z in tally_by_level))
-			tally_by_level[turf_z] = 0
+		var/turf_z_as_string = "[turf_z]" // I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE
+		if(!(turf_z_as_string in tally_by_level))
+			tally_by_level += list(turf_z_as_string = 0)
 
-		tally_by_level[turf_z]++
+		tally_by_level[turf_z_as_string]++
 		for(var/trait in level_traits)
 			if(trait in tally_by_level_trait)
 				tally_by_level_trait[trait]++
