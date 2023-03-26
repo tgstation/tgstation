@@ -172,7 +172,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)

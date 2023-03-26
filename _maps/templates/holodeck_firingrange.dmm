@@ -6,14 +6,18 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "j" = (
@@ -34,23 +38,17 @@
 "n" = (
 /obj/item/target,
 /obj/item/target/clown,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "o" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
 /obj/item/target,
 /obj/item/target/syndicate,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
@@ -91,7 +89,9 @@
 	pixel_y = 4
 	},
 /obj/item/training_toolbox,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
@@ -113,17 +113,19 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "H" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "J" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -137,7 +139,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -145,14 +147,12 @@
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
 /obj/item/clothing/ears/earmuffs,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "P" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -189,7 +189,7 @@
 /area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
