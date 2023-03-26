@@ -647,7 +647,7 @@ SUBSYSTEM_DEF(air)
 
 		var/turf_z_as_string = "[turf_z]" // I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE
 		if(!(turf_z_as_string in tally_by_level))
-			tally_by_level += list(turf_z_as_string = 0)
+			tally_by_level[turf_z_as_string] = 0
 
 		tally_by_level[turf_z_as_string]++
 		for(var/trait in level_traits)
