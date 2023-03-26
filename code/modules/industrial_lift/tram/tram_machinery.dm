@@ -582,7 +582,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	/// Is this sign malfunctioning?
 	var/malfunctioning = FALSE
 	/// A default list of possible sign states
-	var/list/sign_states = list()
+	var/static/list/sign_states = list()
 
 /obj/machinery/destination_sign/north
 	layer = BELOW_OBJ_LAYER
