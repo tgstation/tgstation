@@ -23,9 +23,9 @@
 	/// Effect for when the spell triggers
 	var/obj/effect/expansion_effect = /obj/effect/temp_visual/cosmic_domain
 
-/datum/action/cooldown/spell/conjure/cosmic_expansion/cast(atom/cast_on)
+/datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(!istype(target, /mob/living/basic/star_gazer) && cast_on != nearby_mob)
-			nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
+		if(cast_on != nearby_mob)
+			nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 	return ..()

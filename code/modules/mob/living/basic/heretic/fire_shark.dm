@@ -32,7 +32,7 @@
 /mob/living/basic/fire_shark/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
-	AddElement(/datum/element/death_gasses, /datum/gas/plasma, 40)
+	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 5)
 	AddComponent(/datum/component/swarming)

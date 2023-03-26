@@ -1,9 +1,9 @@
 /**
  * ## death gasses element!
  *
- * bespoke element that spawn can spawn one type of gas for now when a mob is killed
+ * Bespoke element that spawns one type of gas when a mob is killed
  */
-/datum/element/death_gasses
+/datum/element/death_gases
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 3
 	///What gas the target spawns when killed
@@ -11,7 +11,7 @@
 	///The amount of gas spawned on death
 	var/amount_of_gas
 
-/datum/element/death_gasses/Attach(datum/target, datum/gas/gas_type, amount_of_gas = 10)
+/datum/element/death_gases/Attach(datum/target, datum/gas/gas_type, amount_of_gas = 10)
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -21,12 +21,12 @@
 	src.amount_of_gas = amount_of_gas
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/datum/element/death_gasses/Detach(datum/target)
+/datum/element/death_gases/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
 ///signal called by the stat of the target changing
-/datum/element/death_gasses/proc/on_death(mob/living/target, gibbed)
+/datum/element/death_gases/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(gas_type)

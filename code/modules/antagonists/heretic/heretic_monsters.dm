@@ -39,5 +39,6 @@
 
 	objectives += master_obj
 	owner.announce_objectives()
+	ADD_TRAIT(owner.current, TRAIT_HERETIC_SUMMON, master.current)
 	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
 	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))

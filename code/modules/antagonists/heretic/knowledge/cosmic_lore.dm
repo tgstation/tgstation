@@ -59,9 +59,8 @@
 /datum/heretic_knowledge/cosmic_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	if(!istype(target, /mob/living/basic/star_gazer))
-		to_chat(target, span_danger("A cosmic ring appeared above your head!"))
-		target.apply_status_effect(/datum/status_effect/star_mark)
+	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
+	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	new /obj/effect/forcefield/cosmic_field(get_turf(source))
 
 /datum/heretic_knowledge/spell/cosmic_runes
@@ -154,9 +153,6 @@
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
-	if(second_target_resolved && third_target_resolved && second_target_resolved == third_target_resolved)
-		reset_combo(source)
-		return
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
@@ -172,12 +168,8 @@
 
 /// Resets the combo.
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
-	var/mob/living/second_target_resolved = second_target?.resolve()
-	var/mob/living/third_target_resolved = third_target?.resolve()
-	if(second_target_resolved)
-		second_target = null
-	if(third_target_resolved)
-		third_target = null
+	second_target = null
+	third_target = null
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
 	if(combo_timer)
 		deltimer(combo_timer)

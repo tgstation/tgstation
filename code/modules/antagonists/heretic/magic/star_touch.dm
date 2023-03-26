@@ -47,12 +47,12 @@
 		span_danger("The spell bounces off of you!"),
 	)
 
-/datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
+/datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(victim.has_status_effect(/datum/status_effect/star_mark))
 		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
-		victim.apply_status_effect(/datum/status_effect/star_mark)
+		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
 	new /obj/effect/forcefield/cosmic_field(get_turf(src))
 	start_beam(victim, caster)
 	return TRUE
