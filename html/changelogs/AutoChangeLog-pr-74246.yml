@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "giving a podperson a blood transfusion by injecting them with water/whatever their exotic blood happens to be will now work."

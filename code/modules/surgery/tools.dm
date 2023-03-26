@@ -440,7 +440,7 @@
 	var/obj/item/bodypart/limb_snip_candidate
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
-		tail_snip_candidate = patient.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		tail_snip_candidate = patient.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(!tail_snip_candidate)
 			to_chat(user, span_warning("[patient] does not have a tail."))
 			return

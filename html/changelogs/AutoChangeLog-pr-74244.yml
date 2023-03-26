@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "plasmamen will now be given their internals upon being kidnapped and upon being returned."
