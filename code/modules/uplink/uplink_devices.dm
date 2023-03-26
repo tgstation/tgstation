@@ -24,9 +24,9 @@
 	/// See [`code/__DEFINES/uplink.dm`]
 	var/uplink_flag = UPLINK_TRAITORS
 
-/obj/item/uplink/Initialize(mapload, owner, tc_amount = 20)
+/obj/item/uplink/Initialize(mapload, owner, tc_amount = 20, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
-	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, uplink_flag, tc_amount)
+	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, uplink_flag, tc_amount, uplink_handler_override = uplink_handler_override)
 
 /obj/item/uplink/debug
 	name = "debug uplink"
