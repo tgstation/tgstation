@@ -1,0 +1,5 @@
+# These are useless. They have no color so they're just transparent nothings that pollute maps. We're also linting against these now too.
+
+/obj/effect/turf_decal/tile : @DELETE
+/obj/effect/turf_decal/trimline : @DELETE
+

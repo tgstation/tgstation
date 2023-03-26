@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Computers are now properly connected to Ethernet, and can use Ntos when Relays are down."
+  - refactor: "Removes Ntnet and Ntnet interfaces, which was only used by Ntnet circuits (which now directly checks for a Relay to work) and MULEbots, which did nothing with it."
+  - balance: "Wirecarp no longer tells you what ruins spawned in a round, instead it's limited to PDA logs, and tells you the source too. This means the RD can catch someone running illegal programs if they don't make any attempt at hiding it."
+  - qol: "Wirecarp logs is now set to save 300 at once, instead of 100 and being increased to 300 by the RD during the round. This is pretty insignificant, since there's no reason to NOT want as many logs as possible."

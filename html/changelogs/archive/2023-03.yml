@@ -692,3 +692,247 @@
       and enabled by default. Station borgs will still be shot at on sight unless
       a syndicate crew member deliberately configures the turrets otherwise.
   - bugfix: fixes gloves not sending the COMSIG_PARENT_ATTACKBY signal
+2023-03-19:
+  A.C.M.O.:
+  - bugfix: Fixed lungs gas exchange implementation, so you always inhale and exhale
+      the correct gases.
+  - bugfix: Fixed a large quantity of hard-deletes which were being caused by organs
+      and cybernetic organs.
+  - bugfix: Fixed many organs which were applying side-effects regardless of whether
+      or not the insertion failed.
+  - code_imp: Added unit tests for Organs.
+  - code_imp: Added unit tests for Lungs.
+  - code_imp: Improved unit tests for breathing.
+  - code_imp: Improved unit tests for DNA Infuser organs.
+  DATA-xPUNGED:
+  - qol: Tramstation's kitchen has been completely refurbished!
+  JohnFulpWillard:
+  - bugfix: Pubbystation, if run, will now have a working monastery pod shuttle again.
+  Jolly:
+  - bugfix: All the newly resprited chairs Left and Right facing sprites should be
+      symmetrical now.
+  LemonInTheDark:
+  - admin: You can now optionally populate new lists created via vv. hit cancel to
+      stop filling them up
+  NamelessFairy:
+  - admin: Admins can now customize the outfit necrostone victims are equiped with.
+  - admin: Admins can now customize the maximum number of thralls that can be created
+      by a necrostone
+  - qol: The necrostone's thrall counter is now a shown as a separate colored line
+      of text when examining the stone rather than part of its description.
+  - qol: When inspecting syndicate bombs the text that tells you how long is on the
+      timer stands out more.
+  - qol: Inspecting an active syndicate bomb will give you a balloon alert on the
+      bomb itself when inspected.
+  - qol: Abductors chat and Lings/Xenomorphs hivemind chat type has been moved from
+      unsorted to radio.
+  - admin: Admins can now customize the wisdom cow event.
+  Rhials:
+  - soundadd: The chainsaw now has SFX for starting, stopping, and idling.
+  Sealed101:
+  - bugfix: fixed a few internal organs acting wonky on inserting/removing (some xenomorph
+      organs, abductor glands, flashlight eyes, demon/cursed hearts)
+  Vile Beggar:
+  - rscadd: The Derelict Sulaco ruin was spruced up with a new look and some neat
+      little goodies (free rouny plush).
+  ZephyrTFA:
+  - bugfix: Plasmamen don't have hearts, again
+  atosti:
+  - bugfix: Material tile floors now make noise when walked on by bare/claw/heavy
+      feet
+2023-03-20:
+  Cheshify:
+  - bugfix: removed two decals from a space ruin.
+  GoldenAlpharex:
+  - bugfix: Ghost role spawners that are set to have infinite uses no longer run out
+      of uses.
+  Jacquerel:
+  - bugfix: Plasmamen and golems (and androids, if you ever find one) can be implanted
+      again.
+  Melbert:
+  - bugfix: Fixes rare human arm melting condition
+  timothymtorres:
+  - bugfix: Fix not being able to read in full bright areas
+2023-03-21:
+  Jacquerel:
+  - bugfix: Removing a storage implant from someone will dump the items on the ground
+      rather than inside the mob.
+  - bugfix: Wizard Apprentices can no longer draw their own ritual circles.
+  - bugfix: Implants and items which you cannot drop will no longer be forced out
+      of your character when you are kidnapped.
+  - bugfix: Objects you try to take back from the kidnapping location as souvenirs
+      will drop to the ground when you leave instead of being destroyed, except shirts
+      and shoes (make sure to pick up your monographed synidcate T-shirt).
+  JohnFulpWillard:
+  - balance: Wirecarp now properly shuts off NtNet remotely.
+  - balance: Wirecarp now shows the source of a PDA that does an action.
+  - bugfix: Wirecarp can no longer be used to see if Nukies exist through their networks.
+  - rscdel: Removes Software downloading and communication Ntnet networks, as they
+      were pretty worthless.
+  JohnFulpWillard, sprites by BalkyGoat:
+  - rscadd: ' The Janitor Access key: Janitors can now be given departmental AA (one
+      at a time) using the Keycard authentication device in Command offices. Use it
+      if you need cleaning!'
+  - bugfix: HoP's trim is no longer set to edit Supply access.
+  LT3:
+  - code_imp: Tram crossing signal/platform logic improvements
+  OneAsianTortoise:
+  - qol: adds service radio to jani/curator/chaplain/lawyer vendor
+  Pickle-Coding:
+  - balance: 9mm, 10mm, and other stuff can cause wounds.
+  Profakos:
+  - bugfix: Tramstation now has the right amount of security and medical record computers
+  Rhials:
+  - balance: midwife spider eggs now spawn in separate locations. Divide and conquer!
+  - bugfix: midwife spider eggs can no longer generate in atmos-hazardous areas.
+  atosti:
+  - bugfix: Organ harvesters now open and abort harvesting when losing power
+  coiax:
+  - bugfix: Coffee cups are now correctly immune to becoming frozen by low temperature
+      water vapour.
+  - bugfix: Holosigns, like the atmos holofan, can no longer be frozen by low temperature
+      water vapour.
+2023-03-22:
+  DATA-xPUNGED:
+  - spellcheck: "Pacoca is now called \"Pa\xE7oca\", as it should"
+  Helg2:
+  - rscadd: Wirebrush is now avalaible at janivend, for janiborg and you can put it
+      in the janibelt.
+  Melbert:
+  - bugfix: Fixed stray white pixel in illegal rolling pin inhands.
+  NamelessFairy:
+  - bugfix: Stray Cargo Pod false alarms will once again play an announcement when
+      they occur.
+  Rhials:
+  - bugfix: NODISMEMBER mobs can now be attacked by the flesh worm.
+  SmoSmoSmoSmok:
+  - bugfix: heck suit no longer bugs out worn boots/gloves icons
+  coiax:
+  - bugfix: Fixed missing food types for the meat clown, it is now meat and fruit.
+  san7890:
+  - refactor: Some aspects of how we track suicides from your living mob to your observer
+      have changed- please do let us know if anything has broken via a GitHub Issue
+      Report.
+  tf-4:
+  - bugfix: Failing a kickflip no longer shows the chat messages to the wrong people.
+2023-03-23:
+  Astrogem2:
+  - rscadd: New space ruin that I have made, which adds some variety to space searching.
+  Cheshify:
+  - rscadd: Nanotrasen has given the crew access to a brand new emergency shuttle!
+      Watch out for it's destructive entrance!
+  LT3:
+  - imageadd: New fire alarm
+  - code_imp: Fire alarm/fire door volume reduced, lights synchronized
+  Singul0:
+  - bugfix: Circuit-based bluespace launchpads now work again!
+  SyncIt21:
+  - bugfix: aux construction console RCD works again
+  kawoppi:
+  - bugfix: added lights to the tramstation head of personnel's office
+2023-03-24:
+  Jacquerel:
+  - rscadd: Bioscrambler anomalies will once again swap your organs with other organs.
+  - balance: Bioscrambler anomalies no longer affect synthetic parts.
+  LordVollkorn / Gage Gaebler:
+  - rscadd: Added Traveler's Rest, a tiny space structure for space travellers to
+      relax and to prepare for the explorations ahead.
+  Rhials:
+  - rscadd: Xenomorphs born in the room the roundstart delivery egg was spawned in
+      will be part of a special "captive xenomorph" team, tasked with escaping and
+      tracked in the roundend report.
+  - bugfix: Regular Xenomorphs no longer receive a blank objectives popup on spawn.
+  SmoSmoSmoSmok:
+  - bugfix: the orm will no longer display weird decimals
+  SyncIt21:
+  - bugfix: canvas getting finalized with untitled name when naming is cancelled
+  atosti:
+  - bugfix: machines can now be pried open more than once.
+  - bugfix: machines now have the correct density when pried open.
+  flowercuco:
+  - qol: Prosthesis organ manipulation now warns you if you are using the incorrect
+      engineering tool
+  lizardqueenlexi:
+  - bugfix: all space ruins can now appear on Linux servers
+  softcerv:
+  - bugfix: drawing from an empty tarot card deck no longer causes runtimes
+  vinylspiders:
+  - bugfix: fixes gondola meatslab not being able to be placed into the DNA infuser
+  - qol: adjusted the blood deficiency quirk for slimepeople to not cause excessive
+      hunger as long as blood volume is kept above 550 via an IV drip (or other means
+      of getting welding fluid/some other toxin etc into the bloodstream, e.g. ingestion)
+  - qol: speciees with exotic blood types will now receive the correct blood bag in
+      the mail from having the blood deficiency perk
+  - rscadd: 'adds new blood bag types: TOX (slimepeople), H2O (podpeople), S (snail)'
+  - bugfix: fixed blood deficiency quirk causing wild fluctuations in blood volume
+      on the analyzer, giving more accurate readings
+2023-03-25:
+  13spacemen:
+  - qol: It is now obvious when examining volume pumps that you can multitool them
+      to overclock them to disable pressure limits and spill gas out. Overclocked
+      volume pumps flash lights
+  Hatterhat:
+  - bugfix: Thrown reagent containers (beakers, molotovs) hitting mobs no longer fully
+      splash their target with their contents, as this was unintended behavior. The
+      intended behavior was 0-50% of the splashed reagents being ignored. Throwing
+      stuff at floors/walls is unaffected.
+  LT3:
+  - code_imp: Access key rings added to list on creation
+  - code_imp: Access keys unregister signal when destroyed
+  Rhials:
+  - code_imp: splits up spacevine.dm into four files in the events folder, and a __defines
+      file.
+  - code_imp: Lightbulb removal code is a little bit easier to read
+  - spellcheck: The lightbulb remover skillchip implant (which I know you guys LOVE
+      to use) has a slightly different message now.
+  SyncIt21:
+  - bugfix: broken sprites in RCD UI
+  Thunder12345:
+  - rscadd: Added skirt variants of the galaxy suits
+  Timberpoes:
+  - bugfix: DNA Scanners, Sleepers, Abductor Experimentors, Skill Stations and Mod
+      Installers now appropriately release their contents when opened, fixing an issue
+      where they could permanently absorb players and items until admins intervened.
+  - bugfix: Cyborg recharge stations should be much more usable again.
+  cats4gold:
+  - qol: adds the weight class 'tiny' to paper slips
+  timothymtorres:
+  - rscadd: Add crafting recipe for basketballs (leather sheets) and basketball hoops
+      (metal, rods, and durathread)
+  - rscadd: Add new basketball minigame for 2-7 players.  There are 4 different courts
+      and teams by default with more planned to be added later.
+  - rscadd: New basketball mechanics that uses stamina.  Shoot with RMB, pass with
+      LMB, and dunk by clicking the hoop while adjacent.  Spinning while holding the
+      ball decreases the chance for someone to steal the ball, but it decreases your
+      shooting accuracy.  Shooting from 2 tiles away lets you score 3 points.
+  - qol: Basketballs now play a buzzer sound when someone scores. CtrlClick will reset
+      the scorecard and AltClick with a wrench will rotate the hoop.
+  - qol: Dunking and shooting animations for basketball.
+  - soundadd: Added basketball bounce sound with credits attribution
+  - imageadd: Added basketball icon to minigames. Move baseball and dodgeball icons
+      to toy/balls.dmi
+2023-03-26:
+  Chlorotrifluoride:
+  - imageadd: prettified all RTD icons
+  - imageadd: prettified in hand RLD icons
+  - imageadd: subtly improved the RSF icons
+  NamelessFairy:
+  - bugfix: Tram's Ordnance Freezer is now piped correctly.
+  PositiveEntropy:
+  - imageadd: Redoes The Safes!
+  Timberpoes:
+  - bugfix: Having your severed, brain-filled head reattached to a body no longer
+      teleports your brain to the mythical Gem Room.
+  VladinXXV:
+  - bugfix: The intern who was recording Etheral crewmembers' bloodtypes as random
+      human bloodtypes has been replaced with an intern who has seen the example made
+      of the previous one.
+  ZephyrTFA:
+  - bugfix: You can no longer use Pocket Protectors to pull items out of nullspace
+  mc-oofert:
+  - refactor: Stickers use a component and an element now to do their sticking
+  san7890:
+  - bugfix: Tile decals are no longer fucked on all stations.
+  vinylspiders:
+  - bugfix: fixed blood deficiency quirk sending the wrong blood pack to roundstart
+      species who have exotic blood

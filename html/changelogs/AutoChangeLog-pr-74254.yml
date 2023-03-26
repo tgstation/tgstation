@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "CTF fourside's yellow spawnpoint walls now use the same lighting as the rest of the map instead of space lighting."

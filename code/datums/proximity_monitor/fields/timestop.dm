@@ -19,13 +19,18 @@
 	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
+	/// hides time icon effect and mutes sound
+	var/hidden = FALSE
 
-/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
+/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE, silent = FALSE) //Immune atoms assoc list atom = TRUE
 	. = ..()
 	if(!isnull(time))
 		duration = time
 	if(!isnull(radius))
 		freezerange = radius
+	if(silent)
+		hidden = TRUE
+		alpha = 0
 	for(var/A in immune_atoms)
 		immune[A] = TRUE
 	for(var/mob/living/to_check in GLOB.player_list)
@@ -39,12 +44,14 @@
 
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+	if(!hidden)
+		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
+	if(!hidden)
+		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)
@@ -203,8 +210,7 @@
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
 	victim.Stun(20, ignore_canstun = TRUE)
-	ADD_TRAIT(victim, TRAIT_MUTE, TIMESTOP_TRAIT)
-	ADD_TRAIT(victim, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
 	SSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
@@ -218,8 +224,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
 	victim.AdjustStun(-20, ignore_canstun = TRUE)
-	REMOVE_TRAIT(victim, TRAIT_MUTE, TIMESTOP_TRAIT)
-	REMOVE_TRAIT(victim, TRAIT_EMOTEMUTE, TIMESTOP_TRAIT)
+	victim.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
 	frozen_mobs -= victim
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
