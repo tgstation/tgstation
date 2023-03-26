@@ -65,13 +65,19 @@
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
+/datum/quirk/blooddeficiency/post_add()
+	if(!ishuman(quirk_holder))
+		return
+
+	// for making sure the roundstart species has the right blood pack sent to them
+	var/mob/living/carbon/human/carbon_target = quirk_holder
+	carbon_target.dna.species.update_quirk_mail_goodies(carbon_target, src)
+
 /**
  * Makes the mob lose blood from having the blood deficiency quirk, if possible
  *
- 
  * Arguments:
  * * delta_time
- *
  */
 /datum/quirk/blooddeficiency/proc/lose_blood(delta_time)
 	if(quirk_holder.stat == DEAD)
