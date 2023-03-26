@@ -539,6 +539,7 @@
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
+			
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
