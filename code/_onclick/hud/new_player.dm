@@ -153,6 +153,10 @@
 	if(ready)
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
+		if(!new_player.client.readied_store)
+			new_player.client.readied_store = new(new_player)
+		else
+			new_player.client.readied_store.ui_interact(new_player)
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"

@@ -17,6 +17,7 @@
 
 /datum/preferences/proc/load_metacoins(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
+		metacoins = 0
 		return
 	var/datum/db_query/query_get_metacoins = SSdbcore.NewQuery("SELECT metacoins FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	var/mc_count = 0
