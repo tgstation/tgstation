@@ -1,32 +1,27 @@
 ///This element allows for items to interact with liquids on turfs.
-/datum/element/liquids_interaction
-	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 2
+/datum/component/liquids_interaction
 	///Callback interaction called when the turf has some liquids on it
 	var/datum/callback/interaction_callback
 
-/datum/element/liquids_interaction/Attach(obj/item/target, on_interaction_callback)
+/datum/component/liquids_interaction/Initialize(on_interaction_callback)
 	. = ..()
-	if(!istype(target))
-		return ELEMENT_INCOMPATIBLE
-	if(!src.interaction_callback)
-		src.interaction_callback = on_interaction_callback
 
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(AfterAttack)) //The only signal allowing item -> turf interaction
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
 
-/datum/element/liquids_interaction/Detach(mob/living/target)
-	. = ..()
-	if(interaction_callback)
-		QDEL_NULL(interaction_callback)
-		
-	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
+	interaction_callback = CALLBACK(parent, on_interaction_callback)
 
-/datum/element/liquids_interaction/proc/AfterAttack(obj/item/target, atom/target2, mob/user)
+/datum/component/liquids_interaction/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(AfterAttack)) //The only signal allowing item -> turf interaction
+
+/datum/component/liquids_interaction/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+
+/datum/component/liquids_interaction/proc/AfterAttack(obj/item/target, turf/turf_target, mob/user)
 	SIGNAL_HANDLER
-	if(!isturf(target2))
-		return
-	var/turf/T = target2
-	if(!T.liquids)
-		return
-	if(interaction_callback.Invoke(target, target2, user, T.liquids))
+
+	if(!isturf(turf_target) || !turf_target.liquids)
+		return NONE
+
+	if(interaction_callback.Invoke(turf_target, user, turf_target.liquids))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
