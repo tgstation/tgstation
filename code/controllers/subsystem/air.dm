@@ -651,11 +651,7 @@ SUBSYSTEM_DEF(air)
 		var/area/turf_area = get_area(active_turf)
 		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Turf type: [active_turf.type]. Relevant Z-Trait(s): [english_list(level_traits)]."
 
-		var/turf_z_as_string = "[turf_z]" // I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE
-		if(!(turf_z_as_string in tally_by_level))
-			tally_by_level[turf_z_as_string] = 0
-
-		tally_by_level[turf_z_as_string]++
+		tally_by_level["[turf_z]"]++
 
 	// Following is so we can detect which rounds were "problematic" as far as active turfs go.
 	SSblackbox.record_feedback("amount", "overall_roundstart_active_turfs", length(GLOB.active_turfs_startlist))
