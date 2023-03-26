@@ -884,8 +884,7 @@
 /// H2O electrolysis
 /obj/item/organ/internal/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
-	breath.gases[/datum/ga
-	s/water_vapor][MOLES] -= gas_breathed
+	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
 	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
