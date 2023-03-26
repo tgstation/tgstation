@@ -1231,11 +1231,6 @@
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"Uo" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "UN" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/iron/smooth,
@@ -2249,7 +2244,7 @@ Sd
 wF
 PP
 bU
-Uo
+fu
 Zi
 ub
 ej
