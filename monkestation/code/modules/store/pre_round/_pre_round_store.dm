@@ -51,10 +51,10 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 
 
 	if(bought_item)
-		data["balance"] = user.client.prefs.metacoins - intitial(bought_item.item_cost)
+		data["balance"] = user.client.prefs.metacoins - initial(bought_item.item_cost)
 	else
 		data["balance"] = user.client.prefs.metacoins
-		
+
 	data["items"] += buyables
 	data["currently_owned"] = initial(bought_item.name)
 
@@ -71,4 +71,17 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 /datum/pre_round_store/proc/attempt_buy(list/params)
 	var/id = params["path"]
 	var/datum/store_item/attempted_item = text2path(id)
-	bought_item = attempted_item
+	bought_item = new attempted_item
+
+/datum/pre_round_store/proc/finalize_purchase_spawn(mob/new_player_mob, mob/new_player_mob_living)
+	var/datum/preferences/owners_prefs = new_player_mob.client.prefs
+	if(!owners_prefs.has_coins(initial(bought_item.item_cost)))
+		to_chat(owner, span_warning("It seems your lacking coins to complete this transaction."))
+		return
+	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost))
+	var/obj/item/created_item = new bought_item.item_path
+	if(!new_player_mob.put_in_hands(created_item, FALSE))
+		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
+		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
+	ui_close()
+	qdel(new_player_mob.client.readied_store)

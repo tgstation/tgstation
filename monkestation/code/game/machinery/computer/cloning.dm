@@ -520,7 +520,7 @@
 	updateUsrDialog()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
-/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)	//hippie end, re-add cloning
+/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
@@ -536,8 +536,7 @@
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
-
-	if(!istype(dna) || HAS_TRAIT(mob_occupant, NO_DNA_COPY))
+	if(!istype(dna) || (NO_DNA_COPY in mob_occupant.dna.species.species_traits))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
