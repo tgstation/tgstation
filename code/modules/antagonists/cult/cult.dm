@@ -273,6 +273,8 @@
 	var/narsie_summoned = FALSE
 	///How large were we at max size.
 	var/size_at_maximum = 0
+	///list of cultists just before summoning Narsie
+	var/list/truecult = list()
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -474,7 +476,11 @@
 		for(var/datum/mind/cultmind as anything in members)
 			if(istype(cultmind.current, /mob/living/simple_animal/hostile/construct/harvester))
 				continue
+			if(cultmind in truecult)
+				continue
 			noharvesterscult += cultmind
+		for(var/datum/mind/presummoncultist as anything in truecult)
+			noharvesterscult += presummoncultist
 		parts += printplayerlist(noharvesterscult)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
