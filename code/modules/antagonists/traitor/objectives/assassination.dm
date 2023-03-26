@@ -1,13 +1,11 @@
 /datum/traitor_objective_category/assassinate_kidnap
 	name = "Assassination/Kidnap"
 	objectives = list(
-		//starter assassinations, basically just require you to kill someone
 		list(
 			list(
 				/datum/traitor_objective/target_player/assassinate/calling_card = 1,
 				/datum/traitor_objective/target_player/assassinate/behead = 1,
 			) = 1,
-			//above but for heads
 			list(
 				/datum/traitor_objective/target_player/assassinate/calling_card/heads_of_staff = 1,
 				/datum/traitor_objective/target_player/assassinate/behead/heads_of_staff = 1,

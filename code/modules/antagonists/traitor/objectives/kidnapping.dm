@@ -5,15 +5,8 @@
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
-	/// The period of time until you can take another objective after taking 3 objectives.
-	var/objective_period = 15 MINUTES
-	/// The maximum number of objectives we can get within this period.
-	var/maximum_objectives_in_period = 3
-
 	/// The jobs that this objective is targetting.
 	var/list/target_jobs
-	/// The person we need to kidnap
-	var/mob/living/target
 	/// Area that the target needs to be delivered to
 	var/area/dropoff_area
 	/// Have we called the pod yet?

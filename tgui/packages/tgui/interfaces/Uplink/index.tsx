@@ -58,6 +58,7 @@ type UplinkData = {
   maximum_active_objectives: number;
   maximum_potential_objectives: number;
   purchased_items: number;
+  shop_locked: BooleanLike;
 };
 
 type UplinkState = {
@@ -174,6 +175,7 @@ export class Uplink extends Component<{}, UplinkState> {
       current_stock,
       lockable,
       purchased_items,
+      shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
@@ -207,10 +209,10 @@ export class Uplink extends Component<{}, UplinkState> {
           <Box>
             {item.desc}
             {(item.lock_other_purchases && (
-              <Box color="red" bold>
-                Taking this item will lock your uplink. Additionally, if you
-                have already purchased an item, you will not be able to purchase
-                this.
+              <Box color="orange" bold>
+                Taking this item will lock you from further purchasing from the
+                marketplace. Additionally, if you have already purchased an
+                item, you will not be able to purchase this.
               </Box>
             )) ||
               null}
@@ -413,7 +415,7 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <>
+                  <Section>
                     <GenericUplink
                       currency=""
                       categories={allCategories}
@@ -427,17 +429,20 @@ export class Uplink extends Component<{}, UplinkState> {
                         }
                       }}
                     />
-                    <Dimmer>
-                      <Box
-                        color="red"
-                        fontFamily={'Bahnschrift'}
-                        fontSize={3}
-                        align={'top'}
-                        as="span">
-                        SHOP LOCKED
-                      </Box>
-                    </Dimmer>
-                  </>
+                    {(shop_locked && (
+                      <Dimmer>
+                        <Box
+                          color="red"
+                          fontFamily={'Bahnschrift'}
+                          fontSize={3}
+                          align={'top'}
+                          as="span">
+                          SHOP LOCKED
+                        </Box>
+                      </Dimmer>
+                    )) ||
+                      null}
+                  </Section>
                 )}
             </Stack.Item>
           </Stack>

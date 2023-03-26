@@ -15,12 +15,6 @@
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(1, 2)
 
-	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
-	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
-	var/objective_period = 15 MINUTES
-	/// The maximum number of objectives we can get within this period.
-	var/maximum_objectives_in_period = 3
-
 	/// If we're targeting heads of staff or not
 	var/heads_of_staff = FALSE
 	/// Have we already spawned an eyesnatcher

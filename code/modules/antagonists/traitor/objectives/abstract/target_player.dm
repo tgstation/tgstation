@@ -3,7 +3,7 @@
  * Not all 'target player' objectives have to be under this subtype, it's only used if you don't want duplicates among the current
  * children types under this type.
  */
-/datum/traitor_objective/target_player_no_duplicate
+/datum/traitor_objective/target_player
 	abstract_type = /datum/traitor_objective/target_player
 
 	progression_minimum = 30 MINUTES
