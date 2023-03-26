@@ -531,12 +531,13 @@
 
 	if(ishuman(mob_occupant))
 		dna = C.has_dna()
+		var/mob/living/carbon/human/human_occupant = mob_occupant
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
-	if(!istype(dna) || (NO_DNA_COPY in mob_occupant.dna.species.species_traits))
+	if(!istype(dna) || (NO_DNA_COPY in human_occupant.dna.species.species_traits))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
