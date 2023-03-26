@@ -318,7 +318,6 @@
 	skin_tone = "caucasian1"
 	outfit = /datum/outfit/job/assistant/consistent
 
-
 /obj/effect/mob_spawn/corpse/human/prey_pod
 	husk = TRUE
 	outfit = /datum/outfit/prey_pod_victim
