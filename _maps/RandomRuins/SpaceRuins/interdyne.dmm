@@ -749,6 +749,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"BR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "BW" = (
 /obj/structure/safe,
 /obj/item/documents/syndicate,
@@ -1044,6 +1051,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"NG" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "NV" = (
 /obj/structure/toilet{
 	dir = 4
@@ -1054,6 +1069,7 @@
 /obj/structure/cable,
 /obj/effect/mob_spawn/corpse/human/monkey,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Oo" = (
@@ -1234,6 +1250,12 @@
 "UN" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"US" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Vi" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1800,7 +1822,7 @@ nj
 Eq
 Nb
 Zi
-fu
+gV
 bV
 QD
 Zi
@@ -1835,7 +1857,7 @@ fu
 eJ
 WU
 KA
-fu
+gV
 vd
 xb
 Zi
@@ -1868,9 +1890,9 @@ iN
 dU
 nj
 Yi
-Nb
-gr
-HF
+US
+NG
+BR
 SE
 kH
 Zi
@@ -2142,7 +2164,7 @@ Zi
 oO
 Zi
 WM
-Nb
+US
 QD
 PF
 Zi
