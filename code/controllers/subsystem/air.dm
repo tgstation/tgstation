@@ -616,8 +616,9 @@ SUBSYSTEM_DEF(air)
 #ifdef UNIT_TESTS
 	return
 #endif
+	// Associated lists, left-hand-side is the z-level or z-trait, right-hand-side is the number of active turfs associated with that.
 	var/list/tally_by_level = list()
-
+	// Discriminate for certain z-traits, stuff like "Linkage" is not helpful.
 	var/list/tally_by_level_trait = list(
 		ZTRAIT_AWAY = 0,
 		ZTRAIT_CENTCOM = 0,
@@ -638,11 +639,16 @@ SUBSYSTEM_DEF(air)
 		If the round is still ongoing, you can use the \"Mapping -> Show roundstart AT list\" verb to see exactly what active turfs were detected. Otherwise, good luck."
 
 	for(var/turf/active_turf as anything in GLOB.active_turfs_startlist)
-		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
-		var/area/turf_area = get_area(active_turf)
 		var/turf_z = active_turf.z
 		var/datum/space_level/level = SSmapping.z_list[turf_z]
-		var/list/level_traits = level.traits
+		var/list/level_traits = list()
+		for(var/trait in level.traits)
+			if(trait in tally_by_level_trait)
+				level_traits += trait
+				tally_by_level_trait[trait]++
+
+		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
+		var/area/turf_area = get_area(active_turf)
 		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Z-Level has traits: [english_list(level_traits)]."
 
 		var/turf_z_as_string = "[turf_z]" // I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE
@@ -650,9 +656,6 @@ SUBSYSTEM_DEF(air)
 			tally_by_level[turf_z_as_string] = 0
 
 		tally_by_level[turf_z_as_string]++
-		for(var/trait in level_traits)
-			if(trait in tally_by_level_trait)
-				tally_by_level_trait[trait]++
 
 	// Following is so we can detect which rounds were "problematic" as far as active turfs go.
 	SSblackbox.record_feedback("amount", "overall_roundstart_active_turfs", length(GLOB.active_turfs_startlist))
