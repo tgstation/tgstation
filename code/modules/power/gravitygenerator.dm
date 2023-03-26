@@ -388,7 +388,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			continue
 		if(!is_valid_z_level(T, mob_turf))
 			continue
-		mobs.update_gravity(mobs.has_gravity())
+		if(isliving(mobs))
+			var/mob/living/grav_update = mobs
+			grav_update.refresh_gravity()
 		if(mobs.client)
 			shake_camera(mobs, 15, 1)
 			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)

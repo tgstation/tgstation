@@ -357,7 +357,7 @@
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
 		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
-		// 60 gives them one second to wake up and run away a bit!
+		// give them one second of grace to wake up and run away a bit!
 		Unconscious(6 SECONDS)
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)

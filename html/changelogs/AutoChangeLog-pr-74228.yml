@@ -1,0 +1,4 @@
+author: "SishTis"
+delete-after: True
+changes:
+  - bugfix: "Fixed gravity issue in Underground Outpost 45's research airlock."
