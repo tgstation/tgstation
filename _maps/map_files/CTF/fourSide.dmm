@@ -30,9 +30,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "cC" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "cJ" = (
@@ -43,7 +41,9 @@
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "dn" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "dr" = (
@@ -73,19 +73,17 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "hw" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "hU" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "ie" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "iF" = (
@@ -153,7 +151,7 @@
 /area/centcom/ctf)
 "qy" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -218,7 +216,7 @@
 /area/centcom/ctf)
 "wf" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -230,9 +228,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "xd" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "xx" = (
@@ -266,7 +262,7 @@
 /area/centcom/ctf)
 "Ci" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -296,7 +292,9 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "Gm" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Gn" = (
@@ -322,7 +320,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "HY" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "Iu" = (
@@ -361,7 +361,7 @@
 /area/centcom/ctf)
 "MC" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -373,7 +373,7 @@
 /area/centcom/ctf)
 "NI" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -391,7 +391,7 @@
 /area/centcom/ctf)
 "PY" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -427,7 +427,7 @@
 /area/centcom/ctf)
 "Xi" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
@@ -443,7 +443,7 @@
 /area/centcom/ctf)
 "XZ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)

@@ -42,11 +42,6 @@
 	if(ishuman(new_podperson))
 		update_mail_goodies(new_podperson)
 
-/datum/species/pod/on_species_loss(mob/living/carbon/former_podperson, datum/species/new_species, pref_load)
-	. = ..()
-	if(ishuman(former_podperson))
-		new_species.update_mail_goodies(former_podperson)
-
 /datum/species/pod/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
 	if(istype(quirk, /datum/quirk/blooddeficiency))
 		mail_goodies += list(

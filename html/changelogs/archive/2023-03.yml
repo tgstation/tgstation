@@ -911,3 +911,28 @@
   - soundadd: Added basketball bounce sound with credits attribution
   - imageadd: Added basketball icon to minigames. Move baseball and dodgeball icons
       to toy/balls.dmi
+2023-03-26:
+  Chlorotrifluoride:
+  - imageadd: prettified all RTD icons
+  - imageadd: prettified in hand RLD icons
+  - imageadd: subtly improved the RSF icons
+  NamelessFairy:
+  - bugfix: Tram's Ordnance Freezer is now piped correctly.
+  PositiveEntropy:
+  - imageadd: Redoes The Safes!
+  Timberpoes:
+  - bugfix: Having your severed, brain-filled head reattached to a body no longer
+      teleports your brain to the mythical Gem Room.
+  VladinXXV:
+  - bugfix: The intern who was recording Etheral crewmembers' bloodtypes as random
+      human bloodtypes has been replaced with an intern who has seen the example made
+      of the previous one.
+  ZephyrTFA:
+  - bugfix: You can no longer use Pocket Protectors to pull items out of nullspace
+  mc-oofert:
+  - refactor: Stickers use a component and an element now to do their sticking
+  san7890:
+  - bugfix: Tile decals are no longer fucked on all stations.
+  vinylspiders:
+  - bugfix: fixed blood deficiency quirk sending the wrong blood pack to roundstart
+      species who have exotic blood
