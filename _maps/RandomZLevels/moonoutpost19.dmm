@@ -3620,7 +3620,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/suit/armor/vest,
 /obj/item/reagent_containers/spray/pepper,
@@ -3837,7 +3837,7 @@
 "ri" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -3858,7 +3858,7 @@
 "rn" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/under/suit/navy,
 /turf/open/floor/carpet/orange,
@@ -4007,7 +4007,7 @@
 	icon_state = "science";
 	locked = 0;
 	name = "scientist's locker";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /turf/open/floor/iron{
@@ -4205,7 +4205,7 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	name = "Worn-out APC";
 	pixel_y = -25;
-	!INVALID_VAR! = "150";
+	req_access = "150";
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/red,
@@ -4263,7 +4263,7 @@
 "un" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white{
@@ -4359,7 +4359,7 @@
 /area/awaymission/moonoutpost19/research)
 "uV" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
@@ -4454,7 +4454,7 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
@@ -4697,7 +4697,7 @@
 "yj" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power Maintenance";
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -4939,7 +4939,7 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "refrigerator";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/reagent_containers/condiment/milk{
 	pixel_x = 4
@@ -5086,7 +5086,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
 	name = "scientist's locker";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /obj/item/tank/internals/oxygen,
@@ -5234,7 +5234,7 @@
 "BS" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/item/stack/spacecash/c50,
 /turf/open/floor/wood{
@@ -5453,7 +5453,7 @@
 "Dq" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Storage";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -5464,7 +5464,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -5558,7 +5558,7 @@
 /area/awaymission/moonoutpost19/main)
 "Ec" = (
 /obj/machinery/door/airlock/maintenance{
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/machinery/duct,
 /turf/open/floor/plating{
@@ -5837,7 +5837,7 @@
 "FT" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -5851,7 +5851,7 @@
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -5974,7 +5974,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
-	!INVALID_VAR! = "101"
+	req_access = "101"
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -6081,7 +6081,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
@@ -6174,7 +6174,7 @@
 "Ig" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/carpet/red,
@@ -6470,7 +6470,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Gateway Access";
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6491,7 +6491,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "LF" = (
 /obj/machinery/door/airlock/maintenance{
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -6631,7 +6631,7 @@
 "MR" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/clothing/under/suit/burgundy,
 /turf/open/floor/carpet/royalblue,
@@ -6712,7 +6712,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -6765,7 +6765,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/machinery/light/broken/directional/east,
 /obj/effect/turf_decal/tile/red,
@@ -6849,7 +6849,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "rd";
 	name = "research director's locker";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/storage/backpack/satchel/science,
 /obj/item/clothing/gloves/latex,
@@ -6886,13 +6886,13 @@
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
 	pixel_y = 8;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/machinery/button/door{
 	id = "AwayRD";
 	name = "Privacy Shutter Control";
 	pixel_y = -2;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners{
 	dir = 1
@@ -6930,7 +6930,7 @@
 	id = "awaymission19atvs";
 	name = "Biohazard Shutter Control";
 	pixel_y = 8;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
@@ -6962,7 +6962,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gateway";
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
@@ -6974,7 +6974,7 @@
 	dir = 1;
 	pixel_y = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006;
@@ -7367,7 +7367,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	!INVALID_VAR! = "150"
+	req_access = "150"
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -7689,7 +7689,7 @@
 	name = "Containment Chamber Blast Doors";
 	pixel_x = 4;
 	pixel_y = -2;
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/machinery/button/ignition{
 	id = "awayxenobio";
@@ -7843,7 +7843,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
@@ -8095,7 +8095,7 @@
 "Xw" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -8113,7 +8113,7 @@
 /obj/structure/closet/secure_closet{
 	locked = 0;
 	name = "kitchen Cabinet";
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /obj/item/reagent_containers/condiment/flour{
 	pixel_x = -4;
@@ -8316,7 +8316,7 @@
 /area/awaymission/moonoutpost19/main)
 "YU" = (
 /obj/machinery/vending/medical{
-	!INVALID_VAR! = "201"
+	req_access = "201"
 	},
 /turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
