@@ -7,10 +7,6 @@
 	name = "garbage spawner"
 	loot = list(
 		/obj/effect/spawner/random/trash/food_packaging = 20,
-		/obj/item/food/breadslice/moldy/bacteria = 3,
-		/obj/item/food/pizzaslice/moldy/bacteria = 3,
-		/obj/item/food/badrecipe/moldy/bacteria = 1,
-		/obj/item/food/deadmouse/moldy = 1,
 		/obj/item/trash/can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
@@ -68,6 +64,8 @@
 		/obj/item/trash/shrimp_chips = 1,
 		/obj/item/trash/waffles = 1,
 		/obj/item/trash/tray = 1,
+		/obj/item/food/breadslice/moldy/bacteria = 1,
+		/obj/item/food/pizzaslice/moldy/bacteria = 1,
 	)
 
 /obj/effect/spawner/random/trash/botanical_waste
@@ -87,9 +85,6 @@
 		/obj/effect/spawner/random/trash/food_packaging = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 1,
 		/obj/item/food/deadmouse = 1,
-		/obj/item/food/breadslice/moldy/bacteria = 1,
-		/obj/item/food/pizzaslice/moldy/bacteria = 1,
-		/obj/item/food/badrecipe/moldy/bacteria = 1,
 	)
 
 /obj/effect/spawner/random/trash/hobo_squat
