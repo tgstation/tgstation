@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
-	name = "Rapid Pipe Dispenser (RPD)"
+	name = "Rapid Pipe Dispenser"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
