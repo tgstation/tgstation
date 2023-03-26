@@ -148,6 +148,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"dE" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/power)
 "dL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
@@ -369,8 +379,21 @@
 /obj/structure/sign/poster/contraband/missing_gloves{
 	pixel_y = 32
 	},
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
+"gK" = (
+/obj/machinery/power/port_gen/pacman/super{
+	anchored = 1
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "gT" = (
 /obj/structure/sink/kitchen/directional/south{
 	dir = 8;
@@ -441,18 +464,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
-"id" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/multitool,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
 "ix" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/green/end,
@@ -502,6 +513,10 @@
 /area/template_noop)
 "iT" = (
 /obj/machinery/light/dim/directional/north,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "ja" = (
@@ -537,13 +552,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
-"js" = (
-/obj/effect/spawner/structure/electrified_grille,
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
 "jv" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced/damaged,
@@ -1096,8 +1104,9 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "rV" = (
 /obj/structure/rack,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 10
+/obj/structure/cable,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 30
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
@@ -1366,8 +1375,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "xH" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/port_gen/pacman/super{
+	anchored = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "xS" = (
@@ -1446,7 +1457,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zd" = (
-/obj/effect/spawner/random/trash/mess,
+/obj/structure/table,
+/obj/item/stock_parts/cell/high,
+/obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "zf" = (
@@ -1933,16 +1946,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
-"Ju" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
 "Jy" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -2166,12 +2169,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
 "Mu" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "Mx" = (
@@ -2710,10 +2711,6 @@
 "Wd" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
-"We" = (
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/power)
 "Wf" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -2725,6 +2722,13 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"Wm" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/power)
 "Wy" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -2882,6 +2886,15 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/qm)
+"Yu" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/multitool,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/power)
 "YD" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -4504,7 +4517,7 @@ pK
 iJ
 iJ
 iJ
-iJ
+gK
 pK
 pK
 pK
@@ -4572,8 +4585,8 @@ pK
 pK
 yg
 VU
-Gj
 pX
+xH
 yg
 be
 Ls
@@ -4634,7 +4647,7 @@ pK
 pK
 yg
 iT
-Gj
+Wm
 zd
 yg
 do
@@ -4696,8 +4709,8 @@ pK
 pK
 yg
 gE
-Gj
-pX
+dE
+Yu
 yg
 LE
 Cc
@@ -4757,8 +4770,8 @@ pK
 pK
 zV
 yg
-id
-Ju
+Mu
+Mu
 Mu
 yg
 bQ
@@ -4819,9 +4832,9 @@ iJ
 pK
 pK
 yg
-We
-js
-We
+or
+or
+or
 yg
 Lu
 Cc
