@@ -649,7 +649,7 @@ SUBSYSTEM_DEF(air)
 
 		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
 		var/area/turf_area = get_area(active_turf)
-		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Z-Level has traits: [english_list(level_traits)]."
+		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Turf type: [active_turf.type]. Relevant Z-Trait(s): [english_list(level_traits)]."
 
 		var/turf_z_as_string = "[turf_z]" // I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE I FUCKING HATE IT HERE
 		if(!(turf_z_as_string in tally_by_level))
