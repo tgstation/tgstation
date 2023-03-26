@@ -311,7 +311,8 @@
 	desc = "A box full of surplus .50 BMG magazines. Not as good as high quality magazines, \
 			usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
 			Useful for arming a squad."
-	item = /obj/item/storage/box/syndie_kit/surplus/sniper
+	cost = 7 //1 TC per magazine
+	item = /obj/item/storage/box/syndie_kit/surplus
 
 /datum/uplink_item/ammo/sniper/penetrator
 	name = ".50 BMG Penetrator Magazine"

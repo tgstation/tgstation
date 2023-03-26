@@ -15,12 +15,13 @@
 	var/mecha_damage = 10
 
 /obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
-	if(isobj(target) && (blocked != 100) && object_damage)
+	if(isobj(target) && (blocked != 100))
 		var/obj/thing_to_break = target
 		var/damage_to_deal = object_damage
 		if(ismecha(thing_to_break) && mecha_damage)
 			damage_to_deal += mecha_damage
-		thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
+		if(damage_to_deal)
+			thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
 	return ..()
 
 /obj/projectile/bullet/p50/surplus
@@ -41,16 +42,14 @@
 	var/emp_radius = 2
 
 /obj/projectile/bullet/p50/disruptor/on_hit(atom/target, blocked = FALSE)
+	. = ..()
 	if((blocked != 100) && isliving(target))
 		var/mob/living/living_guy = target
 		living_guy.Sleeping(40 SECONDS) //Yes, its really 40 seconds of sleep, I hope you had your morning coffee.
-	if(ismecha(target)) //especially good against mechs
-		target.take_damage(mecha_damage, BRUTE, BULLET, FALSE)
 	if(issilicon(target)) //also especially good against borgs
 		var/mob/living/silicon/borg_boy = target
 		borg_boy.apply_damage(damage, BRUTE)
 	empulse(target, emp_radius, emp_radius)
-	return ..()
 
 /obj/projectile/bullet/p50/incendiary
 	name =".50 BMG incendiary bullet"

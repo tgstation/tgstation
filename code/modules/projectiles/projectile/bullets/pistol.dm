@@ -28,10 +28,6 @@
 	name = "10mm bullet"
 	damage = 40
 
-/obj/projectile/bullet/c10mm/surplus
-	name = "10mm surplus bullet"
-	weak_against_armour = TRUE
-
 /obj/projectile/bullet/c10mm/ap
 	name = "10mm armor-piercing bullet"
 	damage = 35

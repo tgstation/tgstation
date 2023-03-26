@@ -570,21 +570,13 @@
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 
-/// Surplus Ammo Boxes
+/// Surplus Ammo Box
 
 /obj/item/storage/box/syndie_kit/surplus
-	name = "surplus 10mm magazine box"
-	desc = "A shoddy box full of surplus 10mm magazines. Hope they work!"
-
-/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_box/magazine/m10mm/surplus(src)
-
-/obj/item/storage/box/syndie_kit/surplus/sniper
 	name = "surplus .50 BMG magazine box"
 	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
 
-/obj/item/storage/box/syndie_kit/surplus/sniper/PopulateContents()
+/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 

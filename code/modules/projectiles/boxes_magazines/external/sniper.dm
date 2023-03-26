@@ -18,8 +18,8 @@
 
 /obj/item/ammo_box/magazine/sniper_rounds/disruptor
 	name = "anti-materiel sniper rounds (.50 BMG Bzzt)"
-	desc = "Disruptor sniper rounds.A special blend of soporific chemicals \
-	and a electromagnetic payload to cause anything to come to a grinding halt."
+	desc = "Disruptor sniper rounds. A special blend of soporific chemicals \
+		and a electromagnetic payload to cause anything to come to a grinding halt."
 	base_icon_state = "disruptor"
 	ammo_type = /obj/item/ammo_casing/p50/disruptor
 

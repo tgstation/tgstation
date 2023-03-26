@@ -6,11 +6,6 @@
 	caliber = CALIBER_10MM
 	projectile_type = /obj/projectile/bullet/c10mm
 
-/obj/item/ammo_casing/c10mm/surplus
-	name = "10mm surplus bullet casing"
-	desc = "A 10mm surplus bullet casing."
-	projectile_type = /obj/projectile/bullet/c10mm/surplus
-
 /obj/item/ammo_casing/c10mm/ap
 	name = "10mm armor-piercing bullet casing"
 	desc = "A 10mm armor-piercing bullet casing."
