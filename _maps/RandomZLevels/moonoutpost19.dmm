@@ -700,7 +700,7 @@
 	density = 0;
 	icon_state = "open";
 	name = "Dormitories";
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /obj/item/stack/rods,
 /obj/item/shard{
@@ -954,7 +954,7 @@
 	id_tag = "awaydorm4";
 	name = "Dorm 1";
 	opacity = 0;
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -4498,7 +4498,7 @@
 	icon_state = "open";
 	name = "Research Director's Office";
 	opacity = 0;
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -5139,7 +5139,7 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -7446,7 +7446,7 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
@@ -8443,7 +8443,7 @@
 	icon_state = "open";
 	name = "Xenobiology Lab";
 	opacity = 0;
-	!INVALID_VAR! = "EMAGGED"
+	
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
