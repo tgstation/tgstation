@@ -89,8 +89,6 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
-	if(ishuman(former_ethereal))
-		new_species.update_mail_goodies(former_ethereal)
 	return ..()
 
 /datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())

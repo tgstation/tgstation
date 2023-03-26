@@ -127,9 +127,7 @@
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "iv" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "iN" = (
@@ -334,7 +332,9 @@
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "st" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "tm" = (
@@ -383,7 +383,7 @@
 /area/centcom/ctf)
 "wE" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -554,7 +554,7 @@
 /area/centcom/ctf)
 "Fo" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -655,14 +655,12 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "KY" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "Ly" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
@@ -782,7 +780,9 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/ctf)
 "PO" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/cult,
 /area/centcom/ctf)
 "QJ" = (
@@ -913,7 +913,7 @@
 /area/centcom/ctf)
 "YT" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/cult,
 /area/centcom/ctf)

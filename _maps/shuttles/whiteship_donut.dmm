@@ -295,7 +295,7 @@
 /obj/item/stack/sheet/iron,
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -331,9 +331,7 @@
 /area/shuttle/abandoned)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "be" = (
@@ -350,7 +348,7 @@
 /obj/machinery/light/directional/west,
 /obj/item/folder/blue,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -359,7 +357,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/east,
 /obj/machinery/cell_charger,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bi" = (
@@ -433,9 +433,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/disk/holodisk/donutstation/whiteship,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bs" = (
@@ -443,9 +441,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bt" = (
@@ -453,9 +449,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bu" = (

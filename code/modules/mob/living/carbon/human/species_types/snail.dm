@@ -54,8 +54,6 @@
 		bag.emptyStorage()
 		former_snailperson.temporarilyRemoveItemFromInventory(bag, TRUE)
 		qdel(bag)
-	if(ishuman(former_snailperson))
-		new_species.update_mail_goodies(former_snailperson)
 
 /datum/species/snail/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
 	if(istype(quirk, /datum/quirk/blooddeficiency))
