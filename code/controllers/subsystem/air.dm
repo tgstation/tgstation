@@ -630,6 +630,7 @@ SUBSYSTEM_DEF(air)
 	message_to_log += "End of active turf list."
 	log_mapping(message_to_log.Join("\n"))
 
+	SSblackbox.record_feedback("tally", "roundstart_active_turfs", 1, length(GLOB.active_turfs_startlist)) // So we can detect which rounds were "problematic" as far as active turfs go.
 
 /turf/open/proc/resolve_active_graph()
 	. = list()
