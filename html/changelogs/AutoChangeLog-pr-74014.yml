@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - admin: "Admins can now customize the outfit necrostone victims are equiped with."
-  - admin: "Admins can now customize the maximum number of thralls that can be created by a necrostone"
-  - qol: "The necrostone's thrall counter is now a shown as a separate colored line of text when examining the stone rather than part of its description."

@@ -504,11 +504,11 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/cell/high,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cf" = (
@@ -814,8 +814,8 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -943,10 +943,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/red,
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "Ed" = (
@@ -1010,11 +1010,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "KB" = (
-/obj/effect/turf_decal/tile/red/half{
-	dir = 4
-	},
 /obj/structure/chair/office/tactical{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4

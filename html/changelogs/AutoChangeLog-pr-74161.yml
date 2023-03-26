@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - qol: "guillotine description tips are now span_notices (blue text) instead of just a bunch of grey text."
+  - bugfix: "fixed a bug that if you try to behead body without a head with guillotine it just stops working."

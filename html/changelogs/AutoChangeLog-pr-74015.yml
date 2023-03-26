@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "All the newly resprited chairs Left and Right facing sprites should be symmetrical now."
