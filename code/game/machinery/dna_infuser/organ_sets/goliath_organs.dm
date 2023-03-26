@@ -122,7 +122,7 @@
 
 /obj/item/goliath_infuser_hammer/examine(mob/user)
 	. = ..()
-	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna by <b>right-clicking</b> them with the arm."
+	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	. = ..()
