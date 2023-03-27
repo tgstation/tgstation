@@ -63,7 +63,7 @@
 
 	if(!leg)
 		return
-	
+
 	. = COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(do_kneecap_target), source, leg, target, attacker)
