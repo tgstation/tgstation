@@ -3558,6 +3558,7 @@
 #include "code\modules\jobs\job_types\antagonists\wizard_apprentice.dm"
 #include "code\modules\jobs\job_types\antagonists\xenomorph.dm"
 #include "code\modules\jobs\job_types\ert\ert_generic.dm"
+#include "code\modules\jobs\job_types\event\admin.dm"
 #include "code\modules\jobs\job_types\event\fugitive.dm"
 #include "code\modules\jobs\job_types\event\santa.dm"
 #include "code\modules\jobs\job_types\spawner\ancient_crew.dm"
