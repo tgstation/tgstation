@@ -170,7 +170,7 @@
 //Security
 /obj/item/clothing/head/hats/hos
 	name = "generic head of security hat"
-	desc = "Please contact the NanoTrasen Costuming Department if found."
+	desc = "Please contact the Nanotrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
 
