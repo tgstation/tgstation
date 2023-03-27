@@ -204,6 +204,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define issupermatter(A) (istype(A, /obj/machinery/power/supermatter_crystal))
+
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))

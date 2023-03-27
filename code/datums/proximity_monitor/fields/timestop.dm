@@ -115,6 +115,8 @@
 		freeze_projectile(A)
 	else if(ismecha(A))
 		freeze_mecha(A)
+	else if(issupermatter(A))
+		freeze_supermatter(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
 	else
@@ -151,6 +153,8 @@
 		unfreeze_projectile(A)
 	else if(ismecha(A))
 		unfreeze_mecha(A)
+	else if(issupermatter(A))
+		unfreeze_supermatter(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(A, COMSIG_ITEM_PICKUP)
@@ -189,6 +193,13 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_structure(obj/O)
 	escape_the_negative_zone(O)
+
+/datum/proximity_monitor/advanced/timestop/proc/freeze_supermatter(obj/machinery/power/supermatter_crystal/supermatter)
+	frozen_things += supermatter
+	supermatter.time_frozen = TRUE
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_supermatter(obj/machinery/power/supermatter_crystal/supermatter)
+	supermatter.time_frozen = FALSE
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)

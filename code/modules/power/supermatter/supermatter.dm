@@ -168,6 +168,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
+	var/time_frozen = FALSE
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	gas_percentage = list()
@@ -235,7 +237,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	// PART 1: PRELIMINARIES
-	if(disable_process)
+	if(disable_process || time_frozen)
 		return
 
 	var/turf/local_turf = loc
