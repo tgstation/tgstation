@@ -338,14 +338,16 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		for(var/datum/mafia_role/townie in total_town)
-			award_role(townie.winner_award, townie)
+		if(!early_start)
+			for(var/datum/mafia_role/townie in total_town)
+				award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
-		for(var/datum/mafia_role/changeling in total_mafia)
-			award_role(changeling.winner_award, changeling)
+		if(!early_start)
+			for(var/datum/mafia_role/changeling in total_mafia)
+				award_role(changeling.winner_award, changeling)
 		return TRUE
 
 /**
@@ -356,7 +358,7 @@
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	if(custom_setup.len || early_start)
+	if(custom_setup.len)
 		return
 	var/client/role_client = GLOB.directory[rewarded.player_key]
 	role_client?.give_award(award, rewarded.body)
