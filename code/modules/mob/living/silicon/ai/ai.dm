@@ -992,13 +992,13 @@
 	if(istype(apcarea, /area/station/command/heads_quarters) || istype(apcarea, /area/station/ai_monitored/command/nuke_storage))
 		var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 		if(doom_n_boom && !(apcarea in doom_n_boom.hacked_command_areas))
-				doom_n_boom.hacked_command_areas += apcarea
-				doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
-				var/datum/antagonist/malf_ai/malf_ai_datum = mind.has_antag_datum(/datum/antagonist/malf_ai)
-				if(malf_ai_datum)
-					malf_ai_datum.update_static_data_for_all_viewers()
-				else //combat software AIs use a different UI
-					malf_picker.update_static_data_for_all_viewers()
+			doom_n_boom.hacked_command_areas += apcarea
+			doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
+			var/datum/antagonist/malf_ai/malf_ai_datum = mind.has_antag_datum(/datum/antagonist/malf_ai)
+			if(malf_ai_datum)
+				malf_ai_datum.update_static_data_for_all_viewers()
+			else //combat software AIs use a different UI
+				malf_picker.update_static_data_for_all_viewers()
 
 	apc.malfai = parent || src
 	apc.malfhack = TRUE
