@@ -11,13 +11,9 @@
 /turf/open/floor/carpet/airless,
 /area/ruin/space/has_grav)
 "bU" = (
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "cD" = (
@@ -90,10 +86,10 @@
 /turf/template_noop,
 /area/template_noop)
 "iB" = (
+/obj/item/shard,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/shard,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "jk" = (
@@ -126,13 +122,10 @@
 /turf/template_noop,
 /area/template_noop)
 "oy" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /obj/structure/table_frame,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin/space/has_grav)
 "oP" = (
@@ -258,10 +251,10 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/has_grav)
 "Cc" = (
+/obj/machinery/light/broken/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/white/corner/airless{
 	dir = 8
 	},
@@ -465,10 +458,10 @@
 /turf/open/floor/carpet/airless,
 /area/ruin/space/has_grav)
 "Si" = (
+/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/corner/airless{
 	dir = 8
 	},

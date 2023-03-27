@@ -70,7 +70,7 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+	if(host_mob.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
 		return ..()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob

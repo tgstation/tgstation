@@ -339,8 +339,8 @@
 	amount = 5;
 	pixel_y = 9
 	},
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "Eo" = (
@@ -510,9 +510,9 @@
 /area/station/maintenance/starboard/central)
 "RH" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "ST" = (
@@ -526,9 +526,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "Tn" = (
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "TC" = (

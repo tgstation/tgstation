@@ -8,10 +8,10 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "c" = (
@@ -63,8 +63,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "m" = (
@@ -83,13 +83,13 @@
 "p" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/paper/crumpled{
 	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
 	pixel_y = -3
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "q" = (
@@ -207,9 +207,9 @@
 	name = "Experimentation Lab"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/modular_map_connector,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "G" = (
@@ -271,11 +271,11 @@
 /area/ruin/syndicate_lava_base/testlab)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south{
 	req_access = list("syndicate")
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "Y" = (
@@ -287,10 +287,10 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 

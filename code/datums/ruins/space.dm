@@ -189,14 +189,14 @@
 
 /datum/map_template/ruin/space/djstation
 	id = "djstation"
-	suffix = "djstation.dmm"
+	suffix = "dj_station.dmm"
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
-	suffix = "thederelict.dmm"
+	suffix = "russian_derelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
@@ -356,8 +356,20 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/massdriverrouter
+	id = "fasttravel"
+	suffix = "fasttravel.dmm"
+	name = "Mass driver Router"
+	description = "An old, still functional router for some long destroyed system."
+
 /datum/map_template/ruin/space/prey_pod
 	id = "prey"
 	suffix = "prey_pod.dmm"
 	name = "Crashed Mimic Escape Pod"
 	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/travelers_rest
+	id = "travelers_rest"
+	suffix = "travelers_rest.dmm"
+	name = "Traveler's Rest"
+	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."

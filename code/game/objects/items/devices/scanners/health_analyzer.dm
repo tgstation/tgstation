@@ -159,7 +159,7 @@
 			render_list += "<span class='alert ml-1'>Cellular damage level: [target.getCloneLoss()].</span>\n"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to have [target.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>\n"
-	if (!target.getorganslot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
+	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span>\n"
 
 	if(iscarbon(target))
@@ -193,7 +193,7 @@
 		var/mob/living/carbon/carbontarget = target
 
 		// Ear status
-		var/obj/item/organ/internal/ears/ears = carbontarget.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = carbontarget.get_organ_slot(ORGAN_SLOT_EARS)
 		if(istype(ears))
 			if(HAS_TRAIT_FROM(carbontarget, TRAIT_DEAF, GENETIC_MUTATION))
 				render_list = "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
@@ -208,7 +208,7 @@
 					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.\n</span>"
 
 		// Eye status
-		var/obj/item/organ/internal/eyes/eyes = carbontarget.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = carbontarget.get_organ_slot(ORGAN_SLOT_EYES)
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
@@ -266,21 +266,21 @@
 
 			var/datum/species/the_dudes_species = humantarget.dna.species
 			var/missing_organs = list()
-			if(!humantarget.getorganslot(ORGAN_SLOT_BRAIN))
+			if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
 				missing_organs += "brain"
-			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
+			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
+			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(the_dudes_species.mutantstomach && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
+			if(the_dudes_species.mutantstomach && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
-			if(the_dudes_species.mutanttongue && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
+			if(the_dudes_species.mutanttongue && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
-			if(!humantarget.getorganslot(ORGAN_SLOT_EARS))
+			if(!humantarget.get_organ_slot(ORGAN_SLOT_EARS))
 				missing_organs += "ears"
-			if(!humantarget.getorganslot(ORGAN_SLOT_EYES))
+			if(!humantarget.get_organ_slot(ORGAN_SLOT_EYES))
 				missing_organs += "eyes"
 
 			if(length(missing_organs))
@@ -309,7 +309,7 @@
 			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
 			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
 			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| istype(humantarget.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
+			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(humantarget.coretemperature-T0C,0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
@@ -403,7 +403,7 @@
 			render_block.Cut()
 
 		// Stomach reagents
-		var/obj/item/organ/internal/stomach/belly = target.getorganslot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/internal/stomach/belly = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(belly)
 			if(belly.reagents.reagent_list.len)
 				for(var/bile in belly.reagents.reagent_list)

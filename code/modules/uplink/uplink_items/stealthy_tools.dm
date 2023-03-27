@@ -35,6 +35,14 @@
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
 
+/datum/uplink_item/stealthy_tools/syndigaloshes
+	name = "No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces."
+	item = /obj/item/clothing/shoes/chameleon/noslip
+	cost = 2
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \
@@ -86,17 +94,6 @@
 	cost = 1
 	surplus = 30
 	illegal_tech = FALSE
-
-// Medium progression cost
-
-/datum/uplink_item/stealthy_tools/syndigaloshes
-	name = "No-Slip Chameleon Shoes"
-	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces."
-	progression_minimum = 20 MINUTES
-	item = /obj/item/clothing/shoes/chameleon/noslip
-	cost = 2
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 // High progression cost
 
