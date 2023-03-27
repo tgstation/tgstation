@@ -26,8 +26,8 @@
 	icon_aggro = "broodmother"
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
-	pixel_x = -12
-	base_pixel_x = -12
+	pixel_x = -16
+	base_pixel_x = -16
 	health_doll_icon = "broodmother"
 	maxHealth = 1000
 	health = 1000
