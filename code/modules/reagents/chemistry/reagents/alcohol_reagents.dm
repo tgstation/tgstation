@@ -3141,7 +3141,7 @@
 	icon_state = "pina_colada"
 
 /datum/reagent/consumable/ethanol/pina_olivada
-	name = "Pina Olivada"
+	name = "Piña Olivada"
 	description = "An oddly designed concoction of olive oil and pineapple juice."
 	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
 	color = "#493c00"
@@ -3166,7 +3166,7 @@
 
 /datum/glass_style/drinking_glass/pina_olivada
 	required_drink_type = /datum/reagent/consumable/ethanol/pina_olivada
-	name = "Pina Olivada"
+	name = "Piña Olivada"
 	desc = "A balance of fruity pineapple with thick, rich olive oil. Stir well before drinking."
 	icon_state = "pina_olivada"
 
