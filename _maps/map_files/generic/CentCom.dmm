@@ -427,10 +427,14 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "cl" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/official/periodic_table{
+	pixel_x = -32
+	},
+/turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
 /obj/structure/closet/secure_closet/ert_engi,
@@ -6577,14 +6581,18 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "Cy" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8;
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_y = -32
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white/textured,
+/obj/structure/sign/calendar/directional/north,
+/turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
 "Cz" = (
 /obj/machinery/door/airlock/centcom{
@@ -7898,17 +7906,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "Lf" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 8;
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood/tile,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "Li" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -8360,6 +8363,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"Nm" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/textured,
+/area/centcom/central_command_areas/evacuation/ship)
 "Nn" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
@@ -9303,11 +9313,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "Rk" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/white,
+/obj/structure/cable,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "Rl" = (
 /obj/structure/chair/comfy/brown{
@@ -36389,13 +36397,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 KH
 Lt
 Lt
@@ -36403,6 +36404,13 @@ Lt
 Lt
 Lt
 Lt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36645,13 +36653,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 KH
 Lt
 KK
@@ -36691,15 +36692,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (100,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -36948,15 +36949,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (101,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -37205,15 +37206,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (102,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -37430,6 +37431,13 @@ Lt
 qp
 Lt
 Lt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37675,16 +37683,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 fT
 Lo
-fW
+Lf
 Sd
 pV
 aa
@@ -37695,6 +37696,13 @@ Lt
 Lt
 Lt
 KH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37932,13 +37940,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 Lt
 Lt
 qp
@@ -37948,7 +37949,7 @@ aa
 aa
 KH
 Lt
-Rk
+cl
 HR
 Gi
 Lt
@@ -37976,15 +37977,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (105,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -38233,15 +38234,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (106,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -38465,7 +38466,7 @@ LN
 OW
 yX
 yX
-Cy
+Nm
 Lt
 ey
 LG
@@ -38490,15 +38491,15 @@ pJ
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (107,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -38747,15 +38748,15 @@ LC
 Lt
 KH
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (108,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -39004,15 +39005,15 @@ JE
 Tu
 Lt
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (109,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -39261,15 +39262,15 @@ bN
 bN
 Lt
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (110,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -39518,15 +39519,15 @@ LB
 tm
 Lt
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (111,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -39775,15 +39776,15 @@ LP
 Lt
 KH
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (112,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -40032,15 +40033,15 @@ zr
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (113,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -40289,15 +40290,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (114,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -40518,11 +40519,18 @@ aa
 aa
 KH
 Lt
-Lf
+Cy
 iC
 Po
 Lt
 KH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40759,16 +40767,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 fT
 Lo
-cl
+Rk
 Sd
 pV
 aa
@@ -40779,6 +40780,13 @@ Lt
 Lt
 Lt
 KH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41016,13 +41024,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 Lt
 Lt
 ge
@@ -41060,15 +41061,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (117,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -41317,15 +41318,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (118,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -41574,15 +41575,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (119,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -41831,15 +41832,15 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (120,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -42057,6 +42058,13 @@ Lt
 Lt
 Lt
 Lt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
