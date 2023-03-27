@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "You can now vote to start a Mafia game early. If over half of the current signups vote (And you have three or more players) you will immediately start a game with a slightly adjusted set of roles."
+  - admin: "You can now force a mafia game to start in the admin options panel."
