@@ -31,7 +31,7 @@
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/xeno/X in GLOB.antagonists)
-			if(!X.owner || !X.xeno_team || !istype(X.xeno_team, new_team)) //Make sure we don't add them to the wrong team
+			if(!X.owner || !X.xeno_team)
 				continue
 			xeno_team = X.xeno_team
 			return

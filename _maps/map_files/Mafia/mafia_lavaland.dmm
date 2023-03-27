@@ -1,31 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/mafia)
-"c" = (
+"ab" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"ac" = (
 /turf/closed/wall/rust,
 /area/centcom/mafia)
-"d" = (
+"ad" = (
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"f" = (
+"ae" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"af" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"g" = (
+"ag" = (
 /obj/mafia_game_board,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"h" = (
+"ah" = (
 /obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"i" = (
+"ai" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"j" = (
+"aj" = (
 /obj/machinery/door/airlock/external/ruin{
 	max_integrity = 99999;
 	name = "Maintenance"
@@ -33,11 +45,11 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"k" = (
+"ak" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"l" = (
+"al" = (
 /obj/structure/closet{
 	desc = "It's a storage unit. For mining stuff. Y'know.";
 	icon_state = "mining";
@@ -46,11 +58,11 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"m" = (
+"am" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"n" = (
+"an" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
@@ -58,7 +70,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"o" = (
+"ao" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
@@ -70,7 +82,7 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"p" = (
+"ap" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
@@ -79,10 +91,10 @@
 	},
 /turf/closed/indestructible/fakeglass,
 /area/centcom/mafia)
-"q" = (
+"aq" = (
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
-"r" = (
+"ar" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
@@ -94,52 +106,52 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"s" = (
+"as" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"t" = (
+"at" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"u" = (
+"au" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"v" = (
+"av" = (
 /obj/mafia_game_board,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"w" = (
+"aw" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"x" = (
+"ax" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"y" = (
+"ay" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"z" = (
+"az" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
@@ -151,20 +163,20 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"A" = (
+"aA" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"B" = (
+"aB" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"C" = (
+"aC" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -173,7 +185,7 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"D" = (
+"aD" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -182,7 +194,7 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"E" = (
+"aE" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -191,20 +203,20 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"F" = (
+"aF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"G" = (
+"aG" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"H" = (
+"aH" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -216,7 +228,7 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"I" = (
+"aI" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
@@ -228,7 +240,7 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"J" = (
+"aJ" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -238,7 +250,7 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"K" = (
+"aK" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
@@ -250,27 +262,27 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"L" = (
+"aL" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"M" = (
+"aM" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"N" = (
+"aN" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"O" = (
+"aO" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
@@ -279,50 +291,50 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"P" = (
+"aP" = (
 /obj/effect/turf_decal/trimline/brown/filled/end,
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"Q" = (
+"aQ" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"R" = (
+"aR" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"S" = (
+"aS" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"T" = (
+"aT" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"U" = (
+"aU" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"V" = (
+"aV" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
-"W" = (
+"aW" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -331,7 +343,7 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"X" = (
+"aX" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -340,582 +352,592 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"Y" = (
+"aY" = (
 /turf/closed/indestructible/reinforced,
+/area/centcom/mafia)
+"aZ" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"GL" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
 /area/centcom/mafia)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
-a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-a
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aa
 "}
 (3,1,1) = {"
-a
-Y
-Y
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aY
+aY
+aa
 "}
 (4,1,1) = {"
-a
-Y
-Y
-c
-g
-h
-d
-d
-d
-d
-d
-i
-d
-d
-d
-d
-d
-h
-k
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ag
+ah
+ad
+ad
+ad
+ad
+ad
+ai
+ad
+ad
+ad
+ad
+ad
+ah
+ak
+ac
+aY
+aY
+aa
 "}
 (5,1,1) = {"
-a
-Y
-Y
-c
-h
-d
-d
-i
-Y
-Y
-j
-Y
-j
-Y
-Y
-d
-d
-i
-h
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ah
+ad
+ad
+ai
+aY
+aY
+aj
+aY
+aj
+aY
+aY
+ad
+ad
+ai
+ah
+ac
+aY
+aY
+aa
 "}
 (6,1,1) = {"
-a
-Y
-Y
-c
-i
-Y
-Y
-j
-Y
-l
-q
-Y
-s
-H
-Y
-j
-Y
-Y
-d
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ai
+aY
+aY
+aj
+aY
+al
+aq
+aY
+as
+aH
+aY
+aj
+aY
+aY
+ad
+ac
+aY
+aY
+aa
 "}
 (7,1,1) = {"
-a
-Y
-c
-c
-d
-Y
-r
-M
-p
-m
-q
-p
-w
-A
-p
-q
-l
-Y
-d
-c
-c
-Y
-a
+aa
+aY
+ac
+ac
+ad
+aY
+ar
+aM
+ap
+am
+aq
+ap
+aw
+aA
+ap
+aq
+al
+aY
+ad
+ac
+ac
+aY
+aa
 "}
 (8,1,1) = {"
-a
-Y
-c
-d
-d
-Y
-L
-N
-Y
-Y
-q
-Y
-x
-Y
-Y
-q
-m
-Y
-d
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+ad
+aY
+aL
+aN
+aY
+aY
+aq
+aY
+ax
+aY
+aY
+aq
+am
+aY
+ad
+ad
+ac
+aY
+aa
 "}
 (9,1,1) = {"
-a
-Y
-c
-d
-Y
-Y
-p
-O
-P
-p
-q
-p
-y
-p
-q
-q
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+aY
+ap
+aO
+aP
+ap
+aq
+ap
+ay
+ap
+aq
+aq
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (10,1,1) = {"
-a
-Y
-c
-d
-Y
-l
-p
-Y
-p
-p
-p
-p
-p
-p
-p
-Y
-p
-K
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+al
+ap
+aY
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aY
+ap
+aK
+aY
+ad
+ac
+aY
+aa
 "}
 (11,1,1) = {"
-a
-Y
-c
-d
-j
-m
-q
-q
-q
-p
-q
-u
-q
-p
-B
-C
-C
-J
-j
-i
-c
-Y
-a
+aa
+aY
+ac
+ad
+aj
+am
+aq
+aq
+aq
+ap
+aq
+aZ
+aq
+ap
+aB
+aC
+aC
+aJ
+aj
+ai
+ac
+aY
+aa
 "}
 (12,1,1) = {"
-a
-Y
-c
-i
-Y
-Y
-p
-Y
-p
-p
-t
-R
-X
-p
-p
-Y
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ai
+aY
+aY
+ap
+aY
+ap
+ap
+GL
+aR
+ae
+ap
+ap
+aY
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (13,1,1) = {"
-a
-Y
-c
-d
-j
-n
-C
-C
-P
-p
-q
-W
-q
-p
-q
-q
-q
-m
-j
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aj
+an
+aC
+aC
+aP
+ap
+aq
+ab
+aq
+ap
+aq
+aq
+aq
+am
+aj
+ad
+ac
+aY
+aa
 "}
 (14,1,1) = {"
-a
-Y
-c
-d
-Y
-o
-p
-Y
-p
-p
-p
-p
-p
-p
-p
-Y
-p
-l
-Y
-i
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+ao
+ap
+aY
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aY
+ap
+al
+aY
+ai
+ac
+aY
+aa
 "}
 (15,1,1) = {"
-a
-Y
-c
-d
-Y
-Y
-p
-q
-q
-p
-S
-p
-q
-p
-B
-D
-p
-Y
-Y
-d
-c
-Y
-a
+aa
+aY
+ac
+ad
+aY
+aY
+ap
+aq
+aq
+ap
+aS
+ap
+aq
+ap
+aB
+aD
+ap
+aY
+aY
+ad
+ac
+aY
+aa
 "}
 (16,1,1) = {"
-a
-Y
-c
-f
-d
-Y
-m
-q
-Y
-Y
-T
-Y
-q
-Y
-Y
-E
-G
-Y
-d
-d
-c
-Y
-a
+aa
+aY
+ac
+af
+ad
+aY
+am
+aq
+aY
+aY
+aT
+aY
+aq
+aY
+aY
+aE
+aG
+aY
+ad
+ad
+ac
+aY
+aa
 "}
 (17,1,1) = {"
-a
-Y
-c
-c
-d
-Y
-l
-q
-p
-Q
-U
-p
-q
-m
-p
-F
-I
-Y
-d
-c
-c
-Y
-a
+aa
+aY
+ac
+ac
+ad
+aY
+al
+aq
+ap
+aQ
+aU
+ap
+aq
+am
+ap
+aF
+aI
+aY
+ad
+ac
+ac
+aY
+aa
 "}
 (18,1,1) = {"
-a
-Y
-Y
-c
-d
-Y
-Y
-j
-Y
-z
-V
-Y
-q
-l
-Y
-j
-Y
-Y
-d
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ad
+aY
+aY
+aj
+aY
+az
+aV
+aY
+aq
+al
+aY
+aj
+aY
+aY
+ad
+ac
+aY
+aY
+aa
 "}
 (19,1,1) = {"
-a
-Y
-Y
-c
-h
-i
-d
-d
-Y
-Y
-j
-Y
-j
-Y
-Y
-d
-i
-d
-h
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ah
+ai
+ad
+ad
+aY
+aY
+aj
+aY
+aj
+aY
+aY
+ad
+ai
+ad
+ah
+ac
+aY
+aY
+aa
 "}
 (20,1,1) = {"
-a
-Y
-Y
-c
-k
-h
-d
-d
-i
-d
-d
-d
-d
-d
-d
-d
-d
-h
-v
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ak
+ah
+ad
+ad
+ai
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ah
+av
+ac
+aY
+aY
+aa
 "}
 (21,1,1) = {"
-a
-Y
-Y
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-c
-Y
-Y
-a
+aa
+aY
+aY
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aY
+aY
+aa
 "}
 (22,1,1) = {"
-a
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-Y
-a
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aa
 "}
 (23,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
