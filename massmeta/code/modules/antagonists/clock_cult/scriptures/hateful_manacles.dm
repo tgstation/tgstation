@@ -30,8 +30,8 @@
 	if(do_after(invoker, 30, target=M))
 		if(M.handcuffed)
 			return FALSE
-		M.handcuffed = new /obj/item/restraints/handcuffs/clockwork(M)
-		M.update_handcuffed()
+		var/obj/item/restraints/handcuffs/clockwork/cuffs = new /obj/item/restraints/handcuffs/clockwork(M)
+		cuffs.apply_cuffs(M, user)
 		return TRUE
 	return FALSE
 
