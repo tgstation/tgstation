@@ -31,7 +31,7 @@
 		if(M.handcuffed)
 			return FALSE
 		var/obj/item/restraints/handcuffs/clockwork/cuffs = new /obj/item/restraints/handcuffs/clockwork(M)
-		cuffs.apply_cuffs(M, user)
+		cuffs.apply_cuffs(M, invoker)
 		return TRUE
 	return FALSE
 
