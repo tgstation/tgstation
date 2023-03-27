@@ -32935,8 +32935,8 @@
 /area/station/medical/virology)
 "hZL" = (
 /obj/structure/closet/crate,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/instrument/harmonica,
 /obj/item/storage/dice,
