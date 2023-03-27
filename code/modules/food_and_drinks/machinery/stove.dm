@@ -161,7 +161,10 @@
 	// To big for the pot
 	if(ingredient.w_class >= WEIGHT_CLASS_BULKY)
 		return FALSE
-
+	if(ingredient.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM))
+		return FALSE
+	if(HAS_TRAIT(ingredient, TRAIT_NO_STORAGE_INSERT))
+		return FALSE
 	return TRUE
 
 /obj/item/reagent_containers/cup/soup_pot/proc/on_reagents_cleared(datum/source, datum/reagent/changed)
@@ -178,6 +181,8 @@
 /obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/drop_loc = drop_location())
 	for(var/obj/item/ingredient as anything in added_ingredients)
 		ingredient.forceMove(drop_loc)
+		ingredient.pixel_x += rand(-4, 4)
+		ingredient.pixel_y += rand(-4, 4)
 		ingredient.SpinAnimation(loops = 1)
 	update_appearance(UPDATE_OVERLAYS)
 
