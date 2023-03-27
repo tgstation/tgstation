@@ -86,6 +86,7 @@
 	else
 		uplink_handler = uplink_handler_override
 	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, PROC_REF(handle_uplink_handler_update))
+	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED, PROC_REF(handle_uplink_replaced))
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -95,6 +96,18 @@
 /datum/component/uplink/proc/handle_uplink_handler_update()
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
+
+/// When a new uplink is made via the syndicate beacon it locks all lockable implants and destroys implants that can not be locked
+/datum/component/uplink/proc/handle_uplink_replaced()
+	SIGNAL_HANDLER
+	if(lockable)
+		lock_uplink()
+		return
+	var/obj/item/uplink_item = parent
+	do_sparks(3,FALSE, uplink_item)
+	uplink_item.visible_message(span_warning("[uplink_item] suddenly combusts!"))
+	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
+	qdel(uplink_item)
 
 /// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/add_telecrystals(telecrystals_added)
@@ -275,9 +288,7 @@
 		if("lock")
 			if(!lockable)
 				return TRUE
-			active = FALSE
-			locked = TRUE
-			SStgui.close_uis(src)
+			lock_uplink()
 
 	if(!uplink_handler.has_objectives)
 		return TRUE
@@ -318,6 +329,12 @@
 		if("objective_abort")
 			uplink_handler.abort_objective(objective)
 	return TRUE
+
+/// Proc that locks uplinks
+/datum/component/uplink/proc/lock_uplink()
+	active = FALSE
+	locked = TRUE
+	SStgui.close_uis(src)
 
 // Implant signal responses
 /datum/component/uplink/proc/implant_activation()
