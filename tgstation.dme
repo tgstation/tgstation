@@ -5307,6 +5307,7 @@
 #include "monkestation\code\modules\research\nanites\nanite_programs\weapon.dm"
 #include "monkestation\code\modules\research\techweb\all_nodes.dm"
 #include "monkestation\code\modules\store\admin\admin_coin_modification.dm"
+#include "monkestation\code\modules\store\atm\_atm.dm"
 #include "monkestation\code\modules\store\pre_round\_pre_round_store.dm"
 #include "monkestation\code\modules\store\pre_round\roundstart_items\_roundstart_item.dm"
 #include "monkestation\code\modules\store\store_items\__store.dm"

@@ -31,7 +31,7 @@
 
 /datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE)
 	if(!ckey || !SSdbcore.IsConnected())
-		return
+		return FALSE
 
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")
 	query_inc_metacoins.warn_execute()
@@ -42,6 +42,7 @@
 			to_chat(src, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")
 		else
 			to_chat(src, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account!</span>")
+	return TRUE
 
 /datum/preferences/proc/has_coins(amount)
 	if(amount > metacoins)

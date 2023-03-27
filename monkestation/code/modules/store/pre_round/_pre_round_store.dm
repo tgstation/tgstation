@@ -67,6 +67,7 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 	switch(action)
 		if("attempt_buy")
 			attempt_buy(params)
+			return TRUE
 
 /datum/pre_round_store/proc/attempt_buy(list/params)
 	var/id = params["path"]
