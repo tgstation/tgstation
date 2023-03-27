@@ -3140,6 +3140,20 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pina_colada"
 
+/datum/reagent/consumable/ethanol/pina_olivada
+	name = "Pina Olivada"
+	description = "An oddly designed concoction of olive oil and pineapple juice."
+	boozepwr = 50 // they add more alcohol to it to make it drinkable
+	color = "#493c00"
+	quality = DRINK_NICE
+	taste_description = "a horrible embolism of pineapple and olive oil"
+
+/datum/glass_style/drinking_glass/pina_olivada
+	required_drink_type = /datum/reagent/consumable/ethanol/pina_olivada
+	name = "Pina Olivada"
+	desc = "A balance of fruity pineapple with thick, rich olive oil. Stir well before drinking."
+	icon_state = "pina_olivada"
+
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
 	name = "Pruno"
 	color = "#E78108"
