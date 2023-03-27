@@ -31,7 +31,7 @@
 	if(!ui)
 		ui = new(user, src, "ATM")
 		ui.open()
-	
+
 /obj/machinery/atm/ui_data(mob/user)
 	var/list/data = list()
 
@@ -55,14 +55,14 @@
 
 /obj/machinery/atm/ui_static_data(mob/user)
 	var/list/data = list()
-	
+
 	var/flash_value = FALSE
 	if(flash_sale_datum)
 		flash_value = TRUE
 		data["flash_sale_name"] = flash_sale_datum.name
 		data["flash_sale_cost"] = flash_sale_datum.item_cost
 		data["flash_sale_desc"] = flash_sale_datum.store_desc
-	
+
 	data["flash_sale_present"] = flash_value
 	return data
 
@@ -70,7 +70,7 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	switch(action)
 		if("withdraw")
 			attempt_withdraw()
@@ -128,12 +128,12 @@
 	var/current_balance = living_user.client.prefs.metacoins
 
 	var/withdraw_amount = tgui_input_number(living_user, "How many Monkecoins would you like to withdraw?", "ATM", 0 , current_balance, 0)
-	
+
 	if(!withdraw_amount)
 		return
 	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount))
 		return
-	
+
 	var/obj/item/stack/monkecoin/coin_stack = new(living_user.loc)
 	coin_stack.amount = withdraw_amount
 
@@ -176,7 +176,7 @@
 
 	if(!registed_account)
 		return
-	
+
 	var/withdrawn_amount = tgui_input_number(living_mob, "How much cash would you like to withdraw?", "ATM", 0, registed_account.account_balance, 0)
 	if(!withdrawn_amount)
 		return
@@ -199,6 +199,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/monkecoin
 	var/value = 100
 
 /obj/item/stack/monkecoin/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
