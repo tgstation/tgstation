@@ -520,7 +520,6 @@
 /**
  * Getter function for a mob's quirk
  *
- 
  * Arguments:
  * * quirktype - the type of the quirk to acquire e.g. /datum/quirk/some_quirk
  *

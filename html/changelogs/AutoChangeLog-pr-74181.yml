@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - code_imp: "Access key rings added to list on creation"
-  - code_imp: "Access keys unregister signal when destroyed"

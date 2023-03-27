@@ -3,8 +3,6 @@
 		return
 	//Being dead doesn't mean your temperature never changes
 
-	update_gravity(has_gravity())
-
 	if(malfhack?.aidisabled)
 		deltimer(malfhacking)
 		// This proc handles cleanup of screen notifications and
