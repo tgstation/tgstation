@@ -2,16 +2,18 @@
 /obj/structure/syndicate_uplink_beacon
 	name = "suspicious beacon"
 	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "broadcaster"
-	desc = "This ramshackle device seems capable of recieving and sending signals for some odd purpose."
+	icon_state = "relay_traitor"
+	desc = "This ramshackle device seems capable of recieving and sending signals for some nefarious purpose."
+	density = TRUE
+	anchored = TRUE
 	/// Traitor's code that they speak into the radio
 	var/uplink_code
 	/// weakref to person who is going to use the beacon to get a replacement uplink
 	var/datum/weakref/owner
-	/// Datum that allows the beacon to listen to the radio
-	var/datum/radio_frequency/traitor_frequency
 	/// while constructed the teleport beacon is still active
 	var/obj/item/beacon/teleport_beacon
+	/// Radio that the device needs to listen to the codeword from the traitor
+	var/obj/item/radio/listening_radio
 	/// prevents traitor from activating teleport_beacon proc too much in a small period of time
 	COOLDOWN_DECLARE(beacon_cooldown)
 
@@ -25,7 +27,8 @@
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-
+	listening_radio = new(src)
+	listening_radio.canhear_range = 0
 	teleport_beacon = new(src)
 
 /obj/structure/syndicate_uplink_beacon/attack_hand(mob/living/user, list/modifiers)
@@ -55,20 +58,32 @@
 	new /obj/item/stack/sheet/iron/five
 	new /obj/item/stack/cable_coil/five
 	teleport_beacon.forceMove(get_turf(src))
+	teleport_beacon = null
 	qdel(src)
 	return TRUE
 
+/obj/structure/syndicate_uplink_beacon/Destroy()
+	QDEL_NULL(listening_radio)
+	QDEL_NULL(teleport_beacon)
+	return ..()
+
+/// Proc reads the user, sets radio to the correct frequency and starts to listen for the replacement uplink code
 /obj/structure/syndicate_uplink_beacon/proc/probe_traitor(mob/living/user)
 	owner = WEAKREF(user)
 	var/datum/antagonist/traitor/traitor_datum = user.mind.has_antag_datum(/datum/antagonist/traitor)
 
 	uplink_code = traitor_datum.replacement_uplink_code
-	traitor_frequency = SSradio.add_object(src, traitor_datum.replacement_uplink_frequency, RADIO_SIGNALER)
+	listening_radio.set_frequency(traitor_datum.replacement_uplink_frequency)
+	become_hearing_sensitive()
 
-/obj/structure/syndicate_uplink_beacon/receive_signal(datum/signal/signal)
-	if(!signal)
-		return FALSE
+/obj/structure/syndicate_uplink_beacon/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
+	if(ismob(speaker) || radio_freq != listening_radio.get_frequency())
+		return
+	if(!findtext(message, uplink_code))
+		return
+	teleport_uplink()
 
+/// Proc uses owners uplink handler to create replacement uplink and then lock or destroy their other uplinks
 /obj/structure/syndicate_uplink_beacon/proc/teleport_uplink()
 	if(!COOLDOWN_FINISHED(src, beacon_cooldown))
 		return
@@ -79,6 +94,9 @@
 		return
 
 	var/datum/antagonist/traitor/traitor_datum = resolved_owner.mind.has_antag_datum(/datum/antagonist/traitor)
+	if(!traitor_datum)
+		return
+
 	var/datum/uplink_handler/uplink_handler = traitor_datum.uplink_handler
 
 	SEND_SIGNAL(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED)
@@ -86,6 +104,7 @@
 	do_sparks(5, FALSE, src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
 
+// Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item)
 		return NONE
