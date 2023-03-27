@@ -77,8 +77,13 @@
 					return
 
 /// Returns true if this item should be scary to us
-/datum/brain_trauma/mild/phobia/proc/is_scary_item(obj/item/checked)
-	return !QDELETED(checked) && (is_type_in_typecache(checked, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(checked)))
+/datum/brain_trauma/mild/phobia/proc/is_scary_item(obj/checked)
+	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs))
+		return FALSE
+	if (!isitem(checked))
+		return TRUE
+	var/obj/item/checked_item = checked
+	return !(checked_item.item_flags & EXAMINE_SKIP)
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
@@ -220,3 +225,8 @@
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
 	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/blood/is_scary_item(obj/checked)
+	if (GET_ATOM_BLOOD_DNA_LENGTH(checked))
+		return TRUE
+	return ..()
