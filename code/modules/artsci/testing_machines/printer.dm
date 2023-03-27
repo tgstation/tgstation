@@ -3,15 +3,18 @@
 	k_elasticity = 0
 	unit_name = "artifact"
 	allow_negative_cost = TRUE
+	export_types = list(/obj)
 
-/datum/export/analyzed_artifact/applies_to(obj/O, apply_elastic = TRUE)
-	if(O.GetComponent(/datum/component/artifact))
+/datum/export/analyzed_artifact/applies_to(obj/object, apply_elastic = TRUE)
+	if(object.GetComponent(/datum/component/artifact))
 		return TRUE
 	return ..()
 
-/datum/export/analyzed_artifact/get_cost(obj/O)
-	var/obj/item/sticker/analysis_form/M = O
-	return 3595354
+/datum/export/analyzed_artifact/get_cost(obj/object)
+	var/datum/component/artifact/art = object.GetComponent(/datum/component/artifact)
+	if(!art || !art.analysis)
+		return -CARGO_CRATE_VALUE
+	return art.analysis.get_export_value(art)
 
 /obj/item/sticker/analysis_form
 	name = "analysis form"
@@ -26,8 +29,7 @@
 	max_integrity = 50
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
-	contraband = FALSE
-	stick_type = /datum/component/attached_sticker/analysis_form
+	contraband = STICKER_NOSPAWN
 	var/chosen_origin = ""
 	var/list/chosentriggers = list()
 	var/chosentype = ""
@@ -51,21 +53,19 @@
 	if(!istype(usr.get_active_held_item(), /obj/item/pen))
 		to_chat(usr, span_notice("You need a pen to write on [src]!"))
 		return
-	//SEND_SIGNAL(attached, COMSIG_ANALYSISFORM_CHANGED, src)
 	switch(action)
 		if("origin")
 			chosen_origin = params["origin"]
-			return
 		if("type")
 			chosentype = params["type"]
-			return
 		if("trigger")
 			var/trig = params["trigger"]
 			if(trig in chosentriggers)
 				chosentriggers -= trig
 			else
 				chosentriggers += trig
-			return
+	if(attached)
+		analyze_attached()
 
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	. = ..()
@@ -82,19 +82,38 @@
 	return .
 
 /obj/item/sticker/analysis_form/can_interact(mob/user)
-	if(!loc)
+	if(attached && user.Adjacent(attached))
 		return TRUE
 	return ..()
+	
+/obj/item/sticker/analysis_form/register_signals(mob/living/user)
+	. = ..()
+	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+
+/obj/item/sticker/analysis_form/unregister_signals(datum/source)
+	. = ..()
+	UnregisterSignal(attached, list(COMSIG_PARENT_EXAMINE))
 
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()
-	//if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-	//	return
+	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+		return
+	ui_interact(user)
+
+/obj/item/sticker/analysis_form/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("It has an artifact analysis form attached to it...")
+	ui_interact(user)
+
+/obj/item/sticker/analysis_form/examine(mob/user)
+	. = ..()
+	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+		return
 	ui_interact(user)
 
 /obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
-	//if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-		//return UI_CLOSE
+	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+		return UI_CLOSE
 	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
 	if(user.is_blind())
@@ -102,6 +121,50 @@
 		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(!loc)
+	if(attached && in_range(user, attached))
 		return UI_INTERACTIVE
 	return ..()
+//analysis
+
+/obj/item/sticker/analysis_form/stick(atom/target, mob/living/user, px,py)
+	..()
+	analyze_attached()
+
+/obj/item/sticker/analysis_form/peel(atom/source)
+	SIGNAL_HANDLER
+	. = ..()
+	deanalyze_attached()
+
+/obj/item/sticker/analysis_form/proc/analyze_attached()
+	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
+	if(!to_analyze)
+		return
+	if(chosen_origin)
+		to_analyze.holder.name = to_analyze.names[chosen_origin]
+	if(chosentype)
+		to_analyze.holder.name += " ([chosentype])"
+
+/obj/item/sticker/analysis_form/proc/deanalyze_attached()
+	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
+	if(!to_analyze)
+		return
+	to_analyze.holder.name = to_analyze.fake_name
+
+/obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
+	var/correct = 0
+	var/possible_guesses = 2 //typename + origin
+	var/incorrect = 0
+
+	for(var/datum/artifact_trigger/trigger in art.triggers)
+		possible_guesses += 1
+	if(art.artifact_origin.type_name == chosen_origin)
+		correct += 1
+	if(art.type_name == chosentype)
+		correct += 1
+	for(var/name in chosentriggers)
+		if(locate(SSartifacts.artifact_trigger_name_to_type[name]) in art.triggers)
+			correct += 1
+		else
+			incorrect += 1 //dumbasses would check the entire list and get away with it
+	incorrect += possible_guesses - correct
+	return round((CARGO_CRATE_VALUE/4) * art.potency * (max((ARTIFACT_COMMON - art.weight) * 0.01, 0.01) * max(correct - incorrect, 0))

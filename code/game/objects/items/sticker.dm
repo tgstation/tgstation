@@ -17,7 +17,7 @@
 	///The turf our COMSIG_TURF_EXPOSE is registered to, so we can unregister it later.
 	var/turf/signal_turf
 	/// If the sticker should be disincluded from normal sticker boxes.
-	var/contraband = FALSE
+	var/contraband = STICKER_NORMAL
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -57,6 +57,7 @@
 			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
 	register_signals(user)
 	moveToNullspace()
+	SEND_SIGNAL(attached, COMSIG_STICKER_STICKED, src, user)
 
 ///Makes this sticker move from nullspace and cut the overlay from the object it is attached to, silent for no visible message.
 /obj/item/sticker/proc/peel(datum/source)
@@ -69,6 +70,7 @@
 	pixel_y = rand(-4,1)
 	pixel_x = rand(-3,3)
 	unregister_signals()
+	SEND_SIGNAL(attached, COMSIG_STICKER_UNSTICKED, src)
 	attached = null
 
 ///Registers signals to the object it is attached to
@@ -114,6 +116,7 @@
 /// Signal handler for COMSIG_PARENT_QDELETING, deletes this sticker if the attached object is deleted
 /obj/item/sticker/proc/on_attached_qdel(datum/source)
 	SIGNAL_HANDLER
+	peel()
 	qdel(src)
 
 /obj/item/sticker/smile
@@ -191,7 +194,7 @@
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
-	contraband = TRUE
+	contraband = STICKER_SYNDICATE
 
 /obj/item/sticker/syndicate/c4
 	name = "C-4 sticker"

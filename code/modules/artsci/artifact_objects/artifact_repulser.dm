@@ -18,7 +18,7 @@
 	. = ..()
 	attract = prob(40)
 	range = rand(1,3)
-	cooldown_time = rand(10,60) SECONDS
+	cooldown_time = rand(10,40) SECONDS
 	strength = rand(MOVE_FORCE_DEFAULT,MOVE_FORCE_OVERPOWERING)
 	potency += cooldown_time / 4 + strength / 3000
 

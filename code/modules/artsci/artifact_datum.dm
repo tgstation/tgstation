@@ -36,6 +36,8 @@
 	
 	///structure description from x-ray machines
 	var/xray_result = "NONE"
+	///we store our analysis form var here
+	var/obj/item/sticker/analysis_form/analysis
 
 /datum/component/artifact/Initialize(var/forced_origin = null)
 	. = ..()
@@ -262,19 +264,19 @@
 	Stimulate(STIMULUS_SHOCK, 800 * severity)
 	Stimulate(STIMULUS_RADIATION, 2 * severity)
 
-/datum/component/artifact/proc/on_analysis(atom/source, obj/item/sticker/sticker)
+/datum/component/artifact/proc/on_analysis(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER
+	if(analysis)
+		to_chat(user, "You peel off [sticker], to make room for [sticker].")
+		sticker.peel()
 	if(!istype(sticker, /obj/item/sticker/analysis_form))
 		return
-	var/obj/item/sticker/analysis_form/form = sticker
-	if(form.chosen_origin)
-		holder.name = names[form.chosen_origin]
-	if(form.chosentype)
-		holder.name = "[holder.name] ([form.chosentype])"
+	analysis = sticker
 
 /datum/component/artifact/proc/deanalyze(atom/source)
 	SIGNAL_HANDLER
-	holder.name = fake_name
+	analysis = null
+
 // Effects for subtypes
 /datum/component/artifact/proc/effect_activate()
 	return

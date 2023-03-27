@@ -8,7 +8,7 @@
 	else
 		weighted_list = SSartifacts.artifact_rarities["all"]
 	
-	var/type = pick_weight(weighted_list).associated_object
+	var/type = initial(pick_weight(weighted_list).associated_object)
 	return new type(loc)
 
 /// Subsystem for managing artifacts.
