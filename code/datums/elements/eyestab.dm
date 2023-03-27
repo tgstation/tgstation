@@ -47,9 +47,6 @@
 	if (isalien(target))
 		return
 
-	if (isbrain(target))
-		return
-
 	perform_eyestab(source, target, user)
 
 	return COMPONENT_SKIP_ATTACK
@@ -57,6 +54,10 @@
 /datum/element/eyestab/proc/perform_eyestab(obj/item/item, mob/living/target, mob/living/user)
 	var/obj/item/bodypart/target_limb = target.get_bodypart(BODY_ZONE_HEAD)
 	if (ishuman(target) && isnull(target_limb))
+		return
+
+	if (isbrain(target))
+		to_chat(user, span_warning("You cannot locate any organic eyes on this brain!"))
 		return
 
 	item.add_fingerprint(user)
