@@ -169,7 +169,6 @@ Nothing else in the console has ID requirements.
 		return data
 	data += list(
 		"nodes" = list(),
-		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
@@ -210,22 +209,7 @@ Nothing else in the console has ID requirements.
 			"tier" = stored_research.tiers[n.id],
 		))
 
-	// Get experiments and serialize them
-	var/list/exp_to_process = stored_research.available_experiments.Copy()
-	for (var/e in stored_research.completed_experiments)
-		exp_to_process += stored_research.completed_experiments[e]
-	for (var/e in exp_to_process)
-		var/datum/experiment/ex = e
-		data["experiments"][ex.type] = list(
-			"name" = ex.name,
-			"description" = ex.description,
-			"tag" = ex.exp_tag,
-			"progress" = ex.check_progress(),
-			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint,
-		)
 	return data
-
 /**
  * Compresses an ID to an integer representation using the id_cache, used for deduplication
  * in sent JSON payloads
@@ -272,10 +256,6 @@ Nothing else in the console has ID requirements.
 			node_cache[compressed_id]["unlock_ids"] = list()
 			for (var/unlocked_node in node.unlock_ids)
 				node_cache[compressed_id]["unlock_ids"] += compress_id(unlocked_node)
-		if (LAZYLEN(node.required_experiments))
-			node_cache[compressed_id]["required_experiments"] = node.required_experiments
-		if (LAZYLEN(node.discount_experiments))
-			node_cache[compressed_id]["discount_experiments"] = node.discount_experiments
 
 	// Build design cache
 	var/design_cache = list()

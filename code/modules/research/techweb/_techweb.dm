@@ -38,19 +38,6 @@
 	var/list/discovered_mutations = list()
 	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 	var/list/tiers = list()
-	/// This is a list of all incomplete experiment datums that are accessible for scientists to complete
-	var/list/datum/experiment/available_experiments = list()
-	/// A list of all experiment datums that have been complete
-	var/list/datum/experiment/completed_experiments = list()
-	/// Assoc list of all experiment datums that have been skipped, to tech point reward for completing them -
-	/// That is, upon researching a node without completing its associated discounts, their experiments go here.
-	/// Completing these experiments will have a refund.
-	var/list/datum/experiment/skipped_experiment_types = list()
-
-	/// If science researches something without completing its discount experiments,
-	/// they have the option to complete them later for a refund
-	/// This ratio determines how much of the original discount is refunded
-	var/skipped_experiment_refund_ratio = 0.66
 
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
@@ -64,17 +51,6 @@
 	///The amount of research points generated the techweb generated the latest time it generated.
 	var/last_income
 
-	/**
-	 * Assoc list of relationships with various partners
-	 * scientific_cooperation[partner_typepath] = relationship
-	 */
-	var/list/scientific_cooperation
-	/**
-	  * Assoc list of papers already published by the crew.
-	  * published_papers[experiment_typepath][tier] = paper
-	  * Filled with nulls on init, populated only on publication.
-	*/
-	var/list/published_papers
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -82,7 +58,6 @@
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
-	initialize_published_papers()
 	return ..()
 
 /datum/techweb/Destroy()
@@ -242,80 +217,16 @@
 			return FALSE
 	return TRUE
 
-/**
- * Checks if all experiments have been completed for a given node on this techweb
- *
- * Arguments:
- * * node - the node to check
- */
-/datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
-	. = TRUE
-	for (var/experiment_type in node.required_experiments)
-		if (!completed_experiments[experiment_type])
-			return FALSE
 
 /**
- * Checks if a node can be unlocked on this techweb, having the required points and experiments
+ * Checks if a node can be unlocked on this techweb, having the required points
  *
  * Arguments:
  * * node - the node to check
  */
 /datum/techweb/proc/can_unlock_node(datum/techweb_node/node)
-	return can_afford(node.get_price(src)) && have_experiments_for_node(node)
+	return can_afford(node.get_price(src))
 
-/**
- * Adds an experiment to this techweb by its type, ensures that no duplicates are added.
- *
- * Arguments:
- * * experiment_type - the type of the experiment to add
- */
-/datum/techweb/proc/add_experiment(experiment_type)
-	. = TRUE
-	// check active experiments for experiment of this type
-	for (var/available_experiment in available_experiments)
-		var/datum/experiment/experiment = available_experiment
-		if (experiment.type == experiment_type)
-			return FALSE
-	// check completed experiments for experiments of this type
-	for (var/completed_experiment in completed_experiments)
-		var/datum/experiment/experiment = completed_experiment
-		if (experiment == experiment_type)
-			return FALSE
-	available_experiments += new experiment_type()
-
-/**
- * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
- *
- * Arguments:
- * * experiment_list - the list of types of experiments to add
- */
-/datum/techweb/proc/add_experiments(list/experiment_list)
-	. = TRUE
-	for (var/datum/experiment/experiment as anything in experiment_list)
-		. = . && add_experiment(experiment)
-
-/**
- * Notifies the techweb that an experiment has been completed, updating internal state of the techweb to reflect this.
- *
- * Arguments:
- * * completed_experiment - the experiment which was completed
- */
-/datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
-	available_experiments -= completed_experiment
-	completed_experiments[completed_experiment.type] = completed_experiment
-
-	var/result_text = "[completed_experiment] has been completed"
-	var/refund = skipped_experiment_types[completed_experiment.type] || 0
-	if(refund > 0)
-		add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = refund))
-		result_text += ", refunding [refund] points."
-		// Nothing more to gain here, but we keep it in the list to prevent double dipping
-		skipped_experiment_types[completed_experiment.type] = -1
-	else
-		result_text += "!"
-
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""].")
-	return result_text
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -328,7 +239,7 @@
 		return FALSE
 	update_node_status(node)
 	if(!force)
-		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
+		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))))
 			return FALSE
 	var/log_message = "[id]/[organization] researched node [node.id]"
 	if(auto_adjust_cost)
@@ -339,20 +250,10 @@
 	//Add to our researched list
 	researched_nodes[node.id] = TRUE
 
-	// Track any experiments we skipped relating to this
-	for(var/missed_experiment in node.discount_experiments)
-		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
-			continue
-		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
-
 	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
 		var/datum/techweb_node/unlocked_node = SSresearch.techweb_node_by_id(id)
-		if (unlocked_node.required_experiments.len > 0)
-			add_experiments(unlocked_node.required_experiments)
-		if (unlocked_node.discount_experiments.len > 0)
-			add_experiments(unlocked_node.discount_experiments)
 		update_node_status(unlocked_node)
 
 	// Unlock what the research actually unlocks
@@ -478,41 +379,3 @@
 
 /datum/techweb/proc/isNodeAvailableID(id)
 	return available_nodes[id]? SSresearch.techweb_node_by_id(id) : FALSE
-
-/// Fill published_papers with nulls.
-/datum/techweb/proc/initialize_published_papers()
-	published_papers = list()
-	scientific_cooperation = list()
-	for (var/datum/experiment/ordnance/ordnance_experiment as anything in SSresearch.ordnance_experiments)
-		var/max_tier = min(length(ordnance_experiment.gain), length(ordnance_experiment.target_amount))
-		var/list/tier_list[max_tier]
-		published_papers[ordnance_experiment.type] = tier_list
-	for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
-		scientific_cooperation[partner.type] = 0
-
-/// Publish the paper into our techweb. Cancel if we are not allowed to.
-/datum/techweb/proc/add_scientific_paper(datum/scientific_paper/paper_to_add)
-	if(!paper_to_add.allowed_to_publish(src))
-		return FALSE
-	paper_to_add.publish_paper(src)
-
-	// If we haven't published a paper in the same topic ...
-	if(locate(paper_to_add.experiment_path) in published_papers[paper_to_add.experiment_path])
-		return TRUE
-	// Quickly add and complete it.
-	// PS: It's also possible to use add_experiment() together with a list/available_experiments check
-	// to determine if we need to run all this, but this pretty much does the same while only needing one evaluation.
-
-	add_experiment(paper_to_add.experiment_path)
-
-	for (var/datum/experiment/experiment as anything in available_experiments)
-		if(experiment.type != paper_to_add.experiment_path)
-			continue
-
-		experiment.completed = TRUE
-		var/announcetext = complete_experiment(experiment)
-		if(length(GLOB.experiment_handlers))
-			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
-			handler.announce_message_to_all(announcetext)
-
-	return TRUE

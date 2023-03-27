@@ -47,7 +47,6 @@
 		return data
 	data += list(
 		"nodes" = list(),
-		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
@@ -71,22 +70,6 @@
 			"can_unlock" = stored_research.can_unlock_node(node),
 			"tier" = stored_research.tiers[node.id]
 		))
-
-	// Get experiments and serialize them
-	var/list/exp_to_process = stored_research.available_experiments.Copy()
-	for (var/comp_experi in stored_research.completed_experiments)
-		exp_to_process += stored_research.completed_experiments[comp_experi]
-	for (var/process_experi in exp_to_process)
-		var/datum/experiment/unf_experi = process_experi
-		data["experiments"][unf_experi.type] = list(
-			"name" = unf_experi.name,
-			"description" = unf_experi.description,
-			"tag" = unf_experi.exp_tag,
-			"progress" = unf_experi.check_progress(),
-			"completed" = unf_experi.completed,
-			"performance_hint" = unf_experi.performance_hint
-		)
-	return data
 
 /datum/computer_file/program/science/ui_act(action, list/params)
 	. = ..()
@@ -144,10 +127,6 @@
 			node_cache[compressed_id]["unlock_ids"] = list()
 			for (var/unlocked_node in node.unlock_ids)
 				node_cache[compressed_id]["unlock_ids"] += compress_id(unlocked_node)
-		if (LAZYLEN(node.required_experiments))
-			node_cache[compressed_id]["required_experiments"] = node.required_experiments
-		if (LAZYLEN(node.discount_experiments))
-			node_cache[compressed_id]["discount_experiments"] = node.discount_experiments
 
 	// Build design cache
 	var/design_cache = list()

@@ -35,7 +35,6 @@ SUBSYSTEM_DEF(research)
 	///Node ids that should be hidden by default.
 	var/list/techweb_nodes_hidden = list()
 	///Node ids that are exclusive to the BEPIS.
-	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
@@ -64,16 +63,10 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
 	)
 
-	/// Lookup list for ordnance briefers.
-	var/list/ordnance_experiments = list()
-	/// Lookup list for scipaper partners.
-	var/list/scientific_partners = list()
-
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
-	populate_ordnance_experiments()
 	science_tech = new /datum/techweb/science
 	admin_tech = new /datum/techweb/admin
 	autosort_categories()
@@ -268,8 +261,6 @@ SUBSYSTEM_DEF(research)
 			D.unlocked_by += node.id
 		if(node.hidden)
 			techweb_nodes_hidden[node.id] = TRUE
-		if(node.experimental)
-			techweb_nodes_experimental[node.id] = TRUE
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 
@@ -296,15 +287,3 @@ SUBSYSTEM_DEF(research)
 			else
 				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
 		CHECK_TICK
-
-/datum/controller/subsystem/research/proc/populate_ordnance_experiments()
-	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
-		if (initial(experiment_path.experiment_proper))
-			ordnance_experiments += new experiment_path()
-
-	for(var/partner_path in subtypesof(/datum/scientific_partner))
-		var/datum/scientific_partner/partner = new partner_path
-		if(!partner.accepted_experiments.len)
-			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
-				partner.accepted_experiments += ordnance_experiment.type
-		scientific_partners += partner

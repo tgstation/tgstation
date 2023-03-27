@@ -35,9 +35,6 @@ export const OperatingComputer = (props, context) => {
           <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
             Surgery Procedures
           </Tabs.Tab>
-          <Tabs.Tab onClick={() => act('open_experiments')}>
-            Experiments
-          </Tabs.Tab>
         </Tabs>
         {tab === 1 && <PatientStateView />}
         {tab === 2 && <SurgeryProceduresView />}

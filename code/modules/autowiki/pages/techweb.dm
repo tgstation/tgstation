@@ -9,9 +9,6 @@
 		if (!node.show_on_wiki)
 			continue
 
-		if (!valid_node(node))
-			continue
-
 		output += "\n\n" + include_template("Autowiki/TechwebEntry", list(
 			"name" = escape_value(node.display_name),
 			"description" = escape_value(node.description),
@@ -20,9 +17,6 @@
 		))
 
 	return output
-
-/datum/autowiki/techweb/proc/valid_node(datum/techweb_node/node)
-	return !node.experimental
 
 /datum/autowiki/techweb/proc/generate_designs(list/design_ids)
 	var/output = ""
@@ -47,12 +41,6 @@
 
 	return output
 
-/datum/autowiki/techweb/experimental
-	page = "Template:Autowiki/Content/Techweb/Experimental"
-
-/datum/autowiki/techweb/experimental/valid_node(datum/techweb_node/node)
-	return node.experimental
-
 /proc/sort_research_nodes(node_id_a, node_id_b)
 	var/datum/techweb_node/node_a = SSresearch.techweb_nodes[node_id_a]
 	var/datum/techweb_node/node_b = SSresearch.techweb_nodes[node_id_b]
@@ -60,9 +48,5 @@
 	var/prereq_difference = node_a.prereq_ids.len - node_b.prereq_ids.len
 	if (prereq_difference != 0)
 		return prereq_difference
-
-	var/experiment_difference = node_a.required_experiments.len - node_b.required_experiments.len
-	if (experiment_difference != 0)
-		return experiment_difference
 
 	return sorttext(node_b.display_name, node_a.display_name)
