@@ -43,7 +43,9 @@
 	dir = 8;
 	resistance_flags = 64
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "cK" = (
@@ -82,7 +84,7 @@
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -374,7 +376,7 @@
 /area/centcom/ctf)
 "xl" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -383,9 +385,7 @@
 /turf/open/floor/circuit/off,
 /area/centcom/ctf)
 "xS" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "xU" = (
@@ -423,7 +423,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "zg" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "zs" = (
@@ -513,9 +515,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/ctf)
 "FM" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "FP" = (
@@ -734,7 +734,7 @@
 /area/centcom/ctf)
 "Rc" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/pod/dark,
 /area/centcom/ctf)
@@ -757,7 +757,7 @@
 /area/centcom/ctf)
 "RH" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)

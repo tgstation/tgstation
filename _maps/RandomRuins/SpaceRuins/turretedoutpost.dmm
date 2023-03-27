@@ -78,14 +78,14 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
 /obj/item/rack_parts,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -93,7 +93,7 @@
 /obj/item/rack_parts,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -101,7 +101,7 @@
 /obj/structure/rack,
 /obj/item/firing_pin,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -116,7 +116,7 @@
 "ay" = (
 /obj/item/rack_parts,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -175,7 +175,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -241,33 +241,25 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aW" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aX" = (
 /obj/item/rack_parts,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aY" = (
 /obj/structure/rack,
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/exotic/syndie,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/exotic/syndie,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (

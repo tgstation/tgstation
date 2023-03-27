@@ -30,6 +30,7 @@
 	)
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	. = ..()
 	if(istype(chem,/datum/reagent/consumable/salt))
 		H.adjustFireLoss(2 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)
@@ -54,8 +55,6 @@
 		bag.emptyStorage()
 		former_snailperson.temporarilyRemoveItemFromInventory(bag, TRUE)
 		qdel(bag)
-	if(ishuman(former_snailperson))
-		new_species.update_mail_goodies(former_snailperson)
 
 /datum/species/snail/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
 	if(istype(quirk, /datum/quirk/blooddeficiency))
