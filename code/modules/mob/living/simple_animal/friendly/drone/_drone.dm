@@ -126,44 +126,6 @@
 	)
 	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
 	var/list/drone_machinery_blacklist_compiled
-	/// whitelisted drone items, direct
-	var/list/drone_item_whitelist_flat = list(
-		/obj/item/chisel,
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
-		/obj/item/rack_parts,
-	)
-	/// whitelisted drone items, recursive/includes descendants
-	var/list/drone_item_whitelist_recursive = list(
-		/obj/item/airlock_painter,
-		/obj/item/circuitboard,
-		/obj/item/conveyor_switch_construct,
-		/obj/item/electronics,
-		/obj/item/light,
-		/obj/item/pipe_meter,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/circuit_stack,
-		/obj/item/stack/conveyor,
-		/obj/item/stack/pipe_cleaner_coil,
-		/obj/item/stack/rods,
-		/obj/item/stack/sheet,
-		/obj/item/stack/tile,
-		/obj/item/stack/ducts,
-		/obj/item/stock_parts,
-		/obj/item/toner,
-		/obj/item/wallframe,
-		/obj/item/clothing/head,
-		/obj/item/clothing/mask,
-		/obj/item/storage/box/lights,
-		/obj/item/lightreplacer,
-	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
 		/obj/machinery/atmospherics/components/unary/vent_pump,
@@ -340,7 +302,6 @@
 
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 
 	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
 	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
