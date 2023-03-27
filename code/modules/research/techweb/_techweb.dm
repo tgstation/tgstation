@@ -250,6 +250,11 @@
 	//Add to our researched list
 	researched_nodes[node.id] = TRUE
 
+	// Gain the experiments from the new node
+	for(var/id in node.unlock_ids)
+		visible_nodes[id] = TRUE
+		var/datum/techweb_node/unlocked_node = SSresearch.techweb_node_by_id(id)
+		update_node_status(unlocked_node)
 
 	// Unlock what the research actually unlocks
 	for(var/id in node.design_ids)
