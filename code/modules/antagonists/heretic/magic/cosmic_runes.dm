@@ -95,6 +95,9 @@
 		asoundin = 'sound/magic/cosmic_energy.ogg',
 		asoundout = 'sound/magic/cosmic_energy.ogg',
 	)
+	for(var/mob/living/person_on_rune in get_turf(src))
+		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))
+			do_teleport(person_on_rune, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	new rune_effect(get_turf(linked_rune_resolved))
 
 /// For if someone failed to invoke the rune

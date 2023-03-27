@@ -66,7 +66,8 @@
 /datum/heretic_knowledge/spell/cosmic_runes
 	name = "Cosmic Runes"
 	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with eachother for easy teleportation. \
-		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark."
+		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark. \
+		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "When day came, the Sleeper got lost. \
 		The sun outshone the stars, so he lost his guide."
 	next_knowledge = list(
