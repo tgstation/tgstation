@@ -126,6 +126,44 @@
 	)
 	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
 	var/list/drone_machinery_blacklist_compiled
+	/// whitelisted drone items, direct
+	var/list/drone_item_whitelist_flat = list(
+		/obj/item/chisel,
+		/obj/item/crowbar/drone,
+		/obj/item/screwdriver/drone,
+		/obj/item/wrench/drone,
+		/obj/item/weldingtool/drone,
+		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/rack_parts,
+	)
+	/// whitelisted drone items, recursive/includes descendants
+	var/list/drone_item_whitelist_recursive = list(
+		/obj/item/airlock_painter,
+		/obj/item/circuitboard,
+		/obj/item/conveyor_switch_construct,
+		/obj/item/electronics,
+		/obj/item/light,
+		/obj/item/pipe_meter,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/circuit_stack,
+		/obj/item/stack/conveyor,
+		/obj/item/stack/pipe_cleaner_coil,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet,
+		/obj/item/stack/tile,
+		/obj/item/stack/ducts,
+		/obj/item/stock_parts,
+		/obj/item/toner,
+		/obj/item/wallframe,
+		/obj/item/clothing/head,
+		/obj/item/clothing/mask,
+		/obj/item/storage/box/lights,
+		/obj/item/lightreplacer,
+	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
 		/obj/machinery/atmospherics/components/unary/vent_pump,
