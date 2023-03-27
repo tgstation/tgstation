@@ -3143,10 +3143,26 @@
 /datum/reagent/consumable/ethanol/pina_olivada
 	name = "Pina Olivada"
 	description = "An oddly designed concoction of olive oil and pineapple juice."
-	boozepwr = 50 // they add more alcohol to it to make it drinkable
+	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
 	color = "#493c00"
 	quality = DRINK_NICE
 	taste_description = "a horrible embolism of pineapple and olive oil"
+
+/datum/reagent/consumable/ethanol/pina_olivada/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(prob(90))
+		return ..() // first must clear 10% chance that something funny happens
+	if(prob(15))
+		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
+	if(prob(5))
+		var/list/messages = list(
+			"A horrible aftertaste coats your mouth.",
+			"You feel like you're going to choke on the oil in your throat.",
+			"You start to feel some heartburn coming on.",
+			"You want to throw up, but you know that nothing can come out due to the clog in your esophagus.",
+			"Your throat feels horrible.",
+		)
+		to_chat(drinker, span_notice(pick(messages)))
+	return ..()
 
 /datum/glass_style/drinking_glass/pina_olivada
 	required_drink_type = /datum/reagent/consumable/ethanol/pina_olivada
