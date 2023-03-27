@@ -70,6 +70,8 @@
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "dusty radio"
 
+/obj/item/uplink/replacement
+
 // Multitool uplink
 /obj/item/multitool/uplink/Initialize(mapload, owner, tc_amount = 20)
 	. = ..()
