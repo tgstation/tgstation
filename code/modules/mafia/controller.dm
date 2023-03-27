@@ -1,4 +1,4 @@
-
+#define MINIMUM_MAFIA_PLAYERS 3
 
 /**
  * The mafia controller handles the mafia minigame in progress.
@@ -765,7 +765,7 @@
 					to_chat(usr, span_notice("You are no longer voting to start the game early."))
 				else
 					GLOB.mafia_early_votes[C.ckey] = C
-					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [FLOOR(round(length(GLOB.mafia_signup) / 2), 3)])."))
+					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [FLOOR(round(length(GLOB.mafia_signup) / 2), MINIMUM_MAFIA_PLAYERS)])."))
 					if(check_start_votes()) //See if we have enough votes to start
 						forced_setup()
 				return TRUE
@@ -905,7 +905,7 @@
 		if(i == 5)
 			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_DISRUPT))
 			continue
-		if(ISMULTIPLE(i, 3))
+		if(ISMULTIPLE(i, MINIMUM_MAFIA_PLAYERS))
 			add_setup_role(role_setup, unique_roles_added, pick(MAFIA_REGULAR, MAFIA_SPECIAL))
 			continue
 		add_setup_role(role_setup, unique_roles_added, pick(TOWN_INVEST, TOWN_PROTECT, TOWN_KILLING, TOWN_SUPPORT))
@@ -989,7 +989,7 @@
 /datum/mafia_controller/proc/check_start_votes()
 	check_signups() //Same as before. What a useful proc.
 
-	if(length(GLOB.mafia_early_votes) < 3)
+	if(length(GLOB.mafia_early_votes) < MINIMUM_MAFIA_PLAYERS)
 		return FALSE //Bare minimum is 3, otherwise the game instantly ends. Also prevents people from randomly starting games for no reason.
 
 	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup) / 2))
@@ -1004,6 +1004,9 @@
  * in the signup list than max_players, those players will be notified that they will not be put into the game.
  *
  * This should only be run as we are in the process of starting a game.
+ *
+ * max_players - The maximum number of keys to put in our return list before we start telling people they're not getting in.
+ * filtered_keys - A list of player ckeys, to be included in the game.
  */
 /datum/mafia_controller/proc/filter_players(max_players)
 	//final list for all the players who will be in this game
@@ -1089,3 +1092,5 @@
 		QDEL_NULL(GLOB.mafia_game)
 	var/datum/mafia_controller/MF = new()
 	return MF
+
+#undef MINIMUM_MAFIA_PLAYERS
