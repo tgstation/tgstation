@@ -3149,9 +3149,9 @@
 	taste_description = "a horrible embolism of pineapple and olive oil"
 
 /datum/reagent/consumable/ethanol/pina_olivada/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(10, delta_time))
+	if(DT_PROB(8, delta_time))
 		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
-	if(DT_PROB(2.5, delta_time))
+	if(DT_PROB(3, delta_time))
 		var/list/messages = list(
 			"A horrible aftertaste coats your mouth.",
 			"You feel like you're going to choke on the oil in your throat.",
