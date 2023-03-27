@@ -13,15 +13,17 @@
 
 /obj/structure/syndicate_uplink_beacon/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
-		to_chat(sender, span_warning("You have no clue how to use this thing!"))
+		balloon_alert(user, "don't know how to use!")
 		return
 	if(!owner = null)
-		to_chat(sender, span_warning("Another agent has used this device, make your own!"))
+		balloon_alert(user, "already claimed!")
+		return
+	playsound(loc, "sound/machines/terminal_button0[rand(1, 8)].ogg", 40, TRUE)
+	balloon_alert(user, "beginning synchronization...")
+	if(!do_after(user, 3 SECONDS, src))
+		balloon_alert(user, "interrupted!")
 		return
 	probe_traitor(user)
-	playsound(loc, "sound/machines/terminal_button0[rand(1, 8)].ogg", 40, TRUE)
-	to_chat(sender, span_warning("You begin to activate and synchronize your beacon..."))
-
 
 /obj/structure/syndicate_uplink_beacon/proc/probe_traitor(mob/living/user)
 	owner = WEAKREF(user)
