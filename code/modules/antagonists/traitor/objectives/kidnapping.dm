@@ -1,6 +1,6 @@
 /datum/traitor_objective_category/kidnapping
 	name = "Kidnap Personnel"
-	objectives = list(
+	objectives = list(//
 		list(
 			/datum/traitor_objective/kidnapping/common = 20,
 			/datum/traitor_objective/kidnapping/common/assistant = 1,
