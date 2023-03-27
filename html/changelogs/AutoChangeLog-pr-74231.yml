@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "Fire alarm sprites are directional again"
