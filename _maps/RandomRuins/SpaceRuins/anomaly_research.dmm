@@ -11,14 +11,26 @@
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "aP" = (
-/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "aX" = (
 /obj/machinery/light/broken/directional/north,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"bB" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "bG" = (
@@ -40,15 +52,19 @@
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
 "cy" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/tank_holder/extinguisher,
+/obj/machinery/door/airlock/research,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "cA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"cD" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "cF" = (
 /obj/effect/turf_decal/stripes/line,
@@ -78,18 +94,14 @@
 /turf/open/lava/plasma/ice_moon,
 /area/misc/anomaly_research)
 "dy" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "dz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/iron/smooth,
+/turf/open/space/basic,
 /area/misc/anomaly_research)
 "dD" = (
 /obj/structure/lattice/catwalk,
@@ -124,10 +136,11 @@
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "eU" = (
-/obj/effect/turf_decal/trimline/purple/corner,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "eZ" = (
 /obj/structure/fireplace{
@@ -191,10 +204,15 @@
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "gr" = (
-/obj/machinery/duct,
-/obj/machinery/door/airlock/research/glass{
-	name = "Pharmacy"
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/item/anomaly_neutralizer,
+/obj/item/anomaly_neutralizer,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "gs" = (
@@ -211,7 +229,12 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "gN" = (
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "hh" = (
@@ -223,6 +246,19 @@
 	dir = 6
 	},
 /turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
+"hq" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -7
+	},
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "hV" = (
 /obj/structure/flora/grass/green/style_random,
@@ -257,24 +293,40 @@
 /turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
 "iv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/misc/anomaly_research)
+"iw" = (
 /obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
-"iw" = (
-/obj/machinery/door/airlock/research/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "iC" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
+"iP" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "jl" = (
-/obj/effect/turf_decal/siding/purple,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "jt" = (
 /obj/effect/turf_decal/stripes/line{
@@ -300,15 +352,13 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "jN" = (
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "kj" = (
 /obj/structure/lattice/catwalk,
@@ -332,6 +382,22 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
+"lx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"lz" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/item/kirbyplants/random,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "lL" = (
 /obj/machinery/research/anomaly_refinery,
 /obj/effect/turf_decal/stripes/white/line,
@@ -349,8 +415,15 @@
 /turf/closed/wall,
 /area/misc/anomaly_research)
 "lX" = (
-/obj/machinery/door/airlock/wood,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "mb" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -376,11 +449,17 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "my" = (
-/obj/effect/turf_decal/arrows/red,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "mE" = (
 /obj/effect/turf_decal/stripes/line{
@@ -395,6 +474,17 @@
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/machinery/light/warm/no_nightlight/directional/north,
 /turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
+"mY" = (
+/obj/machinery/light/warm/no_nightlight/directional/north,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "nh" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -424,18 +514,19 @@
 /area/misc/anomaly_research)
 "nA" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 5
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "nI" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "nS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -451,14 +542,17 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "nZ" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "og" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 8
-	},
+/obj/machinery/light/warm/no_nightlight/directional/south,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "ok" = (
@@ -471,37 +565,46 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "ow" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
 	},
-/obj/structure/table/reinforced,
-/obj/item/anomaly_neutralizer,
-/obj/item/anomaly_neutralizer,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
 "oF" = (
-/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/turf_decal/trimline/purple/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "oI" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "pk" = (
 /obj/machinery/jukebox,
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "pl" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/turf/open/floor/iron/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "pn" = (
-/obj/machinery/door/airlock/research,
-/turf/open/floor/iron/smooth,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "pu" = (
 /obj/effect/turf_decal/stripes/line,
@@ -509,20 +612,32 @@
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
 "pE" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"qa" = (
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "qj" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
-/obj/item/raw_anomaly_core/random{
-	pixel_x = -7
-	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/recharge_station,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "qr" = (
@@ -536,6 +651,13 @@
 /obj/effect/spawner/random/trash/box,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
+/area/misc/anomaly_research)
+"qM" = (
+/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/turf_decal/trimline/purple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "rk" = (
 /obj/structure/table/reinforced,
@@ -585,13 +707,17 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "sv" = (
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/white,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
 "sz" = (
-/obj/machinery/light/warm/no_nightlight/directional/south,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "sU" = (
@@ -648,6 +774,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
+"un" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
 "ut" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -701,6 +836,19 @@
 /obj/item/analyzer,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
+"uZ" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/misc/anomaly_research)
+"vG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "vJ" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -710,10 +858,9 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "vK" = (
-/obj/machinery/light/broken/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "vS" = (
 /obj/effect/turf_decal/siding/purple,
@@ -722,6 +869,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"vT" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "vY" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -729,8 +883,9 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "wb" = (
-/obj/item/paper/fluff/ruins/anomaly_research/mega_anomally,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "wf" = (
 /obj/effect/spawner/random/trash/garbage,
@@ -834,6 +989,17 @@
 /obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
+"yG" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "yJ" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Pharmacy"
@@ -852,10 +1018,8 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "yS" = (
-/obj/structure/sink/kitchen/directional/west,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "zu" = (
@@ -989,11 +1153,11 @@
 /turf/open/lava/plasma/ice_moon,
 /area/misc/anomaly_research)
 "Et" = (
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 8
+/obj/item/paper/fluff/ruins/anomaly_research/stabilizer,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "EE" = (
@@ -1018,15 +1182,21 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "Ft" = (
-/obj/item/paper/fluff/ruins/anomaly_research/stabilizer,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fu" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
+/area/misc/anomaly_research)
+"FE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "FK" = (
 /obj/machinery/light/warm/no_nightlight/directional/south,
@@ -1075,11 +1245,9 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "GR" = (
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/recharge_station,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/research,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Hb" = (
@@ -1100,10 +1268,12 @@
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
 "HE" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "HL" = (
 /obj/effect/spawner/random/trash/bin,
@@ -1151,6 +1321,14 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
+"It" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/misc/anomaly_research)
 "IC" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron/dark/textured,
@@ -1183,11 +1361,13 @@
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
 "Jw" = (
-/obj/machinery/door/airlock{
-	name = "Unisex Restrooms"
+/obj/effect/turf_decal/arrows/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "Jy" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1209,10 +1389,9 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "KP" = (
-/obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/freezer,
+/obj/item/paper/fluff/ruins/anomaly_research/mega_anomally,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "KU" = (
 /obj/effect/turf_decal/siding/purple{
@@ -1226,6 +1405,15 @@
 	},
 /obj/structure/closet/l3closet,
 /turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
+"Lb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "Lc" = (
 /obj/structure/toilet{
@@ -1246,7 +1434,8 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Lo" = (
-/obj/effect/turf_decal/siding/wood{
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -1268,11 +1457,12 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "LU" = (
-/obj/effect/turf_decal/trimline/purple/corner{
+/obj/structure/sink/kitchen/directional/west,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Mg" = (
@@ -1313,14 +1503,18 @@
 /turf/closed/wall,
 /area/misc/anomaly_research)
 "NM" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
 /area/misc/anomaly_research)
 "NP" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "NR" = (
@@ -1328,6 +1522,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
+/area/misc/anomaly_research)
+"Oa" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "On" = (
 /obj/structure/table/wood,
@@ -1349,12 +1550,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"Op" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/misc/anomaly_research)
 "Oq" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
+/area/misc/anomaly_research)
+"PQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "PY" = (
 /turf/open/floor/wood,
@@ -1365,10 +1577,10 @@
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "Qp" = (
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
+/obj/machinery/door/airlock/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "Qr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1392,9 +1604,10 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "QP" = (
-/obj/effect/spawner/random/environmentally_safe_anomaly,
-/obj/effect/turf_decal/trimline/purple,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "QZ" = (
 /obj/effect/turf_decal/siding/purple{
@@ -1423,6 +1636,13 @@
 /obj/machinery/light/warm/no_nightlight/directional/north,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
+/area/misc/anomaly_research)
+"Sm" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "So" = (
 /obj/structure/table/reinforced,
@@ -1460,7 +1680,11 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "SX" = (
-/obj/machinery/door/airlock/research,
+/obj/effect/spawner/random/environmentally_safe_anomaly,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Tp" = (
@@ -1508,6 +1732,8 @@
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "UD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/misc/anomaly_research)
 "UJ" = (
@@ -1525,6 +1751,16 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
+"VX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/tank_holder/extinguisher,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
 "Wy" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -1536,8 +1772,10 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "WD" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/freezer,
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "WM" = (
 /obj/structure/window/reinforced,
@@ -1606,15 +1844,25 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "Zv" = (
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/duct,
+/obj/machinery/door/airlock/research/glass{
+	name = "Pharmacy"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"ZA" = (
+/obj/machinery/door/airlock/research/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "ZI" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
+/obj/machinery/door/airlock/wood/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "ZJ" = (
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1643,15 +1891,6 @@ RT
 RT
 RT
 RT
-Ya
-Ya
-RT
-RT
-RT
-RT
-RT
-RT
-RT
 RT
 RT
 Ya
@@ -1659,8 +1898,21 @@ Ya
 Ya
 Ya
 Ya
+RT
+RT
+RT
+RT
+RT
+kp
+RT
+RT
+RT
 Ya
 Ya
+Ya
+Ya
+Ya
+RT
 RT
 RT
 RT
@@ -1673,18 +1925,23 @@ RT
 kp
 "}
 (2,1,1) = {"
-RT
-RT
-RT
-Ya
-Ya
-Ya
-Ya
-Ya
-RT
-RT
 kp
 RT
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+RT
 Ya
 Ya
 Ya
@@ -1699,9 +1956,8 @@ Ya
 Ya
 Ya
 Ya
-Ya
-Ya
-Ya
+RT
+RT
 RT
 RT
 RT
@@ -1723,6 +1979,84 @@ Ya
 Ya
 Ya
 Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+RT
+RT
+RT
+"}
+(4,1,1) = {"
+RT
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+RT
+RT
+"}
+(5,1,1) = {"
+RT
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
 xE
 Ya
 Ya
@@ -1734,14 +2068,18 @@ xI
 xE
 xE
 xE
+Ya
+Ya
 Ya
 Ya
 Ya
 RT
 RT
 "}
-(4,1,1) = {"
+(6,1,1) = {"
 RT
+Ya
+Ya
 Ya
 Ya
 Ya
@@ -1772,77 +2110,89 @@ xE
 Ya
 Ya
 Ya
-RT
-"}
-(5,1,1) = {"
-RT
-Ya
-Ya
-Ya
-xI
-xI
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xI
-xE
-xE
-xE
-dr
-xE
 Ya
 Ya
 RT
-"}
-(6,1,1) = {"
-RT
-Ya
-Ya
-Ya
-xI
-xE
-dr
-xE
-xE
-AV
-Ss
-Ss
-Ss
-Ss
-Ss
-AV
-AV
-AV
-AV
-AV
-AV
-AV
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-Ya
-Ya
-Ya
 "}
 (7,1,1) = {"
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+xI
+xI
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xI
+xE
+xE
+xE
+dr
+xE
+Ya
+Ya
+Ya
+Ya
+Ya
+"}
+(8,1,1) = {"
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+xI
+xE
+dr
+xE
+xE
+AV
+Ss
+Ss
+Ss
+Ss
+Ss
+AV
+AV
+AV
+AV
+AV
+AV
+AV
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+Ya
+Ya
+Ya
+Ya
+Ya
+"}
+(9,1,1) = {"
+Ya
+Ya
 Ya
 Ya
 Ya
@@ -1875,8 +2225,12 @@ xE
 Ya
 Ya
 Ya
+Ya
+Ya
 "}
-(8,1,1) = {"
+(10,1,1) = {"
+Ya
+Ya
 Ya
 Ya
 Ya
@@ -1887,10 +2241,10 @@ IC
 IC
 IC
 AV
-Lo
-Lo
-Lo
-oI
+Lb
+eU
+eU
+iv
 Gj
 tD
 Zh
@@ -1909,8 +2263,12 @@ xE
 Ya
 Ya
 Ya
+Ya
+RT
 "}
-(9,1,1) = {"
+(11,1,1) = {"
+RT
+Ya
 Ya
 Ya
 Ya
@@ -1920,11 +2278,11 @@ IC
 UD
 UD
 UD
-Zp
+ZI
+pl
+PQ
 PY
-PY
-PY
-As
+Lo
 Gj
 AV
 Zh
@@ -1942,9 +2300,13 @@ xE
 xE
 xE
 Ya
+Ya
+Ya
 RT
 "}
-(10,1,1) = {"
+(12,1,1) = {"
+RT
+Ya
 Ya
 Ya
 Ya
@@ -1976,9 +2338,13 @@ xE
 xE
 xE
 Ya
+Ya
+Ya
 RT
 "}
-(11,1,1) = {"
+(13,1,1) = {"
+RT
+Ya
 Ya
 Ya
 Ya
@@ -2010,16 +2376,20 @@ xE
 xE
 xE
 Ya
+Ya
+Ya
 RT
 "}
-(12,1,1) = {"
+(14,1,1) = {"
+RT
+Ya
 Ya
 AV
 AV
 AV
 AV
 AV
-pn
+cy
 AV
 xE
 AV
@@ -2045,15 +2415,19 @@ xE
 xE
 Ya
 Ya
+Ya
+RT
 "}
-(13,1,1) = {"
+(15,1,1) = {"
+RT
+Ya
 Ya
 AV
 Le
 rk
 yR
 sU
-Ls
+QP
 AV
 AV
 AV
@@ -2079,17 +2453,21 @@ xE
 xE
 Ya
 Ya
+Ya
+RT
 "}
-(14,1,1) = {"
+(16,1,1) = {"
+RT
+Ya
 Ya
 AV
 wW
-dy
+yG
 yR
 Kh
-Ls
+QP
 AO
-oF
+sz
 Ce
 WM
 mE
@@ -2113,17 +2491,21 @@ xE
 Ya
 Ya
 Ya
+Ya
+RT
 "}
-(15,1,1) = {"
+(17,1,1) = {"
+RT
+Ya
 Ya
 AV
 Ts
-NM
-yR
-Ls
-Ls
-iw
-ZI
+jl
+bB
+QP
+QP
+ZA
+oI
 Fg
 Fm
 Jy
@@ -2146,18 +2528,22 @@ xE
 xE
 Ya
 Ya
+Ya
+RT
 RT
 "}
-(16,1,1) = {"
+(18,1,1) = {"
+RT
+Ya
 Ya
 AV
 tR
-gN
+iP
 yR
 Ls
-sz
+og
 MG
-Ts
+mY
 Fg
 eq
 eA
@@ -2180,16 +2566,20 @@ xE
 xE
 Ya
 Ya
+Ya
+RT
 RT
 "}
-(17,1,1) = {"
+(19,1,1) = {"
+RT
+Ya
 Ya
 AV
 AV
 yJ
 yR
 Ls
-Ls
+QP
 AV
 fO
 Hb
@@ -2215,15 +2605,19 @@ Ya
 Ya
 Ya
 RT
+RT
+RT
 "}
-(18,1,1) = {"
+(20,1,1) = {"
+RT
+Ya
 Ya
 Ya
 AV
 KU
 DV
 QZ
-Ls
+QP
 AV
 AV
 AV
@@ -2247,18 +2641,22 @@ ZM
 Ya
 Ya
 Ya
+RT
+RT
 RT
 RT
 "}
-(19,1,1) = {"
-kp
+(21,1,1) = {"
+RT
+Ya
+Ya
 Ya
 AV
 kw
+qM
+WD
 QP
-jl
-Ls
-Ls
+QP
 Ls
 Cl
 xE
@@ -2283,17 +2681,21 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(20,1,1) = {"
+(22,1,1) = {"
+RT
+Ya
 Ya
 Ya
 AV
 nU
-HE
+uZ
 ih
-Ls
-Ls
-Ls
+yS
+QP
+vT
 Cl
 xE
 xE
@@ -2317,16 +2719,20 @@ RT
 RT
 kp
 RT
+RT
+RT
 "}
-(21,1,1) = {"
+(23,1,1) = {"
+RT
+RT
 Ya
 AV
 AV
 yR
-gr
+Zv
 GG
 GG
-Ls
+QP
 xQ
 Cl
 Cl
@@ -2351,16 +2757,20 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(22,1,1) = {"
+(24,1,1) = {"
+RT
+RT
 Ya
 AV
 Sj
-Qp
-yS
-og
+nZ
+LU
+NP
 GG
-Ls
+QP
 KU
 Tp
 Cl
@@ -2385,16 +2795,20 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(23,1,1) = {"
+(25,1,1) = {"
+RT
+kp
 Ya
 AV
 So
-Ft
+Et
 HO
-xS
+wb
 GG
-Ls
+QP
 Gc
 tw
 Cl
@@ -2419,16 +2833,20 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(24,1,1) = {"
+(26,1,1) = {"
+RT
+RT
 Ya
 AV
 UJ
-NP
+gN
 tx
-xS
+Sm
 GG
-Ls
+QP
 nU
 Oo
 Cl
@@ -2453,8 +2871,12 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(25,1,1) = {"
+(27,1,1) = {"
+RT
+RT
 Ya
 AV
 Oq
@@ -2462,7 +2884,7 @@ tK
 nl
 xS
 GG
-Ls
+QP
 xQ
 Cl
 Cl
@@ -2487,8 +2909,12 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(26,1,1) = {"
+(28,1,1) = {"
+RT
+RT
 Ya
 AV
 HL
@@ -2496,7 +2922,7 @@ EE
 xa
 ml
 GG
-Zv
+Oa
 Ls
 Cl
 xE
@@ -2521,8 +2947,12 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(27,1,1) = {"
+(29,1,1) = {"
+RT
+Ya
 Ya
 AV
 AV
@@ -2555,8 +2985,12 @@ RT
 RT
 RT
 RT
+RT
+RT
 "}
-(28,1,1) = {"
+(30,1,1) = {"
+RT
+Ya
 Ya
 Ya
 AV
@@ -2564,7 +2998,7 @@ gg
 jE
 AV
 lL
-Ls
+QP
 xh
 Cl
 xE
@@ -2589,8 +3023,12 @@ Ya
 RT
 RT
 RT
+RT
+RT
 "}
-(29,1,1) = {"
+(31,1,1) = {"
+RT
+Ya
 Ya
 Ya
 AV
@@ -2598,7 +3036,7 @@ AL
 AF
 AV
 SQ
-xh
+nI
 xh
 Cl
 Cl
@@ -2623,16 +3061,20 @@ Ya
 Ya
 RT
 RT
-"}
-(30,1,1) = {"
 RT
+RT
+"}
+(32,1,1) = {"
+Ya
+Ya
+Ya
 Ya
 AV
 NR
 Cc
 AV
 wz
-xh
+nI
 Xv
 xh
 xh
@@ -2657,16 +3099,20 @@ Ya
 Ya
 Ya
 RT
-"}
-(31,1,1) = {"
 RT
+RT
+"}
+(33,1,1) = {"
+RT
+Ya
+Ya
 Ya
 AV
 AV
 xo
 AV
 GI
-xh
+nI
 Cy
 wg
 xh
@@ -2691,16 +3137,20 @@ xE
 xE
 Ya
 RT
-"}
-(32,1,1) = {"
 RT
+RT
+"}
+(34,1,1) = {"
+RT
+Ya
+Ya
 Ya
 AV
 it
 lo
 AV
 ok
-xh
+nI
 yK
 vS
 xh
@@ -2725,16 +3175,20 @@ xE
 xE
 Ya
 Ya
-"}
-(33,1,1) = {"
 RT
+RT
+"}
+(35,1,1) = {"
+RT
+Ya
+Ya
 Ya
 AV
 Is
-lo
+sv
 AV
 sg
-xh
+nI
 vJ
 Ia
 xh
@@ -2759,19 +3213,23 @@ xE
 xE
 Ya
 Ya
-"}
-(34,1,1) = {"
 RT
+RT
+"}
+(36,1,1) = {"
+RT
+RT
+Ya
 Ya
 AV
 Nc
-KP
+Op
 AV
 xh
-xh
+nI
 fm
 II
-xh
+lx
 AV
 AV
 AV
@@ -2793,25 +3251,29 @@ xE
 xE
 Ya
 Ya
-"}
-(35,1,1) = {"
+Ya
 RT
+"}
+(37,1,1) = {"
+RT
+RT
+Ya
 Ya
 AV
 Lc
-WD
+NM
 AV
 sp
-xh
-xh
-pE
-xh
+nI
+nI
+pn
+nI
 Ii
 xQ
 AV
-dz
+nA
 fc
-cy
+VX
 AV
 xI
 xI
@@ -2827,25 +3289,29 @@ xE
 xE
 Ya
 Ya
-"}
-(36,1,1) = {"
+Ya
 RT
+"}
+(38,1,1) = {"
+RT
+RT
+Ya
 Ya
 AV
 AV
-Jw
+ow
 AV
 cA
 cA
 cA
 gA
-Ls
-eU
-iv
-pn
-my
-wb
-TU
+QP
+oF
+aP
+cy
+Jw
+KP
+cD
 AV
 MN
 Fs
@@ -2861,19 +3327,23 @@ ZJ
 xE
 Ya
 Ya
+Ya
+RT
 "}
-(37,1,1) = {"
+(39,1,1) = {"
+RT
 RT
 Ya
 Ya
+Ya
 AV
-jN
+my
 xj
 mb
 ip
 ii
 xh
-xh
+nI
 ZQ
 YA
 AV
@@ -2895,19 +3365,23 @@ ZJ
 xE
 Ya
 Ya
+Ya
+Ya
 "}
-(38,1,1) = {"
+(40,1,1) = {"
+RT
+RT
 RT
 Ya
 Ya
 AV
-GR
+qj
 xs
 wB
 nh
 cA
 xh
-aP
+SX
 Ng
 Jp
 AV
@@ -2929,23 +3403,27 @@ xI
 xE
 Ya
 Ya
+Ya
+Ya
 "}
-(39,1,1) = {"
+(41,1,1) = {"
 RT
+RT
+kp
 Ya
 Ya
 AV
-ow
+gr
 Sv
-pl
+dy
 Gg
 cA
 Ls
-xh
+nI
 ft
 dj
 AV
-dz
+un
 aw
 SS
 Xr
@@ -2963,23 +3441,27 @@ Fs
 xE
 Ya
 Ya
+Ya
+Ya
 "}
-(40,1,1) = {"
+(42,1,1) = {"
+RT
 RT
 Ya
+dz
 Ya
 AV
-qj
-Fg
-pl
+hq
+vG
+Ft
+lX
+GR
+QP
 nI
-SX
-Ls
-xh
-LU
-Et
-pn
-Hs
+qa
+iw
+cy
+HE
 Zh
 Zh
 Zh
@@ -2997,23 +3479,27 @@ xI
 xE
 Ya
 Ya
+Ya
+Ya
 "}
-(41,1,1) = {"
-Ya
-Ya
+(43,1,1) = {"
+RT
+RT
+dz
+dz
 Ya
 AV
 uN
-Fg
-sv
+vG
+lz
 ut
 cA
 Cf
-vK
+pE
 xh
 xQ
 AV
-nA
+jN
 BD
 uG
 BD
@@ -3031,14 +3517,18 @@ ZJ
 xE
 Ya
 Ya
+Ya
+Ya
 "}
-(42,1,1) = {"
+(44,1,1) = {"
+RT
 Ya
+dz
 Ya
 Ya
 AV
 AV
-lX
+Qp
 AV
 AV
 AV
@@ -3065,14 +3555,18 @@ xE
 xE
 Ya
 Ya
-"}
-(43,1,1) = {"
 Ya
+RT
+"}
+(45,1,1) = {"
+RT
+Ya
+dz
 Ya
 Ya
 AV
 bP
-PY
+FE
 PY
 CP
 hh
@@ -3099,14 +3593,18 @@ xE
 xE
 Ya
 Ya
+Ya
+RT
 "}
-(44,1,1) = {"
+(46,1,1) = {"
+RT
+Ya
 Ya
 Ya
 Ya
 AV
 UC
-bG
+vK
 bG
 PY
 hh
@@ -3133,14 +3631,18 @@ xE
 xE
 Ya
 Ya
-"}
-(45,1,1) = {"
+Ya
 RT
+"}
+(47,1,1) = {"
+RT
+Ya
+Ya
 Ya
 Ya
 AV
 eO
-nZ
+It
 bG
 YB
 hh
@@ -3167,82 +3669,173 @@ xE
 xE
 Ya
 Ya
-"}
-(46,1,1) = {"
-RT
-Ya
-Ya
-AV
-AV
-AV
-AV
-AV
-AV
-Ya
-Ya
-Ya
-Ya
-Ya
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-xE
-Ya
-Ya
-Ya
-Ya
-"}
-(47,1,1) = {"
-RT
-RT
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-RT
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-Ya
-xE
-xE
-xE
-xE
-xE
-xE
-Ya
-Ya
-Ya
-Ya
-Ya
 Ya
 RT
 "}
 (48,1,1) = {"
+RT
+RT
+Ya
+Ya
+Ya
+AV
+AV
+AV
+AV
+AV
+AV
+Ya
+Ya
+Ya
+Ya
+Ya
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+xE
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+"}
+(49,1,1) = {"
+RT
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+xE
+xE
+xE
+xE
+xE
+xE
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+RT
+RT
+"}
+(50,1,1) = {"
+RT
+RT
+RT
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
 kp
 RT
 RT
+"}
+(51,1,1) = {"
+RT
+RT
+RT
+RT
 Ya
 Ya
 Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+Ya
+RT
+RT
+RT
+RT
+RT
+RT
+"}
+(52,1,1) = {"
+kp
+RT
+RT
+RT
+RT
+RT
+Ya
+Ya
+Ya
+Ya
+RT
 RT
 RT
 RT
@@ -3254,12 +3847,6 @@ RT
 RT
 RT
 RT
-RT
-Ya
-Ya
-Ya
-Ya
-Ya
 Ya
 Ya
 Ya
@@ -3268,5 +3855,10 @@ Ya
 Ya
 RT
 RT
-kp
+RT
+RT
+RT
+RT
+RT
+RT
 "}
