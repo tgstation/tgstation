@@ -12,6 +12,8 @@ GLOBAL_VAR(station_nuke_source)
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
+	can_buckle = TRUE
+	buckle_lying = 0
 
 	/// What the timer is set to, in seconds
 	var/timer_set = 90
@@ -63,6 +65,7 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
+	AddElement(/datum/element/ridable, /datum/component/riding/structure/tank)
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
