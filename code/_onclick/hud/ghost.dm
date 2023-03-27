@@ -21,6 +21,10 @@
 	var/mob/dead/observer/G = usr
 	G.follow()
 
+/atom/movable/screen/ghost/activities
+	name = "Bored?"
+	icon_state = "bored"
+
 /atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
 	icon_state = "reenter_corpse"
@@ -52,6 +56,14 @@
 /atom/movable/screen/ghost/minigames_menu/Click()
 	var/mob/dead/observer/observer = usr
 	observer.open_minigames_menu()
+
+/atom/movable/screen/ghost/dm
+	name = "Deathmatch Lobby"
+	icon_state = "dm"
+
+/atom/movable/screen/ghost/dm/Click()
+	var/mob/dead/observer/G = usr
+	G.deathmatch_signup()
 
 /datum/hud/ghost/New(mob/owner)
 	..()
@@ -90,6 +102,11 @@
 	using = new /atom/movable/screen/language_menu
 	using.screen_loc = ui_ghost_language_menu
 	using.icon = ui_style
+	using.hud = src
+	static_inventory += using
+
+	using = new /atom/movable/screen/ghost/dm()
+	using.screen_loc = ui_ghost_dm
 	using.hud = src
 	static_inventory += using
 
