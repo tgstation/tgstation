@@ -34,14 +34,17 @@
 		return
 	if(owner == WEAKREF(user))
 		balloon_alert(user, "already synchronized to you!")
+		return
 	if(owner != null)
 		balloon_alert(user, "already claimed!")
 		return
-	playsound(loc, "sound/machines/terminal_button0[rand(1, 8)].ogg", 40, TRUE)
+	var/datum/looping_sound/typing/typing_sounds = new(src, TRUE)
 	balloon_alert(user, "beginning synchronization...")
 	if(!do_after(user = user, delay = 3 SECONDS, target = src, interaction_key = REF(src)))
 		balloon_alert(user, "interrupted!")
+		typing_sounds.stop()
 		return
+	typing_sounds.stop()
 	probe_traitor(user)
 
 /obj/structure/syndicate_uplink_beacon/screwdriver_act_secondary(mob/living/user, obj/item/tool)
