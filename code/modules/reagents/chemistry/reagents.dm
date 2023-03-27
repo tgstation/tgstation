@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/affected_biotype = MOB_ORGANIC
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_respiration_type = RESPIRATION_OXYGEN
+	var/affected_respiration_type = ALL
 	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
 	var/affected_organtype = ORGAN_ORGANIC
