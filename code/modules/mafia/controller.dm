@@ -65,6 +65,9 @@
 	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
 	var/debug = FALSE
 
+	///was our game forced to start early?
+	var/early_start = FALSE
+
 /datum/mafia_controller/New()
 	. = ..()
 	GLOB.mafia_game = src
@@ -353,7 +356,7 @@
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	if(custom_setup.len)
+	if(custom_setup.len || early_start)
 		return
 	var/client/role_client = GLOB.directory[rewarded.player_key]
 	role_client?.give_award(award, rewarded.body)
@@ -398,6 +401,8 @@
 	QDEL_LIST(landmarks)
 	QDEL_NULL(town_center_landmark)
 	phase = MAFIA_PHASE_SETUP
+
+	early_start = FALSE
 
 /**
  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
@@ -977,6 +982,7 @@
 	var/list/setup = generate_forced_setup(req_players)
 
 	prepare_game(setup, filtered_keys)
+	early_start = TRUE
 	start_game()
 
 /**
