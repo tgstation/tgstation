@@ -77,6 +77,7 @@
 		valid_triggers -= selection
 		triggers += new selection()
 		trigger_amount--
+	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE)
 	setup()
 //Seperate from initialize, for artifact inheritance funnies
 /datum/component/artifact/proc/setup()
@@ -94,7 +95,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
-	RegisterSignals(parent, list(COMSIG_ANALYSISFORM_CHANGED,COMSIG_STICKER_STICKED), PROC_REF(on_analysis))
+	RegisterSignal(parent, COMSIG_STICKER_STICKED, PROC_REF(on_analysis))
 	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(deanalyze))
 
 /datum/component/artifact/UnregisterFromParent()

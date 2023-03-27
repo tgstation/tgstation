@@ -1054,3 +1054,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
+
+/// this object cannot have its export value be shown by export scanner (shows as unknown)
+#define TRAIT_HIDDEN_EXPORT_VALUE "hiddenexportvalue"

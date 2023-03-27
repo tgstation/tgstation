@@ -132,8 +132,8 @@
 
 /obj/item/sticker/analysis_form/peel(atom/source)
 	SIGNAL_HANDLER
-	. = ..()
 	deanalyze_attached()
+	..()
 
 /obj/item/sticker/analysis_form/proc/analyze_attached()
 	var/datum/component/artifact/to_analyze = attached.GetComponent(/datum/component/artifact)
@@ -152,19 +152,20 @@
 
 /obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
 	var/correct = 0
-	var/possible_guesses = 2 //typename + origin
-	var/incorrect = 0
+	var/total_guesses = 0 
 
-	for(var/datum/artifact_trigger/trigger in art.triggers)
-		possible_guesses += 1
 	if(art.artifact_origin.type_name == chosen_origin)
 		correct += 1
+	if(chosen_origin)
+		total_guesses += 1
+	if(chosentype)
+		total_guesses += 1
 	if(art.type_name == chosentype)
 		correct += 1
 	for(var/name in chosentriggers)
+		total_guesses += 1
 		if(locate(SSartifacts.artifact_trigger_name_to_type[name]) in art.triggers)
 			correct += 1
-		else
-			incorrect += 1 //dumbasses would check the entire list and get away with it
-	incorrect += possible_guesses - correct
-	return round((CARGO_CRATE_VALUE/4) * art.potency * (max((ARTIFACT_COMMON - art.weight) * 0.01, 0.01) * max(correct - incorrect, 0))
+
+	var/incorrect = total_guesses - correct
+	return round((CARGO_CRATE_VALUE/4) * art.potency * (max((ARTIFACT_COMMON - art.weight) * 0.01, 0.01) * max(correct - incorrect, 0.01)))
