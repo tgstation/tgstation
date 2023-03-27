@@ -4,7 +4,7 @@
 ///// Debride burnt flesh
 /datum/surgery/debride
 	name = "Debride burnt flesh"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/burn
 	possible_locs = list(
 		BODY_ZONE_R_ARM,

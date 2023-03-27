@@ -1,7 +1,7 @@
 /datum/surgery/organ_extraction
 	name = "Experimental organ replacement"
 	possible_locs = list(BODY_ZONE_CHEST)
-	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,

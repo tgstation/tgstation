@@ -8,7 +8,7 @@
 ///// Repair puncture wounds
 /datum/surgery/repair_puncture
 	name = "Repair puncture"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags =  SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/pierce
 	target_mobtypes = list(/mob/living/carbon)
 	possible_locs = list(

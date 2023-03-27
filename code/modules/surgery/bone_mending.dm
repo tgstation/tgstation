@@ -4,7 +4,7 @@
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery/repair_bone_hairline
 	name = "Repair bone fracture (hairline)"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/blunt/severe
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -30,7 +30,7 @@
 ///// Repair Compound Fracture (Critical)
 /datum/surgery/repair_bone_compound
 	name = "Repair Compound Fracture"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/blunt/critical
 	possible_locs = list(
 		BODY_ZONE_R_ARM,

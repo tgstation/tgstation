@@ -180,6 +180,9 @@
 		ui = new(user, src, "SurgeryInitiator")
 		ui.open()
 
+/datum/component/surgery_initiator/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
 /datum/component/surgery_initiator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)

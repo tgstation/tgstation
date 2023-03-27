@@ -23,7 +23,7 @@
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE
+			success = TRUE	
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
