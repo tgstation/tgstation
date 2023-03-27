@@ -34,6 +34,7 @@
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.stun_diminish = 1
 	return ..()
 
 //KNOCKDOWN
@@ -48,6 +49,7 @@
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	owner.knockdown_diminish = 1
 	return ..()
 
 
@@ -78,6 +80,7 @@
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
+	owner.paralyze_diminish = 1
 	return ..()
 
 //INCAPACITATED
@@ -114,8 +117,8 @@
 	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()
-	if(owner.getStaminaLoss())
-		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+	if(owner.stamina.loss)
+		owner.stamina.adjust(0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
 
 //SLEEPING
@@ -205,7 +208,7 @@
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
 			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
-		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
+		owner.stamina.adjust(-min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
 

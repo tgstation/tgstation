@@ -26,11 +26,12 @@
 	return data
 
 /datum/preference/choiced/skin_tone/apply_to_human(mob/living/carbon/human/target, value)
-	target.skin_tone = value
+	if(target.dna.species.use_skintones)
+		target.skin_tone = value
 
 /datum/preference/choiced/skin_tone/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	return initial(species_type.use_fur)
+	return initial(species_type.use_skintones)

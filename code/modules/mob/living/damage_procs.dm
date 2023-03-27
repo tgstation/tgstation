@@ -32,7 +32,7 @@
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
+			stamina.adjust(-damage_amount, forced = forced)
 	return TRUE
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
@@ -49,7 +49,7 @@
 		if(CLONE)
 			return adjustCloneLoss(damage)
 		if(STAMINA)
-			return adjustStaminaLoss(damage)
+			return stamina.adjust(-damage)
 
 /// return the damage amount for the type given
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
@@ -65,7 +65,7 @@
 		if(CLONE)
 			return getCloneLoss()
 		if(STAMINA)
-			return getStaminaLoss()
+			return stamina.loss
 
 /// applies multiple damages at once via [/mob/living/proc/apply_damage]
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
@@ -287,25 +287,11 @@
 /mob/living/proc/getOrganLoss(slot)
 	return
 
-/mob/living/proc/getStaminaLoss()
-	return staminaloss
-
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
-		return
-	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
-	if(updating_stamina)
-		update_stamina()
-	return
-
+/mob/living/proc/pre_stamina_change(diff as num, forced)
+	return diff
+	
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
-		return FALSE
-	staminaloss = amount
-	if(updating_stamina)
-		update_stamina()
+	return
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
@@ -328,7 +314,7 @@
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_bodytype, updating_health = TRUE)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
-	adjustStaminaLoss(-stamina, FALSE)
+	src.stamina.adjust(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
 
@@ -336,7 +322,7 @@
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
-	adjustStaminaLoss(stamina, FALSE)
+	src.stamina.adjust(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
 

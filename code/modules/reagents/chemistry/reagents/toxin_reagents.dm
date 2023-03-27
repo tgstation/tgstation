@@ -275,7 +275,7 @@
 			affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
 			affected_mob.adjust_slurring(6 SECONDS * REM * delta_time)
 		if(5 to 8)
-			affected_mob.adjustStaminaLoss(40 * REM * delta_time, 0)
+			affected_mob.stamina.adjust(-40 * REM * delta_time, 0)
 		if(9 to INFINITY)
 			affected_mob.fakedeath(type)
 	..()
@@ -578,7 +578,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustStaminaLoss(data * REM * delta_time, 0)
+	affected_mob.stamina.adjust(-data * REM * delta_time, 0)
 	data = max(data - 1, 3)
 	..()
 	. = TRUE
@@ -848,7 +848,7 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(current_cycle >= 10)
 		affected_mob.Sleeping(40 * REM * delta_time)
-	affected_mob.adjustStaminaLoss(10 * REM * delta_time, 0)
+	affected_mob.stamina.adjust(-10 * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -1190,7 +1190,7 @@
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	affected_mob.adjustStaminaLoss(7.5 * REM * delta_time, 0)
+	affected_mob.stamina.adjust(-7.5 * REM * delta_time, 0)
 	if(DT_PROB(10, delta_time))
 		switch(rand(1, 3))
 			if(1)

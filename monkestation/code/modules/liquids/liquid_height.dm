@@ -17,7 +17,7 @@
 
 	src.height_applied = height_applied
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_target_move)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_target_move))
 	var/atom/movable/movable_target = target
 	if(isturf(movable_target.loc))
 		var/turf/turf_loc = movable_target.loc

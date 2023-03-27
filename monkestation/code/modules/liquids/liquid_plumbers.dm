@@ -10,6 +10,7 @@
 	idle_power_usage = 10
 	active_power_usage = 1000
 	buffer = 300
+	category="Distribution"
 
 	/// Pump is turned on by engineer, etc.
 	var/turned_on = FALSE
@@ -244,6 +245,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/plumbing/floor_pump/input/on/waste, 0
 	desc = "Pump used to dump liquids out from a plumbing pipenet into a location."
 	icon_state = "active_output"
 	base_icon_state = "active_output"
+	category="Distribution"
 
 	/// Is the turf too full to pump more?
 	var/over_volume = FALSE

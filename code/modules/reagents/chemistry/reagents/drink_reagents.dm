@@ -628,7 +628,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_DOUBLE_TAP, type)
 	if(current_cycle > 10)
 		to_chat(affected_mob, span_warning("You feel kinda tired as your sugar rush wears off..."))
-		affected_mob.adjustStaminaLoss(min(80, current_cycle * 3), required_biotype = affected_biotype)
+		affected_mob.stamina.adjust(-min(80, current_cycle * 3))
 		affected_mob.adjust_drowsiness(current_cycle * 2 SECONDS)
 	..()
 

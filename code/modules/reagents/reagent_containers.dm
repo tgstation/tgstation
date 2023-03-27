@@ -41,7 +41,7 @@
 
 	add_initial_reagents()
 
-	AddElement(/datum/element/liquids_interaction, on_interaction_callback = PROC_REF(attack_on_liquids_turf))
+	AddComponent(/datum/component/liquids_interaction, TYPE_PROC_REF(/obj/item/reagent_containers/cup/beaker, attack_on_liquids_turf))
 
 /obj/item/reagent_containers/proc/attack_on_liquids_turf(obj/item/reagent_containers/my_beaker, turf/T, mob/living/user, obj/effect/abstract/liquid_turf/liquids)
 	if(!user.Adjacent(T))

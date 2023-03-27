@@ -237,6 +237,12 @@
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
 
+/datum/quirk/item_quirk/family_heirloom/clone_data()
+	return heirloom
+
+/datum/quirk/item_quirk/family_heirloom/on_clone(data)
+	heirloom = data
+
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
@@ -432,7 +438,7 @@
 
 	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
-		quirk_holder.toggle_move_intent()
+		quirk_holder.set_move_intent(MOVE_INTENT_WALK)
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
 
 /datum/quirk/nonviolent

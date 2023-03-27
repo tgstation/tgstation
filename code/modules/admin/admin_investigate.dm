@@ -34,6 +34,7 @@
 		INVESTIGATE_RECORDS,
 		INVESTIGATE_RESEARCH,
 		INVESTIGATE_WIRES,
+		INVESTIGATE_NANITES,
 	)
 
 	var/list/logs_present = list("notes, memos, watchlist")

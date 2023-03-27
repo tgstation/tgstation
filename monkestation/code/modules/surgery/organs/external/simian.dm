@@ -1,6 +1,6 @@
 /obj/item/organ/external/tail/simian
-	name = "simian tail"
-	desc = "A severed simian tail. Somewhere, no doubt, a simian hater is very pleased with themselves."
+	name = "monkey tail"
+	desc = "A severed monkey tail. Somewhere, no doubt, a simian hater is very pleased with themselves."
 	preference = "feature_tail_monkey"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/simian

@@ -17640,6 +17640,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/item/mmi,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
+/obj/item/nanite_scanner,
+/obj/item/nanite_scanner,
+/obj/item/multitool{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "elt" = (
@@ -23751,9 +23762,7 @@
 "fJF" = (
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "fJG" = (
@@ -24901,19 +24910,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/item/storage/box/disks{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/storage/box/gloves{
-	pixel_x = 1;
-	pixel_y = 3
-	},
-/obj/item/storage/box/bodybags{
-	pixel_x = -3;
-	pixel_y = -1
-	},
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/machinery/button/door/directional/east{
 	id = "genetics_shutters";
@@ -24925,6 +24921,7 @@
 	pixel_x = 24;
 	pixel_y = -5
 	},
+/obj/machinery/clonepod,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "fZh" = (
@@ -40182,6 +40179,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/circuits)
 "jKU" = (
@@ -42247,9 +42245,9 @@
 "kiz" = (
 /obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/folder/white,
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "kiA" = (
@@ -42313,6 +42311,15 @@
 	network = list("ss13","rd")
 	},
 /obj/machinery/status_display/evac/directional/east,
+/obj/item/storage/box/disks_nanite,
+/obj/item/storage/box/gloves{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/box/disks{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "kjd" = (
@@ -63666,6 +63673,8 @@
 /obj/item/stock_parts/cell/high,
 /obj/structure/table,
 /obj/machinery/newscaster/directional/west,
+/obj/item/storage/box/disks_nanite,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "pDt" = (
@@ -74790,7 +74799,7 @@
 "sob" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment,
-/obj/item/kirbyplants/random,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "sog" = (
@@ -82968,15 +82977,15 @@
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "umk" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/east,
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/light/directional/east,
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "umm" = (
@@ -86886,15 +86895,8 @@
 "vka" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/west,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 3
-	},
-/obj/structure/table,
-/obj/item/multitool{
-	pixel_x = -4;
-	pixel_y = 2
-	},
 /obj/machinery/light/cold/directional/west,
+/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "vkg" = (

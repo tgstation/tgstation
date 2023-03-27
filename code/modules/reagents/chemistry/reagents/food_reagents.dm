@@ -767,7 +767,7 @@
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
 		M.adjustToxLoss(3*REM, FALSE, required_biotype = affected_biotype)
-		M.adjustStaminaLoss(10*REM, FALSE, required_biotype = affected_biotype)
+		M.stamina.adjust(-10*REM, FALSE)
 		M.set_eye_blur_if_lower(10 SECONDS)
 		. = TRUE
 	..()

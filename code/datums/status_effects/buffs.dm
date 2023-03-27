@@ -290,7 +290,7 @@
 			itemUser.adjustFireLoss(-1.5)
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
 			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
-			itemUser.adjustStaminaLoss(-1.5)
+			itemUser.stamina.adjust(1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 
@@ -478,7 +478,7 @@
 	owner.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
 	owner.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
 	owner.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
-	owner.adjustStaminaLoss(-4 * delta_time, updating_stamina = FALSE)
+	owner.stamina.adjust(4 * delta_time)
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 

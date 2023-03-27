@@ -192,6 +192,6 @@
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] starts aiming with a blowgun!"))
 	if(do_after(user, 25, target = src))
-		user.adjustStaminaLoss(20)
+		user.stamina.adjust(-20)
 		user.adjustOxyLoss(20)
 		return ..()

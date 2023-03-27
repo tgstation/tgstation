@@ -422,6 +422,11 @@ SUBSYSTEM_DEF(ticker)
 				if (item.restricted_roles && length(item.restricted_roles) && !(player_assigned_role.title in item.restricted_roles))
 					continue
 				item.post_equip_item(new_player_mob.client?.prefs, new_player_living)
+
+		if(new_player_mob.client.readied_store)
+			if(new_player_mob.client.readied_store.bought_item)
+				new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
+
 		CHECK_TICK
 
 	if(captainless)

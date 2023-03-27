@@ -84,7 +84,7 @@ In all, this is a lot like the monkey code. /N
 			if(CLONE)
 				adjustCloneLoss(damage)
 			if(STAMINA)
-				adjustStaminaLoss(damage)
+				stamina.adjust(-damage)
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack

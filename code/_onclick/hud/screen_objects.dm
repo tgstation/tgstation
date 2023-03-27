@@ -328,12 +328,17 @@
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			icon_state = "running"
+		if(MOVE_INTENT_SPRINT)
+			icon_state = "sprinting"
 	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
-	user.toggle_move_intent(user)
+	if(user.m_intent != MOVE_INTENT_WALK)
+		user.set_move_intent(MOVE_INTENT_WALK)
+	else
+		user.set_move_intent(MOVE_INTENT_RUN)
 
 /atom/movable/screen/pull
 	name = "stop pulling"

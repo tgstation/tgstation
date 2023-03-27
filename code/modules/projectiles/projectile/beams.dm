@@ -86,8 +86,9 @@
 /obj/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 30
+	damage = 0
 	damage_type = STAMINA
+	stamina = 30
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
@@ -98,7 +99,7 @@
 	impact_type = /obj/effect/projectile/impact/disabler
 
 /obj/projectile/beam/disabler/weak
-	damage = 15
+	stamina = 15
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -178,7 +179,7 @@
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
-				M.adjustStaminaLoss(34)
+				M.stamina.adjust(-34)
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"

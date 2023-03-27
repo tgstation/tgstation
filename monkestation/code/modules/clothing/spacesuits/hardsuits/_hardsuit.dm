@@ -8,10 +8,11 @@
 	worn_icon = 'monkestation/icons/mob/clothing/hardsuit/hardsuit_body.dmi'
 	icon_state = "hardsuit-engineering"
 	max_integrity = 300
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
-	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_helmet)
 	supports_variations_flags = NONE
 
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
@@ -81,7 +82,6 @@
 		RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
-	. = ..()
 	ToggleHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
@@ -230,8 +230,8 @@
 		air_contents = null
 		return
 	active_hardsuit = loc
-	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
-	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, .proc/on_user_del)
+	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
+	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_del))
 
 	START_PROCESSING(SSobj, src)
 
@@ -255,7 +255,7 @@
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit) && ishuman(loc.loc) && loc.loc == active_user)
 		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
 		active_hardsuit = loc
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
 		return
 	turn_off(active_user)
 

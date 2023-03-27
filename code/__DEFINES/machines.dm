@@ -59,6 +59,7 @@
 #define BIOGENERATOR (1<<4) //Uses biomass
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
+#define NANITE_COMPILER (1<<7) //Prints nanite disks
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
@@ -80,6 +81,10 @@
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
+
+//cloning defines. These are flags.
+#define CLONING_SUCCESS (1<<0)
+#define CLONING_DELETE_RECORD (1<<1)
 
 //mass drivers and related machinery
 #define MASSDRIVER_ORDNANCE "ordnancedriver"

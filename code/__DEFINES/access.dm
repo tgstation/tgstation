@@ -22,6 +22,8 @@
 #define ACCESS_MINISAT "minisat"
 /// Access used to run the NTNet Tablet Application WireCarp, which allows you to diagnose and view NTNet logging.
 #define ACCESS_NETWORK "network"
+/// Cloning room and clone pod ejection
+#define ACCESS_CLONING "cloning"
 /// Access used to access the Gateway Room, which will further lead you to get to Away Missions.
 #define ACCESS_GATEWAY "gateway"
 /// Access used to override "personal control" on a personal locker, meaning you are able to open any of those lockers/wardrobes.

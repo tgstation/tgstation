@@ -126,7 +126,7 @@
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, forced = TRUE)
+		stamina.adjust(stamina_recovery * delta_time, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
 	if(length(speak_emote))
@@ -211,7 +211,7 @@
 	return sentience_type == compare_type
 
 /// Updates movement speed based on stamina loss
-/mob/living/basic/update_stamina()
+/mob/living/basic/on_stamina_update()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/basic/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)

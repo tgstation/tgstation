@@ -13,7 +13,7 @@
 	src.produces_eggs = produces_eggs
 	src.gestate_timer = gestate_timer
 
-	RegisterSignal(parent, COMSIG_MUTATION_TRIGGER, .proc/trigger_mutation)
+	RegisterSignal(parent, COMSIG_MUTATION_TRIGGER, PROC_REF(trigger_mutation))
 
 /datum/component/mutation/proc/trigger_mutation(atom/source, turf/source_turf, passes_minimum_checks)
 	SIGNAL_HANDLER
@@ -46,7 +46,7 @@
 		parent_animal.pass_stats(layed_egg)
 
 	else
-		addtimer(CALLBACK(src, .proc/finished_gestate, passes_minimum_checks), gestate_timer)
+		addtimer(CALLBACK(src, PROC_REF(finished_gestate), passes_minimum_checks), gestate_timer)
 
 
 /datum/component/mutation/proc/finished_gestate(passes_minimum_checks)

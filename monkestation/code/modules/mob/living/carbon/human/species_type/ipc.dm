@@ -73,6 +73,13 @@
 	var/saved_screen //for saving the screen when they die
 	var/datum/action/innate/change_screen/change_screen
 
+/datum/species/ipc/get_scream_sound(mob/living/carbon/human/ethereal)
+	return pick(
+		'sound/voice/ethereal/ethereal_scream_1.ogg',
+		'sound/voice/ethereal/ethereal_scream_2.ogg',
+		'sound/voice/ethereal/ethereal_scream_3.ogg',
+	)
+
 /datum/species/ipc/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
 		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
@@ -118,7 +125,7 @@
 	saved_screen = C.dna.features["ipc_screen"]
 	C.dna.features["ipc_screen"] = "BSOD"
 	C.update_body()
-	addtimer(CALLBACK(src, .proc/post_death, C), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(post_death), C), 5 SECONDS)
 
 /datum/species/ipc/proc/post_death(mob/living/carbon/C)
 	if(C.stat < DEAD)
@@ -134,10 +141,7 @@
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = input(usr, "Which screen do you want to use?", "Screen Change") as null | anything in GLOB.ipc_screens_list
-	var/color_choice = input(usr, "Which color do you want your screen to be?", "Color Change") as null | color
 	if(!screen_choice)
-		return
-	if(!color_choice)
 		return
 	if(!ishuman(owner))
 		return
@@ -274,3 +278,5 @@
 		BP.limb_id = chassis_of_choice.icon_state
 		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
 		BP.update_limb()
+		if(chassis_of_choice.color_src == MUTCOLORS)
+			BP.should_draw_greyscale = TRUE

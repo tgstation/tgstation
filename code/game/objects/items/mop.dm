@@ -28,7 +28,7 @@
 /obj/item/mop/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
-	AddElement(/datum/element/liquids_interaction, on_interaction_callback = PROC_REF(attack_on_liquids_turf))
+	AddComponent(/datum/component/liquids_interaction, TYPE_PROC_REF(/obj/item/mop, attack_on_liquids_turf))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 

@@ -91,7 +91,7 @@
 	return ..()
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
-	breather.adjustStaminaLoss(-2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	breather.stamina.adjust(2 * REM * delta_time, FALSE)
 	breather.adjustToxLoss(0.1 * current_cycle * REM * delta_time, FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
 	return ..()
 

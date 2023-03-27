@@ -25,7 +25,8 @@
 	return data
 
 /datum/preference/choiced/fur_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.skin_tone = value
+	if(target.dna.species.use_fur)
+		target.skin_tone = value
 
 /datum/preference/choiced/fur_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

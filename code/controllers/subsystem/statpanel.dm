@@ -187,6 +187,9 @@ SUBSYSTEM_DEF(statpanels)
 
 	/// Set the atoms we're meant to display
 	var/datum/object_window_info/obj_window = target.obj_window
+	if(!obj_window)
+		refresh_client_obj_view(target)
+		return
 	obj_window.atoms_to_show = atoms_to_display
 	START_PROCESSING(SSobj_tab_items, obj_window)
 	refresh_client_obj_view(target)

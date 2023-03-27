@@ -132,6 +132,8 @@
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		sleep_chance += 2
+	else if(owner.m_intent == MOVE_INTENT_SPRINT)
+		sleep_chance += 5
 	if(drowsy)
 		sleep_chance += 3
 
@@ -193,7 +195,7 @@
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.adjustStaminaLoss(50)
+				owner.stamina.adjust(-50)
 			else
 				to_chat(owner, span_warning("You can't stop shaking..."))
 

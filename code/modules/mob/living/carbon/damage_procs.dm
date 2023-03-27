@@ -36,7 +36,7 @@
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
+			stamina.adjust(-damage_amount, forced = forced)
 	return TRUE
 
 //These procs fetch a cumulative total damage from all bodyparts
@@ -101,10 +101,10 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype)
-	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+/mob/living/carbon/pre_stamina_change(diff as num, forced)
+	if(!forced && (status_flags & GODMODE))
+		return 0
+	return diff
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.

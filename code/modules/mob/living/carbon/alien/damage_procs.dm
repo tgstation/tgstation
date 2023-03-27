@@ -7,7 +7,7 @@
 	return FALSE
 
 ///aliens are immune to stamina damage.
-/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, forced = FALSE, required_biotype)
+/mob/living/carbon/alien/pre_stamina_change(diff as num, forced)
 	return FALSE
 
 ///aliens are immune to stamina damage.

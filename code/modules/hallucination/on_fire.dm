@@ -91,7 +91,7 @@
 	else if(times_to_lower_stamina)
 		next_action -= delta_time
 		if(next_action < 0)
-			hallucinator.adjustStaminaLoss(15)
+			hallucinator.stamina.adjust(-15)
 			next_action += 2
 			times_to_lower_stamina -= 1
 

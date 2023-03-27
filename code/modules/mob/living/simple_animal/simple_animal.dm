@@ -211,7 +211,7 @@
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		stamina.adjust(stamina_recovery * delta_time, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	QDEL_NULL(access_card)
@@ -250,7 +250,7 @@
  * Updates the speed and staminaloss of a given simplemob.
  * Reduces the stamina loss by stamina_recovery
  */
-/mob/living/simple_animal/update_stamina()
+/mob/living/simple_animal/on_stamina_update()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()

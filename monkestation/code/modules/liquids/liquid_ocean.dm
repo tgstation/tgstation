@@ -62,8 +62,8 @@
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/movable_entered)
-	RegisterSignal(src, COMSIG_TURF_MOB_FALL, .proc/mob_fall)
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
+	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 	if(!static_overlay)
 		static_overlay = new(null, ocean_reagents)
 	vis_contents += static_overlay
@@ -88,9 +88,9 @@
 			ocean_turfs |= directional_turf
 		else
 			if(isclosedturf(directional_turf))
-				RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, .proc/add_turf_direction)
+				RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction))
 			else if(!(directional_turf in atmos_adjacent_turfs))
-				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, .proc/add_turf_direction_non_closed)
+				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed))
 			else
 				open_turfs.Add(direction)
 
@@ -102,13 +102,13 @@
 	for(var/direction in open_turfs)
 		var/turf/directional_turf = get_step(src, direction)
 		if(isspaceturf(directional_turf))
-			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, .proc/add_turf_direction)
+			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction))
 			open_turfs -= direction
 			if(!open_turfs.len)
 				SSliquids.active_ocean_turfs -= src
 			return
 		else if(!(directional_turf in atmos_adjacent_turfs))
-			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, .proc/add_turf_direction_non_closed)
+			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed))
 			open_turfs -= direction
 			if(!open_turfs.len)
 				SSliquids.active_ocean_turfs -= src

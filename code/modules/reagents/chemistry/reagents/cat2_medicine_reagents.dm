@@ -118,24 +118,24 @@
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * delta_time, FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
-	switch(round(affected_mob.getStaminaLoss()))
+	switch(round(affected_mob.stamina.loss))
 		if(10 to 40)
 			ooo_youaregettingsleepy = 3
 		if(41 to 60)
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.stamina.adjust(-ooo_youaregettingsleepy * REM * delta_time, FALSE)
 	..()
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, delta_time, times_fired)
-	affected_mob.adjustStaminaLoss(3 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	if(affected_mob.getStaminaLoss() >= 80)
+	affected_mob.stamina.adjust(-3 * REM * delta_time, FALSE)
+	if(affected_mob.stamina.loss >= 80)
 		affected_mob.adjust_drowsiness(2 SECONDS * REM * delta_time)
-	if(affected_mob.getStaminaLoss() >= 100)
+	if(affected_mob.stamina.loss >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
-		affected_mob.adjustStaminaLoss(-100, TRUE, required_biotype = affected_biotype)
+		affected_mob.stamina.adjust(100, TRUE)
 		affected_mob.Sleeping(10 SECONDS)
 	..()
 	. = TRUE
@@ -274,7 +274,7 @@
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, delta_time, times_fired)
 	affected_mob.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity(), required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustStaminaLoss(2 * REM * delta_time, required_biotype = affected_biotype)
+	affected_mob.stamina.adjust(-2 * REM * delta_time)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
@@ -351,7 +351,6 @@
 	if(creation_purity >= 1) //Perfectly pure multivers gives a bonus of 2!
 		medibonus += 1
 	affected_mob.adjustToxLoss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * delta_time, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time, required_organtype = affected_organtype) //kills at 40u
 	for(var/r2 in affected_mob.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
@@ -557,7 +556,7 @@
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)
 	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
-	H.adjustStaminaLoss(10 * REM * delta_time, required_biotype = affected_biotype)
+	H.stamina.adjust(-10 * REM * delta_time)
 	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * delta_time, required_organtype = affected_organtype)
 	H.set_heartattack(TRUE)
 

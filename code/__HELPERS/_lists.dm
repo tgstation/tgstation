@@ -662,6 +662,14 @@
 	return null
 
 
+
+/// Returns datum/data/record
+/proc/find_record_old(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R
+	return null
+
 /**
  * Move a single element from position from_index within a list, to position to_index
  * All elements in the range [1,to_index) before the move will be before the pivot afterwards

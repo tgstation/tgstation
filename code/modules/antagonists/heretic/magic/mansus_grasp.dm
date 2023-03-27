@@ -42,7 +42,7 @@
 		var/mob/living/carbon/carbon_hit = victim
 		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_hit.AdjustKnockdown(5 SECONDS)
-		carbon_hit.adjustStaminaLoss(80)
+		carbon_hit.stamina.adjust(-80)
 
 	return TRUE
 

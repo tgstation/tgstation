@@ -6942,6 +6942,10 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"chc" = (
+/obj/machinery/computer/nanite_cloud_controller,
+/turf/open/floor/glass/reinforced,
+/area/station/science/xenobiology)
 "che" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -9487,6 +9491,10 @@
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"cTN" = (
+/obj/machinery/nanite_program_hub,
+/turf/open/floor/glass/reinforced,
+/area/station/science/xenobiology)
 "cTV" = (
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
@@ -24127,6 +24135,10 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/engineering/atmos)
+"hMb" = (
+/obj/machinery/nanite_programmer,
+/turf/open/floor/glass/reinforced,
+/area/station/science/xenobiology)
 "hMc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -24753,6 +24765,12 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/station/security/prison/garden)
+"hWe" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/nanite_chamber,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "hWh" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -26280,6 +26298,9 @@
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
 "itj" = (
+/obj/structure/closet/secure_closet/personal/patient{
+	name = "test subject's closet"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "itl" = (
@@ -41274,9 +41295,9 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "nhU" = (
-/obj/machinery/computer/scan_consolenew,
 /obj/machinery/light/directional/north,
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/computer/cloning,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "nia" = (
@@ -45660,9 +45681,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal/patient{
-	name = "test subject's closet"
-	},
+/obj/machinery/clonepod,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "ouZ" = (
@@ -52477,6 +52496,12 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/tubes,
 /obj/item/crowbar/red,
+/obj/item/nanite_scanner,
+/obj/item/nanite_scanner,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
+/obj/item/storage/box/disks_nanite,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "qFt" = (
@@ -57323,6 +57348,9 @@
 "shG" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "shH" = (
@@ -250104,7 +250132,7 @@ ily
 qLY
 pnA
 qFp
-fvk
+hMb
 bfN
 ily
 gOM
@@ -250361,7 +250389,7 @@ ily
 qLY
 kRi
 fvk
-fvk
+cTN
 bfN
 ily
 ily
@@ -250618,7 +250646,7 @@ ily
 qLY
 jKY
 fvk
-fvk
+chc
 rMY
 tgx
 tgx
@@ -251363,7 +251391,7 @@ ult
 wjz
 tXh
 shG
-shG
+hWe
 uzK
 iIe
 pKJ

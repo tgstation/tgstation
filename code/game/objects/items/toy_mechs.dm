@@ -225,14 +225,14 @@
 				SpinAnimation(5, 0)
 				playsound(src, 'sound/mecha/mechstep.ogg', 30, TRUE)
 				user.adjustBruteLoss(25)
-				user.adjustStaminaLoss(50)
+				user.stamina.adjust(-50)
 			if(2)
 				user.SpinAnimation(5, 0)
 				playsound(user, 'sound/weapons/smash.ogg', 20, TRUE)
 				combat_health-- //we scratched it!
 			if(4)
 				say(special_attack_cry + "!!")
-				user.adjustStaminaLoss(25)
+				user.stamina.adjust(-25)
 
 		if(!combat_sleep(1 SECONDS, null, user))
 			say("PATHETIC.")
