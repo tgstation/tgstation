@@ -221,7 +221,7 @@
 	else
 		animate(src, pixel_x = SWOOP_HEIGHT*0.1, pixel_z = SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	sleep(0.3 SECONDS)
-	icon_state = "swoop"
+	icon_state = "dragon_swoop"
 	if(negative)
 		animate(src, pixel_x = -SWOOP_HEIGHT, pixel_z = SWOOP_HEIGHT, time = 7)
 	else
