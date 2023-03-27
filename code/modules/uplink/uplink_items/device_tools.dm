@@ -146,7 +146,7 @@
 
 	uplink.failsafe_code = uplink.generate_code()
 	var/code = "[islist(uplink.failsafe_code) ? english_list(uplink.failsafe_code) : uplink.failsafe_code]"
-	var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(user)
+	var/datum/antagonist/traitor/traitor_datum = user.mind?.has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
 		traitor_datum.antag_memory += "<b>Uplink Failsafe Code:</b> [code]" + "<br>"
 		traitor_datum.update_static_data_for_all_viewers()
