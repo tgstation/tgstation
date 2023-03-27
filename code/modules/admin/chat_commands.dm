@@ -18,7 +18,7 @@
 	name = "echo"
 	help_text = "echos a message"
 
-/datum/tgs_chat_channel/ping_role/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/ping_role/Run(datum/tgs_chat_user/sender, params)
 	return params
 
 /// subtype tgs chat command with validated admin ranks. Only supports discord.
