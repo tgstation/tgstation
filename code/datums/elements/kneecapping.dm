@@ -64,8 +64,9 @@
 	if(!leg)
 		return
 
-	if(HAS_TRAIT(leg, TRAIT_HARDLY_WOUNDED))
-		return
+	for(var/datum/wound/wound in leg.wounds)
+		if(wound.severity == WOUND_SEVERITY_CRITICAL)
+			return
 	
 	. = COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
