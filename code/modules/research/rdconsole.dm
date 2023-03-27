@@ -209,6 +209,7 @@ Nothing else in the console has ID requirements.
 			"tier" = stored_research.tiers[n.id],
 		))
 
+	return data
 /**
  * Compresses an ID to an integer representation using the id_cache, used for deduplication
  * in sent JSON payloads
