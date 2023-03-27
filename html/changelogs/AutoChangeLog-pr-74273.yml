@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Players with phobias will no longer be frightened by items equipped to players in slots which are not considered to be visible."
+  - bugfix: "Players with a phobia of the supernatural won't be spooked by void cloaks which are currently invisible."
