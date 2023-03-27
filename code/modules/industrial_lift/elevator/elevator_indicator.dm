@@ -1,22 +1,3 @@
-GLOBAL_LIST_EMPTY(elevator_doors)
-
-/obj/machinery/button/elevator
-	name = "elevator button"
-	desc = "Go back. Go back. Go back. Can you operate the elevator."
-	icon_state = "hallctrl"
-	skin = "hallctrl"
-	device_type = /obj/item/assembly/control/elevator
-	req_access = list()
-	id = 1
-	light_mask = "hall-light-mask"
-
-/obj/machinery/button/elevator/Initialize(mapload, ndir, built)
-	. = ..()
-	// Kind of a cop-out
-	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
-
 /**
  * A lift indicator aka an elevator hall lantern w/ floor number
  */
