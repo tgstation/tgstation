@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - balance: "Wirecarp now properly shuts off NtNet remotely."
-  - balance: "Wirecarp now shows the source of a PDA that does an action."
-  - bugfix: "Wirecarp can no longer be used to see if Nukies exist through their networks."
-  - rscdel: "Removes Software downloading and communication Ntnet networks, as they were pretty worthless."

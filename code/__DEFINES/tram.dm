@@ -10,6 +10,8 @@
 #define XING_SIGNAL_DIRECTION_WEST "west-"
 #define XING_SIGNAL_DIRECTION_EAST "east-"
 
+#define XING_DEFAULT_TRAM_LENGTH 10
+
 /// Tram destinations/platforms
 #define TRAMSTATION_WEST 1
 #define TRAMSTATION_CENTRAL 2

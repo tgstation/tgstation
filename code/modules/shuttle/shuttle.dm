@@ -300,6 +300,23 @@
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_BIGGER_PODS))
 		roundstart_template = /datum/map_template/shuttle/escape_pod/luxury
 
+// should fit the syndicate infiltrator, and smaller ships like the battlecruiser corvettes and fighters
+/obj/docking_port/stationary/syndicate
+	name = "near the station"
+	dheight = 1
+	dwidth = 12
+	height = 17
+	width = 23
+	shuttle_id = "syndicate_nearby"
+
+/obj/docking_port/stationary/syndicate/northwest
+	name = "northwest of station"
+	shuttle_id = "syndicate_nw"
+
+/obj/docking_port/stationary/syndicate/northeast
+	name = "northeast of station"
+	shuttle_id = "syndicate_ne"
+
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	override_can_dock_checks = TRUE

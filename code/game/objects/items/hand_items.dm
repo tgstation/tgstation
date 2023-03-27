@@ -617,8 +617,8 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
-	dont_go_breakin_my_heart.applyOrganDamage(999)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 
 /obj/projectile/kiss/french
