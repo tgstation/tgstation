@@ -9,7 +9,7 @@
  * * message_admins: whether this will admin log how the nation creation went. Errors are still put in runtime log either way.
  */
 /proc/create_separatist_nation_list(list/revolting_departments, announcement = FALSE, dangerous = FALSE, message_admins = TRUE)
-	var/datum/team/nation/created_teams = list()
+	var/list/datum/team/nation/created_teams = list()
 	for(var/department_type in revolting_departments)
 		created_teams += create_separatist_nation(department_type, announcement, message_admins)
 
