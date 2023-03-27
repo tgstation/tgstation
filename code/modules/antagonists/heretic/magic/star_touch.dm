@@ -53,7 +53,7 @@
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
-	new /obj/effect/forcefield/cosmic_field(get_turf(src))
+	new /obj/effect/forcefield/cosmic_field(get_turf(caster))
 	start_beam(victim, caster)
 	return TRUE
 
