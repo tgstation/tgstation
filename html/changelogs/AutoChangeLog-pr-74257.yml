@@ -1,0 +1,4 @@
+author: "spockye"
+delete-after: True
+changes:
+  - rscadd: "remakes the old escape pod shuttle"

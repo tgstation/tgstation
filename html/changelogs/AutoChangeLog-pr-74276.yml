@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "Bacteria rich moldy food (like breadslices and pizzaslices) now spawn in trashcarts, trashbags and randomly on the floor."
+  - rscadd: "Damp rag now spawns in the trashcarts and etc."
