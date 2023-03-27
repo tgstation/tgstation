@@ -89,12 +89,12 @@
 
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
-	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 
 	target.adjust_eye_blur_up_to(6 SECONDS, EYESTAB_MAX_BLUR)
-	eyes.applyOrganDamage(rand(2, 4))
+	eyes.apply_organ_damage(rand(2, 4))
 
 	if(eyes.damage < EYESTAB_BLEEDING_THRESHOLD)
 		return
@@ -106,7 +106,7 @@
 
 	// At over 10 damage, we cause at least enough eye damage to force nearsightedness
 	if (!target.is_nearsighted_from(EYE_DAMAGE) && eyes.damage <= eyes.low_threshold)
-		eyes.setOrganDamage(eyes.low_threshold)
+		eyes.set_organ_damage(eyes.low_threshold)
 
 	// At over 10 damage, there is a 50% chance they drop all their items
 	if (prob(50))
@@ -119,7 +119,7 @@
 	// At over 10 damage, there is a chance (based on eye damage) of going blind
 	if (prob(eyes.damage - eyes.low_threshold + 1))
 		if (!target.is_blind_from(EYE_DAMAGE))
-			eyes.setOrganDamage(eyes.maxHealth)
+			eyes.set_organ_damage(eyes.maxHealth)
 		// Also cause some temp blindness, so that they're still blind even if they get healed
 		target.adjust_temp_blindness_up_to(20 SECONDS, 1 MINUTES)
 

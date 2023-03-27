@@ -50355,14 +50355,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "pWu" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	name = "northeast of station";
-	shuttle_id = "syndicate_ne";
-	width = 23
+/obj/docking_port/stationary/syndicate/northeast{
+	dir = 8
 	},
 /turf/open/genturf,
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)

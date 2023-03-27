@@ -44913,14 +44913,8 @@
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "oJU" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	name = "northwest of station";
-	shuttle_id = "syndicate_nw";
-	width = 23
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)

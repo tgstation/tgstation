@@ -30,6 +30,7 @@
 	)
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	. = ..()
 	if(istype(chem,/datum/reagent/consumable/salt))
 		H.adjustFireLoss(2 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)

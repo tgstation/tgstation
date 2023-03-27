@@ -700,7 +700,7 @@
 ///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
 	if(requires_liver)
-		if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
+		if(!invisible_man.get_organ_slot(ORGAN_SLOT_LIVER))
 			return
 		if(invisible_man.undergoing_liver_failure())
 			return
