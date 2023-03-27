@@ -1,0 +1,6 @@
+author: "SethLafuente"
+delete-after: True
+changes:
+  - balance: "Increased Bonus Reward for kidnapping alive targets"
+  - balance: "Changed Virologist and Scientist into Common objectives for kidnapping"
+  - balance: "Changed Paramedic into Uncommon objectives for kidnapping"
