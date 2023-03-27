@@ -192,7 +192,7 @@
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air, member.volume / air.volume)
+		member.air_temporary.copy_from_ratio(air, member.volume / air.volume)
 
 		member.air_temporary.temperature = air.temperature
 
@@ -277,4 +277,4 @@
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-			gas_mixture.copy_from(total_gas_mixture, gas_mixture.volume / volume_sum)
+			gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
