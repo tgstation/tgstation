@@ -3146,7 +3146,7 @@
 	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
 	color = "#493c00"
 	quality = DRINK_NICE
-	taste_description = "a horrible embolism of pineapple and olive oil"
+	taste_description = "a horrible emulsion of pineapple and olive oil"
 
 /datum/reagent/consumable/ethanol/pina_olivada/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(8, delta_time))
