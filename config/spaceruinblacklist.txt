@@ -27,6 +27,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
+#_maps/RandomRuins/SpaceRuins/derelict_construction.dmm
 #_maps/RandomRuins/SpaceRuins/derelict_sulaco.dmm
 #_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
