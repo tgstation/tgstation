@@ -11520,7 +11520,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/right/directional/west{
 	elevator_linked_id = "tram_cargo_lift";
 	elevator_mode = 1
 	},
@@ -11745,13 +11745,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/station/command/teleporter)
-"cDa" = (
-/obj/structure/closet/secure_closet/brig/genpop,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/siding/thinplating/corner,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/security/execution/transfer)
 "cDd" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -11875,9 +11868,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/machinery/door/window/elevator/directional/south{
-	elevator_linked_id = "tram_perma_lift";
-	elevator_mode = 1
+/obj/machinery/door/window/elevator/left/directional/south{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_perma_lift"
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -13596,7 +13589,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/left/directional/west{
 	elevator_linked_id = "tram_cargo_lift";
 	elevator_mode = 1
 	},
@@ -16481,7 +16474,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/door/window/elevator/directional/north{
+/obj/machinery/door/window/elevator/left/directional/north{
 	elevator_linked_id = "tram_xeno_lift";
 	elevator_mode = 1
 	},
@@ -17542,9 +17535,9 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/obj/machinery/door/window/elevator/directional/east{
-	elevator_linked_id = "tram_dorm_lift";
-	elevator_mode = 1
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_dorm_lift"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -20290,7 +20283,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/left/directional/west{
 	elevator_linked_id = "tram_sci_lift";
 	elevator_mode = 1
 	},
@@ -23485,11 +23478,11 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/door/window/elevator/directional/south{
-	req_access = null;
+/obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "dumbwaiter_lift";
 	elevator_mode = 1;
-	name = "Dumbwaiter"
+	name = "Dumbwaiter";
+	req_access = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -23733,11 +23726,11 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
-/obj/machinery/door/window/elevator/directional/north{
-	req_access = null;
+/obj/machinery/door/window/elevator/left/directional/north{
 	elevator_linked_id = "dumbwaiter_lift";
 	elevator_mode = 1;
-	name = "Dumbwaiter"
+	name = "Dumbwaiter";
+	req_access = null
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -37429,7 +37422,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/elevator/directional/south{
+/obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_xeno_lift";
 	elevator_mode = 1
 	},
@@ -45238,7 +45231,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/obj/machinery/door/window/elevator/directional/south{
+/obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_lower_center_lift";
 	elevator_mode = 1
 	},
@@ -48142,8 +48135,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/door/window/elevator/directional/south{
-	icon_state = "right";
+/obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_perma_lift";
 	elevator_mode = 1
 	},
@@ -49854,9 +49846,9 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/obj/machinery/door/window/elevator/directional/east{
-	elevator_linked_id = "tram_dorm_lift";
-	elevator_mode = 1
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_dorm_lift"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
@@ -50041,8 +50033,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
-/obj/machinery/door/window/elevator/directional/south{
-	icon_state = "right";
+/obj/machinery/door/window/elevator/right/directional/south{
 	elevator_linked_id = "tram_perma_lift";
 	elevator_mode = 1
 	},
@@ -53904,7 +53895,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/left/directional/west{
 	elevator_linked_id = "tram_upper_center_lift";
 	elevator_mode = 1
 	},
@@ -56773,7 +56764,7 @@
 /area/station/maintenance/tram/mid)
 "tmO" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/machinery/door/window/elevator/directional/north{
+/obj/machinery/door/window/elevator/left/directional/north{
 	elevator_linked_id = "tram_lower_center_lift";
 	elevator_mode = 1
 	},
@@ -61514,7 +61505,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/left/directional/west{
 	elevator_linked_id = "tram_sci_lift";
 	elevator_mode = 1
 	},
@@ -61962,7 +61953,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
-/obj/machinery/door/window/elevator/directional/west{
+/obj/machinery/door/window/elevator/left/directional/west{
 	elevator_linked_id = "tram_upper_center_lift";
 	elevator_mode = 1
 	},
@@ -67925,9 +67916,9 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
-/obj/machinery/door/window/elevator/directional/south{
-	elevator_linked_id = "tram_perma_lift";
-	elevator_mode = 1
+/obj/machinery/door/window/elevator/left/directional/south{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_perma_lift"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -85479,7 +85470,7 @@ aci
 acv
 acH
 sXc
-cDa
+msg
 jWs
 jWs
 jWs
