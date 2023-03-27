@@ -127,6 +127,7 @@
 		span_hear("You hear a short mechanical noise."))
 
 	owner.transferItemToLoc(active_item, src, TRUE)
+	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
 	return TRUE
@@ -166,6 +167,14 @@
 		span_notice("You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_hear("You hear a short mechanical noise."))
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
+
+	if(length(items_list) > 1)
+		RegisterSignal(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(swap_tools))) // secondary for welders
+
+/obj/item/organ/internal/cyberimp/arm/proc/swap_tools(active_item)
+	SIGNAL_HANDLER
+	Retract(active_item)
+	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
 
 /obj/item/organ/internal/cyberimp/arm/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
