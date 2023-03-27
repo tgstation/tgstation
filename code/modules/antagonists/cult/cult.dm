@@ -472,16 +472,7 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		var/list/no_harvesters_cult = list()
-		for(var/datum/mind/cult_mind as anything in members)
-			if(istype(cult_mind.current, /mob/living/simple_animal/hostile/construct/harvester))
-				continue
-			if(cult_mind in true_cultists)
-				continue
-			no_harvesters_cult += cult_mind
-		for(var/datum/mind/pre_summon_cultist as anything in true_cultists)
-			no_harvesters_cult += pre_summon_cultist
-		parts += printplayerlist(no_harvesters_cult)
+		parts += printplayerlist(true_cultists)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
