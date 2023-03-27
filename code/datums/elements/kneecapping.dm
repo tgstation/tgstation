@@ -64,7 +64,7 @@
 	if(!leg)
 		return
 
-	for(var/datum/wound/wound in leg.wounds)
+	for(var/datum/wound/blunt/wound in leg.wounds)
 		if(wound.severity == WOUND_SEVERITY_CRITICAL)
 			return
 	
