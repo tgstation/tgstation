@@ -167,14 +167,14 @@
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
-/obj/machinery/nanite_chamber/close_machine(mob/living/carbon/user)
+/obj/machinery/nanite_chamber/close_machine(mob/living/carbon/user, density_to_set)
 	if(!state_open)
 		return FALSE
 
 	..(user)
 	return TRUE
 
-/obj/machinery/nanite_chamber/open_machine()
+/obj/machinery/nanite_chamber/open_machine(drop, density_to_set)
 	if(state_open)
 		return FALSE
 

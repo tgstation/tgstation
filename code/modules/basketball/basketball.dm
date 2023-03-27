@@ -102,8 +102,8 @@
 
 	for(var/i in 1 to 6)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjustStaminaLoss), STAMINA_COST_SPINNING), 1.5 SECONDS)
-
+	user.stamina.adjust(-STAMINA_COST_SPINNING)
+	
 /// Used to calculate our disarm chance based on stamina, direction, and spinning
 /// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
 /obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone)
@@ -115,12 +115,12 @@
 	// spinning gives you a lower disarm chance but it drains stamina
 	var/disarm_chance = baller.flags_1 & IS_SPINNING_1 ? 35 : 50
 	// ballers stamina results in lower disarm, stealer stamina results in higher disarm
-	disarm_chance += (baller.getStaminaLoss() - stealer.getStaminaLoss()) / 2
+	disarm_chance += (baller.stamina.current - stealer.stamina.current) / 2
 	// the lowest chance for disarm is 25% and the highest is 75%
 	disarm_chance = clamp(disarm_chance, MIN_DISARM_CHANCE, MAX_DISARM_CHANCE)
 
 	// getting disarmed or shoved while holding the ball drains stamina
-	baller.adjustStaminaLoss(STAMINA_COST_DISARMING)
+	baller.stamina.adjust(-STAMINA_COST_DISARMING)
 
 	if(!prob(disarm_chance))
 		return // the disarm failed
@@ -193,7 +193,7 @@
 	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	baller.adjustStaminaLoss(STAMINA_COST_SHOOTING)
+	baller.stamina.adjust(-STAMINA_COST_SHOOTING)
 
 	var/dunk_dir = get_dir(baller, aim_target)
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16

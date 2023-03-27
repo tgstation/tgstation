@@ -146,7 +146,7 @@
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
-/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, mob/living/attacker)
+/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, density_to_set)
 	if(!state_open)
 		return FALSE
 
@@ -154,20 +154,7 @@
 
 	. = TRUE
 
-	addtimer(CALLBACK(src, PROC_REF(try_inject_nanites), attacker), 30) //If someone is shoved in give them a chance to get out before the injection starts
-
-/obj/machinery/public_nanite_chamber/proc/try_inject_nanites(mob/living/attacker)
-	if(occupant)
-		var/mob/living/L = occupant
-		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
-			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
-			if(nanites && nanites.cloud_id != cloud_id)
-				change_cloud(attacker)
-			return
-		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
-			inject_nanites(attacker)
-
-/obj/machinery/public_nanite_chamber/open_machine()
+/obj/machinery/public_nanite_chamber/open_machine(drop, density_to_set)
 	if(state_open)
 		return FALSE
 

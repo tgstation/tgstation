@@ -221,9 +221,9 @@
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(user.stat == CONSCIOUS)
-		if(!user.getorgan(/obj/item/organ/internal/butt) || !ishuman(user))
+		if(!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user))
 			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
 			return
-		var/obj/item/organ/internal/butt/booty = user.getorgan(/obj/item/organ/internal/butt)
+		var/obj/item/organ/internal/butt/booty = user.get_organ_by_type(/obj/item/organ/internal/butt)
 		if(!booty.cooling_down)
 			booty.On_Fart(user)

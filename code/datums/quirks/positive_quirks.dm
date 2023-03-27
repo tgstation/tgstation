@@ -359,7 +359,7 @@
 /datum/quirk/dummy_thick/post_add()
 	. = ..()
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
-	var/obj/item/organ/internal/butt/booty = quirk_holder.getorgan(/obj/item/organ/internal/butt)
+	var/obj/item/organ/internal/butt/booty = quirk_holder.get_organ_by_type(/obj/item/organ/internal/butt)
 	var/matrix/thick = new
 	thick.Scale(1.5)
 	animate(booty, transform = thick, time = 1)
