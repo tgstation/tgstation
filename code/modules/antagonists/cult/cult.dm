@@ -273,6 +273,8 @@
 	var/narsie_summoned = FALSE
 	///How large were we at max size.
 	var/size_at_maximum = 0
+	///list of cultists just before summoning Narsie
+	var/list/true_cultists = list()
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -470,7 +472,7 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		parts += printplayerlist(members)
+		parts += printplayerlist(true_cultists)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
