@@ -36,7 +36,7 @@
 	. = ..()
 	if(!.) // Default checks
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_EYES))
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
 		// Cant use balloon alert, they've got no eyes!
 		to_chat(user, span_warning("You have no eyes with which to mesmerize."))
 		return FALSE
@@ -73,7 +73,7 @@
 		owner.balloon_alert(owner, "[current_target] is not [(current_target.stat == DEAD || HAS_TRAIT(current_target, TRAIT_FAKEDEATH)) ? "alive" : "conscious"].")
 		return FALSE
 	// Target has eyes?
-	if(!current_target.getorganslot(ORGAN_SLOT_EYES) && !issilicon(current_target))
+	if(!current_target.get_organ_slot(ORGAN_SLOT_EYES) && !issilicon(current_target))
 		owner.balloon_alert(owner, "[current_target] has no eyes.")
 		return FALSE
 	// Target blind?

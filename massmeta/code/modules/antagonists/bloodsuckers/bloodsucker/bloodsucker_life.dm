@@ -147,14 +147,14 @@
 	// Step 2 NOTE: Giving passive organ regeneration will cause Torpor to spam /datum/client_colour/monochrome at the Bloodsucker, permanently making them colorblind!
 	for(var/all_organs in bloodsuckeruser.organs)
 		var/obj/item/organ/organ = all_organs
-		organ.setOrganDamage(0)
-	var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.getorganslot(ORGAN_SLOT_HEART)
+		organ.set_organ_damage(0)
+	var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!istype(current_heart, /obj/item/organ/internal/heart/vampheart) && !istype(current_heart, /obj/item/organ/internal/heart/demon) && !istype(current_heart, /obj/item/organ/internal/heart/cursed))
 		qdel(current_heart)
 		var/obj/item/organ/internal/heart/vampheart/vampiric_heart = new
 		vampiric_heart.Insert(owner.current)
 		vampiric_heart.Stop()
-	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 		current_eyes.color_cutoffs = list(60, 16, 10)
@@ -169,8 +169,8 @@
 		iter_wound.remove_wound()
 	// From [powers/panacea.dm]
 	var/list/bad_organs = list(
-		bloodsuckeruser.getorgan(/obj/item/organ/internal/body_egg),
-		bloodsuckeruser.getorgan(/obj/item/organ/internal/zombie_infection))
+		bloodsuckeruser.get_organ_by_type(/obj/item/organ/internal/body_egg),
+		bloodsuckeruser.get_organ_by_type(/obj/item/organ/internal/zombie_infection))
 	for(var/tumors in bad_organs)
 		var/obj/item/organ/yucky_organs = tumors
 		if(!istype(yucky_organs))
