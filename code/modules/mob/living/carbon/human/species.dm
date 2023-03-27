@@ -353,6 +353,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantliver
 		if(ORGAN_SLOT_STOMACH)
 			return mutantstomach
+		if(ORGAN_SLOT_BUTT)
+			return mutantbutt
 		else
 			CRASH("Invalid organ slot [slot]")
 
