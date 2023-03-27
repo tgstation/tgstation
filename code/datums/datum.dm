@@ -40,10 +40,12 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
+#ifndef EXPERIMENT_515_DONT_CACHE_REF
 	/// A cached version of our \ref
 	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
 	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
 	var/cached_ref
+#endif
 
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference

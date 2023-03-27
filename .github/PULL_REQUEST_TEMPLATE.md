@@ -9,7 +9,7 @@
 
 <!-- If your pull request is part of Mapping March and you want to earn an antagonist token for your FIRST mapping pull request submitted this month, please include your ckey. For more information, read about the event here: https://hackmd.io/@EOBGames/BkwuRlxkh -->
 
-Ckey to recieve rewards: N/A
+Ckey to receive rewards: N/A
 
 ## Why It's Good For The Game
 

@@ -2,10 +2,6 @@
 	name = "Steal %ITEM% and destroy it"
 	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests."
 
-	progression_minimum = 20 MINUTES
-	progression_reward = 5 MINUTES
-	telecrystal_reward = 0
-
 	var/list/possible_items = list()
 	/// The current target item that we are stealing.
 	var/datum/objective_item/steal/target_item
@@ -23,10 +19,10 @@
 	telecrystal_reward = 1
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/bartender_shotgun,
-		/datum/objective_item/steal/low_risk/fireaxe,
-		/datum/objective_item/steal/low_risk/big_crowbar,
-		/datum/objective_item/steal/low_risk/nullrod,
+		/datum/objective_item/steal/traitor/bartender_shotgun,
+		/datum/objective_item/steal/traitor/fireaxe,
+		/datum/objective_item/steal/traitor/nullrod,
+		/datum/objective_item/steal/traitor/big_crowbar,
 	)
 
 /datum/traitor_objective/destroy_item/very_risky

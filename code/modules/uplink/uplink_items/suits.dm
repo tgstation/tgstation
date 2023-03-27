@@ -19,6 +19,12 @@
 	cost = 6
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/suits/noslip
+	name = "MODsuit Anti-Slip Module"
+	desc = "A MODsuit module preventing the user from slipping on water."
+	item = /obj/item/mod/module/noslip
+	cost = 2
+
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black Syndicate space suit is less encumbering than Nanotrasen variants, \
@@ -63,15 +69,6 @@
 	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules or the Infiltrator MODsuit."
 	item = /obj/item/mod/module/plate_compression
 	progression_minimum = 20 MINUTES
-	cost = 2
-
-// Medium progression cost
-
-/datum/uplink_item/suits/noslip
-	name = "MODsuit Anti-Slip Module"
-	desc = "A MODsuit module preventing the user from slipping on water."
-	item = /obj/item/mod/module/noslip
-	progression_minimum = 90 MINUTES
 	cost = 2
 
 // Very high progression cost

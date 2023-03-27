@@ -44,5 +44,9 @@
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 ///from base of atom/mech_melee_attack(): (obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 #define COMSIG_ATOM_ATTACK_MECH "atom_attack_mech"
+/// from base of atom/attack_robot(): (mob/user)
+#define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
+/// from base of atom/attack_robot_secondary(): (mob/user)
+#define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
 ///from relay_attackers element: (atom/attacker)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"

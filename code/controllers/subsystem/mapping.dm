@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(mapping)
 	var/adding_new_zlevel = FALSE
 
 	///shows the default gravity value for each z level. recalculated when gravity generators change.
-	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	///List in the form: list(z level num = max generator gravity in that z level OR the gravity level trait)
 	var/list/gravity_by_z_level = list()
 
 	/// list of traits and their associated z leves
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(mapping)
 		max_gravity = max(grav_gen.setting, max_gravity)
 
 	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
-	gravity_by_z_level["[z_level_number]"] = max_gravity
+	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
 
 
@@ -531,10 +531,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
@@ -763,6 +764,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
 	z_level_to_lowest_plane_offset += 1
+	gravity_by_z_level.len += 1
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0

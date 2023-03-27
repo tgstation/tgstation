@@ -153,7 +153,7 @@
 	)
 		set_light(0)
 		return
-	set_light(1.4, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
 
 /obj/machinery/status_display/update_overlays()
 	. = ..()
@@ -170,6 +170,8 @@
 		if(SD_PICTURE)
 			remove_messages()
 			. += mutable_appearance(icon, current_picture)
+			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
+				return .
 		else
 			var/overlay = update_message(message1_overlay, LINE1_Y, message1)
 			if(overlay)
@@ -285,7 +287,7 @@
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
-		maptext_x = 0 
+		maptext_x = 0
 
 		// Mask off to fit in screen.
 		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
@@ -472,7 +474,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 	/// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.
 	var/static/list/emotion_map = list(
-		AI_EMOTION_BLANK = "ai_off",
+		AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
 		AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
 		AI_EMOTION_HAPPY = "ai_happy",
 		AI_EMOTION_NEUTRAL = "ai_neutral",
