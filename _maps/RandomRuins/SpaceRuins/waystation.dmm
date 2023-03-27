@@ -2250,7 +2250,9 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "NK" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/atmospherics/components/tank/air{
+	piping_layer = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
 "Of" = (
