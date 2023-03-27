@@ -31,7 +31,7 @@
 /obj/item/uplink/debug
 	name = "debug uplink"
 
-/obj/item/uplink/debug/Initialize(mapload, owner, tc_amount = 9000)
+/obj/item/uplink/debug/Initialize(mapload, owner, tc_amount = 9000, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug uplink"
@@ -44,7 +44,7 @@
 	name = "debug nuclear uplink"
 	uplink_flag = UPLINK_NUKE_OPS
 
-/obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000)
+/obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug nuclear uplink"
@@ -65,19 +65,18 @@
 	name = "dusty radio"
 	desc = "A dusty looking radio."
 
-/obj/item/uplink/old/Initialize(mapload, owner, tc_amount = 10)
+/obj/item/uplink/old/Initialize(mapload, owner, tc_amount = 10, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "dusty radio"
 
-/obj/item/uplink/replacement
 
 // Multitool uplink
-/obj/item/multitool/uplink/Initialize(mapload, owner, tc_amount = 20)
+/obj/item/multitool/uplink/Initialize(mapload, owner, tc_amount = 20, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
 	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, UPLINK_TRAITORS, tc_amount)
 
 // Pen uplink
-/obj/item/pen/uplink/Initialize(mapload, owner, tc_amount = 20)
+/obj/item/pen/uplink/Initialize(mapload, owner, tc_amount = 20, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
 	AddComponent(/datum/component/uplink, owner, TRUE, FALSE, UPLINK_TRAITORS, tc_amount)
