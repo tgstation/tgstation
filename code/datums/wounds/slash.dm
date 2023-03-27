@@ -178,7 +178,7 @@
 	if(user.is_mouth_covered())
 		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
 		return
-	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
+	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
 		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
 		return
 

@@ -812,7 +812,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
-
-#undef FACING_SAME_DIR
-#undef FACING_EACHOTHER
-#undef FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR
