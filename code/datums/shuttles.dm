@@ -360,6 +360,12 @@
 	admin_notes = "Choo choo motherfucker!"
 	credit_cost = CARGO_CRATE_VALUE * 2
 
+/datum/map_template/shuttle/emergency/helio
+	suffix = "helio"
+	name = "Helio Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 4
+	description = "For when you're not quite ready to say goodbye to your home station. May cause damage to smaller stations."
+
 /datum/map_template/shuttle/emergency/cere
 	suffix = "cere"
 	name = "Cere Station Emergency Shuttle"
@@ -641,6 +647,10 @@
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
 	name = "cargo ferry (Delta)"
+
+/datum/map_template/shuttle/cargo/helio
+	suffix = "helio"
+	name = "cargo ferry (Helio)"
 
 /datum/map_template/shuttle/mining/delta
 	suffix = "delta"
