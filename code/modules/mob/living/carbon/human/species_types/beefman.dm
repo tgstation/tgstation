@@ -89,7 +89,7 @@
 /datum/species/beefman/on_species_gain(mob/living/carbon/human/user, datum/species/old_species, pref_load)
 	. = ..()
 	spec_updatehealth(user)
-	var/obj/item/organ/internal/brain/has_brain = user.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/has_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(has_brain)
 		if(user.dna.features["beef_trauma"])
 			user.gain_trauma(user.dna.features["beef_trauma"], TRAUMA_RESILIENCE_ABSOLUTE)
@@ -273,7 +273,7 @@
 		return FALSE
 
 	if(target_zone == BODY_ZONE_PRECISE_MOUTH)
-		var/obj/item/organ/internal/tongue/tongue = user.getorgan(/obj/item/organ/internal/tongue)
+		var/obj/item/organ/internal/tongue/tongue = user.get_organ_by_type(/obj/item/organ/internal/tongue)
 		if(!tongue)
 			to_chat("You do not have a tongue!")
 			return FALSE
@@ -310,7 +310,7 @@
 	if(!(target_zone in tearable_limbs))
 		return FALSE
 	if(target_zone == BODY_ZONE_PRECISE_MOUTH)
-		var/obj/item/organ/internal/tongue/tongue = user.getorgan(/obj/item/organ/internal/tongue)
+		var/obj/item/organ/internal/tongue/tongue = user.get_organ_by_type(/obj/item/organ/internal/tongue)
 		if(tongue)
 			to_chat("You already have a tongue!")
 			return FALSE
