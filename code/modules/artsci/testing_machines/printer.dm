@@ -1,87 +1,60 @@
-/datum/export/artifact_analysis_form
+/datum/export/analyzed_artifact
 	cost = -CARGO_CRATE_VALUE
 	k_elasticity = 0
-	unit_name = "artifact analysis form"
-	export_types = list(/obj/item/paper/fluff/analysis_form)
+	unit_name = "artifact"
 	allow_negative_cost = TRUE
 
-/datum/export/artifact_analysis_form/get_cost(obj/O)
-	var/obj/item/paper/fluff/analysis_form/M = O
+/datum/export/analyzed_artifact/applies_to(obj/O, apply_elastic = TRUE)
+	if(O.GetComponent(/datum/component/artifact))
+		return TRUE
+	return ..()
+
+/datum/export/analyzed_artifact/get_cost(obj/O)
+	var/obj/item/sticker/analysis_form/M = O
 	return 3595354
 
-/obj/item/paper/fluff/analysis_form
+/obj/item/sticker/analysis_form
 	name = "analysis form"
-	desc = "A paper with adhesive to attach to artifacts."
-
-/obj/machinery/computer/artifact_printer
-	name = "analysis form printing console"
-	desc = "Prints analysis forms, to export artifacts to cargo. Needs toner."
-	icon_screen = "artprinter"
-	icon_keyboard = "mining_key"
-	light_color = LIGHT_COLOR_PURPLE
-	density = TRUE
-	circuit = /obj/item/circuitboard/computer/artifact_printer
-	use_power = IDLE_POWER_USE
-	var/obj/item/toner/ink
-	var/chosenorigin = ""
-	var/chosentype = ""
+	desc = "An analysis form for artifacts, has adhesive on the back."
+	gender = NEUTER
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "analysisform"
+	inhand_icon_state = "paper"
+	throwforce = 0
+	throw_range = 1
+	throw_speed = 1
+	max_integrity = 50
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
+	contraband = FALSE
+	stick_type = /datum/component/attached_sticker/analysis_form
+	var/chosen_origin = ""
 	var/list/chosentriggers = list()
-	var/cooldown_time = 5 SECONDS
-	COOLDOWN_DECLARE(cooldown)
+	var/chosentype = ""
 
-/obj/machinery/computer/artifact_printer/Initialize(mapload)
-	. = ..()
-	if(mapload)
-		ink = new /obj/item/toner(src)
-
-/obj/machinery/computer/artifact_printer/proc/use_ink(mob/user)
-	. = TRUE
-	if(!ink)
-		balloon_alert(user,"no cartridge!")
-		return FALSE
-	if(!ink.charges)
-		balloon_alert(user,"no ink!")
-		return FALSE
-	ink.charges--
-	playsound(src.loc, 'sound/machines/printer.ogg', 50, TRUE)
-
-/obj/machinery/computer/artifact_printer/AltClick(mob/user)
-	. = ..()
-	remove_toner(user)
-
-/obj/machinery/computer/artifact_printer/proc/remove_toner(mob/user)
-	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		ink.forceMove(user.drop_location())
-		user.put_in_hands(ink)
-		to_chat(user, span_notice("You remove [ink] from [src]."))
-		ink = null
-
-/obj/machinery/computer/artifact_printer/attackby(obj/item/item, mob/living/user, params)
-	if(!ink && istype(item, /obj/item/toner))
-		if(!user.transferItemToLoc(item, src))
-			return
-		to_chat(user, span_notice("You install [item] into [src]."))
-		ink = item
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+/obj/item/sticker/analysis_form/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/pen))
+		ui_interact(user)
 	else
 		return ..()
-/obj/machinery/computer/artifact_printer/ui_interact(mob/user, datum/tgui/ui)
+
+/obj/item/sticker/analysis_form/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ArtifactPaperPrinter", name)
+		ui = new(user, src, "ArtifactForm", name)
 		ui.open()
 
-/obj/machinery/computer/artifact_printer/ui_act(action, params)
+/obj/item/sticker/analysis_form/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
+	if(!istype(usr.get_active_held_item(), /obj/item/pen))
+		to_chat(usr, span_notice("You need a pen to write on [src]!"))
+		return
+	//SEND_SIGNAL(attached, COMSIG_ANALYSISFORM_CHANGED, src)
 	switch(action)
-		if("remove_toner")
-			remove_toner(usr)
-			return
 		if("origin")
-			chosenorigin = params["origin"]
+			chosen_origin = params["origin"]
 			return
 		if("type")
 			chosentype = params["type"]
@@ -94,21 +67,41 @@
 				chosentriggers += trig
 			return
 
-/obj/machinery/computer/artifact_printer/ui_static_data(mob/user)
+/obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	. = ..()
-	.["allorigins"] = SSartifacts.artifact_origins_names
+	.["allorigins"] = SSartifacts.artifact_origin_name_to_typename
 	.["alltypes"] = SSartifacts.artifact_type_names
-	.["alltriggers"] = SSartifacts.artifact_trigger_names
+	.["alltriggers"] = SSartifacts.artifact_trigger_name_to_type
 	return
 
-/obj/machinery/computer/artifact_printer/ui_data(mob/user)
+/obj/item/sticker/analysis_form/ui_data(mob/user)
 	. = ..()
-	.["has_toner"] = ink
-	if(ink)
-		.["max_toner"] = ink.max_charges
-		.["current_toner"] = ink.charges
-	.["chosenorigin"] = chosenorigin
+	.["chosenorigin"] = chosen_origin
 	.["chosentype"] = chosentype
 	.["chosentriggers"] = chosentriggers
-	.["cant_print"] = (!ink || !COOLDOWN_FINISHED(src,cooldown))
 	return .
+
+/obj/item/sticker/analysis_form/can_interact(mob/user)
+	if(!loc)
+		return TRUE
+	return ..()
+
+/obj/item/sticker/analysis_form/examine(mob/user)
+	. = ..()
+	//if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+	//	return
+	ui_interact(user)
+
+/obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
+	//if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+		//return UI_CLOSE
+	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
+		return UI_UPDATE
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind!"))
+		return UI_CLOSE
+	if(!user.can_read(src))
+		return UI_CLOSE
+	if(!loc)
+		return UI_INTERACTIVE
+	return ..()

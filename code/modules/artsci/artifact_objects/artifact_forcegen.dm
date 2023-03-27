@@ -61,3 +61,4 @@
 	holder.anchored = FALSE
 	for(var/obj/field in projected_forcefields)
 		qdel(field)
+		projected_forcefields -= field

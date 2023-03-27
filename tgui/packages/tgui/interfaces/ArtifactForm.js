@@ -8,33 +8,22 @@ import {
 } from "../components";
 import { Window } from "../layouts";
 
-export const ArtifactPaperPrinter = (props, context) => {
+export const ArtifactForm = (props, context) => {
 	const { act, data } = useBackend(context);
-	const { has_toner, max_toner, current_toner, allorigins, chosenorigin, alltypes, chosentype, alltriggers, chosentriggers, cant_print } = data;
+	const { allorigins, chosenorigin, alltypes, chosentype, alltriggers, chosentriggers } = data;
 	return (
-		<Window width={480} height={460} title={"Analysis Form Printer"}>
+		<Window width={480} height={400} title={"Analysis Form"} theme={"paper"} >
 			<Window.Content>
-				{has_toner ? (
-					<Section title="Toner" buttons={
-						<Button disabled={!has_toner} onClick={() => act('remove_toner')} icon="eject"> Eject </Button>}
-					>
-						<ProgressBar value={current_toner} maxValue={max_toner} />
-					</Section>
-					) : (
-					<Section title="Toner">
-					<Box color="average">No toner cartridge.</Box>
-					</Section>
-				)}
 				<Section title="Origin">
-				  {allorigins.map((origin) => (
+				  {Object.keys(allorigins).map((key) => (
 					<Button
-					  key={origin}
-					  icon={chosenorigin === origin ? 'check-square-o' : 'square-o'}
-					  content={origin}
-					  selected={chosenorigin === origin}
+					  key={key}
+					  icon={chosenorigin === allorigins[key] ? 'check-square-o' : 'square-o'}
+					  content={key}
+					  selected={chosenorigin === allorigins[key]}
 					  onClick={() =>
 						act('origin', {
-						  origin: origin,
+						  origin: allorigins[key],
 						})
 					  }
 					/>
@@ -56,7 +45,7 @@ export const ArtifactPaperPrinter = (props, context) => {
 				  ))}
 				</Section>
 				<Section title="Triggers">
-				  {alltriggers.map((trig) => (
+				  {Object.keys(alltriggers).map((trig) => (
 					<Button
 						key={trig}
 						icon={chosentriggers.includes(trig) ? 'check-square-o' : 'square-o'}
@@ -70,7 +59,6 @@ export const ArtifactPaperPrinter = (props, context) => {
 					/>
 				  ))}
 				</Section>
-				<Button textAlign="Center" width="100%" disabled={cant_print} onClick={() => act('print')}>Print</Button>
 			</Window.Content>
 		</Window>
 	);

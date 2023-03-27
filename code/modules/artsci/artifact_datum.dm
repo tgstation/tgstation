@@ -9,9 +9,10 @@
 	var/artifact_size = ARTIFACT_SIZE_LARGE
 	///type name for displaying on analysis forms
 	var/type_name = "coderbus moment"
-	///real name of the artifact when properly analyzed
-	var/real_name
+	/// fake name for when unanalyzed
 	var/fake_name
+	///randomly generated names by origin for when it gets analyzed
+	var/list/names = list()
 	///Is the artifact active?
 	var/active = FALSE
 	///Triggers that activate the artifact
@@ -44,8 +45,14 @@
 	SSartifacts.artifacts += holder
 	if(forced_origin)
 		valid_origins = list(forced_origin)
-	artifact_origin = SSartifacts.artifact_origins_by_name[pick(valid_origins)]
+	artifact_origin = SSartifacts.artifact_origins_by_typename[pick(valid_origins)]
 	fake_name = "[pick(artifact_origin.adjectives)] [pick(isitem(holder) ? artifact_origin.nouns_small : artifact_origin.nouns_large)]"
+	for(var/datum/artifact_origin/og in SSartifacts.artifact_origins)
+		var/a_name = og.generate_name()
+		if(a_name)
+			names[og.type_name] = a_name
+		else
+			names[og.type_name] = "[pick(og.adjectives)] [pick(isitem(holder) ? og.nouns_small : og.nouns_large)]"
 	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
 	var/dat_icon
@@ -58,7 +65,6 @@
 		if(ARTIFACT_SIZE_TINY)
 			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
 	holder.icon_state = dat_icon
-	real_name = artifact_origin.generate_name()
 	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", LIGHTING_PLANE + 0.5)
 	activation_sound = pick(artifact_origin.activation_sounds)
 	if(LAZYLEN(artifact_origin.deactivation_sounds))
@@ -86,10 +92,12 @@
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
+	RegisterSignals(parent, list(COMSIG_ANALYSISFORM_CHANGED,COMSIG_STICKER_STICKED), PROC_REF(on_analysis))
+	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(deanalyze))
 
 /datum/component/artifact/UnregisterFromParent()
 	SSartifacts.artifacts -= parent
-	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT,COMSIG_STICKER_STICKED,COMSIG_STICKER_UNSTICKED))
 
 /datum/component/artifact/proc/Activate(silent=FALSE)
 	if(active) //dont activate activated objects
@@ -253,6 +261,20 @@
 	SIGNAL_HANDLER
 	Stimulate(STIMULUS_SHOCK, 800 * severity)
 	Stimulate(STIMULUS_RADIATION, 2 * severity)
+
+/datum/component/artifact/proc/on_analysis(atom/source, obj/item/sticker/sticker)
+	SIGNAL_HANDLER
+	if(!istype(sticker, /obj/item/sticker/analysis_form))
+		return
+	var/obj/item/sticker/analysis_form/form = sticker
+	if(form.chosen_origin)
+		holder.name = names[form.chosen_origin]
+	if(form.chosentype)
+		holder.name = "[holder.name] ([form.chosentype])"
+
+/datum/component/artifact/proc/deanalyze(atom/source)
+	SIGNAL_HANDLER
+	holder.name = fake_name
 // Effects for subtypes
 /datum/component/artifact/proc/effect_activate()
 	return

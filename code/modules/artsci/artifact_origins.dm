@@ -11,7 +11,7 @@
 	var/max_icons = 0 // amount of sprites we have for this origin
 	var/max_item_icons = 0 // amount of sprites we have for this origins items
 /datum/artifact_origin/proc/generate_name()
-		return "unknown"
+		return FALSE
 
 /datum/artifact_origin/wizard
 	type_name = ORIGIN_WIZARD
