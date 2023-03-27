@@ -81,7 +81,8 @@
 /turf/open/floor/holofloor/chapel/bottom_right,
 /area/template_noop)
 "aj" = (
-/obj/structure/closet/secure_closet/courtroom,
+/obj/structure/table/wood,
+/obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -122,14 +123,7 @@
 /area/template_noop)
 "an" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "ao" = (
@@ -183,7 +177,15 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "at" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/wood,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "au" = (
@@ -203,11 +205,8 @@
 /area/template_noop)
 "av" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
-/obj/item/food/grown/poppy,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -249,8 +248,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "az" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
+/obj/structure/closet/secure_closet/courtroom,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -260,6 +258,8 @@
 /turf/open/floor/holofloor/chapel/bottom_left,
 /area/template_noop)
 "aB" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -272,11 +272,10 @@
 /turf/open/floor/holofloor/chapel,
 /area/template_noop)
 "aD" = (
-/obj/item/gavelblock,
-/obj/item/gavelhammer,
 /obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
+/obj/item/paper_bin,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -304,8 +303,11 @@
 /area/template_noop)
 "aG" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/pen/red,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/poppy,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -336,7 +338,6 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aJ" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -358,7 +359,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aM" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
@@ -385,11 +386,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aP" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/candle_box,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aQ" = (
@@ -397,11 +394,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aR" = (
-/obj/structure/table/wood,
-/obj/item/hand_labeler,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aS" = (
@@ -435,8 +428,11 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aV" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 8
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -466,19 +462,50 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aY" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
+/obj/item/gavelblock,
+/obj/item/gavelhammer,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "aZ" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
-"hZ" = (
+"fL" = (
+/obj/item/clothing/suit/costume/judgerobe,
+/obj/item/clothing/head/costume/powdered_wig,
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"hg" = (
+/obj/structure/table/wood/fancy,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"hE" = (
+/obj/item/clothing/suit/chaplainsuit/bishoprobe,
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"kv" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/book/bible,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"oy" = (
+/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"vi" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/chaplain/nun_hood,
@@ -486,153 +513,124 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
-"ih" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"rE" = (
+"FR" = (
 /obj/item/toy/figure/chaplain,
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
-"tI" = (
-/obj/item/clothing/suit/chaplainsuit/bishoprobe,
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"wV" = (
-/obj/structure/table/wood/fancy,
-/obj/item/storage/book/bible,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"Fg" = (
-/obj/structure/table/wood/fancy,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"KQ" = (
-/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"Tx" = (
-/obj/item/clothing/suit/costume/judgerobe,
-/obj/item/clothing/head/costume/powdered_wig,
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+"Kk" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 
 (1,1,1) = {"
-at
+aP
 ag
 aA
 ag
 ac
 aT
 aA
-aY
-aY
-aj
-"}
-(2,1,1) = {"
-rE
-aK
-ai
-aK
-aC
-ak
-ai
-aY
-aY
+aV
+aV
 az
 "}
-(3,1,1) = {"
-Tx
-aM
-aV
-ag
-ac
-aT
-aA
-aY
-aY
-aG
-"}
-(4,1,1) = {"
-hZ
-af
-aJ
+(2,1,1) = {"
+FR
+aK
+ai
 aK
 aC
 ak
 ai
-aY
-aY
+aV
+aV
+aD
+"}
+(3,1,1) = {"
+fL
+aJ
+aZ
+ag
+ac
+aT
+aA
+aV
+aV
+av
+"}
+(4,1,1) = {"
+vi
+af
+an
+aK
+aC
+ak
+ai
+aV
+aV
 ae
 "}
 (5,1,1) = {"
-wV
+kv
 aQ
-aD
-at
-at
-at
-at
-aB
-aB
-av
-"}
-(6,1,1) = {"
-Fg
-af
-aJ
-ag
-ac
-aT
-aA
-aY
-aY
-an
-"}
-(7,1,1) = {"
-KQ
-ih
-aZ
-aK
-aE
-ak
-ai
-aY
 aY
 aP
+aP
+aP
+aP
+aM
+aM
+aG
+"}
+(6,1,1) = {"
+hg
+af
+an
+ag
+ac
+aT
+aA
+aV
+aV
+at
+"}
+(7,1,1) = {"
+oy
+Kk
+aR
+aK
+aE
+ak
+ai
+aV
+aV
+aB
 "}
 (8,1,1) = {"
-tI
+hE
 ag
 aA
 ag
 ac
 aT
 aA
-aY
-aY
-aR
+aV
+aV
+aj
 "}
 (9,1,1) = {"
-at
+aP
 aK
 ai
 aK
 aE
 ak
 ai
-aY
-aY
-aj
+aV
+aV
+az
 "}

@@ -20,7 +20,7 @@
 	if(!.)
 		return
 
-	var/obj/item/organ/internal/liver/affected_liver = affected_mob.getorgan(/obj/item/organ/internal/liver)
+	var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_by_type(/obj/item/organ/internal/liver)
 	if(!affected_liver)
 		affected_mob.visible_message(span_notice("<B>[affected_mob]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B>"))
 		cure()

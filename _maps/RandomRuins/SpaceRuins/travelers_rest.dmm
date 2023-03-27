@@ -84,7 +84,7 @@
 "gF" = (
 /obj/structure/cable,
 /obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/has_grav/travelers_rest)
 "gN" = (
 /obj/machinery/shower/directional/east,
@@ -393,7 +393,7 @@
 /obj/structure/cable,
 /obj/machinery/power/solar,
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
-/turf/open/floor/iron/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/has_grav/travelers_rest)
 "LS" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
