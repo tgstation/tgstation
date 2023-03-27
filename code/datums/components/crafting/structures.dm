@@ -67,7 +67,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	always_available = FALSE
 	time = 6 SECONDS
-		reqs = list(
+	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/beacon = 1,
