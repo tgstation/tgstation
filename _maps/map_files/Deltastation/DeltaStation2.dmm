@@ -58642,14 +58642,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oFv" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	name = "northeast of station";
-	shuttle_id = "syndicate_ne";
-	width = 23
+/obj/docking_port/stationary/syndicate/northeast{
+	dir = 8
 	},
 /turf/open/space,
 /area/space/nearstation)
