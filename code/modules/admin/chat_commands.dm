@@ -14,6 +14,13 @@
 	set waitfor = FALSE
 	load_admins()
 
+/datum/tgs_chat_command/ping_role
+	name = "echo"
+	help_text = "echos a message"
+
+/datum/tgs_chat_channel/ping_role/Run(datum/tgs_chat_user/sender, params)
+	return params
+
 /// subtype tgs chat command with validated admin ranks. Only supports discord.
 /datum/tgs_chat_command/validated
 	var/required_rights = 0 //! validate discord userid is linked to a game admin with these flags.
