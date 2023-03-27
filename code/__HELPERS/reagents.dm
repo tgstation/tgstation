@@ -190,6 +190,15 @@
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
 
+///Returns a random reagent object minus blacklisted reagents
+/proc/get_random_reagent_id_unrestricted()
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
+			random_reagents += reagent_path
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent
+
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
