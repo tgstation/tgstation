@@ -261,16 +261,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = NONE
 
-// Donation reward for Random516
-/obj/item/clothing/under/custom/blutigen_undergarment
-	name = "Dragon undergarments"
-	desc = "The Dragon wears the sexy?"
-	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
-	icon_state = "blutigen_undergarment"
-	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
-	supports_variations_flags = NONE
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-
 /obj/item/clothing/gloves/ring/hypno
 	var/list/spans = list()
 	actions_types = list(/datum/action/item_action/hypno_whisper)
@@ -601,18 +591,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/hands.dmi'
 	worn_icon_state = "mikugloves"
-
-// Donation Reward for Grand Vegeta
-/obj/item/clothing/shoes/sneakers/mikuleggings
-	name = "starlight singer leggings"
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
-	desc = " "
-	icon_state = "mikuleggings"
-	icon = 'monkestation/icons/donator/obj/clothing/shoes.dmi'
-	worn_icon = 'monkestation/icons/donator/mob/clothing/feet.dmi'
-	worn_icon_state = "mikuleggings"
 
 // Donation reward for CandleJax
 /obj/item/clothing/head/helmet/space/plasmaman/candlejax

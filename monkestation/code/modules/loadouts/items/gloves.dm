@@ -85,3 +85,4 @@ GLOBAL_LIST_INIT(loadout_gloves, generate_loadout_items(/datum/loadout_item/glov
 
 /datum/loadout_item/gloves/donator
 	donator_only = TRUE
+	requires_purchase = FALSE

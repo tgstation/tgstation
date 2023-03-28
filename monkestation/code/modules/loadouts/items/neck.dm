@@ -138,3 +138,4 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/donator
 	donator_only = TRUE
+	requires_purchase = FALSE

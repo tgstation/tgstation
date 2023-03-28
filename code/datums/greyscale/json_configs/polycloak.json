@@ -1,0 +1,22 @@
+{
+    "cloak": [
+        {
+            "type": "icon_state",
+            "icon_state": "cloak-1",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "cloak-2",
+            "blend_mode": "overlay",
+			"color_ids": [2]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "cloak-3",
+            "blend_mode": "overlay",
+			"color_ids": [3]
+        }
+    ]
+}

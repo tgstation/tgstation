@@ -130,3 +130,4 @@ GLOBAL_LIST_INIT(loadout_glasses, generate_loadout_items(/datum/loadout_item/gla
 
 /datum/loadout_item/glasses/donator
 	donator_only = TRUE
+	requires_purchase = FALSE

@@ -289,3 +289,42 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Yuri Coat"
 	item_path = /obj/item/clothing/suit/costume/yuri
 	item_cost = 7500
+
+/datum/store_item/suit/winter_coat/cosmic
+	name = "Cosmic Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/cosmic
+	item_cost = 5000
+
+/datum/store_item/suit/winter_coat/ratvar
+	name = "Ratvar Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/ratvar
+	item_cost = 5000
+
+/datum/store_item/suit/winter_coat/narsie
+	name = "Narsie Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
+	item_cost = 5000
+
+/datum/store_item/suit/saints
+	name = "Third Street Saints fur coat"
+	item_path = /obj/item/clothing/suit/saints
+	item_cost = 7500
+
+/datum/store_item/suit/heartcoat
+	name = "Heart coat"
+	item_path = /obj/item/clothing/suit/heartcoat
+	item_cost = 7500
+
+/datum/store_item/suit/phantom
+	name = "Phantom Thief Coat"
+	item_path = /obj/item/clothing/suit/phantom
+	item_cost = 7500
+
+/datum/store_item/suit/morningstar
+	name = "Morning Star Coat"
+	item_path = /obj/item/clothing/suit/morningstar
+
+/datum/store_item/suit/driscoll
+	name = "driscoll poncho"
+	item_path = /obj/item/clothing/suit/driscoll
+	item_cost = 7500

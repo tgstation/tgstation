@@ -428,3 +428,28 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "TMC Uniform"
 	item_path = /obj/item/clothing/under/costume/tmc
 	item_cost = 7500
+
+/datum/store_item/under/formal/driscoll
+	name = "O'Driscoll outfit"
+	item_path = /obj/item/clothing/under/driscoll
+	item_cost = 7500
+
+/datum/store_item/under/formal/morningstar
+	name = "Morningstar suit"
+	item_path = /obj/item/clothing/under/morningstar
+	item_cost = 7500
+
+/datum/store_item/under/formal/saints
+	name = "Saints outfit"
+	item_path = /obj/item/clothing/under/saints
+	item_cost = 7500
+
+/datum/store_item/under/formal/phantom
+	name = "Phantom Thief outfit"
+	item_path = /obj/item/clothing/under/phantom
+	item_cost = 7500
+
+/datum/store_item/under/miscellaneous/bloodred
+	name = "Blood-red pajamas"
+	item_path = /obj/item/clothing/under/bloodred
+	item_cost = 3000
