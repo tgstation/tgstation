@@ -2619,7 +2619,7 @@
 /obj/machinery/light/directional/east,
 /obj/item/storage/belt/military,
 /obj/item/ammo_box/magazine/sniper_rounds,
-/obj/item/gun/ballistic/automatic/sniper_rifle/syndicate,
+/obj/item/gun/ballistic/rifle/sniper_rifle/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "iq" = (

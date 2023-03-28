@@ -17,14 +17,17 @@
 
 /datum/round_event/pirates
 	///admin chosen pirate team
-	var/datum/pirate_gang/chosen_gang
+	var/list/datum/pirate_gang/gang_list
 
 /datum/round_event/pirates/start()
-	send_pirate_threat(chosen_gang)
+	send_pirate_threat(gang_list)
 
-/proc/send_pirate_threat(datum/pirate_gang/chosen_gang)
+/proc/send_pirate_threat(list/pirate_selection)
+	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
+	///If there was nothing to pull from our requested list, stop here.
 	if(!chosen_gang)
-		chosen_gang = pick_n_take(GLOB.pirate_gangs)
+		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
+		return
 	//set payoff
 	var/payoff = 0
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -90,6 +93,6 @@
 
 /datum/event_admin_setup/listed_options/pirates/apply_to_event(datum/round_event/pirates/event)
 	if(isnull(chosen))
-		event.chosen_gang = null
+		event.gang_list = GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs
 	else
-		event.chosen_gang = new chosen
+		event.gang_list = list(new chosen)
