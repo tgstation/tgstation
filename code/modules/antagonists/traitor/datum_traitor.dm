@@ -149,7 +149,7 @@
 /// proc that generates the traitors replacement uplink code and radio frequency
 /datum/antagonist/traitor/proc/generate_replacement_codes()
 	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
-	replacement_uplink_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
+	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
 
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
