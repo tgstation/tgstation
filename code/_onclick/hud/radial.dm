@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_value
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
 
 /atom/movable/screen/radial/proc/handle_parent_del()
 	SIGNAL_HANDLER
@@ -198,6 +198,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
 	E.cut_overlays()
+	E.vis_contents.Cut()
 	E.alpha = 0
 	E.name = "None"
 	E.maptext = null

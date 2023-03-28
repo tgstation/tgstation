@@ -15,8 +15,8 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/action)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(action))
 	update_parent(index)
 
 /datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
@@ -33,8 +33,9 @@
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
-
-	return INVOKE_ASYNC(src, .proc/check_step, I, user)
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
+		. = check_step(I, user)
+	return .
 
 /datum/component/construction/proc/update_index(diff)
 	index += diff

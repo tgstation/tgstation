@@ -1,10 +1,10 @@
 {
   "private": true,
   "name": "tgui-bench",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "dependencies": {
     "common": "workspace:*",
-    "fastify": "^3.20.2",
+    "fastify": "^3.29.4",
     "fastify-static": "^4.2.3",
     "inferno": "^7.4.8",
     "inferno-vnode-flags": "^7.4.8",

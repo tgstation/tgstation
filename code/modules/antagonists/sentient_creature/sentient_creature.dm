@@ -20,18 +20,18 @@
 	return final_icon
 
 /datum/antagonist/sentient_creature/on_gain()
-	if(owner.enslaved_to)
-		owner.current.copy_languages(owner.enslaved_to, LANGUAGE_MASTER)
+	var/mob/living/master = owner.enslaved_to?.resolve()
+	if(master)
+		owner.current.copy_languages(master, LANGUAGE_MASTER)
 		owner.current.update_atom_languages()
 	. = ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)
 	var/list/data = list()
-	if(owner.enslaved_to)
-		data["enslaved_to"] = owner.enslaved_to.real_name
-		data["p_them"] = owner.enslaved_to.p_them()
-		data["p_their"] = owner.enslaved_to.p_their()
+	var/mob/living/master = owner.enslaved_to?.resolve()
+	if(master)
+		data["enslaved_to"] = master.real_name
+		data["p_them"] = master.p_them()
+		data["p_their"] = master.p_their()
 	data["holographic"] = owner.current.flags_1 & HOLOGRAM_1
 	return data
-
-

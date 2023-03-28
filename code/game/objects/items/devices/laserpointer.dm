@@ -19,13 +19,15 @@
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
-
 /obj/item/laser_pointer/red
 	pointer_icon_state = "red_laser"
+
 /obj/item/laser_pointer/green
 	pointer_icon_state = "green_laser"
+
 /obj/item/laser_pointer/blue
 	pointer_icon_state = "blue_laser"
+
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
@@ -69,6 +71,7 @@
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	laser_act(target, user, params)
 
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
@@ -188,7 +191,7 @@
 			to_chat(user, span_warning("[src]'s battery is overused, it needs time to recharge!"))
 			recharge_locked = TRUE
 
-	flick_overlay_view(I, targloc, 10)
+	targloc.flick_overlay_view(I, 10)
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process(delta_time)

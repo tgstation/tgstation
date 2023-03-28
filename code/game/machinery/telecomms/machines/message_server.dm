@@ -11,8 +11,15 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/machinery_blackbox_recorder
 	var/obj/item/stored
+
+/datum/armor/machinery_blackbox_recorder
+	melee = 25
+	bullet = 10
+	laser = 10
+	fire = 50
+	acid = 70
 
 /obj/machinery/blackbox_recorder/Initialize(mapload)
 	. = ..()
@@ -182,8 +189,7 @@
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
 		if(!QDELETED(comp))
-			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
 				if(!QDELETED(app))
 					app.receive_message(src)
 

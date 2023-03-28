@@ -7,7 +7,7 @@
 	worn_icon_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
-	bolt_type = BOLT_TYPE_STANDARD
+	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
@@ -33,7 +33,7 @@
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		to_chat(user, span_notice("The bolt is closed!"))
+		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
 
@@ -159,9 +159,7 @@
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
-	can_misfire = TRUE
-	misfire_probability = 0
-	misfire_percentage_increment = 5 //Slowly increases every shot
+	can_misfire = FALSE
 	can_bayonet = TRUE
 	knife_y_offset = 11
 	can_be_sawn_off = FALSE
@@ -178,10 +176,7 @@
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
-	can_misfire = FALSE
 	can_jam = FALSE
-	misfire_probability = 0
-	misfire_percentage_increment = 0
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///

@@ -50,15 +50,16 @@
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		A.revive()
 		stored_card.update_appearance()
+
 	// Finished restoring
 	if(A.health >= 100)
 		restoring = FALSE
 
 	return TRUE
 
-/datum/computer_file/program/ai_restorer/try_insert(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!computer)
 		return FALSE
 	if(!istype(attacking_item, /obj/item/aicard))
@@ -117,7 +118,7 @@
 				return TRUE
 
 /datum/computer_file/program/ai_restorer/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["ejectable"] = TRUE
 	data["AI_present"] = !!stored_card?.AI

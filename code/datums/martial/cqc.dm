@@ -16,7 +16,7 @@
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
-	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
 	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
@@ -38,7 +38,7 @@
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
 	if(!touch_spell)
 		return
-	INVOKE_ASYNC(touch_spell, /datum/action/cooldown/spell/touch.proc/do_hand_hit, touch_weapon, attacker, attacker)
+	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
@@ -146,7 +146,7 @@
 		return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
-	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
+	if(A != D && can_use(A)) // A != D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE

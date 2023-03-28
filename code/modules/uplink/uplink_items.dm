@@ -1,5 +1,6 @@
 
 // TODO: Work into reworked uplinks.
+/// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
 	var/list/sale_items_copy = sale_items.Copy()
@@ -12,7 +13,7 @@
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.category = category
-		uplink_item.cost = max(round(uplink_item.cost * discount),1)
+		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
 		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
 		uplink_item.item = taken_item.item
@@ -46,6 +47,8 @@
 	var/surplus = 100
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
+	/// If this value is changed on two items they will share stock, defaults to not sharing stock with any other item
+	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	/// A bitfield to represent what uplinks can purchase this item.
@@ -63,8 +66,19 @@
 	var/restricted = FALSE
 	/// Can this item be deconstructed to unlock certain techweb research nodes?
 	var/illegal_tech = TRUE
-	// String to be shown instead of the price, e.g for the Random item.
+	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
+	/// Whether this item locks all other items from being purchased. Used by syndicate balloon and a few other purchases.
+	/// Can't be purchased if you've already bought other things
+	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
+	/// However, they won't be purchasable afterwards.
+	var/lock_other_purchases = FALSE
+
+/datum/uplink_item/New()
+	. = ..()
+	if(stock_key != UPLINK_SHARED_STOCK_UNIQUE)
+		return
+	stock_key = type
 
 /datum/uplink_category
 	/// Name of the category
@@ -72,15 +86,37 @@
 	/// Weight of the category. Used to determine the positioning in the uplink. High weight = appears first
 	var/weight = 0
 
+/// Returns by how much percentage do we reduce the price of the selected item
 /datum/uplink_item/proc/get_discount()
-	return pick(4;0.75,2;0.5,1;0.25)
 
+	var/static/list/discount_types = list(
+		TRAITOR_DISCOUNT_SMALL = 4,
+		TRAITOR_DISCOUNT_AVERAGE = 2,
+		TRAITOR_DISCOUNT_BIG = 1,
+	)
+
+	return get_discount_value(pick_weight(discount_types))
+
+/// Receives a traitor discount type value, returns the amount by which we will reduce the price
+/datum/uplink_item/proc/get_discount_value(discount_type)
+	switch(discount_type)
+		if(TRAITOR_DISCOUNT_BIG)
+			return 0.75
+		if(TRAITOR_DISCOUNT_AVERAGE)
+			return 0.5
+		else
+			return 0.25
+
+/// Spawns an item and logs its purchase
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/atom/A = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
+	if(lock_other_purchases)
+		uplink_handler.shop_locked = TRUE
 
+/// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	if(!spawn_path)
 		return
@@ -125,3 +161,6 @@
 	..()
 	if(user?.mind?.failed_special_equipment)
 		user.mind.failed_special_equipment -= item
+
+/// Code that enables the ability to have limited stock that is shared by different items
+/datum/shared_uplink_stock

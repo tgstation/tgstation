@@ -1,0 +1,235 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/kitchen/spoon{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/kitchen/spoon{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/kitchen/spoon{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/kitchen/spoon{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"e" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"f" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"l" = (
+/obj/structure/table,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/knife/kitchen,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"m" = (
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/obj/item/storage/bag/tray,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"o" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Kitchen Storage Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"p" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
+/obj/structure/rack,
+/obj/item/vending_refill/dinnerware,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"q" = (
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"s" = (
+/turf/template_noop,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/kitchenspike,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"A" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"D" = (
+/obj/structure/closet/crate/freezer,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"K" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/kitchen/fork{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/kitchen/fork{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/kitchen/fork{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/kitchen/fork{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/cargo)
+"Z" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+s
+s
+s
+s
+s
+s
+s
+s
+s
+"}
+(2,1,1) = {"
+a
+a
+Z
+Z
+e
+w
+f
+q
+s
+"}
+(3,1,1) = {"
+a
+a
+Z
+D
+u
+C
+C
+K
+o
+"}
+(4,1,1) = {"
+a
+a
+Z
+A
+C
+T
+b
+K
+s
+"}
+(5,1,1) = {"
+a
+a
+Z
+c
+C
+C
+C
+K
+s
+"}
+(6,1,1) = {"
+a
+a
+Z
+Z
+l
+R
+p
+m
+s
+"}
+(7,1,1) = {"
+a
+a
+a
+Z
+Z
+Z
+Z
+Z
+s
+"}

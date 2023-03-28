@@ -10,9 +10,9 @@
 	var/time_to_remove = 3.5 SECONDS
 
 /datum/status_effect/strandling/on_apply()
-	RegisterSignal(owner, COMSIG_CARBON_PRE_BREATHE, .proc/on_breathe)
-	RegisterSignal(owner, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), .proc/on_cut)
-	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, .proc/on_self_check)
+	RegisterSignal(owner, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breathe))
+	RegisterSignal(owner, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), PROC_REF(on_cut))
+	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(on_self_check))
 	return TRUE
 
 /datum/status_effect/strandling/on_remove()
@@ -25,7 +25,7 @@
 /datum/status_effect/strandling/proc/on_breathe(mob/living/source)
 	SIGNAL_HANDLER
 
-	if(source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+	if(source.get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
 		return
 
 	source.losebreath++
@@ -37,7 +37,7 @@
 	if(DOING_INTERACTION(user, REF(src)))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_remove_effect, user, tool)
+	INVOKE_ASYNC(src, PROC_REF(try_remove_effect), user, tool)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// Signal proc for [COMSIG_CARBON_PRE_MISC_HELP], allowing someone to remove the effect by hand
@@ -47,7 +47,7 @@
 	if(DOING_INTERACTION(helper, REF(src)))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_remove_effect, helper)
+	INVOKE_ASYNC(src, PROC_REF(try_remove_effect), helper)
 	return COMPONENT_BLOCK_MISC_HELP
 
 /**
@@ -69,7 +69,7 @@
 	tool?.play_tool_sound(owner)
 
 	// Now try to remove the effect with a doafter. If we have a tool, we'll even remove it 60% faster.
-	if(!do_mob(user, owner, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), interaction_key = REF(src)))
+	if(!do_after(user, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), owner, interaction_key = REF(src)))
 		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
 		return FALSE
 

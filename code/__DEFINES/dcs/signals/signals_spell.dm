@@ -33,6 +33,8 @@
 // Spell type signals
 
 // Pointed projectiles
+// Sent from /datum/action/cooldown/spell/pointed/projectile/fire_projectile() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
+#define COMSIG_MOB_SPELL_PROJECTILE "mob_spell_projectile"
 /// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/firer, atom/target, atom/hit, angle, hit_limb)
 #define COMSIG_SPELL_PROJECTILE_HIT "spell_projectile_hit"
 
@@ -85,6 +87,9 @@
 #define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
 	/// Return to stop the cast and prevent the item from being marked
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1 << 0)
+///When an object is retrieved by a magic recall spell. This will apply to all containers, mobs, etc. that are pulled by the spell.
+#define COMSIG_MAGIC_RECALL "magic_recall"
+
 
 // Charge
 /// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell/spell, mob/user)

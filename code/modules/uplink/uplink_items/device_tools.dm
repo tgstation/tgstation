@@ -1,13 +1,9 @@
-// File ordered based on progression
-
 /datum/uplink_category/device_tools
 	name = "Misc. Gadgets"
 	weight = 3
 
 /datum/uplink_item/device_tools
 	category = /datum/uplink_category/device_tools
-
-// No progression cost
 
 /datum/uplink_item/device_tools/soap
 	name = "Syndicate Soap"
@@ -115,14 +111,14 @@
 			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/computer_hardware/hard_drive/portable/virus/frame
+	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/portable/virus/frame/target = .
+	var/obj/item/computer_disk/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -190,13 +186,10 @@
 	surplus = 75
 	restricted = TRUE
 
-// Low progression cost
-
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/card/emag
 	cost = 4
 
@@ -204,7 +197,6 @@
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
@@ -213,11 +205,8 @@
 	name = "Super Pointy Tape"
 	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
 			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/stack/sticky_tape/pointy/super
 	cost = 1
-
-// Medium progression cost
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
@@ -230,14 +219,12 @@
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
 
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/grenade/hypnotic
 	cost = 12
 
@@ -250,6 +237,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
+	surplus = 0 // not while there isnt one on any station
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/powersink

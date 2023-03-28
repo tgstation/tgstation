@@ -205,8 +205,12 @@
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
-/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.species_traits)
+/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantstomach
+
+///This gets called after the owner takes a bite of food
+/obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
+	return
 
 /obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	var/old_disgust = disgusted.old_disgust
@@ -229,7 +233,7 @@
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
-				disgusted.blur_eyes(3) //We need to add more shit down here
+				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
 

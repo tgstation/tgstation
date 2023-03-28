@@ -43,7 +43,7 @@
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -144,7 +144,8 @@
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
-	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be fired using right click."
+	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher."
+	desc_controls = "Right-click to use grenade launcher."
 	icon_state = "m90"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
@@ -164,6 +165,10 @@
 	. = ..()
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher(src)
 	update_appearance()
+
+/obj/item/gun/ballistic/automatic/m90/Destroy()
+	QDEL_NULL(underbarrel)
+	return ..()
 
 /obj/item/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/firing_pin
@@ -269,10 +274,10 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
-	if(!user.canUseTopic(src))
+	if(!user.can_perform_action(src))
 		return
 	cover_open = !cover_open
-	to_chat(user, span_notice("You [cover_open ? "open" : "close"] [src]'s cover."))
+	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 
@@ -286,11 +291,13 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(cover_open)
 		balloon_alert(user, "close the cover!")
 		return
 	else
-		. = ..()
+		. |= ..()
 		update_appearance()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -305,7 +312,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
-		balloon_alert(user, "close the cover!")
+		balloon_alert(user, "open the cover!")
 		return
 	..()
 
@@ -328,7 +335,7 @@
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 40
+	fire_delay = 4 SECONDS
 	burst_size = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -340,6 +347,13 @@
 /obj/item/gun/ballistic/automatic/sniper_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/reset_semicd()
+	. = ..()
+	if(suppressed)
+		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	else
+		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

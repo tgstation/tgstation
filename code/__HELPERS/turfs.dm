@@ -84,7 +84,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/turf/center = locate((destination.x + xoffset), (destination.y + yoffset), location.z)//So now, find the new center.
 
 	//Now to find a box from center location and make that our destination.
-	for(var/turf/current_turf in block(locate(center.x + b1xerror, center.y + b1yerror, location.z), locate(center.x + b2xerror, center.y + b2yerror, location.z)))
+	var/width = b2xerror - b1xerror
+	var/height = b2yerror - b1yerror
+	for(var/turf/current_turf as anything in CORNER_BLOCK_OFFSET(center, width, height, b1xerror, b1yerror))
 		if(density_check && current_turf.density)
 			continue//If density was specified.
 		if(closed_turf_check && isclosedturf(current_turf))

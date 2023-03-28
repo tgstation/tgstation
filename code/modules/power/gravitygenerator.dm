@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
 	// 9x9 block obtained from the bottom middle of the block
-	var/list/spawn_turfs = block(locate(our_turf.x - 1, our_turf.y + 2, our_turf.z), locate(our_turf.x + 1, our_turf.y, our_turf.z))
+	var/list/spawn_turfs = CORNER_BLOCK_OFFSET(our_turf, 3, 3, -1, 0)
 	var/count = 10
 	for(var/turf/T in spawn_turfs)
 		count--
@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		part.main_part = src
 		generator_parts += part
 		part.update_appearance()
-		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/gravity_generator/part/proc/on_update_icon)
+		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, TYPE_PROC_REF(/obj/machinery/gravity_generator/part, on_update_icon))
 
 /obj/machinery/gravity_generator/main/set_broken()
 	. = ..()
@@ -388,7 +388,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			continue
 		if(!is_valid_z_level(T, mob_turf))
 			continue
-		mobs.update_gravity(mobs.has_gravity())
+		if(isliving(mobs))
+			var/mob/living/grav_update = mobs
+			grav_update.refresh_gravity()
 		if(mobs.client)
 			shake_camera(mobs, 15, 1)
 			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)

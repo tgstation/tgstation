@@ -12,13 +12,19 @@
 	throw_range = 2 //No head bowling
 	px_x = 0
 	px_y = -8
-	stam_damage_coeff = 1
-	max_stamina_damage = 100
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
+	unarmed_attack_verb = "bite"
+	unarmed_attack_effect = ATTACK_EFFECT_BITE
+	unarmed_attack_sound = 'sound/weapons/bite.ogg'
+	unarmed_miss_sound = 'sound/weapons/bite.ogg'
+	unarmed_damage_low = 1 // Yeah, biteing is pretty weak, blame the monkey super-nerf
+	unarmed_damage_high = 3
+	unarmed_stun_threshold = 4
+	bodypart_trait_source = HEAD_TRAIT
 
 	var/mob/living/brain/brainmob //The current occupant.
 	var/obj/item/organ/internal/brain/brain //The brain organ
@@ -71,10 +77,6 @@
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
 
-	var/is_blushing = FALSE
-	var/face_offset_x = 0
-	var/face_offset_y = 0
-
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -107,7 +109,7 @@
 	if(IS_ORGANIC_LIMB(src) && show_organs_on_examine)
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || brainmob?.suiciding)
+		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
 		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
@@ -149,7 +151,7 @@
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.setOrganDamage(brain.maxHealth)
+				brain.set_organ_damage(brain.maxHealth)
 			brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
@@ -168,8 +170,6 @@
 
 	return ..()
 
-#define OFFSET_X 1
-#define OFFSET_Y 2
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
@@ -182,28 +182,11 @@
 		stored_lipstick_trait = null
 	update_hair_and_lips()
 
-	if(OFFSET_FACE in owner.dna?.species.offset_features)
-		var/offset = owner.dna.species.offset_features[OFFSET_FACE]
-		face_offset_x = offset[OFFSET_X]
-		face_offset_y = offset[OFFSET_Y]
-
-	is_blushing = HAS_TRAIT(owner, TRAIT_BLUSHING) // Caused by either the *blush emote or the "drunk" mood event
-
-#undef OFFSET_X
-#undef OFFSET_Y
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
 	. = ..()
-
-	// Blush emote overlay
-	if (is_blushing)
-		var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "blush", -BODY_ADJ_LAYER) // Should appear behind the eyes
-		blush_overlay.color = COLOR_BLUSH_PINK
-		blush_overlay.pixel_x += face_offset_x
-		blush_overlay.pixel_y += face_offset_y
-		. += blush_overlay
 
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
@@ -216,7 +199,7 @@
 					facial_overlay.color = facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
-				
+
 			if(!eyes)
 				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 
@@ -229,7 +212,7 @@
 				else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
 					debrain_overlay.icon = 'icons/mob/species/alien/bodyparts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
-				else if(!(NOBLOOD in species_flags_list))
+				else if(!(TRAIT_NOBLOOD in species_flags_list))
 					debrain_overlay.icon = 'icons/mob/species/human/human_face.dmi'
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
@@ -313,6 +296,9 @@
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	husk_type = "monkey"
 	icon_state = "default_monkey_head"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -329,7 +315,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
@@ -342,6 +328,6 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

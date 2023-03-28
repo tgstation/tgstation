@@ -22,8 +22,8 @@ created from them: make sure you handle that list correctly! Either copy them by
 and clear when youre done! if you dont i will use :newspaper2: on you
 */
 
-#define HOLODECK_CD 2 SECONDS
-#define HOLODECK_DMG_CD 5 SECONDS
+#define HOLODECK_CD (2 SECONDS)
+#define HOLODECK_DMG_CD (5 SECONDS)
 
 /// typecache for turfs that should be considered ok during floorchecks.
 /// A linked turf being anything not in this typecache will cause the holodeck to perform an emergency shutdown.
@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	clear_projection()
 
 	template = SSmapping.holodeck_templates[offline_program]
-	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
+	INVOKE_ASYNC(template, TYPE_PROC_REF(/datum/map_template, load), bottom_left) //this is what actually loads the holodeck simulation into the map
 
 /obj/machinery/computer/holodeck/proc/clear_projection()
 	//clear the items from the previous program
@@ -261,10 +261,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
 	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
 	for(var/turf/closed/holo_turf in linked)
-		for(var/baseturf in holo_turf.baseturfs)
-			if(ispath(baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= baseturf
-				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+		holo_turf.replace_baseturf(/turf/open/floor/holofloor, /turf/open/floor/holofloor/plating)
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()
@@ -273,7 +270,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -283,10 +280,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 			continue
 
 		if(isobj(holo_atom))
@@ -368,7 +365,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src,.proc/load_program, last_program, TRUE), 25)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -377,7 +374,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
+	INVOKE_ASYNC(src, PROC_REF(toggle_power), !machine_stat)
 
 ///shuts down the holodeck and force loads the offline_program
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()

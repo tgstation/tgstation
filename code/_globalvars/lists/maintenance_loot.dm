@@ -24,6 +24,8 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/raisins = 1,
 		/obj/item/trash/sosjerky = 1,
+		/obj/item/trash/flare = 1,
+		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
 		/obj/item/disk/data = 1,
@@ -249,6 +251,13 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//computer disks
+		/obj/item/computer_disk/maintenance/scanner = 1,
+		/obj/item/computer_disk/maintenance/camera = 1,
+		/obj/item/computer_disk/maintenance/modsuit_control = 1,
+		/obj/item/computer_disk/maintenance/theme = 3,
+	) = 4,
+
 	list(//modsuits
 		/obj/effect/spawner/random/mod/maint = 3,
 		/obj/item/mod/construction/broken_core = 1,
@@ -287,7 +296,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
 		/obj/item/pen/survival = 1,
 		/obj/item/restraints/handcuffs = 1,
-		/obj/item/shield/riot/buckler = 1,
+		/obj/item/shield/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/master = 1,
@@ -299,7 +308,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/clothing/gloves/color/black = 1,
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
-		/obj/item/clothing/head/helmet/justice = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice = 1,
 		/obj/item/storage/belt/military/assault = 1,
 		/obj/item/storage/belt/security = 1,
 		) = 1,
@@ -332,9 +341,11 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//misc
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
+		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,
+		/obj/item/folder/ancient_paperwork = 1,
 		) = 1,
 
 ))

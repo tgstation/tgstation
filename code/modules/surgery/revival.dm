@@ -1,6 +1,9 @@
 /datum/surgery/revival
 	name = "Revival"
-	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
+	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. \
+		The body must still be able to sustain life."
+	requires_bodypart_type = NONE
+	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -8,28 +11,23 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/revive,
-		/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/revival/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
-	if(target.suiciding || HAS_TRAIT(target, TRAIT_HUSK))
+	if(HAS_TRAIT(target, TRAIT_SUICIDED) || HAS_TRAIT(target, TRAIT_HUSK) || HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
-		return FALSE
-	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
 
 /datum/surgery_step/revive
-	name = "shock brain"
+	name = "shock brain (defibrillator)"
 	implements = list(
 		/obj/item/shockpaddles = 100,
 		/obj/item/melee/touch_attack/shock = 100,
@@ -61,9 +59,13 @@
 			return FALSE
 
 /datum/surgery_step/revive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You prepare to give [target]'s brain the spark of life with [tool]."),
+	display_results(
+		user,
+		target,
+		span_notice("You prepare to give [target]'s brain the spark of life with [tool]."),
 		span_notice("[user] prepares to shock [target]'s brain with [tool]."),
-		span_notice("[user] prepares to shock [target]'s brain with [tool]."))
+		span_notice("[user] prepares to shock [target]'s brain with [tool]."),
+	)
 	target.notify_ghost_cloning("Someone is trying to zap your brain.", source = target)
 
 /datum/surgery_step/revive/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -73,13 +75,17 @@
 		..()
 
 /datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	display_results(user, target, span_notice("You successfully shock [target]'s brain with [tool]..."),
+	display_results(
+		user,
+		target,
+		span_notice("You successfully shock [target]'s brain with [tool]..."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool]..."),
-		span_notice("[user] send a powerful shock to [target]'s brain with [tool]..."))
+		span_notice("[user] send a powerful shock to [target]'s brain with [tool]..."),
+	)
 	target.grab_ghost()
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
-	if(target.revive(full_heal = FALSE, admin_revive = FALSE))
+	if(target.revive())
 		target.visible_message(span_notice("...[target] wakes up, alive and aware!"))
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
@@ -89,8 +95,12 @@
 		return FALSE
 
 /datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You shock [target]'s brain with [tool], but [target.p_they()] doesn't react."),
+	display_results(
+		user,
+		target,
+		span_notice("You shock [target]'s brain with [tool], but [target.p_they()] doesn't react."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react."),
-		span_notice("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react."))
+		span_notice("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react."),
+	)
 	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
 	return FALSE

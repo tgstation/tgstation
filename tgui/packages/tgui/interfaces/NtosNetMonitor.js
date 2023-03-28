@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, NumberInput, Icon, Section, Stack, Tabs } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetMonitor = (props, context) => {
@@ -7,16 +7,8 @@ export const NtosNetMonitor = (props, context) => {
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
   const {
     ntnetrelays,
-    ntnetstatus,
-    config_softwaredownload,
-    config_peertopeer,
-    config_communication,
-    config_systemcontrol,
     idsalarm,
     idsstatus,
-    ntnetmaxlogs,
-    maxlogs,
-    minlogs,
     ntnetlogs = [],
     tablets = [],
   } = data;
@@ -45,16 +37,8 @@ export const NtosNetMonitor = (props, context) => {
           <Stack.Item>
             <MainPage
               ntnetrelays={ntnetrelays}
-              ntnetstatus={ntnetstatus}
-              config_softwaredownload={config_softwaredownload}
-              config_peertopeer={config_peertopeer}
-              config_communication={config_communication}
-              config_systemcontrol={config_systemcontrol}
               idsalarm={idsalarm}
               idsstatus={idsstatus}
-              ntnetmaxlogs={ntnetmaxlogs}
-              maxlogs={maxlogs}
-              minlogs={minlogs}
               ntnetlogs={ntnetlogs}
             />
           </Stack.Item>
@@ -70,20 +54,7 @@ export const NtosNetMonitor = (props, context) => {
 };
 
 const MainPage = (props, context) => {
-  const {
-    ntnetrelays,
-    ntnetstatus,
-    config_softwaredownload,
-    config_peertopeer,
-    config_communication,
-    config_systemcontrol,
-    idsalarm,
-    idsstatus,
-    ntnetmaxlogs,
-    maxlogs,
-    minlogs,
-    ntnetlogs = [],
-  } = props;
+  const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
   const { act, data } = useBackend(context);
   return (
     <Section>
@@ -91,73 +62,24 @@ const MainPage = (props, context) => {
         WARNING: Disabling wireless transmitters when using a wireless device
         may prevent you from reenabling them!
       </NoticeBox>
-      <Section
-        title="Wireless Connectivity"
-        buttons={
-          <Button.Confirm
-            icon={ntnetstatus ? 'power-off' : 'times'}
-            content={ntnetstatus ? 'ENABLED' : 'DISABLED'}
-            selected={ntnetstatus}
-            onClick={() => act('toggleWireless')}
-          />
-        }>
-        {ntnetrelays ? (
-          <LabeledList>
-            <LabeledList.Item label="Active NTNet Relays">
-              {ntnetrelays}
-            </LabeledList.Item>
-          </LabeledList>
-        ) : (
-          'No Relays Connected'
-        )}
-      </Section>
-      <Section title="Firewall Configuration">
-        <LabeledList>
-          <LabeledList.Item
-            label="Software Downloads"
+      <Section title="Wireless Connectivity">
+        {ntnetrelays.map((relay) => (
+          <Section
+            key={relay.ref}
+            title={relay.name}
             buttons={
-              <Button
-                icon={config_softwaredownload ? 'power-off' : 'times'}
-                content={config_softwaredownload ? 'ENABLED' : 'DISABLED'}
-                selected={config_softwaredownload}
-                onClick={() => act('toggle_function', { id: '1' })}
+              <Button.Confirm
+                color={relay.is_operational ? 'good' : 'bad'}
+                content={relay.is_operational ? 'ENABLED' : 'DISABLED'}
+                onClick={() =>
+                  act('toggle_relay', {
+                    ref: relay.ref,
+                  })
+                }
               />
             }
           />
-          <LabeledList.Item
-            label="Peer to Peer Traffic"
-            buttons={
-              <Button
-                icon={config_peertopeer ? 'power-off' : 'times'}
-                content={config_peertopeer ? 'ENABLED' : 'DISABLED'}
-                selected={config_peertopeer}
-                onClick={() => act('toggle_function', { id: '2' })}
-              />
-            }
-          />
-          <LabeledList.Item
-            label="Communication Systems"
-            buttons={
-              <Button
-                icon={config_communication ? 'power-off' : 'times'}
-                content={config_communication ? 'ENABLED' : 'DISABLED'}
-                selected={config_communication}
-                onClick={() => act('toggle_function', { id: '3' })}
-              />
-            }
-          />
-          <LabeledList.Item
-            label="Remote System Control"
-            buttons={
-              <Button
-                icon={config_systemcontrol ? 'power-off' : 'times'}
-                content={config_systemcontrol ? 'ENABLED' : 'DISABLED'}
-                selected={config_systemcontrol}
-                onClick={() => act('toggle_function', { id: '4' })}
-              />
-            }
-          />
-        </LabeledList>
+        ))}
       </Section>
       <Section title="Security Systems">
         {!!idsalarm && (
@@ -189,26 +111,9 @@ const MainPage = (props, context) => {
               </>
             }
           />
-          <LabeledList.Item
-            label="Max Log Count"
-            buttons={
-              <NumberInput
-                value={ntnetmaxlogs}
-                minValue={minlogs}
-                maxValue={maxlogs}
-                width="39px"
-                onChange={(e, value) =>
-                  act('updatemaxlogs', {
-                    new_number: value,
-                  })
-                }
-              />
-            }
-          />
         </LabeledList>
         <Section
           title="System Log"
-          level={2}
           buttons={
             <Button.Confirm
               icon="trash"

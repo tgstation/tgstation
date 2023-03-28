@@ -43,8 +43,6 @@
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
-	/// If true, the transmit wire starts cut.
-	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
 	var/unscrewed = FALSE
 	/// If true, the radio has access to the full spectrum.
@@ -54,7 +52,7 @@
 	/// If true, subspace_transmission can be toggled at will.
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
-	var/freqlock = FALSE
+	var/freqlock = RADIO_FREQENCY_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -76,10 +74,25 @@
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
 	var/list/secure_radio_connections
 
+	/// overlay when speaker is on
+	var/overlay_speaker_idle = "s_idle"
+	/// overlay when recieving a message
+	var/overlay_speaker_active = "s_active"
+
+	/// overlay when mic is on
+	var/overlay_mic_idle = "m_idle"
+	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
+	var/overlay_mic_active = "m_active"
+
+	/// When set to FALSE, will avoid calling update_icon() in set_broadcasting and co.
+	/// Used to save time on updating icon several times over initialization.
+	VAR_PRIVATE/perform_update_icon = TRUE
+
+	/// If TRUE, will set the icon in initializations.
+	VAR_PRIVATE/should_update_icon = FALSE
+
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = list()
 	. = ..()
 
@@ -88,10 +101,15 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
+	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
 	set_frequency(sanitize_frequency(frequency, freerange, syndie))
 	set_on(on)
+	perform_update_icon = TRUE
+
+	if (should_update_icon)
+		update_appearance(UPDATE_ICON)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
@@ -195,6 +213,11 @@
 	else if(!listening)
 		remove_radio_all(src)
 
+	if (perform_update_icon && !isnull(overlay_speaker_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
+
 /**
  * setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
  * hearing sensitive in this case only matters for the purposes of listening for words said in nearby tiles, talking into us directly bypasses hearing
@@ -213,6 +236,11 @@
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
 
+	if (perform_update_icon && !isnull(overlay_mic_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
+
 ///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)
 
@@ -228,12 +256,14 @@
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
 		return
+	if(SEND_SIGNAL(src, COMSIG_RADIO_NEW_MESSAGE, talking_movable, message, channel) & COMPONENT_CANNOT_USE_RADIO)
+		return
 
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
 		language = talking_movable.get_selected_language()
-	INVOKE_ASYNC(src, .proc/talk_into_impl, talking_movable, message, channel, spans.Copy(), language, message_mods)
+	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, spans.Copy(), language, message_mods)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
@@ -248,6 +278,8 @@
 
 	if(use_command)
 		spans |= SPAN_COMMAND
+
+	flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -301,7 +333,7 @@
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
-	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
+	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 20)
 
 /obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
@@ -314,7 +346,7 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
@@ -353,6 +385,9 @@
 				return TRUE
 	return FALSE
 
+/obj/item/radio/proc/on_recieve_message()
+	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
 
@@ -372,7 +407,7 @@
 	data["frequency"] = frequency
 	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
 	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
-	data["freqlock"] = freqlock
+	data["freqlock"] = freqlock != RADIO_FREQENCY_UNLOCKED
 	data["channels"] = list()
 	for(var/channel in channels)
 		data["channels"][channel] = channels[channel] & FREQ_LISTENING
@@ -390,7 +425,7 @@
 		return
 	switch(action)
 		if("frequency")
-			if(freqlock)
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
@@ -442,6 +477,15 @@
 	else
 		. += span_notice("It cannot be modified or attached.")
 
+/obj/item/radio/update_overlays()
+	. = ..()
+	if(unscrewed)
+		return
+	if(broadcasting)
+		. += overlay_mic_idle
+	if(listening)
+		. += overlay_speaker_idle
+
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	unscrewed = !unscrewed
@@ -461,7 +505,7 @@
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	set_on(FALSE)
-	addtimer(CALLBACK(src, .proc/end_emp_effect, curremp), 200)
+	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 200)
 
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))

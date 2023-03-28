@@ -356,6 +356,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/ert_shuttle_spawn
+	name = "ertshuttlespawn"
+	icon_state = "ert_spawn"
+
+/obj/effect/landmark/ert_shuttle_brief_spawn
+	name = "ertshuttlebriefspawn"
+	icon_state = "ert_brief_spawn"
+
 //ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
@@ -450,23 +458,45 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
 
-	/// A list of everything this hangover spawn created
-	var/list/debris = list()
+	/// A list of everything this hangover spawn created as part of the hangover station trait
+	var/list/hangover_debris = list()
+
+	/// A list of everything this hangover spawn created as part of the birthday station trait
+	var/list/party_debris = list()
 
 /obj/effect/landmark/start/hangover/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/landmark/start/hangover/Destroy()
-	debris = null
+	hangover_debris = null
+	party_debris = null
 	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
+		var/list/bonus_confetti = GLOB.alldirs
+		for(var/confettis in bonus_confetti)
+			var/party_turf_to_spawn_on = get_step(src, confettis)
+			if(!isopenturf(party_turf_to_spawn_on))
+				continue
+			var/dense_object = FALSE
+			for(var/atom/content in party_turf_to_spawn_on)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
+				continue
+			if(prob(50))
+				party_debris += new /obj/effect/decal/cleanable/confetti(party_turf_to_spawn_on)
+			if(prob(10))
+				party_debris += new /obj/item/toy/balloon(party_turf_to_spawn_on)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
-		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		hangover_debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
 	if(prob(70))
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
@@ -480,7 +510,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
+			hangover_debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)

@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "The Green Text appears on the station, tempting people to try and pick it up."
+	min_wizard_trigger_potency = 5
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/greentext/start()
 
@@ -44,7 +46,7 @@
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-	roundend_callback = CALLBACK(src, .proc/check_winner)
+	roundend_callback = CALLBACK(src, PROC_REF(check_winner))
 	SSticker.OnRoundend(roundend_callback)
 
 /obj/item/greentext/equipped(mob/user, slot, initial = FALSE)

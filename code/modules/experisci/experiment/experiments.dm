@@ -32,14 +32,14 @@
 	description = "A scientist needs vermin to test on, use the cytology equipment to grow some of these simple critters!"
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/basic/cockroach, /mob/living/simple_animal/mouse)
+	possible_types = list(/mob/living/basic/cockroach, /mob/living/basic/mouse)
 
 /datum/experiment/scanning/random/cytology/medium
 	name = "Advanced Cytology Scanning Experiment"
 	description = "We need to see how the body functions from the earliest moments. Some cytology experiments will help us gain this understanding."
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/retaliate/snake, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/basic/cow, /mob/living/simple_animal/chicken)
+	possible_types = list(/mob/living/basic/carp, /mob/living/simple_animal/hostile/retaliate/snake, /mob/living/simple_animal/pet/cat, /mob/living/basic/pet/dog/corgi, /mob/living/basic/cow, /mob/living/simple_animal/chicken)
 
 /datum/experiment/scanning/random/cytology/medium/one
 	name = "Advanced Cytology Scanning Experiment One"

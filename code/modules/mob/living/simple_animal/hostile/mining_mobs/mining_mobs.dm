@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
@@ -15,8 +15,10 @@
 	combat_mode = TRUE
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
-	see_in_dark = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Pale purple, should be red enough to see stuff on lavaland
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 35
 	mob_size = MOB_SIZE_LARGE
 	var/icon_aggro = null
 
