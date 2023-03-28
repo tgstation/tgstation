@@ -26,7 +26,7 @@
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
 	var/list/last_partial_pressures = list()
-	/// Assoc list of gas to treat as other gas, in the form gas_id -> list(list(replace, multiplier) ...)
+	/// List of gas to treat as other gas, in the form list(inital_gas, treat_as, multiplier)
 	var/list/treat_as = list()
 	/// Assoc list of procs to run while a gas is present, in the form gas id -> proc_path
 	var/list/breath_present = list()
@@ -201,23 +201,38 @@
 	if(on_loss)
 		breath_lost[gas_type] = on_loss
 
-#define BREATH_RELATIONSHIP_CONVERT 1
-#define BREATH_RELATIONSHIP_MULTIPLIER 2
+#define BREATH_RELATIONSHIP_INITIAL_GAS 1
+#define BREATH_RELATIONSHIP_CONVERT 2
+#define BREATH_RELATIONSHIP_MULTIPLIER 3
 /**
  * Tells the lungs to treat the passed in gas type as another passed in gas type
  * Takes the gas to check for as an argument, alongside the gas to convert and the multiplier to use
+ * These act in the order of insertion, use that how you will
  */
 /obj/item/organ/internal/lungs/proc/add_gas_relationship(gas_type, convert_to, multiplier)
-	if(!gas_type)
+	if(isnull(gas_type) || isnull(convert_to) || multiplier == 0)
 		return
 
-	if(!treat_as[gas_type])
-		treat_as[gas_type] = list()
-
 	var/list/add = new /list(BREATH_RELATIONSHIP_MULTIPLIER)
+	add[BREATH_RELATIONSHIP_INITIAL_GAS] = gas_type
 	add[BREATH_RELATIONSHIP_CONVERT] = convert_to
 	add[BREATH_RELATIONSHIP_MULTIPLIER] = multiplier
-	treat_as[gas_type] += list(add)
+	treat_as += list(add)
+
+/// Clears away a gas relationship. Takes the same args as the initial addition
+/obj/item/organ/internal/lungs/proc/add_gas_relationship(gas_type, convert_to, multiplier)
+	if(isnull(gas_type) || isnull(convert_to) || multiplier == 0)
+		return
+
+	for(var/packet in treat_as)
+		if(packet[BREATH_RELATIONSHIP_INITIAL_GAS] != gas_type)
+			continue
+		if(packet[BREATH_RELATIONSHIP_CONVERT] != convert_to)
+			continue
+		if(packet[BREATH_RELATIONSHIP_MULTIPLIER] != multiplier)
+			continue
+		treat_as -= packet
+		return
 
 /// Handles oxygen breathing. Always called by things that need o2, no matter what
 /obj/item/organ/internal/lungs/proc/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
@@ -623,15 +638,14 @@
 		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES])
 
 	// Treat gas as other types of gas
-	// We iterate over the conversionsinstead of the breaths because it's shorter
-	// If that ever changes change this
-	for(var/convert_id in treat_as)
-		if(!partial_pressures[convert_id])
+	for(var/list/conversion_packet in treat_as)
+		var/read_from = conversion_packet[BREATH_RELATIONSHIP_INITIAL_GAS]
+		if(!partial_pressures[read_from])
 			continue
-		for(var/list/conversion in treat_as[convert_id])
-			partial_pressures[conversion[BREATH_RELATIONSHIP_CONVERT]] += partial_pressures[convert_id] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
-			if(partial_pressures[conversion[BREATH_RELATIONSHIP_CONVERT]] <= 0)
-				partial_pressures -= conversion[BREATH_RELATIONSHIP_CONVERT] // No negative values jeremy
+		var/convert_into = conversion_packet[BREATH_RELATIONSHIP_CONVERT]
+		partial_pressures[conversion[convert_into]] += partial_pressures[read_from] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
+		if(partial_pressures[conversion[convert_into]] <= 0)
+			partial_pressures -= conversion[convert_into] // No negative values jeremy
 
 	// First, we breathe the stuff that always wants to be processed
 	// This is typically things like o2, stuff the mob needs to live
