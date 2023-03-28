@@ -169,11 +169,15 @@
 
 //Security
 /obj/item/clothing/head/hats/hos
+	name = "generic head of security hat"
+	desc = "Please contact the Nanotrasen Costuming Department if found."
+	armor_type = /datum/armor/hats_hos
+	strip_delay = 8 SECONDS
+
+/obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
-	armor_type = /datum/armor/hats_hos
 	icon_state = "hoscap"
-	strip_delay = 80
 
 /datum/armor/hats_hos
 	melee = 40
@@ -186,9 +190,17 @@
 	acid = 60
 	wound = 10
 
-/obj/item/clothing/head/hats/hos/syndicate
+/obj/item/clothing/head/hats/hos/cap/syndicate
 	name = "syndicate cap"
 	desc = "A black cap fit for a high ranking syndicate officer."
+
+/obj/item/clothing/head/hats/hos/shako
+	name = "sturdy shako"
+	desc = "Wearing this makes you want to shout \"Down and give me twenty!\" at someone."
+	icon_state = "hosshako"
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
 
 /obj/item/clothing/head/hats/hos/beret
 	name = "head of security's beret"

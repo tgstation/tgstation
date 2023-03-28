@@ -579,6 +579,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/previous_destination
 	/// The light mask overlay we use
 	var/light_mask
+	/// Is this sign malfunctioning?
+	var/malfunctioning = FALSE
+	/// A default list of possible sign states
+	var/static/list/sign_states = list()
 
 /obj/machinery/destination_sign/north
 	layer = BELOW_OBJ_LAYER
@@ -606,6 +610,16 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
 		GLOB.tram_signs += src
+
+	sign_states = list(
+		"[base_icon_state][DESTINATION_WEST_ACTIVE]",
+		"[base_icon_state][DESTINATION_WEST_IDLE]",
+		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
+		"[base_icon_state][DESTINATION_EAST_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
+		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
+		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+	)
 
 /obj/machinery/destination_sign/Destroy()
 	GLOB.tram_signs -= src
@@ -645,6 +659,12 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return PROCESS_KILL
 
 	use_power(active_power_usage)
+
+	if(malfunctioning)
+		icon_state = "[pick(sign_states)]"
+		light_mask = "[pick(sign_states)]_e"
+		update_appearance()
+		return PROCESS_KILL
 
 	if(!tram.travelling)
 		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
