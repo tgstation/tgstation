@@ -14,7 +14,7 @@
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	desc = "A starry winter hood."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "winterhood_cosmic"
 	worn_icon_state = "winterhood_cosmic"
 
@@ -30,7 +30,7 @@
 /obj/item/clothing/head/hooded/winterhood/ratvar
 	icon_state = "winterhood_ratvar"
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	desc = "A brass-plated winter hood to keep the cogs in the brain warm and turning."
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie
@@ -45,7 +45,7 @@
 /obj/item/clothing/head/hooded/winterhood/narsie
 	desc = "A black winter hood to keep your blood warm and flowing."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
-	worn_icon = 'monkestation/icons/mob/head.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "winterhood_narsie"
 
 // End Of Winter Coat Varients

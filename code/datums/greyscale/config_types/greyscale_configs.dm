@@ -1110,7 +1110,7 @@
 
 /datum/greyscale_config/polycowhat_worn
 	name = "wpolycowhat_poly"
-	icon_file = 'monkestation/icons/mob/head.dmi'
+	icon_file = 'monkestation/icons/mob/clothing/head.dmi'
 	json_config = 'code/datums/greyscale/json_configs/polycowhatworn.json'
 
 /datum/greyscale_config/boatcloak
