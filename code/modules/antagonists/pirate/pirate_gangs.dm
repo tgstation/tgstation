@@ -1,15 +1,16 @@
-///global list of all pirate gangs that can show up today. these will be taken out of the global list as spawned so dupes cannot spawn.
-GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
+///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
+GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE))
+GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///initializes the pirate gangs glob list, adding all subtypes that can roll today.
-/proc/init_pirate_gangs()
+/proc/init_pirate_gangs(is_heavy)
 	var/list/pirate_gangs = list()
 
 	for(var/type in subtypesof(/datum/pirate_gang))
 		var/datum/pirate_gang/possible_gang = new type
 		if(!possible_gang.can_roll())
 			qdel(possible_gang)
-		else
+		else if(possible_gang.is_heavy_threat == is_heavy)
 			pirate_gangs += possible_gang
 	return pirate_gangs
 
@@ -18,6 +19,8 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///name of this gang, for spawning feedback
 	var/name = "Space Bugs"
 
+	///Whether or not this pirate crew is a heavy-level threat
+	var/is_heavy_threat = FALSE
 	///the random ship name chosen from pirates.json
 	var/ship_name
 	///the ship they load in on.
@@ -97,6 +100,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/skeletons
 	name = "Skeleton Pirates"
 
+	is_heavy_threat = TRUE
 	ship_template_id = "dutchman"
 	ship_name_pool = "skeleton_names" //just points to THE ONE AND ONLY
 
