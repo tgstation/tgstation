@@ -338,14 +338,14 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		if(!early_start || !length(custom_setup))
+		if(!early_start && !length(custom_setup))
 			for(var/datum/mafia_role/townie in total_town)
 				award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
-		if(!early_start || !length(custom_setup))
+		if(!early_start && !length(custom_setup))
 			for(var/datum/mafia_role/changeling in total_mafia)
 				award_role(changeling.winner_award, changeling)
 		return TRUE
