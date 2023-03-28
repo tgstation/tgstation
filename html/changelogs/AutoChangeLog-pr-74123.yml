@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Experimentors can connect to techwebs that have at least one RD server on the level."
