@@ -367,3 +367,9 @@
 	suffix = "travelers_rest.dmm"
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/venusian_one
+	id = "venusian_one"
+	suffix = "venusian_one.dmm"
+	name = "Venusian One"
+	description = "A dead Cybersun freighter carrying some heavy duty sulfur... And a gun."

@@ -155,10 +155,10 @@
 
 //Ruin of Venusian One
 
-/area/ruin/space/has_grav/venusian
+/area/ruin/space/has_grav/powered/venusian
 	name = "\improper Venusian One"
 
-/area/ruin/space/has_grav/venusian/vault
+/area/ruin/space/has_grav/powered/venusian/vault
 	name = "\improper Venusian One Vault"
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
