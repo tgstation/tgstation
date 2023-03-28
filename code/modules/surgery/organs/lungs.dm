@@ -220,7 +220,7 @@
 	treat_as += list(add)
 
 /// Clears away a gas relationship. Takes the same args as the initial addition
-/obj/item/organ/internal/lungs/proc/add_gas_relationship(gas_type, convert_to, multiplier)
+/obj/item/organ/internal/lungs/proc/remove_gas_relationship(gas_type, convert_to, multiplier)
 	if(isnull(gas_type) || isnull(convert_to) || multiplier == 0)
 		return
 
@@ -643,9 +643,9 @@
 		if(!partial_pressures[read_from])
 			continue
 		var/convert_into = conversion_packet[BREATH_RELATIONSHIP_CONVERT]
-		partial_pressures[conversion[convert_into]] += partial_pressures[read_from] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
-		if(partial_pressures[conversion[convert_into]] <= 0)
-			partial_pressures -= conversion[convert_into] // No negative values jeremy
+		partial_pressures[convert_into] += partial_pressures[read_from] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
+		if(partial_pressures[convert_into] <= 0)
+			partial_pressures -= convert_into // No negative values jeremy
 
 	// First, we breathe the stuff that always wants to be processed
 	// This is typically things like o2, stuff the mob needs to live
@@ -935,3 +935,8 @@
 	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
+
+
+#undef BREATH_RELATIONSHIP_INITIAL_GAS
+#undef BREATH_RELATIONSHIP_CONVERT
+#undef BREATH_RELATIONSHIP_MULTIPLIER
