@@ -140,9 +140,8 @@
 	)
 
 /obj/item/gun/ballistic/revolver/syndicate
-	name = "\improper Syndicate Revolver"
-	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
-	icon_state = "revolversyndie"
+	name = "\improper .357 revolver"
+	desc = "A suspicious revolver. Uses .357 ammo."
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
@@ -280,9 +279,8 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = "\improper Syndicate Revolver"
+	name = "\improper .357 revolver"
 	clumsy_check = FALSE
-	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)
