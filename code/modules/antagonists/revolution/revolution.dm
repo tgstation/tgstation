@@ -176,7 +176,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()

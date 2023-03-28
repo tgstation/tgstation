@@ -42,30 +42,6 @@
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////
-/datum/design/design_disk
-	name = "Design Storage Disk"
-	desc = "Produce additional disks for storing device designs."
-	id = "design_disk"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
-	build_path = /obj/item/disk/design_disk
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/design_disk_adv
-	name = "Advanced Design Storage Disk"
-	desc = "Produce additional disks for storing device designs."
-	id = "design_disk_adv"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver=50)
-	build_path = /obj/item/disk/design_disk/adv
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
 	desc = "Produce additional disks for storing technology data."
