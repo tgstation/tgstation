@@ -9,8 +9,10 @@
 	/// If set, how long the force field lasts after it's created. Set to 0 to have infinite duration forcefields.
 	var/initial_duration = 30 SECONDS
 
-/obj/effect/forcefield/Initialize(mapload)
+/obj/effect/forcefield/Initialize(mapload, ntiemelef)
 	. = ..()
+	if(ntiemelef)
+		initial_duration = ntiemelef
 	if(initial_duration > 0 SECONDS)
 		QDEL_IN(src, initial_duration)
 

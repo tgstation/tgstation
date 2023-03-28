@@ -176,6 +176,11 @@
 	if(..())
 		buckled_mob.pixel_y -= 13
 
+/obj/structure/bonfire/bluespace
+
+/obj/structure/bonfire/check_oxygen()
+	return
+
 /particles/bonfire
 	icon = 'icons/effects/particles/bonfire.dmi'
 	icon_state = "bonfire"
