@@ -13,7 +13,7 @@ Format:
 	votable (is this map votable)
 endmap
 
-map metastation	
+map metastation
 	#default
 	votable
 endmap
@@ -32,7 +32,12 @@ map icebox
 	disabled
 endmap
 
-map tramstation	
+map tramstation
+endmap
+
+map heliostation
+	votable
+	disabled
 endmap
 
 map runtimestation

@@ -615,28 +615,118 @@ h2.alert {
 }
 
 .brass {
-  color: #BE8700;
+  color: #be8700;
 }
 .heavy_brass {
-  color: #BE8700;
+  color: #be8700;
   font-weight: bold;
   font-style: italic;
 }
 .large_brass {
-  color: #BE8700;
-  font-size: 185%;
+  color: #be8700;
+  font-size: 24px;
+}
+.leader_brass {
+  color: #be8700;
+  font-size: 16px;
 }
 .big_brass {
-  color: #BE8700;
-  font-size: 185%;
+  color: #be8700;
+  font-size: 24px;
   font-weight: bold;
   font-style: italic;
 }
-.ratvar	{
-  color: #BE8700;
-  font-size: 925%;
+.ratvar {
+  color: #be8700;
+  font-size: 48px;
   font-weight: bold;
   font-style: italic;
+  animation: ratvarcolor 5000ms infinite;
+}
+.ratvarsmall {
+  color: #be8700;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  animation: ratvarcolor 5000ms infinite;
+}
+.alloy {
+  color: #42474d;
+}
+.heavy_alloy {
+  color: #42474d;
+  font-weight: bold;
+  font-style: italic;
+}
+.nezbere_large {
+  color: #42474d;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+.nezbere {
+  color: #42474d;
+  font-weight: bold;
+  font-style: italic;
+}
+.nezbere_small {
+  color: #42474d;
+}
+.sevtug_large {
+  color: #af0aaf;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+.sevtug {
+  color: #af0aaf;
+  font-weight: bold;
+  font-style: italic;
+}
+.sevtug_small {
+  color: #af0aaf;
+}
+.inathneq_large {
+  color: #1e8ce1;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+.inathneq {
+  color: #1e8ce1;
+  font-weight: bold;
+  font-style: italic;
+}
+.inathneq_small {
+  color: #1e8ce1;
+}
+.nzcrentr_large {
+  color: #daaa18;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+.nzcrentr {
+  color: #daaa18;
+  font-weight: bold;
+  font-style: italic;
+}
+.nzcrentr_small {
+  color: #daaa18;
+}
+.neovgre_large {
+  color: #6e001a;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+.neovgre {
+  color: #6e001a;
+  font-weight: bold;
+  font-style: italic;
+}
+.neovgre_small {
+  color: #6e001a;
 }
 
 .colossus {

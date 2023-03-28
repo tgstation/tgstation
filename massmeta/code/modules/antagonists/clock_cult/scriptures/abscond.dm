@@ -2,7 +2,7 @@
 // !       Abscond       ! //
 //==================================//
 
-/datum/clockcult/scripture/abscond
+/*/datum/clockcult/scripture/abscond
 	name = "Бегство"
 	desc = "Телепорт на Риби. Если тащить кого-то, то он отправится тоже."
 	tip = "Телепорт на Риби. Если тащить кого-то, то он отправится тоже."
@@ -32,3 +32,6 @@
 /datum/clockcult/scripture/abscond/invoke_fail()
 	if(invoker?.client)
 		animate(invoker.client, color = client_color, time = 10)
+*/
+
+//Waltuh

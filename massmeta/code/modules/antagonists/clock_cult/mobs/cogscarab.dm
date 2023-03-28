@@ -29,16 +29,11 @@ GLOBAL_LIST_INIT(cogscarabs, list())
 /mob/living/simple_animal/drone/cogscarab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOGUNS, "cogscarab")
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) //I think red vented
 	GLOB.cogscarabs += src
 
 /mob/living/simple_animal/drone/cogscarab/death(gibbed)
 	GLOB.cogscarabs -= src
-	. = ..()
-
-/mob/living/simple_animal/drone/cogscarab/Life(seconds, times_fired)
-	if(!is_reebe(z) && !GLOB.ratvar_risen)
-		var/turf/T = get_turf(pick(GLOB.servant_spawns))
-		try_warp_servant(src, T, FALSE)
 	. = ..()
 
 //====Shell====
