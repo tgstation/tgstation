@@ -27,34 +27,27 @@
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 
-	if(!(methods & (VAPOR|PATCH|TOUCH)))
+	if(!(methods & (VAPOR|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
-	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
-
-///Signal fired when wearer attempts to activate/deactivate suits
-/obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
-	SIGNAL_HANDLER
-
-	balloon_alert(user, "springlocks aren't responding...?")
-	return MOD_CANCEL_ACTIVATE
+	addtimer(CALLBACK(src, .proc/snap_shut), rand(6 SECONDS, 9 SECONDS))
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
-		return
+	if(!mod.wearer || !active) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
+		loc.visible_message("[mod] makes a chrunching noise, but nothing seems to happen, thankfully.")
+		return // if the user manages to get their module out in time, the springlocks won't kill them. in practice this will result in ego and more people purple guying
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
-	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/machines/trapdoor/trapdoor_shut.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
