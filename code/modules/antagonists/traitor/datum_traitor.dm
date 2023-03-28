@@ -153,6 +153,7 @@
 
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
