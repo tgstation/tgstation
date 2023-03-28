@@ -231,3 +231,54 @@
 		user.put_in_hands(gun)
 	else
 		user.dropItemToGround(src, TRUE)
+
+// SNIPER //
+
+/obj/item/gun/ballistic/rifle/sniper_rifle
+	name = "anti-materiel sniper rifle"
+	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
+		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
+		It is also able to be suppressed....somehow."
+	icon_state = "sniper"
+	weapon_weight = WEAPON_HEAVY
+	inhand_icon_state = "sniper"
+	worn_icon_state = null
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	recoil = 2
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	internal_magazine = FALSE
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BACK
+	mag_display = TRUE
+	tac_reloads = TRUE
+	rack_delay = 1 SECONDS
+	can_suppress = TRUE
+	can_unsuppress = TRUE
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/examine(mob/user)
+	. = ..()
+	. += span_warning("<b>It seems to have a warning label:</b> Do NOT, under any circumstances, attempt to 'quickscope' with this rifle.")
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 7) //enough range to at least make extremely good use of the penetrator rounds
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
+	. = ..()
+	if(suppressed)
+		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	else
+		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
+	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
+		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
+		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
+		Who knows what that might mean."
+	pin = /obj/item/firing_pin/implant/pindicate

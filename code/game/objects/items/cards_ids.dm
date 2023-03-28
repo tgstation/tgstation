@@ -1174,6 +1174,7 @@
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	registered_account.account_job = new /datum/job/admin // so we can actually use this account without being filtered as a "departmental" card
 
 /obj/item/card/id/advanced/prisoner
 	name = "prisoner ID card"

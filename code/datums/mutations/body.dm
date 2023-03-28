@@ -466,17 +466,17 @@
 
 	if(new_stat != HARD_CRIT)
 		return
-	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, TRUE)
+	var/list/organs = owner.get_organs_for_zone(BODY_ZONE_HEAD, TRUE)
 
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
 	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/splashed in view(2, owner))
-		var/obj/item/organ/internal/eyes/eyes = splashed.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = splashed.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes)
 			to_chat(splashed, span_userdanger("You are blinded by a shower of blood!"))
-			eyes.applyOrganDamage(5)
+			eyes.apply_organ_damage(5)
 		else
 			to_chat(splashed, span_userdanger("You are knocked down by a wave of... blood?!"))
 		splashed.Stun(2 SECONDS)
@@ -499,7 +499,7 @@
 	. = ..()
 	if(.)//cant add
 		return TRUE
-	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.zone = BODY_ZONE_CHEST
 
@@ -517,7 +517,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
 		brain.zone = BODY_ZONE_HEAD
 	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)

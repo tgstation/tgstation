@@ -158,10 +158,10 @@
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/turf_decal/tile/dark_blue/anticorner{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ij" = (
@@ -179,8 +179,8 @@
 /area/shuttle/escape)
 "iJ" = (
 /obj/machinery/stasis,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jj" = (
@@ -359,11 +359,11 @@
 	anchorable = 0;
 	anchored = 1
 	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -381,11 +381,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "sg" = (
+/obj/effect/turf_decal/delivery,
+/obj/vehicle/ridden/wheelchair,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
-/obj/vehicle/ridden/wheelchair,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "sN" = (
@@ -412,8 +412,8 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/surgicaldrill,
 /obj/item/cautery,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/item/clothing/gloves/latex,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uR" = (
@@ -485,10 +485,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "yk" = (
+/obj/structure/bed/roller,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/bed/roller,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zB" = (
@@ -614,14 +614,14 @@
 /area/shuttle/escape/brig)
 "Gq" = (
 /obj/machinery/shower/directional/south,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -643,15 +643,15 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Hq" = (
+/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "HA" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/structure/sign/poster/official/random/directional/south,
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "HL" = (
@@ -699,11 +699,11 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/structure/sign/poster/official/moth_epi{
 	pixel_y = -32
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
@@ -780,10 +780,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Ru" = (
+/obj/machinery/vending/wallmed/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "RL" = (
@@ -919,12 +919,12 @@
 	anchored = 1
 	},
 /obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/loading_area{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
