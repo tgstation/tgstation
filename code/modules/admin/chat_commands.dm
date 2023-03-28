@@ -120,3 +120,28 @@
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
 	return status
+
+/datum/tgs_chat_command/embeds_test
+	name = "embeds_test"
+	help_text = "asdf"
+
+/datum/tgs_chat_command/embeds_test/Run(datum/tgs_chat_user/sender, params)
+	var/datum/tgs_message_content/response = new("Embed support: [sender.channel.embeds_supported]")
+	response.embed = new()
+	response.embed.description = "desc"
+	response.embed.title = "title"
+	response.embed.colour = COLOR_VIVID_YELLOW
+	response.embed.author = new /datum/tgs_chat_embed/provider/author("Dominion")
+	response.embed.author.url = "https://github.com/Cyberboss"
+	response.embed.timestamp = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
+	response.embed.url = "https://github.com/tgstation/tgstation-server"
+	response.embed.fields = list()
+	var/datum/tgs_chat_embed/field/field = new("field1","value1")
+	fields += field
+	field = new("field2","value2")
+	field.is_inline = TRUE
+	fields += field
+	field = new("field3","value3")
+	fields += field
+	response.embed.footer = new /datum/tgs_chat_embed/footer("Footer text")
+	return response
