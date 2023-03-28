@@ -23551,6 +23551,7 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "hEw" = (
@@ -44155,6 +44156,7 @@
 	pixel_x = 8;
 	req_access = list("brig")
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "oou" = (
@@ -49315,6 +49317,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "pXN" = (
@@ -68996,6 +68999,7 @@
 /obj/item/storage/box/ids,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/papercutter,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},

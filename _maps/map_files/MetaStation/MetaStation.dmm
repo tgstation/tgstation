@@ -2927,6 +2927,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "aZv" = (
@@ -24348,6 +24349,7 @@
 "iNB" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/table/glass,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iNC" = (
@@ -32692,10 +32694,6 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/paperslip{
-	pixel_x = -5;
-	pixel_y = 10
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -34892,6 +34890,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "mwS" = (
@@ -38519,6 +38518,7 @@
 /obj/item/stack/package_wrap,
 /obj/structure/table/wood,
 /obj/structure/cable,
+/obj/item/papercutter,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "nHB" = (
