@@ -161,15 +161,15 @@ const UplinkSection = (props, context) => {
       <br />
       <Section textAlign="Center">
         If you lose your uplink you can construct a Syndicate Uplink Beacon and
-        then speak the code{' '}
+        then speak{' '}
         <span style={goalstyle}>
           <b>{replacement_code}</b>
         </span>{' '}
-        into{' '}
+        on radio frequency{' '}
         <span style={goalstyle}>
           <b>{replacement_frequency}</b>
         </span>{' '}
-        via radio after synchronizing with the beacon.
+        after synchronizing with the beacon.
       </Section>
     </Section>
   );
