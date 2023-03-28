@@ -97,6 +97,7 @@
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
+	SIGNAL_HANDLER
 	if(global_frozen_atoms[A] || !istype(A))
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
@@ -115,8 +116,6 @@
 		freeze_projectile(A)
 	else if(ismecha(A))
 		freeze_mecha(A)
-	else if(issupermatter(A))
-		freeze_supermatter(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
 	else
@@ -133,6 +132,8 @@
 	into_the_negative_zone(A)
 	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(unfreeze_atom))
 	RegisterSignal(A, COMSIG_ITEM_PICKUP, PROC_REF(unfreeze_atom))
+
+	SEND_SIGNAL(A, COMSIG_ATOM_TIMESTOP_FREEZE, src)
 
 	return TRUE
 
@@ -153,11 +154,12 @@
 		unfreeze_projectile(A)
 	else if(ismecha(A))
 		unfreeze_mecha(A)
-	else if(issupermatter(A))
-		unfreeze_supermatter(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(A, COMSIG_ITEM_PICKUP)
+
+	SEND_SIGNAL(A, COMSIG_ATOM_TIMESTOP_UNFREEZE, src)
+
 	escape_the_negative_zone(A)
 	A.move_resist = frozen_things[A]
 	frozen_things -= A
@@ -193,13 +195,6 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_structure(obj/O)
 	escape_the_negative_zone(O)
-
-/datum/proximity_monitor/advanced/timestop/proc/freeze_supermatter(obj/machinery/power/supermatter_crystal/supermatter)
-	frozen_things += supermatter
-	supermatter.time_frozen = TRUE
-
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_supermatter(obj/machinery/power/supermatter_crystal/supermatter)
-	supermatter.time_frozen = FALSE
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
