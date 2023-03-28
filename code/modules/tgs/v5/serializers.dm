@@ -30,7 +30,7 @@
 		"url" = url,
 		"width" = width,
 		"height" = height,
-		"proxy_url" = proxy_url
+		"proxyUrl" = proxy_url
 	)
 
 /datum/tgs_chat_embed/provider/_interop_serialize()
@@ -41,12 +41,12 @@
 
 /datum/tgs_chat_embed/provider/author/_interop_serialize()
 	. = ..()
-	.["icon_url"] = icon_url
-	.["proxy_icon_url"] = proxy_icon_url
+	.["iconUrl"] = icon_url
+	.["proxyIconUrl"] = proxy_icon_url
 
 /datum/tgs_chat_embed/field/_interop_serialize()
 	return list(
 		"name" = name,
 		"value" = value,
-		"is_inline" = is_inline
+		"isInline" = is_inline
 	)
