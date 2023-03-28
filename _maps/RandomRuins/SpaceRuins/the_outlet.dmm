@@ -30,9 +30,7 @@
 "aN" = (
 /obj/item/clothing/suit/hooded/cultrobes/alt,
 /obj/item/clothing/shoes/cult/alt,
-/obj/structure/closet/crate/secure{
-	req_access = [203]
-	},
+/obj/structure/closet/crate,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "aX" = (
@@ -1436,9 +1434,7 @@
 /obj/item/clothing/suit/hooded/cultrobes,
 /obj/item/clothing/shoes/cult,
 /obj/item/sharpener/cult,
-/obj/structure/closet/crate/secure{
-	req_access = [203]
-	},
+/obj/structure/closet/crate,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "HV" = (
