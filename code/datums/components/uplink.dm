@@ -97,7 +97,7 @@
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
 
-/// When a new uplink is made via the syndicate beacon it locks all lockable implants and destroys implants that can not be locked
+/// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys uplinks that can not be locked
 /datum/component/uplink/proc/handle_uplink_replaced()
 	SIGNAL_HANDLER
 	if(lockable)
