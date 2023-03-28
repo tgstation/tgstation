@@ -5,29 +5,25 @@
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "aw" = (
+/obj/structure/table,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "aE" = (
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/stack/cable_coil{
-	amount = 15;
-	pixel_x = 5;
-	pixel_y = 12
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict6"
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/item/stack/cable_coil{
-	amount = 15
-	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "be" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/engine,
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "bA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -43,38 +39,26 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "dg" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/ballistic/rifle/boltaction{
-	pixel_y = 5
-	},
-/obj/item/gun/ballistic/rifle/boltaction,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
-	name = "Shooting Range"
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/iron,
 /area/centcom/basketball)
 "dr" = (
-/obj/structure/table,
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 7
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/obj/item/clothing/glasses/sunglasses{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "dC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict7"
 	},
-/obj/item/wrench,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "dJ" = (
-/turf/open/floor/iron/dark/small,
+/obj/structure/training_machine,
+/obj/item/target/syndicate,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "dM" = (
 /obj/structure/table,
@@ -89,27 +73,26 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "dS" = (
-/obj/item/crowbar,
-/turf/open/floor/catwalk_floor,
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict9"
+	},
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "eS" = (
-/obj/effect/decal/cleanable/oil/streak,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/centcom/basketball)
 "eU" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "fi" = (
-/obj/machinery/vending/sovietsoda,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "fj" = (
-/obj/structure/stairs/east,
-/obj/structure/sign/poster/random/directional/south,
-/turf/open/floor/iron/dark/small,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "fu" = (
 /obj/structure/table/reinforced/titaniumglass,
@@ -118,43 +101,21 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "fB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "cyka"
-	},
-/turf/open/floor/plating,
+/obj/structure/sign/poster/contraband/communist_state,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "gk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
-	name = "Shooting Range";
-	dir = 4
-	},
-/obj/item/gun/ballistic/rifle/boltaction{
-	pixel_y = 5
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/basketball)
-"gq" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/engine,
 /area/centcom/basketball)
-"gx" = (
+"gq" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 4
 	},
-/obj/effect/decal/cleanable/oil/streak,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "hf" = (
 /obj/effect/turf_decal/plaque{
@@ -176,18 +137,32 @@
 /turf/open/floor/iron/large,
 /area/centcom/basketball)
 "kc" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/ballistic/rifle/boltaction{
-	pixel_y = 10
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"kp" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict5"
 	},
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
-	name = "Shooting Range"
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"ku" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"kF" = (
+/obj/structure/stairs/east,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"kT" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
-"kp" = (
+"ly" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/west{
 	base_state = "right";
@@ -201,38 +176,20 @@
 /obj/item/gun/ballistic/rifle/boltaction,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
-"ku" = (
-/obj/structure/stairs/east,
-/turf/open/floor/iron,
-/area/centcom/basketball)
-"kT" = (
-/obj/structure/chair/stool/directional/south,
-/turf/open/floor/plating,
-/area/centcom/basketball)
-"ly" = (
-/obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/basketball)
 "lD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/obj/structure/stairs/east,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
 /area/centcom/basketball)
 "lR" = (
-/obj/structure/stairs/west,
-/turf/open/floor/iron,
+/obj/structure/training_machine,
+/obj/item/target/clown,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "mp" = (
-/obj/structure/stairs/west,
-/obj/structure/sign/poster/random/directional/south,
-/turf/open/floor/iron/dark/small,
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
 /area/centcom/basketball)
 "my" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -242,29 +199,32 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "mV" = (
-/obj/effect/turf_decal/tile/dark_red/full,
-/turf/open/floor/iron/large,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "nE" = (
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "nW" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "oh" = (
 /obj/effect/turf_decal/plaque{
-	icon_state = "derelict6"
+	icon_state = "derelict14"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "oR" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict10"
-	},
-/turf/open/floor/iron/dark/small,
+/obj/item/weldingtool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"pn" = (
+/obj/structure/stairs/west,
+/turf/open/floor/iron,
 /area/centcom/basketball)
 "pu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -273,60 +233,76 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "qU" = (
-/obj/structure/sign/poster/contraband/soviet_propaganda,
-/turf/closed/indestructible/fakeglass,
-/area/centcom/basketball)
-"rS" = (
 /obj/effect/turf_decal/plaque{
-	icon_state = "derelict8"
+	icon_state = "derelict10"
 	},
-/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
-"rU" = (
-/obj/machinery/power/shuttle_engine/large{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/centcom/basketball)
-"sb" = (
+"rS" = (
 /obj/structure/stairs/east,
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
+"rU" = (
+/obj/item/crowbar,
+/turf/open/floor/catwalk_floor,
+/area/centcom/basketball)
+"sb" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 5
+	},
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
 "su" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
-/turf/open/floor/engine,
+/obj/item/pushbroom,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "tO" = (
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
-/turf/open/floor/engine,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "tX" = (
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "uH" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/dark/small,
-/area/centcom/basketball)
-"uR" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict4"
-	},
-/turf/open/floor/iron/dark/small,
-/area/centcom/basketball)
-"uW" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict16"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
-"vo" = (
+"uR" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"uW" = (
 /obj/effect/turf_decal/plaque{
-	icon_state = "derelict9"
+	icon_state = "derelict4"
 	},
 /turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"vo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"wt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "wZ" = (
 /obj/machinery/pipedispenser,
@@ -347,12 +323,16 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "zy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/broken_bottle,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "zZ" = (
-/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Ax" = (
@@ -362,9 +342,9 @@
 /area/centcom/basketball)
 "AC" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "AI" = (
@@ -377,14 +357,17 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Bd" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict12"
-	},
-/turf/open/floor/iron/dark/small,
+/obj/structure/table,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "BJ" = (
-/obj/structure/sign/poster/contraband/communist_state,
-/turf/closed/indestructible/fakeglass,
+/obj/machinery/power/shuttle_engine/large{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "Cv" = (
 /obj/effect/landmark/basketball/team_spawn/home_hoop,
@@ -441,7 +424,7 @@
 /area/centcom/basketball)
 "Gi" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 5
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
@@ -449,14 +432,15 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/basketball)
 "HH" = (
-/obj/machinery/vending/cigarette,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict1"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Ic" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/engine,
+/obj/structure/stairs/east,
+/turf/open/floor/iron,
 /area/centcom/basketball)
 "IA" = (
 /obj/effect/turf_decal/tile/dark_red/full,
@@ -464,23 +448,36 @@
 /turf/open/floor/iron/large,
 /area/centcom/basketball)
 "JM" = (
-/obj/structure/table,
-/obj/item/clothing/glasses/sunglasses{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 7
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"JW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/obj/item/wrench,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "KH" = (
-/obj/structure/stairs/west,
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict3"
+	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Lu" = (
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/iron/dark/small,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/stack/cable_coil{
+	amount = 15;
+	pixel_x = 5;
+	pixel_y = 12
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/item/stack/cable_coil{
+	amount = 15
+	},
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "LI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -489,14 +486,15 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "LS" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/item/clothing/head/utility/hardhat/orange,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/broken_bottle,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "LU" = (
-/turf/open/floor/catwalk_floor,
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict12"
+	},
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "LV" = (
 /obj/item/kirbyplants{
@@ -506,52 +504,54 @@
 /turf/open/floor/iron,
 /area/centcom/basketball)
 "Ma" = (
-/obj/structure/stairs/east,
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/iron,
-/area/centcom/basketball)
-"MS" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/plating,
-/area/centcom/basketball)
-"MW" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
+/obj/structure/table,
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
+"MS" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/training_machine,
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"MW" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/plating,
+/area/centcom/basketball)
 "Nt" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict5"
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 10
 	},
-/turf/open/floor/iron/dark/small,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range"
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Oj" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict2"
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
+/obj/structure/stairs/west,
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Om" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict3"
+/mob/living/simple_animal/hostile/bear/fightpit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/iron/dark/small,
-/area/centcom/basketball)
-"OB" = (
-/obj/structure/training_machine,
-/obj/item/target/clown,
-/obj/effect/turf_decal/stripes/box,
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/engine,
 /area/centcom/basketball)
-"OO" = (
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+"OB" = (
+/mob/living/simple_animal/hostile/bear/fightpit,
+/turf/open/floor/engine,
 /area/centcom/basketball)
 "PU" = (
 /obj/structure/table,
@@ -567,28 +567,26 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "PW" = (
-/obj/item/weldingtool,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "guy"
+	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Qa" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict1"
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/dark/small,
+/obj/machinery/mech_bay_recharge_port,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/plaque{
-	icon_state = "derelict14"
+	icon_state = "derelict11"
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Qi" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/engine,
+/obj/structure/sign/poster/contraband/soviet_propaganda,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ql" = (
 /obj/item/kirbyplants{
@@ -597,8 +595,16 @@
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
 /area/centcom/basketball)
+"QR" = (
+/obj/structure/stairs/west,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
 "Rl" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/training_machine,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Se" = (
@@ -607,47 +613,39 @@
 	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
-"So" = (
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/belt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/turf/open/floor/plating,
-/area/centcom/basketball)
 "Tc" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/small,
+/turf/closed/indestructible/riveted/plastinum,
 /area/centcom/basketball)
 "TV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/engine,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "cyka"
+	},
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "Uq" = (
-/turf/closed/indestructible/riveted/plastinum,
-/area/centcom/basketball)
-"Uv" = (
-/obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/turf/open/floor/iron/dark,
-/area/centcom/basketball)
-"Uy" = (
 /obj/effect/turf_decal/plaque{
-	icon_state = "derelict11"
+	icon_state = "derelict2"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
-"Vr" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
+"Uv" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Uy" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/training_machine,
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /turf/open/floor/engine,
+/area/centcom/basketball)
+"Vr" = (
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "WB" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
@@ -666,27 +664,35 @@
 /turf/closed/indestructible/riveted/plastinum,
 /area/centcom/basketball)
 "Xm" = (
-/obj/item/pushbroom,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Xn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "guy"
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Xo" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "derelict7"
-	},
-/turf/open/floor/iron/dark/small,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/storage/belt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/plating,
 /area/centcom/basketball)
 "YH" = (
-/obj/structure/training_machine,
-/obj/item/target/syndicate,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/engine,
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict8"
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "YX" = (
 /obj/effect/turf_decal/tile/dark_red/full,
@@ -694,6 +700,16 @@
 /turf/open/floor/iron/large,
 /area/centcom/basketball)
 "ZM" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range";
+	dir = 4
+	},
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 
@@ -730,21 +746,21 @@ tO
 tO
 tO
 tO
-Uq
-Uq
+Tc
+Tc
 WM
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
 WM
-Uq
-Uq
+Tc
+Tc
 tO
 tO
 tO
@@ -757,8 +773,8 @@ tO
 tO
 tO
 tO
-Uq
-fi
+Tc
+dg
 tX
 tX
 WB
@@ -770,8 +786,8 @@ tX
 WB
 tX
 tX
-HH
-Uq
+fi
+Tc
 tO
 tO
 tO
@@ -784,7 +800,7 @@ tO
 tO
 tO
 tO
-Uq
+Tc
 tX
 tX
 tX
@@ -798,7 +814,7 @@ tX
 tX
 tX
 tX
-Uq
+Tc
 tO
 tO
 tO
@@ -808,12 +824,12 @@ Hu
 (5,1,1) = {"
 Hu
 tO
-Uq
-Uq
-Uq
-Uq
-Ma
-ku
+Tc
+Tc
+Tc
+Tc
+lD
+Ic
 AI
 Cw
 Cw
@@ -823,375 +839,375 @@ Cw
 Cw
 Cw
 AI
-sb
-fj
-Uq
-Uq
-Uq
-Uq
+rS
+kF
+Tc
+Tc
+Tc
+Tc
 tO
 Hu
 "}
 (6,1,1) = {"
 Hu
 tO
-Uq
-dr
+Tc
+Ma
 PU
-MW
-ZM
-ZM
+kT
+Vr
+Vr
 Cw
-mV
-mV
-mV
+mp
+mp
+mp
 Cv
-mV
-mV
-mV
+mp
+mp
+mp
 Cw
-dJ
-Lu
+eU
+Uv
 CV
 bA
-AC
-Uq
+zZ
+Tc
 tO
 Hu
 "}
 (7,1,1) = {"
 Hu
 tO
-Uq
-Uv
-aw
-ZM
-aw
-ZM
+Tc
+Bd
+gq
+Vr
+gq
+Vr
 Cw
-mV
+mp
 IA
-mV
-mV
-mV
+mp
+mp
+mp
 IA
-mV
+mp
 Cw
-dJ
-uH
+eU
+nW
 tO
-rU
-fB
-Uq
+BJ
+TV
+Tc
 tO
 Hu
 "}
 (8,1,1) = {"
 Hu
-Uq
-Uq
+Tc
+Tc
 nE
 Ev
 nE
 Ev
 nE
 Cw
-mV
+mp
 xP
 IA
 IA
 IA
-mV
-mV
+mp
+mp
 Cw
-vo
-Qa
+dS
+HH
 tO
 tO
-dC
-Uq
-Uq
+JW
+Tc
+Tc
 Hu
 "}
 (9,1,1) = {"
 Hu
+Tc
+Tc
+ly
+Cw
+ZM
+Cw
+ly
+Cw
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+Cw
+qU
 Uq
-Uq
-kp
-Cw
-gk
-Cw
-kp
-Cw
-mV
-mV
-mV
-mV
-mV
-mV
-mV
-Cw
-oR
-Oj
 Gh
 Gh
 my
 cz
-Uq
+Tc
 Hu
 "}
 (10,1,1) = {"
 Hu
-Uq
+Tc
+dr
+Dt
+Dt
+Dt
+Dt
+wt
 Qi
-Dt
-Dt
-Dt
-Dt
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+fB
+Qh
+KH
 be
-qU
-mV
-mV
-mV
-mV
-mV
-mV
-mV
-BJ
-Uy
-Om
-nW
-nW
-kT
-So
-Uq
+be
+uR
+Xo
+Tc
 Hu
 "}
 (11,1,1) = {"
 Hu
-Uq
-gq
-tU
-tU
-tU
-tU
-Rl
-qU
+Tc
+Om
+kc
+kc
+kc
+kc
+Uy
+Qi
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+fB
+LU
+uW
 mV
-mV
-mV
-mV
-mV
-mV
-mV
-BJ
-Bd
-uR
-OO
 LI
-eS
+tU
 fu
-Uq
+Tc
 Hu
 "}
 (12,1,1) = {"
 Hu
-Uq
+Tc
 Se
+lR
+kc
+dJ
 OB
-tU
-YH
-su
 Rl
-qU
-mV
-mV
-mV
+Qi
+mp
+mp
+mp
 YX
-mV
-mV
-mV
-BJ
+mp
+mp
+mp
+fB
 zr
-Nt
-dS
+kp
+rU
 wZ
-LU
+eS
 Ax
-Uq
+Tc
 Hu
 "}
 (13,1,1) = {"
 Hu
-Uq
-TV
-tU
-su
-tU
-tU
-Rl
-qU
-mV
-mV
-mV
-mV
-mV
-mV
-mV
-BJ
-Qh
+Tc
+gk
+kc
+OB
+kc
+kc
+MS
+Qi
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+fB
 oh
-Xn
-zy
-Xm
+aE
+PW
+LS
+su
 AU
-Uq
+Tc
 Hu
 "}
 (14,1,1) = {"
 Hu
-Uq
+Tc
+JM
 Gi
-Vr
-Vr
-Vr
-Vr
-Ic
-qU
-mV
-mV
-mV
-mV
-mV
-mV
-mV
-BJ
+Gi
+Gi
+Gi
+zy
+Qi
+mp
+mp
+mp
+mp
+mp
+mp
+mp
+fB
 hf
-Xo
-PW
+dC
+oR
 hB
-kT
-aE
-Uq
+uR
+Lu
+Tc
 Hu
 "}
 (15,1,1) = {"
 Hu
-Uq
-Uq
+Tc
+Tc
 Cw
-dg
+sb
 Cw
-kc
+Nt
 Cw
 Cw
-mV
-mV
-mV
-mV
-mV
-mV
-mV
+mp
+mp
+mp
+mp
+mp
+mp
+mp
 Cw
-uW
-rS
+uH
+YH
 WK
 WK
-AC
 zZ
-Uq
+MW
+Tc
 Hu
 "}
 (16,1,1) = {"
 Hu
-Uq
-Uq
+Tc
+Tc
 Ev
 nE
 Ev
 nE
 Ev
 Cw
-mV
-mV
+mp
+mp
 jr
 jr
 jr
-mV
-mV
+mp
+mp
 Cw
-dJ
-uH
-MS
-MS
-lD
-Uq
-Uq
+eU
+nW
+Qa
+Qa
+fj
+Tc
+Tc
 Hu
 "}
 (17,1,1) = {"
 Hu
 tO
-Uq
-ly
-ZM
+Tc
+aw
+Vr
 pu
-ZM
+Vr
 pu
 Cw
-mV
+mp
 jr
-mV
-mV
-mV
+mp
+mp
+mp
 jr
-mV
+mp
 Cw
-dJ
-uH
 eU
-eU
-lD
-Uq
+nW
+Xn
+Xn
+fj
+Tc
 tO
 Hu
 "}
 (18,1,1) = {"
 Hu
 tO
-Uq
-JM
-dM
-MW
-ZM
-ZM
-Cw
-mV
-mV
-mV
-DP
-mV
-mV
-mV
-Cw
-dJ
 Tc
-gx
+Xm
+dM
+kT
+Vr
+Vr
+Cw
+mp
+mp
+mp
+DP
+mp
+mp
+mp
+Cw
+eU
+ku
+vo
 CD
-LS
-Uq
+AC
+Tc
 tO
 Hu
 "}
 (19,1,1) = {"
 Hu
 tO
-Uq
-Uq
-Uq
-Uq
+Tc
+Tc
+Tc
+Tc
 at
-lR
+pn
 AI
 Cw
 Cw
@@ -1201,12 +1217,12 @@ Cw
 Cw
 Cw
 AI
-KH
-mp
-Uq
-Uq
-Uq
-Uq
+QR
+Oj
+Tc
+Tc
+Tc
+Tc
 tO
 Hu
 "}
@@ -1216,7 +1232,7 @@ tO
 tO
 tO
 tO
-Uq
+Tc
 tX
 tX
 tX
@@ -1230,7 +1246,7 @@ tX
 tX
 tX
 tX
-Uq
+Tc
 tO
 tO
 tO
@@ -1243,8 +1259,8 @@ tO
 tO
 tO
 tO
-Uq
-HH
+Tc
+fi
 tX
 tX
 jj
@@ -1256,8 +1272,8 @@ tX
 jj
 tX
 tX
-fi
-Uq
+dg
+Tc
 tO
 tO
 tO
@@ -1270,21 +1286,21 @@ tO
 tO
 tO
 tO
-Uq
-Uq
+Tc
+Tc
 WM
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
-Uq
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
+Tc
 WM
-Uq
-Uq
+Tc
+Tc
 tO
 tO
 tO
