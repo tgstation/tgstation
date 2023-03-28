@@ -93,3 +93,13 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 /datum/store_item/mask/balaclava
 	name = "Balaclava"
 	item_path = /obj/item/clothing/mask/balaclava
+
+/datum/store_item/mask/kitsunewhite
+	name = "White Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsunewhite
+	item_cost = 5000
+
+/datum/store_item/mask/kitsuneblack
+	name = "Black Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsuneblack
+	item_cost = 5000
