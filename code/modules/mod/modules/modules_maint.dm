@@ -31,7 +31,7 @@
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
-	addtimer(CALLBACK(src, .proc/snap_shut), rand(6 SECONDS, 9 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(6 SECONDS, 9 SECONDS))
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
