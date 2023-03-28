@@ -26,6 +26,8 @@
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
 	var/list/last_partial_pressures = list()
+	/// Assoc list of gas to treat as other gas, in the form gas_id -> list(list(replace, multiplier) ...)
+	var/list/treat_as = list()
 	/// Assoc list of procs to run while a gas is present, in the form gas id -> proc_path
 	var/list/breath_present = list()
 	/// Assoc list of procs to run when a gas is immediately removed from the breath, in the form gas id -> proc_path
@@ -128,6 +130,8 @@
 	if(safe_oxygen_max)
 		add_gas_reaction(/datum/gas/oxygen, while_present = PROC_REF(too_much_oxygen), on_loss = PROC_REF(safe_oxygen))
 	add_gas_reaction(/datum/gas/pluoxium, while_present = PROC_REF(consume_pluoxium))
+	// We treat a mole of ploux as 8 moles of oxygen
+	add_gas_relationship(/datum/gas/pluoxium, /datum/gas/oxygen, 8)
 	if(safe_nitro_min)
 		add_gas_reaction(/datum/gas/nitrogen, always = PROC_REF(breathe_nitro))
 	if(safe_co2_max)
@@ -196,6 +200,24 @@
 		breath_present[gas_type] = while_present
 	if(on_loss)
 		breath_lost[gas_type] = on_loss
+
+#define BREATH_RELATIONSHIP_CONVERT 1
+#define BREATH_RELATIONSHIP_MULTIPLIER 2
+/**
+ * Tells the lungs to treat the passed in gas type as another passed in gas type
+ * Takes the gas to check for as an argument, alongside the gas to convert and the multiplier to use
+ */
+/obj/item/organ/internal/lungs/proc/add_gas_relationship(gas_type, convert_to, multiplier)
+	if(!gas_type)
+		return
+
+	if(!treat_as[gas_type])
+		treat_as[gas_type] = list()
+
+	var/list/add = new /list(BREATH_RELATIONSHIP_MULTIPLIER)
+	add[BREATH_RELATIONSHIP_CONVERT] = convert_to
+	add[BREATH_RELATIONSHIP_MULTIPLIER] = multiplier
+	treat_as[gas_type] += list(add)
 
 /// Handles oxygen breathing. Always called by things that need o2, no matter what
 /obj/item/organ/internal/lungs/proc/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
@@ -599,6 +621,17 @@
 	var/list/partial_pressures = list()
 	for(var/gas_id in breath_gases)
 		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES])
+
+	// Treat gas as other types of gas
+	// We iterate over the conversionsinstead of the breaths because it's shorter
+	// If that ever changes change this
+	for(var/convert_id in treat_as)
+		if(!partial_pressures[convert_id])
+			continue
+		for(var/list/conversion in treat_as[convert_id])
+			partial_pressures[conversion[BREATH_RELATIONSHIP_CONVERT]] += partial_pressures[convert_id] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
+			if(partial_pressures[conversion[BREATH_RELATIONSHIP_CONVERT]] <= 0)
+				partial_pressures -= conversion[BREATH_RELATIONSHIP_CONVERT] // No negative values jeremy
 
 	// First, we breathe the stuff that always wants to be processed
 	// This is typically things like o2, stuff the mob needs to live
