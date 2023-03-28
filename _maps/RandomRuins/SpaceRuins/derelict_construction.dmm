@@ -2,59 +2,58 @@
 "ao" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "aS" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "bY" = (
 /turf/closed/mineral/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space)
 "dB" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "eu" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "eX" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "fa" = (
 /obj/structure/lattice,
 /mob/living/simple_animal/hostile/pirate/ranged/space,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "gi" = (
 /mob/living/basic/mouse/gray,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "gj" = (
 /mob/living/basic/carp,
 /turf/template_noop,
 /area/template_noop)
 "iy" = (
 /obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "jc" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "jv" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -63,33 +62,33 @@
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "jX" = (
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "jZ" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "kU" = (
 /obj/structure/table,
-/obj/item/screwdriver/caravan,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/light/tube,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "kW" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "lw" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /obj/item/stack/rods/two,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "mx" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -99,19 +98,18 @@
 	},
 /obj/item/stack/sheet/glass,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "mD" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "nJ" = (
 /obj/item/stack/sheet/plasteel,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "oj" = (
 /obj/item/clothing/head/cone,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "ow" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -124,14 +122,14 @@
 	pixel_x = -8
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "qM" = (
 /turf/template_noop,
 /area/template_noop)
 "qR" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/ruin/space/has_grav/derelictconstruction)
 "qZ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -143,12 +141,12 @@
 	amount = 5
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "rK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "sd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/large,
@@ -156,7 +154,7 @@
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/mod/maint,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "sq" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -165,71 +163,74 @@
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "sw" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "sA" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "sM" = (
 /obj/item/wallframe/noticeboard,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
+"uc" = (
+/obj/item/wallframe/light_fixture,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/derelictconstruction)
 "uo" = (
 /obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "uw" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "vs" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/frame,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "xT" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/floodlight,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "yy" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "zn" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "zC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/office/light,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "zE" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "zP" = (
 /obj/item/airlock_painter,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Ax" = (
 /turf/closed/wall,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "AH" = (
 /obj/item/storage/backpack/duffelbag/engineering,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "AR" = (
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
@@ -238,17 +239,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Bc" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/vending_refill/cigarette,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Cl" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Dz" = (
 /obj/item/chair,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -258,12 +257,20 @@
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
+"DU" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"DY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/template_noop)
 "DZ" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/frame,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "EC" = (
 /obj/item/rcd_ammo{
 	pixel_y = 8;
@@ -271,7 +278,7 @@
 	},
 /obj/item/rcd_ammo,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "FY" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/wallframe/apc,
@@ -281,39 +288,42 @@
 /obj/item/stack/sheet/plasteel,
 /obj/item/airlock_painter/decal,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Gi" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Gx" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Hn" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Hq" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Ik" = (
 /obj/structure/foamedmetal,
-/turf/open/space/basic,
-/area/ruin/space/has_grav)
+/turf/open/floor/plating/foam,
+/area/ruin/space/has_grav/derelictconstruction)
 "IR" = (
 /turf/closed/wall/r_wall,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
+"Jj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictconstruction)
 "JA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate,
@@ -321,96 +331,99 @@
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "JB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "JV" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Li" = (
 /obj/structure/door_assembly/door_assembly_sec,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "LL" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Md" = (
 /turf/open/floor/plating/foam,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Ne" = (
 /obj/item/wallframe/intercom,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
+"Oz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/ruin/space/has_grav/derelictconstruction)
 "OQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/marker_beacon/ten,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Qg" = (
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Rq" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Sw" = (
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "SK" = (
 /obj/item/airlock_painter/decal/tile,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "SX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "SY" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Vh" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Vq" = (
 /obj/structure/foamedmetal/iron,
 /obj/structure/foamedmetal,
 /turf/open/floor/plating/foam,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Wj" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Xx" = (
 /obj/item/stack/sheet/iron/ten,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Yh" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 "Za" = (
 /mob/living/simple_animal/hostile/pirate/melee/space,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/ruin/space/has_grav/derelictconstruction)
 "ZV" = (
 /obj/item/pickaxe/emergency,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/derelictconstruction)
 
 (1,1,1) = {"
 qM
@@ -732,8 +745,8 @@ bY
 bY
 "}
 (12,1,1) = {"
-qM
-qM
+DY
+DU
 Ax
 Ax
 jX
@@ -770,7 +783,7 @@ ow
 AR
 jv
 Ax
-ao
+Jj
 Ax
 jc
 kU
@@ -848,10 +861,10 @@ qM
 qM
 "}
 (16,1,1) = {"
-qM
-qM
+DY
+DU
 Hq
-Sw
+uc
 FY
 oj
 SK
@@ -967,7 +980,7 @@ qM
 qM
 qM
 qM
-qR
+Oz
 qR
 Za
 qR
