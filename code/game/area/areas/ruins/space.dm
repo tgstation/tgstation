@@ -582,3 +582,16 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// the outlet
+/area/ruin/space/has_grav/the_outlet/storefront
+	name = "\improper outlet storefront"
+
+/area/ruin/space/has_grav/the_outlet/employeesection
+	name = "\improper outlet employees only"
+
+/area/ruin/space/has_grav/the_outlet/researchrooms
+	name = "\improper outlet research rooms"
+
+/area/ruin/space/has_grav/the_outlet/cultinfluence
+	name = "\improper outlet cult corruption"
