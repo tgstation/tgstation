@@ -1008,3 +1008,47 @@
       of an unhelpful type 'O-' one.
   - bugfix: plasmamen will now be given their internals upon being kidnapped and upon
       being returned.
+2023-03-28:
+  13spacemen:
+  - qol: Cult Roundend Report no longer lists post-summon cultists. No more 30 random
+      Harvesters clogging up the roundend report
+  Helg2:
+  - rscadd: Bacteria rich moldy food (like breadslices and pizzaslices) now spawn
+      in trashcarts, trashbags and randomly on the floor.
+  - rscadd: Damp rag now spawns in the trashcarts and etc.
+  Jacquerel:
+  - bugfix: Players with phobias will no longer be frightened by items equipped to
+      players in slots which are not considered to be visible.
+  - bugfix: Players with a phobia of the supernatural won't be spooked by void cloaks
+      which are currently invisible.
+  LT3:
+  - rscadd: Tram signs will now malfunction when the tram is malfunctioning
+  - qol: Janitor access keys now show up on the Custodial Locator tablet app
+  LemonInTheDark:
+  - bugfix: Fixes a bunch of minor gravity bugs, report em if you see more yeah?
+  Moth-lantern:
+  - bugfix: Moved the tank compressor and some tables and the anomaly refinery so
+      that the tank compressor could actually be usable again on Tramstation.
+  Profakos:
+  - bugfix: the roboticist in the prey pod now has clothes as intended
+  Rhials:
+  - rscadd: You can now vote to start a Mafia game early. If over half of the current
+      signups vote (And you have three or more players) you will immediately start
+      a game with a slightly adjusted set of roles.
+  - admin: You can now force a mafia game to start in the admin options panel.
+  SethLafuente:
+  - balance: Increased Bonus Reward for kidnapping alive targets
+  - balance: Changed Virologist and Scientist into Common objectives for kidnapping
+  - balance: Changed Paramedic into Uncommon objectives for kidnapping
+  Thunder12345:
+  - rscadd: The Nanotrasen Costuming Department has released specifications for how
+      to convert the Head of Security's cap into a shako.
+  Wallem:
+  - balance: Fixes a glaring oversight with the entrenching tool's balancing.
+  Watermelon914:
+  - balance: Reduced the reputation cost of most non-murderbone orientated uplink
+      items like hypnotic flash and emag.
+  - balance: Reduced the amount of assassinate/kidnap/eyesnatch objectives that'll
+      appear at once.
+  spockye:
+  - rscadd: remakes the old escape pod shuttle
