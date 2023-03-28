@@ -373,3 +373,9 @@
 	suffix = "travelers_rest.dmm"
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/botanical_haven
+	id = "botanical_haven"
+	suffix = "botanical_haven.dmm"
+	name = "Botanical Haven"
+	description = "A small sanctuary for plants and botanists, hidden away in a rusted structure."
