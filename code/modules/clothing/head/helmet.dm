@@ -1,8 +1,8 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	icon = 'massmeta/icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'massmeta/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
