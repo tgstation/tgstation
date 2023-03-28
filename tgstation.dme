@@ -2968,6 +2968,7 @@
 #include "code\modules\client\preferences\multiz_performance.dm"
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\ooc.dm"
+#include "code\modules\client\preferences\paint_color.dm"
 #include "code\modules\client\preferences\parallax.dm"
 #include "code\modules\client\preferences\pda.dm"
 #include "code\modules\client\preferences\persistent_scars.dm"
