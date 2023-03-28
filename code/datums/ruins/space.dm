@@ -382,7 +382,7 @@
 
 
 /datum/map_template/ruin/space/transit_booth
-	id = "transit_hub"
-	suffix = "transit_hub.dmm"
-	name = "Transit Hub"
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
 	description = "Make sure to check out the duty-free store!"
