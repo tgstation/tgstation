@@ -10,6 +10,11 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
+"aK" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/lava/plasma/ice_moon,
+/area/misc/anomaly_research)
 "aP" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 4
@@ -140,6 +145,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "eZ" = (
@@ -298,6 +304,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "iw" = (
@@ -320,6 +327,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"jf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall,
 /area/misc/anomaly_research)
 "jl" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
@@ -541,6 +552,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"nW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/textured,
+/area/misc/anomaly_research)
 "nZ" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
@@ -754,6 +770,8 @@
 "tD" = (
 /obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "tK" = (
@@ -844,6 +862,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"vm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
 "vG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -888,8 +911,8 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "wf" = (
-/obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "wg" = (
@@ -1302,6 +1325,8 @@
 "HY" = (
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "Ia" = (
@@ -1348,6 +1373,8 @@
 /area/misc/anomaly_research)
 "Jb" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "Jp" = (
@@ -1380,6 +1407,8 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "Kh" = (
@@ -1565,15 +1594,22 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "PQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/lava/plasma/ice_moon,
 /area/misc/anomaly_research)
 "PY" = (
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
 "Qh" = (
-/obj/effect/spawner/random/trash/moisture_trap,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "Qp" = (
@@ -1745,6 +1781,8 @@
 "Vy" = (
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
 "VL" = (
@@ -2245,9 +2283,9 @@ Lb
 eU
 eU
 iv
-Gj
+nW
 tD
-Zh
+vm
 Zh
 iC
 Ud
@@ -2280,12 +2318,12 @@ UD
 UD
 ZI
 pl
-PQ
+pl
 PY
 Lo
 Gj
 AV
-Zh
+vm
 Zh
 ND
 Ud
@@ -2439,7 +2477,7 @@ AV
 AV
 AV
 AV
-AV
+jf
 AV
 AV
 AV
@@ -2477,8 +2515,8 @@ AV
 xE
 xE
 xE
-xE
-xE
+aK
+PQ
 xE
 xE
 xE
