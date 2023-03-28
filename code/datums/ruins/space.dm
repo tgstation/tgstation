@@ -379,3 +379,9 @@
 	suffix = "botanical_haven.dmm"
 	name = "Botanical Haven"
 	description = "A small sanctuary for plants and botanists, hidden away in a rusted structure."
+
+/datum/map_template/ruin/space/pod_crash
+	id = "pod_crash"
+	suffix = "pod_crash.dmm"
+	name = "Pod Crash"
+	description = "A tragic display of what happens to drivers who pda and pod."

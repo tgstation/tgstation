@@ -1,0 +1,4 @@
+author: "spockye"
+delete-after: True
+changes:
+  - rscadd: "Added a new emergency shuttle, the emergency_tranquility"
