@@ -136,3 +136,16 @@
 /datum/id_trim/away/dangerous_research/head_occultist
 	assignment = "Head Occultist"
 	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_COMMAND)
+
+//Trims for the outlet ruin
+/datum/id_trim/away/the_outlet
+	assignment = "Krazy Cashier"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/datum/id_trim/away/the_outlet/angry_assistant_manager
+	assignment = "Angry Assistant Manager"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
+
+/datum/id_trim/away/the_outlet/mad_manager
+	assignment = "The Mad Manager"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL, ACCESS_AWAY_SEC)

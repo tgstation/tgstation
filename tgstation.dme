@@ -3678,6 +3678,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\oldstation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\originalcontent.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\spacehotel.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\the_Outlet.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\TheDerelict.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\mapping\access_helpers.dm"
