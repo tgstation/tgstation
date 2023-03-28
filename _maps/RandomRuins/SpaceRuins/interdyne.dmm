@@ -35,6 +35,7 @@
 "bU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/simple_animal/hostile/zombie,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "bV" = (
@@ -46,6 +47,10 @@
 "bW" = (
 /turf/template_noop,
 /area/template_noop)
+"bZ" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "cj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -107,6 +112,10 @@
 /obj/effect/gibspawner/generic,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"es" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "et" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/mineral/plastitanium,
@@ -131,6 +140,7 @@
 /mob/living/simple_animal/hostile/zombie,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "eL" = (
@@ -146,7 +156,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "fj" = (
-/obj/structure/cable,
 /obj/effect/gibspawner/generic,
 /obj/machinery/light/blacklight/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -156,7 +165,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/toy/plush/whiny_plushie,
 /obj/machinery/button/door{
-	id = "vault";
+	id = "interdyne_vault";
 	name = "secret button"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -248,32 +257,17 @@
 "jm" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"jq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"jt" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "jA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"jF" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/interdyne)
 "jI" = (
 /obj/structure/dresser,
@@ -328,6 +322,7 @@
 /obj/machinery/door/poddoor{
 	id = "vault"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "lQ" = (
@@ -337,14 +332,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"lS" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "ma" = (
@@ -383,6 +370,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "mp" = (
@@ -403,10 +391,6 @@
 "mQ" = (
 /obj/item/paper/fluff/junkmail_generic,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"nj" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "nm" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -475,6 +459,7 @@
 	name = "Chief Researcher's Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "pI" = (
@@ -506,10 +491,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "qR" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "qS" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -524,6 +509,9 @@
 "ri" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics{
+	pixel_y = 32
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "rr" = (
@@ -531,15 +519,14 @@
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
-"rs" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/interdyne)
 "rC" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"rL" = (
+/obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "rQ" = (
@@ -601,6 +588,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"vK" = (
+/obj/structure/chair/office/tactical,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "vU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red,
@@ -634,6 +625,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"wY" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
 "xb" = (
 /obj/structure/closet/wardrobe/white/medical,
 /obj/item/clothing/suit/toggle/labcoat/interdyne,
@@ -643,17 +638,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xf" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/item/paper/fluff/ruins/interdyne/pizza_note,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"xg" = (
-/obj/machinery/chem_heater/withbuffer,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xu" = (
@@ -684,7 +669,6 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/interdyne)
 "zX" = (
-/obj/structure/cable,
 /obj/machinery/light/blacklight/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
@@ -704,13 +688,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "AC" = (
-/obj/structure/cable,
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "AF" = (
 /obj/machinery/light/blacklight/directional/south,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "AN" = (
@@ -721,11 +705,6 @@
 /area/ruin/space/has_grav/interdyne)
 "AV" = (
 /obj/effect/gibspawner/generic,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
@@ -784,16 +763,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "DH" = (
-/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/interdyne)
 "DL" = (
 /obj/machinery/light/blacklight/directional/north,
-/obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "DP" = (
@@ -840,10 +814,7 @@
 "Fw" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
+/obj/machinery/jukebox,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "FC" = (
@@ -854,6 +825,10 @@
 "Go" = (
 /obj/machinery/chem_master,
 /obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Gp" = (
+/obj/machinery/chem_master,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "GY" = (
@@ -867,7 +842,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "HP" = (
-/obj/structure/cable,
 /obj/item/pizzabox,
 /obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -900,14 +874,6 @@
 "Js" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"JA" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "JC" = (
@@ -951,10 +917,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "Kz" = (
@@ -981,10 +943,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"Lg" = (
-/obj/machinery/jukebox,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "Lx" = (
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid12"
@@ -1008,10 +966,6 @@
 /area/ruin/space/has_grav/interdyne)
 "Me" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/has_grav/interdyne)
-"Mf" = (
-/obj/structure/barricade/wooden/crude,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Mi" = (
 /obj/structure/table/wood/fancy/black,
@@ -1073,7 +1027,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Oo" = (
-/obj/structure/cable,
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/interdyne)
@@ -1093,10 +1046,6 @@
 /obj/structure/table/reinforced/ctf,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
-"PC" = (
-/obj/structure/sign/poster/contraband/interdyne_gene_clinics,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "PD" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -1162,7 +1111,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "RF" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
@@ -1171,6 +1119,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "RR" = (
@@ -1248,8 +1197,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "UN" = (
+/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "US" = (
 /obj/structure/cable,
@@ -1330,11 +1280,6 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/interdyne)
-"XR" = (
-/obj/machinery/door/airlock/hatch,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "XS" = (
 /obj/machinery/vending/cigarette/syndicate,
@@ -1531,15 +1476,15 @@ aY
 Lb
 VN
 Zi
-lS
-fu
+QD
+QD
 JC
 fu
 Zi
 xf
 XT
 Zi
-JA
+QD
 Ww
 Zi
 QD
@@ -1558,7 +1503,7 @@ bW
 bW
 Lx
 Rn
-PC
+Zi
 ri
 aY
 Lb
@@ -1574,7 +1519,7 @@ Zi
 HP
 jI
 KA
-yb
+bE
 CP
 KA
 bE
@@ -1604,15 +1549,15 @@ Zi
 he
 NV
 Zi
-jt
+fu
 Zi
 JC
 Zi
 Zi
-XR
+JC
 Zi
 Zi
-jq
+QD
 dR
 QD
 Zi
@@ -1672,9 +1617,9 @@ aY
 VN
 Zi
 Zi
-nj
-nj
-nj
+Zi
+Zi
+Zi
 Zi
 Zi
 Zi
@@ -1736,8 +1681,8 @@ Rn
 Zi
 Zi
 Zi
-PC
-PC
+Zi
+Zi
 Zi
 RR
 Zi
@@ -1783,15 +1728,15 @@ nU
 EM
 JH
 dU
-nj
+Zi
 fj
 Ei
 Zi
 RG
-fu
+gV
 AF
-Zi
-Me
+es
+jF
 bW
 bW
 bW
@@ -1818,7 +1763,7 @@ YB
 oJ
 me
 dU
-nj
+Zi
 Eq
 Nb
 Zi
@@ -1888,7 +1833,7 @@ EM
 oV
 iN
 dU
-nj
+Zi
 Yi
 US
 NG
@@ -1923,11 +1868,11 @@ UN
 qR
 qR
 dU
-nj
+Zi
 AV
 Nb
 Zi
-jt
+fu
 QD
 xb
 Zi
@@ -1954,17 +1899,17 @@ Zi
 dU
 BW
 EM
-rs
+UN
 ox
 uS
 dU
-nj
+Zi
 zX
 lQ
 Zi
 nA
-fu
-AF
+QD
+rL
 Zi
 Rn
 Rn
@@ -2127,13 +2072,13 @@ Wc
 SE
 Zi
 mj
-Mf
+Zi
 Zi
 wJ
 Zi
 Zi
 Zi
-Lg
+aY
 Nr
 Jo
 OD
@@ -2195,10 +2140,10 @@ Zi
 Zi
 Zi
 hi
-nA
+bE
 kp
 Zi
-JA
+fu
 Og
 bV
 VR
@@ -2225,11 +2170,11 @@ Rn
 Rn
 Zi
 TC
-fu
-fu
-fu
+QD
+QD
+QD
 RF
-oO
+Yi
 oO
 mp
 Zi
@@ -2266,7 +2211,7 @@ Sd
 wF
 PP
 bU
-fu
+bZ
 Zi
 ub
 ej
@@ -2293,15 +2238,15 @@ Me
 Rn
 Rn
 Rn
-Rn
 Zi
-xg
+Zi
+QD
 Sz
 qS
 qS
-Sz
-xg
+vK
 fu
+QD
 Zi
 bE
 eL
@@ -2330,11 +2275,11 @@ Rn
 Rn
 Rn
 Zi
-Go
+Gp
 pI
 pb
 pb
-pI
+wY
 Go
 AC
 Zi
