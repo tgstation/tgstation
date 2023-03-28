@@ -303,6 +303,7 @@ Works together with spawning an observer, noted above.
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
 /mob/living/ghostize(can_reenter_corpse = TRUE)

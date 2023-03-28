@@ -20,13 +20,15 @@
 
 /datum/component/ctf_player/proc/setup_dusting()
 	//Todo, check if the victim is actually a ctf participant just incase
-	RegisterSignal(player_mob, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(ctf_dust)) //Todo, we need a COMSIG_MOB_AFTER_APPLY_DAMAGE
-	//Todo create a new signal for ghosting
+	RegisterSignal(player_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(ctf_dust))
+	RegisterSignal(player_mob, COMSIG_MOB_GHOSTIZED, PROC_REF(ctf_dust))
 
 /datum/component/ctf_player/proc/ctf_dust()
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(player_mob, TRAIT_CRITICAL_CONDITION) || player_mob.stat == DEAD /*|| !player_mob.client*/) //Commented out for testing purposes
-		UnregisterSignal(player_mob, list(COMSIG_MOB_APPLY_DAMAGE))
+
+	//Todo, ignore oxy/stam damage as funny as it is for the shotgun class to die from exaustion
+	if(HAS_TRAIT(player_mob, TRAIT_CRITICAL_CONDITION) || player_mob.stat == DEAD || !player_mob.client)
+		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
 		player_mob.dust()
 		player_mob = null
 	//Todo, dropping ammo pickups

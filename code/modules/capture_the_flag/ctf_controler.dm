@@ -16,7 +16,7 @@
 	ctf_enabled = TRUE
 	for(var/team in teams)
 		var/obj/machinery/ctf/spawner/spawner = teams[team].spawner
-		notify_ghosts("[spawner.name] has been activated!", source = spawner, action=NOTIFY_ORBIT, header = "CTF has been activated")
+		notify_ghosts("[spawner.name] has been activated!", source = spawner, action = NOTIFY_ORBIT, header = "CTF has been activated")
 		//spawner.start_ctf() todo port the functinality from old start_ctf()
 	
 /datum/ctf_controller/proc/add_team(obj/machinery/ctf/spawner/spawner)
