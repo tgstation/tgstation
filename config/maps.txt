@@ -37,6 +37,7 @@ endmap
 
 map heliostation
 	votable
+	disabled
 endmap
 
 map runtimestation
