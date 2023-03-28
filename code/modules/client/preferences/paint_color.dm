@@ -1,11 +1,11 @@
+/// Preference for the roundstart color of the spraycan given by the Tagger quirk.
 /datum/preference/color/paint_color
 	savefile_key = "paint_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/paint_color/is_accessible(datum/preferences/preferences)
-	. = ..()
-	if (!.)
+	if (!..(preferences))
 		return FALSE
 
 	return "Tagger" in preferences.all_quirks
