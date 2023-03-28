@@ -22,7 +22,7 @@
 
 /datum/dynamic_ruleset/roundstart/darkspawn/pre_execute(population)
 	. = ..()
-	var/num_darkspawn = antag_cap[indice_pop] * (scaled_times + 1)
+	var/num_darkspawn = 3
 	for (var/i = 1 to num_darkspawn)
 		if(candidates.len <= 0)
 			break
