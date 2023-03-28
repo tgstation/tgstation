@@ -35,7 +35,7 @@
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
-	if(!mod.wearer || !mod.activeactive) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
+	if(!mod.wearer || !mod.active) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		loc.visible_message("[mod] makes a crunching noise, but nothing seems to happen, thankfully.")
 		return // if the user manages to get their module out in time, the springlocks won't kill them. in practice this will result in ego and more people purple guying
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
