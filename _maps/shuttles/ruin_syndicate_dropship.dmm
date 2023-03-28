@@ -127,9 +127,7 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "kc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "kk" = (
@@ -253,7 +251,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -294,7 +292,7 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "Ib" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -378,9 +376,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Mc" = (
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Nn" = (
@@ -429,7 +425,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
