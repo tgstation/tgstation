@@ -126,7 +126,11 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "at" = (
-/turf/open/floor/plating/airless,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "av" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -2622,11 +2626,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ir" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "it" = (
 /obj/structure/dresser,
@@ -3925,6 +3925,15 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet/red,
 /area/shuttle/sbc_starfury)
+"nD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/sbc_starfury)
 "nR" = (
 /obj/machinery/power/smes/engineering{
 	charge = 4e+006
@@ -4506,15 +4515,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/pod/dark,
-/area/shuttle/sbc_starfury)
-"Bb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "Be" = (
@@ -6118,7 +6118,7 @@ ae
 mv
 mA
 mH
-at
+ir
 mO
 aa
 aa
@@ -6186,8 +6186,8 @@ aH
 aH
 mB
 mH
-at
-at
+ir
+ir
 aa
 aa
 "}
@@ -6254,8 +6254,8 @@ lN
 IH
 Tn
 mH
-at
-at
+ir
+ir
 aa
 aa
 "}
@@ -6391,7 +6391,7 @@ aH
 aH
 mB
 mH
-at
+ir
 mO
 aa
 "}
@@ -6459,8 +6459,8 @@ ae
 ae
 mB
 mH
-at
-at
+ir
+ir
 aa
 "}
 (11,1,1) = {"
@@ -6527,8 +6527,8 @@ mw
 ae
 mI
 mH
-at
-at
+ir
+ir
 aa
 "}
 (12,1,1) = {"
@@ -6732,7 +6732,7 @@ mD
 aH
 mB
 mH
-at
+ir
 aa
 "}
 (15,1,1) = {"
@@ -6744,7 +6744,7 @@ aV
 aJ
 cf
 vk
-ir
+at
 vk
 ci
 ae
@@ -6868,7 +6868,7 @@ ae
 aH
 mN
 mH
-at
+ir
 mO
 "}
 (17,1,1) = {"
@@ -6936,8 +6936,8 @@ ae
 aH
 mB
 mH
-at
-at
+ir
+ir
 "}
 (18,1,1) = {"
 aa
@@ -7004,8 +7004,8 @@ ae
 aH
 mB
 mH
-at
-at
+ir
+ir
 "}
 (19,1,1) = {"
 aa
@@ -7140,7 +7140,7 @@ ae
 aH
 mB
 mH
-at
+ir
 mO
 "}
 (21,1,1) = {"
@@ -7208,8 +7208,8 @@ ae
 aH
 mB
 mH
-at
-at
+ir
+ir
 "}
 (22,1,1) = {"
 aa
@@ -7276,8 +7276,8 @@ ae
 aH
 mI
 mH
-at
-at
+ir
+ir
 "}
 (23,1,1) = {"
 aa
@@ -7480,7 +7480,7 @@ ae
 aH
 mB
 mH
-at
+ir
 aa
 "}
 (26,1,1) = {"
@@ -7587,7 +7587,7 @@ Qu
 aI
 ft
 Ju
-Bb
+nD
 Qw
 ae
 ae
@@ -7615,7 +7615,7 @@ ae
 mE
 mB
 mH
-at
+ir
 mO
 aa
 "}
@@ -7683,8 +7683,8 @@ ae
 ae
 mB
 mH
-at
-at
+ir
+ir
 aa
 "}
 (29,1,1) = {"
@@ -7751,8 +7751,8 @@ ae
 aH
 mL
 mH
-at
-at
+ir
+ir
 aa
 "}
 (30,1,1) = {"
@@ -7886,7 +7886,7 @@ vp
 aH
 mB
 mH
-at
+ir
 mO
 aa
 aa
@@ -7954,8 +7954,8 @@ aH
 aH
 mB
 mH
-at
-at
+ir
+ir
 aa
 aa
 "}
@@ -8022,8 +8022,8 @@ ae
 mz
 mG
 mH
-at
-at
+ir
+ir
 aa
 aa
 "}
