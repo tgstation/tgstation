@@ -137,7 +137,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock{
-	name = "Break room"
+	name = "Break Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/grimy,
@@ -750,9 +750,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "rZ" = (
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Electrical"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "sc" = (
@@ -1408,8 +1410,10 @@
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "HF" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/highsecurity,
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Merchandise Storage"
+	},
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "HH" = (
@@ -1643,7 +1647,9 @@
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "MR" = (
-/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Electrical"
+	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1941,7 +1947,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/freezer{
-	name = "fabric storage"
+	name = "Fabric Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/mapping_helpers/airlock/access/all/away/medical,
@@ -2168,7 +2174,9 @@
 "ZO" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/highsecurity,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Merchandise Storage"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
