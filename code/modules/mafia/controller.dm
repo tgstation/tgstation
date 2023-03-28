@@ -345,7 +345,7 @@
 		return TRUE
 	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
-		if(!early_start)
+		if(!early_start || !length(custom_setup))
 			for(var/datum/mafia_role/changeling in total_mafia)
 				award_role(changeling.winner_award, changeling)
 		return TRUE
@@ -358,8 +358,6 @@
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	if(custom_setup.len)
-		return
 	var/client/role_client = GLOB.directory[rewarded.player_key]
 	role_client?.give_award(award, rewarded.body)
 
@@ -404,7 +402,7 @@
 	QDEL_NULL(town_center_landmark)
 	phase = MAFIA_PHASE_SETUP
 
-	early_start = FALSE
+	early_start = initial(early_start)
 
 /**
  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
