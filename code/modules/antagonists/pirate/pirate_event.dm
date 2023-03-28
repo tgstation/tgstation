@@ -41,14 +41,16 @@
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
 		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name)
 		return
-	if(threat?.answered)
-		var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(plundered_account)
-			if(plundered_account.adjust_money(-payoff))
-				chosen_gang.paid_off = TRUE
-				priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
-			else
-				priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
+	if(!threat?.answered)
+		return
+
+	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(plundered_account)
+		if(plundered_account.adjust_money(-payoff))
+			chosen_gang.paid_off = TRUE
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
+		else
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
 
 /proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
 	if(chosen_gang.paid_off)
