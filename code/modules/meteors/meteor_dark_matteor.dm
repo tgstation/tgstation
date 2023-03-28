@@ -38,6 +38,7 @@
 		SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), new_turf)
 
 /obj/effect/meteor/dark_matteor/Destroy()
+	QDEL_NULL(spark_system)
 	vis_contents -= warp
 	QDEL_NULL(warp)
 	return ..()
