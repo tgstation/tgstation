@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, NumberInput, Icon, Section, Stack, Tabs } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetMonitor = (props, context) => {
@@ -9,9 +9,6 @@ export const NtosNetMonitor = (props, context) => {
     ntnetrelays,
     idsalarm,
     idsstatus,
-    ntnetmaxlogs,
-    maxlogs,
-    minlogs,
     ntnetlogs = [],
     tablets = [],
   } = data;
@@ -42,9 +39,6 @@ export const NtosNetMonitor = (props, context) => {
               ntnetrelays={ntnetrelays}
               idsalarm={idsalarm}
               idsstatus={idsstatus}
-              ntnetmaxlogs={ntnetmaxlogs}
-              maxlogs={maxlogs}
-              minlogs={minlogs}
               ntnetlogs={ntnetlogs}
             />
           </Stack.Item>
@@ -60,15 +54,7 @@ export const NtosNetMonitor = (props, context) => {
 };
 
 const MainPage = (props, context) => {
-  const {
-    ntnetrelays,
-    idsalarm,
-    idsstatus,
-    ntnetmaxlogs,
-    maxlogs,
-    minlogs,
-    ntnetlogs = [],
-  } = props;
+  const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
   const { act, data } = useBackend(context);
   return (
     <Section>
@@ -123,22 +109,6 @@ const MainPage = (props, context) => {
                   onClick={() => act('resetIDS')}
                 />
               </>
-            }
-          />
-          <LabeledList.Item
-            label="Max Log Count"
-            buttons={
-              <NumberInput
-                value={ntnetmaxlogs}
-                minValue={minlogs}
-                maxValue={maxlogs}
-                width="39px"
-                onChange={(e, value) =>
-                  act('updatemaxlogs', {
-                    new_number: value,
-                  })
-                }
-              />
             }
           />
         </LabeledList>

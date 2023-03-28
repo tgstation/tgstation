@@ -84,7 +84,7 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
+		var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
@@ -154,7 +154,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.get_organ_by_type(/obj/item/organ/internal/brain)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -270,7 +270,7 @@
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
 		return FALSE
-	if(B.suiciding || brain?.suicided)
+	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
 		return FALSE

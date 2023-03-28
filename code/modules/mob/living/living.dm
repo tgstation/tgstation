@@ -12,6 +12,7 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
+	gravity_setup()
 
 /mob/living/prepare_huds()
 	..()
@@ -857,7 +858,7 @@
 		reagents.clear_reagents()
 
 	if(heal_flags & HEAL_ADMIN)
-		suiciding = FALSE
+		REMOVE_TRAIT(src, TRAIT_SUICIDED, REF(src))
 
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -1103,10 +1104,15 @@
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(gravity)
-	. = ..()
-	if(!SSticker.HasRoundStarted())
-		return
+/mob/living/proc/update_gravity(gravity)
+	// Handle movespeed stuff
+	var/speed_change = max(0, gravity - STANDARD_GRAVITY)
+	if(speed_change)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
+	else
+		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
+
+	// Time to add/remove gravity alerts. sorry for the mess it's gotta be fast
 	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
 		if(-INFINITY to NEGATIVE_GRAVITY)
@@ -1806,7 +1812,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
 			OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
 			CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
+			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
