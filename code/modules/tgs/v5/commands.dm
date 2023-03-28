@@ -46,8 +46,6 @@
 			TGS_ERROR_LOG("Custom chat command \"[command]\" should return a [/datum/tgs_message_content]! Got: \"[response]\"")
 			response = null
 
-		if(.major > 5 || (api_version.))
-		
 		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = response?.text
 		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE] = response?._interop_serialize()
 		return json_encode(topic_response)

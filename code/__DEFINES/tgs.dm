@@ -308,7 +308,7 @@
 	var/datum/tgs_chat_embed/provider/provider
 	var/datum/tgs_chat_embed/provider/author/author
 
-	var/list/datum/tgs_chat_embed_field/fields
+	var/list/datum/tgs_chat_embed/field/fields
 
 /// Common datum for similar discord embed medias
 /datum/tgs_chat_embed/media
