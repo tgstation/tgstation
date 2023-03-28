@@ -91,8 +91,8 @@
 		to_chat(user, span_notice("You neatly cut [storedpaper]."))
 		storedpaper = null
 		qdel(storedpaper)
-		new /obj/item/paperslip(get_turf(src))
-		new /obj/item/paperslip(get_turf(src))
+		new /obj/item/paper/paperslip(get_turf(src))
+		new /obj/item/paper/paperslip(get_turf(src))
 		update_appearance()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
@@ -109,25 +109,17 @@
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
-/obj/item/paperslip
+/obj/item/paper/paperslip
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
-	icon = 'icons/obj/bureaucracy.dmi'
-	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
-/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
-	if(burn_paper_product_attackby_check(I, user))
-		return
-	return ..()
-
-
-/obj/item/paperslip/Initialize(mapload)
-	. = ..()
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
-
+/obj/item/paper/paperslip/corporate
+	name = "corporate paper slip"
+	desc = "A little slip of paper for confidental corporate matters. Slightly more resistant to external forces." //A fluff to use for confidental and secret info
+	icon_state = "corppaperslip"
+	max_integrity = 70
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter"

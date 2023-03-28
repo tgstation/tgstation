@@ -4262,6 +4262,7 @@
 #include "code\modules\paperwork\folders_premade.dm"
 #include "code\modules\paperwork\handlabeler.dm"
 #include "code\modules\paperwork\paper.dm"
+#include "code\modules\paperwork\paper_biscuit.dm"
 #include "code\modules\paperwork\paper_cutter.dm"
 #include "code\modules\paperwork\paper_premade.dm"
 #include "code\modules\paperwork\paperbin.dm"
