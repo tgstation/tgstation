@@ -101,6 +101,7 @@
 
 	SEND_SIGNAL(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED)
 	new /obj/item/uplink(get_turf(src), resolved_owner, 0, uplink_handler)
+	flick(src, "relay_traitor_activate")
 	do_sparks(5, FALSE, src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
 
