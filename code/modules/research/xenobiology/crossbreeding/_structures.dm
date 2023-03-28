@@ -541,16 +541,16 @@ GLOBAL_LIST_EMPTY(bluespace_slime_crystals)
 
 /obj/structure/slime_crystal/rainbow/Initialize()
 	. = ..()
-	for(var/X in subtypesof(/obj/item/slimecross/crystalized) - /obj/item/slimecross/crystalized/rainbow)
+	for(var/X in subtypesof(/obj/item/slimecross/crystalline) - /obj/item/slimecross/crystalline/rainbow)
 		inserted_cores[X] = FALSE
 
 /obj/structure/slime_crystal/rainbow/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 
-	if(!istype(I,/obj/item/slimecross/crystalized) || istype(I,/obj/item/slimecross/crystalized/rainbow))
+	if(!istype(I,/obj/item/slimecross/crystalline) || istype(I,/obj/item/slimecross/crystalline/rainbow))
 		return
 
-	var/obj/item/slimecross/crystalized/slimecross = I
+	var/obj/item/slimecross/crystalline/slimecross = I
 
 	if(inserted_cores[slimecross.type])
 		return
