@@ -338,7 +338,7 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		if(!early_start)
+		if(!early_start || !length(custom_setup))
 			for(var/datum/mafia_role/townie in total_town)
 				award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
