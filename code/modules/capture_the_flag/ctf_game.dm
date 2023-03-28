@@ -3,9 +3,9 @@
 #define BLUE_TEAM "Blue"
 #define GREEN_TEAM "Green"
 #define YELLOW_TEAM "Yellow"
-#define FLAG_RETURN_TIME 200 // 20 seconds
-#define INSTAGIB_RESPAWN 50 //5 seconds
-#define DEFAULT_RESPAWN 150 //15 seconds
+#define FLAG_RETURN_TIME 20 SECONDS
+#define INSTAGIB_RESPAWN 5 SECONDS
+#define DEFAULT_RESPAWN 15 SECONDS
 
 /obj/machinery/ctf
 	name = "CTF Controller"
@@ -26,7 +26,6 @@
 	var/team = WHITE_TEAM
 	var/team_span = ""
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
-	var/respawn_cooldown = DEFAULT_RESPAWN
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
@@ -86,7 +85,10 @@
 		if(isnull(ctf_player_component))
 			spawn_team_member(new_team_member) //Player managed to lose their player component despite being on a team
 		else
-			spawn_team_member(new_team_member, ctf_player_component)
+			if(ctf_player_component.can_respawn)
+				spawn_team_member(new_team_member, ctf_player_component)
+			else
+				to_chat(user, span_warning("You cannot respawn yet!"))
 		return
 	if(ctf_game.team_valid_to_join(team, user))
 		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
@@ -134,7 +136,7 @@
 		player_mob.set_species(/datum/species/human)
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))
-		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team)
+		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game)
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)

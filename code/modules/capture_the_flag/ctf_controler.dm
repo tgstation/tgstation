@@ -1,8 +1,11 @@
+#define DEFAULT_RESPAWN 15 SECONDS //Todo move to _defines
+
 /datum/ctf_controller
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/datum/ctf_team/teams = list()
 	var/points_to_win = 3
 	var/ctf_enabled = FALSE
+	var/respawn_cooldown = DEFAULT_RESPAWN
 
 /datum/ctf_controller/New()
 	. = ..()

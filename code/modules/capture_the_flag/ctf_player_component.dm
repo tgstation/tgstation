@@ -2,9 +2,12 @@
 /datum/component/ctf_player
 	var/team
 	var/mob/living/player_mob
+	var/can_respawn = TRUE
+	var/datum/ctf_controller/ctf_game
 
-/datum/component/ctf_player/Initialize(team)
+/datum/component/ctf_player/Initialize(team, ctf_game)
 	src.team = team
+	src.ctf_game = ctf_game
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
 	if(!istype(parent, /datum/mind))
@@ -31,6 +34,10 @@
 		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
 		player_mob.dust()
 		player_mob = null
+		can_respawn = FALSE
+		addtimer(CALLBACK(src, PROC_REF(allow_respawns)), ctf_game.respawn_cooldown ,TIMER_UNIQUE) //Todo link with associated ctf game for respawn cooldown times
 	//Todo, dropping ammo pickups
 
-
+/datum/component/ctf_player/proc/allow_respawns()
+	can_respawn = TRUE
+	//Insert message to player
