@@ -74,7 +74,7 @@
 			action = NOTIFY_ORBIT,
 			flashwindow = FALSE,
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
-			header = "IT'S LOOSE",
+			header = ghost_notification_message,
 			notify_volume = 75
 		)
 
@@ -459,3 +459,19 @@
 
 /obj/singularity/dark_matteor
 	ghost_notification_message = "IT'S HERE"
+	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
+	COOLDOWN_DECLARE(initial_explosion_immunity)
+
+/obj/singularity/dark_matteor/Initialize(mapload, starting_energy)
+	. = ..()
+	COOLDOWN_START(src, initial_explosion_immunity, 15 SECONDS)
+
+/obj/singularity/dark_matteor/examine(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
+		. += span_warning("Protected by dark matter, [src] seems to be immune to explosions for [DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity))].")
+
+/obj/singularity/dark_matteor/ex_act(severity, target)
+	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
+		return
+	return ..()

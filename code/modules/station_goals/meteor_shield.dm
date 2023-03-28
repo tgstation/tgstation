@@ -67,6 +67,19 @@
 	/// cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun
 	STATIC_COOLDOWN_DECLARE(shared_emag_cooldown)
 
+/obj/machinery/satellite/meteor_shield/examine(mob/user)
+	. = ..()
+	if(active)
+		. += span_notice("It is currently active. You can interact with it to shut it down.")
+		if(obj_flags & EMAGGED)
+			. += span_warning("Instead of its regular beeps and pings, it seems to be emitting a strange hum of white noise...")
+		else
+			. += span_notice("It occasionally beeps and pings as it communicates with the satellite network.")
+	else
+		. += span_notice("It is currently disabled. You can interact with it to set it up.")
+		if(obj_flags & EMAGGED)
+			. += span_warning("But something seems off about it...?")
+
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in get_line(src,meteor))
 		if(!isspaceturf(T))
@@ -104,14 +117,16 @@
 
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
+		balloon_alert(user, "already emagged!")
 		return
 	if(!COOLDOWN_FINISHED(src, shared_emag_cooldown))
-		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could destroy the shields."))
+		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could damage the satellite network."))
 		return
 	COOLDOWN_START(src, shared_emag_cooldown, METEOR_SHIELD_EMAG_COOLDOWN)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You access the satellite's debug mode and it begins emitting a strange signal, increasing the chance of meteor strikes."))
 	AddComponent(/datum/component/gps, "Corrupted Meteor Shield Attraction Signal")
+	say("Recalibrating...")
 	if(active) //if we allowed inactive updates a sat could be worth -1 active meteor shields on first emag
 		update_emagged_meteor_sat(user)
 
