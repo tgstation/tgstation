@@ -5,9 +5,6 @@
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "ai" = (
-/obj/structure/toilet{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-9"
 	},
@@ -309,14 +306,6 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"ig" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/the_outlet/storefront)
 "il" = (
 /obj/effect/decal/cleanable/ants,
 /obj/machinery/light/directional/south,
@@ -397,13 +386,12 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "jD" = (
-/obj/machinery/door/airlock/vault{
-	 = [203];
-	name = "Clothing Storage"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/mapping_helpers/airlock/access/all/away/medical,
 /obj/effect/mapping_helpers/airlock/access/all/away/security,
+/obj/machinery/door/airlock/vault{
+	name = "Clothing Storage"
+	},
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "jH" = (
@@ -922,6 +910,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-13"
 	},
+/obj/structure/toilet,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "wl" = (
@@ -1952,7 +1941,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/freezer{
-	 = [202];
 	name = "fabric storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
@@ -2080,6 +2068,9 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-137"
 	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/structure/toilet,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Xt" = (
@@ -3686,7 +3677,7 @@ eN
 RN
 od
 Xm
-ig
+ko
 UY
 wf
 ai
@@ -3731,8 +3722,8 @@ Db
 Gu
 qy
 UY
-Dp
 od
+Dp
 UY
 UY
 od
