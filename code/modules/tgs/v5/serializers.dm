@@ -24,7 +24,7 @@
 		"author" = author?._interop_serialize(),
 		"fields" = serialized_fields
 	)
-	
+
 /datum/tgs_chat_embed/media/_interop_serialize()
 	return list(
 		"url" = url,
@@ -41,7 +41,7 @@
 
 /datum/tgs_chat_embed/provider/author/_interop_serialize()
 	. = ..()
-	.["icon_url"] = icon_url,
+	.["icon_url"] = icon_url
 	.["proxy_icon_url"] = proxy_icon_url
 
 /datum/tgs_chat_embed/field/_interop_serialize()

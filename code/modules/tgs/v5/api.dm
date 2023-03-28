@@ -317,7 +317,7 @@
 
 	message = UpgradeDeprecatedChatMessage(message)
 	message = message._interop_serialize()
-	message = [DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = ids
+	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = ids
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
