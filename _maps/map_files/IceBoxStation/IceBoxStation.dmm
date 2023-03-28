@@ -3286,11 +3286,10 @@
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -26
 	},
-/obj/machinery/light/directional/north,
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ben" = (
@@ -7405,12 +7404,12 @@
 /area/station/maintenance/port/greater)
 "cow" = (
 /obj/structure/cable,
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "coB" = (
@@ -16132,10 +16131,12 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atm,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "fbt" = (
 /obj/effect/turf_decal/tile/green,
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "fbK" = (
@@ -19203,6 +19204,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "gck" = (
@@ -24568,6 +24570,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"hTo" = (
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "hTt" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -25515,6 +25521,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Cargo Bay Office - Access"
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "iiH" = (
@@ -47058,6 +47065,14 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
+"oUt" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "oUE" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/directional/south,
@@ -54905,6 +54920,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"rwQ" = (
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "rwW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/gas_mask,
@@ -62813,6 +62832,13 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
+"tYd" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "tYe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -68456,7 +68482,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "vPh" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "vPi" = (
@@ -73667,6 +73693,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "xvj" = (
@@ -75896,7 +75923,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "yfp" = (
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "yfF" = (
@@ -220530,7 +220557,7 @@ tCn
 eaS
 kdW
 iRo
-aUr
+oUt
 nNw
 rLb
 oLI
@@ -225158,7 +225185,7 @@ fjD
 gOx
 nbT
 fYS
-gpp
+hTo
 aJA
 tAR
 qnj
@@ -231840,7 +231867,7 @@ det
 iLK
 vBi
 lJO
-dnq
+rwQ
 iuv
 xgm
 eit
@@ -243132,7 +243159,7 @@ bln
 bln
 bln
 gmW
-uRo
+tYd
 uRo
 uRo
 uRo
@@ -244448,7 +244475,7 @@ lso
 rvZ
 dEV
 kLI
-xjg
+hgh
 beh
 mnF
 lKZ

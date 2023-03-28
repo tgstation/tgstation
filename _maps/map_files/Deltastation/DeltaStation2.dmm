@@ -13242,6 +13242,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"deo" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "dep" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -16783,6 +16795,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
+"dZx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "dZD" = (
 /obj/machinery/telecomms/server/presets/science,
 /obj/effect/turf_decal/tile/purple{
@@ -20283,6 +20305,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "eSq" = (
@@ -21771,9 +21794,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "fjS" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "fjW" = (
@@ -34317,6 +34338,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"ipM" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/lobby)
 "ipQ" = (
 /turf/closed/wall,
 /area/station/command/bridge)
@@ -40237,7 +40265,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/status_display/ai/directional/north,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -41665,7 +41692,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "kca" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "kcc" = (
@@ -48859,6 +48886,13 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/telecomms,
 /area/station/tcommsat/server)
+"lPp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/primary/fore)
 "lPs" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/bot,
@@ -54055,7 +54089,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "nfd" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "nfj" = (
@@ -63521,9 +63555,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pBw" = (
-/obj/machinery/status_display/supply{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/arrows{
 	dir = 4
 	},
@@ -63531,6 +63562,7 @@
 	c_tag = "Cargo - Waiting Room";
 	name = "cargo camera"
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "pBB" = (
@@ -63591,9 +63623,6 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/toy/figure/cargotech,
-/obj/machinery/status_display/supply{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -64571,6 +64600,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"pNi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "pNq" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -66953,6 +66992,15 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
+"qql" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit/departure_lounge)
 "qqn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67441,9 +67489,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/duct,
 /obj/machinery/light/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -74730,7 +74778,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/starboard/fore)
 "smR" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "smU" = (
@@ -74893,7 +74941,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "spJ" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "spV" = (
@@ -81368,7 +81416,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room)
 "tSj" = (
@@ -94492,6 +94539,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "xbu" = (
@@ -132899,7 +132947,7 @@ oYs
 rjk
 oYs
 oYs
-fbU
+lPp
 cZS
 cZS
 nvu
@@ -134501,7 +134549,7 @@ gqq
 tMo
 rjd
 pRS
-oHJ
+deo
 kxs
 mlE
 xWP
@@ -134681,7 +134729,7 @@ aaa
 aaa
 aaa
 sjt
-kEn
+dZx
 kJd
 wTn
 sjt
@@ -141711,8 +141759,8 @@ hct
 avR
 whK
 hiV
-xuI
-fNm
+uNY
+ipM
 aJd
 gsH
 fNm
@@ -142518,7 +142566,7 @@ hXm
 kYb
 vcj
 nxb
-qpg
+qql
 nyb
 iJv
 knH
@@ -147337,7 +147385,7 @@ uYp
 hfG
 hQJ
 dCk
-rTO
+pNi
 dCd
 gft
 clO

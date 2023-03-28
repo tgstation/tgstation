@@ -20547,6 +20547,7 @@
 	name = "service camera"
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/atm,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/bar/atrium)
 "gHA" = (
@@ -28809,7 +28810,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "jeS" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "jeT" = (
@@ -30081,6 +30082,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
+"jDJ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "jDU" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -32138,7 +32152,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "kox" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "koE" = (
@@ -40736,6 +40750,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "ncC" = (
@@ -50223,7 +50238,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/bridge)
 "qms" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qmx" = (
@@ -52422,8 +52437,18 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"qXx" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atm,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "qXA" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "qXJ" = (
@@ -60105,7 +60130,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "trt" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "tsf" = (
@@ -63137,10 +63162,10 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "uqN" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/atm,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -69009,6 +69034,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/atm,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
 "wiw" = (
@@ -100445,7 +100471,7 @@ dXI
 dkA
 ovv
 ovv
-nIx
+qXx
 iFm
 ocO
 eAl
@@ -115646,7 +115672,7 @@ nTd
 hDa
 tNa
 cQR
-rDh
+jDJ
 lux
 hEQ
 beo
