@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Curators/HoP can now manage Newscaster D-Notices (previously was Warden/HoS)."
+  - balance: "Security Officers/Detectives can now issue Wanted notices on Newscasters."
+  - balance: "Ntos Newscaster now requires Library access only to download, not to run."

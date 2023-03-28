@@ -8,7 +8,7 @@
 
 /datum/uplink_item/bundles_tc/c20r
 	name = "C-20r bundle"
-	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a (surplus) suppressor at discount price."
+	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a suppressor at discount price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	cost = 14 // normally 16
 	purchasable_from = UPLINK_NUKE_OPS
@@ -31,10 +31,10 @@
 /datum/uplink_item/bundles_tc/sniper
 	name = "Sniper bundle"
 	desc = "Elegant and refined: Contains a collapsed sniper rifle in an expensive carrying case, \
-			two soporific knockout magazines, a free surplus suppressor, and a sharp-looking tactical turtleneck suit. \
+			two .50 BMG disruptor magazines, a free suppressor, and a sharp-looking tactical turtleneck suit. \
 			We'll throw in a free red tie if you order NOW."
 	item = /obj/item/storage/briefcase/sniperbundle
-	cost = 20 // normally 26
+	cost = 20 // normally 27, the suit and office supplies are free!
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/firestarter
@@ -144,9 +144,10 @@
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/sniper
-	name = "Sniper Rifle"
-	desc = "Ranged fury, Syndicate style. Guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
+	name = "Anti-Materiel Sniper Rifle"
+	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
+			Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault."
+	item = /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	purchasable_from = UPLINK_NUKE_OPS
@@ -297,32 +298,49 @@
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper
-	cost = 4
+	cost = 3
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper/basic
-	name = ".50 Magazine"
+	name = ".50 BMG Magazine"
 	desc = "An additional standard 6-round magazine for use with .50 sniper rifles."
 	item = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/uplink_item/ammo/sniper/surplusbox
+	name = ".50 BMG Surplus Magazine Box"
+	desc = "A box full of surplus .50 BMG magazines. Not as good as high quality magazines, \
+			usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
+			Useful for arming a squad."
+	cost = 7 //1 TC per magazine
+	item = /obj/item/storage/box/syndie_kit/surplus
+
 /datum/uplink_item/ammo/sniper/penetrator
-	name = ".50 Penetrator Magazine"
-	desc = "A 5-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
+	name = ".50 BMG Penetrator Magazine"
+	desc = "A 6-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
 			Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
-	cost = 5
+	cost = 4
 
-/datum/uplink_item/ammo/sniper/soporific
-	name = ".50 Soporific Magazine"
-	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Put your enemies to sleep today!"
-	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
-	cost = 6
+/datum/uplink_item/ammo/sniper/incendiary
+	name = ".50 BMG Incendiary Magazine"
+	desc = "A 6-round magazine of incendiary ammo. \
+			Sets your enemies ablaze, along with everyone else next to them!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/incendiary
+	cost = 4
+
+/datum/uplink_item/ammo/sniper/disruptor
+	name = ".50 BMG Disruptor Magazine"
+	desc = "A 6-round magazine of disruptor ammo designed for use with .50 sniper rifles. \
+			Put your enemies and their alarm clock to sleep today!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/disruptor
+	cost = 4
 
 /datum/uplink_item/ammo/sniper/marksman
-	name = ".50 Marksman Magazine"
-	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	name = ".50 BMG Marksman Magazine"
+	desc = "A 6-round magazine of marksman ammo designed for use with .50 sniper rifles. \
+			Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
