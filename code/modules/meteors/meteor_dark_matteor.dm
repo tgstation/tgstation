@@ -7,7 +7,7 @@
 	hitpwr = EXPLODE_DEVASTATE
 	heavy = TRUE
 	meteorsound = 'sound/effects/curse1.ogg'
-	meteordrop = list(/obj/singularity) //what the FUCK
+	meteordrop = list(/obj/singularity/dark_matteor) //what the FUCK
 	dropamt = 1
 	threat = 100
 	signature = "dark matter"
@@ -22,6 +22,7 @@
 	vis_contents += warp
 	spark_system = new /datum/effect_system/spark_spread/quantum()
 	spark_system.set_up(4, TRUE, src)
+	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/meteor/dark_matteor/process(delta_time)
@@ -46,6 +47,8 @@
 	if(.)
 		spark_system.start()
 
-/obj/effect/meteor/dark_matteor/meteor_effect()
-	..()
-	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
+/obj/effect/meteor/dark_matteor/shield_defense(obj/machinery/satellite/meteor_shield/defender)
+	defender.visible_message(span_danger("[defender]'s beam is reflected by [src]!"))
+	new /obj/effect/temp_visual/explosion/fast(get_turf(defender))
+	qdel(defender)
+	return FALSE

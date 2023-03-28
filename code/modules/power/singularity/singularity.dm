@@ -38,6 +38,8 @@
 	var/consumed_supermatter = FALSE
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
+	/// What the game tells ghosts when you make one
+	var/ghost_notification_message = "IT'S LOOSE"
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -67,7 +69,7 @@
 
 	if (!mapload)
 		notify_ghosts(
-			"IT'S LOOSE",
+			ghost_notification_message,
 			source = src,
 			action = NOTIFY_ORBIT,
 			flashwindow = FALSE,
@@ -454,3 +456,6 @@
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
+
+/obj/singularity/dark_matteor
+	ghost_notification_message = "IT'S HERE"

@@ -1,7 +1,13 @@
+/// number of emagged meteor shields to get the first warning, a simple say message
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_ONE 3
+/// number of emagged meteor shields to get the second warning, telling the user an announcement is coming
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_TWO 6
+/// number of emagged meteor shields to get the third warning + an announcement to the crew
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_THREE 7
+/// number of emagged meteor shields to get the fourth... ah shit the dark matt-eor is coming.
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR 10
+/// how long between emagging meteor shields you have to wait
+#define METEOR_SHIELD_EMAG_COOLDOWN 1 MINUTES
 
 //Station Shield
 // A chain of satellites encircles the station
@@ -49,12 +55,18 @@
 	mode = "M-SHIELD"
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	/// the range a meteor shield sat can destroy meteors
+	var/kill_range = 14
+
+	//emag behavior dark matt-eor stuff
+
 	/// amount of emagged active meteor shields
 	var/static/emagged_active_meteor_shields = 0
 	/// the highest amount of shields you've ever emagged
 	var/static/highest_emagged_threshold_reached = 0
-	/// the range a meteor shield sat can destroy meteors
-	var/kill_range = 14
+	/// cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun
+	STATIC_COOLDOWN_DECLARE(shared_emag_cooldown)
+
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in get_line(src,meteor))
@@ -63,6 +75,9 @@
 	return TRUE
 
 /obj/machinery/satellite/meteor_shield/process()
+	if(obj_flags & EMAGGED)
+		//kills the processing because emagged meteor shields no longer stop meteors in any way
+		return ..()
 	if(!active)
 		return
 	for(var/obj/effect/meteor/meteor_to_destroy in GLOB.meteor_list)
@@ -70,8 +85,9 @@
 			continue
 		if(get_dist(meteor_to_destroy, src) > kill_range)
 			continue
-		if(!(obj_flags & EMAGGED) && space_los(meteor_to_destroy))
-			Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
+		if(space_los(meteor_to_destroy))
+			var/turf/beam_from = get_turf(src)
+			beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
 			if(meteor_to_destroy.shield_defense(src))
 				qdel(meteor_to_destroy)
 
@@ -90,6 +106,10 @@
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+	if(!COOLDOWN_FINISHED(src, shared_emag_cooldown))
+		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could destroy the shields."))
+		return
+	COOLDOWN_START(src, shared_emag_cooldown, METEOR_SHIELD_EMAG_COOLDOWN)
 	obj_flags |= EMAGGED
 	to_chat(user, span_notice("You access the satellite's debug mode, increasing the chance of meteor strikes."))
 	if(active) //if we allowed inactive updates a sat could be worth -1 active meteor shields on first emag
@@ -137,3 +157,5 @@
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_TWO
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_THREE
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR
+
+#undef METEOR_SHIELD_EMAG_COOLDOWN
