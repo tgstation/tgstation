@@ -370,6 +370,8 @@
 		/datum/reagent/water = 9,
 		/datum/reagent/medicine/omnizine = 6,
 	)
+	ingredient_reagent_multiplier = 0.2 // Too much acid
+	percentage_of_nutriment_converted = 0
 
 // Wing Fang Chu
 /datum/reagent/consumable/nutriment/soup/wingfangchu
@@ -457,12 +459,6 @@
 		/datum/reagent/consumable/nutriment/soup/coldchili = 30,
 		/datum/reagent/consumable/tomatojuice = 10,
 		// Frost Oil comes from the chilis
-		/*
-		/datum/reagent/consumable/nutriment = 4,
-		/datum/reagent/consumable/nutriment/protein = 6,
-		/datum/reagent/consumable/nutriment/vitamin = 4,
-		/datum/reagent/consumable/frostoil = 3,
-		*/
 	)
 	ingredient_reagent_multiplier = 0.33 // Chilis have a TON of frost oil naturally
 	percentage_of_nutriment_converted = 0
@@ -954,6 +950,7 @@
 		/datum/reagent/consumable/nutriment/protein = 8, // No idea where this comes from
 		/datum/reagent/consumable/tomatojuice = 8, // No idea where this comes from
 	)
+	ingredient_reagent_multiplier = 0.5 // Onions are very reagent heavy
 	percentage_of_nutriment_converted = 0.1
 
 // Bisque / Crab soup
@@ -1140,6 +1137,8 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/zurek = 30,
 	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Cullen Skink, a Scottish soup with a funny name
 /datum/reagent/consumable/nutriment/soup/cullen_skink
@@ -1170,6 +1169,8 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/water = 6,
 	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0
 
 // Chicken Noodle Soup
 /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
@@ -1252,6 +1253,7 @@
 		/datum/reagent/consumable/nutriment/soup/atrakor_dumplings = 30,
 		/datum/reagent/water = 10,
 	)
+	ingredient_reagent_multiplier = 0.5
 	percentage_of_nutriment_converted = 0.2
 
 // Meatball Soup, but lizard-like
@@ -1279,6 +1281,8 @@
 		/datum/reagent/consumable/nutriment/soup/meatball_noodles = 30,
 		/datum/reagent/water = 10,
 	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Black Broth
 /datum/reagent/consumable/nutriment/soup/black_broth
@@ -1309,6 +1313,8 @@
 		/datum/reagent/consumable/liquidgibs = 7,
 		/datum/reagent/consumable/vinegar = 5,
 	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Jellyfish Stew
 /datum/reagent/consumable/nutriment/soup/jellyfish
@@ -1387,6 +1393,7 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/cottonball = 30,
 	)
+	ingredient_reagent_multiplier = 0.5
 	percentage_of_nutriment_converted = 0.1 // Cotton has no nutrition
 
 // Cheese Soup
@@ -1480,6 +1487,8 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/water = 10,
 	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Oat Soup, but not oatmeal
 /datum/reagent/consumable/nutriment/soup/moth_oats
