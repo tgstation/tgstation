@@ -118,7 +118,7 @@
 			say("Warning. Risk of dark matter congealment entering existent ranges. Further tampering will be reported.")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_THREE)
 			say("Warning. Further tampering has been reported.")
-			priority_announce()
+			priority_announce("Warning. Tampering of meteor satellites puts the station at risk of exotic, deadly meteor types. Please intervene.", "Meteor Warning")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR)
 			say("Warning. Warning. Dark Matt-eor on course for station.")
 			var/datum/round_event_control/dark_matteor/dark_matteor_event = locate() in SSevents.control

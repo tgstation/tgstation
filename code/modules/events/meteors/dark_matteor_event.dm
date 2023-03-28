@@ -20,7 +20,7 @@
 		var/obj/effect/meteor/detected_dark_matteor = locate(/obj/effect/meteor/dark_matteor) in GLOB.meteor_list //If we accidentally pick a meteor not spawned by the event, we're still technically not wrong
 		if(detected_dark_matteor)
 			SSsecurity_level.set_level(SEC_LEVEL_RED)
-			priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/misc/notice1.ogg')
+			priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/effects/curse1.ogg')
 
 /datum/event_admin_setup/warn_admin/dark_matteor
 	warning_text = "Dark Matt-eors spawn singularities. The round is ending once a dark matt-eor hits the station. Proceed anyways?"
