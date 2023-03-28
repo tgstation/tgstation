@@ -255,8 +255,10 @@
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
 	desc = "A lifelike statue of a horrifying monster."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
 	icon_state = "goliath"
+	pixel_x = -12
+	base_pixel_x = -12
 	name = "goliath"
 
 ///////////Other Stuff//////////////////////////////////////////////
