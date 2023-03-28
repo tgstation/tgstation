@@ -381,7 +381,7 @@
 	description = "A tragic display of what happens to drivers who pda and pod."
 
 
-/datum/map_template/ruin/space/transit_hub
+/datum/map_template/ruin/space/transit_booth
 	id = "transit_hub"
 	suffix = "transit_hub.dmm"
 	name = "Transit Hub"
