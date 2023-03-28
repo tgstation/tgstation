@@ -671,8 +671,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
  */
 
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
-//	new/datum/stack_recipe("огромная шестерня", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE),
-//	null,
+	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
 	new/datum/stack_recipe("направленное латунное окно", /obj/structure/window/bronze/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("полное латунное окно", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("латунный шлюз", /obj/machinery/door/airlock/bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
@@ -693,6 +693,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("латунный шампур", /obj/structure/destructible/clockwork/trap/skewer, 12, time=40, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("латунный трамплин", /obj/structure/destructible/clockwork/trap/flipper, 10, time=40, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 ))
 
 /obj/item/stack/sheet/bronze

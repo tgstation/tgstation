@@ -503,6 +503,7 @@
 	icon_state = "clockwork_window_single"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 80
+	atom_integrity = 80
 	armor = /datum/armor/brass_window
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	decon_speed = 40
@@ -553,6 +554,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	max_integrity = 120
+	atom_integrity = 120
 	glass_amount = 2
 
 /obj/structure/window/reinforced/clockwork/spawn_debris(location)

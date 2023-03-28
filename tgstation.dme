@@ -5234,6 +5234,7 @@
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\abstraction_crystal.dm"
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\clockwork_armaments.dm"
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\dimensional_breach.dm"
+#include "massmeta\code\modules\antagonists\clock_cult\scriptures\dimensional_gate.dm"
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\hateful_manacles.dm"
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\integration_cog.dm"
 #include "massmeta\code\modules\antagonists\clock_cult\scriptures\interdiction_lens.dm"

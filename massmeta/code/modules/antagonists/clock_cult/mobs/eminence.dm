@@ -77,6 +77,7 @@
 	trigger_event.Grant(src)
 	//Wooooo, you are a ghost
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_TRUE_NIGHT_VISION, INNATE_TRAIT)
 	cog_change()
 
 /mob/living/simple_animal/eminence/Login()

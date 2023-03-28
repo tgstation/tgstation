@@ -13,7 +13,6 @@
 	after_use_text = "Позвольте энергии течь сквозь вас!"
 	slab_overlay = "volt"
 	use_time = 150
-	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE
 
 /datum/clockcult/scripture/slab/kindle/apply_effects(atom/A)
@@ -54,6 +53,7 @@
 		else
 			to_chat(invoker, span_brass("[M] кажется несколько устойчивым к моим силам!"))
 			M.adjust_confusion(5 SECONDS)
+			M.adjust_silence(5 SECONDS)
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		S.emp_act(EMP_HEAVY)

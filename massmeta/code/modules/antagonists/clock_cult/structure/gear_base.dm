@@ -9,6 +9,7 @@
 	var/list/transmission_sigils
 	var/depowered = FALSE	//Makes sure the depowered proc is only called when its depowered and not while its depowered
 	var/minimum_power = 0	//Minimum operation power
+	var/can_unanchor = TRUE
 
 /obj/structure/destructible/clockwork/gear_base/Initialize(mapload)
 	. = ..()
@@ -23,7 +24,7 @@
 		ST.linked_structures -= src
 
 /obj/structure/destructible/clockwork/gear_base/attackby(obj/item/I, mob/user, params)
-	if(is_servant_of_ratvar(user) && I.tool_behaviour == TOOL_WRENCH)
+	if(is_servant_of_ratvar(user) && I.tool_behaviour == TOOL_WRENCH && can_unanchor)
 		to_chat(user, span_notice("Начинаю [anchored ? "откручивать" : "прикручивать"] [src]."))
 		if(I.use_tool(src, user, 20, volume=50))
 			to_chat(user, span_notice("Успешно [anchored ? "откручиваю" : "прикручиваю"] [src]."))

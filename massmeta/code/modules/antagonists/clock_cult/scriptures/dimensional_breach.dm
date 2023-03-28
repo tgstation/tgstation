@@ -2,9 +2,9 @@
 // !      Dimensional Breach      ! //
 //==================================//
 /datum/clockcult/scripture/ark_activation
-	name = "Активировать Ковчег"
-	desc = "Подготавливает Ковчег к активации, предупреждая экипаж о вашем существовании. Требуется 6 вызывающих."
-	tip = "Подготавливает Ковчег к активации, предупреждая экипаж о вашем существовании."
+	name = "Dimensional Breach"
+	desc = "Breaches the verge between Reebe and the station, activating The Ark and announcing about your existence."
+	tip = "Activates The Ark and announcing about your existence."
 	button_icon_state = "Spatial Gateway"
 	power_cost = 5000
 	invokation_time = 140
@@ -20,8 +20,8 @@
 	if(!..())
 		return FALSE
 	var/area/AR = get_area(invoker)
-	if(!is_reebe(AR.z))
-		to_chat(invoker, span_brass("Нужно быть рядом с Ковчегом!"))
+	if(!is_station_level(AR.z))
+		to_chat(invoker, span_brass("You need to be at the station in order to breach the dimension!"))
 		return FALSE
 	return TRUE
 

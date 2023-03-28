@@ -10,7 +10,7 @@
 	invokation_time = 20
 	invokation_text = list("Через мужество и надежду...", "мы защитим тебя!")
 	category = SPELLTYPE_PRESERVATION
-	cogs_required = 0
+	cogs_required = 2
 
 /datum/clockcult/scripture/clockwork_armaments/invoke_success()
 	var/mob/living/M = invoker
@@ -34,7 +34,5 @@
 			armaments_hammer.equip(M)
 		if("Меч")
 			armaments_sword.equip(M)
-		if("Лук")
-			armaments_bow.equip(M)
 		if("Базовое")
 			default.equip(M)
