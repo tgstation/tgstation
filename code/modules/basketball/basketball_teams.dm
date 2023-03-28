@@ -93,3 +93,16 @@
 	idcard.registered_name = "Alien ([hive_num])"
 	idcard.update_label()
 	idcard.update_icon()
+
+/datum/outfit/basketball/ass_blast_usa
+	name = "Basketball Ass Blast USA"
+	uniform = /obj/item/clothing/under/misc/patriotsuit
+	shoes = /obj/item/clothing/shoes/sneakers/red
+	neck = /obj/item/bedsheet/patriot
+
+/datum/outfit/basketball/soviet_bears
+	name = "Basketball Soviet Bears"
+	uniform = /obj/item/clothing/under/costume/soviet
+	shoes = /obj/item/clothing/shoes/winterboots
+	head = /obj/item/clothing/head/costume/ushanka
+	gloves = /obj/item/clothing/gloves/color/brown

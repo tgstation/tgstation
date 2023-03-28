@@ -1,0 +1,1320 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/stairs/west,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"aw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"aE" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/stack/cable_coil{
+	amount = 15;
+	pixel_x = 5;
+	pixel_y = 12
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/item/stack/cable_coil{
+	amount = 15
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"be" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"bA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/item/lead_pipe,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"cz" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dg" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 5
+	},
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"dr" = (
+/obj/structure/table,
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"dC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dJ" = (
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"dM" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"dS" = (
+/obj/item/crowbar,
+/turf/open/floor/catwalk_floor,
+/area/centcom/basketball)
+"eS" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"eU" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"fi" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"fj" = (
+/obj/structure/stairs/east,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"fu" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"fB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "cyka"
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"gk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range";
+	dir = 4
+	},
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"gq" = (
+/mob/living/simple_animal/hostile/bear/fightpit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"gx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"hf" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict15"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"hB" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"jj" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"jr" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"kc" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 10
+	},
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"kp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	icon_state = "right";
+	name = "Shooting Range";
+	dir = 4
+	},
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 10
+	},
+/obj/item/gun/ballistic/rifle/boltaction,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"ku" = (
+/obj/structure/stairs/east,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"kT" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ly" = (
+/obj/structure/table,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"lD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"lR" = (
+/obj/structure/stairs/west,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"mp" = (
+/obj/structure/stairs/west,
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"my" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"mV" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"nE" = (
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"nW" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"oh" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict6"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"oR" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict10"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"pu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"qU" = (
+/obj/structure/sign/poster/contraband/soviet_propaganda,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"rS" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict8"
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"rU" = (
+/obj/machinery/power/shuttle_engine/large{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"sb" = (
+/obj/structure/stairs/east,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"su" = (
+/mob/living/simple_animal/hostile/bear/fightpit,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"tO" = (
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tU" = (
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"tX" = (
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"uH" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"uR" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict4"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"uW" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict16"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"vo" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict9"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"wZ" = (
+/obj/machinery/pipedispenser,
+/turf/open/floor/catwalk_floor,
+/area/centcom/basketball)
+"xP" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/effect/decal/hammerandsickle{
+	pixel_y = -42
+	},
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"zr" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict13"
+	},
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"zy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/broken_bottle,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"zZ" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ax" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/catwalk_floor,
+/area/centcom/basketball)
+"AC" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"AI" = (
+/obj/machinery/status_display,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"AU" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/clothing/head/utility/welding,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Bd" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict12"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"BJ" = (
+/obj/structure/sign/poster/contraband/communist_state,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"Cv" = (
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"Cw" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"CD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"CV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Dt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"DP" = (
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"Ev" = (
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Gh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Gi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/basketball)
+"HH" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"Ic" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"IA" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"JM" = (
+/obj/structure/table,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"KH" = (
+/obj/structure/stairs/west,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Lu" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"LI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LS" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/item/clothing/head/utility/hardhat/orange,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LU" = (
+/turf/open/floor/catwalk_floor,
+/area/centcom/basketball)
+"LV" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"Ma" = (
+/obj/structure/stairs/east,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"MS" = (
+/obj/machinery/mech_bay_recharge_port,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"MW" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Nt" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict5"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Oj" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict2"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Om" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict3"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"OB" = (
+/obj/structure/training_machine,
+/obj/item/target/clown,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"OO" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"PU" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"PW" = (
+/obj/item/weldingtool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Qa" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict1"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Qh" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict14"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Qi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Ql" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"Rl" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Se" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"So" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/storage/belt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Tc" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"TV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Uq" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/centcom/basketball)
+"Uv" = (
+/obj/structure/table,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Uy" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict11"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"Vr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"WB" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"WK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"WM" = (
+/obj/structure/sign/poster/contraband/kss13,
+/turf/closed/indestructible/riveted/plastinum,
+/area/centcom/basketball)
+"Xm" = (
+/obj/item/pushbroom,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Xn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "guy"
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Xo" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict7"
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/basketball)
+"YH" = (
+/obj/structure/training_machine,
+/obj/item/target/syndicate,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"YX" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/item/toy/basketball,
+/turf/open/floor/iron/large,
+/area/centcom/basketball)
+"ZM" = (
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+Uq
+WM
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+WM
+Uq
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+fi
+tX
+tX
+WB
+tX
+tX
+LV
+tX
+tX
+WB
+tX
+tX
+HH
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+tO
+Uq
+Uq
+Uq
+Uq
+Ma
+ku
+AI
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+AI
+sb
+fj
+Uq
+Uq
+Uq
+Uq
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+tO
+Uq
+dr
+PU
+MW
+ZM
+ZM
+Cw
+mV
+mV
+mV
+Cv
+mV
+mV
+mV
+Cw
+dJ
+Lu
+CV
+bA
+AC
+Uq
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+tO
+Uq
+Uv
+aw
+ZM
+aw
+ZM
+Cw
+mV
+IA
+mV
+mV
+mV
+IA
+mV
+Cw
+dJ
+uH
+tO
+rU
+fB
+Uq
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+Uq
+Uq
+nE
+Ev
+nE
+Ev
+nE
+Cw
+mV
+xP
+IA
+IA
+IA
+mV
+mV
+Cw
+vo
+Qa
+tO
+tO
+dC
+Uq
+Uq
+Hu
+"}
+(9,1,1) = {"
+Hu
+Uq
+Uq
+kp
+Cw
+gk
+Cw
+kp
+Cw
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+Cw
+oR
+Oj
+Gh
+Gh
+my
+cz
+Uq
+Hu
+"}
+(10,1,1) = {"
+Hu
+Uq
+Qi
+Dt
+Dt
+Dt
+Dt
+be
+qU
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+BJ
+Uy
+Om
+nW
+nW
+kT
+So
+Uq
+Hu
+"}
+(11,1,1) = {"
+Hu
+Uq
+gq
+tU
+tU
+tU
+tU
+Rl
+qU
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+BJ
+Bd
+uR
+OO
+LI
+eS
+fu
+Uq
+Hu
+"}
+(12,1,1) = {"
+Hu
+Uq
+Se
+OB
+tU
+YH
+su
+Rl
+qU
+mV
+mV
+mV
+YX
+mV
+mV
+mV
+BJ
+zr
+Nt
+dS
+wZ
+LU
+Ax
+Uq
+Hu
+"}
+(13,1,1) = {"
+Hu
+Uq
+TV
+tU
+su
+tU
+tU
+Rl
+qU
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+BJ
+Qh
+oh
+Xn
+zy
+Xm
+AU
+Uq
+Hu
+"}
+(14,1,1) = {"
+Hu
+Uq
+Gi
+Vr
+Vr
+Vr
+Vr
+Ic
+qU
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+BJ
+hf
+Xo
+PW
+hB
+kT
+aE
+Uq
+Hu
+"}
+(15,1,1) = {"
+Hu
+Uq
+Uq
+Cw
+dg
+Cw
+kc
+Cw
+Cw
+mV
+mV
+mV
+mV
+mV
+mV
+mV
+Cw
+uW
+rS
+WK
+WK
+AC
+zZ
+Uq
+Hu
+"}
+(16,1,1) = {"
+Hu
+Uq
+Uq
+Ev
+nE
+Ev
+nE
+Ev
+Cw
+mV
+mV
+jr
+jr
+jr
+mV
+mV
+Cw
+dJ
+uH
+MS
+MS
+lD
+Uq
+Uq
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+Uq
+ly
+ZM
+pu
+ZM
+pu
+Cw
+mV
+jr
+mV
+mV
+mV
+jr
+mV
+Cw
+dJ
+uH
+eU
+eU
+lD
+Uq
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+Uq
+JM
+dM
+MW
+ZM
+ZM
+Cw
+mV
+mV
+mV
+DP
+mV
+mV
+mV
+Cw
+dJ
+Tc
+gx
+CD
+LS
+Uq
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+Uq
+Uq
+Uq
+Uq
+at
+lR
+AI
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+AI
+KH
+mp
+Uq
+Uq
+Uq
+Uq
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+tX
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+HH
+tX
+tX
+jj
+tX
+tX
+Ql
+tX
+tX
+jj
+tX
+tX
+fi
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Uq
+Uq
+WM
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+Uq
+WM
+Uq
+Uq
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
