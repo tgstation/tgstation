@@ -67,7 +67,6 @@
 	/// cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun
 	STATIC_COOLDOWN_DECLARE(shared_emag_cooldown)
 
-
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in get_line(src,meteor))
 		if(!isspaceturf(T))
@@ -111,7 +110,8 @@
 		return
 	COOLDOWN_START(src, shared_emag_cooldown, METEOR_SHIELD_EMAG_COOLDOWN)
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You access the satellite's debug mode, increasing the chance of meteor strikes."))
+	to_chat(user, span_notice("You access the satellite's debug mode and it begins emitting a strange signal, increasing the chance of meteor strikes."))
+	AddComponent(/datum/component/gps, "Corrupted Meteor Shield Attraction Signal")
 	if(active) //if we allowed inactive updates a sat could be worth -1 active meteor shields on first emag
 		update_emagged_meteor_sat(user)
 
@@ -138,7 +138,7 @@
 			say("Warning. Risk of dark matter congealment entering existent ranges. Further tampering will be reported.")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_THREE)
 			say("Warning. Further tampering has been reported.")
-			priority_announce("Warning. Tampering of meteor satellites puts the station at risk of exotic, deadly meteor types. Please intervene.", "Meteor Warning")
+			priority_announce("Warning. Tampering of meteor satellites puts the station at risk of exotic, deadly meteor collisions. Please intervene by checking your gps devices for strange signals, and dismantling the tampered meteor shields.", "Strange Meteor Signal Warning")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR)
 			say("Warning. Warning. Dark Matt-eor on course for station.")
 			var/datum/round_event_control/dark_matteor/dark_matteor_event = locate() in SSevents.control
