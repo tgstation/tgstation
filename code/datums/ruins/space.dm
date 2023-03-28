@@ -379,3 +379,10 @@
 	suffix = "pod_crash.dmm"
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
+
+
+/datum/map_template/ruin/space/transit_hub
+	id = "transit_hub"
+	suffix = "transit_hub.dmm"
+	name = "Transit Hub"
+	description = "Make sure to check out the duty-free store!"

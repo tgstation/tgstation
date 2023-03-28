@@ -10,12 +10,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "c" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "d" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -25,11 +25,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "e" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "f" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -44,7 +44,7 @@
 	time = 0
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "g" = (
 /obj/machinery/door/airlock/external{
 	name = "Transit Booth Airlock"
@@ -53,38 +53,36 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "h" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/machinery/door/window/right/directional/west{
 	name = "Eastbound"
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav{
-	name = "transitbooth"
-	})
+/area/ruin/space/has_grav/transit_booth)
 "i" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "j" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "k" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "l" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "n" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -93,7 +91,7 @@
 	pixel_y = 35
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "o" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -103,7 +101,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "p" = (
 /obj/machinery/door/airlock/external{
 	name = "Transit Booth Airlock"
@@ -115,10 +113,10 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "q" = (
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "s" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/siding/dark_red{
@@ -138,7 +136,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "t" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -158,14 +156,11 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "u" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
-"v" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "w" = (
 /obj/machinery/door/airlock/external{
 	name = "Transit Booth Airlock"
@@ -174,7 +169,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "x" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
@@ -182,7 +177,7 @@
 /obj/structure/sign/calendar/directional/north,
 /obj/effect/turf_decal/siding/dark/corner,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "y" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
@@ -192,7 +187,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "z" = (
 /obj/machinery/door/poddoor{
 	id = "east"
@@ -203,16 +198,16 @@
 /obj/structure/sign/warning/directional/south,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "B" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "C" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "D" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -229,7 +224,7 @@
 	time = 0
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "E" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
@@ -238,7 +233,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "F" = (
 /obj/structure/window/reinforced{
 	layer = 2.9
@@ -256,7 +251,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "G" = (
 /obj/structure/window/reinforced{
 	layer = 2.9
@@ -272,7 +267,7 @@
 	time = 0
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "H" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/siding/dark_red{
@@ -286,7 +281,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "I" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/siding/dark_red{
@@ -302,7 +297,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "J" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/coffee{
@@ -310,7 +305,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "K" = (
 /obj/machinery/door/poddoor{
 	id = "south"
@@ -319,7 +314,7 @@
 /obj/structure/sign/warning/directional/east,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "L" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigars{
@@ -330,7 +325,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "M" = (
 /obj/machinery/door/poddoor{
 	id = "north"
@@ -341,7 +336,7 @@
 /obj/structure/sign/warning/directional/west,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "N" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -350,7 +345,7 @@
 	name = "Northbound"
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "O" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Southbound"
@@ -359,7 +354,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "P" = (
 /obj/machinery/door/poddoor{
 	id = "west"
@@ -370,7 +365,7 @@
 /obj/structure/sign/warning/directional/north,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "Q" = (
 /obj/structure/rack,
 /obj/item/book/random{
@@ -390,7 +385,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "R" = (
 /obj/machinery/door/airlock/external{
 	name = "Transit Booth Airlock"
@@ -402,17 +397,15 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "S" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "T" = (
 /turf/closed/wall,
-/area/ruin/space/has_grav{
-	name = "transitbooth"
-	})
+/area/ruin/space/has_grav/transit_booth)
 "U" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -421,7 +414,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "V" = (
 /obj/structure/window/reinforced{
 	layer = 2.9
@@ -440,7 +433,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "W" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -458,7 +451,7 @@
 	time = 0
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "X" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
@@ -467,7 +460,7 @@
 	name = "Westbound"
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "Y" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -476,7 +469,7 @@
 	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 "Z" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -485,7 +478,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/transit_booth)
 
 (1,1,1) = {"
 B
@@ -504,11 +497,11 @@ a
 (2,1,1) = {"
 j
 a
-v
+T
 w
-v
+T
 a
-v
+T
 P
 l
 l
@@ -518,11 +511,11 @@ a
 (3,1,1) = {"
 j
 a
-v
+T
 c
-v
+T
 l
-v
+T
 D
 X
 l
@@ -532,9 +525,9 @@ a
 (4,1,1) = {"
 j
 a
-v
+T
 R
-v
+T
 n
 L
 u
@@ -546,7 +539,7 @@ a
 (5,1,1) = {"
 j
 a
-v
+T
 x
 o
 b
@@ -559,8 +552,8 @@ j
 "}
 (6,1,1) = {"
 j
-v
-v
+T
+T
 k
 Q
 I
@@ -581,8 +574,8 @@ s
 H
 F
 i
-v
-v
+T
+T
 j
 "}
 (8,1,1) = {"
@@ -595,7 +588,7 @@ U
 U
 d
 y
-v
+T
 a
 j
 "}
@@ -607,9 +600,9 @@ q
 e
 J
 Y
-v
+T
 p
-v
+T
 a
 j
 "}
@@ -619,11 +612,11 @@ a
 l
 h
 W
-v
+T
 l
-v
+T
 S
-v
+T
 a
 j
 "}
@@ -635,9 +628,9 @@ l
 z
 T
 a
-v
+T
 g
-v
+T
 a
 j
 "}
