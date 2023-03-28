@@ -643,7 +643,7 @@
 		if(!partial_pressures[read_from])
 			continue
 		var/convert_into = conversion_packet[BREATH_RELATIONSHIP_CONVERT]
-		partial_pressures[convert_into] += partial_pressures[read_from] * conversion[BREATH_RELATIONSHIP_MULTIPLIER]
+		partial_pressures[convert_into] += partial_pressures[read_from] * conversion_packet[BREATH_RELATIONSHIP_MULTIPLIER]
 		if(partial_pressures[convert_into] <= 0)
 			partial_pressures -= convert_into // No negative values jeremy
 
