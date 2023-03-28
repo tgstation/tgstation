@@ -7,6 +7,159 @@
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
 
+/obj/machinery/ctf
+	name = "CTF Controller"
+	desc = "Used for running friendly games of capture the flag."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "syndbeacon"
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/game_id = CTF_GHOST_CTF_GAME_ID
+	//Todo Comment this
+	var/datum/ctf_controller/ctf_game
+
+/obj/machinery/ctf/Initialize(mapload)
+	. = ..()
+	ctf_game = GLOB.ctf_games[game_id]
+
+/obj/machinery/ctf/spawner
+	var/team = WHITE_TEAM
+	var/team_span = ""
+	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
+	var/respawn_cooldown = DEFAULT_RESPAWN
+	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
+	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
+	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
+	var/list/default_gear
+	var/ammo_type = /obj/effect/powerup/ammo/ctf
+	// Fast paced gameplay, no real time for burn infections.
+	var/player_traits = list(TRAIT_NEVER_WOUNDED)
+
+/obj/machinery/ctf/spawner/Initialize(mapload)
+	. = ..()
+	ctf_game.add_team(src)
+	GLOB.ctf_panel.ctf_machines += src
+	SSpoints_of_interest.make_point_of_interest(src)
+	default_gear = ctf_gear
+
+/obj/machinery/ctf/spawner/Destroy()
+	GLOB.ctf_panel.ctf_machines -= src
+	return ..()
+
+/obj/machinery/ctf/spawner/red
+	name = "Red CTF Controller"
+	icon_state = "syndbeacon"
+	team = RED_TEAM
+	team_span = "redteamradio"
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red, "Marksman" = /datum/outfit/ctf/marksman/red)
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/red/instagib)
+
+/obj/machinery/ctf/spawner/blue
+	name = "Blue CTF Controller"
+	icon_state = "bluebeacon"
+	team = BLUE_TEAM
+	team_span = "blueteamradio"
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/blue/instagib)
+
+//Green and yellow teams here
+
+/obj/machinery/ctf/spawner/attack_ghost(mob/user)
+	if(ctf_game.ctf_enabled == FALSE)
+		if(user.client && user.client.holder)
+			var/response = tgui_alert(user, "Enable this CTF game?", "CTF", list("Yes", "No"))
+			if(response == "Yes")
+				ctf_game.start_ctf()
+				//Figure out what toggle_id_ctf() does and then do it here
+			return
+
+		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+			to_chat(user, span_warning("CTF has been temporarily disabled by admins."))
+			return
+		get_ctf_voting_controller(game_id).vote(user)
+		return
+	if(!SSticker.HasRoundStarted())
+		return
+	if(user.ckey in ctf_game.get_players(team)) //TODO!!!! Respawn timer checking logic inside here
+		var/datum/component/ctf_player/ctf_player_component = ctf_game.get_player_component(team, user.ckey)
+		var/client/new_team_member = user.client
+		if(isnull(ctf_player_component))
+			spawn_team_member(new_team_member) //Player managed to lose their player component despite being on a team
+		else
+			spawn_team_member(new_team_member, ctf_player_component)
+		return
+	if(ctf_game.team_valid_to_join(team, user))
+		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
+		var/client/new_team_member = user.client
+		spawn_team_member(new_team_member)
+
+	//if(user.mind && user.mind.current)  Todo: Check what this does
+	//		ctf_dust_old(user.mind.current)
+	
+
+/obj/machinery/ctf/spawner/Topic(href, href_list)
+	if(href_list["join"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
+
+/obj/machinery/ctf/spawner/proc/spawn_team_member(client/new_team_member, datum/component/ctf_player/ctf_player_component)
+	var/datum/outfit/chosen_class
+
+	if(ctf_gear.len == 1) //no choices to make
+		for(var/key in ctf_gear)
+			chosen_class = ctf_gear[key]
+
+	else //There's a choice to make, present a radial menu
+		var/list/display_classes = list()
+
+		for(var/key in ctf_gear)
+			var/datum/outfit/ctf/class = ctf_gear[key]
+			var/datum/radial_menu_choice/option = new
+			option.image  = image(icon = initial(class.icon), icon_state = initial(class.icon_state))
+			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
+			display_classes[key] = option
+
+		sort_list(display_classes)
+		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
+		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE)
+			return
+
+		chosen_class = ctf_gear[choice]
+
+	var/turf/spawn_point = pick(get_adjacent_open_turfs(get_turf(src)))
+	var/mob/living/carbon/human/player_mob = new(spawn_point)
+	new_team_member.prefs.safe_transfer_prefs_to(player_mob, is_antag = TRUE)
+	if(player_mob.dna.species.outfit_important_for_life)
+		player_mob.set_species(/datum/species/human)
+	player_mob.ckey = new_team_member.ckey
+	if(isnull(ctf_player_component))
+		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team)
+		ctf_game.add_player(team, player_mob.ckey, player_component)
+	else
+		player_mob.mind.TakeComponent(ctf_player_component)
+	player_mob.faction += team
+	player_mob.equipOutfit(chosen_class)
+	RegisterSignal(player_mob, COMSIG_PARENT_QDELETING, PROC_REF(ctf_qdelled_player)) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
+	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
+
+/obj/machinery/ctf/spawner/proc/ctf_qdelled_player(mob/living/body)
+	SIGNAL_HANDLER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /obj/item/ctf
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
@@ -669,7 +822,8 @@
 				break
 
 /proc/is_ctf_target(atom/target)
-	. = FALSE
+	return TRUE //Temp for testing
+/*	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
 	if(ishuman(target))
@@ -677,7 +831,7 @@
 		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 			if(H in CTF.spawned_mobs)
 				. = TRUE
-				break
+				break */
 
 #undef WHITE_TEAM
 #undef RED_TEAM

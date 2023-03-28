@@ -46,6 +46,9 @@
 
 /datum/minigames_menu/proc/ctf()
 	var/datum/ctf_panel/ctf_panel
+	var/datum/ctf_controller/game = GLOB.ctf_games["centcom"] //Attention maintainers, if namelessfairy PRs this and you see this tell them its still here, we already support multiple player CTF, this code cannot exist here, its just here for initial testing.
+	if(!game)
+		game = create_ctf_game("centcom") //TODO (IMPORTANT) MOVE THIS TO THE MAPLOADING SYSTEM, CTF NEEDS TO KNOW WHAT MAP ITS LOADING AND THATS THE ONLY AREA I CAN PUT IT TO MAKE THIS ACTUALLY PRODUCTIVE, THE VOTING DATUM IS SEPERATE AND WILL JUST HAVE TO STAY THAT WAY
 	if(!ctf_panel)
 		ctf_panel = new(src)
 	ctf_panel.ui_interact(usr)
