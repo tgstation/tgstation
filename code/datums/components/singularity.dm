@@ -6,6 +6,8 @@
 
 /// What's the /bloodthirsty subtype chance it'll go to its target?
 #define CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY 80
+/// what's the /bloodthirsty subtype chance it'll change targets to a closer one?
+#define CHANCE_TO_CHANGE_TARGET_BLOODTHIRSTY 20
 
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
@@ -346,8 +348,14 @@
 
 /datum/component/singularity/bloodthirsty/move()
 	var/atom/atom_parent = parent
-	if(target && !QDELETED(target) && target.z != atom_parent.z)
-		target = null
+	//handle current target
+	if(target && !QDELETED(target))
+		if(target.z != atom_parent.z)
+			target = null
+		var/living/potentially_closer = find_new_target()
+		if(potentially_closer != target && prob(20))
+			target = potentially_closer
+	//if we lost that target get a new one
 	if(!target || QDELETED(target))
 		target = find_new_target()
 		foreboding_nosebleed(target)

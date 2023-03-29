@@ -24,8 +24,8 @@
 		. += span_warning("Protected by dark matter, [src] seems to be immune to explosions for [DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity))].")
 	. += span_warning("<i>\"The most disturbing aspect of the singularity is its \
 	apparent attraction to living organisms. It seems to sense \
-	their presence and move towards them at a surprisingly fast speed.\
-	We have observed it consume several specimens of flora and fauna that\
+	their presence and move towards them at a surprisingly fast speed. \
+	We have observed it consume several specimens of flora and fauna that \
 	we have collected from this sector. The singularity does not seem \
 	to care for other inanimate objects or machines, but will consume \
 	them all the same. We have tried to communicate with it using various \

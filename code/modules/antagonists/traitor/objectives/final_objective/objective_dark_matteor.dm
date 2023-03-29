@@ -10,6 +10,14 @@
 	///checker on whether we have sent the satellites yet.
 	var/sent_satellites = FALSE
 
+/datum/traitor_objective/ultimate/dark_matteor/can_generate_objective(generating_for, list/possible_duplicates)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(SSmapping.is_planetary())
+		return FALSE //meteors can't spawn on planets
+	return TRUE
+
 /datum/traitor_objective/ultimate/dark_matteor/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
@@ -50,7 +58,7 @@
 	..()
 	for(var/i in 1 to 11)
 		new /obj/machinery/satellite/meteor_shield(src)
-	new /obj/item/card/emag(src)
+	new /obj/item/card/emag/meteor_shield_recalibrator(src)
 	new /obj/item/paper/dark_matteor_summoning(src)
 
 /obj/item/paper/dark_matteor_summoning
@@ -59,13 +67,17 @@
 		Summoning a dark matter meteor.<br>
 		<br>
 		<br>
-		Operative, this crate contains 10 meteor shield satellites stolen from NT’s supply lines. Your mission is to
-		deploy them in space near the station and recalibrate them with the emag. Be careful: you need a one-minute
+		Operative, this crate contains 10+1 spare meteor shield satellites stolen from NT’s supply lines. Your mission is to
+		deploy them in space near the station and recalibrate them with the provided emag. Be careful: you need a 30 second
 		cooldown between each hack, and NT will detect your interference after seven recalibrations. That means you
-		have at least 10 minutes of work and 3 minutes of resistance.<br>
+		have at least 5 minutes of work and 1 minute of resistance.<br>
 		<br>
 		This is a high-risk operation. You’ll need backup, fortification, and determination. The reward?
 		A spectacular dark matter singularity that will wipe out the station.<br>
 		<br>
 		<b>**Death to Nanotrasen.**</b>
 "}
+
+/obj/item/card/emag/meteor_shield_recalibrator
+	name = "cryptographic satellite recalibrator"
+	desc = "It's a cryptographic sequencer that has been tuned to recalibrate meteor shields quicker and with less risk of frying them."
