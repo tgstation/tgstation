@@ -60,11 +60,11 @@
 		list( //level 4
 			/datum/reagent/medicine/salglu_solution,
 			/datum/reagent/medicine/epinephrine,
-			/datum/reagent/acetaldehyde,
 			/datum/reagent/medicine/mine_salve,
+			/datum/reagent/medicine/c2/multiver,
+			/datum/reagent/fuel/oil,
 		),
 		list( //level 5
-			/datum/reagent/fuel/oil,
 			/datum/reagent/medicine/synaptizine,
 			/datum/reagent/medicine/mannitol,
 			/datum/reagent/drug/space_drugs,
@@ -77,6 +77,7 @@
 			/datum/reagent/medicine/antihol,
 		),
 		list( // level 7
+			/datum/reagent/acetaldehyde,
 			/datum/reagent/medicine/leporazine,
 			/datum/reagent/toxin/mindbreaker,
 			/datum/reagent/medicine/higadrite,
