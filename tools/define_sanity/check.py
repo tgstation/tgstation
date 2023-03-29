@@ -20,9 +20,9 @@ def post_error(define_name, file, github_error_style):
         print(red(f"- Failure: {define_name} is defined locally in {file} but not undefined locally!"))
 
 parent_directory = "code/**/*.dm"
+
 # This files/directories are expected to have "global" defines, so they must be exempt from this check.
 # Add directories as string here to automatically be exempt in case you have a non-complaint file name.
-# Any file pre-pended with a `_` is automatically exempt.
 excluded_files = [
     #  Wildcard directories, all files are expected to be exempt.
     "code/__DEFINES/*.dm",
@@ -32,8 +32,12 @@ excluded_files = [
     "code/modules/tgs/**/*.dm",
 ]
 
-define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
+# In addition to the previous directories, any file pre-pended with a `_` is automatically exempt.
+# What does this mean? Basically let's say you have a file named `code/modules/whatever/_example.dm`.
+# We scan every file name for that pre-pended `_` in "_example" and if it exists, we don't scan it for defines.
+
 file_determination_regex = re.compile(r"code(.+)?\\(.+).dm")
+define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
