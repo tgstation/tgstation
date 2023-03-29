@@ -68,3 +68,5 @@ if error_found:
         for string in strings_to_output:
             f.write(string)
     sys.exit(1)
+else:
+    print("No unhandled local defines found.")
