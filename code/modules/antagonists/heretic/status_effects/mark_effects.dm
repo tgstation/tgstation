@@ -237,6 +237,7 @@
 
 /datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
+	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
 	do_teleport(
 		owner,
 		get_turf(cosmic_diamond),

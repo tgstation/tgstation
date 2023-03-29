@@ -12,12 +12,12 @@
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	speed = -0.2
-	maxHealth = 3000
-	health = 3000
+	maxHealth = 3500
+	health = 3500
 
 	obj_damage = 400
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 35
+	melee_damage_upper = 35
 	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "ravages"

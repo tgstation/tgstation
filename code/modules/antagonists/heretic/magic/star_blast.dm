@@ -30,6 +30,8 @@
 	pixel_speed_multiplier = 0.2
 	/// Effect for when the ball hits something
 	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
+	/// The range at which people will get marked with a star mark.
+	var/star_mark_range = 3
 
 /obj/projectile/magic/star_ball/Initialize(mapload)
 	. = ..()
@@ -37,11 +39,16 @@
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/star_mark)
+	var/mob/living/cast_on = firer
+	for(var/mob/living/nearby_mob in range(star_mark_range, target))
+		if(cast_on != nearby_mob)
+			nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 
 /obj/projectile/magic/star_ball/Destroy()
 	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
-	new /obj/effect/forcefield/cosmic_field(get_turf(src))
+	for(var/turf/cast_turf as anything in get_turfs())
+		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	return ..()
+
+/obj/projectile/magic/star_ball/proc/get_turfs()
+	return list(get_turf(src), pick(get_step(src, NORTH), get_step(src, SOUTH)), pick(get_step(src, EAST), get_step(src, WEST)))

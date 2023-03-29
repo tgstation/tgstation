@@ -98,7 +98,7 @@
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
 	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
-		and creates a cosmic field at your feet. Targets which already have a star mark \
+		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
 		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
 		deals a bit of fire damage and damages the cells. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
@@ -111,8 +111,8 @@
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
-	desc = "Fires a projectile that moves very slowly and create a cosmic field on impact. \
-		Anyone hit by the projectile will recieve burn damage, a knockdown, and a star mark."
+	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
+		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "He didn't try, yet felt the call of the night's Creator."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
@@ -129,7 +129,8 @@
 	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
-		or if you attack someone already marked."
+		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
+		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "As he ascended to be a watcher, he needed to gather knowledge. \
 		He started to draw it at his home."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
@@ -140,13 +141,17 @@
 	var/datum/weakref/third_target
 	/// When this timer completes we reset our combo.
 	var/combo_timer
+	/// The duration of the combo.
+	var/combo_duration = 2 SECONDS
+	/// The hits we have on a mob with a mind.
+	var/combo_counter = 0
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
 		return
 	if(combo_timer)
 		deltimer(combo_timer)
-	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), 2 SECONDS, TIMER_STOPPABLE)
+	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	target.adjustFireLoss(4)
@@ -154,6 +159,8 @@
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
+	if(target.mind && !target.stat == DEAD)
+		combo_counter += 1
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
@@ -164,6 +171,12 @@
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			third_target_resolved.adjustFireLoss(20)
 			third_target_resolved.adjustCloneLoss(12)
+			if(combo_counter > 3)
+				target.apply_status_effect(/datum/status_effect/star_mark, source)
+				if(target.mind && !target.stat == DEAD)
+					increase_combo_duration()
+					if(combo_counter == 4)
+						source.AddElement(/datum/element/effect_trail/cosmic_trail)
 		third_target = second_target
 	second_target = WEAKREF(target)
 
@@ -171,9 +184,18 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
 	second_target = null
 	third_target = null
+	if(combo_counter > 3)
+		source.RemoveElement(/datum/element/effect_trail/cosmic_trail)
+	combo_duration = 2 SECONDS
+	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
 	if(combo_timer)
 		deltimer(combo_timer)
+
+/// Increases the combo duration.
+/datum/heretic_knowledge/blade_upgrade/cosmic/proc/increase_combo_duration()
+	if(combo_duration < 10)
+		combo_duration += 0.5 SECONDS
 
 /datum/heretic_knowledge/spell/cosmic_expansion
 	name = "Cosmic Expansion"

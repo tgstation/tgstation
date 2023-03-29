@@ -53,9 +53,13 @@
 		victim.remove_status_effect(/datum/status_effect/star_mark)
 	else
 		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
-	new /obj/effect/forcefield/cosmic_field(get_turf(caster))
+	for(var/turf/cast_turf as anything in get_turfs(victim))
+		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	start_beam(victim, caster)
 	return TRUE
+
+/datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
+	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
 
 /datum/action/cooldown/spell/touch/star_touch/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -160,7 +164,7 @@
 
 /// What to process when the beam is connected to a target
 /datum/action/cooldown/spell/touch/star_touch/proc/on_beam_tick(mob/living/target)
-	target.adjustFireLoss(2)
+	target.adjustFireLoss(3)
 	target.adjustCloneLoss(1)
 	return
 
