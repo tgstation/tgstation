@@ -1,102 +1,4 @@
 #define DEFAULT_METEOR_LIFETIME 1800
-#define MAP_EDGE_PAD 5
-
-GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths of seconds
-//set to at least 100 unless you want evarr ruining every round
-// This spelling mistake? Name? is older then git, I'm scared to touch it
-
-//Meteors probability of spawning during a given wave
-GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \
-						  /obj/effect/meteor/flaming=1, /obj/effect/meteor/irradiated=3, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=1, \
-						  /obj/effect/meteor/banana=1, /obj/effect/meteor/emp = 1)) //for normal meteor event
-
-GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/effect/meteor/big=8, /obj/effect/meteor/flaming=3, \
-						  /obj/effect/meteor/irradiated=3, /obj/effect/meteor/cluster=1, /obj/effect/meteor/carp=1, /obj/effect/meteor/bluespace=2, /obj/effect/meteor/emp = 2)) //for threatening meteor event
-
-GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
-						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/cluster=8, /obj/effect/meteor/tunguska=1, \
-						  /obj/effect/meteor/carp=2, /obj/effect/meteor/bluespace=10, /obj/effect/meteor/emp = 8)) //for catastrophic meteor event
-
-GLOBAL_LIST_INIT(meateors, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
-
-GLOBAL_LIST_INIT(meteors_dust, list(/obj/effect/meteor/dust=1)) //for space dust event
-
-GLOBAL_LIST_INIT(meteors_stray, list(/obj/effect/meteor/medium=15, /obj/effect/meteor/big=10, \
-						  /obj/effect/meteor/flaming=25, /obj/effect/meteor/irradiated=30, /obj/effect/meteor/carp=25, /obj/effect/meteor/bluespace=30, \
-						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
-						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
-
-GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect/meteor/dust=5)) //for sandstorm event
-
-///////////////////////////////
-//Meteor spawning global procs
-///////////////////////////////
-
-/proc/spawn_meteors(number = 10, list/meteor_types, direction)
-	for(var/i in 1 to number)
-		spawn_meteor(meteor_types, direction)
-
-/proc/spawn_meteor(list/meteor_types, direction)
-	if (SSmapping.is_planetary())
-		stack_trace("Tried to spawn meteors in a map which isn't in space.")
-		return // We're not going to find any space turfs here
-	var/turf/picked_start
-	var/turf/picked_goal
-	var/max_i = 10//number of tries to spawn meteor.
-	while(!isspaceturf(picked_start))
-		var/start_side
-		if(direction) //If a direction has been specified, we set start_side to it. Otherwise, pick randomly
-			start_side = direction
-		else
-			start_side = pick(GLOB.cardinals)
-		var/start_Z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
-		picked_start = spaceDebrisStartLoc(start_side, start_Z)
-		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
-		max_i--
-		if(max_i <= 0)
-			return
-	var/new_meteor = pick_weight(meteor_types)
-	new new_meteor(picked_start, picked_goal)
-
-/proc/spaceDebrisStartLoc(start_side, Z)
-	var/starty
-	var/startx
-	switch(start_side)
-		if(NORTH)
-			starty = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
-		if(EAST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
-			startx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD)
-		if(SOUTH)
-			starty = (TRANSITIONEDGE + MAP_EDGE_PAD)
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
-		if(WEST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
-			startx = (TRANSITIONEDGE + MAP_EDGE_PAD)
-	. = locate(startx, starty, Z)
-
-/proc/spaceDebrisFinishLoc(startSide, Z)
-	var/endy
-	var/endx
-	switch(startSide)
-		if(NORTH)
-			endy = (TRANSITIONEDGE + MAP_EDGE_PAD)
-			endx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
-		if(EAST)
-			endy = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
-			endx = (TRANSITIONEDGE + MAP_EDGE_PAD)
-		if(SOUTH)
-			endy = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
-			endx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
-		if(WEST)
-			endy = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
-			endx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD)
-	. = locate(endx, endy, Z)
-
-///////////////////////
-//The meteor effect
-//////////////////////
 
 /obj/effect/meteor
 	name = "\proper the concept of meteor"
@@ -552,12 +454,6 @@ GLOBAL_LIST_INIT(meteors_sandstorm, list(/obj/effect/meteor/sand=45, /obj/effect
 	if(prob(20))
 		explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, flash_range = 8, adminlog = FALSE)
 
-//////////////////////////
-//Spookoween meteors
-/////////////////////////
-
-GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
-
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
@@ -572,6 +468,5 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
-//////////////////////////
+
 #undef DEFAULT_METEOR_LIFETIME
-#undef MAP_EDGE_PAD
