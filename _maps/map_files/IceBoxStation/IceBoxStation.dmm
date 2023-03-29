@@ -3548,7 +3548,6 @@
 "bhK" = (
 /obj/structure/table,
 /obj/item/folder/blue,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "bhV" = (
@@ -21219,7 +21218,6 @@
 "gKk" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/safe/caps_spare/directional/east,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gKl" = (
@@ -31037,7 +31035,6 @@
 	pixel_y = 9
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/papercutter,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "jUr" = (
@@ -46941,7 +46938,6 @@
 /obj/structure/table,
 /obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oQg" = (

@@ -5238,7 +5238,6 @@
 /obj/structure/table/wood,
 /obj/item/hand_labeler,
 /obj/item/stack/package_wrap,
-/obj/item/papercutter,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "aCR" = (
@@ -20976,7 +20975,6 @@
 /obj/machinery/recharger,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/item/papercutter,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "fXQ" = (
@@ -50188,7 +50186,6 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qNA" = (
