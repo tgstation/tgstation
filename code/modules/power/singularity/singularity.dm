@@ -18,7 +18,8 @@
 	/// The singularity component itself.
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity_component
-
+	/// type of singularity component made
+	var/singularity_component_type = /datum/component/singularity
 	///Current singularity size, from 1 to 6
 	var/current_size = 1
 	///Current allowed size for the singulo
@@ -472,16 +473,16 @@
 
 /obj/singularity/dark_matteor
 	name = "dark matter singularity"
-	desc = "<i>\"I have never seen anything like it. \
-		A single point of light in the abyss, spinning with an eerie rhythm. \
-		It looks like a tornado, moving at incredible speeds, \
-		warping the fabric of space and time. It is both beautiful and horrifying, \
-		a cosmic paradox that defies all logic. I can't take my eyes off it, even though \
-		I know it could devour us all in an instant. What have I created!?\"</i> - Chief Engineer Ship Chafer"
+	desc = "<i>\"It is both beautiful and horrifying, \
+		a cosmic paradox that defies all logic. I can't \
+		take my eyes off it, even though I know it could \
+		devour us all in an instant.\
+		\"</i><br>- Chief Engineer Ship Chafer"
 	ghost_notification_message = "IT'S HERE"
 	icon_state = "dark_matter_s1"
 	singularity_icon_variant = "dark_matter"
 	maximum_stage = STAGE_FOUR
+	singularity_component_type = /datum/component/singularity/bloodthirsty
 	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
 	COOLDOWN_DECLARE(initial_explosion_immunity)
 
@@ -493,6 +494,14 @@
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
 		. += span_warning("Protected by dark matter, [src] seems to be immune to explosions for [DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity))].")
+	. += span_warning("<i>\"The most disturbing aspect of the singularity is its \
+	apparent attraction to living organisms. It seems to sense \
+	their presence and move towards them at a surprisingly fast speed.\
+	We have observed it consume several specimens of flora and fauna that\
+	we have collected from this sector. The singularity does not seem \
+	to care for other inanimate objects or machines, but will consume \
+	them all the same. We have tried to communicate with it using various \
+	methods, but received no response.\"</i><br>- Research Director Raia Moentgen")
 
 /obj/singularity/dark_matteor/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
