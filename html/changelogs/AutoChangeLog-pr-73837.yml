@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Firing pin swapping's 2 balloon alerts have been replaced with a single more readable one."
-  - admin: "Admins can now edit a pin_removable var on firing pins to render them unremovable from the weapons they're installed in."

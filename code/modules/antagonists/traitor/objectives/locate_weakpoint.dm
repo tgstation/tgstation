@@ -3,7 +3,7 @@
 	objectives = list(
 		/datum/traitor_objective/locate_weakpoint = 1,
 	)
-	weight = OBJECTIVE_WEIGHT_TINY
+	weight = OBJECTIVE_WEIGHT_UNLIKELY
 
 /datum/traitor_objective/locate_weakpoint
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."
@@ -245,7 +245,7 @@
 	if(!user.mind)
 		return
 
-	if(!user.mind.has_antag_datum(/datum/antagonist/traitor))
+	if(!IS_TRAITOR(user))
 		to_chat(user, span_warning("You can't seem to find a way to detonate the charge."))
 		return
 
