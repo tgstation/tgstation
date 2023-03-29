@@ -40,22 +40,9 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
-	// Take a snapshot of what the brain was formerly contained in.
-	// We do some special logic after the parent call if the brain_holder was a head bodypart.
-	var/brain_holder = loc
-
 	. = ..()
 	if(!.)
 		return
-
-	// We're doing a transfer from a head to a mob. This is usually stuff like reattaching dismembered/amputated heads.
-	if(istype(brain_holder, /obj/item/bodypart/head))
-		var/obj/item/bodypart/head/last_head = loc
-		if(last_head.brainmob)
-			brainmob = last_head.brainmob
-			last_head.brainmob = null
-			brainmob.container = null
-			brainmob.forceMove(src)
 
 	name = initial(name)
 
@@ -100,6 +87,20 @@
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	brain_owner.update_body_parts()
+
+/obj/item/organ/internal/brain/on_insert(mob/living/carbon/organ_owner, special)
+	// Are we inserting into a new mob from a head?
+	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
+	// This is usually stuff like reattaching dismembered/amputated heads.
+	if(istype(loc, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/brain_holder = loc
+		if(brain_holder.brainmob)
+			brainmob = brain_holder.brainmob
+			brain_holder.brainmob = null
+			brainmob.container = null
+			brainmob.forceMove(src)
+
+	return ..()
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
