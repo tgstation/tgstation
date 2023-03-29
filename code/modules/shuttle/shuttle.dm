@@ -1161,4 +1161,6 @@
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 
+#ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT
+#endif

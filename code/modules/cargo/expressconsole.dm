@@ -1,11 +1,3 @@
-#define MAX_EMAG_ROCKETS 5
-#define BEACON_COST 500
-#define SP_LINKED 1
-#define SP_READY 2
-#define SP_LAUNCH 3
-#define SP_UNLINK 4
-#define SP_UNREADY 5
-
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package \
@@ -231,10 +223,3 @@
 							update_appearance()
 							CHECK_TICK
 
-#undef MAX_EMAG_ROCKETS
-#undef BEACON_COST
-#undef SP_LINKED
-#undef SP_READY
-#undef SP_LAUNCH
-#undef SP_UNLINK
-#undef SP_UNREADY
