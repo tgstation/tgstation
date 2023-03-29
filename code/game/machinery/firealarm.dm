@@ -5,15 +5,15 @@
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building fire alarms."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/firealarm.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
-	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
-	icon = 'icons/obj/monitors.dmi'
+	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
+	icon = 'icons/obj/firealarm.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
@@ -23,9 +23,9 @@
 	power_channel = AREA_USAGE_ENVIRON
 	resistance_flags = FIRE_PROOF
 
-	light_power = 0
-	light_range = 3
-	light_color = COLOR_VIVID_RED
+	light_power = 1
+	light_range = 1.6
+	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
@@ -91,6 +91,7 @@
 		return
 	var/area/our_area = get_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
+	handle_fire(our_area, our_area.fire)
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
 	//were already registered to an area. exit from here first before entering into an new area
@@ -138,9 +139,9 @@
 /obj/machinery/firealarm/update_appearance(updates)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
-		set_light(l_power = 2)
+		set_light(l_power = 3)
 	else
-		set_light(l_power = 0)
+		set_light(l_power = 1)
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -157,28 +158,46 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	. += mutable_appearance(icon, "fire_overlay")
-	if(is_station_level(z))
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]", src, alpha = src.alpha)
-	else
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
-		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", src, alpha = src.alpha)
+	if(panel_open)
+		return
 
-	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
-			. += mutable_appearance(icon, "fire_off")
-			. += emissive_appearance(icon, "fire_off", src, alpha = src.alpha)
-	else if(obj_flags & EMAGGED)
-		. += mutable_appearance(icon, "fire_emagged")
-		. += emissive_appearance(icon, "fire_emagged", src, alpha = src.alpha)
-	else
-		. += mutable_appearance(icon, "fire_on")
-		. += emissive_appearance(icon, "fire_on", src, alpha = src.alpha)
+	if(obj_flags & EMAGGED)
+		. += mutable_appearance(icon, "fire_emag")
+		. += emissive_appearance(icon, "fire_emag_e", src, alpha = src.alpha)
+		set_light(l_color = LIGHT_COLOR_BLUE)
 
-	if(!panel_open && my_area?.fire_detect && my_area?.fire) //It just looks horrible with the panel open
-		. += mutable_appearance(icon, "fire_detected")
-		. += emissive_appearance(icon, "fire_detected", src, alpha = src.alpha) //Pain
+	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
+		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
+			if(is_station_level(z))
+				var/current_level = SSsecurity_level.get_current_level_as_number()
+				. += mutable_appearance(icon, "fire_[current_level]")
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
+				switch(current_level)
+					if(SEC_LEVEL_GREEN)
+						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
+					if(SEC_LEVEL_BLUE)
+						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
+					if(SEC_LEVEL_RED)
+						set_light(l_color = LIGHT_COLOR_FLARE)
+					if(SEC_LEVEL_DELTA)
+						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+			else
+				. += mutable_appearance(icon, "fire_offstation")
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
+				set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
+		else
+			. += mutable_appearance(icon, "fire_disabled")
+			. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
+			set_light(l_color = COLOR_WHITE)
+
+	else if(my_area?.fire_detect && my_area?.fire)
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
+		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+	else
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
+		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -195,8 +214,8 @@
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
-		user.visible_message(span_warning("Sparks fly out of [src]!"),
-							span_notice("You override [src], disabling the speaker."))
+		user.visible_message(span_warning("Sparks fly out of [src]!"))
+		user.balloon_alert(user, "speaker disabled!")
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
@@ -231,6 +250,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
+		balloon_alert(user, "triggered alarm!")
 		user.log_message("triggered a fire alarm.", LOG_GAME)
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
@@ -251,6 +271,7 @@
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.crack_open()
 	if(user)
+		balloon_alert(user, "reset alarm")
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
@@ -428,9 +449,13 @@
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
+		if(is_station_level(z))
+			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
 		. += "<b>Right-Click</b> to reset firelocks in this area."
 	else
+		if(is_station_level(z))
+			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
 

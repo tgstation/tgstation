@@ -892,3 +892,9 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	alpha = 0
+
+#undef LAUNCH_ALL
+#undef LAUNCH_ORDERED
+#undef LAUNCH_RANDOM
+#undef TAB_BAY
+#undef TAB_POD

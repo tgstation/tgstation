@@ -447,3 +447,7 @@
 	name = "dirty foam"
 	allow_duplicate_results = FALSE
 	result_type = /obj/effect/decal/cleanable/dirt
+
+#undef MINIMUM_FOAM_DILUTION_RANGE
+#undef MINIMUM_FOAM_DILUTION
+#undef FOAM_REAGENT_SCALE

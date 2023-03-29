@@ -272,6 +272,6 @@
 
 /obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
 	. = ..()
-	create_reagents(30, INJECTABLE|OPENCONTAINER)
+	create_reagents(SOUP_SERVING_SIZE + 5, INJECTABLE|OPENCONTAINER)
 
 #undef PLASTIC_BREAK_PROBABILITY

@@ -42,9 +42,9 @@
 						accept_laws = FALSE
 					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
 			if(GLASS_CORE)
-				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !core_mmi?.brainmob?.suiciding ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 			if(AI_READY_CORE)
-				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !core_mmi?.brainmob?.suiciding ? " the neural interface can be <b>screwed</b> in." : "."]")
+				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 /obj/structure/ai_core/handle_atom_del(atom/A)
 	if(A == circuit)
@@ -144,7 +144,7 @@
 		if(!core_mmi)
 			balloon_alert(user, "no brain installed!")
 			return TOOL_ACT_TOOLTYPE_SUCCESS
-		else if(!core_mmi.brainmob?.mind || core_mmi.brainmob?.suiciding)
+		else if(!core_mmi.brainmob?.mind || suicide_check())
 			balloon_alert(user, "brain is inactive!")
 			return TOOL_ACT_TOOLTYPE_SUCCESS
 		else
@@ -255,7 +255,7 @@
 					if(!core_mmi)
 						balloon_alert(user, "no brain installed!")
 						return
-					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || core_mmi.brainmob?.suiciding)
+					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
 						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
 						return
 					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
@@ -271,7 +271,7 @@
 						var/install = tgui_alert(user, "This [AI_CORE_BRAIN(M)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(M)]", list("Yes", "No"))
 						if(install != "Yes")
 							return
-						if(M.brainmob?.suiciding)
+						if(M.brainmob && HAS_TRAIT(M.brainmob, TRAIT_SUICIDED))
 							to_chat(user, span_warning("[M.name] is completely useless!"))
 							return
 						if(!user.transferItemToLoc(M, src))
@@ -312,7 +312,7 @@
 					return
 
 				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					if(core_mmi?.brainmob?.suiciding)
+					if(suicide_check())
 						to_chat(user, span_warning("The brain installed is completely useless."))
 						return
 					P.play_tool_sound(src)
@@ -338,7 +338,7 @@
 
 /obj/structure/ai_core/proc/ai_structure_to_mob()
 	var/mob/living/brain/the_brainmob = core_mmi.brainmob
-	if(!the_brainmob.mind || the_brainmob.suiciding)
+	if(!the_brainmob.mind || suicide_check())
 		return FALSE
 	the_brainmob.mind.remove_antags_for_borging()
 	if(!the_brainmob.mind.has_ever_been_ai)
@@ -394,6 +394,12 @@
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	qdel(src)
 
+/// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
+/obj/structure/ai_core/proc/suicide_check()
+	if(isnull(core_mmi) || isnull(core_mmi.brainmob))
+		return FALSE
+	return HAS_TRAIT(core_mmi.brainmob, TRAIT_SUICIDED)
+
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
 If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
@@ -416,7 +422,7 @@ That prevents a few funky behaviors.
 		if(core_mmi.brainmob.mind)
 			to_chat(user, span_warning("[src] already contains an active mind!"))
 			return
-		else if(core_mmi.brainmob.suiciding)
+		else if(suicide_check())
 			to_chat(user, span_warning("[AI_CORE_BRAIN(core_mmi)] installed in [src] is completely useless!"))
 			return
 	//Transferring a carded AI to a core.

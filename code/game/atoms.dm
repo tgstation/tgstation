@@ -1789,6 +1789,11 @@
  *
  * micro-optimized to hell because this proc is very hot, being called several times per movement every movement.
  *
+ * HEY JACKASS, LISTEN
+ * IF YOU ADD SOMETHING TO THIS PROC, MAKE SURE /mob/living ACCOUNTS FOR IT
+ * Living mobs treat gravity in an event based manner. We've decomposed this proc into different checks
+ * for them to use. If you add more to it, make sure you do that, or things will behave strangely
+ *
  * Gravity situations:
  * * No gravity if you're not in a turf
  * * No gravity if this atom is in is a space turf
@@ -1819,7 +1824,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level["[gravity_turf.z]"] || turf_area.has_gravity)
+	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics

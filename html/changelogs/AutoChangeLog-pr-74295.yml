@@ -1,0 +1,4 @@
+author: "flowercuco"
+delete-after: True
+changes:
+  - bugfix: "admin respawn character verb works properly"
