@@ -159,6 +159,7 @@
 	name = "dead grass patch"
 	desc = "It turns out grass doesn't grow very well in hell."
 	icon_state = "sand"
+	broken = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/grass/lavaland/spawniconchange()
