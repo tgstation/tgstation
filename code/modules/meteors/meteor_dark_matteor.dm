@@ -7,7 +7,7 @@
 	hitpwr = EXPLODE_DEVASTATE
 	heavy = TRUE
 	meteorsound = 'sound/effects/curse1.ogg'
-	meteordrop = list(/obj/singularity/dark_matteor) //what the FUCK
+	meteordrop = list(/obj/singularity/dark_matter) //what the FUCK
 	dropamt = 1
 	threat = 100
 	signature = "dark matter"

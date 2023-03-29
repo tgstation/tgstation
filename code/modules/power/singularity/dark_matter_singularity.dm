@@ -1,5 +1,5 @@
 /// This type of singularity cannot grow as big, but it constantly hunts down living targets.
-/obj/singularity/dark_matteor
+/obj/singularity/dark_matter
 	name = "dark matter singularity"
 	desc = "<i>\"It is both beautiful and horrifying, \
 		a cosmic paradox that defies all logic. I can't \
@@ -14,11 +14,11 @@
 	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
 	COOLDOWN_DECLARE(initial_explosion_immunity)
 
-/obj/singularity/dark_matteor/Initialize(mapload, starting_energy = 250)
+/obj/singularity/dark_matter/Initialize(mapload, starting_energy = 250)
 	. = ..()
 	COOLDOWN_START(src, initial_explosion_immunity, 5 SECONDS)
 
-/obj/singularity/dark_matteor/examine(mob/user)
+/obj/singularity/dark_matter/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
 		. += span_warning("Protected by dark matter, [src] seems to be immune to explosions for [DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity))].")
@@ -31,7 +31,7 @@
 	them all the same. We have tried to communicate with it using various \
 	methods, but received no response.\"</i><br>- Research Director Raia Moentgen")
 
-/obj/singularity/dark_matteor/ex_act(severity, target)
+/obj/singularity/dark_matter/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
 		return
 	return ..()

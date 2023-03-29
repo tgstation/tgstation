@@ -21,10 +21,10 @@
 			toggle(text2num(params["id"]))
 			. = TRUE
 
-/obj/machinery/computer/sat_control/proc/toggle(id)
+/obj/machinery/computer/sat_control/proc/toggle(toggled_id)
 	var/turf/current_turf = get_turf(src)
-	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
+	for(var/obj/machinery/satellite/satellite in GLOB.machines)
+		if(satellite.id == toggled_id && is_valid_z_level(get_turf(S), current_turf))
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()

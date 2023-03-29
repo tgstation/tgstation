@@ -9,12 +9,14 @@
 	use_power = NO_POWER_USE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
-	var/static/gid = 0
+	/// global counter of IDs
+	var/static/global_id = 0
+	/// id number for this satellite
 	var/id = 0
 
 /obj/machinery/satellite/Initialize(mapload)
 	. = ..()
-	id = gid++
+	id = global_id++
 
 /obj/machinery/satellite/Destroy()
 	if(active)
