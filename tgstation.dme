@@ -4338,6 +4338,7 @@
 #include "code\modules\power\lighting\light_wallframes.dm"
 #include "code\modules\power\singularity\boh_tear.dm"
 #include "code\modules\power\singularity\containment_field.dm"
+#include "code\modules\power\singularity\dark_matter_singularity.dm"
 #include "code\modules\power\singularity\emitter.dm"
 #include "code\modules\power\singularity\field_generator.dm"
 #include "code\modules\power\singularity\narsie.dm"

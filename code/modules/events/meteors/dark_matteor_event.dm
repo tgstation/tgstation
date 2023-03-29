@@ -11,10 +11,10 @@
 /datum/round_event/dark_matteor
 	fakeable = FALSE //Already faked by meteors that miss. Please, god, please miss
 
-/datum/round_event/stray_meteor/start()
+/datum/round_event/dark_matteor/start()
 	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1))
 
-/datum/round_event/stray_meteor/announce(fake)
+/datum/round_event/dark_matteor/announce(fake)
 	SSsecurity_level.set_level(SEC_LEVEL_RED)
 	priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/effects/curse1.ogg')
 

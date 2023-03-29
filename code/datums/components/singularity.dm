@@ -380,7 +380,7 @@
 			head.adjustBleedStacks(5)
 			carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_notice("You get a nosebleed."))
 			return
-	to_chat(target, span_warning("You feel an sharp pain inside you for just a moment."))
+	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
 #undef CHANCE_TO_MOVE_TO_TARGET
 #undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY
