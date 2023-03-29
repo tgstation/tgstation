@@ -1250,7 +1250,7 @@
 /area/ruin/space/has_grav/the_outlet/storefront)
 "DC" = (
 /obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/the_outlet/chemicals_test,
+/obj/item/paper/fluff/ruins/the_outlet/tanners_steps,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "DQ" = (
