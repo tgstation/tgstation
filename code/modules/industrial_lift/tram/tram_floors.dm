@@ -76,6 +76,7 @@
 		return FALSE
 	if(approach_distance < 0)
 		return FALSE
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(
 		span_hear("You hear an electric crackle when you step on the plate...")
 	)
