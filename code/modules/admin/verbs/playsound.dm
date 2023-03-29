@@ -71,12 +71,12 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
-/proc/web_sound(mob/usr, input)
+/proc/web_sound(mob/user, input)
 	if(!check_rights(R_SOUND))
 		return
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
-		to_chat(usr, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
+		to_chat(user, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 	var/web_sound_url = ""
 	var/stop_web_sounds = FALSE
@@ -87,15 +87,15 @@
 		var/stdout = output[SHELLEO_STDOUT]
 		var/stderr = output[SHELLEO_STDERR]
 		if(errorlevel)
-			to_chat(usr, span_boldwarning("Youtube-dl URL retrieval FAILED:"), confidential = TRUE)
-			to_chat(usr, span_warning("[stderr]"), confidential = TRUE)
+			to_chat(user, span_boldwarning("Youtube-dl URL retrieval FAILED:"), confidential = TRUE)
+			to_chat(user, span_warning("[stderr]"), confidential = TRUE)
 			return
 		var/list/data
 		try
 			data = json_decode(stdout)
 		catch(var/exception/e)
-			to_chat(usr, span_boldwarning("Youtube-dl JSON parsing FAILED:"), confidential = TRUE)
-			to_chat(usr, span_warning("[e]: [stdout]"), confidential = TRUE)
+			to_chat(user, span_boldwarning("Youtube-dl JSON parsing FAILED:"), confidential = TRUE)
+			to_chat(user, span_warning("[e]: [stdout]"), confidential = TRUE)
 			return
 		if (data["url"])
 			web_sound_url = data["url"]
@@ -110,9 +110,9 @@
 		music_extra_data["album"] = data["album"]
 		var/duration = data["duration"] * 1 SECONDS
 		if (duration > 10 MINUTES)
-			if((tgui_alert(usr, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel")) != "Yes"))
+			if((tgui_alert(user, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning!", list("No", "Yes", "Cancel")) != "Yes"))
 				return
-		var/res = tgui_alert(usr, "Show the title of and link to this song to the players?\n[title]", "Show Info?", list("Yes", "No", "Cancel"))
+		var/res = tgui_alert(user, "Show the title of and link to this song to the players?\n[title]", "Show Info?", list("Yes", "No", "Cancel"))
 		switch(res)
 			if("Yes")
 				music_extra_data["title"] = data["title"]
@@ -124,31 +124,31 @@
 				music_extra_data["album"] = "Song Album Hidden"
 			if("Cancel", null)
 				return
-		var/anon = tgui_alert(usr, "Display who played the song?", "Credit Yourself?", list("Yes", "No", "Cancel"))
+		var/anon = tgui_alert(user, "Display who played the song?", "Credit Yourself?", list("Yes", "No", "Cancel"))
 		switch(anon)
 			if("Yes")
 				if(res == "Yes")
-					to_chat(world, span_boldannounce("[usr] played: [webpage_url]"), confidential = TRUE)
+					to_chat(world, span_boldannounce("[user] played: [webpage_url]"), confidential = TRUE)
 				else
-					to_chat(world, span_boldannounce("[usr] played some music"), confidential = TRUE)
+					to_chat(world, span_boldannounce("[user] played some music"), confidential = TRUE)
 			if("No")
 				if(res == "Yes")
 					to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 			if("Cancel", null)
 				return
-		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[usr.ckey]", "[input]"))
-		log_admin("[key_name(usr)] played web sound: [input]")
-		message_admins("[key_name(usr)] played web sound: [input]")
+		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[user.ckey]", "[input]"))
+		log_admin("[key_name(user)] played web sound: [input]")
+		message_admins("[key_name(user)] played web sound: [input]")
 	else
 		//pressed ok with blank
-		log_admin("[key_name(usr)] stopped web sounds.")
+		log_admin("[key_name(user)] stopped web sounds.")
 
-		message_admins("[key_name(usr)] stopped web sounds.")
+		message_admins("[key_name(user)] stopped web sounds.")
 		web_sound_url = null
 		stop_web_sounds = TRUE
 	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
-		tgui_alert(usr, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
-		to_chat(usr, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
+		tgui_alert(user, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
+		to_chat(user, span_boldwarning("BLOCKED: Content URL not using HTTP(S) Protocol!"), confidential = TRUE)
 
 		return
 	if(web_sound_url || stop_web_sounds)
