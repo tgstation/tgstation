@@ -188,14 +188,14 @@
 /obj/item/gun/energy/laser/thermal/inferno //the magma gun
 	name = "inferno pistol"
 	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. \
-			While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold."
+		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold."
 	icon_state = "infernopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
 
 /obj/item/gun/energy/laser/thermal/cryo //the ice gun
 	name = "cryo pistol"
 	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. \
-			While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot."
+		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
