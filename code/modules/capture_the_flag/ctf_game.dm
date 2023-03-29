@@ -84,8 +84,7 @@
 		if(user.client && user.client.holder)
 			var/response = tgui_alert(user, "Enable this CTF game?", "CTF", list("Yes", "No"))
 			if(response == "Yes")
-				ctf_game.start_ctf()
-				//Figure out what toggle_id_ctf() does and then do it here
+				toggle_id_ctf(user, game_id)
 			return
 
 		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
@@ -363,69 +362,6 @@
 /obj/machinery/ctf/control_point/proc/clear_point()
 	controlling_team = null
 	icon_state = "dominator"
-
-
-
-#define CTF_LOADING_UNLOADED 0
-#define CTF_LOADING_LOADING 1
-#define CTF_LOADING_LOADED 2
-
-/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE) //Todo, figure out what on earth this actually does
-	var/static/loading = CTF_LOADING_UNLOADED
-	if(unload == TRUE)
-		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
-		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
-		if(loading == CTF_LOADING_UNLOADED)
-			to_chat(user, span_warning("CTF cannot be unloaded if it was not loaded in the first place"))
-			return
-		to_chat(user, span_warning("CTF is being unloaded"))
-		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-			CTF.unload()
-		log_admin("[key_name_admin(user)] has unloaded CTF.")
-		message_admins("[key_name_admin(user)] has unloaded CTF.")
-		loading = CTF_LOADING_UNLOADED
-		return
-	switch (loading)
-		if (CTF_LOADING_UNLOADED)
-			if (isnull(GLOB.ctf_spawner))
-				to_chat(user, span_boldwarning("Couldn't find a CTF spawner. Call a maintainer!"))
-				return
-
-			to_chat(user, span_notice("Loading CTF..."))
-
-			loading = CTF_LOADING_LOADING
-			if(!GLOB.ctf_spawner.load_map(user))
-				to_chat(user, span_warning("CTF loading was cancelled"))
-				loading = CTF_LOADING_UNLOADED
-				return
-			loading = CTF_LOADING_LOADED
-		if (CTF_LOADING_LOADING)
-			to_chat(user, span_warning("CTF is loading!"))
-
-			return
-
-	var/ctf_enabled = FALSE
-	var/area/A
-	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-		if(activated_id != CTF.game_id)
-			continue
-		ctf_enabled = CTF.toggle_ctf()
-		A = get_area(CTF)
-	for(var/obj/machinery/power/emitter/E in A)
-		E.active = ctf_enabled
-	if(user)
-		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
-	else if(automated)
-		message_admins("CTF has finished a round and automatically restarted.")
-		notify_ghosts("CTF has automatically restarted after a round finished in [A]!",'sound/effects/ghost2.ogg')
-	else
-		message_admins("The players have spoken! Voting has enabled CTF!")
-	if(!automated)
-		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [A]!",'sound/effects/ghost2.ogg')
-
-#undef CTF_LOADING_UNLOADED
-#undef CTF_LOADING_LOADING
-#undef CTF_LOADING_LOADED
 
 /obj/machinery/capture_the_flag //Todo, purge this code from the codebase and my memories
 	name = "CTF Controller"
@@ -800,6 +736,62 @@
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
 	flags_1 = NODECONSTRUCT_1
+
+#define CTF_LOADING_UNLOADED 0
+#define CTF_LOADING_LOADING 1
+#define CTF_LOADING_LOADED 2
+
+/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
+	var/static/loading = CTF_LOADING_UNLOADED
+	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
+	if(unload == TRUE)
+		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
+		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
+		if(loading == CTF_LOADING_UNLOADED)
+			to_chat(user, span_warning("CTF cannot be unloaded if it was not loaded in the first place"))
+			return
+		to_chat(user, span_warning("CTF is being unloaded"))
+		ctf_controller.unload_ctf()
+		log_admin("[key_name_admin(user)] has unloaded CTF.")
+		message_admins("[key_name_admin(user)] has unloaded CTF.")
+		loading = CTF_LOADING_UNLOADED
+		return
+	switch (loading)
+		if (CTF_LOADING_UNLOADED)
+			if (isnull(GLOB.ctf_spawner))
+				to_chat(user, span_boldwarning("Couldn't find a CTF spawner. Call a maintainer!"))
+				return
+
+			to_chat(user, span_notice("Loading CTF..."))
+
+			loading = CTF_LOADING_LOADING
+			if(!GLOB.ctf_spawner.load_map(user))
+				to_chat(user, span_warning("CTF loading was cancelled"))
+				loading = CTF_LOADING_UNLOADED
+				return
+			loading = CTF_LOADING_LOADED
+		if (CTF_LOADING_LOADING)
+			to_chat(user, span_warning("CTF is loading!"))
+
+			return
+
+	var/ctf_enabled = FALSE
+	ctf_enabled = ctf_controller.toggle_ctf()
+	for(var/obj/machinery/power/emitter/emitter in ctf_area)
+		emitter.active = ctf_enabled
+	if(user)
+		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
+	else if(automated)
+		message_admins("CTF has finished a round and automatically restarted.")
+		notify_ghosts("CTF has automatically restarted after a round finished in [ctf_area]!",'sound/effects/ghost2.ogg')
+	else
+		message_admins("The players have spoken! Voting has enabled CTF!")
+	if(!automated)
+		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [ctf_area]!",'sound/effects/ghost2.ogg')
+
+#undef CTF_LOADING_UNLOADED
+#undef CTF_LOADING_LOADING
+#undef CTF_LOADING_LOADED
 
 /proc/is_ctf_target(atom/target)
 	. = FALSE

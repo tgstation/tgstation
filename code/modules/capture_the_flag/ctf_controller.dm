@@ -18,6 +18,14 @@
 	GLOB.ctf_games[game_id] = null
 	return ..()
 
+/datum/ctf_controller/proc/toggle_ctf()
+	if(!ctf_enabled)
+		start_ctf()
+		. = TRUE
+	else
+		stop_ctf()
+		. = FALSE
+
 /datum/ctf_controller/proc/start_ctf()
 	ctf_enabled = TRUE
 	for(var/team in teams)
@@ -31,6 +39,12 @@
 	respawn_barricades()
 	for(var/datum/ctf_team/team in teams)
 		team.reset_team()
+
+/datum/ctf_controller/proc/unload_ctf()
+	if(game_id != CTF_GHOST_CTF_GAME_ID)
+		return //At present we only support unloading standard centcom ctf, if we intend to support ctf unloading elsewhere then this proc will need to be ammended.
+	stop_ctf()
+	new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
 /datum/ctf_controller/proc/add_team(obj/machinery/ctf/spawner/spawner)
 	if(!isnull(teams[spawner.team]))
