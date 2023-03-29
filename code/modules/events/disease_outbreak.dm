@@ -143,7 +143,7 @@
 	category = EVENT_CATEGORY_HEALTH
 	weight = 15
 	min_players = 40 // To avoid shafting lowpop
-	earliest_start = 15 MINUTES // give the viro a chance
+	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
