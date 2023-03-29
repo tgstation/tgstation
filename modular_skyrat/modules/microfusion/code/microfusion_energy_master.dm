@@ -315,65 +315,15 @@
 
 // To maintain modularity, I am moving this proc override here.
 /obj/item/gun/microfusion/fire_gun(atom/target, mob/living/user, flag, params)
-	if(QDELETED(target))
-		return
-	if(firing_burst)
-		return
-	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
-			return
-		if(!ismob(target) || user.combat_mode) //melee attack
-			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-		if(iscarbon(target))
-			var/mob/living/carbon/carbon = target
-			for(var/i in carbon.all_wounds)
-				var/datum/wound/W = i
-				if(W.try_treating(src, user))
-					return // another coward cured!
 
-	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
-		var/mob/living/living = user
-		if(!can_trigger_gun(living))
-			return
-	if(flag)
-		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-			handle_suicide(user, target, params)
-			return
-
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
-		shoot_with_empty_chamber(user)
-		return
-
-	if(check_botched(user))
-		return
-
-	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
-	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
-		to_chat(user, span_warning("You need two hands to fire [src]!"))
-		return
-
+	// check to see if the emitter prevents us from firing before anything else
 	var/attempted_shot = process_emitter()
 	if(attempted_shot != SHOT_SUCCESS)
 		if(attempted_shot)
 			to_chat(user, span_danger(attempted_shot))
 		return
 
-	//DUAL (or more!) WIELDING
-	var/bonus_spread = 0
-	var/loop_counter = 0
-	if(ishuman(user) && user.combat_mode)
-		var/mob/living/carbon/human/H = user
-		for(var/obj/item/gun/gun in H.held_items)
-			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
-				continue
-			else if(gun.can_trigger_gun(user))
-				bonus_spread += dual_wield_spread
-				loop_counter++
-				addtimer(CALLBACK(gun, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
-
-	return process_fire(target, user, TRUE, params, null, bonus_spread)
+	. = ..()
 
 // To maintain modularity, I am moving this proc override here.
 /obj/item/gun/microfusion/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
