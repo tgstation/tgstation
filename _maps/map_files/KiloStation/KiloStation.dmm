@@ -5182,23 +5182,23 @@
 /obj/structure/flora/bush/ferny/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bPP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bPR" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bPX" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bPY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -5212,7 +5212,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bQb" = (
 /obj/structure/flora/bush/leavy/style_random,
 /obj/structure/flora/bush/ferny/style_random,
@@ -5384,7 +5384,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -5392,21 +5392,21 @@
 /obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -5427,7 +5427,7 @@
 /obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUx" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/camera/directional/east{
@@ -5450,7 +5450,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -5458,7 +5458,7 @@
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -5466,7 +5466,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUE" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -5475,19 +5475,19 @@
 /obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUF" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "bUJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5500,13 +5500,13 @@
 /area/station/security/evidence)
 "bUN" = (
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "bUO" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "bUV" = (
 /obj/structure/cable,
 /obj/structure/chair,
@@ -5813,6 +5813,10 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/ai_monitored/security/armory)
+"caP" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/entry)
 "caS" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -6392,7 +6396,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "cij" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -6909,7 +6913,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "cov" = (
 /obj/structure/disposaloutlet{
 	dir = 8
@@ -7083,7 +7087,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "crI" = (
 /obj/machinery/door/window/left/directional/north{
 	req_access = list("chapel_office")
@@ -7100,7 +7104,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "crR" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -7200,7 +7204,7 @@
 "ctu" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "ctv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
@@ -17137,7 +17141,7 @@
 /obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "fIu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -27944,6 +27948,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"iVL" = (
+/turf/closed/mineral/random/labormineral,
+/area/station/hallway/secondary/entry)
 "iVO" = (
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -31328,6 +31335,9 @@
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"kdH" = (
+/turf/open/misc/asteroid/airless,
+/area/station/hallway/secondary/entry)
 "kdO" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/coffee,
@@ -36462,7 +36472,7 @@
 	width = 7
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/station/hallway/secondary/entry)
 "lOG" = (
 /turf/closed/wall/rust,
 /area/station/service/chapel/monastery)
@@ -51786,6 +51796,10 @@
 /obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qWA" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/airless,
+/area/station/hallway/secondary/entry)
 "qWB" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66457,7 +66471,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/hallway/secondary/entry)
 "vFk" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -113419,15 +113433,15 @@ lgb
 cuV
 cuV
 fuB
-cHu
+caP
 bUI
-cHu
-cHu
-cHu
-cHu
+caP
+caP
+caP
+caP
 crG
 bUI
-cHu
+caP
 cuV
 fuB
 cuV
@@ -113675,7 +113689,7 @@ gBp
 tXB
 hGX
 mkk
-aeu
+iVL
 bPP
 bUN
 bUN
@@ -113685,8 +113699,8 @@ bUN
 bUN
 bUN
 bUd
-aeu
-aeu
+iVL
+iVL
 cKz
 oki
 oCd
@@ -113932,7 +113946,7 @@ lxo
 dZR
 itC
 rCi
-aeu
+iVL
 fIn
 bUN
 bUN
@@ -113942,8 +113956,8 @@ bUN
 bUN
 bUN
 bUe
-aeu
-aeu
+iVL
+iVL
 uvO
 fqe
 qOQ
@@ -114200,7 +114214,7 @@ bUN
 bUN
 bUk
 bUE
-aeu
+iVL
 usr
 xVm
 usr
@@ -114456,8 +114470,8 @@ bUN
 bUN
 bUN
 bUp
-aUz
-aeu
+qWA
+iVL
 usr
 uOa
 cJf
@@ -114712,7 +114726,7 @@ bUN
 bUN
 bUN
 bUN
-cHu
+caP
 eob
 rCi
 usr
@@ -114970,8 +114984,8 @@ bUN
 bUN
 bUN
 bUk
-aeu
-aeu
+iVL
+iVL
 xVm
 tWc
 mWn
@@ -115484,8 +115498,8 @@ bUN
 bUN
 bUN
 bUd
-aeu
-aeu
+iVL
+iVL
 usr
 dxm
 lzc
@@ -115740,7 +115754,7 @@ bUN
 bUN
 bUN
 bUN
-cHu
+caP
 eob
 rCi
 usr
@@ -115998,8 +116012,8 @@ bUN
 bUN
 bUN
 bUy
-aeu
-aeu
+iVL
+iVL
 rCi
 aeu
 aeu
@@ -116256,7 +116270,7 @@ bUN
 bUN
 bUe
 bUF
-aeu
+iVL
 rCi
 aeu
 aeu
@@ -116501,8 +116515,8 @@ iOW
 mnK
 iOW
 vOW
-aeu
-aeu
+iVL
+iVL
 vFc
 bUN
 bUN
@@ -116513,7 +116527,7 @@ bUN
 bUN
 bUk
 ctu
-aeu
+iVL
 rCi
 aeu
 aeU
@@ -116758,7 +116772,7 @@ vte
 ruc
 rsd
 sMh
-aeu
+iVL
 bPK
 bPZ
 bUN
@@ -116769,8 +116783,8 @@ bUN
 bUN
 bUN
 bUC
-aeU
-aeu
+kdH
+iVL
 rCi
 aeu
 aUz
@@ -117015,8 +117029,8 @@ jDU
 apl
 ivY
 sMh
-aeu
-aeu
+iVL
+iVL
 bTT
 bUO
 bUN
@@ -117026,8 +117040,8 @@ bUN
 bUN
 crK
 bUD
-aeu
-aeu
+iVL
+iVL
 rCi
 aeU
 aeU
@@ -117272,8 +117286,8 @@ oHG
 tBn
 yeK
 vOW
-aeu
-aeu
+iVL
+iVL
 vJm
 cic
 cic
@@ -117283,8 +117297,8 @@ cic
 cic
 cic
 nZG
-aeu
-aeu
+iVL
+iVL
 rCi
 aeU
 aeU
