@@ -492,8 +492,8 @@
 /area/ruin/space/has_grav/interdyne)
 "qR" = (
 /obj/structure/cable,
-/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "qS" = (
@@ -1865,7 +1865,7 @@ dU
 kV
 sD
 UN
-qR
+UN
 qR
 dU
 Zi
