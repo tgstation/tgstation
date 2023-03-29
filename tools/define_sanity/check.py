@@ -10,12 +10,14 @@ excluded_files = [
     "code/__DEFINES/*.dm",
     "code/__HELPERS/*.dm",
     "code/_globalvars/*.dm",
-    # Singular files, which are also exempt.
+    # Singular files.
     "code/__byond_version_compat.dm",
     "code/_compile_options.dm",
+    # TGS files come from another repository so lets not touch them.
     "code/modules/tgs/v3210/commands.dm",
     "code/modules/tgs/v4/api.dm",
     "code/modules/tgs/v5/_defines.dm",
+    "code/modules/tgs/core/_definitions.dm",
     "code/modules/unit_tests/_unit_tests.dm",
     # In an ideal world, anything below this line shouldn't be the way it is and moved to the __DEFINES directory. This is not an ideal world.
     # If you disagree, feel free to either refactor them out of this list or move them to the "Singular Files" section.

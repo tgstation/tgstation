@@ -3649,3 +3649,7 @@
 /datum/reagent/consumable/ethanol/gin_garden/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
 	doll.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
 	..()
+
+#undef ALCOHOL_EXPONENT
+#undef ALCOHOL_RATE
+#undef ALCOHOL_THRESHOLD_MODIFIER

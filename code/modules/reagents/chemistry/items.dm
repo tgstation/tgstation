@@ -342,3 +342,6 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+
+#undef DETAILED_CHEM_OUTPUT
+#undef SHORTENED_CHEM_OUTPUT

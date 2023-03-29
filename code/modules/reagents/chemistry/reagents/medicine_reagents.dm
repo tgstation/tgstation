@@ -143,7 +143,7 @@
 	affected_mob.adjustCloneLoss(-power * REM * delta_time, FALSE, affected_biotype)
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
-		iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		iter_wound.on_xadone(power * REM * delta_time)
 	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 	..()
 	return TRUE
@@ -200,7 +200,7 @@
 		affected_mob.adjustCloneLoss(-power * REM * delta_time, FALSE, required_biotype = affected_biotype)
 		for(var/i in affected_mob.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			iter_wound.on_xadone(power * REM * delta_time)
 		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = TRUE
 	..()
