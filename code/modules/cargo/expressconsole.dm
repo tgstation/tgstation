@@ -230,3 +230,11 @@
 							. = TRUE
 							update_appearance()
 							CHECK_TICK
+
+#undef MAX_EMAG_ROCKETS
+#undef BEACON_COST
+#undef SP_LINKED
+#undef SP_READY
+#undef SP_LAUNCH
+#undef SP_UNLINK
+#undef SP_UNREADY

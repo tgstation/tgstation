@@ -168,3 +168,7 @@
  */
 /datum/interview/proc/link_self()
 	return "<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"
+
+#undef INTERVIEW_APPROVED
+#undef INTERVIEW_DENIED
+#undef INTERVIEW_PENDING

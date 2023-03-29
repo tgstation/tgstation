@@ -665,7 +665,8 @@
 	l_hand = /obj/item/spear
 	r_hand = /obj/item/assembly/flash
 
-#undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN
+#undef DECONVERTER_STATION_WIN
+#undef HEAD_UPDATE_PERIOD
 #undef REVOLUTION_VICTORY
 #undef STATION_VICTORY

@@ -608,8 +608,6 @@
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
 
-#undef ABDUCTOR_MAX_TEAMS
-
 /// Midround Space Ninja Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
 	name = "Space Ninja"
