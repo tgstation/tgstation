@@ -40,29 +40,34 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+	// Take a snapshot of what the brain was formerly contained in.
+	// We do some special logic after the parent call if the brain_holder was a head bodypart.
+	var/brain_holder = loc
+
 	. = ..()
 	if(!.)
 		return
 
-	// Transfer brainmob from the head if we're being transferred from a head to a new body.
-	// And example of this ocurring is reattaching an amputated/severed head via surgery.
-	if(istype(loc, /obj/item/bodypart/head))
-		var/obj/item/bodypart/head/brain_holder = loc
-		if(brain_holder.brainmob)
-			brainmob = brain_holder.brainmob
-			brain_holder.brainmob = null
+	// We're doing a transfer from a head to a mob. This is usually stuff like reattaching dismembered/amputated heads.
+	if(istype(brain_holder, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/last_head = loc
+		if(last_head.brainmob)
+			brainmob = last_head.brainmob
+			last_head.brainmob = null
 			brainmob.container = null
 			brainmob.forceMove(src)
 
 	name = initial(name)
 
-	if(brain_owner.mind && brain_owner.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
+	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
+	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
 		return
 
+	// Not a ling? Now you get to assume direct control.
 	if(brainmob)
 		if(brain_owner.key)
 			brain_owner.ghostize()
@@ -75,7 +80,6 @@
 		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
 		QDEL_NULL(brainmob)
-
 	else
 		brain_owner.set_suicide(suicided)
 
