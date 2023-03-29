@@ -59,8 +59,8 @@
 	check_audio_state()
 
 	owner.visible_message(span_bolddanger("[owner] tries to speak, but can't! They're choking!"), \
-		span_userdanger("You try to breath, but there's a block! You're choking!"), \
-		)
+		span_userdanger("You try to breathe, but there's a block! You're choking!"), \
+	)
 
 	//barticles
 	if(flaming)

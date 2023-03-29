@@ -46,6 +46,7 @@
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
 #_maps/RandomRuins/SpaceRuins/originalcontent.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/pod_crash.dmm
 #_maps/RandomRuins/SpaceRuins/russian_derelict.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm

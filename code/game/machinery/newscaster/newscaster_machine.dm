@@ -19,6 +19,10 @@
 	var/newscaster_username
 	///How much paper is contained within the newscaster?
 	var/paper_remaining = 0
+	///The access required to access D-notices.
+	var/admin_access = ACCESS_LIBRARY
+	///The access required to submit & remove wanted issues.
+	var/security_access = ACCESS_SECURITY
 
 	///What newscaster channel is currently being viewed by the player?
 	var/datum/feed_channel/current_channel
@@ -158,7 +162,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["user"]["job"] = "N/A"
 		data["user"]["department"] = "N/A"
 
-	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
+	data["admin_mode"] = (admin_access in card?.GetAccess())
+	data["security_mode"] = (security_access in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
 	data["creating_comment"] = creating_comment
@@ -329,7 +334,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
@@ -343,7 +348,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
@@ -357,7 +362,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isliving(usr))
 				var/mob/living/living_user = usr
 				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+			if(!(admin_access in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/prototype_channel = (params["channel"])
@@ -735,7 +740,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(isliving(usr))
 		var/mob/living/living_user = usr
 		id_card = living_user.get_idcard(hand_first = TRUE)
-	if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+	if(!(security_access in id_card?.GetAccess()))
 		say("Clearance not found.")
 		return TRUE
 	GLOB.news_network.wanted_issue.active = FALSE

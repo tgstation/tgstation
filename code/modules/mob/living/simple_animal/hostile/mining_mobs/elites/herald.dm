@@ -277,3 +277,8 @@
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
+
+#undef HERALD_TRISHOT
+#undef HERALD_DIRECTIONALSHOT
+#undef HERALD_TELESHOT
+#undef HERALD_MIRROR

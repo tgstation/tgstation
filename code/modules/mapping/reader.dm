@@ -1,7 +1,6 @@
 ///////////////////////////////////////////////////////////////
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
-#define SPACE_KEY "space"
 // We support two different map formats
 // It is kinda possible to process them together, but if we split them up
 // I can make optimization decisions more easily
@@ -964,3 +963,9 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	grid_models.Cut()
 	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW
+
+#undef MAP_DMM
+#undef MAP_TGM
+#undef MAP_UNKNOWN
+#undef TRIM_TEXT
+#undef MAPLOADING_CHECK_TICK
