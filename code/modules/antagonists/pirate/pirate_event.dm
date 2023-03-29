@@ -37,24 +37,26 @@
 	//send message
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
 	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang, FALSE), RESPONSE_MAX_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
 	SScommunications.send_message(threat, unique = TRUE)
 
 /proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late ,sender_override = chosen_gang.ship_name)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name)
 		return
-	if(threat?.answered)
-		var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(plundered_account)
-			if(plundered_account.adjust_money(-payoff))
-				priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
-			else
-				priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
-				spawn_pirates(threat, chosen_gang, TRUE)
+	if(!threat?.answered)
+		return
 
-/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang, skip_answer_check)
-	if(!skip_answer_check && threat?.answered == 1)
+	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(plundered_account)
+		if(plundered_account.adjust_money(-payoff))
+			chosen_gang.paid_off = TRUE
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
+		else
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
+
+/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
+	if(chosen_gang.paid_off)
 		return
 
 	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
