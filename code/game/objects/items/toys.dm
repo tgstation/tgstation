@@ -260,7 +260,7 @@
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3 SECONDS))
 	return MANUAL_SUICIDE
 
 /**
@@ -294,6 +294,18 @@
 	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
+
+/*
+ * Fake dark matter singularity!
+ */
+/obj/item/toy/spinningtoy/dark_matter
+	name = "dark matter singularity"
+	desc = "<i>\"Surviving the encounter with the \
+		horrible thing, I realized immediately what I \
+		had to do: sell marketable toys of it. \
+		\"</i><br>- Chief Engineer Ship Chafer"
+	icon = 'icons/obj/engine/singularity.dmi'
+	icon_state = "dark_matter_s1"
 
 /*
  * Toy gun: Why isn't this an /obj/item/gun?

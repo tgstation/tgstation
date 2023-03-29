@@ -127,6 +127,8 @@
 	var/datum/dna/dna_ref
 	/// Mind datum
 	var/datum/mind/mind_ref
+	/// Typepath of species used by player, for usage in respawning via records
+	var/species_type
 
 /datum/record/locked/New(
 	age = 18,
@@ -147,6 +149,7 @@
 	. = ..()
 	src.dna_ref = dna_ref
 	src.mind_ref = mind_ref
+	species_type = dna_ref.species.type
 
 	GLOB.manifest.locked += src
 
