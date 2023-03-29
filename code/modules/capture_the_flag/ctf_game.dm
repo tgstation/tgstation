@@ -154,10 +154,11 @@
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
-	player_mob.faction += team //Todo check if we actually use this
+	player_mob.faction += team
 	player_mob.equipOutfit(chosen_class)
 	RegisterSignal(player_mob, COMSIG_PARENT_QDELETING, PROC_REF(ctf_qdelled_player)) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
-	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT) //Todo check if we actually use this
+	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
+	return player_mob //used in medisim_game.dm
 
 /obj/machinery/ctf/spawner/proc/ctf_qdelled_player(mob/living/body)
 	SIGNAL_HANDLER //ToDo, test chasms and other qdel methods, delete this if we don't need it anymore.
@@ -291,6 +292,13 @@
 	desc = "A yellow banner used to play capture the flag."
 	team = YELLOW_TEAM
 
+/obj/effect/ctf
+	density = FALSE
+	anchored = TRUE
+	invisibility = INVISIBILITY_OBSERVER
+	alpha = 100
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/effect/ctf/flag_reset
 	name = "banner landmark"
 	icon = 'icons/obj/banner.dmi'
@@ -315,7 +323,7 @@
 
 /obj/machinery/ctf/control_point/Initialize(mapload)
 	. = ..()
-	ctf_game.control_points |= src
+	ctf_game.control_points += src
 
 /obj/machinery/ctf/control_point/Destroy()
 	ctf_game.control_points.Remove(src)
@@ -695,7 +703,6 @@
 		stop_ctf()
 		new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
 
-
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	var/area/A = get_area(src)
 	for(var/_competitor in GLOB.mob_living_list)
@@ -741,7 +748,7 @@
 	if(!(src.team in living.faction))
 		to_chat(living, span_danger("<B>Stay out of the enemy spawn!</B>"))
 		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
-		living.apply_damage(200)
+		living.apply_damage(200) //Damage instead of instant death so we trigger the damage signal.
 
 /obj/structure/trap/ctf/red
 	team = RED_TEAM
@@ -768,36 +775,21 @@
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
 
-/obj/structure/table/reinforced/ctf
-	resistance_flags = INDESTRUCTIBLE
-	flags_1 = NODECONSTRUCT_1
-
-/obj/effect/ctf
-	density = FALSE
-	anchored = TRUE
-	invisibility = INVISIBILITY_OBSERVER
-	alpha = 100
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/effect/ctf/dead_barricade //Todo fix all of this, this is bad and I'm 99% sure broken
+/obj/effect/ctf/dead_barricade
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
-	var/game_id = "centcom"
+	var/game_id = CTF_GHOST_CTF_GAME_ID
+	var/datum/ctf_controller/ctf_game
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
-	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-		if(CTF.game_id != game_id)
-			continue
-		CTF.dead_barricades += src
+	ctf_game = GLOB.ctf_games[game_id]
+	ctf_game.barricades += src
 
 /obj/effect/ctf/dead_barricade/Destroy()
-	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-		if(CTF.game_id != game_id)
-			continue
-		CTF.dead_barricades -= src
+	ctf_game.barricades -= src
 	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
@@ -805,67 +797,18 @@
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 
-//Control Point
+/obj/structure/table/reinforced/ctf
+	resistance_flags = INDESTRUCTIBLE
+	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/control_point //Todo, make this a subtype of ctf
-	name = "control point"
-	desc = "You should capture this."
-	icon = 'icons/obj/machines/dominator.dmi'
-	icon_state = "dominator"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/obj/machinery/capture_the_flag/controlling
-	var/team = "none"
-	///This is how many points are gained a second while controlling this point
-	var/point_rate = 1
-	var/game_area = /area/centcom/ctf //Replace with a reference to the gamemode, global messages are handled there
-
-/obj/machinery/control_point/process(delta_time) //Probably unavoidable. Make its neater though
-	if(controlling)
-		controlling.control_points += point_rate * delta_time
-		if(controlling.control_points >= controlling.control_points_to_win)
-			controlling.victory()
-
-	var/scores
-
-	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
-		if (!team.ctf_enabled) //Why are you doing this to me?
-			continue
-		scores += UNLINT("<span style='color: [team.team]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n")
-
-	balloon_alert_to_viewers(scores)
-
-/obj/machinery/control_point/attackby(mob/user, params)
-	capture(user)
-
-/obj/machinery/control_point/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	capture(user)
-
-/obj/machinery/control_point/proc/capture(mob/user)
-	if(do_after(user, 30, target = src))
-		for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
-			if(team.ctf_enabled && (user.ckey in team.team_members))
-				controlling = team //There is for sure a better way of doing this
-				icon_state = "dominator-[team.team]"
-				for(var/mob/M in GLOB.player_list)
-					var/area/mob_area = get_area(M)
-					if(istype(mob_area, game_area))
-						to_chat(M, "<span class='userdanger [team.team_span]'>[user.real_name] has captured \the [src], claiming it for [team.team]! Go take it back!</span>")
-				break
-
-/proc/is_ctf_target(atom/target) //Litearlly use the factions or the traits oh my god
-	return TRUE //Temp for testing
-/*	. = FALSE
+/proc/is_ctf_target(atom/target)
+	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
-			if(H in CTF.spawned_mobs)
-				. = TRUE
-				break */
+		var/mob/living/carbon/human/human = target
+		if(HAS_TRAIT(human, CAPTURE_THE_FLAG_TRAIT))
+			. = TRUE
 
 #undef WHITE_TEAM
 #undef RED_TEAM

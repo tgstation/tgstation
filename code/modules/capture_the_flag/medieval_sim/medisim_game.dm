@@ -7,6 +7,7 @@
 	game_id = CTF_MEDISIM_CTF_GAME_ID
 	ammo_type = null
 	player_traits = list()
+	//var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>" //ToDo impliment a thing for this
 
 /obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard 
 	game_id = "medieval" //Todo: actually set up this id somewhere

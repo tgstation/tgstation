@@ -4,6 +4,7 @@
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/datum/ctf_team/teams = list()
 	var/list/obj/machinery/ctf/control_point/control_points = list()
+	var/list/obj/effect/ctf/dead_barricade/barricades = list()
 	var/points_to_win = 180
 	var/ctf_enabled = FALSE
 	var/respawn_cooldown = DEFAULT_RESPAWN
@@ -27,6 +28,7 @@
 /datum/ctf_controller/proc/stop_ctf()
 	ctf_enabled = FALSE
 	clear_control_points()
+	respawn_barricades()
 	for(var/datum/ctf_team/team in teams)
 		team.reset_team()
 
@@ -85,6 +87,7 @@
 /datum/ctf_controller/proc/victory(winning_team)
 	ctf_enabled = FALSE //Medi-sim never disables itself, todo, support this
 	clear_control_points()
+	respawn_barricades()
 	var/datum/ctf_team/winning_ctf_team = teams[winning_team]
 	for(var/team in teams)
 		var/datum/ctf_team/ctf_team = teams[team]
@@ -95,6 +98,10 @@
 /datum/ctf_controller/proc/clear_control_points()
 	for(var/obj/machinery/ctf/control_point/control_point in control_points)
 		control_point.clear_point()
+
+/datum/ctf_controller/proc/respawn_barricades()
+	for(var/obj/effect/ctf/dead_barricade/barricade in barricades)
+		barricade.respawn()
 
 /datum/ctf_controller/proc/message_all_teams(message)
 	for(var/team in teams)
