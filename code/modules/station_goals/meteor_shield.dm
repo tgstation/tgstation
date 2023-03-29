@@ -72,9 +72,9 @@
 	if(active)
 		. += span_notice("It is currently active. You can interact with it to shut it down.")
 		if(obj_flags & EMAGGED)
-			. += span_warning("Instead of its regular beeps and pings, it seems to be emitting a strange hum of white noise...")
+			. += span_warning("Rather than the usual sounds of beeps and pings, it produces a weird and constant hiss of white noise…")
 		else
-			. += span_notice("It occasionally beeps and pings as it communicates with the satellite network.")
+			. += span_notice("It emits periodic beeps and pings as it communicates with the satellite network.")
 	else
 		. += span_notice("It is currently disabled. You can interact with it to set it up.")
 		if(obj_flags & EMAGGED)

@@ -2637,6 +2637,7 @@
 #include "code\modules\antagonists\traitor\objectives\final_objective\battlecruiser.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\final_objective.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\infect_ai.dm"
+#include "code\modules\antagonists\traitor\objectives\final_objective\objective_dark_matteor.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\romerol.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\space_dragon.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\supermatter_cascade.dm"
