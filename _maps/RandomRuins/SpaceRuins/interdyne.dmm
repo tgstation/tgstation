@@ -1067,6 +1067,11 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"Qq" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/interdyne)
 "Qw" = (
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/mineral/plastitanium,
@@ -1197,8 +1202,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "UN" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "US" = (
@@ -1864,7 +1870,7 @@ Zi
 dU
 kV
 sD
-UN
+Qq
 UN
 qR
 dU
@@ -1899,7 +1905,7 @@ Zi
 dU
 BW
 EM
-UN
+Qq
 ox
 uS
 dU
