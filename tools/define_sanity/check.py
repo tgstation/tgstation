@@ -27,7 +27,7 @@ excluded_files = [
     "code/modules/mafia/_defines.dm",
 ]
 
-define_regex = re.compile("#define\s([A-Z0-9_]+)\s")
+define_regex = re.compile("#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
 
 filtered_files = []
 
