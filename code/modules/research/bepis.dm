@@ -285,3 +285,11 @@
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
 	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
+
+
+#undef MACHINE_OPERATION
+#undef MACHINE_OVERLOAD
+#undef MAJOR_THRESHOLD
+#undef MINOR_THRESHOLD
+#undef STANDARD_DEVIATION
+#undef PART_CASH_OFFSET_AMOUNT

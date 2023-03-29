@@ -35,8 +35,6 @@
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 
-	check_cremation(delta_time, times_fired)
-
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
@@ -727,61 +725,6 @@
 	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
-
-/////////////
-//CREMATION//
-/////////////
-/mob/living/carbon/proc/check_cremation(delta_time, times_fired)
-	//Only cremate while actively on fire
-	if(!on_fire)
-		return
-
-	//Only starts when the chest has taken full damage
-	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
-	if(!(chest.get_damage() >= chest.max_damage))
-		return
-
-	//Burn off limbs one by one
-	var/obj/item/bodypart/limb
-	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/still_has_limbs = FALSE
-	for(var/zone in limb_list)
-		limb = get_bodypart(zone)
-		if(limb)
-			still_has_limbs = TRUE
-			if(limb.get_damage() >= limb.max_damage)
-				limb.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
-				if(limb.cremation_progress >= 100)
-					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
-						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] crumbles into ash!"))
-						qdel(limb)
-					else
-						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] detaches from [p_their()] body!"))
-	if(still_has_limbs)
-		return
-
-	//Burn the head last
-	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(head)
-		if(head.get_damage() >= head.max_damage)
-			head.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
-			if(head.cremation_progress >= 100)
-				if(IS_ORGANIC_LIMB(head)) //Non-organic limbs don't burn
-					head.drop_limb()
-					head.visible_message(span_warning("[src]'s head crumbles into ash!"))
-					qdel(head)
-				else
-					head.drop_limb()
-					head.visible_message(span_warning("[src]'s head detaches from [p_their()] body!"))
-		return
-
-	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
-	chest.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
-	if(chest.cremation_progress >= 100)
-		visible_message(span_warning("[src]'s body crumbles into a pile of ash!"))
-		dust(TRUE, TRUE)
 
 ////////////////
 //BRAIN DAMAGE//

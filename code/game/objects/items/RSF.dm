@@ -193,3 +193,4 @@ RSF
 		to_dispense = /obj/item/food/cookie
 		to_chat(user, span_notice("Cookie Synthesizer reset."))
 
+#undef OBJECT_OR_LIST_ELEMENT

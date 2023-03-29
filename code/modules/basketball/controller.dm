@@ -406,3 +406,8 @@ GLOBAL_VAR(basketball_game)
 		QDEL_NULL(GLOB.basketball_game)
 	var/datum/basketball_controller/basketball_minigame = new()
 	return basketball_minigame
+
+#undef BASKETBALL_MIN_PLAYER_COUNT
+#undef BASKETBALL_MAX_PLAYER_COUNT
+#undef BASKETBALL_TEAM_HOME
+#undef BASKETBALL_TEAM_AWAY
