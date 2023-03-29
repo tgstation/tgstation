@@ -818,6 +818,10 @@
 	bound_book.gen_random_icon_state()
 	qdel(draw_from)
 
+#undef BOOKS_PER_PAGE
+#undef CHECKOUTS_PER_PAGE
+#undef DEFAULT_SEARCH_CATAGORY
+#undef DEFAULT_UPLOAD_CATAGORY
 #undef INVENTORY_PER_PAGE
 #undef LIBRARY_ARCHIVE
 #undef LIBRARY_CHECKOUT
