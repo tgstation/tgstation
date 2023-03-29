@@ -47,8 +47,6 @@ for code_file in glob.glob(parent_directory, recursive=True):
 
 error_found = False
 
-strings_to_output = [] #remove me
-
 for applicable_file in filtered_files:
     add_file_to_list = False
     with open(applicable_file, encoding="utf8") as file:
@@ -56,17 +54,12 @@ for applicable_file in filtered_files:
         for define in define_regex.finditer(file_contents):
             define_name = define.group(1)
             if not re.search("#undef\s" + define_name, file_contents):
-                string = f"{define_name} is defined in {applicable_file} but not undefined!" #remove me
-                string.replace("\\", "/") #remove me
-                strings_to_output.append(string + "\n") #remove me
+                string = f"{define_name} is defined in {applicable_file} but not undefined!"
                 print(string)
                 error_found = True
 
 if error_found:
     print(f"Please #undef the above defines or remake them as global defines in the /__DEFINES directory.")
-    with open('output.txt', 'w') as f: #remove me
-        for string in strings_to_output:
-            f.write(string)
     sys.exit(1)
 else:
     print("No unhandled local defines found.")
