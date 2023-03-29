@@ -240,3 +240,8 @@
 	last_process = world.time
 	last_move = world.time
 	increment(needed_time / SSprojectiles.wait)
+
+#undef RETURN_PRECISE_POSITION
+#undef RETURN_PRECISE_POINT
+#undef RETURN_POINT_VECTOR
+#undef RETURN_POINT_VECTOR_INCREMENT

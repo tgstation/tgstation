@@ -3,6 +3,9 @@
 //How often to check for promotion possibility
 #define HEAD_UPDATE_PERIOD 300
 
+#define REVOLUTION_VICTORY 1
+#define STATION_VICTORY 2
+
 /datum/antagonist/rev
 	name = "\improper Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
@@ -664,3 +667,5 @@
 
 #undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN
+#undef REVOLUTION_VICTORY
+#undef STATION_VICTORY

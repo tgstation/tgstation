@@ -606,3 +606,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 #undef SCROLL_RATE
 #undef LINE1_Y
 #undef LINE2_Y
+
+#undef SD_BLANK
+#undef SD_EMERGENCY
+#undef SD_MESSAGE
+#undef SD_PICTURE

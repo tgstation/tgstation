@@ -250,3 +250,6 @@
 	if(active)
 		user.throw_item(target)
 		return . | AFTERATTACK_PROCESSED_ITEM
+
+#undef GRENADE_DUD
+#undef GRENADE_USED
