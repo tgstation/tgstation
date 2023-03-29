@@ -346,7 +346,7 @@
 
 /datum/component/singularity/bloodthirsty/move()
 	var/atom/atom_parent = parent
-	if(target.z != atom_parent.z)
+	if(target && !QDELETED(target) && target.z != atom_parent.z)
 		target = null
 	if(!target || QDELETED(target))
 		target = find_new_target()

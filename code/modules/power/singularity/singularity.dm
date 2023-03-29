@@ -61,7 +61,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
-		/datum/component/singularity, \
+		singularity_component_type, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 

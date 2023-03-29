@@ -15,7 +15,6 @@
 	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1))
 
 /datum/round_event/dark_matteor/announce(fake)
-	SSsecurity_level.set_level(SEC_LEVEL_RED)
 	priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/effects/curse1.ogg')
 
 /datum/event_admin_setup/warn_admin/dark_matteor

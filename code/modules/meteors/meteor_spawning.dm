@@ -4,7 +4,7 @@
 	for(var/i in 1 to number)
 		spawn_meteor(meteor_types, direction)
 
-/proc/spawn_meteor(list/meteor_types, direction)
+/proc/spawn_meteor(list/meteor_types, direction, atom/target)
 	if (SSmapping.is_planetary())
 		stack_trace("Tried to spawn meteors in a map which isn't in space.")
 		return // We're not going to find any space turfs here
@@ -19,7 +19,12 @@
 			start_side = pick(GLOB.cardinals)
 		var/start_Z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 		picked_start = spaceDebrisStartLoc(start_side, start_Z)
-		picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
+		if(target)
+			if(!isturf(target))
+				target = get_turf(target)
+			picked_goal = target
+		else
+			picked_goal = spaceDebrisFinishLoc(start_side, start_Z)
 		max_i--
 		if(max_i <= 0)
 			return

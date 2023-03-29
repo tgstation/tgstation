@@ -16,7 +16,7 @@
 
 /obj/singularity/dark_matteor/Initialize(mapload, starting_energy = 250)
 	. = ..()
-	COOLDOWN_START(src, initial_explosion_immunity, 15 SECONDS)
+	COOLDOWN_START(src, initial_explosion_immunity, 5 SECONDS)
 
 /obj/singularity/dark_matteor/examine(mob/user)
 	. = ..()

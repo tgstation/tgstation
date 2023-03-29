@@ -15,9 +15,13 @@
 	var/atom/movable/warp_effect/warp
 	/// and another oh shit in the form of quantum sparks
 	var/datum/effect_system/spark_spread/quantum/spark_system
+	/// in case we miss, we can go back to the previous security level
+	var/previous_security_level
 
-/obj/effect/meteor/dark_matteor/Initialize(mapload)
+/obj/effect/meteor/dark_matteor/Initialize(mapload, turf/target)
 	. = ..()
+	previous_security_level = SSsecurity_level.get_current_level_as_number()
+	SSsecurity_level.set_level(SEC_LEVEL_RED)
 	warp = new(src)
 	vis_contents += warp
 	spark_system = new /datum/effect_system/spark_spread/quantum()
@@ -53,3 +57,8 @@
 	new /obj/effect/temp_visual/explosion/fast(get_turf(defender))
 	qdel(defender)
 	return FALSE
+
+/obj/effect/meteor/dark_matteor/handle_stopping()
+	. = ..()
+	SSsecurity_level.set_level(previous_security_level)
+	priority_announce("Wow. The Dark Matt-eor actually missed your station. Don't forget to thank your Chaplain for his apparent divine intervention.", "Meteor Update")
