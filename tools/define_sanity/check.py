@@ -49,13 +49,16 @@ excluded_files = [
 
 define_regex = re.compile("#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
 
+output_file_name = "define_sanity_output.txt"
+how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
+
 filtered_files = []
 
 # simple way to check if we're running on github actions, or on a local machine
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
 if not on_github:
-    print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a 'define_sanity_output.txt' file will be generated at the root of your directory if any errors are detected."))
+    print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
 
 for code_file in glob.glob(parent_directory, recursive=True):
     in_exempt_directory = False
@@ -65,8 +68,6 @@ for code_file in glob.glob(parent_directory, recursive=True):
             break
     if not in_exempt_directory:
         filtered_files.append(code_file)
-
-error_found = False
 
 located_error_tuples = []
 
@@ -79,18 +80,22 @@ for applicable_file in filtered_files:
                 located_error_tuples.append((define_name, applicable_file))
                 error_found = True
 
-if error_found:
+if len(located_error_tuples):
 
-    if on_github:
-        for error in located_error_tuples:
+    string_list = []
+    for error in located_error_tuples:
+        if not on_github:
+            post_error(error[0], error[1], False)
+            string_list.append(f"{error[0]} is defined locally in {error[1]} but not undefined locally!")
+        else:
             post_error(error[0], error[1], True)
-    else:
-        with open("define_sanity_output.txt", "w") as output_file:
-            for error in located_error_tuples:
-                post_error(error[0], error[1], False)
-                output_file.write(f"{error[0]} is defined locally in {error[1]} but not undefined locally!\n")
 
-    print(red(f"Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."))
+    if len(string_list):
+        with open(output_file_name, "w") as output_file:
+            output_file.write("\n".join(string_list))
+            output_file.write("\n\n" + how_to_fix_message)
+
+    print(red(how_to_fix_message))
     sys.exit(1)
 else:
     print(green("No unhandled local defines found."))
