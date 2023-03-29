@@ -37,8 +37,8 @@
 	ctf_enabled = FALSE
 	clear_control_points()
 	respawn_barricades()
-	for(var/datum/ctf_team/team in teams)
-		team.reset_team()
+	for(var/team in teams)
+		teams[team].reset_team()
 
 /datum/ctf_controller/proc/unload_ctf()
 	if(game_id != CTF_GHOST_CTF_GAME_ID)
