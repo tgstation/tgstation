@@ -16,9 +16,10 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 	var/list/teams = list()
 	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[CTF_GHOST_CTF_GAME_ID]
 
-	for(var/datum/ctf_team/team as anything in ctf_controller.teams)
+	for(var/datum/ctf_team/team_reference as anything in ctf_controller.teams)
 		if (!ctf_controller.ctf_enabled)
 			continue
+		var/datum/ctf_team/team = ctf_controller.teams[team_reference]
 
 		var/list/this = list()
 		this["name"] = "[team.team_color] team"

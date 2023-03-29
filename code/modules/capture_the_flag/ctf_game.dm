@@ -495,7 +495,7 @@
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human = target
-		if(HAS_TRAIT(human, CAPTURE_THE_FLAG_TRAIT))
+		if(target.mind.GetComponent(/datum/component/ctf_player))
 			. = TRUE
 
 #undef WHITE_TEAM
