@@ -49,4 +49,7 @@
 		sender = "<@[sender]>"
 
 	user.mention = sender
-	return stc.Run(user, params) || TRUE
+	var/datum/tgs_message_content/result = stc.Run(user, params)
+	result = UpgradeDeprecatedCommandResponse(result, command)
+
+	return result?.text || TRUE

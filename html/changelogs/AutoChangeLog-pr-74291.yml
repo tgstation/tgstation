@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "re-added normal doors to qm's office on tram."
+  - bugfix: "fixed hos' shutters not being existant on tram."

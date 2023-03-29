@@ -1,13 +1,6 @@
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
 
-/// You hit exhaustion when you use 100 stamina
-#define STAMINA_COST_SHOOTING 10 // shooting with RMB drains stamina (but LMB does not)
-#define STAMINA_COST_DUNKING 20 // dunking is more strenous than shooting
-#define STAMINA_COST_DUNKING_MOB 30 // dunking another person is harder
-#define STAMINA_COST_SPINNING 15 // spin emote uses stamina while holding ball
-#define STAMINA_COST_DISARMING 10 // getting shoved or disarmed while holding ball drains stamina
-
 /obj/item/toy/basketball
 	name = "basketball"
 	icon = 'icons/obj/toys/balls.dmi'
@@ -216,3 +209,6 @@
 		return ..()
 
 	target.put_in_hands(src)
+
+#undef MAX_DISARM_CHANCE
+#undef MIN_DISARM_CHANCE

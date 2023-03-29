@@ -51,17 +51,21 @@
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(new_jellyperson)
-		update_mail_goodies(new_jellyperson, list(/obj/item/reagent_containers/blood/toxin))
+		update_mail_goodies(new_jellyperson)
 	new_jellyperson.AddElement(/datum/element/soft_landing)
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/former_jellyperson, datum/species/new_species, pref_load)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(former_jellyperson)
 	former_jellyperson.RemoveElement(/datum/element/soft_landing)
-	
-	if(ishuman(former_jellyperson))
-		update_mail_goodies(former_jellyperson)
-	
+
+	return ..()
+
+/datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/toxin
+		)
 	return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)

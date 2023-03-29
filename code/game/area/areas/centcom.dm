@@ -1,14 +1,5 @@
 
 // CENTCOM
-
-/*
-Side note, be sure to change the network_root_id of any areas that are not a part of centcom
-and just using the z space as safe harbor.  It shouldn't matter much as centcom z is isolated
-from everything anyway.
-
-The areas used here are STRICTLY on the CC Z level.
-*/
-
 // CentCom itself
 /area/centcom
 	name = "CentCom"
@@ -170,7 +161,7 @@ The areas used here are STRICTLY on the CC Z level.
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
-	network_root_id = "MAGIC_NET"
+
 
 //Abductors
 /area/centcom/abductor_ship
@@ -182,7 +173,6 @@ The areas used here are STRICTLY on the CC Z level.
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	network_root_id = "ALIENS"
 
 //Syndicates
 /area/centcom/syndicate_mothership
@@ -193,7 +183,6 @@ The areas used here are STRICTLY on the CC Z level.
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
-	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/centcom/syndicate_mothership/control
 	name = "Syndicate Control Room"

@@ -97,7 +97,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -120,7 +120,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -140,13 +140,13 @@
 /area/shuttle/escape)
 "aI" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aJ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -156,7 +156,7 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -174,7 +174,7 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -207,12 +207,14 @@
 /area/shuttle/escape/brig)
 "aZ" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ba" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bb" = (
@@ -294,7 +296,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -311,7 +313,9 @@
 	},
 /obj/structure/closet,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bv" = (
@@ -342,7 +346,7 @@
 /area/shuttle/escape)
 "bB" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -353,7 +357,9 @@
 "bD" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
-/obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bE" = (
@@ -418,16 +424,12 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bN" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bO" = (
 /obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bP" = (
@@ -442,7 +444,7 @@
 /area/shuttle/escape)
 "bR" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -453,9 +455,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bT" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bU" = (
@@ -507,7 +507,7 @@
 "cc" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -547,7 +547,7 @@
 /area/shuttle/escape)
 "ci" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -555,14 +555,14 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ck" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -573,7 +573,7 @@
 /area/shuttle/escape)
 "co" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -608,9 +608,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cw" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cx" = (
@@ -649,7 +647,9 @@
 /area/shuttle/escape)
 "cD" = (
 /obj/machinery/stasis,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cE" = (
@@ -722,9 +722,7 @@
 /area/shuttle/escape)
 "cM" = (
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cN" = (
@@ -735,7 +733,7 @@
 "cO" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -773,7 +771,7 @@
 /area/shuttle/escape)
 "cU" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -781,7 +779,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -823,7 +821,7 @@
 /obj/structure/table,
 /obj/item/storage/box/metalfoam,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -831,7 +829,7 @@
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -861,7 +859,9 @@
 /area/shuttle/escape)
 "di" = (
 /obj/structure/sign/warning/electric_shock/directional/east,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dj" = (
@@ -876,38 +876,28 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
 /obj/structure/sign/warning/engine_safety/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dm" = (
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dn" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "do" = (
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dp" = (
@@ -985,7 +975,9 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qy" = (
@@ -1061,7 +1053,9 @@
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
 /obj/item/crowbar,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "NP" = (
@@ -1083,7 +1077,7 @@
 /obj/item/wrench/medical,
 /obj/item/reagent_containers/cup/beaker/cryoxadone,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
