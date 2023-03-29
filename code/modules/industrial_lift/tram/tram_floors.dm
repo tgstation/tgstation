@@ -41,7 +41,7 @@
 		tram_ref = WEAKREF(tram)
 		break
 
-/turf/open/floor/noslip/tram_plate/energized/proc/toast(var/mob/living/future_tram_victim)
+/turf/open/floor/noslip/tram_plate/energized/proc/toast(mob/living/future_tram_victim)
 	link_tram()
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
