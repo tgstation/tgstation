@@ -28,9 +28,8 @@ excluded_files = [
     "code/__DEFINES/*.dm",
     "code/__HELPERS/*.dm",
     "code/_globalvars/*.dm",
-    # TGS files come from another repository so lets not touch them.
-    "code/modules/tgs/v3210/commands.dm",
-    "code/modules/tgs/v4/api.dm",
+    # TGS files come from another repository so lets not worry about them.
+    "code/modules/tgs/**/*.dm",
 ]
 
 define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
