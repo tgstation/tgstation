@@ -3152,7 +3152,7 @@
 	if(DT_PROB(8, delta_time))
 		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
 	if(DT_PROB(3, delta_time))
-		var/list/messages = list(
+		var/static/list/messages = list(
 			"A horrible aftertaste coats your mouth.",
 			"You feel like you're going to choke on the oil in your throat.",
 			"You start to feel some heartburn coming on.",
