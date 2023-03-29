@@ -30,6 +30,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
+"i" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/spray/pestspray{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
 "j" = (
 /turf/closed/wall/rock,
 /area/ruin/space/has_grav/powered/botanical_haven)
@@ -42,6 +54,9 @@
 	dir = 1
 	},
 /turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"m" = (
+/turf/closed/wall/rust,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "o" = (
 /turf/closed/mineral/asteroid,
@@ -91,6 +106,9 @@
 "A" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light/red/dim/directional/north,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/plant_analyzer,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "B" = (
@@ -356,7 +374,7 @@ s
 o
 j
 j
-G
+m
 G
 o
 R
@@ -449,7 +467,7 @@ O
 G
 A
 R
-G
+m
 o
 R
 R
@@ -463,7 +481,7 @@ o
 o
 o
 o
-c
+i
 V
 y
 D
