@@ -378,7 +378,7 @@
 				to_chat(carbon_target, span_notice("You get a headache."))
 				return
 			head.adjustBleedStacks(5)
-			to_chat(carbon_target, span_notice("You get a nosebleed."))
+			carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_notice("You get a nosebleed."))
 			return
 	to_chat(target, span_warning("You feel an sharp pain inside you for just a moment."))
 
