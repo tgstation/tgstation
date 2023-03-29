@@ -21,6 +21,9 @@ def post_error(define_name, file, github_error_style):
 
 parent_directory = "code/**/*.dm"
 
+# simple way to check if we're running on github actions, or on a local machine
+on_github = os.getenv("GITHUB_ACTIONS") == "true"
+
 # This files/directories are expected to have "global" defines, so they must be exempt from this check.
 # Add directories as string here to automatically be exempt in case you have a non-complaint file name.
 excluded_files = [
@@ -36,16 +39,18 @@ excluded_files = [
 # What does this mean? Basically let's say you have a file named `code/modules/whatever/_example.dm`.
 # We scan every file name for that pre-pended `_` in "_example" and if it exists, we don't scan it for defines.
 
-file_determination_regex = re.compile(r"code(.+)?\\(.+).dm")
 define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
+file_determination_regex = ""
+
+if on_github or os.name == "posix":
+    re.compile(r"code(.+)?\/(.+).dm") # i hate it here
+else:
+    re.compile(r"code(.+)?\\(.+).dm")
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
 
 filtered_files = []
-
-# simple way to check if we're running on github actions, or on a local machine
-on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
 if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
