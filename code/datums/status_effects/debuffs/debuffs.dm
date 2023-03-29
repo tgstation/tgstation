@@ -134,12 +134,15 @@
 		tick_interval = -1
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
+	owner.particles = new /particles/sleeping_zs
+	owner.particles.position = list(8, 12, ABOVE_MOB_LAYER)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
 	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 		tick_interval = initial(tick_interval)
+	owner.particles = null
 	return ..()
 
 ///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
