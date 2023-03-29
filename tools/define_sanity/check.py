@@ -38,9 +38,9 @@ excluded_files = [
     "code/modules/tgs/**/*.dm",
 ]
 
-define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
+define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?")
 
-filtered_files = []
+files_to_scan = []
 
 if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
@@ -57,21 +57,19 @@ for code_file in glob.glob(parent_directory, recursive=True):
 
     # If the "base path" of the file starts with an underscore, it's assumed to be an encapsulated file holding references to the other files in its folder and is exempt from the checks.
     if os.path.basename(code_file)[0] == "_":
-        exempt_file = True
+        continue
 
-    if not exempt_file:
-        filtered_files.append(code_file)
+    files_to_scan.append(code_file)
 
 located_error_tuples = []
 
-for applicable_file in filtered_files:
+for applicable_file in files_to_scan:
     with open(applicable_file, encoding="utf8") as file:
         file_contents = file.read()
         for define in define_regex.finditer(file_contents):
             define_name = define.group(1)
             if not re.search("#undef\s" + define_name, file_contents):
                 located_error_tuples.append((define_name, applicable_file))
-                error_found = True
 
 if len(located_error_tuples):
 
