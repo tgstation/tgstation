@@ -562,4 +562,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		living_user.adjustToxLoss(coin_damage)
 	return TRUE
 
+#undef GIBTONITE_QUALITY_HIGH
+#undef GIBTONITE_QUALITY_LOW
+#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

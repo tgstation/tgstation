@@ -341,7 +341,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/effect/heretic_rune,
 		/obj/effect/rune,
 		/obj/effect/visible_heretic_influence,
-		/obj/item/clothing/head/hooded/cult_hoodie,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/mask/madness_mask,
 		/obj/item/clothing/neck/heretic_focus,
