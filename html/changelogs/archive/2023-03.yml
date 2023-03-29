@@ -1052,3 +1052,29 @@
       appear at once.
   spockye:
   - rscadd: remakes the old escape pod shuttle
+2023-03-29:
+  IndieanaJones:
+  - balance: The pirate gangs have been split into two subcategories, one which can
+      spawn earlier in a shift and one that spawns later as they currently do. While
+      skeleton pirates will still be only seen later into the shift, expect to see
+      the other pirate gangs earlier on.
+  - bugfix: Prevented the pirate event from runtiming when no possible pirate gangs
+      were available.
+  - bugfix: Pirates can no longer be selected by Dynamic if there are no more pirates
+      gangs that can be used.
+  JohnFulpWillard:
+  - bugfix: Experimentors can connect to techwebs that have at least one RD server
+      on the level.
+  - balance: Curators/HoP can now manage Newscaster D-Notices (previously was Warden/HoS).
+  - balance: Security Officers/Detectives can now issue Wanted notices on Newscasters.
+  - balance: Ntos Newscaster now requires Library access only to download, not to
+      run.
+  LemonInTheDark:
+  - server: The starlight config has been removed, as it is enabled by default
+  Rex9001:
+  - rscadd: the pod_crash.dmm ruin
+  lizardqueenlexi:
+  - qol: you can choose your default paint color for the "Tagger" quirk from prefs.
+  spockye:
+  - rscadd: Added a new emergency shuttle, the emergency_tranquility
+  - bugfix: ' Redesigns "the_arena" ( the bubblegum shuttle deathmatch area )'
