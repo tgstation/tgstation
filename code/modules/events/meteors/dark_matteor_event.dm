@@ -12,7 +12,7 @@
 	fakeable = FALSE //Already faked by meteors that miss. Please, god, please miss
 
 /datum/round_event/stray_meteor/start()
-	spawn_meteor(list(/obj/effect/meteor/dark_matteor))
+	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1))
 
 /datum/round_event/stray_meteor/announce(fake)
 	SSsecurity_level.set_level(SEC_LEVEL_RED)
