@@ -111,22 +111,21 @@
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
-/obj/item/paper/paperslip
-	name = "paper slip"
-	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
-	icon_state = "paperslip"
-	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
+/obj/item/paperslip
+	icon = 'icons/obj/bureaucracy.dmi'
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
-	name = "corporate plastic card"
-	desc = "A plastic card for confidental corporate matters. Can be written on with pen somehow."
-	icon_state = "corppaperslip"
-	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
-	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
-	drop_sound = 'sound/items/handling/disk_drop.ogg'
-	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
-	throw_range = 10
-	throw_speed = 3
+/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
+	if(burn_paper_product_attackby_check(I, user))
+		return
+	return ..()
+
+/obj/item/paperslip/Initialize(mapload)
+	. = ..()
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter"

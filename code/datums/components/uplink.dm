@@ -235,6 +235,8 @@
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock
+	data["shop_locked"] = uplink_handler.shop_locked
+	data["purchased_items"] = length(uplink_handler.purchase_log.purchase_log)
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)

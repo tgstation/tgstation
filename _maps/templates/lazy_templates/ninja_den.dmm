@@ -181,14 +181,11 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "fV" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "ga" = (
@@ -1070,7 +1067,6 @@
 	},
 /area/centcom/central_command_areas/holding)
 "AT" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -1100,6 +1096,7 @@
 /obj/item/clothing/under/misc/syndicate_souvenir{
 	pixel_y = -5
 	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Bn" = (
@@ -1180,8 +1177,8 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Dh" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Dk" = (
@@ -1241,10 +1238,10 @@
 /turf/open/floor/bamboo/tatami,
 /area/centcom/central_command_areas/holding)
 "Ey" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Ez" = (
@@ -1316,7 +1313,6 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Gw" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/clothing/suit/costume/hawaiian{
@@ -1329,6 +1325,7 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/costume/hawaiian,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Gy" = (
@@ -1355,9 +1352,9 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "GX" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/washing_machine,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Hc" = (
@@ -2109,11 +2106,8 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Xt" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "XL" = (
@@ -2163,13 +2157,13 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "Yl" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/basket,
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Yu" = (
