@@ -43,9 +43,9 @@ define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
 file_determination_regex = ""
 
 if on_github or os.name == "posix":
-    re.compile(r"code(.+)?\/(.+).dm") # i hate it here
+    file_determination_regex = re.compile(r"code(.+)?\/(.+).dm") # i hate it here
 else:
-    re.compile(r"code(.+)?\\(.+).dm")
+    file_determination_regex = re.compile(r"code(.+)?\\(.+).dm")
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
