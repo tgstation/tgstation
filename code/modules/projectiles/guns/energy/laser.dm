@@ -167,6 +167,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
 	shaded_charge = TRUE
 	ammo_x_offset = 1
+	obj_flags = UNIQUE_RENAME
 	can_bayonet = TRUE
 	knife_x_offset = 19
 	knife_y_offset = 13
