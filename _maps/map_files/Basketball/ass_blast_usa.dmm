@@ -171,6 +171,10 @@
 /obj/item/gun/ballistic/automatic/tommygun,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
+"mM" = (
+/obj/structure/sign/poster/contraband/c20r,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
 "nE" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -344,6 +348,10 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
+/area/centcom/basketball)
+"EW" = (
+/obj/structure/sign/poster/contraband/revolver,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Gh" = (
 /obj/structure/rack,
@@ -778,7 +786,7 @@ nE
 Uv
 Ev
 Ev
-Cw
+mM
 Ic
 MW
 Ic
@@ -786,7 +794,7 @@ gk
 gk
 gk
 gk
-Cw
+EW
 Ql
 Ql
 Cw
@@ -859,7 +867,7 @@ jj
 Xn
 Ev
 Ev
-AI
+Cw
 gk
 gk
 gk
@@ -867,7 +875,7 @@ YX
 gk
 gk
 gk
-AI
+Cw
 zr
 Ql
 PW
@@ -940,7 +948,7 @@ nE
 Uv
 Ev
 Ev
-Cw
+mM
 gk
 gk
 gk
@@ -948,7 +956,7 @@ gk
 gk
 gk
 gk
-Cw
+EW
 Ql
 Ql
 Cw

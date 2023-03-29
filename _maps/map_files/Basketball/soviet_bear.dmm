@@ -105,11 +105,8 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "gk" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/engine,
+/obj/structure/sign/warning/firing_range,
+/turf/closed/indestructible/riveted/plastinum,
 /area/centcom/basketball)
 "gq" = (
 /obj/effect/turf_decal/stripes/line{
@@ -546,7 +543,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "OB" = (
@@ -938,7 +934,7 @@ Cw
 ZM
 Cw
 ly
-Cw
+Qi
 mp
 mp
 mp
@@ -946,7 +942,7 @@ mp
 mp
 mp
 mp
-Cw
+fB
 qU
 Uq
 Gh
@@ -965,7 +961,7 @@ Dt
 Dt
 Dt
 wt
-Qi
+Cw
 mp
 mp
 mp
@@ -973,7 +969,7 @@ mp
 mp
 mp
 mp
-fB
+Cw
 Qh
 KH
 be
@@ -985,14 +981,14 @@ Hu
 "}
 (11,1,1) = {"
 Hu
-Tc
+gk
 Om
 kc
 kc
 kc
 kc
 Uy
-Qi
+Cw
 mp
 mp
 mp
@@ -1000,7 +996,7 @@ mp
 mp
 mp
 mp
-fB
+Cw
 LU
 uW
 mV
@@ -1019,7 +1015,7 @@ kc
 dJ
 OB
 Rl
-Qi
+Cw
 mp
 mp
 mp
@@ -1027,7 +1023,7 @@ YX
 mp
 mp
 mp
-fB
+Cw
 zr
 kp
 rU
@@ -1039,14 +1035,14 @@ Hu
 "}
 (13,1,1) = {"
 Hu
-Tc
 gk
+Se
 kc
 OB
 kc
 kc
 MS
-Qi
+Cw
 mp
 mp
 mp
@@ -1054,7 +1050,7 @@ mp
 mp
 mp
 mp
-fB
+Cw
 oh
 aE
 PW
@@ -1073,7 +1069,7 @@ Gi
 Gi
 Gi
 zy
-Qi
+Cw
 mp
 mp
 mp
@@ -1081,7 +1077,7 @@ mp
 mp
 mp
 mp
-fB
+Cw
 hf
 dC
 oR
@@ -1100,7 +1096,7 @@ sb
 Cw
 Nt
 Cw
-Cw
+Qi
 mp
 mp
 mp
@@ -1108,7 +1104,7 @@ mp
 mp
 mp
 mp
-Cw
+fB
 uH
 YH
 WK
