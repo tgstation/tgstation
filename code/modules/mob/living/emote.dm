@@ -365,6 +365,19 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 
+/datum/emote/living/snore/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/emoter = user
+		emoter.particles = new /particles/sleeping_zs
+		emoter.particles.position = list(8, 12, ABOVE_MOB_LAYER)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_sleepy), emoter), 5 SECONDS)
+
+/proc/remove_sleepy(mob/living/user)
+	// If we're still sleeping, don't remove the particles
+	if(!HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+		user.particles = null
+
 /datum/emote/living/stare
 	key = "stare"
 	key_third_person = "stares"
