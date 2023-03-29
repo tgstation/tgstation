@@ -2,7 +2,7 @@
  * omen.dm: For when you want someone to have a really bad day
  *
  * When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
- * or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.
+ * or hitting your head really hard when you slip and fall, or you get shocked by the tram rails at an unfortunate moment.
  *
  * Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.
  */
