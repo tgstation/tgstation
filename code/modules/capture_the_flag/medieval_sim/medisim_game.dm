@@ -3,7 +3,7 @@
 #define REDFIELD_TEAM "Red"
 #define BLUESWORTH_TEAM "Blue"
 
-/obj/machinery/capture_the_flag/medisim
+/obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard
 	game_id = "medieval"
 	game_area = /area/shuttle/escape/simulation
 	ammo_type = null //no guns, no need

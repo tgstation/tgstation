@@ -36,13 +36,15 @@
 
 /obj/machinery/ctf/spawner/Initialize(mapload)
 	. = ..()
-	ctf_game.add_team(src)
-	GLOB.ctf_panel.ctf_machines += src
+	ctf_game.add_team(src) //Todo add support for multiple spawners per team
+	GLOB.ctf_panel.ctf_machines += src //Todo Check if this is needed
 	SSpoints_of_interest.make_point_of_interest(src)
 	default_gear = ctf_gear
+	//Todo, previously ctf_landmark was handled here, check if this is needed
 
 /obj/machinery/ctf/spawner/Destroy()
 	GLOB.ctf_panel.ctf_machines -= src
+	//Todo remove team code
 	return ..()
 
 /obj/machinery/ctf/spawner/red
@@ -61,7 +63,21 @@
 	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
 	instagib_gear = list("Instagib" = /datum/outfit/ctf/blue/instagib)
 
-//Green and yellow teams here
+/obj/machinery/ctf/spawner/green
+	name = "Green CTF Controller"
+	icon_state = "greenbeacon"
+	team = GREEN_TEAM
+	team_span = "greenteamradio"
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green, "Marksman" = /datum/outfit/ctf/marksman/green)
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/green/instagib)
+
+/obj/machinery/ctf/spawner/yellow
+	name = "Yellow CTF Controller"
+	icon_state = "yellowbeacon"
+	team = YELLOW_TEAM
+	team_span = "yellowteamradio"
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow, "Marksman" = /datum/outfit/ctf/marksman/yellow)
+	instagib_gear = list("Instagib" = /datum/outfit/ctf/yellow/instagib)
 
 /obj/machinery/ctf/spawner/attack_ghost(mob/user)
 	if(ctf_game.ctf_enabled == FALSE)
@@ -79,7 +95,7 @@
 		return
 	if(!SSticker.HasRoundStarted())
 		return
-	if(user.ckey in ctf_game.get_players(team)) //TODO!!!! Respawn timer checking logic inside here
+	if(user.ckey in ctf_game.get_players(team))
 		var/datum/component/ctf_player/ctf_player_component = ctf_game.get_player_component(team, user.ckey)
 		var/client/new_team_member = user.client
 		if(isnull(ctf_player_component))
@@ -91,12 +107,12 @@
 				to_chat(user, span_warning("You cannot respawn yet!"))
 		return
 	if(ctf_game.team_valid_to_join(team, user))
-		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
+		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>") //Todo change order of things so you get to message when your actually assigned to a team
 		var/client/new_team_member = user.client
 		spawn_team_member(new_team_member)
 
-	//if(user.mind && user.mind.current)  Todo: Check what this does
-	//		ctf_dust_old(user.mind.current)
+	//if(user.mind && user.mind.current)  Todo: Check what this does, Pretty sure this is usless?
+	//		ctf_dust_old(user.mind.current) 
 	
 
 /obj/machinery/ctf/spawner/Topic(href, href_list)
@@ -124,8 +140,9 @@
 
 		sort_list(display_classes)
 		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
-		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE)
-			return
+		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE || !new_team_member.ckey in ctf_game.get_players(team))
+			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
+				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
 
 		chosen_class = ctf_gear[choice]
 
@@ -140,13 +157,38 @@
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
-	player_mob.faction += team
+	player_mob.faction += team //Todo check if we actually use this
 	player_mob.equipOutfit(chosen_class)
 	RegisterSignal(player_mob, COMSIG_PARENT_QDELETING, PROC_REF(ctf_qdelled_player)) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
-	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
+	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT) //Todo check if we actually use this
 
 /obj/machinery/ctf/spawner/proc/ctf_qdelled_player(mob/living/body)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER //ToDo, test chasms and other qdel methods, delete this if we don't need it anymore.
+
+/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/ctf)) //Todo, rename item/ctf to item/ctf_flag or something because this is dumb
+		var/obj/item/ctf/flag = item
+		if(flag.team != team)
+			//Insert point scoring code, player annoucement code and victory triggering code
+			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
+
+//victory() would go here but it might be unused if I can port it all to the controller
+
+//toggle_ctf() this is almost certainly going to end up in the controller if we actually need it
+
+//start_ctf() Enabling system already ported, figure something out for barriccades
+
+//Machine_reset() recreate this in the controller, its dumb to put it here
+
+//control_point_reset() controller again, should be easy
+
+//unload() Should be an easy controller port
+
+//Stop_ctf() Controller for sure
+
+//Instagib_mode() - Controller but not essential, get back to later
+
+//normal_mode() - Ditto above
 
 
 
@@ -161,8 +203,7 @@
 
 
 
-
-/obj/item/ctf
+/obj/item/ctf //Todo, rename to something less dumb
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
@@ -182,9 +223,9 @@
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
-	var/reset_path = /obj/effect/ctf/flag_reset
+	var/reset_path = /obj/effect/ctf/flag_reset //Surely we can merge this and above? Todo: Do so if we can
 	/// Which area we announce updates on the flag to. Should just generally be the area of the arena.
-	var/game_area = /area/centcom/ctf
+	var/game_area = /area/centcom/ctf //Todo: nuke this from orbit
 
 /obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
@@ -196,7 +237,7 @@
 		reset = new reset_path(get_turf(src))
 		reset.flag = src
 
-/obj/item/ctf/process()
+/obj/item/ctf/process() //Theres probably a better way to handle this...
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
@@ -213,7 +254,7 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
 			if(!capture)
-				to_chat(M, span_userdanger("[src] has been returned to the base!"))
+				to_chat(M, span_userdanger("[src] has been returned to the base!")) //💀
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
 /obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
@@ -330,7 +371,7 @@
 #define CTF_LOADING_LOADING 1
 #define CTF_LOADING_LOADED 2
 
-/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE)
+/proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE) //Todo, figure out what on earth this actually does
 	var/static/loading = CTF_LOADING_UNLOADED
 	if(unload == TRUE)
 		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
@@ -387,7 +428,7 @@
 #undef CTF_LOADING_LOADING
 #undef CTF_LOADING_LOADED
 
-/obj/machinery/capture_the_flag
+/obj/machinery/capture_the_flag //Todo, purge this code from the codebase and my memories
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
@@ -700,7 +741,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/ctf/examine(mob/user)
+/obj/structure/trap/ctf/examine(mob/user) //This is stupid, Todo: make it less so
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
@@ -747,7 +788,7 @@
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/effect/ctf/dead_barricade
+/obj/effect/ctf/dead_barricade //Todo fix all of this, this is bad and I'm 99% sure broken
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
 	icon = 'icons/obj/objects.dmi'
@@ -775,7 +816,7 @@
 
 //Control Point
 
-/obj/machinery/control_point
+/obj/machinery/control_point //Todo, make this a subtype of ctf
 	name = "control point"
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
@@ -785,9 +826,9 @@
 	var/team = "none"
 	///This is how many points are gained a second while controlling this point
 	var/point_rate = 1
-	var/game_area = /area/centcom/ctf
+	var/game_area = /area/centcom/ctf //Replace with a reference to the gamemode, global messages are handled there
 
-/obj/machinery/control_point/process(delta_time)
+/obj/machinery/control_point/process(delta_time) //Probably unavoidable. Make its neater though
 	if(controlling)
 		controlling.control_points += point_rate * delta_time
 		if(controlling.control_points >= controlling.control_points_to_win)
@@ -796,7 +837,7 @@
 	var/scores
 
 	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
-		if (!team.ctf_enabled)
+		if (!team.ctf_enabled) //Why are you doing this to me?
 			continue
 		scores += UNLINT("<span style='color: [team.team]'>[team.team] - [team.control_points]/[team.control_points_to_win]</span>\n")
 
@@ -815,7 +856,7 @@
 	if(do_after(user, 30, target = src))
 		for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
 			if(team.ctf_enabled && (user.ckey in team.team_members))
-				controlling = team
+				controlling = team //There is for sure a better way of doing this
 				icon_state = "dominator-[team.team]"
 				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
@@ -823,7 +864,7 @@
 						to_chat(M, "<span class='userdanger [team.team_span]'>[user.real_name] has captured \the [src], claiming it for [team.team]! Go take it back!</span>")
 				break
 
-/proc/is_ctf_target(atom/target)
+/proc/is_ctf_target(atom/target) //Litearlly use the factions or the traits oh my god
 	return TRUE //Temp for testing
 /*	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
