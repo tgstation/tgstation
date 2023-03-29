@@ -12,6 +12,9 @@
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 
+	/// the prepended string to the icon state (singularity_s1, dark_matter_s1, etc)
+	var/singularity_icon_variant = "singularity"
+
 	/// The singularity component itself.
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity_component
@@ -20,6 +23,9 @@
 	var/current_size = 1
 	///Current allowed size for the singulo
 	var/allowed_size = 1
+	///maximum size this singuloth can get to
+	var/maximum_stage = STAGE_FOUR
+
 	///How strong are we?
 	var/energy = 100
 	///Do we lose energy over time?
@@ -179,6 +185,13 @@
 
 	if(temp_allowed_size >= STAGE_SIX && !consumed_supermatter)
 		temp_allowed_size = STAGE_FIVE
+
+	//cap it off if the singuloth has a maximum stage
+	temp_allowed_size = min(temp_allowed_size, maximum_stage)
+
+	if(temp_allowed_size == maximum_stage)
+		//It cant go smaller due to e loss
+		dissipate = FALSE
 
 	var/new_grav_pull
 	var/new_consume_range
@@ -458,11 +471,21 @@
 	deadchat_plays(mode = DEMOCRACY_MODE)
 
 /obj/singularity/dark_matteor
+	name = "dark matter singularity"
+	desc = "<i>\"I have never seen anything like it. \
+		A single point of light in the abyss, spinning with an eerie rhythm. \
+		It looks like a tornado, moving at incredible speeds, \
+		warping the fabric of space and time. It is both beautiful and horrifying, \
+		a cosmic paradox that defies all logic. I can't take my eyes off it, even though \
+		I know it could devour us all in an instant. What have I created!?\"</i> - Chief Engineer Ship Chafer"
 	ghost_notification_message = "IT'S HERE"
+	icon_state = "dark_matter_s1"
+	singularity_icon_variant = "dark_matter"
+	maximum_stage = STAGE_FOUR
 	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
 	COOLDOWN_DECLARE(initial_explosion_immunity)
 
-/obj/singularity/dark_matteor/Initialize(mapload, starting_energy)
+/obj/singularity/dark_matteor/Initialize(mapload, starting_energy = 250)
 	. = ..()
 	COOLDOWN_START(src, initial_explosion_immunity, 15 SECONDS)
 
