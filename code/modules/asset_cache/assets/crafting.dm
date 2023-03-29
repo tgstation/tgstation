@@ -39,10 +39,9 @@
 	icon_file ||= initial(preview_item.icon_preview) || initial(preview_item.icon)
 	icon_state ||= initial(preview_item.icon_state_preview) || initial(preview_item.icon_state)
 
-#ifdef UNIT_TESTS
-	if(!icon_exists(icon_file, icon_state, scream = TRUE))
-		return
-#endif
+	if(PERFORM_ALL_TESTS(/datum/unit_test/focus_only/bad_cooking_crafting_icons))
+		if(!icon_exists(icon_file, icon_state, scream = TRUE))
+			return
 
 	Insert("a[id]", icon(icon_file, icon_state, SOUTH))
 
