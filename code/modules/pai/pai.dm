@@ -180,7 +180,6 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()

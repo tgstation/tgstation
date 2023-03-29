@@ -33,10 +33,11 @@
 	return ..()
 
 /obj/item/pai_card/attack_self(mob/user)
-	if(!in_range(src, user))
-		return
-	user.set_machine(src)
-	ui_interact(user)
+	var/mob/living/silicon/pai/pai = new(src)
+	pai.name = "brohh"
+	pai.real_name = pai.name
+	pai.key = user.key
+	set_personality(pai)
 
 /obj/item/pai_card/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
