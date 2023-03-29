@@ -69,7 +69,7 @@
 	name = "Level 5: Auspex"
 	upgraded_power = null
 	level_current = 5
-	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport, leaving nearby people bleeding and asleep."
+	desc = "Hide yourself within a Cloak of Darkness, click on an area to teleport, leaving nearby people bleeding and knocked down."
 	power_explanation = "Level 5: Auspex:\n\
 		When Activated, you will be hidden in a Cloak of Darkness.\n\
 		Click any area up to teleport there, ending the Power and causing people at your end location to fall over in pain."
