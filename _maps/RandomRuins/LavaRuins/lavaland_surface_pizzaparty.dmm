@@ -281,10 +281,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
-"td" = (
-/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "tj" = (
 /obj/structure/table/wood/fancy/red,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -987,7 +983,7 @@ aa
 "}
 (11,1,1) = {"
 ab
-td
+ab
 Jt
 ac
 Sg
