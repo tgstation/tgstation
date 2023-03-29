@@ -28,21 +28,9 @@ excluded_files = [
     "code/__DEFINES/*.dm",
     "code/__HELPERS/*.dm",
     "code/_globalvars/*.dm",
-    # Singular files.
-    "code/__byond_version_compat.dm",
-    "code/_compile_options.dm",
     # TGS files come from another repository so lets not touch them.
     "code/modules/tgs/v3210/commands.dm",
     "code/modules/tgs/v4/api.dm",
-    "code/modules/tgs/v5/_defines.dm",
-    "code/modules/tgs/core/_definitions.dm",
-    "code/modules/unit_tests/_unit_tests.dm",
-    # The following files are "encapsulated" in their own folders.
-    "code/modules/client/preferences/_preference.dm",
-    "code/datums/keybinding/_defines.dm",
-    "code/datums/keybinding/_defines.dm",
-    "code/game/machinery/computer/atmos_computers/__identifiers.dm",
-    "code/modules/mafia/_defines.dm",
 ]
 
 define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
