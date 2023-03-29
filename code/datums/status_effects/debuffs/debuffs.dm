@@ -195,18 +195,12 @@
 			healing += 0.1
 
 		// don't forget the bedsheet
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
-				continue
+		if(locate(/obj/item/bedsheet) in owner.loc)
 			healing += 0.1
-			break //Only count the first bedsheet
 
 		// you forgot the pillow
-		for(var/obj/item/pillow/pillow in range(owner.loc,0))
-			if(pillow.loc != owner.loc)
-				continue
+		if(locate(/obj/item/bedsheet) in owner.loc)
 			healing += 0.1
-			break
 
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
