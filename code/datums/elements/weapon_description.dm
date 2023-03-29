@@ -1,4 +1,3 @@
-#define HITS_TO_CRIT(damage) round(100 / damage, 0.1)
 /**
  *
  * The purpose of this element is to widely provide the ability to examine an object and determine its stats, with the ability to add

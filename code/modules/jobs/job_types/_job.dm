@@ -151,7 +151,7 @@
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
-	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
 		liver.add_traits(liver_traits, JOB_TRAIT)
 

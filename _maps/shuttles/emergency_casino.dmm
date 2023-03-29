@@ -144,13 +144,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"fu" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "fI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
@@ -324,11 +317,8 @@
 /area/shuttle/escape)
 "jH" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
 /obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "jQ" = (
@@ -742,11 +732,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vD" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
 /obj/machinery/door/window,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "vI" = (
@@ -934,12 +921,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Aw" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "AA" = (
@@ -992,11 +976,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cz" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
 /obj/machinery/vending/boozeomat,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Dv" = (
@@ -1172,15 +1153,12 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "KN" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/fullupgrade,
 /obj/structure/sign/poster/official/cohiba_robusto_ad{
 	pixel_y = 32
 	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Lb" = (
@@ -1330,10 +1308,6 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "Pv" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
 	name = "HoochMaster Deluxe"
@@ -1341,6 +1315,7 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/cup/glass/shaker,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "PM" = (
@@ -1500,10 +1475,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Xr" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Xv" = (
@@ -1935,7 +1907,7 @@ mz
 (17,1,1) = {"
 Uu
 Pv
-fu
+Xr
 jH
 Cz
 Xr

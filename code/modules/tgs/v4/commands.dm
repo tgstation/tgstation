@@ -34,8 +34,8 @@
 
 	var/datum/tgs_chat_command/sc = custom_commands[command]
 	if(sc)
-		var/result = sc.Run(u, params)
-		if(result == null)
-			result = ""
-		return result
+		var/datum/tgs_message_content/result = sc.Run(u, params)
+		result = UpgradeDeprecatedCommandResponse(result, command)
+
+		return result?.text
 	return "Unknown command: [command]!"

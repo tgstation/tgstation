@@ -3,6 +3,9 @@
 //How often to check for promotion possibility
 #define HEAD_UPDATE_PERIOD 300
 
+#define REVOLUTION_VICTORY 1
+#define STATION_VICTORY 2
+
 /datum/antagonist/rev
 	name = "\improper Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
@@ -176,7 +179,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()
@@ -662,5 +665,8 @@
 	l_hand = /obj/item/spear
 	r_hand = /obj/item/assembly/flash
 
-#undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN
+#undef DECONVERTER_STATION_WIN
+#undef HEAD_UPDATE_PERIOD
+#undef REVOLUTION_VICTORY
+#undef STATION_VICTORY
