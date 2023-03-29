@@ -306,7 +306,6 @@
 		\"</i><br>- Chief Engineer Ship Chafer"
 	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "dark_matter_s1"
-	item_flags = NO_PIXEL_RANDOM_DROP
 
 /*
  * Toy gun: Why isn't this an /obj/item/gun?

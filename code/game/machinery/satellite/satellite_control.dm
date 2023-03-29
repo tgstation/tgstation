@@ -24,25 +24,30 @@
 /obj/machinery/computer/sat_control/proc/toggle(toggled_id)
 	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/satellite in GLOB.machines)
-		if(satellite.id == toggled_id && is_valid_z_level(get_turf(satellite), current_turf))
+		if(satellite.id != toggled_id)
+			continue
+		if(satellite.obj_flags & EMAGGED)
+			to_chat(usr, span_warning("The satellite doesn't seem to respond...?"))
+			return
+		if(is_valid_z_level(get_turf(satellite), current_turf))
 			satellite.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
 	var/list/data = list()
 
 	data["satellites"] = list()
-	for(var/obj/machinery/satellite/S in GLOB.machines)
+	for(var/obj/machinery/satellite/sat in GLOB.machines)
 		data["satellites"] += list(list(
-			"id" = S.id,
-			"active" = S.active,
-			"mode" = S.mode
+			"id" = sat.id,
+			"active" = sat.active,
+			"mode" = sat.mode
 		))
 	data["notice"] = notice
 
 
-	var/datum/station_goal/station_shield/G = locate() in GLOB.station_goals
-	if(G)
+	var/datum/station_goal/station_shield/goal = locate() in GLOB.station_goals
+	if(goal)
 		data["meteor_shield"] = 1
-		data["meteor_shield_coverage"] = G.get_coverage()
-		data["meteor_shield_coverage_max"] = G.coverage_goal
+		data["meteor_shield_coverage"] = goal.get_coverage()
+		data["meteor_shield_coverage_max"] = goal.coverage_goal
 	return data

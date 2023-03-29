@@ -12,7 +12,17 @@
 	fakeable = FALSE //Already faked by meteors that miss. Please, god, please miss
 
 /datum/round_event/dark_matteor/start()
-	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1))
+	var/mob/living/target
+	for(var/mob/living/potential_target as anything in GLOB.mob_living_list)
+		if(!is_station_level(potential_target.z))
+			continue
+		var/turf/target_turf = get_turf(potential_target)
+		if(isgroundlessturf(target_turf))
+			continue
+		target = potential_target
+		break
+	//if target was never chosen the target is null aka the matteor will act as spacedust (and can technically miss)
+	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1), null, target)
 
 /datum/round_event/dark_matteor/announce(fake)
 	priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/effects/curse1.ogg')

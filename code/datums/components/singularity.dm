@@ -361,7 +361,7 @@
 	if(!target || QDELETED(target))
 		target = find_new_target()
 		foreboding_nosebleed(target)
-	. = ..()
+	return ..()
 
 ///Searches the living list for the closest target, and begins chasing them down.
 /datum/component/singularity/bloodthirsty/proc/find_new_target()
@@ -392,7 +392,7 @@
 			to_chat(carbon_target, span_notice("You get a headache."))
 			return
 		head.adjustBleedStacks(5)
-		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_notice("You get a nosebleed."))
+		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_warning("You get a nosebleed."))
 		return
 	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
