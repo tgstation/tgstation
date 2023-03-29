@@ -86,7 +86,7 @@
 		storedcutter = null
 		update_appearance()
 
-	if(storedpaper)
+	if(storedpaper && storedpaper != /obj/item/paper/paperslip)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
 		to_chat(user, span_notice("You neatly cut [storedpaper]."))
 		storedpaper = null
@@ -94,6 +94,8 @@
 		new /obj/item/paper/paperslip(get_turf(src))
 		new /obj/item/paper/paperslip(get_turf(src))
 		update_appearance()
+	if(storedpaper == /obj/item/paper/paperslip)
+		to_chat(user, span_notice("You can't cut [storedpaper] as its already cut!"))
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
 	. = ..()
@@ -115,11 +117,16 @@
 	icon_state = "paperslip"
 	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
-/obj/item/paper/paperslip/corporate
-	name = "corporate paper slip"
-	desc = "A little slip of paper for confidental corporate matters. Slightly more resistant to external forces." //A fluff to use for confidental and secret info
+/obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+	name = "corporate plastic card"
+	desc = "A plastic card for confidental corporate matters. Can be written on with pen somehow."
 	icon_state = "corppaperslip"
-	max_integrity = 70
+	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
+	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
+	throw_range = 10
+	throw_speed = 3
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter"

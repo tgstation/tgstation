@@ -155,7 +155,7 @@
 	var/obj/item/paper/paperslip/fortune_slip = new trash_type(drop_location)
 	fortune_slip.name = "fortune slip"
 	// if someone adds lottery tickets in the future, be sure to add random numbers to this
-	fortune_slip.desc = pick(GLOB.wisdoms)
+	fortune_slip.default_raw_text = pick(GLOB.wisdoms)
 
 	return fortune_slip
 
