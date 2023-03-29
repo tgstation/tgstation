@@ -70,7 +70,7 @@ for applicable_file in filtered_files:
                 error_found = True
 
 if error_found:
-    print(red(f"Please #undef the above defines or remake them as global defines in the /__DEFINES directory."))
+    print(red(f"Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."))
     sys.exit(1)
 else:
     print(green("No unhandled local defines found."))
