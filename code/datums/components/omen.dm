@@ -69,6 +69,13 @@
 				qdel(src)
 			return
 
+	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
+		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
+		if(future_tram_victim.toast(living_guy))
+			if(!permanent)
+				qdel(src)
+			return
+
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
 		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))

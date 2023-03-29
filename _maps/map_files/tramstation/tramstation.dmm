@@ -20357,6 +20357,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"fPa" = (
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 2;
+	inbound = 1
+	},
+/area/station/hallway/primary/tram/left)
 "fPh" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/firealarm/directional/south,
@@ -27221,6 +27227,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"iBj" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/noslip/tram_plate/energized{
+	inbound = 1;
+	outbound = 2
+	},
+/area/station/hallway/primary/tram/left)
 "iBm" = (
 /obj/machinery/light/directional/west,
 /obj/structure/bed{
@@ -35472,7 +35488,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 2;
+	inbound = 1
+	},
 /area/station/hallway/primary/tram/left)
 "lxH" = (
 /obj/structure/table,
@@ -45551,6 +45570,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ppb" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 3;
+	inbound = 2
+	},
+/area/station/hallway/primary/tram/center)
 "pph" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/syringes{
@@ -46730,7 +46759,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 2;
+	inbound = 1
+	},
 /area/station/hallway/primary/tram/center)
 "pHM" = (
 /obj/structure/lattice,
@@ -48410,6 +48442,12 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
+"qog" = (
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 3;
+	inbound = 2
+	},
+/area/station/hallway/primary/tram/right)
 "qoo" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Robotics Lab"
@@ -69885,7 +69923,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate/energized{
+	outbound = 3;
+	inbound = 2
+	},
 /area/station/hallway/primary/tram/right)
 "yfw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -152864,7 +152905,7 @@ wqg
 yiM
 cFs
 lNP
-nJq
+fPa
 vVY
 cFs
 yiM
@@ -156205,7 +156246,7 @@ xBV
 xlT
 jva
 qWY
-lxz
+iBj
 jEc
 jva
 vlb
@@ -169569,7 +169610,7 @@ vok
 aFp
 kNT
 brr
-pHL
+ppb
 fbk
 kNT
 xXb
@@ -169826,7 +169867,7 @@ hEp
 qRq
 kNT
 brr
-pHL
+ppb
 fbk
 kNT
 wuH
@@ -182676,7 +182717,7 @@ vie
 bMb
 brm
 iOd
-ozQ
+qog
 vPi
 brm
 bMb
