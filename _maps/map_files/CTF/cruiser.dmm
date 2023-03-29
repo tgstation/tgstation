@@ -35,7 +35,7 @@
 /turf/closed/indestructible/syndicate,
 /area/centcom/ctf)
 "cu" = (
-/obj/machinery/capture_the_flag/green,
+/obj/machinery/ctf/spawner/green,
 /turf/open/floor/circuit/green,
 /area/centcom/ctf)
 "cy" = (
@@ -53,7 +53,7 @@
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "cO" = (
-/obj/item/ctf/green,
+/obj/item/ctf_flag/green,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "dq" = (
@@ -273,7 +273,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/ctf)
 "pR" = (
-/obj/machinery/capture_the_flag/red,
+/obj/machinery/ctf/spawner/red,
 /turf/open/floor/circuit/red,
 /area/centcom/ctf)
 "rB" = (
@@ -640,7 +640,7 @@
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "LS" = (
-/obj/item/ctf/red,
+/obj/item/ctf_flag/red,
 /turf/open/floor/circuit/red/anim,
 /area/centcom/ctf)
 "MC" = (

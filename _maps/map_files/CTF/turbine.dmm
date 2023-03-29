@@ -13,7 +13,7 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "bT" = (
-/obj/machinery/capture_the_flag/blue,
+/obj/machinery/ctf/spawner/blue,
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "da" = (
@@ -387,7 +387,7 @@
 	},
 /area/centcom/ctf)
 "KA" = (
-/obj/machinery/capture_the_flag/red,
+/obj/machinery/ctf/spawner/red,
 /turf/open/floor/iron/white,
 /area/centcom/ctf)
 "KL" = (
@@ -490,8 +490,8 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Qn" = (
-/obj/item/ctf/blue,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/item/ctf_flag/blue,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Qp" = (
@@ -591,8 +591,8 @@
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "Ub" = (
-/obj/item/ctf/red,
 /obj/effect/turf_decal/tile/red/full,
+/obj/item/ctf_flag/red,
 /turf/open/floor/iron/large,
 /area/centcom/ctf)
 "UD" = (
