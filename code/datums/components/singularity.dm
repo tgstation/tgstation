@@ -350,9 +350,11 @@
 	var/atom/atom_parent = parent
 	//handle current target
 	if(target && !QDELETED(target))
+		if(istype(target, /obj/machinery/power/singularity_beacon))
+			return ..() //don't switch targets from a singulo beacon
 		if(target.z != atom_parent.z)
 			target = null
-		var/living/potentially_closer = find_new_target()
+		var/mob/living/potentially_closer = find_new_target()
 		if(potentially_closer != target && prob(20))
 			target = potentially_closer
 	//if we lost that target get a new one
@@ -379,17 +381,19 @@
 
 /// gives a little fluff warning that someone is being hunted.
 /datum/component/singularity/bloodthirsty/proc/foreboding_nosebleed(mob/living/target)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-		var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
-		if(head)
-			if(has_no_blood)
-				to_chat(carbon_target, span_notice("You get a headache."))
-				return
-			head.adjustBleedStacks(5)
-			carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_notice("You get a nosebleed."))
+	if(!iscarbon(target))
+		to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
+		return
+	var/mob/living/carbon/carbon_target = target
+	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
+	var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
+	if(head)
+		if(has_no_blood)
+			to_chat(carbon_target, span_notice("You get a headache."))
 			return
+		head.adjustBleedStacks(5)
+		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_notice("You get a nosebleed."))
+		return
 	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
 #undef CHANCE_TO_MOVE_TO_TARGET
