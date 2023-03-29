@@ -7,14 +7,12 @@
 /area/template_noop)
 "e" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "h" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "j" = (
@@ -29,7 +27,7 @@
 /area/template_noop)
 "y" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -37,16 +35,20 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "E" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "L" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)

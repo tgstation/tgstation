@@ -60,6 +60,7 @@ jobs:
           tools/bootstrap/python tools/validate_dme.py <tgstation.dme
           tools/bootstrap/python -m tools.maplint.source --github
           tools/build/build --ci lint tgui-test
+          tools/bootstrap/python -m define_sanity.check
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1

@@ -113,29 +113,43 @@
 	toolspeed = 0.1
 	/// Amount of damage we deal to the mining and boss factions.
 	var/mining_bonus_force = 80
+	/// Our cooldown declare for our special knockback hit
+	COOLDOWN_DECLARE(tendril_hammer_cd)
 
 /obj/item/goliath_infuser_hammer/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/goliath_infuser_hammer/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/goliath_infuser_hammer/examine(mob/user)
 	. = ..()
-	user.changeNext_move(CLICK_CD_MELEE * 2) //hits slower but HARD
+	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user)
-	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in target.faction) && !(FACTION_BOSS in target.faction))
-		// Target is not a nemesis, so attack normally.
-		return ..()
-	// Apply nemesis-specific effects.
-	nemesis_effects(user, target)
-	// Can't apply bonus force if target isn't "solid", or is occupying the same turf as the user.
-	if(!target.density || get_turf(target) == get_turf(user))
-		return ..()
-	// Target is a nemesis, and we CAN apply bonus force.
-	force += mining_bonus_force
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	. = ..()
-	force -= mining_bonus_force
+	if(!proximity_flag)
+		return
+
+	//If we're on cooldown, we'll do a normal attack.
+	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))
+		return
+
+	//do a normal attack if our target isn't living, since we're gonna define them after this.
+	if(!isliving(target))
+		return
+
+	var/mob/living/fresh_pancake = target
+
+	// Check for nemesis factions on the target.
+	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
+		// Target is not a nemesis, so attack normally.
+		return
+
+	// Apply nemesis-specific effects.
+	nemesis_effects(user, fresh_pancake)
+
+	// Target is a nemesis, and so now we do the extra big damage and go on cooldown
+	fresh_pancake.apply_damage(mining_bonus_force, damtype) //smush
+	COOLDOWN_START(src, tendril_hammer_cd, 2 SECONDS)
 
 /obj/item/goliath_infuser_hammer/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))

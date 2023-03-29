@@ -31,9 +31,7 @@
 "ac" = (
 /obj/machinery/computer/shuttle/pirate,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ad" = (
@@ -1017,9 +1015,7 @@
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 

@@ -136,3 +136,5 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
 #endif
+
+#undef ERROR_USEFUL_LEN

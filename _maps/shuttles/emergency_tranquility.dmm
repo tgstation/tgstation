@@ -1,0 +1,3724 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"ag" = (
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"aj" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/chair/sofa/bamboo/right{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"aI" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"ba" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-22";
+	pixel_x = -8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"bd" = (
+/obj/structure/sign/poster/official/there_is_no_gas_giant{
+	pixel_y = -32
+	},
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"bi" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"bq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"bB" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"bG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/poster/official/corporate_perks_vacation{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"bP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"bS" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/structure/flora/bush/stalky{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"ct" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"cD" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 4;
+	pixel_y = 4
+	},
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = 32
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"cM" = (
+/turf/open/floor/iron/chapel,
+/area/shuttle/escape)
+"dI" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"dW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"er" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/hedge{
+	icon_state = "hedge-8"
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"et" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"eu" = (
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eD" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 5
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = -5
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"eH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"eN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eW" = (
+/obj/structure/bookcase/random/reference,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"eY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"fe" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"fv" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"fC" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/snappops{
+	pixel_y = 11;
+	pixel_x = 4
+	},
+/obj/item/storage/box/matches{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"fD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"fL" = (
+/turf/template_noop,
+/area/template_noop)
+"fY" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"gd" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ge" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"gg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"gh" = (
+/obj/item/chair/plastic{
+	pixel_y = 5
+	},
+/obj/item/chair/plastic{
+	pixel_y = 9;
+	pixel_x = 1
+	},
+/obj/item/chair/plastic{
+	pixel_y = 14;
+	pixel_x = 3
+	},
+/obj/effect/turf_decal/box,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"gz" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"hd" = (
+/obj/structure/chair/sofa/left/brown,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"he" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"hh" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"hk" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bamboo/right{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"hm" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 2;
+	layer = 3.1
+	},
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_y = 5
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"hx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"hB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"hG" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"hP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"hT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"ij" = (
+/obj/structure/railing/corner{
+	dir = 2;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/chair/sofa/bamboo/left{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"ik" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"ir" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"iz" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"iM" = (
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bamboo/left{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"iY" = (
+/obj/structure/sign/poster/official/download{
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"jb" = (
+/obj/machinery/barsign/all_access/directional/north,
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"jl" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/structure/flora/bush/fullgrass/style_2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"jt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/blood_geometer{
+	pixel_y = 32
+	},
+/turf/open/water,
+/area/shuttle/escape)
+"ju" = (
+/obj/structure/table/reinforced,
+/obj/item/newspaper{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/megaphone/command{
+	pixel_y = 5;
+	pixel_x = 2
+	},
+/obj/item/gps{
+	pixel_x = -6
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"jB" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/storage/photo_album{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"jI" = (
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"jM" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/flora/bush/style_4,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"kh" = (
+/obj/structure/railing/corner{
+	dir = 2;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"kl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/structure/flora/bush/fullgrass,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"kn" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"kp" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 2;
+	layer = 3.1
+	},
+/obj/machinery/microwave,
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"kE" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Escape Shuttle Infirmary"
+	},
+/turf/open/floor/iron/smooth_half,
+/area/shuttle/escape)
+"kK" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"kU" = (
+/obj/effect/turf_decal/plaque,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"ll" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/dark/corner,
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"lF" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"lQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"mc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"mj" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"mq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"mL" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/lighter,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"mQ" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_y = 15;
+	pixel_x = -5
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/trash/shrimp_chips{
+	pixel_x = -5
+	},
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"mR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood,
+/obj/item/newspaper{
+	pixel_x = -4
+	},
+/obj/item/newspaper{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/newspaper{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"ni" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-03"
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"nq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"nv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/chair/comfy/black,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"nw" = (
+/obj/structure/chair/pew/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"nz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"nA" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449";
+	layer = 3.1
+	},
+/obj/structure/flora/rock/pile/jungle/style_3{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"nE" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"nG" = (
+/obj/structure/flora/bush/flowers_br/style_3,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"nM" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"nV" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"ob" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/table/wood,
+/obj/item/binoculars,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"oe" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"oj" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/flora/bush/style_3,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"os" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"ow" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"oy" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"oB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"oE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/item/toy/plush/beeplushie{
+	name = "Comfort Specialist Gordon"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"oK" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"oV" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"pe" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"pf" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/mob/living/simple_animal/butterfly{
+	name = "Peacekeeper Henry"
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"pn" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/flora/bush/flowers_br/style_2,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"pK" = (
+/obj/structure/reagent_dispensers/foamtank,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"pN" = (
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen/fourcolor{
+	pixel_x = -4
+	},
+/obj/item/stamp{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8
+	},
+/obj/item/stamp/qm{
+	pixel_y = -5;
+	pixel_x = 8
+	},
+/obj/structure/table/reinforced{
+	color = "#c1b6a5"
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"pP" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/hedge{
+	icon_state = "hedge-8"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"qd" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/radio,
+/obj/item/radio,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"qm" = (
+/obj/structure/closet/cardboard,
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/hooded/wintercoat/custom,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -11;
+	pixel_x = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"qn" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"qw" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"qB" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"qU" = (
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"ri" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"rK" = (
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/iron/chapel,
+/area/shuttle/escape)
+"rL" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"rR" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"rV" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"si" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"sB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"sI" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"sK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"sM" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"sU" = (
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/flora/bush/ferny,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"sW" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/emcloset/anchored,
+/obj/structure/sign/poster/official/jim_nortons{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"sY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"tc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"ts" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/stasis,
+/obj/machinery/light/directional,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"tB" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"tO" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"ux" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"uz" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"uK" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/stasis,
+/obj/structure/sign/poster/official/moth_epi{
+	pixel_y = 32
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"uR" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	layer = 3.1
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"uT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"vd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"vl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"vx" = (
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"vy" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/item/lighter,
+/obj/structure/table/reinforced{
+	color = "#c1b6a5"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"vB" = (
+/obj/structure/railing/corner{
+	dir = 2;
+	color = "#A47449"
+	},
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449"
+	},
+/turf/open/floor/iron/stairs{
+	dir = 1
+	},
+/area/shuttle/escape)
+"vI" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"vT" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"vX" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"wi" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"wm" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table/optable,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"wp" = (
+/obj/machinery/light/directional/east,
+/obj/structure/flora/bush/fullgrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"wA" = (
+/obj/structure/chair/pew/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"wG" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"wM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"wV" = (
+/obj/machinery/computer/crew,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"xK" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"xQ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"xS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"yj" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/bot/left,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
+"yo" = (
+/obj/structure/chair/office{
+	dir = 1;
+	name = "tactical swivel chair"
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"yu" = (
+/obj/structure/fluff/beach_umbrella{
+	pixel_x = -15;
+	pixel_y = 9
+	},
+/obj/item/storage/basket,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"yy" = (
+/obj/structure/flora/bush/sparsegrass{
+	pixel_y = -6;
+	pixel_x = 9
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"yF" = (
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
+/obj/structure/flora/bush/fullgrass,
+/obj/structure/flora/bush/flowers_yw,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"yJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"yV" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"zb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"zf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/water,
+/area/shuttle/escape)
+"zj" = (
+/obj/effect/turf_decal/siding/wood/end,
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"zo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/vending/coffee,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"zB" = (
+/obj/machinery/vending/games,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"zI" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	color = "#A47449"
+	},
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
+/turf/open/floor/iron/stairs,
+/area/shuttle/escape)
+"zX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/mob/living/simple_animal/bot/cleanbot,
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"At" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"Ay" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Az" = (
+/obj/structure/chair/office{
+	dir = 4;
+	name = "tactical swivel chair"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"AC" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"AF" = (
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"AN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/vending/coffee,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"AQ" = (
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"Bf" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Bn" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"Bs" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"By" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449";
+	layer = 3.1
+	},
+/obj/structure/flora/bush/large/style_2{
+	pixel_x = -6;
+	pixel_y = -16
+	},
+/obj/structure/flora/rock/pile/jungle{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"BC" = (
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"BL" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/hedge{
+	icon_state = "hedge-8"
+	},
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"Ci" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 6;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"Cw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"CR" = (
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Dd" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/obj/machinery/light/directional,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Dk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"DC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"DE" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"DZ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/ion_rifle{
+	pixel_y = 32
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"Ec" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 2;
+	layer = 3.1
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	name = "BrewMaster 2199"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"Ek" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"EH" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	color = "#A47449"
+	},
+/obj/structure/flora/bush/flowers_br{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"EW" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/shuttle/escape)
+"Fc" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/desk_bell{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -2
+	},
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"Fg" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/structure/flora/grass/jungle/b{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"Fj" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/chair/sofa/right/brown,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Fv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/structure/sign/poster/official/festive{
+	pixel_y = -32
+	},
+/turf/open/water,
+/area/shuttle/escape)
+"FS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/hedge{
+	icon_state = "hedge-4"
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"FU" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -4
+	},
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"FV" = (
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"FY" = (
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Gg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/keycard_auth/directional/south,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Gh" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/rack,
+/obj/item/storage/medkit{
+	pixel_y = 10
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Gl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Gp" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/flora/grass/jungle/b/style_2,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Gs" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood,
+/obj/item/book/fish_catalog{
+	pixel_x = -4
+	},
+/obj/item/food/grown/poppy/lily{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Gz" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"GK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"GM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape)
+"GR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"Hj" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Hp" = (
+/obj/structure/chair/comfy/shuttle{
+	name = "tactical chair";
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Hq" = (
+/obj/structure/railing{
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Hu" = (
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/shuttle/escape)
+"HE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"HL" = (
+/obj/structure/railing/corner{
+	dir = 2;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"HS" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Ih" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"IG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"IH" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4;
+	pixel_y = 4
+	},
+/obj/structure/sign/poster/official/midtown_slice{
+	pixel_x = -32
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"IJ" = (
+/obj/item/food/baguette{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/food/bechamel_sauce{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"IO" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/keycard_auth/directional/south,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"IR" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"IV" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"IY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"IZ" = (
+/turf/open/floor/catwalk_floor,
+/area/shuttle/escape)
+"Jo" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Jp" = (
+/obj/structure/railing/corner{
+	dir = 4;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Js" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Tranquility emergency shuttle"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"JG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"JS" = (
+/turf/open/floor/iron/stairs/left,
+/area/shuttle/escape)
+"Kg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/water,
+/area/shuttle/escape)
+"Km" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Kr" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Kt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/flora/grass/jungle/b/style_5,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"KB" = (
+/obj/structure/flora/grass/jungle{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"KE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"KH" = (
+/turf/open/floor/iron/chapel{
+	dir = 4
+	},
+/area/shuttle/escape)
+"KI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spirit_board,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"KJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4;
+	layer = 3.2
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/flowers_pp/style_2,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"KK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"KV" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Lb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Lm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"LD" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"LE" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"LG" = (
+/obj/structure/table/reinforced,
+/obj/machinery/fax{
+	fax_name = "Captain's Office";
+	name = "Captain's Fax Machine"
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"MF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"MO" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"MU" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"MV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/vending/cigarette,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"Na" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8;
+	layer = 3.2
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Nm" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/iron/herringbone,
+/area/shuttle/escape)
+"NC" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"NK" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"NU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"NV" = (
+/turf/open/floor/iron/chapel{
+	dir = 8
+	},
+/area/shuttle/escape)
+"Oh" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/mob/living/simple_animal/chicken{
+	name = "Relaxation Technician James"
+	},
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Oi" = (
+/obj/structure/flora/bush/sunny{
+	pixel_x = 2
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Oj" = (
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 10;
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Om" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Or" = (
+/obj/machinery/light/floor,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"OB" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"OG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"OM" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/laptop{
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Pa" = (
+/obj/machinery/vending/engivend,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Pg" = (
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Pi" = (
+/obj/structure/closet/secure_closet/bar,
+/obj/machinery/light/directional/west,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"Pq" = (
+/obj/machinery/computer/security,
+/obj/structure/plaque/static_plaque/golden/captain{
+	pixel_y = 29
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Qq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Qt" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/structure/flora/grass/jungle{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"Qz" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"QK" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"QR" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"QV" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Rm" = (
+/obj/structure/table/reinforced,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/item/trash/boritos{
+	pixel_y = -7;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"Rx" = (
+/mob/living/simple_animal/bot/hygienebot,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"RD" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"RG" = (
+/obj/structure/railing/corner{
+	dir = 2;
+	color = "#A47449"
+	},
+/obj/structure/flora/bush/reed/style_2{
+	pixel_y = 21;
+	pixel_x = -1
+	},
+/obj/structure/flora/bush/reed/style_3{
+	pixel_y = 10;
+	pixel_x = -9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"RL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"RM" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 7;
+	pixel_y = 14;
+	layer = 3.1
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"Sa" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Sl" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	layer = 3.1
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"St" = (
+/obj/structure/railing{
+	layer = 3.1
+	},
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Sy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/departments/engineering/directional/west,
+/obj/structure/hedge{
+	icon_state = "hedge-12"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Sz" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"SA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"SH" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clipboard{
+	pixel_x = -10
+	},
+/obj/item/trash/chips{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"SM" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"SR" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"SU" = (
+/obj/structure/closet/radiation,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Tb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"Tq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"Tw" = (
+/obj/structure/statue/sandstone/venus{
+	layer = 4;
+	anchored = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Ty" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 4
+	},
+/turf/open/water,
+/area/shuttle/escape)
+"TV" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/shuttle/escape)
+"Uc" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"UF" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"UH" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/hedge{
+	icon_state = "hedge-12"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"UJ" = (
+/mob/living/simple_animal/butterfly{
+	name = "Peacekeeper Henry"
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"UU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"VF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"VR" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/shuttle/escape)
+"VY" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/item/toy/cards/deck{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/toy/cards/deck/kotahi{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"VZ" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/table,
+/obj/item/lazarus_injector,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/clothing/gloves/latex/nitrile{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Wi" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#A47449";
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/shuttle/escape)
+"Wo" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Wx" = (
+/obj/structure/railing/corner{
+	dir = 1;
+	color = "#A47449"
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"WM" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
+"Xa" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/shuttle/escape)
+"Xt" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"XC" = (
+/obj/structure/flora/bush/lavendergrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"XJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"XW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"XX" = (
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"Yc" = (
+/obj/structure/sign/departments/medbay/alt/directional,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"Yh" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"YB" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/hacking_guide{
+	pixel_x = 32
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/shuttle/escape)
+"YO" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/sepia,
+/area/shuttle/escape)
+"YR" = (
+/obj/structure/sign/departments/security,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"Zf" = (
+/turf/open/floor/iron/stairs/right,
+/area/shuttle/escape)
+"Zh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Zn" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"ZF" = (
+/obj/structure/sign/poster/official/fruit_bowl{
+	pixel_y = 32
+	},
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"ZJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/shuttle/escape)
+"ZT" = (
+/turf/open/water/jungle,
+/area/shuttle/escape)
+"ZW" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/e_gun/mini{
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+QV
+QV
+ux
+QV
+QV
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(2,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+ux
+gd
+gd
+ux
+gd
+gd
+ux
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(3,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+ux
+pK
+ir
+gh
+FV
+FY
+Qz
+qd
+ux
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(4,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+Pa
+IZ
+ik
+ik
+ik
+DE
+rR
+SR
+lF
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(5,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+MV
+sB
+Ec
+yj
+IZ
+LD
+YB
+Rm
+eD
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(6,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+bi
+ZJ
+hm
+WM
+IZ
+ux
+ux
+ux
+ux
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(7,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+fC
+ZJ
+kp
+yj
+IZ
+ux
+eW
+hx
+bd
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(8,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+Wo
+ux
+ux
+MU
+ux
+ux
+vx
+ux
+ZF
+lQ
+rV
+ux
+Wo
+fL
+fL
+fL
+fL
+fL
+"}
+(9,1,1) = {"
+fL
+fL
+fL
+fL
+Wo
+ux
+cD
+IH
+hT
+Pi
+ux
+vX
+ux
+Km
+gg
+Tb
+zB
+ux
+Wo
+fL
+fL
+fL
+fL
+"}
+(10,1,1) = {"
+fL
+fL
+fL
+fL
+ux
+jb
+sK
+sK
+HE
+FU
+ux
+fv
+ux
+Gs
+JG
+IG
+he
+DC
+Sz
+fL
+fL
+fL
+fL
+"}
+(11,1,1) = {"
+ux
+QV
+QV
+ux
+ux
+YO
+mQ
+ct
+Fc
+tO
+Sy
+AF
+UH
+QR
+JG
+qU
+RM
+VY
+ux
+ux
+QV
+QV
+ux
+"}
+(12,1,1) = {"
+ux
+gd
+gd
+ux
+bP
+Pg
+Pg
+Pg
+Pg
+MF
+pP
+AQ
+BL
+Tw
+XW
+nq
+XJ
+Tq
+zX
+ux
+gd
+gd
+ux
+"}
+(13,1,1) = {"
+RL
+vl
+IY
+RL
+dI
+uT
+Om
+Om
+ad
+Xt
+wM
+oV
+MO
+dI
+uT
+fD
+fD
+dW
+Xt
+RL
+IY
+IY
+RL
+"}
+(14,1,1) = {"
+ux
+zf
+Fv
+ux
+Rx
+Qq
+sY
+sY
+qB
+CR
+LE
+Xa
+zj
+CR
+si
+sY
+sY
+qB
+AC
+ux
+jt
+Kg
+ux
+"}
+(15,1,1) = {"
+fe
+oB
+oB
+Bs
+qw
+ni
+UU
+ow
+os
+IR
+wM
+Uc
+MO
+ob
+Lb
+UU
+kl
+Ih
+fY
+fe
+oB
+oB
+fe
+"}
+(16,1,1) = {"
+ux
+sW
+NC
+ux
+zo
+vT
+iM
+aj
+oj
+hB
+vd
+nz
+MO
+nv
+vT
+Wx
+By
+jl
+VF
+ux
+oy
+NC
+ux
+"}
+(17,1,1) = {"
+Sz
+oe
+oe
+Sz
+Na
+sU
+UJ
+kn
+IV
+Oj
+Zh
+Sa
+nE
+vT
+yF
+ag
+ag
+nA
+bS
+Sz
+oe
+oe
+Sz
+"}
+(18,1,1) = {"
+Sz
+Gz
+Gz
+Sz
+ag
+kn
+Oi
+XC
+kn
+vB
+Zh
+Or
+wG
+zI
+yy
+ag
+KB
+Qt
+ZT
+Sz
+Gz
+Gz
+Sz
+"}
+(19,1,1) = {"
+Sz
+yV
+yV
+Sz
+KJ
+Jp
+Kr
+ag
+HL
+pf
+Zh
+AF
+nE
+HS
+EH
+QK
+bB
+RG
+aI
+Sz
+yV
+yV
+Sz
+"}
+(20,1,1) = {"
+ux
+UF
+pe
+ux
+AN
+HS
+hk
+ij
+jM
+Fj
+wM
+OG
+MO
+ba
+HS
+Fg
+kh
+Ci
+Cw
+ux
+UF
+pe
+ux
+"}
+(21,1,1) = {"
+Js
+vl
+vl
+KE
+dI
+uT
+Lm
+tc
+mR
+hd
+wM
+AQ
+MO
+dI
+uT
+Wi
+yJ
+dW
+Xt
+RL
+IY
+IY
+RL
+"}
+(22,1,1) = {"
+ux
+zf
+Ty
+ux
+Rx
+si
+mc
+mc
+rL
+CR
+wM
+kU
+Bn
+bq
+zb
+xS
+xS
+tB
+AC
+ux
+Ty
+Kg
+ux
+"}
+(23,1,1) = {"
+fe
+oB
+oB
+fe
+qw
+et
+Ek
+Gl
+Ih
+fY
+wM
+AQ
+uR
+ge
+wA
+nw
+At
+SA
+uz
+fe
+oB
+oB
+fe
+"}
+(24,1,1) = {"
+Wo
+ux
+SU
+ux
+bG
+Kt
+Oh
+Gp
+Gl
+Ih
+wM
+AQ
+NK
+JS
+Hu
+NV
+Hu
+NV
+SA
+ux
+qm
+ux
+Wo
+"}
+(25,1,1) = {"
+fL
+Wo
+ux
+ux
+ux
+ag
+yu
+IJ
+pn
+FS
+Zh
+AF
+sM
+Zf
+KH
+cM
+KH
+rK
+ux
+ux
+ux
+Wo
+fL
+"}
+(26,1,1) = {"
+fL
+fL
+fL
+fL
+ux
+nG
+hh
+iY
+wp
+er
+Zh
+AF
+Sl
+gz
+xK
+qn
+mL
+KI
+ux
+fL
+fL
+fL
+fL
+"}
+(27,1,1) = {"
+fL
+fL
+fL
+fL
+Wo
+ux
+ux
+ux
+ux
+YR
+Bf
+Sz
+Zn
+Yc
+ux
+ux
+ux
+ux
+Wo
+fL
+fL
+fL
+fL
+"}
+(28,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+ux
+nM
+GM
+ri
+Sz
+hP
+jI
+TV
+Sz
+Gh
+wm
+Dd
+ux
+fL
+fL
+fL
+fL
+fL
+"}
+(29,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+Sz
+Hj
+Yh
+Yh
+OB
+hP
+jI
+TV
+kE
+kK
+kK
+iz
+Sz
+fL
+fL
+fL
+fL
+fL
+"}
+(30,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+Sz
+sI
+sI
+vI
+hG
+hP
+jI
+TV
+kE
+Nm
+GR
+eY
+Sz
+fL
+fL
+fL
+fL
+fL
+"}
+(31,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+ux
+DZ
+xQ
+mj
+ux
+Sz
+KV
+Sz
+ux
+uK
+VZ
+ts
+ux
+fL
+fL
+fL
+fL
+fL
+"}
+(32,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+Wo
+ux
+ux
+ux
+ux
+Ay
+GK
+SM
+ux
+ux
+ux
+ux
+Wo
+fL
+fL
+fL
+fL
+fL
+"}
+(33,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+Pq
+yo
+oK
+EW
+GK
+Jo
+mq
+KK
+IO
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(34,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+ux
+wV
+XX
+ll
+VR
+GK
+Jo
+Dk
+jB
+nV
+Sz
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(35,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+Sz
+LG
+XX
+Hq
+OM
+GK
+Jo
+oE
+ZW
+nV
+Sz
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(36,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+Sz
+ju
+Hp
+Hq
+SH
+Az
+eN
+NU
+eH
+Gg
+ux
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(37,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+Sz
+Sz
+RD
+St
+wi
+BC
+eu
+vy
+pN
+ux
+Wo
+fL
+fL
+fL
+fL
+fL
+fL
+"}
+(38,1,1) = {"
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+Sz
+Sz
+Sz
+Sz
+Sz
+Sz
+Sz
+ux
+Wo
+fL
+fL
+fL
+fL
+fL
+fL
+fL
+"}

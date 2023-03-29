@@ -416,3 +416,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef TUMOR_ACTIVE
+#undef TUMOR_INACTIVE
+#undef TUMOR_PASSIVE
