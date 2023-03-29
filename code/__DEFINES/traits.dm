@@ -925,6 +925,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+/// Makes an organ not detected by health scanners and not known by body purists
+#define HIDDEN_IMPLANT_TRAIT "hidden_implant_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
