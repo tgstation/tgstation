@@ -576,9 +576,6 @@
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S
 
-/// Midround Abductors Ruleset (From Ghosts)
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
@@ -610,8 +607,6 @@
 	else // Our second guy is the agent, team is already created, don't need to make another one.
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
-
-#undef ABDUCTOR_MAX_TEAMS
 
 /// Midround Space Ninja Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
@@ -902,3 +897,6 @@
 	if(possible_targets.len)
 		return pick(possible_targets)
 	return FALSE
+
+#undef MALF_ION_PROB
+#undef REPLACE_LAW_WITH_ION_PROB
