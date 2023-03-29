@@ -4143,6 +4143,10 @@
 /area/station/command/heads_quarters/hos)
 "auP" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "HOSOffice";
+	name = "Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
 "auR" = (
@@ -20893,7 +20897,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/disposalpipe/segment,
@@ -63161,7 +63165,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "vyG" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Head of Security"
 	},
 /obj/machinery/door/firedoor,
@@ -64270,7 +64274,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
 	},
 /obj/structure/cable,
