@@ -77,7 +77,7 @@
 	if(approach_distance < 0)
 		return FALSE
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	visible_message(
+	audible_message(
 		span_hear("You hear an electric crackle when you step on the plate...")
 	)
 	if(tram.travel_direction & WEST && inbound < tram.idle_platform.platform_code)
