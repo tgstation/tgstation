@@ -175,6 +175,8 @@
 		/obj/item/clothing/glasses/hud/diagnostic = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist/skirt = 2,
+		/obj/item/clothing/under/rank/rnd/roboticist/boiler = 2,
+		/obj/item/clothing/under/rank/rnd/roboticist/boiler/skirt =2,
 		/obj/item/clothing/suit/toggle/labcoat/roboticist = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science/robotics = 3,
 		/obj/item/clothing/shoes/sneakers/black = 2,
