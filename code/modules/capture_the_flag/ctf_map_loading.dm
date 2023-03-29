@@ -2,6 +2,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 
 /obj/effect/landmark/ctf
 	name = "CTF Map Spawner"
+	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/map_bounds
 
 /obj/effect/landmark/ctf/Initialize(mapload)
@@ -9,6 +10,9 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	if(GLOB.ctf_spawner)
 		qdel(GLOB.ctf_spawner)
 	GLOB.ctf_spawner = src
+	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[game_id]
+	if(isnull(ctf_controller))
+		create_ctf_game(game_id)
 
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)

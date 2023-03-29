@@ -128,7 +128,7 @@
 	var/list/team_members = list()
 	var/team_span = ""
 
-/datum/ctf_team/New(obj/machinery/capture_the_flag/spawner)
+/datum/ctf_team/New(obj/machinery/ctf/spawner/spawner)
 	. = ..()
 	src.spawner = spawner
 	team_color = spawner.team

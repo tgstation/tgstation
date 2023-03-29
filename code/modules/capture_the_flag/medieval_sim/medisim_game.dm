@@ -9,26 +9,17 @@
 	player_traits = list()
 	//var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>" //ToDo impliment a thing for this
 
-/obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard 
-	game_id = "medieval" //Todo: actually set up this id somewhere
-	game_area = /area/shuttle/escape/simulation
-	ammo_type = null //no guns, no need
-	victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>"
-	player_traits = list()
-
-/obj/machinery/capture_the_flag/medisim/Initialize(mapload)
+/obj/machinery/ctf/spawner/medisim/Initialize(mapload)
 	. = ..()
-	start_ctf() //both machines initialize, so both will call start_ctf instead of toggle_id_ctf calling it for both, twice.
+	ctf_game.start_ctf()
 
+/*
 /obj/machinery/capture_the_flag/medisim/victory()
 	. = ..()
 	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
+	*/ //Todo: Port this functionality somewhere
 
-// We don't clean up for the medisim.
-/obj/machinery/capture_the_flag/medisim/unload()
-	return
-
-/obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
+/obj/machinery/ctf/spawner/medisim/spawn_team_member(client/new_team_member)
 	. = ..()
 	if(!.)
 		return
@@ -47,14 +38,14 @@
 	human_knight.real_name = "[title] [oldname]"
 	human_knight.name = human_knight.real_name
 
-/obj/machinery/capture_the_flag/medisim/red
+/obj/machinery/ctf/spawner/medisim/red
 	name = "\improper Redfield Data Realizer"
 	icon_state = "syndbeacon"
 	team = REDFIELD_TEAM
 	team_span = "redteamradio"
 	ctf_gear = list("knight" = /datum/outfit/ctf/medisim, "archer" = /datum/outfit/ctf/medisim/archer)
 
-/obj/machinery/capture_the_flag/medisim/blue
+/obj/machinery/ctf/spawner/medisim/blue
 	name = "\improper Bluesworth Data Realizer"
 	icon_state = "bluebeacon"
 	team = BLUESWORTH_TEAM
