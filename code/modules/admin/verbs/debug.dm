@@ -737,7 +737,7 @@
 	set name = "Unload CTF"
 	set desc = "Despawns the majority of CTF"
 
-	toggle_id_ctf(usr, unload=TRUE)
+	toggle_id_ctf(usr, "centcom", unload=TRUE)
 
 /client/proc/run_empty_query(val as num)
 	set category = "Debug"
