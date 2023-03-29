@@ -4,7 +4,7 @@
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
 	slowdown = 0
-	flags_1 = null
+	flags_1 = NONE
 
 /turf/open/floor/noslip/tram_plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."
