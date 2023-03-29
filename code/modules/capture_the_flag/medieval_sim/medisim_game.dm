@@ -3,8 +3,8 @@
 #define REDFIELD_TEAM "Red"
 #define BLUESWORTH_TEAM "Blue"
 
-/obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard
-	game_id = "medieval"
+/obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard 
+	game_id = "medieval" //Todo: actually set up this id somewhere
 	game_area = /area/shuttle/escape/simulation
 	ammo_type = null //no guns, no need
 	victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>"

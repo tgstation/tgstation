@@ -2850,7 +2850,7 @@
 #include "code\modules\buildmode\submodes\variable_edit.dm"
 #include "code\modules\capture_the_flag\_defines.dm"
 #include "code\modules\capture_the_flag\ctf_classes.dm"
-#include "code\modules\capture_the_flag\ctf_controler.dm"
+#include "code\modules\capture_the_flag\ctf_controller.dm"
 #include "code\modules\capture_the_flag\ctf_equipment.dm"
 #include "code\modules\capture_the_flag\ctf_game.dm"
 #include "code\modules\capture_the_flag\ctf_map_loading.dm"

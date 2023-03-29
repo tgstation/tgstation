@@ -41,3 +41,19 @@
 /datum/component/ctf_player/proc/allow_respawns()
 	can_respawn = TRUE
 	//Insert message to player
+
+/datum/component/ctf_player/proc/send_message(message)
+	to_chat(parent, message)
+
+/datum/component/ctf_player/proc/end_game()
+	if(player_mob)
+		for(var/obj/item/ctf/flag in player_mob)
+				player_mob.dropItemToGround(flag)
+		player_mob.dust()
+	qdel(src)
+
+/datum/component/ctf_player/Destroy(force, silent)
+	if(player_mob)
+		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
+	return ..()
+	

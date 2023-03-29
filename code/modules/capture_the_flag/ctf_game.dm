@@ -108,6 +108,7 @@
 		return
 	if(ctf_game.team_valid_to_join(team, user))
 		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>") //Todo change order of things so you get to message when your actually assigned to a team
+		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
 		spawn_team_member(new_team_member)
 
@@ -140,7 +141,7 @@
 
 		sort_list(display_classes)
 		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
-		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE || !new_team_member.ckey in ctf_game.get_players(team))
+		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || !isobserver(new_team_member.mob) || ctf_game.ctf_enabled == FALSE || !(new_team_member.ckey in ctf_game.get_players(team)))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
 				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
 
@@ -169,22 +170,16 @@
 	if(istype(item, /obj/item/ctf)) //Todo, rename item/ctf to item/ctf_flag or something because this is dumb
 		var/obj/item/ctf/flag = item
 		if(flag.team != team)
-			//Insert point scoring code, player annoucement code and victory triggering code
+			ctf_game.capture_flag(team, user, team_span, flag)
 			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
 
-//victory() would go here but it might be unused if I can port it all to the controller
-
 //toggle_ctf() this is almost certainly going to end up in the controller if we actually need it
-
-//start_ctf() Enabling system already ported, figure something out for barriccades
 
 //Machine_reset() recreate this in the controller, its dumb to put it here
 
 //control_point_reset() controller again, should be easy
 
 //unload() Should be an easy controller port
-
-//Stop_ctf() Controller for sure
 
 //Instagib_mode() - Controller but not essential, get back to later
 
