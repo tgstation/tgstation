@@ -3,6 +3,11 @@
 #define REDFIELD_TEAM "Red"
 #define BLUESWORTH_TEAM "Blue"
 
+/obj/machinery/ctf/spawner/medisim
+	game_id = CTF_MEDISIM_CTF_GAME_ID
+	ammo_type = null
+	player_traits = list()
+
 /obj/machinery/capture_the_flag/medisim //Todo: Convert to new standard 
 	game_id = "medieval" //Todo: actually set up this id somewhere
 	game_area = /area/shuttle/escape/simulation

@@ -110,11 +110,7 @@
 		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>") //Todo change order of things so you get to message when your actually assigned to a team
 		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
-		spawn_team_member(new_team_member)
-
-	//if(user.mind && user.mind.current)  Todo: Check what this does, Pretty sure this is usless?
-	//		ctf_dust_old(user.mind.current) 
-	
+		spawn_team_member(new_team_member)	
 
 /obj/machinery/ctf/spawner/Topic(href, href_list)
 	if(href_list["join"])
@@ -154,7 +150,7 @@
 		player_mob.set_species(/datum/species/human)
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))
-		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game)
+		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game, ammo_type)
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
@@ -185,13 +181,77 @@
 
 //normal_mode() - Ditto above
 
+/obj/item/ctf_flag
+	name = "banner"
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner"
+	inhand_icon_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	desc = "A banner with Nanotrasen's logo on it."
+	slowdown = 2
+	throw_speed = 0
+	throw_range = 1
+	force = 200
+	armour_penetration = 1000
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	anchored = TRUE
+	item_flags = SLOWS_WHILE_IN_HAND
+	var/team = WHITE_TEAM
+	var/reset_cooldown = 0
+	var/anyonecanpickup = TRUE
+	var/obj/effect/ctf/flag_reset/reset
+	var/game_id = CTF_GHOST_CTF_GAME_ID
+	var/datum/ctf_controller/ctf_game
 
+/obj/item/ctf_flag/Destroy()
+	QDEL_NULL(reset)
+	return ..()
 
+/obj/item/ctf/Initialize(mapload)
+	. = ..()
+	ctf_game = GLOB.ctf_games[game_id]
+	if(!reset)
+		reset = new(get_turf(src))
+		reset.flag = src
+		reset.icon_state = icon_state
+		reset.name = "[name] landmark"
 
+//process
 
+//reset_flag
 
+//attack_hand
 
+//Dropped
 
+/obj/item/ctf_flag/red
+	name = "red flag"
+	icon_state = "banner-red"
+	inhand_icon_state = "banner-red"
+	desc = "A red banner used to play capture the flag."
+	team = RED_TEAM
+
+/obj/item/ctf_flag/blue
+	name = "blue flag"
+	icon_state = "banner-blue"
+	inhand_icon_state = "banner-blue"
+	desc = "A blue banner used to play capture the flag."
+	team = BLUE_TEAM
+
+/obj/item/ctf_flag/green
+	name = "green flag"
+	icon_state = "banner-green"
+	inhand_icon_state = "banner-green"
+	desc = "A green banner used to play capture the flag."
+	team = GREEN_TEAM
+
+/obj/item/ctf_flag/yellow
+	name = "yellow flag"
+	icon_state = "banner-yellow"
+	inhand_icon_state = "banner-yellow"
+	desc = "A yellow banner used to play capture the flag."
+	team = YELLOW_TEAM
 
 
 
@@ -338,7 +398,7 @@
 		flag = null
 	return ..()
 
-/obj/effect/ctf/flag_reset/red
+/obj/effect/ctf/flag_reset/red //Todo: Scap all these subtypes
 	name = "red flag landmark"
 	icon_state = "banner-red"
 	desc = "This is where a red banner used to play capture the flag \
