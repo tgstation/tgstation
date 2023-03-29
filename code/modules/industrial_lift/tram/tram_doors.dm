@@ -108,7 +108,7 @@
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower()  && density)
-		balloon_alert(user, "Pulling emergency exit")
+		balloon_alert(user, "activating emergency exit")
 		if(do_after(user, 7 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
@@ -119,8 +119,7 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
 	if(tram_part.travel_distance < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
-		do_animate("deny")
-		return
+		return // we're already animating, don't reset that
 	cycle_doors(OPEN_DOORS, TRUE) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return
 
