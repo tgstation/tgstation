@@ -473,6 +473,13 @@
 	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
 	credit_cost = CARGO_CRATE_VALUE * 70
 
+/datum/map_template/shuttle/emergency/tranquility
+	suffix = "tranquility"
+	name = "The Tranquility Relocation Shuttle"
+	description = "A large shuttle, covered in flora and comfortable resting areas. The perfect way to end a peaceful shift"
+	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
+	credit_cost = CARGO_CRATE_VALUE * 25
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
