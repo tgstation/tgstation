@@ -17,10 +17,12 @@ def post_error(define_name, file, github_error_style):
     if github_error_style:
         print(f"::error file={file},title=Define Sanity::{define_name} is defined locally in {file} but not undefined locally!")
     else:
-        print(red(f"- Error parsing {file}: {define_name} is defined locally in {file} but not undefined locally!"))
+        print(red(f"- Failure: {define_name} is defined locally in {file} but not undefined locally!"))
 
 parent_directory = "code/**/*.dm"
 # This files/directories are expected to have "global" defines, so they must be exempt from this check.
+# Add directories as string here to automatically be exempt in case you have a non-complaint file name.
+# Any file pre-pended with a `_` is automatically exempt.
 excluded_files = [
     #  Wildcard directories, all files are expected to be exempt.
     "code/__DEFINES/*.dm",
@@ -36,16 +38,15 @@ excluded_files = [
     "code/modules/tgs/core/_definitions.dm",
     "code/modules/unit_tests/_unit_tests.dm",
     # The following files are "encapsulated" in their own folders.
-    "code/controllers/configuration/config_entry.dm",
     "code/modules/client/preferences/_preference.dm",
     "code/datums/keybinding/_defines.dm",
-    "code/modules/atmospherics/machinery/components/fusion/_hfr_defines.dm",
     "code/datums/keybinding/_defines.dm",
     "code/game/machinery/computer/atmos_computers/__identifiers.dm",
     "code/modules/mafia/_defines.dm",
 ]
 
-define_regex = re.compile("#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
+define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
+file_determination_regex = re.compile(r"code(.+)?\\(.+).dm")
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
@@ -59,12 +60,22 @@ if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
 
 for code_file in glob.glob(parent_directory, recursive=True):
-    in_exempt_directory = False
+    exempt_file = False
     for exempt_directory in excluded_files:
         if fnmatch.fnmatch(code_file, exempt_directory):
-            in_exempt_directory = True
+            exempt_file = True
             break
-    if not in_exempt_directory:
+
+    if exempt_file:
+        continue
+
+    file_regex_result = re.search(file_determination_regex, code_file)
+
+    refined_file_name = file_regex_result.group(2)
+    if refined_file_name[0] == "_":
+        exempt_file = True
+
+    if not exempt_file:
         filtered_files.append(code_file)
 
 located_error_tuples = []
