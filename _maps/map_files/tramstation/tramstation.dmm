@@ -27199,9 +27199,6 @@
 /area/station/hallway/secondary/exit)
 "iAt" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /turf/open/openspace/airless,
 /area/station/asteroid)
 "iAx" = (
@@ -50015,13 +50012,6 @@
 /obj/machinery/computer/security/telescreen/interrogation,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
-"qSG" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/openspace/airless,
-/area/station/asteroid)
 "qSP" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -177829,7 +177819,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aap
 iAt
 mSE
 lGu
@@ -178086,8 +178076,8 @@ aaa
 aaa
 aac
 aac
-bFw
-qSG
+aap
+iWf
 iWf
 gpr
 bFw
