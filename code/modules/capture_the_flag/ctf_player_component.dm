@@ -38,7 +38,7 @@
 		player_mob.dust()
 		player_mob = null
 		can_respawn = FALSE
-		addtimer(CALLBACK(src, PROC_REF(allow_respawns)), ctf_game.respawn_cooldown ,TIMER_UNIQUE) //Todo link with associated ctf game for respawn cooldown times
+		addtimer(CALLBACK(src, PROC_REF(allow_respawns)), ctf_game.respawn_cooldown, TIMER_UNIQUE)
 		if(death_drop)
 			new death_drop(death_turf)
 
@@ -51,8 +51,8 @@
 
 /datum/component/ctf_player/proc/end_game()
 	if(player_mob)
-		for(var/obj/item/ctf/flag in player_mob)
-				player_mob.dropItemToGround(flag)
+		for(var/obj/item/ctf_flag/flag in player_mob)
+			player_mob.dropItemToGround(flag)
 		player_mob.dust()
 	qdel(src)
 

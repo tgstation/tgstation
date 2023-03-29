@@ -60,23 +60,23 @@
 	team_span = "blueteamradio"
 	ctf_gear = list("knight" = /datum/outfit/ctf/medisim/blue, "archer" = /datum/outfit/ctf/medisim/archer/blue)
 
-/obj/item/ctf/red/medisim
+/obj/item/ctf_flag/red/medisim
 	name = "\improper Redfield Castle Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "plushie_nuke"
 	force = 0
-	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
+	game_id = CTF_MEDISIM_CTF_GAME_ID
 
-/obj/item/ctf/blue/medisim
+/obj/item/ctf_flag/blue/medisim
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "plushie_slime"
 	force = 0
-	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
+	game_id = CTF_MEDISIM_CTF_GAME_ID
 
 #undef REDFIELD_TEAM
 #undef BLUESWORTH_TEAM

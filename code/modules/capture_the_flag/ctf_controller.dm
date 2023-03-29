@@ -3,7 +3,8 @@
 /datum/ctf_controller
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/datum/ctf_team/teams = list()
-	var/points_to_win = 3
+	var/list/obj/machinery/ctf/control_point/control_points = list()
+	var/points_to_win = 180
 	var/ctf_enabled = FALSE
 	var/respawn_cooldown = DEFAULT_RESPAWN
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
@@ -25,6 +26,7 @@
 	
 /datum/ctf_controller/proc/stop_ctf()
 	ctf_enabled = FALSE
+	clear_control_points()
 	for(var/datum/ctf_team/team in teams)
 		team.reset_team()
 
@@ -38,8 +40,8 @@
 /datum/ctf_controller/proc/add_player(team_color, ckey, datum/component/ctf_player/new_team_member)
 	teams[team_color].team_members[ckey] = new_team_member
 
-/datum/ctf_controller/proc/get_player_component(team_color, key)
-	return teams[team_color].team_members[key]
+/datum/ctf_controller/proc/get_player_component(team_color, ckey)
+	return teams[team_color].team_members[ckey]
 
 /datum/ctf_controller/proc/get_players(team_color)
 	return teams[team_color].team_members
@@ -64,11 +66,16 @@
 			return FALSE
 	return TRUE
 
-//Probably need to split up capture flag into capture flag and score point so it can be used for control points
-
-/datum/ctf_controller/proc/capture_flag(team_color, mob/living/user, team_span, flag)
-	teams[team_color].points++
+/datum/ctf_controller/proc/capture_flag(team_color, mob/living/user, team_span, obj/item/ctf_flag/flag)
+	teams[team_color].score_points(flag.flag_value)
 	message_all_teams("<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team_color] team! They now have [get_points(team_color)]/[points_to_win] points!</span>")
+	if(get_points(team_color) >= points_to_win)
+		victory(team_color)
+
+/datum/ctf_controller/proc/control_point_scoring(team_color, points)
+	teams[team_color].score_points(points)
+	if(get_points(team_color) == points_to_win/2)
+		message_all_teams("<span class='userdanger [teams[team_color].team_span]'>[team_color] is half way to winning! they only need [points_to_win/2] more points to win!</span>")
 	if(get_points(team_color) >= points_to_win)
 		victory(team_color)
 
@@ -77,13 +84,17 @@
 
 /datum/ctf_controller/proc/victory(winning_team)
 	ctf_enabled = FALSE //Medi-sim never disables itself, todo, support this
+	clear_control_points()
 	var/datum/ctf_team/winning_ctf_team = teams[winning_team]
 	for(var/team in teams)
 		var/datum/ctf_team/ctf_team = teams[team]
 		ctf_team.message_team("<span class='narsie [winning_ctf_team.team_span]'>[winning_team] team wins!</span>")
 		ctf_team.message_team(victory_rejoin_text)
 		ctf_team.reset_team()
-	//Control point reset code
+
+/datum/ctf_controller/proc/clear_control_points()
+	for(var/obj/machinery/ctf/control_point/control_point in control_points)
+		control_point.clear_point()
 
 /datum/ctf_controller/proc/message_all_teams(message)
 	for(var/team in teams)
@@ -101,6 +112,9 @@
 	src.spawner = spawner
 	team_color = spawner.team
 	team_span = spawner.team_span
+
+/datum/ctf_team/proc/score_points(points_scored)
+	points += points_scored
 
 /datum/ctf_team/proc/reset_team()
 	points = 0

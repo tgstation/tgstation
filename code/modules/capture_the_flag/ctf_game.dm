@@ -163,19 +163,15 @@
 	SIGNAL_HANDLER //ToDo, test chasms and other qdel methods, delete this if we don't need it anymore.
 
 /obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/ctf)) //Todo, rename item/ctf to item/ctf_flag or something because this is dumb
-		var/obj/item/ctf/flag = item
+	if(istype(item, /obj/item/ctf_flag))
+		var/obj/item/ctf_flag/flag = item
 		if(flag.team != team)
 			ctf_game.capture_flag(team, user, team_span, flag)
 			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
 
 //toggle_ctf() this is almost certainly going to end up in the controller if we actually need it
 
-//Machine_reset() recreate this in the controller, its dumb to put it here
-
-//control_point_reset() controller again, should be easy
-
-//unload() Should be an easy controller port
+//unload() Port to controller
 
 //Instagib_mode() - Controller but not essential, get back to later
 
@@ -203,12 +199,13 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/datum/ctf_controller/ctf_game
+	var/flag_value = 1
 
 /obj/item/ctf_flag/Destroy()
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/ctf/Initialize(mapload)
+/obj/item/ctf_flag/Initialize(mapload)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id]
 	if(!reset)
@@ -216,14 +213,55 @@
 		reset.flag = src
 		reset.icon_state = icon_state
 		reset.name = "[name] landmark"
+		reset.name = "This is where \the [name] will respawn in a game of CTF"
 
-//process
+/obj/item/ctf_flag/process() //Todo: Theres probably a better way to handle this...
+	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
+		return PROCESS_KILL
+	if(world.time > reset_cooldown)
+		reset_flag()
 
-//reset_flag
+/obj/item/ctf_flag/proc/reset_flag(capture = FALSE) //Todo: improve this if possible
+	STOP_PROCESSING(SSobj, src)
 
-//attack_hand
+	var/turf/our_turf = get_turf(src.reset)
+	if(!our_turf)
+		return TRUE
+	forceMove(our_turf)
+	if(!capture)
+		ctf_game.message_all_teams("[src] has been returned to the base!")
 
-//Dropped
+//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
+/obj/item/ctf_flag/attack_hand(mob/living/user, list/modifiers) //Todo: I dont even understand this, can it be saved?
+	//pre normal check item stuff, this is for our special flag checks
+	if(!is_ctf_target(user) && !anyonecanpickup)
+		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
+		return
+	if(team in user.faction)
+		to_chat(user, span_warning("You can't move your own flag!"))
+		return
+	if(loc == user)
+		if(!user.dropItemToGround(src))
+			return
+	ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been taken!"))
+	STOP_PROCESSING(SSobj, src)
+	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
+	. = ..() //this is the actual normal item checks
+	if(.) //only apply these flag passives
+		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
+		return
+	//passing means the user picked up the flag so we can now apply this
+	user.set_anchored(TRUE)
+	user.status_flags &= ~CANPUSH
+
+/obj/item/ctf_flag/dropped(mob/user) //Todo: Improve this if possible
+	..()
+	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
+	user.status_flags |= CANPUSH
+	reset_cooldown = world.time + 20 SECONDS
+	START_PROCESSING(SSobj, src)
+	ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been dropped!"))
+	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 
 /obj/item/ctf_flag/red
 	name = "red flag"
@@ -253,144 +291,13 @@
 	desc = "A yellow banner used to play capture the flag."
 	team = YELLOW_TEAM
 
-
-
-
-
-
-/obj/item/ctf //Todo, rename to something less dumb
-	name = "banner"
-	icon = 'icons/obj/banner.dmi'
-	icon_state = "banner"
-	inhand_icon_state = "banner"
-	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	desc = "A banner with Nanotrasen's logo on it."
-	slowdown = 2
-	throw_speed = 0
-	throw_range = 1
-	force = 200
-	armour_penetration = 1000
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	anchored = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
-	var/team = WHITE_TEAM
-	var/reset_cooldown = 0
-	var/anyonecanpickup = TRUE
-	var/obj/effect/ctf/flag_reset/reset
-	var/reset_path = /obj/effect/ctf/flag_reset //Surely we can merge this and above? Todo: Do so if we can
-	/// Which area we announce updates on the flag to. Should just generally be the area of the arena.
-	var/game_area = /area/centcom/ctf //Todo: nuke this from orbit
-
-/obj/item/ctf/Destroy()
-	QDEL_NULL(reset)
-	return ..()
-
-/obj/item/ctf/Initialize(mapload)
-	. = ..()
-	if(!reset)
-		reset = new reset_path(get_turf(src))
-		reset.flag = src
-
-/obj/item/ctf/process() //Theres probably a better way to handle this...
-	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
-		return PROCESS_KILL
-	if(world.time > reset_cooldown)
-		reset_flag()
-
-/obj/item/ctf/proc/reset_flag(capture = FALSE)
-	STOP_PROCESSING(SSobj, src)
-
-	var/turf/our_turf = get_turf(src.reset)
-	if(!our_turf)
-		return TRUE
-	forceMove(our_turf)
-	for(var/mob/M in GLOB.player_list)
-		var/area/mob_area = get_area(M)
-		if(istype(mob_area, game_area))
-			if(!capture)
-				to_chat(M, span_userdanger("[src] has been returned to the base!")) //💀
-
-//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
-/obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
-	//pre normal check item stuff, this is for our special flag checks
-	if(!is_ctf_target(user) && !anyonecanpickup)
-		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
-		return
-	if(team in user.faction)
-		to_chat(user, span_warning("You can't move your own flag!"))
-		return
-	if(loc == user)
-		if(!user.dropItemToGround(src))
-			return
-	for(var/mob/M in GLOB.player_list)
-		var/area/mob_area = get_area(M)
-		if(istype(mob_area, game_area))
-			to_chat(M, span_userdanger("\The [initial(src.name)] has been taken!"))
-	STOP_PROCESSING(SSobj, src)
-	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
-	. = ..() //this is the actual normal item checks
-	if(.) //only apply these flag passives
-		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
-		return
-	//passing means the user picked up the flag so we can now apply this
-	user.set_anchored(TRUE)
-	user.status_flags &= ~CANPUSH
-
-/obj/item/ctf/dropped(mob/user)
-	..()
-	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
-	user.status_flags |= CANPUSH
-	reset_cooldown = world.time + 20 SECONDS
-	START_PROCESSING(SSobj, src)
-	for(var/mob/M in GLOB.player_list)
-		var/area/mob_area = get_area(M)
-		if(istype(mob_area, game_area))
-			to_chat(M, span_userdanger("\The [initial(name)] has been dropped!"))
-	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
-
-
-/obj/item/ctf/red
-	name = "red flag"
-	icon_state = "banner-red"
-	inhand_icon_state = "banner-red"
-	desc = "A red banner used to play capture the flag."
-	team = RED_TEAM
-	reset_path = /obj/effect/ctf/flag_reset/red
-
-
-/obj/item/ctf/blue
-	name = "blue flag"
-	icon_state = "banner-blue"
-	inhand_icon_state = "banner-blue"
-	desc = "A blue banner used to play capture the flag."
-	team = BLUE_TEAM
-	reset_path = /obj/effect/ctf/flag_reset/blue
-
-/obj/item/ctf/green
-	name = "green flag"
-	icon_state = "banner-green"
-	inhand_icon_state = "banner-green"
-	desc = "A green banner used to play capture the flag."
-	team = GREEN_TEAM
-	reset_path = /obj/effect/ctf/flag_reset/green
-
-
-/obj/item/ctf/yellow
-	name = "yellow flag"
-	icon_state = "banner-yellow"
-	inhand_icon_state = "banner-yellow"
-	desc = "A yellow banner used to play capture the flag."
-	team = YELLOW_TEAM
-	reset_path = /obj/effect/ctf/flag_reset/yellow
-
 /obj/effect/ctf/flag_reset
 	name = "banner landmark"
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
-	desc = "This is where a banner with Nanotrasen's logo on it would go."
+	desc = "This is where a CTF flag will respawn."
 	layer = LOW_ITEM_LAYER
-	var/obj/item/ctf/flag
+	var/obj/item/ctf_flag/flag
 
 /obj/effect/ctf/flag_reset/Destroy()
 	if(flag)
@@ -398,29 +305,58 @@
 		flag = null
 	return ..()
 
-/obj/effect/ctf/flag_reset/red //Todo: Scap all these subtypes
-	name = "red flag landmark"
-	icon_state = "banner-red"
-	desc = "This is where a red banner used to play capture the flag \
-		would go."
+/obj/machinery/ctf/control_point
+	name = "control point"
+	desc = "You should capture this"
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator"
+	var/controlling_team
+	var/point_rate = 1
 
-/obj/effect/ctf/flag_reset/blue
-	name = "blue flag landmark"
-	icon_state = "banner-blue"
-	desc = "This is where a blue banner used to play capture the flag \
-		would go."
+/obj/machinery/ctf/control_point/Initialize(mapload)
+	. = ..()
+	ctf_game.control_points |= src
 
-/obj/effect/ctf/flag_reset/green
-	name = "green flag landmark"
-	icon_state = "banner"
-	desc = "This is where a green banner used to play capture the flag \
-		would go."
+/obj/machinery/ctf/control_point/Destroy()
+	ctf_game.control_points.Remove(src)
+	return ..()
 
-/obj/effect/ctf/flag_reset/yellow
-	name = "yellow flag landmark"
-	icon_state = "banner"
-	desc = "This is where a yellow banner used to play capture the flag \
-		would go."
+/obj/machinery/ctf/control_point/process(delta_time)
+	if(controlling_team)
+		ctf_game.control_point_scoring(controlling_team, point_rate * delta_time)
+	
+	var/scores
+
+	if(ctf_game.ctf_enabled)
+		for(var/team in ctf_game.teams)
+			var/datum/ctf_team/ctf_team = ctf_game.teams[team]
+			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
+		balloon_alert_to_viewers(scores)
+	
+/obj/machinery/ctf/control_point/attackby(mob/user, params)
+	capture(user)
+	
+/obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	capture(user)
+
+/obj/machinery/ctf/control_point/proc/capture(mob/user)
+	if(do_after(user, 3 SECONDS, target = src))
+		var/datum/component/ctf_player/ctf_player = user.mind.GetComponent(/datum/component/ctf_player)
+		if(isnull(ctf_player))
+			to_chat(user, span_warning("Non-players shouldn't be capturing control points"))
+			return
+		controlling_team = ctf_player.team
+		icon_state = "dominator-[controlling_team]"
+		ctf_game.message_all_teams("<span class='userdanger [ctf_game.teams[controlling_team].team_span]'>[user.real_name] has captured \the [src], claiming it for [controlling_team]! Go take it back!</span>")
+
+/obj/machinery/ctf/control_point/proc/clear_point()
+	controlling_team = null
+	icon_state = "dominator"
+
+
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1
@@ -692,8 +628,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ctf))
-		var/obj/item/ctf/flag = I
+	if(istype(I, /obj/item/ctf_flag))
+		var/obj/item/ctf_flag/flag = I
 		if(flag.team != src.team)
 			points++
 			flag.reset_flag(capture = TRUE)
@@ -711,7 +647,7 @@
 		if(istype(mob_area, game_area))
 			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
 			to_chat(competitor, victory_rejoin_text)
-			for(var/obj/item/ctf/W in competitor)
+			for(var/obj/item/ctf_flag/W in competitor)
 				competitor.dropItemToGround(W)
 			competitor.dust()
 	control_point_reset()
@@ -747,9 +683,9 @@
 	CTF.arena_reset = FALSE
 
 /obj/machinery/capture_the_flag/proc/control_point_reset()
-	for(var/obj/machinery/control_point/control in GLOB.machines)
+	for(var/obj/machinery/ctf/control_point/control in GLOB.machines)
 		control.icon_state = "dominator"
-		control.controlling = null
+		control.controlling_team = null
 
 /obj/machinery/capture_the_flag/proc/unload()
 	if(!ctf_landmark)
@@ -799,13 +735,13 @@
 /obj/structure/trap/ctf/examine(mob/user) //This is stupid, Todo: make it less so
 	return
 
-/obj/structure/trap/ctf/trap_effect(mob/living/L)
-	if(!is_ctf_target(L))
+/obj/structure/trap/ctf/trap_effect(mob/living/living)
+	if(!is_ctf_target(living))
 		return
-	if(!(src.team in L.faction))
-		to_chat(L, span_danger("<B>Stay out of the enemy spawn!</B>"))
-		L.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
-		L.death()
+	if(!(src.team in living.faction))
+		to_chat(living, span_danger("<B>Stay out of the enemy spawn!</B>"))
+		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
+		living.apply_damage(200)
 
 /obj/structure/trap/ctf/red
 	team = RED_TEAM
