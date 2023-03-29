@@ -33,11 +33,10 @@
 	return ..()
 
 /obj/item/pai_card/attack_self(mob/user)
-if(!in_range(src, user))
+	if(!in_range(src, user))
 		return
 	user.set_machine(src)
 	ui_interact(user)
-
 
 /obj/item/pai_card/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
