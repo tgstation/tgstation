@@ -35,13 +35,11 @@ excluded_files = [
     "code/modules/tgs/v5/_defines.dm",
     "code/modules/tgs/core/_definitions.dm",
     "code/modules/unit_tests/_unit_tests.dm",
-    # In an ideal world, anything below this line shouldn't be the way it is and moved to the __DEFINES directory. This is not an ideal world.
-    # If you disagree, feel free to either refactor them out of this list or move them to the "Singular Files" section.
-    "code/controllers/subsystem/atoms.dm",
+    # The following files are "encapsulated" in their own folders.
     "code/controllers/configuration/config_entry.dm",
     "code/modules/client/preferences/_preference.dm",
     "code/datums/keybinding/_defines.dm",
-    "code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm",
+    "code/modules/atmospherics/machinery/components/fusion/_hfr_defines.dm",
     "code/datums/keybinding/_defines.dm",
     "code/game/machinery/computer/atmos_computers/__identifiers.dm",
     "code/modules/mafia/_defines.dm",
