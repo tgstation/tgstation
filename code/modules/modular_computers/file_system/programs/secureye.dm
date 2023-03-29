@@ -189,3 +189,5 @@
 		if(tempnetwork.len)
 			camlist["[cam.c_tag]"] = cam
 	return camlist
+
+#undef DEFAULT_MAP_SIZE
