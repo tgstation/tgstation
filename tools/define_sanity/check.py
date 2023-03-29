@@ -4,6 +4,11 @@ import os
 import re
 import sys
 
+parent_directory = "code/**/*.dm"
+
+output_file_name = "define_sanity_output.txt"
+how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
+
 def green(text):
     return "\033[32m" + str(text) + "\033[0m"
 
@@ -19,8 +24,6 @@ def post_error(define_name, file, github_error_style):
     else:
         print(red(f"- Failure: {define_name} is defined locally in {file} but not undefined locally!"))
 
-parent_directory = "code/**/*.dm"
-
 # simple way to check if we're running on github actions, or on a local machine
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
@@ -35,20 +38,7 @@ excluded_files = [
     "code/modules/tgs/**/*.dm",
 ]
 
-# In addition to the previous directories, any file pre-pended with a `_` is automatically exempt.
-# What does this mean? Basically let's say you have a file named `code/modules/whatever/_example.dm`.
-# We scan every file name for that pre-pended `_` in "_example" and if it exists, we don't scan it for defines.
-
 define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?\s")
-file_determination_regex = ""
-
-if on_github or os.name == "posix":
-    file_determination_regex = re.compile(r"code(.+)?\/(.+).dm") # i hate it here
-else:
-    file_determination_regex = re.compile(r"code(.+)?\\(.+).dm")
-
-output_file_name = "define_sanity_output.txt"
-how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
 
 filtered_files = []
 
@@ -65,10 +55,8 @@ for code_file in glob.glob(parent_directory, recursive=True):
     if exempt_file:
         continue
 
-    file_regex_result = re.search(file_determination_regex, code_file)
-
-    refined_file_name = file_regex_result.group(2)
-    if refined_file_name[0] == "_":
+    # If the "base path" of the file starts with an underscore, it's assumed to be an encapsulated file holding references to the other files in its folder and is exempt from the checks.
+    if os.path.basename(code_file)[0] == "_":
         exempt_file = True
 
     if not exempt_file:
@@ -102,5 +90,6 @@ if len(located_error_tuples):
 
     print(red(how_to_fix_message))
     sys.exit(1)
+
 else:
     print(green("No unhandled local defines found."))
