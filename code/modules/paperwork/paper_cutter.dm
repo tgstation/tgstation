@@ -118,15 +118,15 @@
 	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
 /obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
- name = "corporate plastic card"
- desc = "A plastic card for confidental corporate matters. Can be written on with pen somehow."
- icon_state = "corppaperslip"
- grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
- max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
- drop_sound = 'sound/items/handling/disk_drop.ogg'
- pickup_sound = 'sound/items/handling/disk_pickup.ogg'
- throw_range = 10
- throw_speed = 3
+	name = "corporate plastic card"
+	desc = "A plastic card for confidental corporate matters. Can be written on with pen somehow."
+	icon_state = "corppaperslip"
+	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
+	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
+	throw_range = 10
+	throw_speed = 3
 
 /obj/item/hatchet/cutterblade
  name = "paper cutter"
