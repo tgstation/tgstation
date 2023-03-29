@@ -35,6 +35,9 @@
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
 
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
+	bodytemp_cold_damage_limit = BODYTEMP_COLD_ICEBOX_SAFE
+
 	mutanteyes = /obj/item/organ/internal/eyes/golem
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
