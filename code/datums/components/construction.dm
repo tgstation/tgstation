@@ -162,3 +162,8 @@
 
 /datum/component/construction/unordered/custom_action(obj/item/I, mob/living/user, typepath)
 	return TRUE
+
+#undef FORWARD
+#undef BACKWARD
+#undef ITEM_DELETE
+#undef ITEM_MOVE_INSIDE
