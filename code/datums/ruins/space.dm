@@ -380,7 +380,6 @@
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
 
-
 /datum/map_template/ruin/space/transit_booth
 	id = "transit_booth"
 	suffix = "transit_booth.dmm"
