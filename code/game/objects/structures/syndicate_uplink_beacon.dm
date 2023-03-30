@@ -32,19 +32,18 @@
 	teleport_beacon = new(src)
 
 /obj/structure/syndicate_uplink_beacon/attack_hand(mob/living/user, list/modifiers)
-	if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+	if(!IS_TRAITOR(user))
 		balloon_alert(user, "don't know how to use!")
 		return
-	if(owner == WEAKREF(user))
+	if(IS_WEAKREF_OF(owner, user))
 		balloon_alert(user, "already synchronized to you!")
 		return
 	if(owner != null)
 		balloon_alert(user, "already claimed!")
 		return
-	var/datum/looping_sound/typing/typing_sounds = new(src, TRUE)
-	balloon_alert(user, "beginning synchronization...")
+	var/datum/looping_sound/typing/typing_sounds = new(src, /*start_immediately =*/TRUE)
+	balloon_alert(user, "synchronizing...")
 	if(!do_after(user = user, delay = 3 SECONDS, target = src, interaction_key = REF(src)))
-		balloon_alert(user, "interrupted!")
 		typing_sounds.stop()
 		return
 	typing_sounds.stop()
@@ -103,14 +102,14 @@
 	SEND_SIGNAL(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED)
 	new /obj/item/uplink(get_turf(src), resolved_owner, 0, uplink_handler)
 	flick("relay_traitor_activate", src)
-	do_sparks(5, FALSE, src)
+	do_sparks(number = 5, cardinal_only = FALSE, source = src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
 
 // Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item)
 		return NONE
-	if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+	if(!IS_TRAITOR(user))
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Synchronize with beacon"
 	return CONTEXTUAL_SCREENTIP_SET
