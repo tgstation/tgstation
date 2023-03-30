@@ -1,3 +1,6 @@
+#define CTF_DEFAULT_RESPAWN 15 SECONDS
+#define CTF_INSTAGIB_RESPAWN 5 SECONDS
+
 /datum/ctf_controller
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/datum/ctf_team/teams = list()
@@ -184,3 +187,6 @@
 		return GLOB.ctf_games[game_id]
 	var/datum/ctf_controller/CTF = new(game_id)
 	return CTF
+
+#undef CTF_DEFAULT_RESPAWN
+#undef CTF_INSTAGIB_RESPAWN
