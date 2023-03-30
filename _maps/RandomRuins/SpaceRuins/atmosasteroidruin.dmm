@@ -90,8 +90,8 @@
 /area/ruin/space/has_grav)
 "gz" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "hG" = (
@@ -374,8 +374,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 8
 	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "Ce" = (
@@ -496,10 +496,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
 "FR" = (
-/obj/machinery/electrolyzer,
 /obj/effect/turf_decal/box,
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav)
 "FT" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -745,8 +747,8 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav)
 "SF" = (
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
 /area/ruin/space/has_grav)
 "SK" = (
