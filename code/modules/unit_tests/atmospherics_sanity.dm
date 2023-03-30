@@ -42,6 +42,8 @@
 		/area/station/science/xenobiology,
 		// viro
 		/area/station/medical/virology,
+		// ai satt
+		/area/station/ai_monitored/turret_protected/ai,
 	)
 	for(var/area/start_area as anything in start_areas)
 		crawl_area(GLOB.areas_by_type[start_area])
