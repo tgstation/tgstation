@@ -168,7 +168,7 @@
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(standing, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(standing.icon, "[icon_state]-emissive", src, alpha = src.alpha)
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
