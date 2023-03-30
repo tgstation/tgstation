@@ -1092,3 +1092,6 @@
 		return TRUE
 
 	return FALSE
+
+#undef MOVES_HITSCAN
+#undef MUZZLE_EFFECT_PIXEL_INCREMENT

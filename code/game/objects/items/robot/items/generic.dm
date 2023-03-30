@@ -353,3 +353,14 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
+
+#undef HUG_MODE_NICE
+#undef HUG_MODE_HUG
+#undef HUG_MODE_SHOCK
+#undef HUG_MODE_CRUSH
+
+#undef HUG_SHOCK_COOLDOWN
+#undef HUG_CRUSH_COOLDOWN
+
+#undef HARM_ALARM_NO_SAFETY_COOLDOWN
+#undef HARM_ALARM_SAFETY_COOLDOWN
