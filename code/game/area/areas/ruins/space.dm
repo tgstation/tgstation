@@ -585,6 +585,10 @@
 /area/ruin/space/has_grav/powered/botanical_haven
 	name = "\improper Botanical Haven"
 
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
 	name = "Waystation Maintenance"
