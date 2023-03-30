@@ -613,7 +613,7 @@
 	name = "Cargonian Heavy Freighter"
 	description = "Show the crew who the real heroes of the station are and get your precious cargo home and do it in style! Who needs passangers?"
 	admin_notes = "Painful to look at, very little seating but very large interor space. Includes convayor belts and a teleporter with gigabeacon. Beacon added mostly to justify the absurd cost other than the tacky decorations."
-	credit_cost = CARGO_CRATE_VALUE * 80
+	credit_cost = CARGO_CRATE_VALUE * 115
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
