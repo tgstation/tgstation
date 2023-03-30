@@ -1129,3 +1129,5 @@
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
+
+#undef CALL_BOT_COOLDOWN

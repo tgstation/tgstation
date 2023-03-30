@@ -96,3 +96,5 @@
 	base_lighting_alpha = 255
 
 	map_generator = /datum/map_generator/jungle_generator
+
+#undef BIOME_RANDOM_SQUARE_DRIFT
