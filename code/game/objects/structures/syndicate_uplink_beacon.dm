@@ -100,7 +100,7 @@
 	var/datum/uplink_handler/uplink_handler = traitor_datum.uplink_handler
 
 	SEND_SIGNAL(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED)
-	new /obj/item/uplink(get_turf(src), resolved_owner, 0, uplink_handler)
+	new /obj/item/uplink/replacement(get_turf(src), resolved_owner, 0, uplink_handler)
 	flick("relay_traitor_activate", src)
 	do_sparks(number = 5, cardinal_only = FALSE, source = src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
