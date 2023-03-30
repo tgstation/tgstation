@@ -65,6 +65,8 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
+	else if(istype(parent, /obj/item/uplink/replacement))
+		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(on_heard))
 
 	if(owner)
 		src.owner = owner
@@ -476,6 +478,17 @@
 		return generate_code()
 
 	return returnable_code
+
+/// Proc that unlocks a locked replacement uplink when it hears the unlock code from their datum
+/datum/component/uplink/proc/on_heard(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(!locked)
+		return
+	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], unlock_code))
+		return
+	var/atom/replacement_uplink = parent
+	locked = FALSE
+	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
