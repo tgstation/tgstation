@@ -749,7 +749,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/wood,
 /obj/item/book/granter/sign_language,
-/obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "CW" = (
@@ -1305,6 +1304,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"Yv" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/has_grav/interdyne)
 "YB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -1376,10 +1378,10 @@ Me
 Rn
 Rn
 Rn
+Yv
 Zi
 Zi
-Zi
-Zi
+Yv
 Rn
 Rn
 Rn
@@ -1426,7 +1428,7 @@ Zi
 Zi
 Zi
 Zi
-Zi
+Yv
 Me
 Lx
 Me
@@ -1439,7 +1441,7 @@ bW
 bW
 zx
 Rn
-Zi
+Yv
 Zi
 Zi
 Zi
@@ -1684,7 +1686,7 @@ bW
 Me
 Rn
 Rn
-Zi
+Yv
 Zi
 Zi
 Zi
@@ -1986,7 +1988,7 @@ Zi
 Zi
 Zi
 Zi
-Zi
+Yv
 Rn
 Me
 Lx
@@ -2083,7 +2085,7 @@ Zi
 wJ
 Zi
 Zi
-Zi
+Yv
 aY
 Nr
 Jo
@@ -2123,9 +2125,9 @@ CW
 Bx
 vg
 Aw
+Yv
 Zi
-Zi
-Zi
+Yv
 Rn
 Rn
 Me
@@ -2244,7 +2246,7 @@ Me
 Rn
 Rn
 Rn
-Zi
+Yv
 Zi
 QD
 Sz
@@ -2263,9 +2265,9 @@ Kg
 iR
 iR
 MY
+Yv
 Zi
-Zi
-Zi
+Yv
 Rn
 Rn
 Rn
@@ -2293,8 +2295,8 @@ iv
 Zi
 Zi
 Zi
-Zi
-Zi
+Yv
+Yv
 mc
 xu
 PB
@@ -2315,6 +2317,7 @@ Me
 Rn
 Rn
 Rn
+Yv
 Zi
 Zi
 Zi
@@ -2324,16 +2327,15 @@ Zi
 Zi
 Zi
 Zi
-Zi
-Zi
+Yv
 Rn
 Rn
 Rn
+Yv
 Zi
 Zi
 Zi
-Zi
-Zi
+Yv
 Rn
 Rn
 Rn
