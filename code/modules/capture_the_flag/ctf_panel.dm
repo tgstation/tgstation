@@ -84,5 +84,4 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 	var/datum/ctf_controller/ctf_enabled_check = GLOB.ctf_games[CTF_GHOST_CTF_GAME_ID]
 	if(ctf_enabled_check.ctf_enabled)
 		return TRUE
-
 	return FALSE

@@ -10,9 +10,6 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	if(GLOB.ctf_spawner)
 		qdel(GLOB.ctf_spawner)
 	GLOB.ctf_spawner = src
-	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[game_id]
-	if(isnull(ctf_controller))
-		create_ctf_game(game_id)
 
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)

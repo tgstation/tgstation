@@ -9,9 +9,11 @@
 	var/ctf_enabled = FALSE
 	var/respawn_cooldown = DEFAULT_RESPAWN
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
+	var/auto_restart = FALSE
 
-/datum/ctf_controller/New()
+/datum/ctf_controller/New(game_id)
 	. = ..()
+	src.game_id = game_id
 	GLOB.ctf_games[game_id] = src
 
 /datum/ctf_controller/Destroy(force, ...)
@@ -27,11 +29,12 @@
 		. = FALSE
 
 /datum/ctf_controller/proc/start_ctf()
+	if(ctf_enabled)
+		return //CTF is already running, don't notify ghosts again
 	ctf_enabled = TRUE
 	for(var/team in teams)
 		var/obj/machinery/ctf/spawner/spawner = teams[team].spawner
-		notify_ghosts("[spawner.name] has been activated!", source = spawner, action = NOTIFY_ORBIT, header = "CTF has been activated") //Why is this silent?
-		//spawner.start_ctf() todo port the functinality from old start_ctf() (Barriers)
+		notify_ghosts("[spawner.name] has been activated!", source = spawner, action = NOTIFY_ORBIT, header = "CTF has been activated")
 	
 /datum/ctf_controller/proc/stop_ctf()
 	ctf_enabled = FALSE
@@ -99,7 +102,7 @@
 	return teams[team_color].points
 
 /datum/ctf_controller/proc/victory(winning_team)
-	ctf_enabled = FALSE //Medi-sim never disables itself, todo, support this
+	ctf_enabled = FALSE
 	clear_control_points()
 	respawn_barricades()
 	var/datum/ctf_team/winning_ctf_team = teams[winning_team]
@@ -108,6 +111,8 @@
 		ctf_team.message_team("<span class='narsie [winning_ctf_team.team_span]'>[winning_team] team wins!</span>")
 		ctf_team.message_team(victory_rejoin_text)
 		ctf_team.reset_team()
+	if(auto_restart)
+		toggle_id_ctf(null, game_id, TRUE)
 
 /datum/ctf_controller/proc/clear_control_points()
 	for(var/obj/machinery/ctf/control_point/control_point in control_points)
@@ -144,8 +149,6 @@
 		ctf_player.end_game()
 	team_members = list()
 
-//victory proc, probably needed, confirm if it is...
-
 /datum/ctf_team/proc/message_team(message)
 	for(var/player in team_members)
 		var/datum/component/ctf_player/ctf_player = team_members[player]
@@ -154,5 +157,5 @@
 /proc/create_ctf_game(game_id)
 	if(GLOB.ctf_games[game_id])
 		QDEL_NULL(GLOB.ctf_games[game_id]) //This'll break the medi-sim shuttle I'll bet you //Todo: check if it does
-	var/datum/ctf_controller/CTF = new()
+	var/datum/ctf_controller/CTF = new(game_id)
 	return CTF

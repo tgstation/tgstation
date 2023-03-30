@@ -21,6 +21,8 @@
 /obj/machinery/ctf/Initialize(mapload)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id]
+	if(isnull(ctf_game))
+		ctf_game = create_ctf_game(game_id)
 
 /obj/machinery/ctf/spawner
 	var/team = WHITE_TEAM
@@ -167,10 +169,6 @@
 			ctf_game.capture_flag(team, user, team_span, flag)
 			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
 
-//toggle_ctf() this is almost certainly going to end up in the controller if we actually need it
-
-//unload() Port to controller
-
 //Instagib_mode() - Controller but not essential, get back to later
 
 //normal_mode() - Ditto above
@@ -226,7 +224,7 @@
 	if(!our_turf)
 		return TRUE
 	forceMove(our_turf)
-	if(!capture)
+	if(!capture && !isnull(ctf_game))
 		ctf_game.message_all_teams("[src] has been returned to the base!")
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
@@ -241,7 +239,8 @@
 	if(loc == user)
 		if(!user.dropItemToGround(src))
 			return
-	ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been taken!"))
+	if(!isnull(ctf_game))
+		ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been taken!"))
 	STOP_PROCESSING(SSobj, src)
 	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
 	. = ..() //this is the actual normal item checks
@@ -258,7 +257,8 @@
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
-	ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been dropped!"))
+	if(!isnull(ctf_game))
+		ctf_game.message_all_teams(span_userdanger("\The [initial(name)] has been dropped!"))
 	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 
 /obj/item/ctf_flag/red
@@ -440,6 +440,8 @@
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
 	var/static/loading = CTF_LOADING_UNLOADED
 	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
+	if(isnull(ctf_controller))
+		ctf_controller = create_ctf_game(activated_id)
 	if(unload == TRUE)
 		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
 		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
