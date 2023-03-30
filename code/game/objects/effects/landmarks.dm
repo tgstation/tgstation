@@ -308,7 +308,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 //generic maintenance locations
 /obj/effect/landmark/generic_maintenance_landmark
-	name = "xeno_spawn"
+	name = "generic_maintenance_spawn"
 	icon_state = "xeno_spawn"
 
 /obj/effect/landmark/generic_maintenance_landmark/Initialize(mapload)
