@@ -7,17 +7,11 @@
 	game_id = CTF_MEDISIM_CTF_GAME_ID
 	ammo_type = null
 	player_traits = list()
-	//var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>" //ToDo impliment a thing for this
 
 /obj/machinery/ctf/spawner/medisim/Initialize(mapload)
 	. = ..()
+	ctf_game.setup_rules(victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!</span>", auto_restart = TRUE)
 	ctf_game.start_ctf()
-
-/*
-/obj/machinery/capture_the_flag/medisim/victory()
-	. = ..()
-	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
-	*/ //Todo: Port this functionality somewhere
 
 /obj/machinery/ctf/spawner/medisim/spawn_team_member(client/new_team_member)
 	. = ..()

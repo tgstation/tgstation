@@ -123,7 +123,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			holder.list_fingerprints()
 
 		if("ctfbutton")
-			toggle_id_ctf(holder, "centcom")
+			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)
 
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr, "Clear all mobs?", "Thunderdome Reset", list("Yes", "No", "Cancel"))

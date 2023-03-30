@@ -1,13 +1,11 @@
-#define DEFAULT_RESPAWN 15 SECONDS //Todo move to _defines
-
 /datum/ctf_controller
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/datum/ctf_team/teams = list()
 	var/list/obj/machinery/ctf/control_point/control_points = list()
 	var/list/obj/effect/ctf/dead_barricade/barricades = list()
-	var/points_to_win = 180
+	var/points_to_win = 3
 	var/ctf_enabled = FALSE
-	var/respawn_cooldown = DEFAULT_RESPAWN
+	var/respawn_cooldown = CTF_DEFAULT_RESPAWN
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
 	var/auto_restart = FALSE
 
@@ -48,6 +46,15 @@
 		return //At present we only support unloading standard centcom ctf, if we intend to support ctf unloading elsewhere then this proc will need to be ammended.
 	stop_ctf()
 	new /obj/effect/landmark/ctf(get_turf(GLOB.ctf_spawner))
+
+/datum/ctf_controller/proc/setup_rules(
+	points_to_win = 3,
+	victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>",
+	auto_restart = FALSE,
+	)
+	src.points_to_win = points_to_win
+	src.victory_rejoin_text = victory_rejoin_text
+	src.auto_restart = auto_restart
 
 /datum/ctf_controller/proc/add_team(obj/machinery/ctf/spawner/spawner)
 	if(!isnull(teams[spawner.team]))

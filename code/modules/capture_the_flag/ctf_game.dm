@@ -4,8 +4,6 @@
 #define GREEN_TEAM "Green"
 #define YELLOW_TEAM "Yellow"
 #define FLAG_RETURN_TIME 20 SECONDS
-#define INSTAGIB_RESPAWN 5 SECONDS
-#define DEFAULT_RESPAWN 15 SECONDS
 
 /obj/machinery/ctf
 	name = "CTF Controller"
@@ -512,5 +510,3 @@
 #undef GREEN_TEAM
 #undef YELLOW_TEAM
 #undef FLAG_RETURN_TIME
-#undef INSTAGIB_RESPAWN
-#undef DEFAULT_RESPAWN
