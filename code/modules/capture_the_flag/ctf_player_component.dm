@@ -26,14 +26,16 @@
 	setup_dusting()
 
 /datum/component/ctf_player/proc/setup_dusting()
-	//Todo, check if the victim is actually a ctf participant just incase
-	RegisterSignal(player_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(ctf_dust))
+	RegisterSignal(player_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_type_check))
 	RegisterSignal(player_mob, COMSIG_MOB_GHOSTIZED, PROC_REF(ctf_dust))
+
+/datum/component/ctf_player/proc/damage_type_check(datum/source, damage, damage_type)
+	SIGNAL_HANDLER
+	if(damage_type != STAMINA && damage_type != OXY)
+		ctf_dust()
 
 /datum/component/ctf_player/proc/ctf_dust()
 	SIGNAL_HANDLER
-
-	//Todo, ignore oxy/stam damage as funny as it is for the shotgun class to die from exaustion
 	if(HAS_TRAIT(player_mob, TRAIT_CRITICAL_CONDITION) || player_mob.stat == DEAD || !player_mob.client)
 		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
 		var/turf/death_turf = get_turf(player_mob)

@@ -13,7 +13,6 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/game_id = CTF_GHOST_CTF_GAME_ID
-	//Todo Comment this
 	var/datum/ctf_controller/ctf_game
 
 /obj/machinery/ctf/Initialize(mapload)
@@ -104,7 +103,7 @@
 				to_chat(user, span_warning("You cannot respawn yet!"))
 		return
 	if(ctf_game.team_valid_to_join(team, user))
-		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>") //Todo change order of things so you get to message when your actually assigned to a team
+		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
 		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
 		spawn_team_member(new_team_member)	
@@ -206,13 +205,13 @@
 	ctf_game = GLOB.ctf_games[game_id]
 	
 
-/obj/item/ctf_flag/process() //Todo: Theres probably a better way to handle this...
+/obj/item/ctf_flag/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
 		reset_flag()
 
-/obj/item/ctf_flag/proc/reset_flag(capture = FALSE) //Todo: improve this if possible
+/obj/item/ctf_flag/proc/reset_flag(capture = FALSE)
 	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
@@ -246,7 +245,7 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
-/obj/item/ctf_flag/dropped(mob/user) //Todo: Improve this if possible
+/obj/item/ctf_flag/dropped(mob/user)
 	..()
 	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
 	user.status_flags |= CANPUSH
@@ -366,7 +365,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/ctf/examine(mob/user) //This is stupid, Todo: make it less so
+/obj/structure/trap/ctf/examine(mob/user)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
