@@ -5,6 +5,7 @@
 #define YELLOW_TEAM "Yellow"
 #define FLAG_RETURN_TIME 20 SECONDS
 
+///Base CTF machines, if spawned in creates a CTF game with the provided game_id unless one already exists. If one exists associates itself with it.
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
@@ -12,7 +13,9 @@
 	icon_state = "syndbeacon"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	///The game ID that this CTF machine is associated with.
 	var/game_id = CTF_GHOST_CTF_GAME_ID
+	///Reference to the CTF controller that this machine operates under.
 	var/datum/ctf_controller/ctf_game
 
 /obj/machinery/ctf/Initialize(mapload)
@@ -21,14 +24,17 @@
 	if(isnull(ctf_game))
 		ctf_game = create_ctf_game(game_id)
 
+///A spawn point for CTF, ghosts can interact with this to vote for CTF or spawn in if a game is running.
 /obj/machinery/ctf/spawner
+	///The team that this spawner is associated with.
 	var/team = WHITE_TEAM
+	///The span applied to messages associated with this team.
 	var/team_span = ""
-	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
 	var/list/default_gear
+	///The powerup dropped when a player spawned by this controller dies.
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
 	var/player_traits = list(TRAIT_NEVER_WOUNDED)
@@ -162,6 +168,7 @@
 			ctf_game.capture_flag(team, user, team_span, flag)
 			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
 
+///A flag used for the CTF minigame.
 /obj/item/ctf_flag
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
@@ -178,12 +185,19 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
+	///Team that this flag is associated with, a team cannot capture its own flag.
 	var/team = WHITE_TEAM
+	///Var used for tracking when this flag should be returned to base.
 	var/reset_cooldown = 0
+	///Can anyone pick up the flag or only players of the opposing team.
 	var/anyonecanpickup = TRUE
+	///Reference to an object that's location is used when this flag needs to respawn.
 	var/obj/effect/ctf/flag_reset/reset
+	///Game_id that this flag is associated with.
 	var/game_id = CTF_GHOST_CTF_GAME_ID
+	///Reference to the CTF controller associated with the above game ID.
 	var/datum/ctf_controller/ctf_game
+	///How many points this flag is worth when captured.
 	var/flag_value = 1
 
 /obj/item/ctf_flag/Destroy()
@@ -202,7 +216,7 @@
 
 /obj/item/ctf_flag/LateInitialize()
 	. = ..()
-	ctf_game = GLOB.ctf_games[game_id]
+	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 	
 
 /obj/item/ctf_flag/process()
@@ -221,8 +235,8 @@
 	if(!capture && !isnull(ctf_game))
 		ctf_game.message_all_teams("[src] has been returned to the base!")
 
-//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
-/obj/item/ctf_flag/attack_hand(mob/living/user, list/modifiers) //Todo: I dont even understand this, can it be saved?
+//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments //Mood
+/obj/item/ctf_flag/attack_hand(mob/living/user, list/modifiers)
 	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
@@ -304,12 +318,15 @@
 		flag = null
 	return ..()
 
+///Control point used for CTF for king of the hill or control point game modes. Teams need to maintain control of the point for a set time to win.
 /obj/machinery/ctf/control_point
 	name = "control point"
 	desc = "You should capture this"
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
+	///Team that is currently controlling this point.
 	var/controlling_team
+	///Amount of points generated per second by this control point while captured.
 	var/point_rate = 1
 
 /obj/machinery/ctf/control_point/Initialize(mapload)
@@ -355,6 +372,7 @@
 	controlling_team = null
 	icon_state = "dominator"
 
+///A trap that when stepped on kills anyone who is not part of the associated CTF team.
 /obj/structure/trap/ctf
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
@@ -392,6 +410,7 @@
 	team = YELLOW_TEAM
 	icon_state = "trap-shock"
 
+///A type of barricade that can be destroyed by CTF weapons and respawns at the end of CTF matches.
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
@@ -431,6 +450,7 @@
 #define CTF_LOADING_LOADING 1
 #define CTF_LOADING_LOADED 2
 
+///Proc that handles toggling and unloading CTF.
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
 	var/static/loading = CTF_LOADING_UNLOADED
 	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
@@ -486,13 +506,14 @@
 #undef CTF_LOADING_LOADING
 #undef CTF_LOADING_LOADED
 
+///Proc that identifies if something is a valid target for CTF related checks, checks if an object is a ctf barrier or has ctf component if they are a player.
 /proc/is_ctf_target(atom/target)
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human = target
-		if(human.mind.GetComponent(/datum/component/ctf_player))
+		if(human.mind?.GetComponent(/datum/component/ctf_player))
 			. = TRUE
 
 #undef WHITE_TEAM

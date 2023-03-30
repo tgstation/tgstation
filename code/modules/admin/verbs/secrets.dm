@@ -587,8 +587,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(choice == "No")
 				return
 			ctf_controller.toggle_instagib_mode()
-			message_admins("[key_name_admin(holder)] enabled instagib mode in CTF game: [selected_game]")
-			log_admin("[key_name_admin(holder)] enabled instagib mode in CTF game: [selected_game]")
+			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 
 	if(E)
 		E.processing = FALSE

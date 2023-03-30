@@ -3,6 +3,7 @@
 #define REDFIELD_TEAM "Red"
 #define BLUESWORTH_TEAM "Blue"
 
+///Variant of the CTF spawner used for the medieval simulation shuttle.
 /obj/machinery/ctf/spawner/medisim
 	game_id = CTF_MEDISIM_CTF_GAME_ID
 	ammo_type = null
