@@ -18,3 +18,12 @@
 
 /// This cycle, a round event was hijacked when the last midround event was too recent.
 #define HIJACKED_TOO_RECENT "HIJACKED_TOO_RECENT"
+
+/// Kill this ruleset from continuing to process
+#define RULESET_STOP_PROCESSING 1
+
+/// Requirements when something needs a lot of threat to run, but still possible at low-pop
+#define REQUIREMENTS_VERY_HIGH_THREAT_NEEDED list(90,90,90,80,60,50,40,40,40,40)
+
+/// Max number of teams we can have for the abductor ruleset
+#define ABDUCTOR_MAX_TEAMS 4

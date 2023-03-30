@@ -12,3 +12,11 @@
 
 /// Force the config directory to be something other than "config"
 #define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
+
+// Config entry types
+#define VALUE_MODE_NUM 0
+#define VALUE_MODE_TEXT 1
+#define VALUE_MODE_FLAG 2
+
+#define KEY_MODE_TEXT 0
+#define KEY_MODE_TYPE 1

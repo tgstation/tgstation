@@ -555,6 +555,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/rune_turf = get_turf(src)
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		cult_team.true_cultists += cult_mind
 	sleep(4 SECONDS)
 	if(src)
 		color = RUNE_COLOR_RED

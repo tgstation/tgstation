@@ -356,6 +356,19 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/atmosastroidruin
+	id = "atmosasteroidruin"
+	suffix = "atmosasteroidruin.dmm"
+	name = "Atmos Asteroid"
+	description = "A dead atmos tech in a continuously pressurizing ruin."
+
+/datum/map_template/ruin/space/massdriverrouter
+	id = "fasttravel"
+	suffix = "fasttravel.dmm"
+	name = "Mass driver Router"
+	description = "An old, still functional router for some long destroyed system."
+
+
 /datum/map_template/ruin/space/prey_pod
 	id = "prey"
 	suffix = "prey_pod.dmm"
@@ -367,3 +380,15 @@
 	suffix = "travelers_rest.dmm"
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/pod_crash
+	id = "pod_crash"
+	suffix = "pod_crash.dmm"
+	name = "Pod Crash"
+	description = "A tragic display of what happens to drivers who pda and pod."
+
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
