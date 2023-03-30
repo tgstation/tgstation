@@ -1,7 +1,13 @@
+/**
+ * This test checks that all areas on the station are connected to the atmospherics network.
+ * It does this by crawling all connected devices from designated starting areas.
+ */
 /datum/unit_test/atmospherics_sanity
-	var/list/station_areas_remaining
+	// we literally iterate over all atmospherics devices on the station
+	priority = TEST_LONGER
 
-TEST_FOCUS(/datum/unit_test/atmospherics_sanity)
+	/// List of areas remaining to be checked
+	var/list/station_areas_remaining
 
 /datum/unit_test/atmospherics_sanity/Run()
 	station_areas_remaining = GLOB.the_station_areas.Copy()
@@ -37,6 +43,7 @@ TEST_FOCUS(/datum/unit_test/atmospherics_sanity)
 	for(var/area/missed as anything in station_areas_remaining)
 		TEST_FAIL("Area Type [missed] was not connected to the atmospherics network")
 
+/// Crawls through an area, iterating over all vents/scrubbers and their connected pipelines
 /datum/unit_test/atmospherics_sanity/proc/crawl_area(area/the_area)
 	if(!(the_area.type in station_areas_remaining))
 		return
