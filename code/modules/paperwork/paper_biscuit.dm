@@ -14,9 +14,9 @@
 
 /obj/item/folder/biscuit/update_overlays()
 	. = ..()
-	if(contents.len) //Shows overlay only when it has content and is cracked open
+	if(contents.len) //This is to prevent the not-sealed biscuit to have the folder_paper overlay when it gets sealed
 		. -= "folder_paper"
-		if(cracked) //This is to prevent the not-sealed biscuit to have the folder_paper overlay when it gets sealed
+		if(cracked) //Shows overlay only when it has content and is cracked open
 			. += "paperbiscuit_paper"
 
 ///Checks if the biscuit has been already cracked. If its not then it dipsplays "unopened!" ballon alert. If it is cracked then it lets the code continue.
