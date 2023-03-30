@@ -3680,6 +3680,7 @@
 #include "code\modules\mapfluff\ruins\objects_and_mobs\necropolis_gate.dm"
 #include "code\modules\mapfluff\ruins\objects_and_mobs\sin_ruins.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\asteroid4.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\atmos_asteroid.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\bigderelict1.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\caravanambush.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\clericsden.dm"
