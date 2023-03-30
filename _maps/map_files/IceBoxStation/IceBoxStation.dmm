@@ -3529,10 +3529,7 @@
 /area/station/medical/virology)
 "bhK" = (
 /obj/structure/table,
-/obj/item/folder/blue{
-	pixel_x = 8
-	},
-/obj/item/papercutter,
+/obj/item/folder/blue,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "bhV" = (
@@ -21183,7 +21180,6 @@
 "gKk" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/safe/caps_spare/directional/east,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gKl" = (
@@ -46796,11 +46792,8 @@
 /area/station/engineering/lobby)
 "oQa" = (
 /obj/structure/table,
-/obj/item/food/cheesiehonkers{
-	pixel_x = 9
-	},
+/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oQg" = (
@@ -67585,9 +67578,6 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = -4;
 	pixel_y = 5
-	},
-/obj/item/papercutter{
-	pixel_x = 9
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)

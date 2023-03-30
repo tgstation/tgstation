@@ -23974,7 +23974,6 @@
 "iNB" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/table/glass,
-/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iNC" = (
@@ -32207,11 +32206,14 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
+/obj/item/paperslip{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "lIX" = (
@@ -40069,10 +40071,6 @@
 	name = "Prison Monitor";
 	network = list("prison");
 	pixel_x = 30
-	},
-/obj/item/papercutter{
-	pixel_y = -7;
-	pixel_x = 11
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
@@ -49157,7 +49155,6 @@
 /obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
-/obj/item/papercutter,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (
