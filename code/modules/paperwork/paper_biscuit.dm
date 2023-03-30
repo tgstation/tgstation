@@ -1,6 +1,6 @@
 /obj/item/folder/biscuit
 	name = "\proper biscuit card"
-	desc = "An biscuit card. To reach contents you need to crack it open."
+	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit"
 	bg_color = "#b88f3d"
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
@@ -63,13 +63,13 @@
 //Corporate "confidental" biscuit cards
 /obj/item/folder/biscuit/confidental
 	name = "\proper confidental biscuit card"
-	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open."
+	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_secret"
 	bg_color = "#355e9f"
 
 /obj/item/folder/biscuit/confidental/spare_id_safe_code
 	name = "\proper spare ID safe code biscuit card"
-	desc = "An biscuit card containing confidental spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open."
+	desc = "An biscuit card containing confidental spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 
 /obj/item/folder/biscuit/confidental/spare_id_safe_code/Initialize(mapload)
 	. = ..()
@@ -77,7 +77,7 @@
 
 /obj/item/folder/biscuit/confidental/emergency_spare_id_safe_code
 	name = "\proper spare emergency ID safe code biscuit card"
-	desc = "An biscuit card containing <i>not so confidental</i> emergency spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open."
+	desc = "An biscuit card containing <i>not so confidental</i> emergency spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 
 /obj/item/folder/biscuit/confidental/emergency_spare_id_safe_code/Initialize(mapload)
 	. = ..()
@@ -86,7 +86,7 @@
 //Biscuits which start not-sealed/cracked initially for the crafting, printing and such
 /obj/item/folder/biscuit/not_sealed
 	name = "\proper biscuit card"
-	desc = "An biscuit card. To reach contents you need to crack it open."
+	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_cracked"
 	cracked = TRUE
 	///Was the biscuit already sealed by players? To prevent several tgui alerts
