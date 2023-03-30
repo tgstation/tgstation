@@ -22,6 +22,12 @@
 /obj/item/access_key/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_ON_DEPARTMENT_ACCESS, PROC_REF(department_access_given))
+	GLOB.janitor_devices += src
+
+/obj/item/access_key/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_ON_DEPARTMENT_ACCESS)
+	GLOB.janitor_devices -= src
+	return ..()
 
 /obj/item/access_key/examine(mob/user)
 	. = ..()

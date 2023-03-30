@@ -56,15 +56,24 @@
 	desc = "Your body can't produce enough blood to sustain itself."
 	icon = "tint"
 	value = -8
+	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = span_danger("You feel your vigor slowly fading away.")
 	lose_text = span_notice("You feel vigorous again.")
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
-/datum/quirk/blooddeficiency/process(delta_time)
+/**
+ * Makes the mob lose blood from having the blood deficiency quirk, if possible
+ *
+ 
+ * Arguments:
+ * * delta_time
+ *
+ */
+/datum/quirk/blooddeficiency/proc/lose_blood(delta_time)
 	if(quirk_holder.stat == DEAD)
 		return
 
