@@ -669,7 +669,7 @@
 /area/deathmatch)
 "DY" = (
 /obj/structure/cable,
-/obj/machinery/power/rtg/mapping{
+/obj/machinery/power/rtg/debug{
 	power_gen = 50000
 	},
 /turf/open/indestructible,

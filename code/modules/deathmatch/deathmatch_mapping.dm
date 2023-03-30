@@ -2,11 +2,12 @@
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	has_gravity = TRUE
-	area_flags = UNIQUE_AREA | NO_ALERTS
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	//area_flags = UNIQUE_AREA | NO_ALERTS
+	//dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	area_flags = UNIQUE_AREA | NO_DEATH_MESSAGE
 
 /area/deathmatch/fullbright
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	//dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /turf/open/indestructible/deathmatch
 	name = "Deathmatch border"

@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		qdel(thing, force=TRUE)
 
 	if(turf_type)
-		var/turf/newT = ChangeTurf(turf_type, baseturf_type ? baseturf_type : initial(turf_type.baseturfs), flags)
+		var/turf/new_turf = ChangeTurf(turf_type, baseturf_type ? baseturf_type : initial(turf_type.baseturfs), flags)
 		SSair.remove_from_active(new_turf)
 		CALCULATE_ADJACENT_TURFS(new_turf, KILL_EXCITED)
 

@@ -46,7 +46,7 @@
 	player.equip_to_slot(new /obj/item/clothing/shoes/sneakers/black, ITEM_SLOT_FEET)
 	player.equip_to_slot(new /obj/item/storage/backpack, ITEM_SLOT_BACK)
 	player.equip_to_slot(new /obj/item/storage/box/survival, ITEM_SLOT_BACKPACK)
-	player.equip_to_slot(new /obj/item/pda, ITEM_SLOT_ID) // For the lamp.
+	player.equip_to_slot(new /obj/item/modular_computer/pda, ITEM_SLOT_ID) // For the lamp.
 
 /datum/deathmatch_loadout/assistant/weaponless
 	name = "Assistant loadout (Weaponless)"
@@ -63,7 +63,7 @@
 	player.equip_to_slot(new /obj/item/clothing/gloves/tackler/combat/insulated, ITEM_SLOT_GLOVES)
 	player.equip_to_slot(new /obj/item/clothing/shoes/combat, ITEM_SLOT_FEET)
 	player.equip_to_slot(new /obj/item/storage/backpack, ITEM_SLOT_BACK)
-	player.equip_to_slot(new /obj/item/card/id/chameleon, ITEM_SLOT_ID)
+	player.equip_to_slot(new /obj/item/card/id/advanced/chameleon, ITEM_SLOT_ID)
 
 /datum/deathmatch_loadout/operative/ranged
 	name = "Ranged Operative"
@@ -72,7 +72,7 @@
 	equipment = list(
 		/obj/item/gun/ballistic/automatic/pistol = ITEM_SLOT_HANDS,
 		list(/obj/item/ammo_box/magazine/m9mm = 5) = ITEM_SLOT_BACKPACK,
-		/obj/item/kitchen/knife/combat = ITEM_SLOT_LPOCKET
+		/obj/item/knife/combat = ITEM_SLOT_LPOCKET
 	)
 
 /datum/deathmatch_loadout/operative/ranged/pre_equip(mob/living/carbon/human/player)
@@ -86,9 +86,9 @@
 	equipment = list(
 		/obj/item/clothing/suit/armor/vest = ITEM_SLOT_OCLOTHING,
 		/obj/item/clothing/head/helmet = ITEM_SLOT_HEAD,
-		list(/obj/item/kitchen/knife/combat = 6) = ITEM_SLOT_BACKPACK,
-		/obj/item/kitchen/knife/combat = ITEM_SLOT_HANDS,
-		/obj/item/kitchen/knife/combat = ITEM_SLOT_LPOCKET
+		list(/obj/item/knife/combat = 6) = ITEM_SLOT_BACKPACK,
+		/obj/item/knife/combat = ITEM_SLOT_HANDS,
+		/obj/item/knife/combat = ITEM_SLOT_LPOCKET
 	)
 
 /datum/deathmatch_loadout/securing_sec
@@ -99,7 +99,7 @@
 	equipment = list(
 		/obj/item/gun/energy/disabler = ITEM_SLOT_HANDS,
 		/obj/item/flashlight/seclite = ITEM_SLOT_LPOCKET,
-		/obj/item/kitchen/knife/combat/survival = ITEM_SLOT_RPOCKET
+		/obj/item/knife/combat/survival = ITEM_SLOT_RPOCKET
 	)
 
 /datum/deathmatch_loadout/instagib
