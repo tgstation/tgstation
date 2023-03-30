@@ -29,8 +29,9 @@
 		/area/station/asteroid,
 		// in the middle of space, for some reason
 		/area/station/commons/vacant_room,
-		// disconnected
 		/area/station/science/ordnance/freezerchamber,
+		// on kilo station in specific this is off in space
+		/area/station/cargo/warehouse,
 	)
 	for(var/ignored_type in ignored_areas)
 		station_areas_remaining -= typesof(ignored_type)
