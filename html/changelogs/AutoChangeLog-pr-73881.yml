@@ -1,6 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes:
-  - balance: "The pirate gangs have been split into two subcategories, one which can spawn earlier in a shift and one that spawns later as they currently do. While skeleton pirates will still be only seen later into the shift, expect to see the other pirate gangs earlier on."
-  - bugfix: "Prevented the pirate event from runtiming when no possible pirate gangs were available."
-  - bugfix: "Pirates can no longer be selected by Dynamic if there are no more pirates gangs that can be used."

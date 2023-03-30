@@ -529,3 +529,21 @@
 					spaceport_security.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = REF(usr)
 	game.fuel += fuel
 	game.food += food
+
+#undef BUTTON_A_GOOD_FIND
+#undef BUTTON_CONTINUE
+#undef BUTTON_CONTINUE_TRAVELS
+#undef BUTTON_DOCK
+#undef BUTTON_EXPLORE_SHIP
+#undef BUTTON_FIX_ENGINE
+#undef BUTTON_GO_AROUND
+#undef BUTTON_KEEP_SPEED
+#undef BUTTON_LEAVE_THE_DERELICT
+#undef BUTTON_OH
+#undef BUTTON_REPAIR_ELECTRONICS
+#undef BUTTON_RESTORE_HULL
+#undef BUTTON_SLOW_DOWN
+#undef BUTTON_SPEED_PAST
+#undef BUTTON_WAIT
+#undef BUTTON_WELCOME_ABOARD
+#undef BUTTON_WHERE_DID_YOU_GO
