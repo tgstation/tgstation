@@ -662,15 +662,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"es" = (
-/obj/effect/landmark/deathmatch_map_spawn{
-	height = 41;
-	width = 41;
-	x_offset = 20;
-	y_offset = 20
-	},
-/turf/open/space/basic,
-/area/space)
 "et" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
