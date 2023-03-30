@@ -1,6 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/machinery/door/airlock/gold/glass{
+	name = "Shuttle Bar"
+	},
 /obj/effect/turf_decal/tile/bar/full,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
@@ -32,7 +34,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/machinery/door/airlock/gold/glass{
+	name = "Shuttle Airlock"
+	},
 /obj/docking_port/mobile/emergency{
 	name = "Cargonian Heavy Freighter"
 	},
@@ -117,7 +121,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "gg" = (
-/obj/machinery/door/airlock/mining/glass,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Lounge"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
@@ -251,7 +257,9 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "mt" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/machinery/door/airlock/gold/glass{
+	name = "Shuttle Airlock"
+	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
@@ -449,7 +457,9 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "rd" = (
-/obj/machinery/door/airlock/gold/glass,
+/obj/machinery/door/airlock/gold/glass{
+	name = "Shuttle Medbay"
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "rI" = (
@@ -489,7 +499,7 @@
 "sO" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
-	name = "freight door";
+	name = "Freight Door";
 	id = "FreightShuttleDoors"
 	},
 /obj/machinery/conveyor{
@@ -753,7 +763,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "BZ" = (
-/obj/machinery/door/airlock/security/glass,
+/obj/machinery/door/airlock/security/glass{
+	name = "Shuttle Brig"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/mineral/silver,
@@ -899,7 +911,7 @@
 "JQ" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
-	name = "freight door";
+	name = "Freight Door";
 	id = "FreightShuttleDoors"
 	},
 /obj/machinery/conveyor{
@@ -983,7 +995,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "MB" = (
-/obj/machinery/door/airlock/command/glass,
+/obj/machinery/door/airlock/command/glass{
+	name = "Shuttle Bridge"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/effect/turf_decal/tile/dark_blue/full,
 /turf/open/floor/mineral/silver,
