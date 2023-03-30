@@ -765,12 +765,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"pv" = (
-/obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/ctf_flag/green,
-/turf/open/floor/iron,
-/area/centcom/ctf)
 "pF" = (
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 5
@@ -2433,7 +2427,7 @@ Te
 td
 SW
 SW
-pv
+gu
 SW
 SW
 Gm
