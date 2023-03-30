@@ -4,6 +4,7 @@
 	icon_state = "paperbiscuit"
 	bg_color = "#ffffff"
 	w_class = WEIGHT_CLASS_TINY
+	max_integrity = 130
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	/// Is biscuit cracked open or not?
