@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { round } from '../../common/math';
-import { classes } from 'common/react';
+import { classes } from '../../common/react';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
