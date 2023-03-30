@@ -8,6 +8,7 @@
 	var/respawn_cooldown = CTF_DEFAULT_RESPAWN
 	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
 	var/auto_restart = FALSE
+	var/instagib_mode = FALSE
 
 /datum/ctf_controller/New(game_id)
 	. = ..()
@@ -136,6 +137,19 @@
 /datum/ctf_controller/proc/message_all_teams(message)
 	for(var/team in teams)
 		teams[team].message_team(message)
+
+/datum/ctf_controller/proc/toggle_instagib_mode()
+	if(!instagib_mode) // Normal > Instagib
+		for(var/team in teams)
+			var/datum/ctf_team/ctf_team = teams[team]
+			ctf_team.spawner.ctf_gear = ctf_team.spawner.instagib_gear
+			respawn_cooldown = CTF_INSTAGIB_RESPAWN
+	else //Instagib > Normal
+		for(var/team in teams)
+			var/datum/ctf_team/ctf_team = teams[team]
+			ctf_team.spawner.ctf_gear = ctf_team.spawner.default_gear
+			respawn_cooldown = CTF_DEFAULT_RESPAWN
+	instagib_mode = !instagib_mode
 
 /datum/ctf_team
 	var/obj/machinery/ctf/spawner/spawner
