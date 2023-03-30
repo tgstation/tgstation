@@ -6076,7 +6076,6 @@
 /obj/item/toy/figure/curator,
 /obj/machinery/requests_console/directional/south{
 	department = "Library";
-	departmentType = null;
 	name = "Library Requests Console"
 	},
 /obj/machinery/camera/autoname/directional/east,
@@ -38937,7 +38936,6 @@
 /obj/machinery/requests_console/directional/east{
 	announcementConsole = 1;
 	department = "Cargo";
-	departmentType = 7;
 	name = "Cargo Request Console"
 	},
 /turf/open/floor/iron/smooth,
@@ -76670,7 +76668,6 @@
 	announcementConsole = 1;
 	anon_tips_receiver = 1;
 	department = "Chief Engineer's Desk";
-	departmentType = null;
 	name = "Chief Engineer's Requests Console"
 	},
 /turf/open/floor/iron/dark/textured,
@@ -85331,7 +85328,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/machinery/requests_console/directional/north{
 	department = "Virology";
-	departmentType = null;
 	name = "Virology Requests Console"
 	},
 /obj/machinery/light/cold/no_nightlight/directional/north,
