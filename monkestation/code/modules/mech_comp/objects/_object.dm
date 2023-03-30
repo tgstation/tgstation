@@ -49,7 +49,7 @@
 		qdel(link)
 		return
 
-	var/action = input("Select a config to modify", "Configure Component", null) as null|anything in configs
+	var/action = tgui_input_list(user, "Select a config to modify", "Configure Component", configs)
 	if(!action)
 		return
 
@@ -66,7 +66,7 @@
 		to_chat(user, span_warning("There are no inputs being used!"))
 		return FALSE
 
-	var/remove = input(user, "Remove an input", "Configure Component") as null|anything in options
+	var/remove = tgui_input_list(user, "Remove an input", "Configure Component", options)
 	if(!remove)
 		return
 
@@ -117,7 +117,7 @@
 		to_chat(user, span_warning("[src] has no more inputs available!"))
 		return
 
-	var/choice = input(user, "Link Input", "Configure Component") as null|anything in options
+	var/choice = tgui_input_list(user, "Link Input", "Configure Component", options)
 	if(!choice)
 		return
 

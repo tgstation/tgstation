@@ -7,7 +7,11 @@
 	desc = "A rather plain vendor for ThinkTronic's line of field-assemblable components."
 	product_ads = "At least it's not Circuits!;95% GPL Compatible!;Source Exists, Somewhere!;Semi-Standards Compliant!;IETF Cleared!"
 
+	default_price = 0
+	extra_price = 0
+
 	products = list(
+		/obj/item/mcobject/signal_output = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/flusher = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/button_panel = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/payment = STANDARD_COMPONENT_SUPPLY,
