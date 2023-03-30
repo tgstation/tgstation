@@ -2,7 +2,7 @@
 	name = "\proper biscuit card"
 	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit"
-	bg_color = "#b88f3d"
+	bg_color = "#ffffff"
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	/// Is biscuit cracked open or not?
