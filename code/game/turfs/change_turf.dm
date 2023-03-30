@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	/turf/baseturf_bottom,
 	)))
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
+/turf/proc/empty(turf/turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port))
 	var/list/allowed_contents = typecache_filter_list_reverse(get_all_contents_ignoring(ignore_typecache), ignored_atoms)
@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		qdel(thing, force=TRUE)
 
 	if(turf_type)
-		var/turf/new_turf = ChangeTurf(turf_type, baseturf_type, flags)
+		var/turf/new_turf = ChangeTurf(turf_type, baseturf_type ? baseturf_type : initial(turf_type.baseturfs), flags)
 		SSair.remove_from_active(new_turf)
 		CALCULATE_ADJACENT_TURFS(new_turf, KILL_EXCITED)
 

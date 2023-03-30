@@ -243,8 +243,10 @@
 /turf/open/floor/iron,
 /area/deathmatch)
 "cX" = (
-/obj/machinery/power/smes/magical,
 /obj/structure/cable,
+/obj/machinery/power/rtg/mapping{
+	power_gen = 50000
+	},
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "da" = (
@@ -1666,12 +1668,6 @@
 	},
 /obj/structure/cable,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
-/turf/open/floor/iron/dark,
-/area/deathmatch)
-"vX" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "vZ" = (
@@ -4713,7 +4709,7 @@ Wo
 Yh
 Rq
 Rq
-Rq
+IJ
 IJ
 "}
 (23,1,1) = {"
@@ -4740,8 +4736,8 @@ KQ
 GR
 uQ
 Yh
-cX
-vX
+SR
+Ux
 IJ
 "}
 (24,1,1) = {"
@@ -4768,7 +4764,7 @@ tn
 Sy
 st
 Yh
-SR
+cX
 Ux
 IJ
 "}

@@ -3,15 +3,11 @@ import { map } from 'common/collections';
 import { Table, Icon, Button, Section, Flex, Box, Dropdown } from '../components';
 import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
-import { Fragment } from 'inferno';
 
 export const DeathmatchLobby = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      title="Deathmatch Lobby"
-      width={560}
-      height={400}>
+    <Window title="Deathmatch Lobby" width={560} height={400}>
       <Window.Content>
         <Flex height="94%">
           <Flex.Item width="350px">
@@ -19,35 +15,32 @@ export const DeathmatchLobby = (props, context) => {
               <Table>
                 <Table.Row>
                   <Table.Cell collapsing />
-                  <Table.Cell collapsing>
-                    Name
-                  </Table.Cell>
-                  <Table.Cell grow>
-                    Loadout
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    Ready
-                  </Table.Cell>
+                  <Table.Cell collapsing>Name</Table.Cell>
+                  <Table.Cell grow>Loadout</Table.Cell>
+                  <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
                 {map((pdata, player) => (
                   <Table.Row className="candystripe">
                     <Table.Cell collapsing>
-                      {!!pdata.host
-                      && (<Icon name="star" />)}
+                      {!!pdata.host && <Icon name="star" />}
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      {!((data.host && !pdata.host) || data.admin)
-                      && (<b>{player}</b>) || (
+                      {(!((data.host && !pdata.host) || data.admin) && (
+                        <b>{player}</b>
+                      )) || (
                         <Dropdown
                           width="100%"
                           nochevron
                           sameline
                           displayText={player}
-                          options={["Kick", "Transfer host", "Toggle observe"]}
-                          onSelected={value => act('host', {
-                            id: player,
-                            func: value,
-                          })} />
+                          options={['Kick', 'Transfer host', 'Toggle observe']}
+                          onSelected={(value) =>
+                            act('host', {
+                              id: player,
+                              func: value,
+                            })
+                          }
+                        />
                       )}
                     </Table.Cell>
                     <Table.Cell grow>
@@ -57,44 +50,50 @@ export const DeathmatchLobby = (props, context) => {
                         displayText={pdata.loadout}
                         disabled={!(data.host || player === data.self)}
                         options={data.loadouts}
-                        onSelected={value => act('change_loadout', {
-                          player: player,
-                          loadout: value,
-                        })} />
+                        onSelected={(value) =>
+                          act('change_loadout', {
+                            player: player,
+                            loadout: value,
+                          })
+                        }
+                      />
                     </Table.Cell>
                     <Table.Cell collapsing>
                       <ButtonCheckbox
                         disabled={player !== data.self}
                         checked={pdata.ready}
-                        onClick={() => act('ready')} />
+                        onClick={() => act('ready')}
+                      />
                     </Table.Cell>
                   </Table.Row>
                 ))(data.players)}
                 {map((odata, observer) => (
                   <Table.Row>
                     <Table.Cell collapsing>
-                      {!!odata.host
-                        && (<Icon name="star" />)
-                        || (<Icon name="eye" />)}
+                      {(!!odata.host && <Icon name="star" />) || (
+                        <Icon name="eye" />
+                      )}
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      {!((data.host && !odata.host) || data.admin)
-                      && (<b>{observer}</b>) || (
+                      {(!((data.host && !odata.host) || data.admin) && (
+                        <b>{observer}</b>
+                      )) || (
                         <Dropdown
                           width="100%"
                           nochevron
                           sameline
                           displayText={observer}
-                          options={["Kick", "Transfer host", "Toggle observe"]}
-                          onSelected={value => act('host', {
-                            id: observer,
-                            func: value,
-                          })} />
+                          options={['Kick', 'Transfer host', 'Toggle observe']}
+                          onSelected={(value) =>
+                            act('host', {
+                              id: observer,
+                              func: value,
+                            })
+                          }
+                        />
                       )}
                     </Table.Cell>
-                    <Table.Cell grow>
-                      Observing
-                    </Table.Cell>
+                    <Table.Cell grow>Observing</Table.Cell>
                   </Table.Row>
                 ))(data.observers)}
               </Table>
@@ -103,18 +102,20 @@ export const DeathmatchLobby = (props, context) => {
           <Flex.Item width="210px">
             <Section>
               <Box textAlign="center">
-                {!!data.host && (
+                {(!!data.host && (
                   <Dropdown
                     width="100%"
                     nochevron
                     displayText={data.map.name}
                     options={data.maps}
-                    onSelected={value => act('change_map', {
-                      map: value,
-                    })} />
-                ) || (
-                  <b>{data.map.name}</b>
-                )}
+                    onSelected={(value) =>
+                      act('host', {
+                        func: 'change_map',
+                        map: value,
+                      })
+                    }
+                  />
+                )) || <b>{data.map.name}</b>}
               </Box>
               {data.map.desc}
               <Box textAlign="center">
@@ -124,14 +125,43 @@ export const DeathmatchLobby = (props, context) => {
                 <br />
                 Current players: <b>{Object.keys(data.players).length}</b>
               </Box>
+              <Button.Checkbox
+                checked={data.global_chat}
+                disabled={!(data.host || data.admin)}
+                content="Global Chat"
+                tooltip="Allow players and observers to talk with each other."
+                onClick={() =>
+                  act('host', {
+                    func: 'global_chat',
+                  })
+                }
+              />
             </Section>
           </Flex.Item>
         </Flex>
-        <Button color="good" content="Start Game" onClick={() => act('start_game')} />
-        <Button color="bad" content="Leave Game" onClick={() => act('leave_game')} />
-        <Button color="caution" content={data.observers[data.self] ? "Join" : "Observe"} onClick={() => act('observe')} />
-        {!!data.admin
-          && (<Button icon="exclamation" color="caution" content="Force Start" onClick={() => act('admin', { func: "Force start" })} />)}
+        <Button
+          color="good"
+          content="Start Game"
+          onClick={() => act('start_game')}
+        />
+        <Button
+          color="bad"
+          content="Leave Game"
+          onClick={() => act('leave_game')}
+        />
+        <Button
+          color="caution"
+          content={data.observers[data.self] ? 'Join' : 'Observe'}
+          onClick={() => act('observe')}
+        />
+        {!!data.admin && (
+          <Button
+            icon="exclamation"
+            color="caution"
+            content="Force Start"
+            onClick={() => act('admin', { func: 'Force start' })}
+          />
+        )}
       </Window.Content>
     </Window>
   );

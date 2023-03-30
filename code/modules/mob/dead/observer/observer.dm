@@ -958,20 +958,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
 
-/mob/dead/observer/verb/deathmatch_signup()
-	set category = "Ghost"
-	set name = "Signup for Deathmatch"
-	set desc = "Opens the deathmatch lobby list."
-	if(!client)
-		return
-	if(!isobserver(src))
-		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
-		return
-	var/datum/deathmatch_controller/game = GLOB.deathmatch_game
-	if(!game)
-		game = new
-	game.ui_interact(usr)
-
 /mob/dead/observer/verb/mafia_game_signup()
 	set category = "Ghost"
 	set name = "Signup for Mafia"
@@ -988,6 +974,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
 	if(!game)
 		game = create_mafia_game("mafia")
+	game.ui_interact(usr)
+
+/mob/dead/observer/verb/deathmatch_signup()
+	set category = "Ghost"
+	set name = "Signup for Deathmatch"
+	set desc = "Opens the deathmatch lobby list."
+	if(!client)
+		return
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+		to_chat(usr, span_warning("Deathmatch has been temporarily disabled by admins."))
+		return
+	if(!isobserver(src))
+		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
+		return
+	var/datum/deathmatch_controller/game = GLOB.deathmatch_game
+	if(!game)
+		game = new
 	game.ui_interact(usr)
 
 /mob/dead/observer/CtrlShiftClick(mob/user)

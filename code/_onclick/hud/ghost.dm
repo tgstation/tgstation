@@ -21,10 +21,6 @@
 	var/mob/dead/observer/G = usr
 	G.follow()
 
-/atom/movable/screen/ghost/activities
-	name = "Bored?"
-	icon_state = "bored"
-
 /atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
 	icon_state = "reenter_corpse"

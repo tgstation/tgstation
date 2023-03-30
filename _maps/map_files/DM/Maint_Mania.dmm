@@ -413,7 +413,6 @@
 /area/template_noop)
 "Qs" = (
 /obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/space/basic,
 /area/template_noop)
 "QN" = (

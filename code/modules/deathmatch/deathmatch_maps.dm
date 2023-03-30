@@ -12,7 +12,7 @@
 	. = ..()
 	if (!map_path)
 		return qdel(src) && stack_trace("MISSING MAP PATH!")
-	template = new(path = map_path)
+	template = new(path = map_path, cache = TRUE)
 
 /datum/deathmatch_map/proc/map_equip(mob/living/carbon/human/player)
 	SHOULD_CALL_PARENT(TRUE)
@@ -28,7 +28,7 @@
 /datum/deathmatch_map/maintenance
 	name = "Maint Mania"
 	desc = "Dark maintenance tunnels, floor pills, improvised weaponry and a bloody beatdown. Welcome to assistant utopia."
-	min_players = 4
+	min_players = 2
 	max_players = 8
 	allowed_loadouts = list(/datum/deathmatch_loadout/assistant)
 	map_path = "_maps/map_files/DM/Maint_Mania.dmm"
@@ -44,7 +44,7 @@
 /datum/deathmatch_map/the_brig
 	name = "The Brig"
 	desc = "A recreation of MetaStation Brig."
-	min_players = 4
+	min_players = 2
 	max_players = 12
 	allowed_loadouts = list(/datum/deathmatch_loadout/assistant)
 	map_path = "_maps/map_files/DM/The_Brig.dmm"
@@ -55,8 +55,8 @@
 	min_players = 2
 	max_players = 5
 	allowed_loadouts = list(
-		/datum/deathmatch_loadout/gunperative,
-		/datum/deathmatch_loadout/meleeperative
+		/datum/deathmatch_loadout/operative/ranged,
+		/datum/deathmatch_loadout/operative/melee
 	)
 	map_path = "_maps/map_files/DM/shooting_range.dmm"
 
@@ -67,3 +67,19 @@
 	max_players = 4
 	allowed_loadouts = list(/datum/deathmatch_loadout/securing_sec)
 	map_path = "_maps/map_files/DM/SecuRing.dmm"
+
+/datum/deathmatch_map/instagib
+	name = "Instagib"
+	desc = "EVERYONE GETS AN INSTAKILL RIFLE!"
+	min_players = 2
+	max_players = 8
+	allowed_loadouts = list(/datum/deathmatch_loadout/instagib)
+	map_path = "_maps/map_files/DM/instagib.dmm"
+
+/datum/deathmatch_map/mech_madness
+	name = "Mech Madness"
+	desc = "Write Me" //No
+	min_players = 2
+	max_players = 8
+	allowed_loadouts = list(/datum/deathmatch_loadout/operative)
+	map_path = "_maps/map_files/DM/mech_madness.dmm"

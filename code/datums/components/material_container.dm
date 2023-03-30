@@ -359,6 +359,8 @@
 
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
+		if (!mats[x]) // Not asking for anything.
+			continue
 		if(!istype(req_mat))
 			if(ispath(req_mat)) //Is this an actual material, or is it a category?
 				req_mat = GET_MATERIAL_REF(req_mat) //Get the ref

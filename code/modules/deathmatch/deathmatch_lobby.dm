@@ -6,6 +6,7 @@
 	var/list/observers = list()
 	var/datum/deathmatch_map/map
 	var/datum/deathmatch_map_loc/location
+	var/global_chat = FALSE
 	var/playing = FALSE
 	var/ready_count
 	var/list/loadouts
@@ -43,15 +44,20 @@
 	loadouts = null
 
 /datum/deathmatch_lobby/proc/start_game()
+	if (playing)
+		return
 	location = game.reserve_location(map)
+		playing = TRUE
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve a map location (all locations used?), try again later."))
+		playing = FALSE
 		return FALSE
 	var/list/spawns = game.load_location(location)
-	if (!spawns)
+	if (!length(spawns) || length(spawns) < length(players))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		game.clear_location(location)
 		location = null
+		playing = FALSE
 		return FALSE
 	for (var/K in players)
 		var/mob/dead/observer/O = players[K]["mob"]
@@ -65,6 +71,8 @@
 		qdel(S)
 		// equip player
 		var/datum/deathmatch_loadout/L = players[K]["loadout"]
+		if (!(L in loadouts))
+			L = loadouts[1]
 		L = new L // agony
 		var/mob/living/carbon/human/H = O.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 		clean_player(H)
@@ -72,6 +80,8 @@
 		map.map_equip(H)
 		// register death handling.
 		RegisterSignal(H, COMSIG_LIVING_DEATH, .proc/player_died)
+		if (global_chat)
+			RegisterSignal(H, COMSIG_MOB_SAY, .proc/global_chat)
 		to_chat(H.client, span_reallybig("GO!"))
 		players[K]["mob"] = H
 	// Remove rest of spawns.
@@ -79,8 +89,9 @@
 		qdel(S)
 	for (var/K in observers)
 		var/mob/M = observers[K]["mob"]
-		M.forceMove(location.location)
-	playing = TRUE
+		M.forceMove(location.centre)
+		if (global_chat)
+			RegisterSignal(M, COMSIG_MOB_DEADSAY, .proc/global_chat)
 	log_game("Deathmatch game [host] started.")
 	return TRUE
 
@@ -128,6 +139,8 @@
 /datum/deathmatch_lobby/proc/add_observer(mob/_mob, _host = FALSE)
 	if (players[_mob.ckey])
 		CRASH("Tried to add [_mob.ckey] as an observer while being a player.")
+	if (playing && global_chat)
+		RegisterSignal(_mob, COMSIG_MOB_DEADSAY, .proc/global_chat)
 	observers[_mob.ckey] = list(mob = _mob, host = _host)
 
 /datum/deathmatch_lobby/proc/add_player(mob/_mob, _loadout, _host = FALSE)
@@ -138,9 +151,9 @@
 // Players might be stinky, need to make sure they aren't cheating.
 /datum/deathmatch_lobby/proc/clean_player(mob/living/carbon/player)
 	if (player.mind)
-		var/datum/mind/M = player.mind
-		M.set_assigned_role(/datum/job/deathmatch) // this SHOULD prevent players from getting brain traumas and such.
-		player.client.remove_spell(src) // fuck you REALB in particular
+		var/datum/mind/M = new (player.key)
+		M.set_assigned_role(SSjob.GetJobType(/datum/job/deathmatch)) // this SHOULD prevent players from getting brain traumas and such.
+		M.transfer_to(player) // fuck you REALB in particular
 
 /datum/deathmatch_lobby/proc/remove_player(ckey)
 	var/list/L = players[ckey]
@@ -196,7 +209,7 @@
 		return
 	if (!observers[player.ckey])
 		add_observer(player)
-	player.forceMove(location.location)
+	player.forceMove(location.centre)
 
 /datum/deathmatch_lobby/proc/change_map(new_map)
 	if (!new_map || !game.maps[new_map])
@@ -218,6 +231,24 @@
 			continue
 		players[K]["loadout"] = loadouts[1]
 
+/datum/deathmatch_lobby/proc/global_chat(mob/speaker, message)
+	SIGNAL_HANDLER
+	if (islist(message))
+		message = message[SPEECH_MESSAGE]
+	var/msg = span_prefix("DM: ") + span_name("[speaker.key]") + ": \"[message]\""
+	msg = "<span class='game'>[msg]</span>"
+	for (var/K in players)
+		to_chat(players[K]["mob"], msg)
+	for (var/K in observers)
+		to_chat(observers[K]["mob"], msg)
+
+/datum/deathmatch_lobby/Topic(href, href_list)
+	var/mob/dead/observer/ghost = usr
+	if (!istype(ghost))
+		return
+	if(href_list["join"])
+		join(ghost)
+
 /datum/deathmatch_lobby/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -238,6 +269,7 @@
 	.["self"] = user.ckey
 	.["host"] = (user.ckey == host)
 	.["admin"] = check_rights_for(user.client, R_ADMIN)
+	.["global_chat"] = global_chat
 	.["loadouts"] = list()
 	for (var/L in loadouts)
 		var/datum/deathmatch_loadout/DML = L
@@ -284,12 +316,6 @@
 			leave(usr.ckey)
 			ui.close()
 			game.ui_interact(usr)
-		if ("change_map")
-			if (playing || host != usr.ckey)
-				return
-			if (!(params["map"] in game.maps))
-				return
-			change_map(params["map"])
 		if ("change_loadout")
 			if (playing)
 				return
@@ -316,7 +342,7 @@
 			if (ready_count >= players.len && players.len >= map.min_players)
 				start_game()
 		if ("host") // Host functions
-			if (playing || (usr.ckey != host || !check_rights(R_ADMIN)))
+			if (playing || (usr.ckey != host && !check_rights(R_ADMIN)))
 				return
 			var/uckey = params["id"]
 			switch (params["func"])
@@ -339,6 +365,12 @@
 					else if (observers[uckey] && players.len < map.max_players)
 						remove_observer(uckey)
 						add_player(umob, loadouts[1], host == uckey)
+				if ("change_map")
+					if (!(params["map"] in game.maps))
+						return
+					change_map(params["map"])
+				if ("global_chat")
+					global_chat = !global_chat
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
 				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")

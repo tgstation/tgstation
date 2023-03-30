@@ -1,6 +1,8 @@
 GLOBAL_VAR(deathmatch_game)
 
 /datum/deathmatch_controller
+	var/datum/map_generator/massdelete/map_remover = new
+
 	var/list/map_locations = list()
 	var/list/used_locations = list()
 	var/list/datum/deathmatch_lobby/lobbies = list()
@@ -15,11 +17,25 @@ GLOBAL_VAR(deathmatch_game)
 		qdel(src)
 		CRASH("A deathmatch controller already exists.")
 	GLOB.deathmatch_game = src
-	for (var/obj/effect/landmark/deathmatch_map_spawn/S in GLOB.landmarks_list)
-		if (!S.compiled_location)
-			continue
-		map_locations += S.compiled_location
-
+	var/locations = list()
+	for (var/obj/effect/landmark/deathmatch_map_corner/S in GLOB.landmarks_list)
+		if (!locations[S.location_id])
+			var/datum/deathmatch_map_loc/L = new
+			L.x1 = S.x
+			L.y1 = S.y
+			L.z = S.z
+			locations[S.location_id] = L
+		else
+			var/datum/deathmatch_map_loc/L = locations[S.location_id]
+			if (L.centre)
+				stack_trace("Deathmatch map location [S.location_id] has three corner markers.")
+				continue
+			L.x2 = S.x
+			L.y2 = S.y
+			L.centre = locate((L.x1 + L.x2) / 2, (L.y1 + L.y2) / 2, L.z)
+			L.width = abs(L.x1 - L.x2)
+			L.height = abs(L.y1 - L.y2)
+			map_locations += L
 	for (var/M in subtypesof(/datum/deathmatch_map))
 		var/datum/deathmatch_map/map = new M
 		if (maps[map.name])
@@ -29,6 +45,7 @@ GLOBAL_VAR(deathmatch_game)
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)
+	deadchat_broadcast(" has opened a new deathmatch lobby. <a href=?src=[REF(lobbies[host.ckey])];join=1>(Join)</a>", "<B>[host]</B>")
 
 /datum/deathmatch_controller/proc/remove_lobby(ckey)
 	var/lobby = lobbies[ckey]
@@ -46,10 +63,10 @@ GLOBAL_VAR(deathmatch_game)
 		return
 	var/datum/deathmatch_map_loc/smallest
 	for (var/datum/deathmatch_map_loc/L in map_locations)
-		if (map.template.width > L.width && map.template.height > L.height)
+		if (map.template.width > L.width || map.template.height > L.height)
 			continue
 		if (smallest)
-			if (smallest && smallest.width > L.width && smallest.height > L.height)
+			if (map.template.width > L.width || map.template.height > L.height)
 				smallest = L
 			continue
 		smallest = L
@@ -62,7 +79,7 @@ GLOBAL_VAR(deathmatch_game)
 	if (!location || !used_locations[location])
 		return
 	var/datum/deathmatch_map/M = used_locations[location]
-	if (!M.template.load(location.location, centered = TRUE))
+	if (!M.template.load(location.centre, centered = TRUE))
 		return
 	if (!spawnpoint_processing.len)
 		return
@@ -71,22 +88,11 @@ GLOBAL_VAR(deathmatch_game)
 	return spawns
 
 /datum/deathmatch_controller/proc/clear_location(datum/deathmatch_map_loc/location)
-	var/z = location.location.z
-	// Get bottom corner
-	var/bX = location.location.x - location.x_offset
-	var/bY = location.location.y - location.y_offset
-	// Get top corner
-	var/tX = location.width + (location.location.x - location.x_offset)
-	var/tY = location.height + (location.location.y - location.y_offset)
-	// Get space area instance
-	var/area/space = GLOB.areas_by_type[/area/space]
-	// Locate bottom and top corners
-	var/bT = locate(bX, bY, z)
-	var/tT = locate(tX, tY, z)
-	// Clear area between bottom and top corners
-	for (var/turf/T in block(bT, tT))
-		space.contents += T // Changes the area.
-		T.empty(flags = CHANGETURF_FORCEOP)
+	// lets give the game a moment to do whatever it needs to before we delete.
+	set waitfor = FALSE
+	sleep(world.tick_lag)
+	map_remover.defineRegion(locate(location.x1, location.y1, location.z), locate(location.x2, location.y2, location.z), TRUE)
+	map_remover.generate()
 	// Free the map location
 	used_locations -= location
 	map_locations += location
@@ -145,7 +151,7 @@ GLOBAL_VAR(deathmatch_game)
 				lobbies[params["id"]].add_observer(usr)
 				lobbies[params["id"]].ui_interact(usr)
 			else
-				lobbies[params["id"]].spectate()
+				lobbies[params["id"]].spectate(usr)
 			log_game("[usr.ckey] joined deathmatch lobby [params["id"]] as an observer.")
 		if ("admin")
 			if (!check_rights(R_ADMIN))
