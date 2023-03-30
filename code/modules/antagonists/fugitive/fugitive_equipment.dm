@@ -62,3 +62,11 @@
 		visible_message(span_warning("The cloaking systems on the [name] begin to overload."), blind_message = audible_message("You hear a fizzle, and the snapping of sparks."))
 		do_sparks(2, FALSE, src)
 		burn()
+
+/obj/item/reagent_containers/hypospray/medipen/invisibility
+	name = "invisibility autoinjector"
+	desc = "An autoinjector containing a stabilized SaturnX compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
+	volume = 20
+	amount_per_transfer_from_this = 20
+	list_reagents = list(/datum/reagent/drug/saturnx = 20)
+	label_examine = FALSE
