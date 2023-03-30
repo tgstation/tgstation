@@ -201,7 +201,7 @@
 			succeed = TRUE
 			break
 	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.getorganslot(organ.slot)
+		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
 		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
 			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
 				continue

@@ -1,0 +1,9 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - rscadd: "The dark matt-eor"
+  - rscadd: "Summon a dark matt-eor final traitor objective"
+  - rscadd: "Dark matter singularity variant, which can't grow as big as a regular singularity but hungers for blood"
+  - code_imp: "cleaned up/sorted meteor shield code, satellite control, and more"
+  - qol: "added a lot of feedback to interacting with meteor shields"
+  - balance: "emagging a lot of meteor shields warns the station, but emagging enough of them summons a Dark Matt-eor."

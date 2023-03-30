@@ -65,3 +65,7 @@
 /atom/movable/screen/alert/status_effect/agent_pinpointer/changeling
 	name = "Pheromone Scent"
 	desc = "The nose always knows."
+
+#undef CHANGELING_PHEROMONE_MIN_DISTANCE
+#undef CHANGELING_PHEROMONE_MAX_DISTANCE
+#undef CHANGELING_PHEROMONE_PING_TIME

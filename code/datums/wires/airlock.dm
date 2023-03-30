@@ -1,8 +1,3 @@
-#define AI_WIRE_NORMAL 0
-#define AI_WIRE_DISABLED 1
-#define AI_WIRE_HACKED 2
-#define AI_WIRE_DISABLED_HACKED -1
-
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Generic Airlock"

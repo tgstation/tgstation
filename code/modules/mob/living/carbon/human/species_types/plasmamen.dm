@@ -140,12 +140,12 @@
 	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
 		for(var/i in H.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
+			iter_wound.on_xadone(4 * REM * delta_time) // plasmamen use plasma to reform their bones or whatever
 		return FALSE // do normal metabolism
 
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		H.adjustStaminaLoss(7.5 * REM * delta_time, 0)
+		H.adjustBruteLoss(0.5 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
 			switch(rand(1, 3))
 				if(1)
