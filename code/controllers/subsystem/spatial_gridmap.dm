@@ -756,6 +756,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
+#undef BOUNDING_BOX_MAX
+#undef BOUNDING_BOX_MIN
 #undef GRID_CELL_ADD
 #undef GRID_CELL_REMOVE
 #undef GRID_CELL_SET
+#undef NUMBER_OF_PREGENERATED_ORANGES_EARS

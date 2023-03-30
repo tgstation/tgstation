@@ -67,10 +67,6 @@ SUBSYSTEM_DEF(explosions)
 	msg += "} "
 	return ..()
 
-
-#define SSEX_TURF "turf"
-#define SSEX_OBJ "obj"
-
 /datum/controller/subsystem/explosions/proc/is_exploding()
 	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
@@ -716,3 +712,5 @@ SUBSYSTEM_DEF(explosions)
 		cost_throwturf = MC_AVERAGE(cost_throwturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	currentpart = SSEXPLOSIONS_TURFS
+
+#undef EXPLOSION_THROW_SPEED

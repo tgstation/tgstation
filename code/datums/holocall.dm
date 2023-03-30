@@ -1,14 +1,3 @@
-#define HOLOPAD_MAX_DIAL_TIME 200
-
-#define HOLORECORD_DELAY "delay"
-#define HOLORECORD_SAY "say"
-#define HOLORECORD_SOUND "sound"
-#define HOLORECORD_LANGUAGE "lang"
-#define HOLORECORD_PRESET "preset"
-#define HOLORECORD_RENAME "rename"
-
-#define HOLORECORD_MAX_LENGTH 200
-
 /mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
 	var/obj/machinery/holopad/H = origin
@@ -357,6 +346,9 @@
 
 /datum/preset_holoimage/nanotrasenprivatesecurity
 	outfit_type = /datum/outfit/nanotrasensoldiercorpse
+
+/datum/preset_holoimage/syndicatebattlecruisercaptain
+	outfit_type = /datum/outfit/syndicate_empty/battlecruiser
 
 /datum/preset_holoimage/hivebot
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/hivebot

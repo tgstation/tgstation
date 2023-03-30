@@ -362,11 +362,18 @@
 	name = "Space Ghost Restaurant"
 	description = "Ever wondered where the restaurant robots come from? On this ruined station, NTgrub interns dressed up robots in clothes, and sent them to stations to cook their meal orders for them."
 
+/datum/map_template/ruin/space/atmosastroidruin
+	id = "atmosasteroidruin"
+	suffix = "atmosasteroidruin.dmm"
+	name = "Atmos Asteroid"
+	description = "A dead atmos tech in a continuously pressurizing ruin."
+
 /datum/map_template/ruin/space/massdriverrouter
 	id = "fasttravel"
 	suffix = "fasttravel.dmm"
 	name = "Mass driver Router"
 	description = "An old, still functional router for some long destroyed system."
+
 
 /datum/map_template/ruin/space/prey_pod
 	id = "prey"
@@ -385,3 +392,9 @@
 	suffix = "pod_crash.dmm"
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
+
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
