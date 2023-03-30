@@ -73,3 +73,5 @@
 	ability_key = BB_MAGICARP_SPELL
 	target_key = BB_MAGICARP_SPELL_TARGET
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/and_clear_target
+
+#undef MAGICARP_SPELL_TARGET_SEEK_RANGE

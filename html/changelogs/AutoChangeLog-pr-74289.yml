@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - server: "The starlight config has been removed, as it is enabled by default"

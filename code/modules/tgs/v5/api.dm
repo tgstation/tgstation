@@ -19,7 +19,7 @@
 
 /datum/tgs_api/v5/ApiVersion()
 	return new /datum/tgs_version(
-		#include "interop_version.dm"
+		#include "__interop_version.dm"
 	)
 
 /datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
@@ -104,6 +104,7 @@
 	return json_encode(response)
 
 /datum/tgs_api/v5/OnTopic(T)
+	RequireInitialBridgeResponse()
 	var/list/params = params2list(T)
 	var/json = params[DMAPI5_TOPIC_DATA]
 	if(!json)
@@ -297,7 +298,15 @@
 	RequireInitialBridgeResponse()
 	return revision
 
-/datum/tgs_api/v5/ChatBroadcast(message, list/channels)
+// Common proc b/c it's used by the V3/V4 APIs
+/datum/tgs_api/proc/UpgradeDeprecatedChatMessage(datum/tgs_message_content/message)
+	if(!istext(message))
+		return message
+
+	TGS_WARNING_LOG("Received legacy string when a [/datum/tgs_message_content] was expected. Please audit all calls to TgsChatBroadcast, TgsChatTargetedBroadcast, and TgsChatPrivateMessage to ensure they use the new /datum.")
+	return new /datum/tgs_message_content(message)
+
+/datum/tgs_api/v5/ChatBroadcast(datum/tgs_message_content/message, list/channels)
 	if(!length(channels))
 		channels = ChatChannelInfo()
 
@@ -306,26 +315,33 @@
 		var/datum/tgs_chat_channel/channel = I
 		ids += channel.id
 
-	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = ids)
+	message = UpgradeDeprecatedChatMessage(message)
+	message = message._interop_serialize()
+	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = ids
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
-/datum/tgs_api/v5/ChatTargetedBroadcast(message, admin_only)
+/datum/tgs_api/v5/ChatTargetedBroadcast(datum/tgs_message_content/message, admin_only)
 	var/list/channels = list()
 	for(var/I in ChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
 		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
 			channels += channel.id
-	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = channels)
+
+	message = UpgradeDeprecatedChatMessage(message)
+	message = message._interop_serialize()
+	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = channels
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
-/datum/tgs_api/v5/ChatPrivateMessage(message, datum/tgs_chat_user/user)
-	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = list(user.channel.id))
+/datum/tgs_api/v5/ChatPrivateMessage(datum/tgs_message_content/message, datum/tgs_chat_user/user)
+	message = UpgradeDeprecatedChatMessage(message)
+	message = message._interop_serialize()
+	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = list(user.channel.id)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
@@ -354,6 +370,7 @@
 	channel.is_admin_channel = channel_json[DMAPI5_CHAT_CHANNEL_IS_ADMIN_CHANNEL]
 	channel.is_private_channel = channel_json[DMAPI5_CHAT_CHANNEL_IS_PRIVATE_CHANNEL]
 	channel.custom_tag = channel_json[DMAPI5_CHAT_CHANNEL_TAG]
+	channel.embeds_supported = channel_json[DMAPI5_CHAT_CHANNEL_EMBEDS_SUPPORTED]
 	return channel
 
 /datum/tgs_api/v5/SecurityLevel()

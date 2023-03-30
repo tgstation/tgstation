@@ -75,7 +75,8 @@
 		return
 	var/mob/admin = usr
 	if(tgui_alert(usr, "WARNING: [warning_text]", event_control.name, list("Yes", "No")) == "Yes")
-		message_admins("[admin.ckey] [snitch_text]")
+		if(snitch_text)
+			message_admins("[admin.ckey] [snitch_text]")
 	else
 		return ADMIN_CANCEL_EVENT
 
@@ -102,7 +103,7 @@
 			chosen_turf = null
 		else
 			return ADMIN_CANCEL_EVENT
-	
+
 /datum/event_admin_setup/input_number
 	///Text shown when admins are queried about what number to set.
 	var/input_text = ""
