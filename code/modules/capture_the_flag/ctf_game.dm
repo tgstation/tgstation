@@ -36,13 +36,12 @@
 
 /obj/machinery/ctf/spawner/Initialize(mapload)
 	. = ..()
-	ctf_game.add_team(src) //Todo add support for multiple spawners per team
+	ctf_game.add_team(src)
 	SSpoints_of_interest.make_point_of_interest(src)
 	default_gear = ctf_gear
-	//Todo, previously ctf_landmark was handled here, check if this is needed
 
 /obj/machinery/ctf/spawner/Destroy()
-	//Todo remove team code
+	ctf_game.remove_team(team)
 	return ..()
 
 /obj/machinery/ctf/spawner/red

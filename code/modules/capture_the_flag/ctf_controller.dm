@@ -58,10 +58,14 @@
 
 /datum/ctf_controller/proc/add_team(obj/machinery/ctf/spawner/spawner)
 	if(!isnull(teams[spawner.team]))
-		return //Todo multi-spawnpoints
+		return //CTF currently only supports one spawn point per team, if you want to add a map that uses more you'll need to modify add_team/remove_team and turn the spawner var on the team itself into a list
 	teams[spawner.team] = new /datum/ctf_team(spawner)
 
-//Todo: Remove team()
+/datum/ctf_controller/proc/remove_team(team_color)
+	if(isnull(teams[team_color]))
+		return //Cannot delete a team that doesn't exist
+	QDEL_NULL(teams[team_color])
+	teams -= team_color
 
 /datum/ctf_controller/proc/add_player(team_color, ckey, datum/component/ctf_player/new_team_member)
 	teams[team_color].team_members[ckey] = new_team_member
