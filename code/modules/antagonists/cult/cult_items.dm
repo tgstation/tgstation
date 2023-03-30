@@ -1041,3 +1041,5 @@ Striking a noncultist, however, will tear their flesh."}
 				throw_at(D.thrower, 7, 1, null)
 	else
 		..()
+
+#undef SHUTTLE_CURSE_OMFG_TIMESPAN
