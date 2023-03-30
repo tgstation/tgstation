@@ -574,3 +574,8 @@
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
+
+#undef CULT_LOSS
+#undef CULT_NARSIE_KILLED
+#undef CULT_VICTORY
+#undef SUMMON_POSSIBILITIES

@@ -380,6 +380,12 @@
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
 
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+
 /datum/map_template/ruin/space/the_outlet
 	id = "the_outlet"
 	suffix = "the_outlet.dmm"

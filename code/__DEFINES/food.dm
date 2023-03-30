@@ -176,3 +176,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_SCOOP_OFFSET 4
 
 #define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)
+
+// Venues for the barbots.
+#define VENUE_RESTAURANT "Restaurant Venue"
+#define VENUE_BAR "Bar Venue"
