@@ -52976,7 +52976,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/cloth_pile,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
