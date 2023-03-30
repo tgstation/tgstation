@@ -53,7 +53,7 @@
 
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/paper) && !storedpaper)
+	if(istype(P, /obj/item/paper) && !storedpaper && !istype(P, /obj/item/paper/paperslip))
 		if(!user.transferItemToLoc(P, src))
 			return
 		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
@@ -86,7 +86,7 @@
 		storedcutter = null
 		update_appearance()
 
-	if(storedpaper && storedpaper != /obj/item/paper/paperslip)
+	if(storedpaper)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
 		to_chat(user, span_notice("You neatly cut [storedpaper]."))
 		storedpaper = null
@@ -94,8 +94,6 @@
 		new /obj/item/paper/paperslip(get_turf(src))
 		new /obj/item/paper/paperslip(get_turf(src))
 		update_appearance()
-	if(storedpaper == /obj/item/paper/paperslip)
-		to_chat(user, span_notice("You can't cut [storedpaper] as its already cut!"))
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
 	. = ..()
