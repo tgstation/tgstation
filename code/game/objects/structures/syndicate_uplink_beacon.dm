@@ -55,9 +55,10 @@
 	balloon_alert(user, "deconstructing...")
 	if (!do_after(user, 5 SECONDS, target = src))
 		return FALSE
-	new /obj/item/stack/sheet/iron/five
-	new /obj/item/stack/cable_coil/five
-	teleport_beacon.forceMove(get_turf(src))
+	var/turf/beacon_tile = get_turf(src)
+	new /obj/item/stack/sheet/iron/five(beacon_tile)
+	new /obj/item/stack/cable_coil/five(beacon_tile)
+	teleport_beacon.forceMove(beacon_tile)
 	teleport_beacon = null
 	qdel(src)
 	return TRUE
