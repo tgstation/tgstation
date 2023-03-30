@@ -203,13 +203,18 @@
 
 /obj/item/ctf_flag/Initialize(mapload)
 	. = ..()
-	ctf_game = GLOB.ctf_games[game_id]
 	if(!reset)
 		reset = new(get_turf(src))
 		reset.flag = src
 		reset.icon_state = icon_state
 		reset.name = "[name] landmark"
 		reset.desc = "This is where \the [name] will respawn in a game of CTF"
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/ctf_flag/LateInitialize()
+	. = ..()
+	ctf_game = GLOB.ctf_games[game_id]
+	
 
 /obj/item/ctf_flag/process() //Todo: Theres probably a better way to handle this...
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
