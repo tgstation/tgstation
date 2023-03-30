@@ -1,0 +1,6 @@
+author: "SuperSlayer0"
+delete-after: True
+changes:
+  - rscdel: "Удалена вампирская абилка predatory lunge"
+  - balance: "Вампирская абилка fortitude больше не дает резист у брут урону"
+  - balance: "Вампиры теперь получают замедление от урона"
