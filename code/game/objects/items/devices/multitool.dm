@@ -140,3 +140,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
+
+#undef PROXIMITY_NEAR
+#undef PROXIMITY_NONE
+#undef PROXIMITY_ON_SCREEN

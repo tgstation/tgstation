@@ -7,7 +7,7 @@
 
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
-	var/obj/item/organ/external/wings/functional/wings = human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/external/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(wings && wings.can_fly(human))
 		wings.toggle_flight(human)
 		if(!(human.movement_type & FLYING))

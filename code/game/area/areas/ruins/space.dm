@@ -25,7 +25,6 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/way_home
 	name = "\improper Salvation"
@@ -291,7 +290,6 @@
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
@@ -535,7 +533,6 @@
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
-	network_root_id = STATION_NETWORK_ROOT
 
 //ABANDONED BOX WHITESHIP
 
@@ -575,6 +572,39 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+//Mass-driver hub ruin
+/area/ruin/space/massdriverhub
+	name = "\improper Mass Driver Router"
+	always_unpowered = FALSE
+
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// Ruin of Waystation
+/area/ruin/space/has_grav/waystation
+	name = "Waystation Maintenance"
+
+/area/ruin/space/has_grav/waystation/qm
+	name = "Quartermaster Office"
+
+/area/ruin/space/has_grav/waystation/dorms
+	name = "Living Space"
+
+/area/ruin/space/has_grav/waystation/kitchen
+	name = "Kitchen"
+
+/area/ruin/space/has_grav/waystation/cargobay
+	name = "Cargo Bay"
+
+/area/ruin/space/has_grav/waystation/securestorage
+	name = "Secure Storage"
+
+/area/ruin/space/has_grav/waystation/cargooffice
+	name = "Cargo Office"
+
+/area/ruin/space/has_grav/powered/waystation/assaultpod
+	name = "Assault Pod"
+
+/area/ruin/space/has_grav/waystation/power
+	name = "Waystation Electrical"

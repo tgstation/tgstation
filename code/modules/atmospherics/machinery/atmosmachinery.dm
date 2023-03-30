@@ -589,3 +589,7 @@
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+#undef PIPE_VISIBLE_LEVEL
+#undef PIPE_HIDDEN_LEVEL
+#undef VENT_SOUND_DELAY

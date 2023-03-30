@@ -54,7 +54,7 @@
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(owner.status_flags & GODMODE)
 		return
-	setOrganDamage(max(damage + (ddmg*damage_multiplier), 0))
+	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
 /obj/item/organ/internal/ears/invincible
@@ -122,4 +122,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	applyOrganDamage(40/severity)
+	apply_organ_damage(40/severity)
