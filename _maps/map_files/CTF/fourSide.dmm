@@ -197,7 +197,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "uG" = (
-/obj/item/ctf_flag,
+/obj/item/ctf_flag{
+	desc = "A banner used to play capture the flag.";
+	name = "capture flag"
+	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "wb" = (
