@@ -31,18 +31,18 @@
 		return NOT_ENOUGH_PLAYERS
 
 	if(length(candidates) < TEAM_BACKSTORY_SIZE || prob(30 - (length(candidates) * 2))) //Solo backstories are always considered if a larger backstory cannot be filled out. Otherwise, it's a rare chance that gets rarer if more people sign up.
-		possible_backstories += list("waldo") //less common as it comes with magicks and is kind of immershun shattering
+		possible_backstories += list(FUGITIVE_BACKSTORY_WALDO) //less common as it comes with magicks and is kind of immershun shattering
 
 	if(length(candidates) >= TEAM_BACKSTORY_SIZE)//group refugees
-		possible_backstories += list("prisoner", "cultist", "synth")
+		possible_backstories += list(FUGITIVE_BACKSTORY_PRISONER, FUGITIVE_BACKSTORY_CULTIST, FUGITIVE_BACKSTORY_SYNTH)
 
 	var/backstory = pick(possible_backstories)
 	var/member_size = 3
 	var/leader
 	switch(backstory)
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			leader = pick_n_take(candidates)
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO)
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
 	var/list/members = list()
 	var/list/spawned_mobs = list()
@@ -77,13 +77,13 @@
 	fugitiveantag.greet(backstory)
 
 	switch(backstory)
-		if("prisoner")
+		if(FUGITIVE_BACKSTORY_PRISONER)
 			S.equipOutfit(/datum/outfit/prisoner)
-		if("cultist")
+		if(FUGITIVE_BACKSTORY_CULTIST)
 			S.equipOutfit(/datum/outfit/yalp_cultist)
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO)
 			S.equipOutfit(/datum/outfit/waldo)
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			S.equipOutfit(/datum/outfit/synthetic)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
 	S.log_message("was spawned as a Fugitive by an event.", LOG_GAME)
