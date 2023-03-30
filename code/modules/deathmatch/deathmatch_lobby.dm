@@ -44,17 +44,18 @@
 
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
-		stack_trace("Attempted to start deathmatch game twice.")
 		return
 	location = game.reserve_location(map)
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve a map location (all locations used?), try again later."))
 		return FALSE
+	playing = TRUE
 	var/list/spawns = game.load_location(location)
 	if (!spawns)
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		game.clear_location(location)
 		location = null
+		playing = FALSE
 		return FALSE
 	for (var/K in players)
 		var/mob/dead/observer/O = players[K]["mob"]
@@ -82,8 +83,7 @@
 		qdel(S)
 	for (var/K in observers)
 		var/mob/M = observers[K]["mob"]
-		M.forceMove(location.location)
-	playing = TRUE
+		M.forceMove(location.centre)
 	log_game("Deathmatch game [host] started.")
 	return TRUE
 
@@ -199,7 +199,7 @@
 		return
 	if (!observers[player.ckey])
 		add_observer(player)
-	player.forceMove(location.location)
+	player.forceMove(location.centre)
 
 /datum/deathmatch_lobby/proc/change_map(new_map)
 	if (!new_map || !game.maps[new_map])

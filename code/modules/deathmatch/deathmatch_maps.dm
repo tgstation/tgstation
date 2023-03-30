@@ -67,3 +67,11 @@
 	max_players = 4
 	allowed_loadouts = list(/datum/deathmatch_loadout/securing_sec)
 	map_path = "_maps/map_files/DM/SecuRing.dmm"
+
+/datum/deathmatch_map/instagib
+	name = "Instagib"
+	desc = "EVERYONE GETS AN INSTAKILL RIFLE!"
+	min_players = 2
+	max_players = 8
+	allowed_loadouts = list(/datum/deathmatch_loadout/instagib)
+	map_path = "_maps/map_files/DM/instagib.dmm"

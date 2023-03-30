@@ -89,3 +89,11 @@
 		/obj/item/flashlight/seclite = ITEM_SLOT_LPOCKET,
 		/obj/item/kitchen/knife/combat/survival = ITEM_SLOT_RPOCKET
 	)
+
+/datum/deathmatch_loadout/instagib
+	name = "Instagib"
+	desc = "Assistant with an instakill rifle."
+	default_species = /datum/species/human
+	equipment = list(
+		/obj/item/gun/energy/laser/instakill = ITEM_SLOT_HANDS
+	)

@@ -24,32 +24,26 @@
 			qdel(mover)
 
 /datum/deathmatch_map_loc
-	var/turf/location
-	var/x_offset
-	var/y_offset
+	var/turf/centre
+	// width and height are used to check map size.
 	var/width
 	var/height
+	var/z
+	// rectangle
+	var/x1
+	var/y1
+	var/x2
+	var/y2
 
-/datum/deathmatch_map_loc/New(loc, x, y, w, h)
+/obj/effect/landmark/deathmatch_map_corner
+	name = "Deathmatch Map Corner"
+	var/location_id = ""
+
+/obj/effect/landmark/deathmatch_map_corner/Initialize()
 	. = ..()
-	location = loc
-	x_offset = x
-	y_offset = y
-	width = w
-	height = h
-
-/obj/effect/landmark/deathmatch_map_spawn
-	name = "Deathmatch Location"
-	var/datum/deathmatch_map_loc/compiled_location
-	// Variables used for map size checks.
-	var/x_offset = 0
-	var/y_offset = 0
-	var/width = 0
-	var/height = 0
-
-/obj/effect/landmark/deathmatch_map_spawn/Initialize()
-	. = ..()
-	compiled_location = new(get_turf(loc), x_offset, y_offset, width, height)
+	if (!location_id)
+		stack_trace("Deathmatch map location at [x] [y] [z] doesn't have an ID.")
+		return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/deathmatch_player_spawn
 	name = "Deathmatch Player Spawner"
