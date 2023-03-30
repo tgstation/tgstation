@@ -1,7 +1,8 @@
 
 /datum/chemical_reaction/formaldehyde
 	results = list(/datum/reagent/toxin/formaldehyde = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
+	required_catalysts = list(/datum/reagent/silver = 1)
 	mix_message = "The mixture fizzles and gives off a fierce smell."
 	is_cold_recipe = FALSE
 	required_temp = 420
