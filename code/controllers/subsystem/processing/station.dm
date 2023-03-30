@@ -52,8 +52,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		return
 
-	for(var/_ in possible_traits)
-		var/datum/station_trait/trait_typepath = _
+	for(var/datum/station_trait/trait_typepath as anything in possible_traits)
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))
