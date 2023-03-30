@@ -613,8 +613,6 @@
 
 /// proc that makes user forget a specific crafting recipe
 /datum/mind/proc/forget_crafting_recipe(recipe)
-	if(!learned_recipes)
-		return
 	learned_recipes -= recipe
 
 /datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
