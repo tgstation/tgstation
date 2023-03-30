@@ -356,11 +356,18 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/atmosastroidruin
+	id = "atmosasteroidruin"
+	suffix = "atmosasteroidruin.dmm"
+	name = "Atmos Asteroid"
+	description = "A dead atmos tech in a continuously pressurizing ruin."
+
 /datum/map_template/ruin/space/massdriverrouter
 	id = "fasttravel"
 	suffix = "fasttravel.dmm"
 	name = "Mass driver Router"
 	description = "An old, still functional router for some long destroyed system."
+
 
 /datum/map_template/ruin/space/prey_pod
 	id = "prey"
