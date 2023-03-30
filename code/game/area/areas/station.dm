@@ -335,7 +335,7 @@
 
 /area/station/hallway/secondary/exit/escape_pod
 	name = "\improper Escape Pod Bay"
-	icon_state ="escape_pods"
+	icon_state = "escape_pods"
 
 /area/station/hallway/secondary/exit/departure_lounge
 	name = "\improper Departure Lounge"
