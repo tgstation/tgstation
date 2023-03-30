@@ -71,6 +71,8 @@
 		qdel(S)
 		// equip player
 		var/datum/deathmatch_loadout/L = players[K]["loadout"]
+		if (!(L in loadouts))
+			L = loadouts[1]
 		L = new L // agony
 		var/mob/living/carbon/human/H = O.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 		clean_player(H)
@@ -137,6 +139,8 @@
 /datum/deathmatch_lobby/proc/add_observer(mob/_mob, _host = FALSE)
 	if (players[_mob.ckey])
 		CRASH("Tried to add [_mob.ckey] as an observer while being a player.")
+	if (playing && global_chat)
+		RegisterSignal(_mob, COMSIG_MOB_DEADSAY, .proc/global_chat)
 	observers[_mob.ckey] = list(mob = _mob, host = _host)
 
 /datum/deathmatch_lobby/proc/add_player(mob/_mob, _loadout, _host = FALSE)
@@ -205,8 +209,6 @@
 		return
 	if (!observers[player.ckey])
 		add_observer(player)
-		if (global_chat)
-			RegisterSignal(player, COMSIG_MOB_DEADSAY, .proc/global_chat)
 	player.forceMove(location.centre)
 
 /datum/deathmatch_lobby/proc/change_map(new_map)

@@ -59,25 +59,31 @@
 	default_species = /datum/species/human
 	outfit = /datum/outfit/syndicate_empty
 
-/datum/deathmatch_loadout/gunperative
+/datum/deathmatch_loadout/operative/pre_equip(mob/living/carbon/human/player)
+	player.equip_to_slot(new /obj/item/clothing/under/syndicate, ITEM_SLOT_ICLOTHING)
+	player.equip_to_slot(new /obj/item/clothing/gloves/tackler/combat/insulated, ITEM_SLOT_GLOVES)
+	player.equip_to_slot(new /obj/item/clothing/shoes/combat, ITEM_SLOT_FEET)
+	player.equip_to_slot(new /obj/item/storage/backpack, ITEM_SLOT_BACK)
+	player.equip_to_slot(new /obj/item/card/id/chameleon, ITEM_SLOT_ID)
+
+/datum/deathmatch_loadout/operative/ranged
 	name = "Ranged Operative"
 	desc = "A syndicate operative with a gun and a knife."
 	default_species = /datum/species/human
-	outfit = /datum/outfit/syndicate_empty
 	equipment = list(
 		/obj/item/gun/ballistic/automatic/pistol = ITEM_SLOT_HANDS,
 		list(/obj/item/ammo_box/magazine/m9mm = 5) = ITEM_SLOT_BACKPACK,
 		/obj/item/kitchen/knife/combat = ITEM_SLOT_LPOCKET
 	)
 
-/datum/deathmatch_loadout/gunperative/pre_equip(mob/living/carbon/human/player)
+/datum/deathmatch_loadout/operative/ranged/pre_equip(mob/living/carbon/human/player)
 	player.equip_to_slot(new /obj/item/clothing/gloves/combat, ITEM_SLOT_GLOVES)
+	. = ..()
 
-/datum/deathmatch_loadout/meleeperative
+/datum/deathmatch_loadout/operative/melee
 	name = "Melee Operative"
 	desc = "A syndicate operative with multiple knives."
 	default_species = /datum/species/human
-	outfit = /datum/outfit/syndicate_empty
 	equipment = list(
 		/obj/item/clothing/suit/armor/vest = ITEM_SLOT_OCLOTHING,
 		/obj/item/clothing/head/helmet = ITEM_SLOT_HEAD,

@@ -55,8 +55,8 @@
 	min_players = 2
 	max_players = 5
 	allowed_loadouts = list(
-		/datum/deathmatch_loadout/gunperative,
-		/datum/deathmatch_loadout/meleeperative
+		/datum/deathmatch_loadout/operative/ranged,
+		/datum/deathmatch_loadout/operative/melee
 	)
 	map_path = "_maps/map_files/DM/shooting_range.dmm"
 
