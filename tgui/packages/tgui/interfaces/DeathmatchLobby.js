@@ -3,7 +3,6 @@ import { map } from 'common/collections';
 import { Table, Icon, Button, Section, Flex, Box, Dropdown } from '../components';
 import { Window } from '../layouts';
 import { ButtonCheckbox } from '../components/Button';
-import { Fragment } from 'inferno';
 
 export const DeathmatchLobby = (props, context) => {
   const { act, data } = useBackend(context);
@@ -109,7 +108,8 @@ export const DeathmatchLobby = (props, context) => {
                     nochevron
                     displayText={data.map.name}
                     options={data.maps}
-                    onSelected={value => act('change_map', {
+                    onSelected={value => act('host', {
+                      func: "change_map",
                       map: value,
                     })} />
                 ) || (
@@ -124,6 +124,13 @@ export const DeathmatchLobby = (props, context) => {
                 <br />
                 Current players: <b>{Object.keys(data.players).length}</b>
               </Box>
+              <Button.Checkbox
+                checked={data.global_chat}
+                content="Global Chat"
+                tooltip="Allow players and observers to talk with each other."
+                onClick={() => act('host', {
+                  func: "global_chat",
+                })} />
             </Section>
           </Flex.Item>
         </Flex>
