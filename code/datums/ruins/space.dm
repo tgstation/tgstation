@@ -385,3 +385,9 @@
 	suffix = "interdyne.dmm"
 	name = "Interdyne Spinward Research Base"
 	description = "An Interdyne facility abandoned due to the accidental discovery of Romerol"
+
+/datum/map_template/ruin/space/waystation
+	id = "waystation"
+	suffix = "waystation.dmm"
+	name = "Waystation"
+	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
