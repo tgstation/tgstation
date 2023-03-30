@@ -584,3 +584,31 @@
 // Botnanical Haven
 /area/ruin/space/has_grav/powered/botanical_haven
 	name = "\improper Botanical Haven"
+
+// Ruin of Waystation
+/area/ruin/space/has_grav/waystation
+	name = "Waystation Maintenance"
+
+/area/ruin/space/has_grav/waystation/qm
+	name = "Quartermaster Office"
+
+/area/ruin/space/has_grav/waystation/dorms
+	name = "Living Space"
+
+/area/ruin/space/has_grav/waystation/kitchen
+	name = "Kitchen"
+
+/area/ruin/space/has_grav/waystation/cargobay
+	name = "Cargo Bay"
+
+/area/ruin/space/has_grav/waystation/securestorage
+	name = "Secure Storage"
+
+/area/ruin/space/has_grav/waystation/cargooffice
+	name = "Cargo Office"
+
+/area/ruin/space/has_grav/powered/waystation/assaultpod
+	name = "Assault Pod"
+
+/area/ruin/space/has_grav/waystation/power
+	name = "Waystation Electrical"
