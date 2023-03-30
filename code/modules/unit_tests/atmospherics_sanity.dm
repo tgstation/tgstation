@@ -25,6 +25,12 @@
 		/area/station/engineering/supermatter,
 		// self contained
 		/area/station/tcommsat/server,
+		// not really sure why this is a station area
+		/area/station/asteroid,
+		// in the middle of space, for some reason
+		/area/station/commons/vacant_room,
+		// disconnected
+		/area/station/science/ordnance/freezerchamber,
 	)
 	for(var/ignored_type in ignored_areas)
 		station_areas_remaining -= typesof(ignored_type)

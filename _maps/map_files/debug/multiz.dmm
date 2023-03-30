@@ -160,6 +160,7 @@
 /area/station/engineering/main)
 "aU" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aV" = (
@@ -167,6 +168,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aW" = (
@@ -268,7 +270,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "bo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
 /obj/item/screwdriver/power,
 /obj/item/crowbar/power,
@@ -306,13 +307,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
-"bw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "bx" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "by" = (
@@ -458,14 +456,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"cl" = (
-/obj/structure/cable,
-/turf/open/floor/iron{
-	dir = 8
-	},
-/area/station/hallway/secondary/entry)
 "cn" = (
 /obj/machinery/door/airlock,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "co" = (
@@ -508,6 +503,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "cy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron{
 	dir = 8
 	},
@@ -923,6 +921,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
+"gC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
 "gW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -984,6 +986,15 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/service)
+"iW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/gravity_generator)
 "jb" = (
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
@@ -1023,6 +1034,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/edge,
 /area/station/engineering/storage)
+"jT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -1057,7 +1074,7 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "kX" = (
-/obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/atmospherics/components/binary/valve/on,
 /turf/open/floor/plating,
 /area/station/construction)
 "lm" = (
@@ -1271,6 +1288,10 @@
 "uw" = (
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
+"uz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron,
+/area/station/engineering/gravity_generator)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1315,6 +1336,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
+"xa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "xb" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/directional/north,
@@ -1455,6 +1481,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"CB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/engineering/gravity_generator)
 "CK" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -1547,7 +1580,7 @@
 /turf/open/floor/plating,
 /area/station/construction)
 "IC" = (
-/obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/atmospherics/components/binary/valve/on,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "IK" = (
@@ -1650,6 +1683,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"Ly" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
 "LE" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1709,10 +1748,20 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"NA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/engineering/gravity_generator)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"OA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "Pa" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -1799,6 +1848,11 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/service)
+"Tm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "TH" = (
 /turf/open/floor/plating,
 /area/station/engineering/storage)
@@ -1923,6 +1977,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"YL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "YV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -3429,7 +3488,7 @@ yl
 aS
 bd
 bo
-bw
+aj
 bN
 bN
 ct
@@ -3479,12 +3538,12 @@ ad
 af
 aj
 aq
-yl
-yl
-yl
-yl
+Tm
+YL
+YL
+YL
 bx
-bO
+xa
 bO
 bO
 bO
@@ -3534,7 +3593,7 @@ af
 aj
 ar
 dW
-yl
+YL
 bf
 bp
 aj
@@ -3696,8 +3755,8 @@ af
 ak
 at
 bh
-bh
-bh
+CB
+iW
 br
 ak
 bS
@@ -3750,7 +3809,7 @@ af
 ak
 aI
 aI
-dV
+NA
 aI
 aI
 ak
@@ -3803,8 +3862,8 @@ ad
 af
 ak
 dV
-dV
-dV
+uz
+NA
 dV
 dV
 by
@@ -3864,7 +3923,7 @@ dV
 by
 bU
 my
-cl
+IK
 IK
 cH
 by
@@ -3918,7 +3977,7 @@ dV
 by
 bV
 eo
-eo
+OA
 Bl
 cM
 jY
@@ -3972,7 +4031,7 @@ dV
 by
 bW
 eo
-eo
+OA
 eo
 eo
 cL
@@ -4025,11 +4084,11 @@ dV
 dV
 by
 bX
-eo
-eo
+OA
+OA
 cy
-eo
-eo
+OA
+OA
 cS
 Ho
 yR
@@ -4132,13 +4191,13 @@ af
 af
 oA
 af
-af
-af
+gC
+Ly
 by
 LW
 by
-af
-af
+Ly
+jT
 af
 oA
 af

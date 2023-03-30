@@ -704,9 +704,6 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/medbay)
 "cH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/item/gun/magic/wand/resurrection/debug,
 /obj/item/gun/magic/wand/death/debug{
@@ -714,6 +711,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
@@ -981,6 +981,9 @@
 /area/station/commons/storage/primary)
 "dH" = (
 /obj/machinery/door/airlock,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "dI" = (
@@ -1864,6 +1867,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"hK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2134,6 +2143,12 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
+"xm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -2152,6 +2167,13 @@
 /obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"za" = (
+/obj/machinery/door/airlock,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -2271,6 +2293,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/explab)
+"Iv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
 "Iy" = (
 /obj/structure/closet/secure_closet/research_director{
 	locked = 0
@@ -2302,6 +2330,12 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"KH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/medical/medbay)
 "Ly" = (
 /obj/machinery/chem_dispenser/chem_synthesizer,
 /turf/open/floor/iron/dark,
@@ -2328,6 +2362,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"MG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/medical/medbay)
 "MN" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -7222,7 +7262,7 @@ dC
 dC
 eW
 vv
-Tt
+xm
 bL
 aa
 aa
@@ -7314,7 +7354,7 @@ dJ
 dJ
 dJ
 cS
-Tt
+Iv
 bL
 aa
 aa
@@ -7406,7 +7446,7 @@ dJ
 dJ
 ny
 cS
-fI
+za
 ga
 ga
 ga
@@ -7498,8 +7538,8 @@ dJ
 dJ
 dO
 cS
-fO
-fO
+lH
+lH
 fO
 fO
 gf
@@ -7591,7 +7631,7 @@ dJ
 jU
 cS
 fO
-fO
+lH
 fO
 fO
 fb
@@ -7683,7 +7723,7 @@ dJ
 ea
 cS
 fO
-fO
+lH
 fO
 fO
 gf
@@ -7775,7 +7815,7 @@ dJ
 sH
 cS
 fP
-fO
+lH
 fO
 fO
 fb
@@ -7867,7 +7907,7 @@ dJ
 dQ
 cS
 gz
-fO
+lH
 fO
 fO
 gf
@@ -7959,7 +7999,7 @@ dJ
 dN
 cS
 fQ
-fO
+lH
 fO
 fO
 ga
@@ -8030,10 +8070,10 @@ Jp
 av
 by
 bV
+MG
 cm
 cm
-cm
-cm
+KH
 cm
 Sj
 by
@@ -8122,10 +8162,10 @@ MN
 av
 by
 bW
-cm
-cm
-cm
-cm
+KH
+KH
+KH
+KH
 cm
 cL
 by
@@ -8214,7 +8254,7 @@ av
 av
 by
 bX
-cm
+KH
 is
 cy
 Ut
@@ -8398,7 +8438,7 @@ af
 af
 af
 af
-af
+hK
 by
 cz
 by
