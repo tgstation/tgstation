@@ -2,7 +2,11 @@
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
 #define NONSENSICAL_VALUE -99999
-/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
+#warn lemnon todo, reorder
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on, l_angle, l_dir)
+	if(light_flags & LIGHT_FROZEN)
+		return
+
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
 
@@ -17,6 +21,12 @@
 
 	if(l_color != NONSENSICAL_VALUE)
 		set_light_color(l_color)
+
+	if(!isnull(l_angle))
+		set_light_angle(l_angle)
+
+	if(!isnull(l_dir))
+		set_light_dir(l_dir)
 
 	if(!isnull(l_on))
 		set_light_on(l_on)
@@ -54,7 +64,7 @@
  * It notifies (potentially) affected light sources so they can update (if needed).
  */
 /atom/proc/set_opacity(new_opacity)
-	if (new_opacity == opacity)
+	if (new_opacity == opacity || light_flags & LIGHT_FROZEN)
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, new_opacity)
 	. = opacity
@@ -104,7 +114,7 @@
 
 /// Setter for the light power of this atom.
 /atom/proc/set_light_power(new_power)
-	if(new_power == light_power)
+	if(new_power == light_power || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
@@ -114,7 +124,7 @@
 
 /// Setter for the light range of this atom.
 /atom/proc/set_light_range(new_range)
-	if(new_range == light_range)
+	if(new_range == light_range || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
@@ -124,7 +134,7 @@
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
-	if(new_color == light_color)
+	if(new_color == light_color || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
@@ -132,9 +142,29 @@
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 
+/// Setter for the light angle of this atom
+/atom/proc/set_light_angle(new_value)
+	if(new_value == light_angle || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ANGLE, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_angle
+	light_angle = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ANGLE, .)
+
+/// Setter for the light direction of this atom
+/atom/proc/set_light_dir(new_value)
+	if(new_value == light_dir || light_flags & LIGHT_FROZEN)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_DIR, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_dir
+	light_dir = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_DIR, .)
+
 /// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
-	if(new_value == light_on)
+	if(new_value == light_on || light_flags & LIGHT_FROZEN)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
@@ -144,10 +174,23 @@
 
 /// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
-	if(new_value == light_flags)
+	if(new_value == light_flags || (light_flags & LIGHT_FROZEN && new_value & LIGHT_FROZEN))
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_flags
 	light_flags = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
+
+/atom/proc/get_light_offset()
+	return list(0, 0)
+
+/// Returns a list of x and y offsets to apply to our visual lighting position
+/proc/calculate_light_offset(atom/get_offset)
+	var/list/hand_back = get_visual_offset(get_offset)
+	hand_back[1] = -hand_back[1] / world.icon_size
+	hand_back[2] = -hand_back[2] / world.icon_size
+	var/list/atoms_opinion = get_offset.get_light_offset()
+	hand_back[1] += atoms_opinion[1]
+	hand_back[2] += atoms_opinion[2]
+	return hand_back

@@ -1,14 +1,20 @@
 import { useBackend, useLocalState } from '../backend';
 import { round } from '../../common/math';
 import { classes } from 'common/react';
-import { Box, Button, Divider, ProgressBar, Section, Slider, Stack, Tabs } from '../components';
+import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+
+const NORTH = 1;
+const SOUTH = 2;
+const EAST = 4;
+const WEST = 8;
 
 type LightDetails = {
   name: string;
   color: string;
   power: number;
   range: number;
+  angle: number;
 };
 
 type TemplateID = string;
@@ -26,6 +32,7 @@ interface CategoryList {
 
 type Data = {
   on: boolean;
+  direction: number;
   light_info: LightDetails;
   templates: LightTemplate[];
   default_id: string;
@@ -52,16 +59,17 @@ export const LightController = (props, context) => {
     <Window
       title={light_info.name + ": Lighting"}
       width={600}
-      height={300}>
+      height={400}>
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
             <Section fitted fill scrollable width="170px">
-              <Tabs>
+              <Tabs fluid centered>
                 {Object.keys(category_ids).map(
                   (category, index) => (
                     <Tabs.Tab
                       key={category}
+                      selected={currentCategory === category}
                       onClick={() => setCurrentCategory(category)}>
                       <Box fontSize="14px" bold textColor={"#eee"}>
                         {category}
@@ -74,6 +82,7 @@ export const LightController = (props, context) => {
                   (id) => (
                     <Tabs.Tab
                       key={id}
+                      selected={currentTemplate === id}
                       onClick={() => setCurrentTemplate(id)}>
                       <Box fontSize="14px" textColor={"#cee"}>
                         {templates[id].light_info.name}
@@ -127,6 +136,20 @@ const LightControl = (props : LightControlProps, context) => {
                 onClick={() => act("set_on", {
                 value: !on,
                 })} />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack justify="space-around">
+            <Stack.Item>
+              <Section title="Direction" textAlign="center" fontSize="11px">
+                <DirectionSelect />
+              </Section>
+            </Stack.Item>
+            <Stack.Item>
+              <Section title="Angle" textAlign="center" fontSize="11px">
+                <AngleSelect />
+              </Section>
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -219,5 +242,78 @@ const LightInfo = (props : LightInfoProps, context) => {
         </Stack.Item>
       </Stack>
     </Section>
+  );
+};
+
+// 3 vertical stacks, setup as columns
+const DirectionSelect = () => {
+  return (
+    <Stack align="start" mt={0.5}>
+      <Stack.Item align="center">
+        <DirectionButton icon="arrow-left" dir={WEST} />
+      </Stack.Item>
+      <Stack.Item>
+        <Stack vertical>
+          <Stack.Item>
+            <DirectionButton icon="arrow-up" dir={NORTH} />
+          </Stack.Item>
+          <Stack.Item>
+            <Box backgroundColor="grey" width="18px" height="18px" ml="2px" />
+          </Stack.Item>
+          <Stack.Item>
+            <DirectionButton icon="arrow-down" dir={SOUTH} />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item align="center">
+        <DirectionButton icon="arrow-right" dir={EAST} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+type DirectedButtonProps = {
+  dir: number;
+  icon: string;
+};
+
+const DirectionButton = (props : DirectedButtonProps, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { direction } = data;
+  const {
+    dir,
+    icon,
+  } = props;
+  return (
+    <Button
+      icon={icon}
+      selected={direction & dir}
+      onClick={() => act('set_dir', {
+          value: dir,
+      })}
+    />
+  );
+};
+
+const AngleSelect = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { light_info } = data;
+  const {
+    angle,
+  } = light_info;
+  return (
+    <Knob
+      mt={0.5}
+      value={angle}
+      minValue={0}
+      maxValue={360}
+      animated
+      size={2.2}
+      step={5}
+      stepPixelSize={10}
+      onChange={(e, value) => act('set_angle', {
+        value: value,
+      })}
+      />
   );
 };

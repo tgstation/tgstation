@@ -9,8 +9,14 @@
 
 	///The turf under the source atom.
 	var/turf/source_turf
-	///The turf the top_atom appears to over.
-	var/turf/pixel_turf
+	/// How much to x shift our light by when displaying it
+	var/offset_x = 0
+	/// How much to y shift our light by when displaying it
+	var/offset_y = 0
+	/// How much larger our light sheet should be, based off offset_x and y
+	/// We clamp to at least 1, so if offset_x is 0.1, then this'll be 1
+	var/visual_offset
+
 	///Intensity of the emitter light.
 	var/light_power
 	/// The range of the emitted light.
@@ -22,6 +28,11 @@
 	var/lum_r
 	var/lum_g
 	var/lum_b
+
+	/// What direction our angled light is pointed
+	var/light_dir = NONE
+	/// How many degrees of a circle should our light show. 360 is all of it, 180 is half, etc
+	var/light_angle = 360
 
 	// The lumcount values used to apply the light.
 	var/tmp/applied_lum_r
@@ -45,7 +56,6 @@
 		add_to_light_sources(top_atom)
 
 	source_turf = top_atom
-	pixel_turf = get_turf_pixel(top_atom) || source_turf
 
 	light_power = source_atom.light_power
 	light_range = source_atom.light_range
@@ -54,6 +64,8 @@
 	PARSE_LIGHT_COLOR(src)
 
 	update()
+	if(GLOB.light_debug_enabled)
+		debug()
 
 /datum/light_source/Destroy(force)
 	remove_lum()
@@ -69,7 +81,6 @@
 	top_atom = null
 	source_atom = null
 	source_turf = null
-	pixel_turf = null
 
 	return ..()
 
@@ -140,23 +151,23 @@
 // This exists so we can cache the vars used in this macro, and save MASSIVE time :)
 // Most of this is saving off datum var accesses, tho some of it does actually cache computation
 // You will NEED to call this before you call APPLY_CORNER
-#define SETUP_CORNERS_CACHE(lighting_source)                               \
-	var/_turf_x = lighting_source.pixel_turf.x;                            \
-	var/_turf_y = lighting_source.pixel_turf.y;                            \
-	var/_turf_z = lighting_source.pixel_turf.z;                            \
-	var/list/_sheet = get_sheet();                                         \
-	var/list/_multiz_sheet = list();                                       \
-	if(!!GET_LOWEST_STACK_OFFSET(source_turf.z)) {                         \
-		_multiz_sheet = get_sheet(multiz = TRUE);                          \
-	}                                                                      \
-	var/_range_offset = CEILING(lighting_source.light_range, 1) + 0.5 + 2; \
-	var/_multiz_offset = SSmapping.max_plane_offset + 1;                   \
-	var/_light_power = lighting_source.light_power;                        \
-	var/_applied_lum_r = lighting_source.applied_lum_r;                    \
-	var/_applied_lum_g = lighting_source.applied_lum_g;                    \
-	var/_applied_lum_b = lighting_source.applied_lum_b;                    \
-	var/_lum_r = lighting_source.lum_r;                                    \
-	var/_lum_g = lighting_source.lum_g;                                    \
+#define SETUP_CORNERS_CACHE(lighting_source)                                                               \
+	var/_turf_x = lighting_source.source_turf.x;                                                            \
+	var/_turf_y = lighting_source.source_turf.y;                                                            \
+	var/_turf_z = lighting_source.source_turf.z;                                                            \
+	var/list/_sheet = get_sheet();                                                                         \
+	var/list/_multiz_sheet = list();                                                                       \
+	if(!!GET_LOWEST_STACK_OFFSET(source_turf.z)) {                                                         \
+		_multiz_sheet = get_sheet(multiz = TRUE);                                                          \
+	}                                                                                                      \
+	var/_range_offset = CEILING(lighting_source.light_range, 1) + 0.5 + 1 + lighting_source.visual_offset; \
+	var/_multiz_offset = SSmapping.max_plane_offset + 1;                                                   \
+	var/_light_power = lighting_source.light_power;                                                        \
+	var/_applied_lum_r = lighting_source.applied_lum_r;                                                    \
+	var/_applied_lum_g = lighting_source.applied_lum_g;                                                    \
+	var/_applied_lum_b = lighting_source.applied_lum_b;                                                    \
+	var/_lum_r = lighting_source.lum_r;                                                                    \
+	var/_lum_g = lighting_source.lum_g;                                                                    \
 	var/_lum_b = lighting_source.lum_b;
 
 #define SETUP_CORNERS_REMOVAL_CACHE(lighting_source)    \
@@ -165,7 +176,7 @@
 	var/_applied_lum_b = lighting_source.applied_lum_b;
 
 // Read out of our sources light sheet, a map of offsets -> the luminosity to use
-#define LUM_FALLOFF(C)  _sheet[C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
+#define LUM_FALLOFF(C) read_sheet(_sheet, C.x - _turf_x, C.y - _turf_y, _range_offset)// _sheet[C.x - _turf_x + _range_offset][C.y + _range_offset]
 #define LUM_FALLOFF_MULTIZ(C) _multiz_sheet[C.z - _turf_z + _multiz_offset][C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
 
 // Macro that applies light to a new corner.
@@ -205,49 +216,82 @@
 /datum/light_source/proc/get_sheet(multiz = FALSE)
 	var/list/static/key_to_sheet = list()
 	var/range = max(1, light_range);
-	var/key = "[range]-[multiz]"
+	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[multiz]"
 	var/list/hand_back = key_to_sheet[key]
 	if(!hand_back)
 		if(multiz)
-			hand_back = generate_sheet_multiz(range)
+			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle)
 		else
-			hand_back = generate_sheet(range)
+			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle)
 		key_to_sheet[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the source object
-/datum/light_source/proc/generate_sheet(range, z_level = 0)
+/datum/light_source/proc/generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, z_level = 0)
 	var/list/encode = list()
-	var/bound_range = CEILING(range, 1) + 1
+	// How far away the turfs we get are, and how many there are are often not the same calculation
+	// So we need to include the visual offset, so we can ensure our sheet is large enough to accept all the distance differences
+	var/bound_range = CEILING(range, 1) + visual_offset
+
 	// Corners are placed at 0.5 offsets
-	// We need our coords to reflect that
-	for(var/x in (-bound_range - 0.5) to (bound_range + 0.5))
+	// We need our coords to reflect that (though x_offsets that change the basis for how things are calculated are fine too)
+	for(var/x in (-(bound_range) + x_offset - 0.5) to (bound_range + x_offset + 0.5))
 		var/list/row = list()
-		for(var/y in (-bound_range - 0.5) to (bound_range + 0.5))
-			row += falloff_at_coord(x, y, z_level, range)
+		for(var/y in (-(bound_range) + y_offset - 0.5) to (bound_range + y_offset + 0.5))
+			row += falloff_at_coord(x, y, z_level, range, center_dir, light_angle)
 		encode += list(row)
 	return encode
 
 /// Returns a THREE dimensional list of lists that encodes the lighting falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the passed object
-/datum/light_source/proc/generate_sheet_multiz(range)
+/datum/light_source/proc/generate_sheet_multiz(range, visual_offset, x_offset, y_offset, center_dir, angle)
 	var/list/encode = list()
 	var/z_range = SSmapping.max_plane_offset // Let's just be safe yeah?
 	for(var/z in -z_range to z_range)
-		var/list/sheet = generate_sheet(range, z)
+		var/list/sheet = generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, z)
 		encode += list(sheet)
 	return encode
 
 /// Takes x y and z offsets from the source as input, alongside our source's range
 /// Returns a value between 0 and 1, 0 being dark on that tile, 1 being fully lit
-/datum/light_source/proc/falloff_at_coord(x, y, z, range)
-	var/_range_divisor = max(1, range)
+/datum/light_source/proc/falloff_at_coord(x, y, z, range, center_dir, angle)
+	var/range_divisor = max(1, range)
+
 	// You may notice we use squares here even though there are three components
 	// Because z diffs are so functionally small, cubes and cube roots are too aggressive
-	return 1 - CLAMP01(sqrt(x ** 2 + y ** 2 + z ** 2 + LIGHTING_HEIGHT) / _range_divisor)
+	// The larger the distance is, the less bright our light will be
+	var/multiplier = 1 - CLAMP01(sqrt(x ** 2 + y ** 2 + z ** 2 + LIGHTING_HEIGHT) / range_divisor)
+	if(angle >= 360 || angle <= 0)
+		return multiplier
+
+	// Turn our positional offset into an angle
+	var/coord_angle = delta_to_angle(x, y)
+	// Get the difference between the angle we want, and the angle we have
+	var/center_angle = dir2angle(center_dir)
+	var/angle_delta = abs(center_angle - coord_angle)
+	// Now we have to normalize the angle delta to be between 0 and 180, instead of 0 and 360
+	// This ensures removing say, 15 degrees removes it from both sides, rather then just one
+	// Turns an unfurling fan into a pair of scissors
+	if(angle_delta > 180)
+		angle_delta = 180 - (angle_delta - 180)
+	// We allow angle deltas to a certian amount, angle / 2
+	// If we pass that, then it starts effecting the visuals
+	// Oh and we'll scale it so 30 degrees is the "0" point, where things become fully dark
+	// This could be variable, it just isn't yet yaknow?
+	return max(multiplier * (1 - max(angle_delta - (angle / 2), 0) / 30), 0)
+
+/datum/light_source/proc/print_sheet()
+	var/list/sheet = get_sheet()
+	var/list/output = list()
+	for(var/list/column in sheet)
+		var/list/print_column = list()
+		for(var/row in column)
+			print_column += round(row, 0.1)
+		output += print_column.Join(", ")
+	message_admins("\n[output.Join("\n")]")
 
 /proc/read_sheet(list/sheet, x, y, offset, z, z_offset)
 	var/list/working = sheet
@@ -311,6 +355,7 @@
 /datum/light_source/proc/refresh_values()
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
+	var/turf/old_source_turf = source_turf
 
 	if (QDELETED(source_atom))
 		qdel(src)
@@ -332,19 +377,16 @@
 		qdel(src)
 		return FALSE
 
-	if (isturf(top_atom))
-		if (source_turf != top_atom)
+	var/atom/visual_source = source_atom
+	if(isturf(top_atom))
+		visual_source = source_atom
+		if(source_turf != top_atom)
 			source_turf = top_atom
-			pixel_turf = source_turf
 			update = TRUE
-	else if (top_atom.loc != source_turf)
-		source_turf = top_atom.loc
-		pixel_turf = get_turf_pixel(top_atom)
-		update = TRUE
 	else
-		var/pixel_loc = get_turf_pixel(top_atom)
-		if (pixel_loc != pixel_turf)
-			pixel_turf = pixel_loc
+		visual_source = top_atom
+		if(top_atom.loc != source_turf)
+			source_turf = top_atom.loc
 			update = TRUE
 
 	if (!isturf(source_turf))
@@ -361,6 +403,21 @@
 		update = TRUE
 
 	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
+		update = TRUE
+
+	if(source_atom.light_dir != light_dir)
+		light_dir = source_atom.light_dir
+		update = TRUE
+
+	if (source_atom.light_angle != light_angle)
+		light_angle = source_atom.light_angle
+		update = TRUE
+
+	var/list/visual_offsets = calculate_light_offset(visual_source)
+	if(visual_offsets[1] != offset_x || visual_offsets[2] != offset_y || source_turf != old_source_turf)
+		offset_x = visual_offsets[1]
+		offset_y = visual_offsets[2]
+		visual_offset = max(CEILING(abs(offset_x), 1), CEILING(abs(offset_y), 1))
 		update = TRUE
 
 	// If we need to update, well, update
@@ -381,19 +438,20 @@
 		return list()
 
 	var/oldlum = source_turf.luminosity
-	source_turf.luminosity = CEILING(light_range, 1)
+	var/working_range = CEILING(light_range + visual_offset, 1)
+	source_turf.luminosity = working_range
 
 	var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 
 	if(!uses_multiz) // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
-		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+		for(var/turf/T in view(working_range, source_turf))
 			if(IS_OPAQUE_TURF(T))
 				continue
 			INSERT_CORNERS(corners, T)
 		source_turf.luminosity = oldlum
 		return corners
 
-	for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+	for(var/turf/T in view(working_range, source_turf))
 		if(IS_OPAQUE_TURF(T))
 			continue
 		INSERT_CORNERS(corners, T)
@@ -477,363 +535,4 @@
 #undef SETUP_CORNERS_CACHE
 #undef GENERATE_MISSING_CORNERS
 
-#warn  a way to isolate them
 
-#warn IDEAS!
-// Half power maint lights, cull some maint lights
-// Bump up intensity of apcs
-// Bump range of screens/air alarms
-// Fix that stupid screen thing where it projects light/emissives even with nothing displayed
-
-/datum/light_source/proc/debug()
-	if(QDELETED(src) || isturf(source_atom))
-		return
-	source_atom.add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
-	var/static/uid = 0
-	if(!source_atom.render_target)
-		source_atom.render_target = "light_debug_[uid]"
-		uid++
-	var/atom/movable/render_step/color/above_light = new(null, source_atom.render_target, "#ffffff23")
-	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, source_atom)
-	source_atom.add_overlay(above_light)
-	QDEL_NULL(above_light)
-	var/atom/movable/lie_to_areas = source_atom
-	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/toggle(source_atom)
-	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/focus(source_atom)
-	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/move(source_atom)
-
-/atom/movable/screen/light_button
-	icon = 'icons/testing/lighting_debug.dmi'
-	plane = HUD_PLANE
-	alpha = 100
-	var/datum/weakref/last_hovored_ref
-
-/atom/movable/screen/light_button/Initialize(mapload)
-	. = ..()
-	layer = loc.layer
-	RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(delete_self))
-
-/atom/movable/screen/light_button/proc/delete_self(datum/source)
-	SIGNAL_HANDLER
-	qdel(src)
-
-// Entered and Exited won't fire while you're dragging something, because you're still "holding" it
-// Very much byond logic, but I want nice for my highlighting, so we fake it with drag
-// Copypasta from action buttons
-/atom/movable/screen/light_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
-		return
-	var/atom/old_object
-	if(last_hovored_ref)
-		old_object = last_hovored_ref?.resolve()
-	else // If there's no current ref, we assume it was us. We also treat this as our "first go" location
-		old_object = src
-
-	if(old_object)
-		old_object.MouseExited(over_location, over_control, params)
-
-	last_hovored_ref = WEAKREF(over_object)
-	over_object.MouseEntered(over_location, over_control, params)
-
-/atom/movable/screen/light_button/MouseDrop(over_object)
-	. = ..()
-	last_hovored_ref = null
-
-/atom/movable/screen/light_button/MouseEntered(location, control, params)
-	. = ..()
-	animate(src, alpha = 255, time = 2)
-
-/atom/movable/screen/light_button/MouseExited(location, control, params)
-	. = ..()
-	animate(src, alpha = initial(alpha), time = 2)
-
-/atom/movable/screen/light_button/toggle
-	name = "Toggle Light"
-	desc = "Click to turn the light on/off"
-	icon_state = "light_enable"
-
-/atom/movable/screen/light_button/toggle/Initialize(mapload)
-	. = ..()
-	RegisterSignal(loc, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_changed))
-	update_appearance()
-
-/atom/movable/screen/light_button/toggle/Click(location, control, params)
-	. = ..()
-	if(!check_rights_for(usr.client, R_DEBUG))
-		return
-	var/atom/movable/parent = loc
-	var/atom/movable/screen/light_button/focus/manager = locate(/atom/movable/screen/light_button/focus) in parent.vis_contents
-	manager.block_lights = FALSE
-	loc.set_light(l_on = !loc.light_on)
-	manager.block_lights = TRUE
-
-/atom/movable/screen/light_button/toggle/proc/on_changed()
-	SIGNAL_HANDLER
-	update_appearance()
-
-/atom/movable/screen/light_button/toggle/update_icon_state()
-	. = ..()
-	if(loc.light_on)
-		icon_state = "light_enable"
-	else
-		icon_state = "light_disable"
-
-/atom/movable/screen/light_button/focus
-	name = "Edit Light"
-	desc = "Click to open an editing menu for the light"
-	icon_state = "light_focus"
-	var/block_lights = TRUE
-
-/atom/movable/screen/light_button/focus/Initialize(mapload)
-	. = ..()
-	RegisterSignal(loc, COMSIG_ATOM_SET_LIGHT, PROC_REF(block_light))
-
-/atom/movable/screen/light_button/focus/proc/block_light(datum/source)
-	SIGNAL_HANDLER
-	if(block_lights)
-		return COMPONENT_BLOCK_LIGHT_UPDATE
-
-/atom/movable/screen/light_button/focus/Click(location, control, params)
-	. = ..()
-	ui_interact(usr)
-
-/atom/movable/screen/light_button/focus/ui_state(mob/user)
-	return GLOB.debug_state
-
-/atom/movable/screen/light_button/focus/can_interact()
-	return TRUE
-
-/atom/movable/screen/light_button/focus/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "LightController")
-		ui.open()
-
-/datum/light_template
-	/// User friendly name, to display clientside
-	var/name = ""
-	/// Description to display to the client
-	var/desc = ""
-	/// Unique id for this template
-	var/id = ""
-	/// What category to put this template in
-	var/category = "UNSORTED"
-	/// Icon to use to display this clientside
-	var/icon = ""
-	/// Icon state to display clientside
-	var/icon_state = ""
-	/// The light range we use
-	var/range = 0
-	/// The light power we use
-	var/power = 0
-	/// The light color we use
-	var/color = ""
-	/// Do not load this template if its type matches the ignore type
-	/// This lets us do subtypes more nicely
-	var/ignore_type = /datum/light_template
-
-#warn implement something to block light/lighting iconstate changes. Unsure how
-
-/datum/light_template/proc/mirror_onto(atom/light_holder)
-	light_holder.set_light(range, power, color)
-	light_holder.icon = icon
-	light_holder.icon_state = icon_state
-	RegisterSignal(light_holder, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(block_changes))
-	light_holder.cut_overlays(light_holder.managed_overlays)
-	light_holder.managed_overlays = list()
-
-/datum/light_template/proc/block_changes(datum/source)
-	SIGNAL_HANDLER
-	return COMSIG_ATOM_NO_UPDATE_NAME|COMSIG_ATOM_NO_UPDATE_DESC|COMSIG_ATOM_NO_UPDATE_ICON
-
-/atom/movable/screen/light_button/focus/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/lights))
-
-/atom/movable/screen/light_button/focus/ui_data()
-	var/list/data = list()
-
-	var/atom/parent = loc
-	var/list/light_info = list()
-	light_info["name"] = full_capitalize(parent.name)
-	light_info["on"] = parent.light_on
-	light_info["power"] = parent.light_power
-	light_info["range"] = parent.light_range
-	light_info["color"] = parent.light_color
-	data["light_info"] = light_info
-	data["on"] = parent.light_on
-
-	return data
-
-/atom/movable/screen/light_button/focus/ui_static_data(mob/user)
-	. = ..()
-	var/list/data = list()
-	data["templates"] = list()
-	data["category_ids"] = list()
-	for(var/id in GLOB.light_types)
-		var/datum/light_template/template = GLOB.light_types[id]
-		var/list/insert = list()
-		var/list/light_info = list()
-		light_info["name"] = template.name
-		light_info["power"] = template.power
-		light_info["range"] = template.range
-		light_info["color"] = template.color
-		insert["light_info"] = light_info
-		insert["description"] = template.desc
-		insert["id"] = template.id
-		insert["category"] = template.category
-		if(!data["category_ids"][template.category])
-			data["category_ids"][template.category] = list()
-		data["category_ids"][template.category] += id
-		data["templates"][template.id] = insert
-
-	var/datum/light_template/first_template = GLOB.light_types[GLOB.light_types[1]]
-	data["default_id"] = first_template.id
-	data["default_category"] = first_template.category
-	return data
-
-/atom/movable/screen/light_button/focus/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
-	block_lights = FALSE
-	var/atom/parent = loc
-	switch(action)
-		if("set_on")
-			parent.set_light(l_on = params["value"])
-		if("change_color")
-			var/chosen_color = input(ui.user, "Pick new color", "[parent]", parent.light_color) as color|null
-			if(chosen_color)
-				parent.set_light(l_color = chosen_color)
-		if("set_power")
-			parent.set_light(l_power = params["value"])
-		if("set_range")
-			parent.set_light(l_range = params["value"])
-		if("mirror_template")
-			var/datum/light_template/template = GLOB.light_types[params["id"]]
-			template.mirror_onto(parent)
-
-	block_lights = TRUE
-	return TRUE
-
-/atom/movable/screen/light_button/move
-	name = "Move Light"
-	desc = "Drag to move the light around"
-	icon_state = "light_move"
-	mouse_drag_pointer = 'icons/effects/mouse_pointers/light_drag.dmi'
-
-/atom/movable/screen/light_button/move/MouseDrop(over_object)
-	. = ..()
-	if(!ismovable(loc))
-		return
-	var/atom/movable/movable_owner = loc
-	movable_owner.forceMove(get_turf(over_object))
-
-/proc/debug_sources()
-	var/list/sum = list()
-	var/total = 0
-	for(var/datum/light_source/source)
-		source.debug()
-		sum[source.source_atom.type] += 1
-		total += 1
-
-	sum = sortTim(sum, /proc/cmp_numeric_asc, TRUE)
-	var/text = ""
-	for(var/type in sum)
-		text += "[type] = [sum[type]]\n"
-	text += "total iterated: [total]"
-	message_admins(text)
-	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHTSOURCE_CREATED, )
-
-GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types())
-
-/// Template that reads info off a light subtype
-/datum/light_template/read_light
-	ignore_type = /datum/light_template/read_light
-	/// Typepath to pull our icon/state and lighting details from
-	var/obj/machinery/light/path_to_read
-
-/datum/light_template/read_light/New()
-	. = ..()
-	desc ||= "[path_to_read]"
-	icon ||= initial(path_to_read.icon)
-	icon_state ||= initial(path_to_read.icon_state)
-	range = initial(path_to_read.brightness)
-	power = initial(path_to_read.bulb_power)
-	color = initial(path_to_read.bulb_colour)
-
-/datum/light_template/read_light/standard_bar
-	name = "Light Bar"
-	id = "light_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light
-
-/datum/light_template/read_light/warm_bar
-	name = "Warm Bar"
-	id = "warm_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light/warm
-
-/datum/light_template/read_light/cold_bar
-	name = "Cold Bar"
-	id = "cold_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light/cold
-
-/datum/light_template/read_light/red_bar
-	name = "Red Bar"
-	id = "red_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light/red
-
-/datum/light_template/read_light/blacklight_bar
-	name = "Black Bar"
-	id = "black_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light/blacklight
-
-/datum/light_template/read_light/dim_bar
-	name = "Dim Bar"
-	id = "dim_bar"
-	category = "Bar"
-	path_to_read = /obj/machinery/light/very_dim
-
-/datum/light_template/read_light/standard_bulb
-	name = "Light Bulb"
-	id = "light_bulb"
-	category = "Bulb"
-	path_to_read = /obj/machinery/light/small
-
-/datum/light_template/read_light/red_bulb
-	name = "Red Bulb"
-	id = "red_bulb"
-	category = "Bulb"
-	path_to_read = /obj/machinery/light/small/red
-
-/datum/light_template/read_light/dimred_bulb
-	name = "Dim-Red Bulb"
-	id = "dimred_bulb"
-	category = "Bulb"
-	path_to_read = /obj/machinery/light/small/red/dim
-
-/datum/light_template/read_light/blacklight_bulb
-	name = "Black Bulb"
-	id = "black_bulb"
-	category = "Bulb"
-	path_to_read = /obj/machinery/light/small/blacklight
-
-/datum/light_template/read_light/standard_floor
-	name = "Floor Light"
-	id = "floor_light"
-	category = "Misc"
-	path_to_read = /obj/machinery/light/floor
-
-/proc/generate_light_types()
-	var/list/types = list()
-	for(var/datum/light_template/template_path as anything in typesof(/datum/light_template))
-		if(initial(template_path.ignore_type) == template_path)
-			continue
-		var/datum/light_template/template = new template_path()
-		types[template.id] = template
-	return types

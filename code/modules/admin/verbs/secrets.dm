@@ -347,7 +347,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
-				stoplag()
+				CHECK_TICK
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -355,7 +355,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
-				stoplag()
+				CHECK_TICK
 		if("customportal")
 			if(!is_funmin)
 				return
