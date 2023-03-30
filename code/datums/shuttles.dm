@@ -597,7 +597,7 @@
 	credit_cost = CARGO_CRATE_VALUE * 15
 
 /datum/map_template/shuttle/emergency/northstar
-	suffix ="northstar"
+	suffix = "northstar"
 	name = "North Star Emergency Shuttle"
 	description = "A rugged shuttle meant for long-distance transit from the tips of the frontier to Central Command and back. \
 	moderately comfortable and large, but cramped."
