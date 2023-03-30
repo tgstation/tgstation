@@ -54,7 +54,6 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 
 /datum/light_template/proc/new_template_chosen(datum/source)
 	SIGNAL_HANDLER
-	#warn you need signalS here post update
 	UnregisterSignal(source, list(COMSIG_ATOM_UPDATE_APPEARANCE, COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED))
 
 /// Template that reads info off a light subtype

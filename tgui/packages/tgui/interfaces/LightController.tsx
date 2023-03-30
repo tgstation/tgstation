@@ -200,7 +200,7 @@ const LightInfo = (props : LightInfoProps, context) => {
           <Stack justify="space-between">
             <Stack.Item>
               <Box fontSize="16px" mt={0.5}>
-                {light_info.name}
+                Template: {light_info.name}
               </Box>
               <Box fontSize="12px" ml={1} color="#aaaaaa">
                 {light.description}

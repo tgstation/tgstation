@@ -1,5 +1,4 @@
 
-#warn a way to isolate them
 #warn IDEAS!
 // Half power maint lights, cull some maint lights
 
@@ -37,7 +36,7 @@
 	// Freeze our light would you please
 	source_atom.light_flags |= LIGHT_FROZEN
 	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/toggle(source_atom)
-	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/focus(source_atom)
+	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/edit(source_atom)
 	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/move(source_atom)
 
 /atom/movable/screen/light_button
@@ -117,31 +116,31 @@
 	else
 		icon_state = "light_disable"
 
-/atom/movable/screen/light_button/focus
+/atom/movable/screen/light_button/edit
 	name = "Edit Light"
 	desc = "Click to open an editing menu for the light"
 	icon_state = "light_focus"
 
-/atom/movable/screen/light_button/focus/Click(location, control, params)
+/atom/movable/screen/light_button/edit/Click(location, control, params)
 	. = ..()
 	ui_interact(usr)
 
-/atom/movable/screen/light_button/focus/ui_state(mob/user)
+/atom/movable/screen/light_button/edit/ui_state(mob/user)
 	return GLOB.debug_state
 
-/atom/movable/screen/light_button/focus/can_interact()
+/atom/movable/screen/light_button/edit/can_interact()
 	return TRUE
 
-/atom/movable/screen/light_button/focus/ui_interact(mob/user, datum/tgui/ui)
+/atom/movable/screen/light_button/edit/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LightController")
 		ui.open()
 
-/atom/movable/screen/light_button/focus/ui_assets(mob/user)
+/atom/movable/screen/light_button/edit/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/spritesheet/lights))
 
-/atom/movable/screen/light_button/focus/ui_data()
+/atom/movable/screen/light_button/edit/ui_data()
 	var/list/data = list()
 
 	var/atom/parent = loc
@@ -158,7 +157,7 @@
 
 	return data
 
-/atom/movable/screen/light_button/focus/ui_static_data(mob/user)
+/atom/movable/screen/light_button/edit/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
 	data["templates"] = list()
@@ -186,7 +185,7 @@
 	data["default_category"] = first_template.category
 	return data
 
-/atom/movable/screen/light_button/focus/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/atom/movable/screen/light_button/edit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
