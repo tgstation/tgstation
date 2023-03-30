@@ -89,6 +89,11 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+      - name: Check client Compatibility
+        uses: MrStonedOne/byond-client-compatibility-check@v1
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: 514
 
   find_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
