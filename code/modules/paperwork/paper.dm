@@ -65,6 +65,8 @@
 
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
+	///is this considered thermal paper?
+	var/thermal_paper = FALSE
 
 /obj/item/paper/Initialize(mapload)
 	. = ..()

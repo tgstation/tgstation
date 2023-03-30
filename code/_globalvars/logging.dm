@@ -51,6 +51,9 @@ GLOBAL_PROTECT(OOClog)
 GLOBAL_VAR(perf_log)
 GLOBAL_PROTECT(perf_log)
 
+GLOBAL_LIST_EMPTY(mechcomp_log)
+GLOBAL_PROTECT(mechcomp_log)
+
 /// Picture logging
 GLOBAL_VAR(picture_log_directory)
 GLOBAL_PROTECT(picture_log_directory)
