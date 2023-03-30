@@ -347,6 +347,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Ar" = (
@@ -501,6 +504,9 @@
 "FT" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/turf_decal/stripes/full,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Gd" = (
