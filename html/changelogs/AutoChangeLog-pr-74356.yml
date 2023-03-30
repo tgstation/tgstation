@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes:
+  - bugfix: "The Bridge and Arrivals on Tramstation should now be firmly connected to the main distro loop once again."
