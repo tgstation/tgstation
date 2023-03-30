@@ -102,10 +102,11 @@
 	SIGNAL_HANDLER
 	if(lockable)
 		lock_uplink()
+	if(!istype(parent, /obj/item/uplink/replacement))
 		return
 	var/obj/item/uplink_item = parent
-	do_sparks(3,FALSE, uplink_item)
-	uplink_item.visible_message(span_warning("[uplink_item] suddenly combusts!"))
+	do_sparks(number = 3, cardinal_only = FALSE, source = uplink_item)
+	uplink_item.visible_message(span_warning("The [uplink_item] suddenly combusts!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
 	qdel(uplink_item)
 
