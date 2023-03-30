@@ -859,9 +859,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	pixel_y = -32
 	alpha = 100
 
-#undef HOLOPAD_PASSIVE_POWER_USAGE
-#undef HOLOGRAM_POWER_USAGE
-#undef CAN_HEAR_MASTERS
 #undef CAN_HEAR_ACTIVE_HOLOCALLS
-#undef CAN_HEAR_RECORD_MODE
 #undef CAN_HEAR_ALL_FLAGS
+#undef CAN_HEAR_HOLOCALL_USER
+#undef CAN_HEAR_MASTERS
+#undef CAN_HEAR_RECORD_MODE
+#undef HOLOGRAM_POWER_USAGE
+#undef HOLOPAD_PASSIVE_POWER_USAGE

@@ -678,3 +678,6 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
 	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 	sharer.temperature -= heat / sharer.heat_capacity
+
+#undef LAST_SHARE_CHECK
+#undef PLANET_SHARE_CHECK

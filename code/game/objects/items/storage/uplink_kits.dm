@@ -126,7 +126,10 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
 			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
-			new /obj/item/toy/spinningtoy(src) //lol
+			if(prob(70))
+				new /obj/item/toy/spinningtoy(src) //lol
+			else
+				new /obj/item/toy/spinningtoy/dark_matter(src) //edgy lol
 
 		if(KIT_SABOTAGE)
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
