@@ -656,7 +656,7 @@
 	pixel_x = -7;
 	pixel_y = 7;
 	req_access = list("cargo");
-	id = FreightShuttleDoors
+	id = "FreightShuttleDoors"
 	},
 /obj/machinery/conveyor_switch{
 	name = "freight switch";
