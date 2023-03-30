@@ -13,7 +13,7 @@
 		At level 4, you will no longer spin, but you will be limited to tackling from only 6 tiles away."
 	power_flags = NONE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
-	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
+	purchase_flags = NONE
 	bloodcost = 10
 	cooldown = 10 SECONDS
 	power_activates_immediately = FALSE
