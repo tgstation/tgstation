@@ -510,3 +510,5 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			continue
 		vars[name] = SStrading_card_game.resolve_keywords(value)
 
+#undef TAPPED_ANGLE
+#undef UNTAPPED_ANGLE

@@ -46,6 +46,7 @@
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
 #_maps/RandomRuins/SpaceRuins/originalcontent.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/pod_crash.dmm
 #_maps/RandomRuins/SpaceRuins/russian_derelict.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
@@ -57,5 +58,16 @@
 #_maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
 #_maps/RandomRuins/SpaceRuins/vaporwave.dmm
 #_maps/RandomRuins/SpaceRuins/way_home.dmm
+#_maps/RandomRuins/SpaceRuins/waystation.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
+#_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+#_maps/RandomRuins/SpaceRuins/forgottenship.dmm
+#_maps/RandomRuins/SpaceRuins/hellfactory.dmm
+#_maps/RandomRuins/SpaceRuins/space_billboard.dmm
+#_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
+#_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
+#_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
+#_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
+#_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm

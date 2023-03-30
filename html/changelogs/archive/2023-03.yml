@@ -1052,3 +1052,80 @@
       appear at once.
   spockye:
   - rscadd: remakes the old escape pod shuttle
+2023-03-29:
+  IndieanaJones:
+  - balance: The pirate gangs have been split into two subcategories, one which can
+      spawn earlier in a shift and one that spawns later as they currently do. While
+      skeleton pirates will still be only seen later into the shift, expect to see
+      the other pirate gangs earlier on.
+  - bugfix: Prevented the pirate event from runtiming when no possible pirate gangs
+      were available.
+  - bugfix: Pirates can no longer be selected by Dynamic if there are no more pirates
+      gangs that can be used.
+  JohnFulpWillard:
+  - bugfix: Experimentors can connect to techwebs that have at least one RD server
+      on the level.
+  - balance: Curators/HoP can now manage Newscaster D-Notices (previously was Warden/HoS).
+  - balance: Security Officers/Detectives can now issue Wanted notices on Newscasters.
+  - balance: Ntos Newscaster now requires Library access only to download, not to
+      run.
+  LemonInTheDark:
+  - server: The starlight config has been removed, as it is enabled by default
+  Rex9001:
+  - rscadd: the pod_crash.dmm ruin
+  lizardqueenlexi:
+  - qol: you can choose your default paint color for the "Tagger" quirk from prefs.
+  spockye:
+  - rscadd: Added a new emergency shuttle, the emergency_tranquility
+  - bugfix: ' Redesigns "the_arena" ( the bubblegum shuttle deathmatch area )'
+2023-03-30:
+  Helg2:
+  - rscadd: re-added normal doors to qm's office on tram.
+  - bugfix: fixed hos' shutters not being existant on tram.
+  LT3:
+  - bugfix: Reduced lighting range for idle fire alarms
+  LemonInTheDark:
+  - bugfix: Breathing pluoxium works again
+  - bugfix: Kilo's arrivals port will no longer be space colored
+  Melbert:
+  - rscdel: Revert elevator panel UI theme change
+  Rhials:
+  - bugfix: mafia games only grant role win achievements when played with a full 12-player
+      setup.
+  Singul0:
+  - rscadd: Adds a new space ruin, A Waystation under attack!
+  Tattle:
+  - spellcheck: fixed a few typos, mostly around breathing
+  Timberpoes:
+  - bugfix: Actually fixes re-attaching heads unintentionally sending brains to the
+      gem room this time. For realsies.
+  Time-Green:
+  - rscdel: removes being cremated from high burn damage and being on fire (yes this
+      was in the game but has been broken for probably a very long time)
+  flowercuco:
+  - bugfix: admin respawn character verb works properly
+  - code_imp: adds IS_TRAITOR macro
+  kinneb:
+  - imageadd: Resprites the Wirebrush
+  - imagedel: Removes the sprite for the Advanced Wirebrush
+  san7890:
+  - bugfix: 'The Syndicate have gotten their hands on the most dangerous weapon: A
+      photocopier that doesn''t require any money. God save us all.'
+  - bugfix: The hermit of the Icemoon has decided to build their hut in some deeper
+      caves for a bit more protection from the local fauna.
+  - bugfix: Pirates finally realized that they shouldn't risk life and limb attacking
+      stations if they had already paid them off.
+  spockye:
+  - bugfix: fixed disposals on the starfury
+  - bugfix: fixed flooring on the starfury
+  - bugfix: fixed missing air alarm on the starfury
+  - bugfix: fixed air turfs exposed to space on the starfury
+  tralezab:
+  - rscadd: The dark matt-eor
+  - rscadd: Summon a dark matt-eor final traitor objective
+  - rscadd: Dark matter singularity variant, which can't grow as big as a regular
+      singularity but hungers for blood
+  - code_imp: cleaned up/sorted meteor shield code, satellite control, and more
+  - qol: added a lot of feedback to interacting with meteor shields
+  - balance: emagging a lot of meteor shields warns the station, but emagging enough
+      of them summons a Dark Matt-eor.
