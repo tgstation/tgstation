@@ -11642,6 +11642,8 @@
 	pixel_y = 0;
 	req_access = list("kitchen")
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "czX" = (
@@ -17809,15 +17811,17 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "eRQ" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform South-East";
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/line{
+/obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -19407,6 +19411,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"fwn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "fwB" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/corner{
@@ -32178,9 +32188,6 @@
 /turf/open/floor/iron/freezer,
 /area/station/science/lower)
 "kqY" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform South-West";
 	dir = 10
@@ -32190,8 +32197,11 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
@@ -34755,7 +34765,13 @@
 /area/station/service/chapel/office)
 "ljn" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ljw" = (
 /obj/structure/chair{
@@ -36753,12 +36769,13 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/loading_area/white{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hopqueueend";
 	name = "HoP Queue Shutters"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/loading_area/white{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -39893,7 +39910,15 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/glass/reinforced/tram,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "ngA" = (
 /obj/structure/disposalpipe/segment{
@@ -42270,6 +42295,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nXp" = (
@@ -43450,7 +43476,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "owM" = (
@@ -50191,6 +50219,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "qVJ" = (
@@ -50537,15 +50567,17 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "raY" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Hallway - Starboard Tram Platform North-East"
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "rbe" = (
@@ -56670,15 +56702,18 @@
 /area/station/medical/virology)
 "tki" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/turf_decal/loading_area/white{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hopqueueendbottom";
 	name = "HoP Queue Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "tkj" = (
@@ -59380,7 +59415,13 @@
 /obj/machinery/airalarm/directional/east,
 /obj/effect/landmark/start/hangover,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ujx" = (
 /obj/machinery/conveyor{
@@ -60563,6 +60604,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "uFr" = (
@@ -61433,7 +61476,15 @@
 "uUc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/glass/reinforced/tram,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "uUs" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
@@ -63107,6 +63158,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "vwZ" = (
@@ -65062,6 +65114,22 @@
 /obj/structure/railing/corner,
 /turf/open/space/openspace,
 /area/station/solars/starboard/fore)
+"wid" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/left)
 "wip" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -66417,7 +66485,15 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/west,
-/turf/open/floor/glass/reinforced/tram,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "wHI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66600,10 +66676,18 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
 "wMt" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/station/command/heads_quarters/hop)
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "wMu" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -150303,7 +150387,7 @@ fNV
 fNV
 fNV
 fbs
-hTa
+fwn
 ald
 fpg
 eFN
@@ -150562,7 +150646,7 @@ xhk
 mhz
 uEV
 czP
-xtn
+wMt
 vwT
 uyd
 hdH
@@ -151843,7 +151927,7 @@ fKO
 jvf
 fKO
 tki
-wMt
+jvf
 ook
 mGQ
 yiM
@@ -152099,7 +152183,7 @@ ngv
 uUc
 wHH
 uUc
-uUc
+wid
 kqY
 xZE
 cEg
