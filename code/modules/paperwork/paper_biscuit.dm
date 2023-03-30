@@ -89,6 +89,8 @@
 	name = "\proper biscuit card"
 	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_cracked"
+	///What is the sprite for when its not cracked? As it starts already cracked, and for re-sealing needs to have a sprite
+	var/not_cracked_icon = "paperbiscuit"
 	cracked = TRUE
 	///Was the biscuit already sealed by players? To prevent several tgui alerts
 	var/sealed = FALSE
@@ -106,10 +108,17 @@
 			cracked = FALSE
 			sealed = TRUE
 			playsound(get_turf(user), 'sound/items/duct_tape_snap.ogg', 60)
-			icon_state = "paperbiscuit"
+			icon_state = "[not_cracked_icon]"
 			update_appearance()
 			return
 		else
 			return
 	if (sealed)
 		return ..()
+
+/obj/item/folder/biscuit/not_sealed/confidental
+	name = "\proper confidental biscuit card"
+	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	icon_state = "paperbiscuit_secret_crackecd"
+	bg_color = "#355e9f"
+	not_cracked_icon = "paperbiscuit_secret"

@@ -563,3 +563,17 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/paper_biscuit_confidental
+	name = "Confidental Paper Biscuit"
+	desc = "An paper biscuit which can seal in itself paperwork, this one is used for confidental Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
+	id = "confidental_biscuit"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 30)
+	build_path = /obj/item/folder/biscuit/not_sealed/confidental
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
+

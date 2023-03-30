@@ -113,6 +113,9 @@
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
+	inhand_icon_state = "silver_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
 /obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
@@ -123,8 +126,8 @@
 	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
-	throw_range = 10
-	throw_speed = 3
+	throw_range = 6
+	throw_speed = 2
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter"
