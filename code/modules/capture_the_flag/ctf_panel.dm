@@ -14,20 +14,21 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 /datum/ctf_panel/ui_data(mob/user)
 	var/list/data = list()
 	var/list/teams = list()
-	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[CTF_GHOST_CTF_GAME_ID]
 
-	for(var/datum/ctf_team/team_reference as anything in ctf_controller.teams)
-		if (!ctf_controller.ctf_enabled)
-			continue
-		var/datum/ctf_team/team = ctf_controller.teams[team_reference]
+	for(var/game_reference in GLOB.ctf_games)
+		var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[game]
+		for(var/datum/ctf_team/team_reference as anything in ctf_controller.teams)
+			if (!ctf_controller.ctf_enabled)
+				continue
+			var/datum/ctf_team/team = ctf_controller.teams[team_reference]
 
-		var/list/this = list()
-		this["name"] = "[team.team_color] team"
-		this["color"] = team.team_color
-		this["score"] = team.points
-		this["team_size"] = team.team_members.len
-		this["refs"] += REF(team.spawner)
-		teams += list(this)
+			var/list/this = list()
+			this["name"] = "[team.team_color] team"
+			this["color"] = team.team_color
+			this["score"] = team.points
+			this["team_size"] = team.team_members.len
+			this["refs"] += REF(team.spawner)
+			teams += list(this)
 
 	if (teams.len == 0)
 		// No CTF map has been spawned in yet
