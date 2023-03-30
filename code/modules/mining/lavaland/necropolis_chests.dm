@@ -16,7 +16,7 @@
 /obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
-	var/loot = rand(1,20)
+	var/loot = rand(1,21)
 	var/mod
 	switch(loot)
 		if(1)
@@ -69,6 +69,8 @@
 			new /obj/item/bedsheet/cult(src)
 		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+		if(21)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 	if(!contents.len)
 		to_chat(user, span_warning("[src] makes a clunking sound as you try to open it. You feel compelled to let the gods know! (Please open an adminhelp and try again!)"))
 		CRASH("Failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")
