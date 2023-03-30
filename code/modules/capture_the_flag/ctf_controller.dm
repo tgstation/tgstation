@@ -156,6 +156,6 @@
 
 /proc/create_ctf_game(game_id)
 	if(GLOB.ctf_games[game_id])
-		QDEL_NULL(GLOB.ctf_games[game_id]) //This'll break the medi-sim shuttle I'll bet you //Todo: check if it does
+		return GLOB.ctf_games[game_id]
 	var/datum/ctf_controller/CTF = new(game_id)
 	return CTF

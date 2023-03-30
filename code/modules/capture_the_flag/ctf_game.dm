@@ -209,7 +209,7 @@
 		reset.flag = src
 		reset.icon_state = icon_state
 		reset.name = "[name] landmark"
-		reset.name = "This is where \the [name] will respawn in a game of CTF"
+		reset.desc = "This is where \the [name] will respawn in a game of CTF"
 
 /obj/item/ctf_flag/process() //Todo: Theres probably a better way to handle this...
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
