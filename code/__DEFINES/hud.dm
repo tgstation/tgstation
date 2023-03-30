@@ -201,6 +201,9 @@
 #define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
 #define ui_ghost_language_menu "SOUTH: 22, CENTER+3:8"
 
+//DM
+#define ui_ghost_dm "SOUTH+1:6, CENTER+1"
+
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"
 

@@ -105,6 +105,13 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
 
+/obj/item/storage/toolbox/mechanical/old/empty
+	name = "toolbox"
+	icon_state = "oldtoolboxclean"
+
+/obj/item/storage/toolbox/mechanical/old/empty/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
 	desc = "An old, blue toolbox, it looks robust."
@@ -137,7 +144,7 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
-	
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
