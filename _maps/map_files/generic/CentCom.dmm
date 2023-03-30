@@ -15,6 +15,12 @@
 	},
 /turf/open/space,
 /area/space)
+"ap" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big2"
+	},
+/turf/open/space,
+/area/space)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -3504,6 +3510,12 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
+"rX" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "small3"
+	},
+/turf/open/space/basic,
+/area/space)
 "rY" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
@@ -3752,6 +3764,12 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"ti" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "small1"
+	},
+/turf/open/space/basic,
+/area/space)
 "tl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -5945,6 +5963,12 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"Gm" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "small2"
+	},
+/turf/open/space/basic,
+/area/space)
 "Gs" = (
 /obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/stripes/line,
@@ -6073,6 +6097,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"HS" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big1"
+	},
+/turf/open/space/basic,
+/area/space)
 "Id" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -6441,6 +6471,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"JZ" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big1"
+	},
+/turf/open/space,
+/area/space)
 "Kd" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
@@ -6473,6 +6509,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"Ki" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big3"
+	},
+/turf/open/space/basic,
+/area/space)
 "Km" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/evac/directional/west,
@@ -6749,6 +6791,12 @@
 /obj/structure/speaking_tile,
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
+"Mc" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big3"
+	},
+/turf/open/space,
+/area/space)
 "Mh" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdome";
@@ -9075,6 +9123,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"Yi" = (
+/obj/effect/landmark/deathmatch_map_corner{
+	location_id = "big2"
+	},
+/turf/open/space/basic,
+/area/space)
 "Yj" = (
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -14017,7 +14071,7 @@ aa
 "}
 (19,1,1) = {"
 aa
-aa
+JZ
 aa
 aa
 aa
@@ -18429,7 +18483,7 @@ aa
 aa
 aa
 aa
-aa
+ti
 aa
 aa
 aa
@@ -24595,7 +24649,7 @@ aa
 aa
 aa
 aa
-aa
+HS
 aa
 aa
 aa
@@ -25068,7 +25122,7 @@ aa
 "}
 (62,1,1) = {"
 aa
-aa
+ap
 aa
 aa
 aa
@@ -27459,7 +27513,7 @@ aa
 aa
 aa
 aa
-aa
+ti
 aa
 aa
 aa
@@ -27938,7 +27992,7 @@ aa
 aa
 aa
 aa
-aa
+Gm
 aa
 aa
 aa
@@ -31037,7 +31091,7 @@ aa
 aa
 aa
 aa
-es
+aa
 aa
 aa
 aa
@@ -35646,7 +35700,7 @@ aa
 aa
 aa
 aa
-aa
+Yi
 aa
 aa
 aa
@@ -36119,7 +36173,7 @@ aa
 "}
 (105,1,1) = {"
 aa
-aa
+Mc
 aa
 aa
 aa
@@ -36968,7 +37022,7 @@ aa
 aa
 aa
 aa
-aa
+Gm
 aa
 aa
 aa
@@ -37447,7 +37501,7 @@ aa
 aa
 aa
 aa
-aa
+rX
 aa
 aa
 aa
@@ -46477,7 +46531,7 @@ aa
 aa
 aa
 aa
-aa
+rX
 aa
 aa
 aa
@@ -46697,7 +46751,7 @@ aa
 aa
 aa
 aa
-aa
+Ki
 aa
 aa
 aa
