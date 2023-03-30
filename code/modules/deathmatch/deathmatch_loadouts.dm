@@ -2,10 +2,11 @@
 	var/name = "Loadout"
 	var/desc = ":KILL:"
 	var/list/equipment
+	// Just in case, make sure this doesn't have an ID.
 	var/datum/outfit/outfit
 	var/datum/species/default_species
 	var/force_default = FALSE
-	var/list/datum/species/blacklist
+	var/list/datum/species/blacklist = list(/datum/species/plasmaman)
 
 /datum/deathmatch_loadout/proc/pre_equip(mob/living/carbon/human/player)
 	return
@@ -13,7 +14,7 @@
 /datum/deathmatch_loadout/proc/equip(mob/living/carbon/human/player)
 	SHOULD_CALL_PARENT(TRUE)
 	pre_equip(player)
-	if (default_species && (force_default || (player.dna.species in blacklist)))
+	if (default_species && (force_default || (player.dna.species.type in blacklist)))
 		player.set_species(default_species)
 	if (outfit)
 		player.equipOutfit(outfit, TRUE)
@@ -51,6 +52,12 @@
 	name = "Assistant loadout (Weaponless)"
 	desc = "What is an assistant without a toolbox? nothing"
 	equipment = list()
+
+/datum/deathmatch_loadout/operative
+	name = "Operative"
+	desc = "A syndicate operative."
+	default_species = /datum/species/human
+	outfit = /datum/outfit/syndicate_empty
 
 /datum/deathmatch_loadout/gunperative
 	name = "Ranged Operative"

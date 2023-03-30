@@ -97,6 +97,13 @@
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		overload()
 
+// Special type that doesn't reset power_gen to initial.
+/obj/machinery/power/rtg/mapping
+	irradiate = FALSE
+
+/obj/machinery/power/rtg/mapping/RefreshParts()
+	return
+
 /obj/machinery/power/rtg/debug
 	name = "Debug RTG"
 	desc = "You really shouldn't be seeing this if you're not a coder or jannie."

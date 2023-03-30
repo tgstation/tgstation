@@ -87,6 +87,9 @@ GLOBAL_VAR(deathmatch_game)
 	return spawns
 
 /datum/deathmatch_controller/proc/clear_location(datum/deathmatch_map_loc/location)
+	// lets give the game a moment to do whatever it needs to before we delete.
+	set waitfor = FALSE
+	sleep(world.tick_lag)
 	map_remover.defineRegion(locate(location.x1, location.y1, location.z), locate(location.x2, location.y2, location.z), TRUE)
 	map_remover.generate()
 	// Free the map location

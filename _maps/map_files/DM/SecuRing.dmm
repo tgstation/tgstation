@@ -81,10 +81,6 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/mineral/plastitanium/red,
 /area/deathmatch)
-"Z" = (
-/obj/machinery/recharger,
-/turf/open/floor/pod/dark,
-/area/deathmatch)
 
 (1,1,1) = {"
 a
@@ -399,7 +395,7 @@ G
 G
 G
 W
-Z
+W
 n
 n
 n
@@ -423,7 +419,7 @@ W
 W
 W
 n
-n
+o
 n
 X
 X

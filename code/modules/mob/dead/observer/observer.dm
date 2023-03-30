@@ -982,6 +982,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Opens the deathmatch lobby list."
 	if(!client)
 		return
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+		to_chat(usr, span_warning("Deathmatch has been temporarily disabled by admins."))
+		return
 	if(!isobserver(src))
 		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
 		return
