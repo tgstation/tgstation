@@ -936,3 +936,196 @@
   vinylspiders:
   - bugfix: fixed blood deficiency quirk sending the wrong blood pack to roundstart
       species who have exotic blood
+2023-03-27:
+  ATHATH:
+  - spellcheck: Tweaked an outdated doctor tip to reflect that fact that salbutamol
+      can't heal plasmamen (outside of very specific edge cases).
+  Helg2:
+  - qol: guillotine description tips are now span_notices (blue text) instead of just
+      a bunch of grey text.
+  - bugfix: fixed a bug that if you try to behead body without a head with guillotine
+      it just stops working.
+  JohnFulpWillard:
+  - balance: You can no longer print Technology data disks. You can still print Tech
+      disks, which hold techweb information on it, just not the one that holds up
+      to 5 nodes.
+  - balance: ^ Because of this, there's no way to download nodes from an RD console
+      and upload them to an Autolathe to bypass departmental restrictions, you have
+      to go through a Techfab/Circuit imprinter for your needs.
+  - balance: Ones that are found cannot have anything uploaded/deleted off of them
+      either, you can only upload them to the Web.
+  - code_imp: Every individual Bepis disk no longer create an entire techweb
+  - bugfix: Computers are now properly connected to Ethernet, and can use Ntos when
+      Relays are down.
+  - refactor: Removes Ntnet and Ntnet interfaces, which was only used by Ntnet circuits
+      (which now directly checks for a Relay to work) and MULEbots, which did nothing
+      with it.
+  - balance: Wirecarp no longer tells you what ruins spawned in a round, instead it's
+      limited to PDA logs, and tells you the source too. This means the RD can catch
+      someone running illegal programs if they don't make any attempt at hiding it.
+  - qol: Wirecarp logs is now set to save 300 at once, instead of 100 and being increased
+      to 300 by the RD during the round. This is pretty insignificant, since there's
+      no reason to NOT want as many logs as possible.
+  LT3:
+  - imageadd: Fire alarm sprites are directional again
+  - imageadd: Solo benches are no longer invisible when facing east/west
+  LemonInTheDark:
+  - bugfix: Fixes decals layering weird in some cases
+  - qol: Human gravity will react to changes instantly, instead of waiting for the
+      next process tick. Hopefully this feels better and not worse
+  Moth-lantern:
+  - bugfix: Anomalies will no longer spawn at the bomb testing range satellite.
+  NamelessFairy:
+  - bugfix: CTF fourside's yellow spawnpoint walls now use the same lighting as the
+      rest of the map instead of space lighting.
+  Profakos:
+  - bugfix: The Starfury's Corvette and Fighters can now visit Tramstation
+  Rhials:
+  - bugfix: Xenomorphs will now be properly teamed together again, and will show up
+      together on the roundend report.
+  SishTis:
+  - bugfix: Fixed gravity issue in Underground Outpost 45's research airlock.
+  Xander3359:
+  - balance: No-slip mod module and no slip shoes no longer have a reputation lock.
+  Y0SH1M4S73R:
+  - admin: Fixed admin lua scripting on Windows-hosted servers running on beta version
+      515.1602 (the latest version as of this change)
+  mc-oofert:
+  - rscadd: A new ruin has drifted into the horizon, the Mass driver router
+  necromanceranne:
+  - balance: Changes the universal click cooldown of the tendril hammer from the goliath
+      infusion into an internal cooldown just for the special heavy attack.
+  san7890:
+  - bugfix: If you buckle a dog to a bed, it will no longer drag its bed as it goes
+      to bark at the mailman. It will instead be comfy and chilling, as expected.
+  spockye:
+  - bugfix: fixed some tiles missing nearstation on Metastation
+  - bugfix: fixed some tiles having spacetiles with nearstation on Metastation
+  vinylspiders:
+  - bugfix: giving a podperson a blood transfusion by injecting them with water/whatever
+      their exotic blood happens to be will now work.
+  - qol: lizards with blood deficiency now receive the type 'L' blood packs instead
+      of an unhelpful type 'O-' one.
+  - bugfix: plasmamen will now be given their internals upon being kidnapped and upon
+      being returned.
+2023-03-28:
+  13spacemen:
+  - qol: Cult Roundend Report no longer lists post-summon cultists. No more 30 random
+      Harvesters clogging up the roundend report
+  Helg2:
+  - rscadd: Bacteria rich moldy food (like breadslices and pizzaslices) now spawn
+      in trashcarts, trashbags and randomly on the floor.
+  - rscadd: Damp rag now spawns in the trashcarts and etc.
+  Jacquerel:
+  - bugfix: Players with phobias will no longer be frightened by items equipped to
+      players in slots which are not considered to be visible.
+  - bugfix: Players with a phobia of the supernatural won't be spooked by void cloaks
+      which are currently invisible.
+  LT3:
+  - rscadd: Tram signs will now malfunction when the tram is malfunctioning
+  - qol: Janitor access keys now show up on the Custodial Locator tablet app
+  LemonInTheDark:
+  - bugfix: Fixes a bunch of minor gravity bugs, report em if you see more yeah?
+  Moth-lantern:
+  - bugfix: Moved the tank compressor and some tables and the anomaly refinery so
+      that the tank compressor could actually be usable again on Tramstation.
+  Profakos:
+  - bugfix: the roboticist in the prey pod now has clothes as intended
+  Rhials:
+  - rscadd: You can now vote to start a Mafia game early. If over half of the current
+      signups vote (And you have three or more players) you will immediately start
+      a game with a slightly adjusted set of roles.
+  - admin: You can now force a mafia game to start in the admin options panel.
+  SethLafuente:
+  - balance: Increased Bonus Reward for kidnapping alive targets
+  - balance: Changed Virologist and Scientist into Common objectives for kidnapping
+  - balance: Changed Paramedic into Uncommon objectives for kidnapping
+  Thunder12345:
+  - rscadd: The Nanotrasen Costuming Department has released specifications for how
+      to convert the Head of Security's cap into a shako.
+  Wallem:
+  - balance: Fixes a glaring oversight with the entrenching tool's balancing.
+  Watermelon914:
+  - balance: Reduced the reputation cost of most non-murderbone orientated uplink
+      items like hypnotic flash and emag.
+  - balance: Reduced the amount of assassinate/kidnap/eyesnatch objectives that'll
+      appear at once.
+  spockye:
+  - rscadd: remakes the old escape pod shuttle
+2023-03-29:
+  IndieanaJones:
+  - balance: The pirate gangs have been split into two subcategories, one which can
+      spawn earlier in a shift and one that spawns later as they currently do. While
+      skeleton pirates will still be only seen later into the shift, expect to see
+      the other pirate gangs earlier on.
+  - bugfix: Prevented the pirate event from runtiming when no possible pirate gangs
+      were available.
+  - bugfix: Pirates can no longer be selected by Dynamic if there are no more pirates
+      gangs that can be used.
+  JohnFulpWillard:
+  - bugfix: Experimentors can connect to techwebs that have at least one RD server
+      on the level.
+  - balance: Curators/HoP can now manage Newscaster D-Notices (previously was Warden/HoS).
+  - balance: Security Officers/Detectives can now issue Wanted notices on Newscasters.
+  - balance: Ntos Newscaster now requires Library access only to download, not to
+      run.
+  LemonInTheDark:
+  - server: The starlight config has been removed, as it is enabled by default
+  Rex9001:
+  - rscadd: the pod_crash.dmm ruin
+  lizardqueenlexi:
+  - qol: you can choose your default paint color for the "Tagger" quirk from prefs.
+  spockye:
+  - rscadd: Added a new emergency shuttle, the emergency_tranquility
+  - bugfix: ' Redesigns "the_arena" ( the bubblegum shuttle deathmatch area )'
+2023-03-30:
+  Helg2:
+  - rscadd: re-added normal doors to qm's office on tram.
+  - bugfix: fixed hos' shutters not being existant on tram.
+  LT3:
+  - bugfix: Reduced lighting range for idle fire alarms
+  LemonInTheDark:
+  - bugfix: Breathing pluoxium works again
+  - bugfix: Kilo's arrivals port will no longer be space colored
+  Melbert:
+  - rscdel: Revert elevator panel UI theme change
+  Rhials:
+  - bugfix: mafia games only grant role win achievements when played with a full 12-player
+      setup.
+  Singul0:
+  - rscadd: Adds a new space ruin, A Waystation under attack!
+  Tattle:
+  - spellcheck: fixed a few typos, mostly around breathing
+  Timberpoes:
+  - bugfix: Actually fixes re-attaching heads unintentionally sending brains to the
+      gem room this time. For realsies.
+  Time-Green:
+  - rscdel: removes being cremated from high burn damage and being on fire (yes this
+      was in the game but has been broken for probably a very long time)
+  flowercuco:
+  - bugfix: admin respawn character verb works properly
+  - code_imp: adds IS_TRAITOR macro
+  kinneb:
+  - imageadd: Resprites the Wirebrush
+  - imagedel: Removes the sprite for the Advanced Wirebrush
+  san7890:
+  - bugfix: 'The Syndicate have gotten their hands on the most dangerous weapon: A
+      photocopier that doesn''t require any money. God save us all.'
+  - bugfix: The hermit of the Icemoon has decided to build their hut in some deeper
+      caves for a bit more protection from the local fauna.
+  - bugfix: Pirates finally realized that they shouldn't risk life and limb attacking
+      stations if they had already paid them off.
+  spockye:
+  - bugfix: fixed disposals on the starfury
+  - bugfix: fixed flooring on the starfury
+  - bugfix: fixed missing air alarm on the starfury
+  - bugfix: fixed air turfs exposed to space on the starfury
+  tralezab:
+  - rscadd: The dark matt-eor
+  - rscadd: Summon a dark matt-eor final traitor objective
+  - rscadd: Dark matter singularity variant, which can't grow as big as a regular
+      singularity but hungers for blood
+  - code_imp: cleaned up/sorted meteor shield code, satellite control, and more
+  - qol: added a lot of feedback to interacting with meteor shields
+  - balance: emagging a lot of meteor shields warns the station, but emagging enough
+      of them summons a Dark Matt-eor.

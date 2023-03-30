@@ -400,3 +400,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
 	delay_time = (time * cms_coefficient)
 	return delay_time
+
+#undef BEAKER1
+#undef BEAKER2

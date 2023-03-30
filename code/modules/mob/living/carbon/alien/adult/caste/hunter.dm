@@ -86,3 +86,4 @@
 			visible_message(span_danger("[src] smashes into [hit_atom]!"), span_alertalien("[src] smashes into [hit_atom]!"))
 			Paralyze(40, ignore_canstun = TRUE)
 
+#undef MAX_ALIEN_LEAP_DIST

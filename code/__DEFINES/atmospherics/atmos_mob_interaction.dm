@@ -11,6 +11,8 @@
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
+
 /// Return this from a while_present proc to call its on_loss version, if one exists
 /// Useful for doing "we're done" effects without duped code
 #define BREATH_LOST 1

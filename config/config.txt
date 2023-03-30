@@ -130,6 +130,9 @@ LOG_TELECOMMS
 ## log prayers
 LOG_PRAYER
 
+## Log Music requests
+LOG_INTERNET_REQUEST
+
 ## log silicons
 LOG_SILICON
 
@@ -294,6 +297,14 @@ CHECK_RANDOMIZER
 ## or your package manager
 ## The default value assumes youtube-dl is in your system PATH
 # INVOKE_YOUTUBEDL youtube-dl
+
+## Comment this out to disable users ability to use the request internet sounds to be played.
+REQUEST_INTERNET_SOUND
+
+## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
+## The Defaults here are all supported by youtube-dl
+## Ensure . and / are escaped with \
+REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
 
 ## In-game features
 
