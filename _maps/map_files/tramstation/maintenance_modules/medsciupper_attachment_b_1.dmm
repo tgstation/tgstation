@@ -57,7 +57,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/closet/body_bag,
 /mob/living/simple_animal/hostile/skeleton{
 	name = "Jim";

@@ -56,7 +56,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "gR" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/crew_quarters/dorms)
 "hz" = (

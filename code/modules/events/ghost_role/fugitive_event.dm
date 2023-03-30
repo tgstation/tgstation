@@ -15,10 +15,10 @@
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/X in GLOB.xeno_spawn)
-		if(istype(X.loc, /area/station/maintenance))
-			possible_spawns += X
-	if(!possible_spawns.len)
+	for(var/turf/spawn_location in GLOB.generic_maintenance_landmark)
+		if(istype(get_area(spawn_location), /area/station/maintenance) && is_safe_turf(spawn_location))
+			possible_spawns += spawn_location
+	if(!length(possible_spawns))
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 	var/turf/landing_turf = pick(possible_spawns)
