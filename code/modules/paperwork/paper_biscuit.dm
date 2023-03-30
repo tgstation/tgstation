@@ -97,6 +97,7 @@
 	if(!sealed)
 		. += span_notice("This one have never been sealed yet. Put in any contents to seal it by pressing it in hand. After sealing the only way to reach contents is by cracking it which is irreversible.")
 
+//Se
 /obj/item/folder/biscuit/not_sealed/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!sealed)

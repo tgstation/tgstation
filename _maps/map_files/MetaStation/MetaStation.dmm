@@ -32206,7 +32206,7 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/paperslip{
+/obj/item/paper/paperslip{
 	pixel_x = -5;
 	pixel_y = 10
 	},
