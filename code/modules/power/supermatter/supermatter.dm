@@ -445,12 +445,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		icon_state = base_icon_state
 
 /obj/machinery/power/supermatter_crystal/proc/time_frozen()
+	SIGNAL_HANDLER
 	if(disable_process != SM_PROCESS_ENABLED)
 		return
 
 	disable_process = SM_PROCESS_TIMESTOP
 
 /obj/machinery/power/supermatter_crystal/proc/time_unfrozen()
+	SIGNAL_HANDLER
 	if(disable_process != SM_PROCESS_TIMESTOP)
 		return
 
