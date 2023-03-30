@@ -231,7 +231,7 @@
 	if(prob(min(num_sheets_dispensed * 2, 30)))
 		if(crisp_paper in mod.wearer.held_items)
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
-		crisp_paper.balloon_alert(mod.wearer, "PC LOAD LETTER!")
+		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
 		crisp_paper.fire_act(1000, 100)
 
@@ -287,7 +287,6 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
@@ -303,7 +302,6 @@
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))

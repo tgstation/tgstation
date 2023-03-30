@@ -205,8 +205,8 @@
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
-/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
-	return !(NOSTOMACH in owner_species.species_traits)
+/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantstomach
 
 ///This gets called after the owner takes a bite of food
 /obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
@@ -233,7 +233,7 @@
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
-				disgusted.blur_eyes(3) //We need to add more shit down here
+				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
 
@@ -283,10 +283,10 @@
 		if(milk.volume > 50)
 			reagents.remove_reagent(milk.type, milk.volume - 5)
 			to_chat(owner, span_warning("The excess milk is dripping off your bones!"))
-		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		body.heal_bodypart_damage(milk_brute_healing * REM * delta_time, milk_burn_healing * REM * delta_time)
 
 		for(var/datum/wound/iter_wound as anything in body.all_wounds)
-			iter_wound.on_xadone(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			iter_wound.on_xadone(1 * REM * delta_time)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 

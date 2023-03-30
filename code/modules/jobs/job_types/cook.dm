@@ -6,7 +6,6 @@
 	total_positions = 2
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
-	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
@@ -36,6 +35,7 @@
 		/obj/item/reagent_containers/cup/bottle/caramel = 20,
 		/obj/item/reagent_containers/condiment/flour = 20,
 		/obj/item/reagent_containers/condiment/rice = 20,
+		/obj/item/reagent_containers/condiment/ketchup = 20,
 		/obj/item/reagent_containers/condiment/enzyme = 15,
 		/obj/item/reagent_containers/condiment/soymilk = 15,
 		/obj/item/knife/kitchen = 4,

@@ -15,10 +15,10 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/Initialize()
 	for(var/type in typesof(/datum/round_event_control))
-		var/datum/round_event_control/E = new type()
-		if(!E.typepath)
+		var/datum/round_event_control/event = new type()
+		if(!event.typepath || !event.valid_for_map())
 			continue //don't want this one! leave it for the garbage collector
-		control += E //add it to the list of all events (controls)
+		control += event //add it to the list of all events (controls)
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))

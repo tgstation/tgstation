@@ -70,7 +70,7 @@
 	if(target_mob != user)
 		target_mob.visible_message(span_danger("[user] attempts to feed [target_mob] something from [src]."), \
 					span_userdanger("[user] attempts to feed you something from [src]."))
-		if(!do_mob(user, target_mob))
+		if(!do_after(user, 3 SECONDS, target_mob))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
@@ -100,7 +100,12 @@
 
 /obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
+	if(!proximity_flag)
+		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+
+	if(!check_allowed_items(target, target_self = TRUE))
 		return
 
 	if(!spillable)
@@ -434,7 +439,8 @@
 
 /obj/item/reagent_containers/cup/mortar
 	name = "mortar"
-	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting. <b>Alt click to eject the item.</b>"
+	desc = "A specially formed bowl of ancient design. It is possible to crush or juice items placed in it using a pestle; however the process, unlike modern methods, is slow and physically exhausting."
+	desc_controls = "Alt click to eject the item."
 	icon_state = "mortar"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
@@ -443,10 +449,6 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
-
-/datum/armor/bucket_wooden
-	melee = 10
-	acid = 50
 
 /obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
 	if(grinded)

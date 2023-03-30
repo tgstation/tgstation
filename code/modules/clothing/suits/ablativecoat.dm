@@ -36,14 +36,6 @@
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
 
-/datum/armor/hooded_ablative
-	melee = 10
-	bullet = 10
-	laser = 60
-	energy = 60
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed

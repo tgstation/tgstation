@@ -66,11 +66,16 @@
 	///Multiplier for this light's base brightness in low power power mode
 	var/bulb_low_power_brightness_mul = 0.25
 	///Determines the colour of the light while it's in low power mode
-	var/bulb_low_power_colour = "#FF3232"
+	var/bulb_low_power_colour = COLOR_VIVID_RED
 	///The multiplier for determining the light's power in low power mode
 	var/bulb_low_power_pow_mul = 0.75
 	///The minimum value for the light's power in low power mode
 	var/bulb_low_power_pow_min = 0.5
+	///The Light range to use when working in fire alarm status
+	var/fire_brightness = 4
+	///The Light colour to use when working in fire alarm status
+	var/fire_colour = COLOR_FIRE_LIGHT_RED
+
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -82,6 +87,17 @@
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
+
+	// Detect and scream about double stacked lights
+	if(PERFORM_ALL_TESTS(focus_only/stacked_lights))
+		var/turf/our_location = get_turf(src)
+		for(var/obj/machinery/light/on_turf in our_location)
+			if(on_turf == src)
+				continue
+			if(on_turf.dir != dir)
+				continue
+			stack_trace("Conflicting double stacked light [on_turf.type] found at ([our_location.x],[our_location.y],[our_location.z])")
+			qdel(on_turf)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/our_area = get_room_area(src)
@@ -152,7 +168,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area =get_room_area(src)
+	var/area/our_area = get_room_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -184,7 +200,8 @@
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area =get_room_area(src)
 		if (local_area?.fire)
-			color_set = bulb_low_power_colour
+			color_set = fire_colour
+			brightness_set = fire_brightness
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
 			power_set = nightshift_light_power
@@ -300,7 +317,7 @@
 	//Light replacer code
 	if(istype(tool, /obj/item/lightreplacer))
 		var/obj/item/lightreplacer/replacer = tool
-		replacer.ReplaceLight(src, user)
+		replacer.replace_light(src, user)
 		return
 
 	// attempt to insert light
@@ -501,47 +518,47 @@
 		// create a light tube/bulb item and put it in the user's hand
 		drop_light_tube(user)
 		return
-	var/protection_amount = 0
-	var/mob/living/carbon/human/electrician = user
 
-	if(istype(electrician))
-		var/obj/item/organ/internal/stomach/maybe_stomach = electrician.getorganslot(ORGAN_SLOT_STOMACH)
+	var/protected = FALSE
+
+	if(istype(user))
+		var/obj/item/organ/internal/stomach/maybe_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.drain_time > world.time)
 				return
-			to_chat(electrician, span_notice("You start channeling some power through the [fitting] into your body."))
+			to_chat(user, span_notice("You start channeling some power through the [fitting] into your body."))
 			stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 			while(do_after(user, LIGHT_DRAIN_TIME, target = src))
 				stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(istype(stomach))
-					to_chat(electrician, span_notice("You receive some charge from the [fitting]."))
+					to_chat(user, span_notice("You receive some charge from the [fitting]."))
 					stomach.adjust_charge(LIGHT_POWER_GAIN)
 				else
-					to_chat(electrician, span_warning("You can't receive charge from the [fitting]!"))
+					to_chat(user, span_warning("You can't receive charge from the [fitting]!"))
 			return
 
-		if(electrician.gloves)
-			var/obj/item/clothing/gloves/electrician_gloves = electrician.gloves
-			if(electrician_gloves.max_heat_protection_temperature)
-				protection_amount = (electrician_gloves.max_heat_protection_temperature > 360)
+		if(user.gloves)
+			var/obj/item/clothing/gloves/electrician_gloves = user.gloves
+			if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
+				protected = TRUE
 	else
-		protection_amount = 1
+		protected = TRUE
 
-	if(protection_amount > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+	if(protected || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
 	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 	else
-		var/obj/item/bodypart/affecting = electrician.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+		var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 		if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
-			electrician.update_damage_overlays()
+			user.update_damage_overlays()
 		if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
-			to_chat(user, span_notice("You feel like you're burning, but you can push through."))
+			to_chat(user, span_notice("You feel your [affecting] burning, and the light beginning to budge."))
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
 			if(affecting?.receive_damage( 0, 10 )) // 10 more burn damage
-				electrician.update_damage_overlays()
+				user.update_damage_overlays()
 			to_chat(user, span_notice("You manage to remove the light [fitting], shattering it in process."))
 			break_light_tube()
 		else
@@ -663,3 +680,4 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+	fire_brightness = 2

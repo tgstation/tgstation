@@ -65,6 +65,10 @@
 	return TRUE
 
 /obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, params)
+	if(!canwalk)
+		balloon_alert(user, "not ready to accept transactions!")
+		return
+
 	if(check_if_finished())
 		qdel(src)
 		return
@@ -79,16 +83,12 @@
 
 		return
 
-	if(!canwalk)
-		to_chat(user, span_warning("Space-Coin only accepts transactions while mobile!"))
-		return
-
 	if(!card.registered_account)
-		to_chat(user, span_warning("This card does not have a registered account!"))
+		balloon_alert(user, "card has no registered account!")
 		return
 
 	if(!card.registered_account.being_dumped)
-		to_chat(user, span_warning("It appears that your funds are safe from draining!"))
+		balloon_alert(user, "funds are already safe!")
 		return
 
 	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo

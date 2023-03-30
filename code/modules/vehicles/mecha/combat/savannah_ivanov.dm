@@ -78,15 +78,6 @@
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
@@ -120,16 +111,16 @@
 			playsound(chassis, 'sound/items/rped.ogg', 50, TRUE)
 		if(2)
 			chassis.visible_message(span_warning("[chassis] begins to shake, the sounds of electricity growing louder."))
-			chassis.Shake(5, 5, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
+			chassis.Shake(1, 1, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 		if(3)
 			chassis.visible_message(span_warning("[chassis] assumes a pose as it rattles violently."))
-			chassis.Shake(7, 7, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
+			chassis.Shake(2, 2, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 			chassis.update_appearance(UPDATE_ICON_STATE)
 		if(4)
 			chassis.visible_message(span_warning("[chassis] sparks and shutters as it finalizes preparation."))
 			playsound(chassis, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE)
-			chassis.Shake(10, 10, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
+			chassis.Shake(3, 3, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
 			chassis.visible_message(span_danger("[chassis] leaps into the air!"))
@@ -253,15 +244,6 @@
 	var/rockets_left = 0
 	var/aiming_missile = FALSE
 
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Destroy()
 	if(aiming_missile)
 		end_missile_targeting()
@@ -371,15 +353,6 @@
 	alpha = 0
 	///reference to mecha following
 	var/obj/vehicle/sealed/mecha/mecha
-
-/datum/armor/mecha_savannah_ivanov
-	melee = 45
-	bullet = 40
-	laser = 30
-	energy = 30
-	bomb = 40
-	fire = 100
-	acid = 100
 
 /obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/mecha)
 	. = ..()

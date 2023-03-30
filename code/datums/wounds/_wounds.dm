@@ -135,7 +135,7 @@
 	LAZYADD(limb.wounds, src)
 	//it's ok to not typecheck, humans are the only ones that deal with wounds
 	var/mob/living/carbon/human/human_victim = victim
-	no_bleeding = (NOBLOOD in human_victim?.dna.species.species_traits)
+	no_bleeding = HAS_TRAIT(human_victim, TRAIT_NOBLOOD)
 	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
@@ -241,12 +241,10 @@
 	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
-		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, REF(src))
-		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb)
 		if(disabling)
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -257,11 +255,9 @@
 	disabling = new_value
 	if(disabling)
 		if(!. && limb) //Gained disabling.
-			ADD_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	else if(. && limb) //Lost disabling.
-		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, REF(src))
-		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, REF(src))
+		limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 

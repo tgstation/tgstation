@@ -70,11 +70,6 @@
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem"
 
-/datum/armor/toggle_labcoat
-	bio = 50
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/suit/toggle/labcoat/chemist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/chemistry
@@ -84,11 +79,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
 
-/datum/armor/toggle_labcoat
-	bio = 50
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/bio
@@ -97,11 +87,6 @@
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_sci"
-
-/datum/armor/toggle_labcoat
-	bio = 50
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()

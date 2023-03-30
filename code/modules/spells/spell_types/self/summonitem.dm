@@ -114,6 +114,7 @@
 					item_to_retrieve = null
 					break
 
+				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 				holding_mark.dropItemToGround(item_to_retrieve)
 
 			else if(isobj(item_to_retrieve.loc))

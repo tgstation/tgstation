@@ -338,11 +338,6 @@
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
 
-/datum/armor/item_hand_tele
-	bomb = 30
-	fire = 100
-	acid = 100
-
 /obj/item/syndicate_teleporter/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -512,11 +507,6 @@
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	name = "syndicate teleporter kit"
 
-/datum/armor/item_hand_tele
-	bomb = 30
-	fire = 100
-	acid = 100
-
 /obj/item/storage/box/syndie_kit/syndicate_teleporter/PopulateContents()
 	new /obj/item/syndicate_teleporter(src)
 	new /obj/item/paper/syndicate_teleporter(src)
@@ -526,3 +516,6 @@
 
 #undef PORTAL_LOCATION_DANGEROUS
 #undef PORTAL_DANGEROUS_EDGE_LIMIT
+
+#undef SOURCE_PORTAL
+#undef DESTINATION_PORTAL

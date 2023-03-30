@@ -58,4 +58,5 @@
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 

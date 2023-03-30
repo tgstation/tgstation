@@ -63,15 +63,6 @@
 	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
 	var/obj/vehicle/sealed/mecha/working/clarke/hostmech
 
-/datum/armor/working_clarke
-	melee = 20
-	bullet = 10
-	laser = 20
-	energy = 10
-	bomb = 60
-	fire = 100
-	acid = 100
-
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(istype(M, /obj/vehicle/sealed/mecha/working/clarke))
@@ -93,15 +84,6 @@
 	name = "Search for Ruins"
 	button_icon_state = "mech_search_ruins"
 	COOLDOWN_DECLARE(search_cooldown)
-
-/datum/armor/working_clarke
-	melee = 20
-	bullet = 10
-	laser = 20
-	energy = 10
-	bomb = 60
-	fire = 100
-	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -139,15 +121,6 @@
 	minimum_range = 5
 	range_mid = 20
 	range_far = 50
-
-/datum/armor/working_clarke
-	melee = 20
-	bullet = 10
-	laser = 20
-	energy = 10
-	bomb = 60
-	fire = 100
-	acid = 100
 
 /datum/status_effect/agent_pinpointer/ruin/scan_for_target()
 	return

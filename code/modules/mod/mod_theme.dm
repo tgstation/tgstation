@@ -45,8 +45,6 @@
 	var/ui_theme = "ntos"
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
-	/// Modules blacklisted from the MOD.
-	var/list/module_blacklist = list()
 	/// Allowed items in the chestplate's suit storage.
 	var/list/allowed_suit_storage = list()
 	/// List of skins with their appropriate clothing flags.

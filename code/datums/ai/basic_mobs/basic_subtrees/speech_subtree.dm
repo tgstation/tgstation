@@ -34,7 +34,7 @@
 		else
 			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
 
-/datum/ai_planning_subtree/random_speech/cockroach
+/datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
 	emote_hear = list("chitters.")
 
@@ -47,6 +47,10 @@
 	speak = list("Squeak!", "SQUEAK!", "Squeak?")
 	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
+
+/datum/ai_planning_subtree/random_speech/frog
+	speech_chance = 3
+	emote_see = list("jumps in a circle.", "shakes.")
 
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
@@ -102,3 +106,13 @@
 	dog_pawn.update_dog_speech(src)
 
 	return ..()
+
+/datum/ai_planning_subtree/random_speech/faithless
+	speech_chance = 1
+	emote_see = list("wails.")
+
+/datum/ai_planning_subtree/random_speech/garden_gnome
+	speech_chance = 5
+	speak = list("Gnot a gnelf!", "Gnot a gnoblin!", "Howdy chum!")
+	emote_hear = list("snores.", "burps.")
+	emote_see = list("blinks.")

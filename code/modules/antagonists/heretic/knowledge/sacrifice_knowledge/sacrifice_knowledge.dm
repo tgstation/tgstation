@@ -11,7 +11,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
 	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
-		If you have no targets, stand on a transmutation rune and invoke it to aquire some."
+		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
@@ -36,10 +36,13 @@
 	. = ..()
 	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
 	heretic_mind = our_heretic.owner
+
+#ifndef UNIT_TESTS // This is a decently hefty thing to generate while unit testing, so we should skip it.
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
 		log_game("Generating z-level for heretic sacrifices...")
 		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
+#endif
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
@@ -184,12 +187,15 @@
 		LAZYADD(target_blacklist, sacrifice.mind)
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
-	to_chat(user, span_hypnophrase("Your patrons accepts your offer."))
 
-	if(sacrifice.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	var/feedback = "Your patrons accept your offer"
+	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
+	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
+		feedback += " <i>graciously</i>"
 
+	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
@@ -317,7 +323,7 @@
 	sac_target.add_mood_event("shadow_realm", /datum/mood_event/shadow_realm)
 
 	sac_target.flash_act()
-	sac_target.blur_eyes(15)
+	sac_target.set_eye_blur_if_lower(30 SECONDS)
 	sac_target.set_jitter_if_lower(20 SECONDS)
 	sac_target.set_dizzy_if_lower(20 SECONDS)
 	sac_target.adjust_hallucinations(24 SECONDS)
@@ -444,7 +450,7 @@
 	sac_target.flash_act()
 	sac_target.adjust_confusion(60 SECONDS)
 	sac_target.set_jitter_if_lower(120 SECONDS)
-	sac_target.blur_eyes(50)
+	sac_target.set_eye_blur_if_lower(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
 	sac_target.AdjustKnockdown(80)
 	sac_target.adjustStaminaLoss(120)
@@ -490,3 +496,6 @@
 	)
 
 	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+
+#undef SACRIFICE_SLEEP_DURATION
+#undef SACRIFICE_REALM_DURATION

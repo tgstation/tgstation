@@ -29,14 +29,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/canUseStorage()
 	return FALSE
 
-/mob/dead/abstract_move(atom/destination)
-	var/turf/old_turf = get_turf(src)
-	var/turf/new_turf = get_turf(destination)
-	if (old_turf?.z != new_turf?.z)
-		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
-		on_changed_z_level(old_turf, new_turf, same_z_layer)
-	return ..()
-
 /mob/dead/get_status_tab_items()
 	. = ..()
 	if(SSticker.HasRoundStarted())

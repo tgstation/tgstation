@@ -9,6 +9,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/machinery/portable_atmospherics/atmos_device = target_object
 	if(istype(atmos_device))
 		if(atmos_device.nob_crystal_inserted)

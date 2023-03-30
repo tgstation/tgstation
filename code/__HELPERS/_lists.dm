@@ -594,12 +594,11 @@
 			inserted_list[key] = temp[key]
 
 ///for sorting clients or mobs by ckey
-/proc/sort_key(list/ckey_list, order=1)
+/proc/sort_key(list/ckey_list, order = 1)
 	return sortTim(ckey_list, order >= 0 ? GLOBAL_PROC_REF(cmp_ckey_asc) : GLOBAL_PROC_REF(cmp_ckey_dsc))
 
 ///Specifically for record datums in a list.
-/proc/sort_record(list/record_list, field = "name", order = 1)
-	GLOB.cmp_field = field
+/proc/sort_record(list/record_list, order = 1)
 	return sortTim(record_list, order >= 0 ? GLOBAL_PROC_REF(cmp_records_asc) : GLOBAL_PROC_REF(cmp_records_dsc))
 
 ///sort any value in a list
@@ -639,11 +638,27 @@
 			i++
 	return i
 
-/// Returns datum/data/record
-/proc/find_record(field, value, list/inserted_list)
-	for(var/datum/data/record/record_to_check in inserted_list)
-		if(record_to_check.fields[field] == value)
-			return record_to_check
+/**
+ * Returns the first record in the list that matches the name
+ *
+ * If locked_only is TRUE, locked records will be checked
+ *
+ * If locked_only is FALSE, crew records will be checked
+ *
+ * If no record is found, returns null
+ */
+/proc/find_record(value, locked_only = FALSE)
+	if(locked_only)
+		for(var/datum/record/locked/target in GLOB.manifest.locked)
+			if(target.name != value)
+				continue
+			return target
+		return null
+
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		if(target.name != value)
+			continue
+		return target
 	return null
 
 

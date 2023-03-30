@@ -3,6 +3,9 @@
 //How often to check for promotion possibility
 #define HEAD_UPDATE_PERIOD 300
 
+#define REVOLUTION_VICTORY 1
+#define STATION_VICTORY 2
+
 /datum/antagonist/rev
 	name = "\improper Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
@@ -176,7 +179,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()
@@ -233,6 +236,7 @@
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
 
+	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
 	rev_mind.special_role = ROLE_REV
 	return TRUE
@@ -416,26 +420,18 @@
 	save_members()
 
 	// Remove everyone as a revolutionary
-	for (var/_rev_mind in members)
-		var/datum/mind/rev_mind = _rev_mind
-		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
-			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+	for (var/datum/mind/rev_mind as anything in members)
+		var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+		if (!isnull(rev_antag))
 			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
-			if(!(rev_mind in ex_headrevs))
-				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
-			else
+			if(rev_mind in ex_headrevs)
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
-				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
+			else
+				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 
 	if (. == STATION_VICTORY)
-		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/datum/mind/rev_head as anything in ex_headrevs)
-			if(!isnull(rev_head.current))
-				ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-				rev_head.current.med_hud_set_status()
+		defeat_effects()
 
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
 		victory_effects()
 
@@ -443,17 +439,22 @@
 	var/charter_given = FALSE
 
 	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
-		if(charter_given)
-			break
-		if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
+		var/mob/living/real_headrev = headrev_mind.current
+		if(isnull(real_headrev))
+			continue
+		add_memory_in_range(real_headrev, 5, /datum/memory/revolution_rev_victory, protagonist = real_headrev)
+		if(charter_given || real_headrev.stat != CONSCIOUS)
 			continue
 		charter_given = TRUE
 		podspawn(list(
-			"target" = get_turf(headrev_mind.current),
+			"target" = get_turf(real_headrev),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = /obj/item/station_charter/revolution,
-		))
-		to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+			"spawn" = list(
+				/obj/item/bedsheet/rev,
+				/obj/item/megaphone,
+				/obj/item/station_charter/revolution,
+			)))
+		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
@@ -539,6 +540,21 @@
 		return
 
 	SSshuttle.call_evac_shuttle("Sending emergency shuttle to rescue command and security staff.")
+
+/datum/team/revolution/proc/defeat_effects()
+	// If the revolution was quelled, make rev heads unable to be revived through pods
+	for (var/datum/mind/rev_head as anything in ex_headrevs)
+		if(!isnull(rev_head.current))
+			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head.current.med_hud_set_status()
+
+	for(var/datum/objective/mutiny/head_tracker in objectives)
+		var/mob/living/head_of_staff = head_tracker.target?.current
+		if(!isnull(head_of_staff))
+			add_memory_in_range(head_of_staff, 5, /datum/memory/revolution_heads_victory, protagonist = head_of_staff)
+
+	priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
@@ -649,5 +665,8 @@
 	l_hand = /obj/item/spear
 	r_hand = /obj/item/assembly/flash
 
-#undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN
+#undef DECONVERTER_STATION_WIN
+#undef HEAD_UPDATE_PERIOD
+#undef REVOLUTION_VICTORY
+#undef STATION_VICTORY

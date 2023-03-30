@@ -54,8 +54,8 @@
 #define SPELL_CASTABLE_WHILE_PHASED (1 << 3)
 /// Whether the spell can be cast while the user has antimagic on them that corresponds to the spell's own antimagic flags.
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
-/// Whether the spell can be cast on the centcom z level.
-#define SPELL_REQUIRES_OFF_CENTCOM (1 << 5)
+/// Whether the spell requires being on the station z-level to be cast.
+#define SPELL_REQUIRES_STATION (1 << 5)
 /// Whether the spell must be cast by someone with a mind datum.
 #define SPELL_REQUIRES_MIND (1 << 6)
 /// Whether the spell requires the caster have a mime vow (mindless mobs will succeed this check regardless).
@@ -72,7 +72,7 @@ DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_REQUIRES_MIME_VOW" = SPELL_REQUIRES_MIME_VOW,
 	"SPELL_REQUIRES_MIND" = SPELL_REQUIRES_MIND,
 	"SPELL_REQUIRES_NO_ANTIMAGIC" = SPELL_REQUIRES_NO_ANTIMAGIC,
-	"SPELL_REQUIRES_OFF_CENTCOM" = SPELL_REQUIRES_OFF_CENTCOM,
+	"SPELL_REQUIRES_STATION" = SPELL_REQUIRES_STATION,
 	"SPELL_REQUIRES_WIZARD_GARB" = SPELL_REQUIRES_WIZARD_GARB,
 ))
 

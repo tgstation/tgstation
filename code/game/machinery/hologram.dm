@@ -105,13 +105,6 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
-
 /obj/machinery/holopad/secure/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuitboard/machine/holopad/board = circuit
@@ -125,13 +118,6 @@ Possible to do for anyone motivated enough:
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
-
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
@@ -223,8 +209,8 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
 	var/holograph_range = 4
-	for(var/obj/item/stock_parts/capacitor/B in component_parts)
-		holograph_range += 1 * B.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		holograph_range += 1 * capacitor.tier
 	holo_range = holograph_range
 
 /obj/machinery/holopad/examine(mob/user)
@@ -259,7 +245,7 @@ Possible to do for anyone motivated enough:
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
-	if(default_pry_open(P))
+	if(default_pry_open(P, close_after_pry = TRUE, closed_density = FALSE))
 		return
 
 	if(default_deconstruction_crowbar(P))
@@ -528,8 +514,8 @@ Possible to do for anyone motivated enough:
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)
-		update_appearance(UPDATE_ICON_STATE)
 		ringing = are_ringing
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -845,13 +831,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
 
-/datum/armor/machinery_holopad
-	melee = 50
-	bullet = 20
-	laser = 20
-	energy = 20
-	fire = 50
-
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null
 	if(!QDELETED(HC))
@@ -880,9 +859,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	pixel_y = -32
 	alpha = 100
 
-#undef HOLOPAD_PASSIVE_POWER_USAGE
-#undef HOLOGRAM_POWER_USAGE
-#undef CAN_HEAR_MASTERS
 #undef CAN_HEAR_ACTIVE_HOLOCALLS
-#undef CAN_HEAR_RECORD_MODE
 #undef CAN_HEAR_ALL_FLAGS
+#undef CAN_HEAR_HOLOCALL_USER
+#undef CAN_HEAR_MASTERS
+#undef CAN_HEAR_RECORD_MODE
+#undef HOLOGRAM_POWER_USAGE
+#undef HOLOPAD_PASSIVE_POWER_USAGE

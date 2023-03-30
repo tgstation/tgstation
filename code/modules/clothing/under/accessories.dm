@@ -70,7 +70,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -173,7 +173,7 @@
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							M.log_message("was given the following commendation by <b>[key_name(user)]</b>: [input]", LOG_GAME, color = "green")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
-							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
+							add_memory_in_range(M, 7, /datum/memory/received_medal, protagonist = M, deuteragonist =  user, medal_type = src, medal_text = input)
 
 		else
 			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
@@ -360,7 +360,13 @@
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/pocketprotector)
+	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/detach(obj/item/clothing/under/U, user)
+	var/drop_loc = drop_location()
+	for(var/atom/movable/held as anything in src)
+		held.forceMove(drop_loc)
+	return ..()
 
 /obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()

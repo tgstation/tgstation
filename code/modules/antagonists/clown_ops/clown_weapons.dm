@@ -15,7 +15,7 @@
 /obj/item/clothing/shoes/clown_shoes/combat
 	name = "combat clown shoes"
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
-	clothing_flags = NOSLIP
+	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	slowdown = SHOES_SLOWDOWN
 	armor_type = /datum/armor/clown_shoes_combat
 	strip_delay = 70
@@ -34,7 +34,7 @@
 /obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /// Recharging rate in PPS (peels per second)
 #define BANANA_SHOES_RECHARGE_RATE 17
@@ -63,7 +63,7 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
@@ -97,16 +97,6 @@
 	active_heat = 0
 	/// Cooldown for making a trombone noise for failing to make a bananium desword
 	COOLDOWN_DECLARE(next_trombone_allowed)
-
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
 
 /obj/item/melee/energy/sword/bananium/make_transformable()
 	AddComponent(/datum/component/transforming, \
@@ -174,16 +164,6 @@
 	active_throw_speed = 1
 	can_clumsy_use = TRUE
 
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
-
 /obj/item/shield/energy/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	adjust_comedy()
@@ -229,16 +209,6 @@
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
-
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
@@ -266,16 +236,6 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
-
 /obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
@@ -290,16 +250,6 @@
 
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600
-
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize(mapload)
 	. = ..()

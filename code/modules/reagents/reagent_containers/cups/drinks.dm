@@ -32,7 +32,9 @@
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/P)
 	. = ..()
-	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
+	if(QDELETED(src))
+		return
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		var/atom/T = get_turf(src)
 		smash(T)
 
@@ -143,7 +145,7 @@
 /obj/item/reagent_containers/cup/glass/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
-	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
+	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/consumable/liquidgibs = 5)
 
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -216,6 +218,7 @@
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 	isGlass = FALSE
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
+	var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
 	var/cap_icon_state = "bottle_cap_small"
 	var/cap_on = TRUE
 	var/cap_lost = FALSE
@@ -225,7 +228,7 @@
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	. = ..()
-	cap_overlay = mutable_appearance(icon, cap_icon_state)
+	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()
@@ -260,6 +263,7 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
+			playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
 	else
 		cap_on = TRUE
 		spillable = FALSE
@@ -287,6 +291,8 @@
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
@@ -297,7 +303,7 @@
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
 			return
 
-	return ..()
+	return . | ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -364,27 +370,28 @@
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon = 'icons/obj/drinks/boxes.dmi'
 	icon_state = "juicebox"
-	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+	volume = 15
+	drink_type = NONE
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/Initialize(mapload, vol)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
 	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_box_change)), CALLBACK(src, PROC_REF(on_box_reset)))
 
 /// Having our icon state change changes our food type
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
 	if(!istype(style))
 		return
 	drink_type = style.drink_type
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_reset()
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/proc/on_box_reset()
 	drink_type = NONE
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
@@ -460,6 +467,9 @@
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
+
+/obj/item/reagent_containers/cup/glass/flask/det/minor
+	list_reagents = list(/datum/reagent/consumable/applejuice = 30)
 
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"

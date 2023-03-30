@@ -15,7 +15,7 @@
 	response_help_simple = "brush"
 	response_disarm_continuous = "pushes"
 	response_disarm_simple = "push"
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	speed = 1
 	maxHealth = 250
 	health = 250

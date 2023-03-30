@@ -21,7 +21,7 @@
 			atk_verb = "helped"
 		if(2)
 			A.emote("cry")
-			A.Stun(20)
+			A.Stun(2 SECONDS)
 			atk_verb = "cried looking at"
 		if(3)
 			if(A.grab_state >= GRAB_AGGRESSIVE)
@@ -53,8 +53,8 @@
 				var/mob/living/carbon/defender = D
 				if(!istype(defender.head,/obj/item/clothing/head/helmet/) && !istype(defender.head,/obj/item/clothing/head/utility/hardhat))
 					defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-			A.Stun(rand(10,45))
-			D.Stun(rand(5,30))
+			A.Stun(rand(1 SECONDS, 4.5 SECONDS))
+			D.Stun(rand(0.5 SECONDS, 3 SECONDS))
 		if(5,6)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("kick", "hit", "slam")
@@ -65,7 +65,7 @@
 			playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
-			D.Paralyze(60)
+			D.Paralyze(6 SECONDS)
 		if(7,8)
 			return FALSE //Resume default behaviour
 

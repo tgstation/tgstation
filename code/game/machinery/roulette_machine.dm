@@ -443,15 +443,6 @@
 	icon_state = "floor_beacon"
 	var/used
 
-/datum/armor/machinery_roulette
-	melee = 45
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 10
-	fire = 30
-	acid = 30
-
 /obj/item/roulette_wheel_beacon/attack_self()
 	if(used)
 		return
@@ -466,6 +457,15 @@
 
 	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
 	qdel(src)
+
+#undef ROULETTE_DOZ_COL_PAYOUT
+#undef ROULETTE_BET_1TO12
+#undef ROULETTE_BET_13TO24
+#undef ROULETTE_BET_25TO36
+
+#undef ROULETTE_BET_2TO1_FIRST
+#undef ROULETTE_BET_2TO1_SECOND
+#undef ROULETTE_BET_2TO1_THIRD
 
 #undef ROULETTE_SINGLES_PAYOUT
 #undef ROULETTE_SIMPLE_PAYOUT

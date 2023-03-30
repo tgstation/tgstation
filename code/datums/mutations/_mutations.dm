@@ -17,7 +17,7 @@
 	/// Visual indicators upon the character of the owner of this mutation
 	var/static/list/visual_indicators = list()
 	/// The path of action we grant to our user on mutation gain
-	var/datum/action/cooldown/spell/power_path
+	var/datum/action/cooldown/power_path
 	/// Which mutation layer to use
 	var/layer_used = MUTATIONS_LAYER
 	/// To restrict mutation to only certain species
@@ -176,7 +176,7 @@
 /datum/mutation/human/proc/modify()
 	if(modified || !power_path || !owner)
 		return
-	var/datum/action/cooldown/spell/modified_power = locate(power_path) in owner.actions
+	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
 	if(!modified_power)
 		CRASH("Genetic mutation [type] called modify(), but could not find a action to modify!")
 	modified_power.cooldown_time *= GET_MUTATION_ENERGY(src) // Doesn't do anything for mutations with energy_coeff unset
@@ -213,7 +213,7 @@
 	if(!ispath(power_path) || !owner)
 		return FALSE
 
-	var/datum/action/cooldown/spell/new_power = new power_path(src)
+	var/datum/action/cooldown/new_power = new power_path(src)
 	new_power.background_icon_state = "bg_tech_blue"
 	new_power.base_background_icon_state = new_power.background_icon_state
 	new_power.active_background_icon_state = "[new_power.base_background_icon_state]_active"

@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/m90,
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
-	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/rifle/sniper_rifle,
 	/obj/item/gun/ballistic/rifle/boltaction/brand_new,
 ))
 
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	SSsounds.free_sound_channel(current_sound_channel)
 	current_sound_channel = null
 	box_state = MYSTERY_BOX_STANDBY
-	Shake(10, 0, 0.5 SECONDS)
+	Shake(3, 0, 0.5 SECONDS)
 
 /// Someone attacked the box with an empty hand, spawn the shown prize and give it to them, then close the box
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)

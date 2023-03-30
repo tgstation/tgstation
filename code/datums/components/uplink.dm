@@ -235,6 +235,8 @@
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock
+	data["shop_locked"] = uplink_handler.shop_locked
+	data["purchased_items"] = length(uplink_handler.purchase_log.purchase_log)
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -385,7 +387,7 @@
 	if(ismob(master.loc))
 		interact(null, master.loc)
 
-/datum/component/uplink/proc/new_message(datum/source, user, message, channel)
+/datum/component/uplink/proc/new_message(datum/source, mob/living/user, message, channel)
 	SIGNAL_HANDLER
 
 	if(channel != RADIO_CHANNEL_UPLINK)
@@ -393,7 +395,7 @@
 
 	if(!findtext(lowertext(message), lowertext(unlock_code)))
 		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
-			failsafe()  // no point returning cannot radio, youre probably ded
+			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
 	interact(null, user)
@@ -468,3 +470,5 @@
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
+
+#undef PEN_ROTATIONS

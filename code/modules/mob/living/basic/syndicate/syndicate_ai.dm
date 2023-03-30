@@ -7,6 +7,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/syndicate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/syndicate
 	)
 
@@ -17,6 +18,12 @@
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/syndicate
 
 /datum/ai_behavior/basic_melee_attack/syndicate
+	action_cooldown = 1.2 SECONDS
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/syndicate
+	attack_behaviour = /datum/ai_behavior/attack_obstructions/syndicate
+
+/datum/ai_behavior/attack_obstructions/syndicate
 	action_cooldown = 1.2 SECONDS
 
 /datum/ai_controller/basic_controller/syndicate/ranged
@@ -58,14 +65,7 @@
 	action_cooldown = 3 SECONDS
 	required_distance = 1
 
-/datum/ai_controller/basic_controller/viscerator
+/datum/ai_controller/basic_controller/syndicate/viscerator
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
-	)
-
-	ai_movement = /datum/ai_movement/dumb
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/syndicate
 	)

@@ -49,16 +49,6 @@
 	armor_type = /datum/armor/hooded_explorer
 	resistance_flags = FIRE_PROOF
 
-/datum/armor/hooded_explorer
-	melee = 30
-	bullet = 10
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 50
-	acid = 50
-	wound = 10
-
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)

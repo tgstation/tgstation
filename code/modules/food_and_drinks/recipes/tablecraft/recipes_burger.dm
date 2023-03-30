@@ -14,7 +14,7 @@
 		/obj/item/food/patty = 1
 	)
 	result = /obj/item/food/burger/human
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/burger
 	name = "Plain Burger"
@@ -24,7 +24,7 @@
 	)
 
 	result = /obj/item/food/burger/plain
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/corgiburger
 	name = "Corgi burger"
@@ -34,7 +34,7 @@
 	)
 
 	result = /obj/item/food/burger/corgi
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
@@ -43,7 +43,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/appendix
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
@@ -52,7 +52,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/brain
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/xenoburger
 	name = "Xeno burger"
@@ -61,7 +61,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/xeno
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
@@ -70,7 +70,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/bearger
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
@@ -80,7 +80,7 @@
 		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/burger/fish
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/tofuburger
 	name = "Tofu burger"
@@ -89,7 +89,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/tofu
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/ghostburger
 	name = "Ghost burger"
@@ -99,7 +99,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/ghost
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/clownburger
 	name = "Clown burger"
@@ -108,7 +108,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/clown
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/mimeburger
 	name = "Mime burger"
@@ -117,7 +117,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/mime
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/redburger
 	name = "Red burger"
@@ -127,7 +127,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/red
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/orangeburger
 	name = "Orange burger"
@@ -137,7 +137,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/orange
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/yellowburger
 	name = "Yellow burger"
@@ -147,7 +147,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/yellow
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/greenburger
 	name = "Green burger"
@@ -157,7 +157,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/green
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/blueburger
 	name = "Blue burger"
@@ -167,7 +167,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/blue
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/purpleburger
 	name = "Purple burger"
@@ -177,7 +177,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/purple
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/blackburger
 	name = "Black burger"
@@ -187,7 +187,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/black
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/whiteburger
 	name = "White burger"
@@ -197,7 +197,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/white
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/spellburger
 	name = "Spell burger"
@@ -206,7 +206,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/spell
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/spellburger2
 	name = "Spell burger"
@@ -215,7 +215,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/spell
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/bigbiteburger
 	name = "Big bite burger"
@@ -225,7 +225,7 @@
 		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/burger/bigbite
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/superbiteburger
 	name = "Super bite burger"
@@ -242,7 +242,7 @@
 
 	)
 	result = /obj/item/food/burger/superbite
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/slimeburger
 	name = "Jelly burger"
@@ -251,7 +251,7 @@
 		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/jelly/slime
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/jellyburger
 	name = "Jelly burger"
@@ -260,7 +260,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/jelly/cherry
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
@@ -270,7 +270,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/fivealarm
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
@@ -279,7 +279,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/rat
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/baseballburger
 	name = "Home run baseball burger"
@@ -288,7 +288,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/baseball
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/baconburger
 	name = "Bacon Burger"
@@ -298,7 +298,7 @@
 	)
 
 	result = /obj/item/food/burger/baconburger
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/empoweredburger
 	name = "Empowered Burger"
@@ -308,7 +308,7 @@
 	)
 
 	result = /obj/item/food/burger/empoweredburger
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/catburger
 	name = "Cat burger"
@@ -319,7 +319,7 @@
 		/obj/item/organ/external/tail/cat = 1,
 	)
 	result = /obj/item/food/burger/catburger
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/crabburger
 	name = "Crab Burger"
@@ -329,7 +329,7 @@
 	)
 
 	result = /obj/item/food/burger/crab
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/cheeseburger
 	name = "Cheese Burger"
@@ -339,7 +339,7 @@
 			/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/burger/cheese
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/soylentburger
 	name = "Soylent Burger"
@@ -349,7 +349,7 @@
 			/obj/item/food/cheese/wedge = 2,
 	)
 	result = /obj/item/food/burger/soylent
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/ribburger
 	name = "McRib"
@@ -359,7 +359,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/rib
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/mcguffin
 	name = "McGuffin"
@@ -369,7 +369,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/mcguffin
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/chickenburger
 	name = "Chicken Sandwich"
@@ -379,7 +379,7 @@
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/chicken
-	subcategory = CAT_BURGER
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/crazyhamburger
 	name = "Crazy hamburger"
@@ -394,4 +394,4 @@
 			/datum/reagent/consumable/cooking_oil = 15
 	)
 	result = /obj/item/food/burger/crazy
-	subcategory = CAT_BURGER
+	category = CAT_BURGER

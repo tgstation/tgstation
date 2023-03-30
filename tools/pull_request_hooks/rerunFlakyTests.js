@@ -190,7 +190,7 @@ async function getExistingIssueId(graphql, context, title) {
   }
 
   const foundInBody = openFlakyTestIssues.find((issue) =>
-    issue.body.contains(`<!-- ${TITLE_BOT_HEADER}${exactTitle} -->`)
+    issue.body.includes(`<!-- ${TITLE_BOT_HEADER}${exactTitle} -->`)
   );
   if (foundInBody !== undefined) {
     return foundInBody.number;

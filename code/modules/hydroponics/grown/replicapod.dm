@@ -136,12 +136,12 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
-				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
 					if(isobserver(M))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
@@ -165,7 +165,7 @@
 			return result
 
 		// Make sure they can still interact with the parent hydroponics tray.
-		if(!user.canUseTopic(parent, be_close = TRUE))
+		if(!user.can_perform_action(parent))
 			to_chat(user, text = "You are no longer able to harvest the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
 			return result
 
@@ -204,7 +204,14 @@
 	podman.hardset_dna(null, null, null, podman.real_name, blood_type, new /datum/species/pod, features) // Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
 
-	podman.dna.species.exotic_blood = max(reagents_add) || /datum/reagent/water
+	//Get the most plentiful reagent, if there's none: get water
+	var/list/most_plentiful_reagent = list(/datum/reagent/water = 0)
+	for(var/reagent in reagents_add)
+		if(reagents_add[reagent] > most_plentiful_reagent[most_plentiful_reagent[1]])
+			most_plentiful_reagent.Cut()
+			most_plentiful_reagent[reagent] = reagents_add[reagent]
+
+	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
 	parent.update_tray(user, 1)
 	return result

@@ -21,7 +21,7 @@
 /obj/item/clothing/shoes/griffin/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/shoes)
+	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -41,9 +41,6 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
-
-/datum/armor/shoes_roman
-	bio = 10
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()

@@ -481,7 +481,7 @@
 	else
 		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
-			var/obj/item/organ/internal/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
+			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 			if(!belly)
 				eater.expel_ingested(my_atom, amount)
 				return
@@ -708,14 +708,14 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize(mob/living/carbon/owner, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
+/datum/reagents/proc/metabolize(mob/living/carbon/owner, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
 
 	var/need_mob_update = FALSE
-	var/obj/item/organ/internal/stomach/belly = owner.getorganslot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/internal/liver/liver = owner.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/liver_tolerance
 	if(liver)
 		var/liver_health_percent = (liver.maxHealth - liver.damage) / liver.maxHealth
@@ -723,7 +723,7 @@
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		// skip metabolizing effects for small units of toxins
-		if(istype(reagent, /datum/reagent/toxin) && liver)
+		if(istype(reagent, /datum/reagent/toxin) && liver && !dead)
 			var/datum/reagent/toxin/toxin = reagent
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL)
 			if(belly)
@@ -733,11 +733,10 @@
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * delta_time)
 				continue
 
-		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
+		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless, dead)
 
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-		owner.update_stamina()
 	update_total()
 
 /*
@@ -750,7 +749,7 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
+/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/need_mob_update = FALSE
 	if(QDELETED(reagent.holder))
 		return FALSE
@@ -758,7 +757,7 @@
 	if(!owner)
 		owner = reagent.holder.my_atom
 
-	if(owner && reagent)
+	if(owner && reagent && (!dead || (reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
 		if(owner.reagent_check(reagent, delta_time, times_fired))
 			return
 		if(liverless && !reagent.self_consuming) //need to be metabolized
@@ -777,8 +776,10 @@
 
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
-
-		need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+		if(!dead)
+			need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+	if(dead)
+		need_mob_update += reagent.on_mob_dead(owner, delta_time)
 	return need_mob_update
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
@@ -832,7 +833,6 @@
 		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose = TRUE)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-		owner.update_stamina()
 	update_total()
 
 /**
@@ -1911,7 +1911,7 @@
 			ui_reaction_id = text2path(params["id"])
 			return TRUE
 		if("search_reagents")
-			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			var/input_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
 			if(!reagent)

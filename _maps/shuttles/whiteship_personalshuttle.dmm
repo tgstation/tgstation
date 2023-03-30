@@ -74,7 +74,7 @@
 	melee_damage_lower = 11;
 	melee_damage_upper = 11;
 	name = "Rotting Carcass";
-	zombiejob = "Assistant"
+	outfit = /datum/outfit/corpse_assistant
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -299,7 +299,7 @@
 	melee_damage_lower = 11;
 	melee_damage_upper = 11;
 	name = "Rotting Carcass";
-	zombiejob = "Assistant"
+	outfit = /datum/outfit/corpse_assistant
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/engine)
@@ -531,7 +531,7 @@
 	melee_damage_lower = 11;
 	melee_damage_upper = 11;
 	name = "Rotting Carcass";
-	zombiejob = "Assistant"
+	outfit = /datum/outfit/corpse_assistant
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)

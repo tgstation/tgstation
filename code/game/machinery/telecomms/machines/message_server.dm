@@ -89,13 +89,6 @@
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
 
-/datum/armor/machinery_blackbox_recorder
-	melee = 25
-	bullet = 10
-	laser = 10
-	fire = 50
-	acid = 70
-
 /obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
 	if (!decryptkey)
@@ -167,13 +160,6 @@
 	server_type = /obj/machinery/telecomms/message_server
 	var/datum/logged
 
-/datum/armor/machinery_blackbox_recorder
-	melee = 25
-	bullet = 10
-	laser = 10
-	fire = 50
-	acid = 70
-
 /datum/signal/subspace/messaging/New(init_source, init_data)
 	source = init_source
 	data = init_data
@@ -224,13 +210,6 @@
 	var/datum/picture/picture  // attached photo
 	var/automated = 0 //automated message
 
-/datum/armor/machinery_blackbox_recorder
-	melee = 25
-	bullet = 10
-	laser = 10
-	fire = 50
-	acid = 70
-
 /datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
 		recipient = param_rec
@@ -259,13 +238,6 @@
 	var/stamp = "Unstamped"
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
-
-/datum/armor/machinery_blackbox_recorder
-	melee = 25
-	bullet = 10
-	laser = 10
-	fire = 50
-	acid = 70
 
 /datum/data_rc_msg/New(param_rec, param_sender, param_message, param_stamp, param_id_auth, param_priority)
 	if(param_rec)

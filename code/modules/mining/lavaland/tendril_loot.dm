@@ -9,7 +9,7 @@
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints[1] = new modkit_design
+	blueprints += new modkit_design
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
@@ -166,9 +166,7 @@
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
 	if(do_after(user, 40, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
-		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
+		user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
 		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
@@ -209,7 +207,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
 	guardian.locked = FALSE
-	guardian.Recall(TRUE)
+	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/repulse.ogg', 50, TRUE)
 
@@ -277,7 +275,7 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/sight_flags = SEE_MOBS
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
@@ -296,8 +294,8 @@
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
 	user.add_sight(sight_flags)
-	if(!isnull(lighting_alpha))
-		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
+	if(!isnull(color_cutoffs))
+		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -542,7 +540,7 @@
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
-	if(exposed_human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS))
+	if(exposed_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
@@ -561,7 +559,8 @@
 	var/list/radial_wings = list()
 	var/list/name2type = list()
 	for(var/obj/item/organ/external/wings/functional/possible_type as anything in wing_types)
-		var/datum/sprite_accessory/accessory = GLOB.wings_list[possible_type.name] //Gets the datum for every wing this species has, then prompts user with a radial menu
+		var/datum/sprite_accessory/accessory = initial(possible_type.sprite_accessory_override) //get the type
+		accessory = GLOB.wings_list[initial(accessory.name)] //get the singleton instance
 		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
 		img.transform *= 0.5
 		img.pixel_x = -32
@@ -716,15 +715,6 @@
 	/// Status of berserk
 	var/berserk_active = FALSE
 
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
@@ -802,20 +792,11 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	darkness_view = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Blue, light blue
+	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
 	var/datum/action/cooldown/scan/scan_ability
-
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
@@ -858,15 +839,6 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
 
@@ -888,7 +860,7 @@
 	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/atom/, remove_filter), "scan"), 30 SECONDS)
+	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")
@@ -909,15 +881,6 @@
 	range_mid = 5
 	range_far = 15
 
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
-
 /datum/status_effect/agent_pinpointer/scan/scan_for_target()
 	return
 
@@ -935,15 +898,6 @@
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
-
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
 	. = ..()
@@ -1013,15 +967,6 @@
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(cloak)),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
 	)
-
-/datum/armor/hooded_berserker
-	melee = 30
-	bullet = 30
-	laser = 10
-	energy = 20
-	bomb = 50
-	fire = 100
-	acid = 100
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()

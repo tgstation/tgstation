@@ -64,16 +64,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/list/waste_multiplier_factors
 
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
-	var/warning_point = 50
+	var/warning_point = 5
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_DANGER]
 	///Spawns anomalies when more damaged than this too.
-	var/danger_point = 550
+	var/danger_point = 60
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
-	var/emergency_point = 675
+	var/emergency_point = 75
 	var/emergency_channel = null // Need null to actually broadcast, lol.
-	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING]
-	var/explosion_point = 900
+	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING].
+	var/explosion_point = 100
 	///Are we exploding?
 	var/final_countdown = FALSE
 	///A scaling value that affects the severity of explosions.
@@ -419,9 +419,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
+/// Returns the integrity percent of the Supermatter. No rounding made yet, round it yourself.
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
-	integrity = round(100 - integrity * 100, 0.01)
+	integrity = 100 - integrity * 100
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
@@ -704,20 +705,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 	external_damage_immediate = 0
 
-	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 2400, 0, 1.5)
-	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 4000, 0, 1)
-	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 320, 0, 1)
+	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 24000, 0, 0.15)
+	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 40000, 0, 0.1)
+	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 3200, 0, 0.1)
 
 	var/is_spaced = FALSE
 	if(isturf(src.loc))
 		var/turf/local_turf = src.loc
 		for (var/turf/open/space/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
-			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.00125, 0, 10)
+			additive_damage[SM_DAMAGE_SPACED] = clamp(internal_energy * 0.000125, 0, 1)
 			is_spaced = TRUE
 			break
 
 	if(total_moles > 0 && !is_spaced)
-		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 600, -1, 0)
+		additive_damage[SM_DAMAGE_HEAL_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 6000, -0.1, 0)
 
 	var/total_damage = 0
 	for (var/damage_type in additive_damage)

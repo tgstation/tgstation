@@ -10,6 +10,7 @@
 		/obj/item/trash/can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/bacteria = 5,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
@@ -19,6 +20,8 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/trash/flare = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/glass/sillycup = 1,
@@ -79,6 +82,7 @@
 	loot = list(
 		/obj/structure/grille = 5,
 		/obj/effect/spawner/random/trash/food_packaging = 3,
+		/obj/effect/spawner/random/trash/bacteria = 1,
 		/obj/effect/spawner/random/trash/cigbutt = 1,
 		/obj/item/food/deadmouse = 1,
 	)
@@ -138,7 +142,7 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
-		/mob/living/simple_animal/hostile/retaliate/frog = 2,
+		/mob/living/basic/frog = 2,
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
@@ -254,4 +258,11 @@
 		/obj/item/storage/box/lights/tubes,
 		/obj/item/storage/box/lights/mixed,
 		/obj/item/storage/box/lights/bulbs,
+	)
+
+/obj/effect/spawner/random/trash/bacteria
+	name = "moldy food spawner"
+	loot = list(
+		/obj/item/food/breadslice/moldy/bacteria,
+		/obj/item/food/pizzaslice/moldy/bacteria,
 	)

@@ -163,7 +163,7 @@
 		/obj/item/radio = 1,
 		/obj/item/analyzer = 1
 	)
-	category = CAT_MISC
+	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/blackmarket_uplink/New()
 	..()

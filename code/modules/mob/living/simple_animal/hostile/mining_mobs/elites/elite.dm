@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list("boss")
+	faction = list(FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -363,16 +363,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
@@ -411,16 +401,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
 
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
@@ -436,3 +416,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef TUMOR_ACTIVE
+#undef TUMOR_INACTIVE
+#undef TUMOR_PASSIVE

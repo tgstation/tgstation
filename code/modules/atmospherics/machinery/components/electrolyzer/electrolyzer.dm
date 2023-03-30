@@ -144,14 +144,14 @@
 
 /obj/machinery/electrolyzer/RefreshParts()
 	. = ..()
-	var/manipulator = 0
+	var/power = 0
 	var/cap = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		manipulator += M.rating
-	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		cap += M.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		power += manipulator.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		cap += capacitor.tier
 
-	working_power = manipulator //used in the amount of moles processed
+	working_power = power //used in the amount of moles processed
 
 	efficiency = (cap + 1) * 0.5 //used in the amount of charge in power cell uses
 

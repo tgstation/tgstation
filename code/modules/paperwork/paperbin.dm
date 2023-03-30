@@ -197,7 +197,7 @@
 /obj/item/paper_bin/bundlenatural
 	name = "natural paper bundle"
 	desc = "A bundle of paper created using traditional methods."
-	icon_state = null
+	icon_state = "paper_stack"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 	bin_overlay_string = "paper_bundle_overlay"

@@ -1,0 +1,318 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"d" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"h" = (
+/obj/item/wallframe/apc,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"k" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron/smooth{
+	amount = 15
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"p" = (
+/obj/item/stack/sheet/iron/ten,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"q" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"t" = (
+/obj/item/wrench,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"x" = (
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"z" = (
+/obj/item/stack/rods,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"B" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"C" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"L" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/security)
+"N" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"P" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. This one doesn't work on rails, which is good because we never had rails to begin with.";
+	name = "mining cart"
+	},
+/obj/item/stack/ore/glass{
+	amount = 15
+	},
+/obj/item/stack/ore/iron{
+	amount = 15
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Q" = (
+/obj/item/pickaxe/mini,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"R" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"S" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"U" = (
+/obj/structure/lattice,
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets_single,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"V" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"W" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"X" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+
+(1,1,1) = {"
+a
+V
+a
+a
+L
+L
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(2,1,1) = {"
+a
+H
+a
+X
+X
+X
+X
+X
+d
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(3,1,1) = {"
+a
+c
+a
+f
+f
+f
+X
+X
+X
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(4,1,1) = {"
+a
+N
+a
+a
+C
+N
+S
+f
+X
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(5,1,1) = {"
+a
+N
+N
+t
+z
+S
+S
+Q
+f
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(6,1,1) = {"
+a
+p
+k
+W
+S
+S
+W
+f
+P
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(7,1,1) = {"
+q
+x
+W
+S
+S
+h
+a
+f
+f
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(8,1,1) = {"
+q
+R
+U
+m
+W
+S
+a
+f
+X
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(9,1,1) = {"
+a
+a
+a
+C
+B
+a
+a
+X
+X
+X
+X
+d
+d
+d
+d
+d
+d
+"}
+(10,1,1) = {"
+X
+X
+f
+f
+f
+f
+f
+X
+X
+X
+X
+d
+d
+d
+d
+d
+d
+"}

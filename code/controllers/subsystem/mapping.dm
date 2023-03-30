@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(mapping)
 	var/adding_new_zlevel = FALSE
 
 	///shows the default gravity value for each z level. recalculated when gravity generators change.
-	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	///List in the form: list(z level num = max generator gravity in that z level OR the gravity level trait)
 	var/list/gravity_by_z_level = list()
 
 	/// list of traits and their associated z leves
@@ -148,13 +148,13 @@ SUBSYSTEM_DEF(mapping)
 #endif
 	// Run map generation after ruin generation to prevent issues
 	run_map_generation()
-	// Add the transit level
-	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
+	// Add the first transit level
+	var/datum/space_level/base_transit = add_reservation_zlevel()
 	require_area_resort()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	initialize_reserved_level(transit.z_value)
+	initialize_reserved_level(base_transit.z_value)
 	calculate_default_z_level_gravities()
 
 	return SS_INIT_SUCCESS
@@ -171,7 +171,8 @@ SUBSYSTEM_DEF(mapping)
 		var/packetlen = length(packet)
 		while(packetlen)
 			if(MC_TICK_CHECK)
-				lists_to_reserve.Cut(1, index)
+				if(index)
+					lists_to_reserve.Cut(1, index)
 				return
 			var/turf/T = packet[packetlen]
 			T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
@@ -221,7 +222,7 @@ SUBSYSTEM_DEF(mapping)
 		max_gravity = max(grav_gen.setting, max_gravity)
 
 	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
-	gravity_by_z_level["[z_level_number]"] = max_gravity
+	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
 
 
@@ -328,7 +329,6 @@ Used by the AI doomsday and the self-destruct nuke.
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
 	holodeck_templates = SSmapping.holodeck_templates
-	transit = SSmapping.transit
 	areas_in_z = SSmapping.areas_in_z
 
 	config = SSmapping.config
@@ -381,7 +381,10 @@ Used by the AI doomsday and the self-destruct nuke.
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE, new_z = TRUE))
+		var/bounds = pm.bounds
+		var/x_offset = bounds ? round(world.maxx / 2 - bounds[MAP_MAXX] / 2) + 1 : 1
+		var/y_offset = bounds ? round(world.maxy / 2 - bounds[MAP_MAXY] / 2) + 1 : 1
+		if (!pm.load(x_offset, y_offset, start_z + parsed_maps[P], no_changeturf = TRUE, new_z = TRUE))
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -433,8 +436,16 @@ Used by the AI doomsday and the self-destruct nuke.
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_default_map_config()
 
+/**
+ * Global list of AREA TYPES that are associated with the station.
+ *
+ * This tracks the types of all areas in existence that are a UNIQUE_AREA and are on the station Z.
+ *
+ * This does not track the area instances themselves - See [GLOB.areas] for that.
+ */
 GLOBAL_LIST_EMPTY(the_station_areas)
 
+/// Generates the global station area list, filling it with typepaths of unique areas found on the station Z.
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/station_area in GLOB.areas)
 		if (!(station_area.area_flags & UNIQUE_AREA))
@@ -520,10 +531,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
@@ -605,7 +617,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	set name = "Load Away Mission"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 
@@ -644,6 +656,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Loading [away_name] failed!")
 		return
 
+/// Adds a new reservation z level. A bit of space that can be handed out on request
+/// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
+/datum/controller/subsystem/mapping/proc/add_reservation_zlevel(for_shuttles)
+	num_of_res_levels++
+	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new type
@@ -654,8 +672,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			if(reserve.Reserve(width, height, i))
 				return reserve
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
-		num_of_res_levels += 1
-		var/datum/space_level/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		var/datum/space_level/newReserved = add_reservation_zlevel()
 		initialize_reserved_level(newReserved.z_value)
 		if(reserve.Reserve(width, height, newReserved.z_value))
 			return reserve
@@ -668,7 +685,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				return reserve
 	QDEL_NULL(reserve)
 
-//This is not for wiping reserved levels, use wipe_reservations() for that.
+///Sets up a z level as reserved
+///This is not for wiping reserved levels, use wipe_reservations() for that.
+///If this is called after SSatom init, it will call Initialize on all turfs on the passed z, as its name promises
 /datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
 	UNTIL(!clearing_reserved_turfs) //regardless, lets add a check just in case.
 	clearing_reserved_turfs = TRUE //This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
@@ -678,11 +697,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
 	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	var/block = block(A, B)
-	for(var/t in block)
-		// No need to empty() these, because it's world init and they're
-		// already /turf/open/space/basic.
-		var/turf/T = t
+	for(var/turf/T as anything in block)
+		// No need to empty() these, because they just got created and are already /turf/open/space/basic.
 		T.flags_1 |= UNUSED_RESERVATION_TURF
+		CHECK_TICK
+
+	// Gotta create these suckers if we've not done so already
+	if(SSatoms.initialized)
+		SSatoms.InitializeAtoms(Z_TURFS(z))
+
 	unused_turfs["[z]"] = block
 	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
@@ -741,6 +764,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
 	z_level_to_lowest_plane_offset += 1
+	gravity_by_z_level.len += 1
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
@@ -850,6 +874,19 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
+
+	UNTIL(initialized)
+	var/static/lazy_loading = FALSE
+	UNTIL(!lazy_loading)
+
+	lazy_loading = TRUE
+	. = _lazy_load_template(template_key, force)
+	lazy_loading = FALSE
+	return .
+
+/datum/controller/subsystem/mapping/proc/_lazy_load_template(template_key, force = FALSE)
+	PRIVATE_PROC(TRUE)
+
 	if(LAZYACCESS(loaded_lazy_templates, template_key)  && !force)
 		var/datum/lazy_template/template = GLOB.lazy_templates[template_key]
 		return template.reservations[1]
@@ -858,10 +895,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/datum/lazy_template/target = GLOB.lazy_templates[template_key]
 	if(!target)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
-
 	return target.lazy_load()
 
 /proc/generate_lighting_appearance_by_z(z_level)
 	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
 		GLOB.default_lighting_underlays_by_z.len = z_level
-	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+
+/// Returns true if the map we're playing on is on a planet
+/datum/controller/subsystem/mapping/proc/is_planetary()
+	return config.planetary

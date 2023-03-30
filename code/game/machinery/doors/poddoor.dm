@@ -45,11 +45,11 @@
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
-	balloon_alert(user, "ID changed")
+	balloon_alert(user, "id changed")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
@@ -113,6 +113,7 @@
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
@@ -173,15 +174,6 @@
 /obj/machinery/door/poddoor/shuttledock
 	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
-
-/datum/armor/door_poddoor
-	melee = 50
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 50
-	fire = 100
-	acid = 70
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)

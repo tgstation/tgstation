@@ -26,6 +26,9 @@
 	var/next_hardcore_score = select_hardcore_quirks()
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
 
+	//Add a sixpack because honestly
+	var/obj/item/bodypart/chest/chest = character.get_bodypart(BODY_ZONE_CHEST)
+	chest.add_bodypart_overlay(new /datum/bodypart_overlay/simple/sixpack() )
 
 /**
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.

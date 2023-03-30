@@ -212,6 +212,10 @@
 	/// How many smaller table smacks we can do before we're out
 	var/table_smacks_left = 3
 
+/obj/item/hand_item/slapper/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/high_fiver)
+
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
@@ -313,54 +317,12 @@
 	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
 
-/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
-	. = TRUE
-
-	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
-		visible_message(span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"), \
-			span_warning("You post up, looking for a high-five, but finding no one within range!"), null, 2)
-		return
-
-	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
-		span_notice("You post up, looking for a high-five!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/highfive)
-
-/// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
+// Successful takes will qdel our hand after
 /obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-	. = TRUE
-
-	var/open_hands_taker
-	var/slappers_giver
-	for(var/i in taker.held_items) // see how many hands the taker has open for high'ing
-		if(isnull(i))
-			open_hands_taker++
-
-	if(!open_hands_taker)
-		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
-		taker.add_mood_event("high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+	. = ..()
+	if(!.)
 		return
 
-	for(var/i in offerer.held_items)
-		var/obj/item/hand_item/slapper/slap_check = i
-		if(istype(slap_check))
-			slappers_giver++
-
-	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
-		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_ten)
-		taker.add_mood_event("high_five", /datum/mood_event/high_ten)
-	else
-		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
-		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
-		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
-		taker.add_mood_event("high_five", /datum/mood_event/high_five)
 	qdel(src)
 
 
@@ -438,8 +400,8 @@
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
 		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
 
-		offerer.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = taker), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = offerer), story_value = STORY_VALUE_OKAY)
+		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 
 		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
 		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
@@ -512,6 +474,7 @@
 
 /obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -573,8 +536,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -583,7 +545,7 @@
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -600,11 +562,11 @@
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
-	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
 	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
-		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
@@ -645,8 +607,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -656,8 +617,8 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
-	dont_go_breakin_my_heart.applyOrganDamage(999)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 
 /obj/projectile/kiss/french
@@ -666,8 +627,10 @@
 
 /obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
 	. = ..()
+	if(isnull(living_target.reagents))
+		return
 	//Don't stack the garlic
-	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+	if(!living_target.has_reagent(/datum/reagent/consumable/garlic))
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
@@ -680,13 +643,14 @@
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
 		return
-	if(!firer || !target.Adjacent(firer))
+	if(!firer || !target.Adjacent(firer) || !ismob(firer))
 		return
+
+	var/mob/kisser = firer
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
-
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
 		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))

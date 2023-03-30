@@ -116,7 +116,7 @@ DEFINE_BITFIELD(food_flags, list(
 ///Amount of reagents you start with on crafted food excluding the used parts
 #define CRAFTED_FOOD_BASE_REAGENT_MODIFIER 0.7
 ///Modifier of reagents you get when crafting food from the parts used
-#define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER  0.5
+#define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER 0.5
 
 #define IS_EDIBLE(O) (O.GetComponent(/datum/component/edible))
 
@@ -176,3 +176,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_SCOOP_OFFSET 4
 
 #define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)
+
+// Venues for the barbots.
+#define VENUE_RESTAURANT "Restaurant Venue"
+#define VENUE_BAR "Bar Venue"

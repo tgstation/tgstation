@@ -132,6 +132,10 @@
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, PROC_REF(on_hand_deleted))
 
+	// We can high five with our touch hand. It casts the spell on people. Radical
+	attached_hand.AddElement(/datum/element/high_fiver)
+	RegisterSignal(attached_hand, COMSIG_ITEM_OFFER_TAKEN, PROC_REF(on_hand_taken))
+
 /// Unregisters all signal procs for the hand.
 /datum/action/cooldown/spell/touch/proc/unregister_hand_signals()
 	SHOULD_CALL_PARENT(TRUE)
@@ -141,6 +145,7 @@
 		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_PARENT_QDELETING,
+		COMSIG_ITEM_OFFER_TAKEN,
 	))
 
 // Touch spells don't go on cooldown OR give off an invocation until the hand is used itself.
@@ -288,6 +293,20 @@
 	SIGNAL_HANDLER
 
 	remove_hand(dropper, reset_cooldown_after = TRUE)
+
+/**
+ * Signal proc for [COMSIG_ITEM_OFFER_TAKEN] from our attached hand.
+ *
+ * Giving a high five with our hand makes it cast
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_taken(obj/item/source, mob/living/carbon/offerer, mob/living/carbon/taker)
+	SIGNAL_HANDLER
+
+	if(!can_hit_with_hand(taker, offerer))
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, taker, offerer)
+	return COMPONENT_OFFER_INTERRUPT
 
 /**
  * Called whenever our spell is cast, but blocked by antimagic.

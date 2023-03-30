@@ -14,6 +14,11 @@
 	if(issilicon(accessor))
 		if(ispAI(accessor))
 			return FALSE
+		if(!(ROLE_SYNDICATE in accessor.faction))
+			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
+				return FALSE
+			if(onSyndieBase() && loc != accessor)
+				return FALSE
 		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
@@ -53,39 +58,12 @@
 /obj/item/proc/InsertID()
 	return FALSE
 
-/obj/proc/text2access(access_text)
-	. = list()
-	if(!access_text)
-		return
-	var/list/split = splittext(access_text,";")
-	for(var/x in split)
-		var/n = text2num(x)
-		if(n)
-			. += n
-
-//Call this before using req_access or req_one_access directly
-/obj/proc/gen_access()
-	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
-	if(!req_access)
-		req_access = list()
-		for(var/a in text2access(req_access_txt))
-			req_access += a
-	if(!req_one_access)
-		req_one_access = list()
-		for(var/b in text2access(req_one_access_txt))
-			req_one_access += b
-
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_access_list(list/access_list)
-	gen_access()
-
-	if(!islist(req_access)) //something's very wrong
-		return TRUE
-
-	if(!req_access.len && !length(req_one_access))
+	if(!length(req_access) && !length(req_one_access))
 		return TRUE
 
 	if(!length(access_list) || !islist(access_list))

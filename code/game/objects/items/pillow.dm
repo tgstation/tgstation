@@ -91,14 +91,14 @@
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
 		return
-	balloon_alert(user, span_notice("removing tag..."))
+	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	if(last_fighter)
 		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
-	balloon_alert(user, span_notice("tag removed"))
+	balloon_alert(user, "tag removed")
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
 

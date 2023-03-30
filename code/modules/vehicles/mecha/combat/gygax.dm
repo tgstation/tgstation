@@ -38,14 +38,6 @@
 	name = "Toggle leg actuators overload"
 	button_icon_state = "mech_overload_off"
 
-/datum/armor/mecha_gygax
-	melee = 25
-	bullet = 20
-	laser = 30
-	energy = 15
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/mech_overload_mode/Trigger(trigger_flags, forced_state = null)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return

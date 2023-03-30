@@ -173,20 +173,12 @@
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
-/datum/armor/barricade_security
-	melee = 10
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 10
-
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	toggle_mode(user)
 
@@ -238,14 +230,6 @@
 	max_integrity = 250
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-
-/datum/armor/barricade_security
-	melee = 10
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 10
-	fire = 10
 
 /obj/item/deployable_turret_folded/Initialize(mapload)
 	. = ..()

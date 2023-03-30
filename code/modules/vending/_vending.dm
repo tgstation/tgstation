@@ -62,7 +62,7 @@
 	armor_type = /datum/armor/machinery_vending
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
-	light_power = 0.5
+	light_power = 0.7
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 
 	/// Is the machine active (No sales pitches if off)!
@@ -168,10 +168,6 @@
 	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
 	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements
 	var/onstation_override = FALSE //change this on the object on the map to override the onstation check. DO NOT APPLY THIS GLOBALLY.
-
-	///ID's that can load this vending machine wtih refills
-	var/list/canload_access_list
-
 
 	var/list/vending_machine_input = list()
 	///Display header on the input view
@@ -619,6 +615,11 @@
 	else
 		. = ..()
 		if(tiltable && !tilted && I.force)
+			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
+				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
+				var/target = get_step(src, opposite_direction)
+				tilt(get_turf(target))
+				return
 			switch(rand(1, 100))
 				if(1 to 5)
 					freebie(user, 3)
@@ -758,7 +759,7 @@
 			. = TRUE
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			add_memory_in_range(L, 7, MEMORY_VENDING_CRUSHED, list(DETAIL_PROTAGONIST = L, DETAIL_WHAT_BY = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = MEMORY_SKIP_UNCONSCIOUS)
+			add_memory_in_range(L, 7, /datum/memory/witness_vendor_crush, protagonist = L, antagonist = src)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
@@ -806,30 +807,17 @@
 	. = ..()
 
 /**
- * Is the passed in user allowed to load this vending machines compartments
+ * Is the passed in user allowed to load this vending machines compartments? This only is ran if we are using a /obj/item/storage/bag to load the vending machine, and not a dedicated restocker.
  *
  * Arguments:
  * * user - mob that is doing the loading of the vending machine
  */
 /obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
-	if(!canload_access_list)
+	if(!req_access || allowed(user) || (obj_flags & EMAGGED) || !scan_id)
 		return TRUE
-	else
-		var/do_you_have_access = FALSE
-		var/req_access_txt_holder = req_access_txt
-		for(var/i in canload_access_list)
-			req_access_txt = i
-			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
-				continue
-			else
-				do_you_have_access = TRUE
-				break //you passed don't bother looping anymore
-		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
-		if(do_you_have_access)
-			return TRUE
-		else
-			to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
-			return FALSE
+
+	to_chat(user, span_warning("[src]'s input compartment blinks red: Access denied."))
+	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
@@ -1078,7 +1066,7 @@
 			speak("You are not of legal age to purchase [R.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
-					sec_radio = new
+					sec_radio = new (src)
 					sec_radio.set_listening(FALSE)
 				sec_radio.set_frequency(FREQ_SECURITY)
 				sec_radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
@@ -1281,11 +1269,6 @@
 	var/list/base64_cache = list()
 	panel_type = "panel20"
 
-/datum/armor/machinery_vending
-	melee = 20
-	fire = 50
-	acid = 70
-
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
 	if(!isliving(user))
@@ -1443,11 +1426,6 @@
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
 
-/datum/armor/machinery_vending
-	melee = 20
-	fire = 50
-	acid = 70
-
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
 	icon_deny = "greed-deny"
@@ -1469,3 +1447,5 @@
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+
+#undef MAX_VENDING_INPUT_AMOUNT

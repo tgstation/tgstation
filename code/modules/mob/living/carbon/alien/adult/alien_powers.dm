@@ -13,7 +13,7 @@ Doesn't work on other aliens/AI.*/
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
-	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.
@@ -274,18 +274,13 @@ Doesn't work on other aliens/AI.*/
 	build_all_button_icons()
 	on_who.update_icons()
 
+// We do this in InterceptClickOn() instead of Activate()
+// because we use the click parameters for aiming the projectile
+// (or something like that)
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
 		unset_click_ability(caller, refund_cooldown = FALSE)
-		return FALSE
-
-	// We do this in InterceptClickOn() instead of Activate()
-	// because we use the click parameters for aiming the projectile
-	// (or something like that)
-	var/turf/user_turf = caller.loc
-	var/turf/target_turf = get_step(caller, target.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(target_turf))
 		return FALSE
 
 	var/modifiers = params2list(params)
@@ -297,7 +292,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target_turf, user_turf))
+	caller.newtonian_move(get_dir(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
@@ -384,7 +379,7 @@ Doesn't work on other aliens/AI.*/
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/alien/adult/alieninated_owner = owner
-	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
 		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
 			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
@@ -401,14 +396,14 @@ Doesn't work on other aliens/AI.*/
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return -1
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)

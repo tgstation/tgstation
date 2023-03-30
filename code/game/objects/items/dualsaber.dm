@@ -29,6 +29,8 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
+	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
+	item_flags = NO_BLOOD_ON_ITEM
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34
@@ -62,7 +64,6 @@
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 
-
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
@@ -70,7 +71,6 @@
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
-
 
 /obj/item/dualsaber/get_sharpness()
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
@@ -84,7 +84,7 @@
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/internal/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/internal/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
@@ -191,10 +191,6 @@
 
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
-
-/datum/armor/item_dualsaber
-	fire = 100
-	acid = 70
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)

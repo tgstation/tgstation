@@ -100,13 +100,15 @@
 		liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE, liverless=TRUE)
 		return
 
-	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
 	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
+			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
+				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
@@ -120,7 +122,7 @@
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 	if(liver_damage)
-		applyOrganDamage(min(liver_damage * delta_time , MAX_TOXIN_LIVER_DAMAGE * delta_time))
+		apply_organ_damage(min(liver_damage * delta_time , MAX_TOXIN_LIVER_DAMAGE * delta_time))
 
 	if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
@@ -160,13 +162,13 @@
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.adjust_drowsyness(0.25 * delta_time)
+			owner.adjust_drowsiness(0.5 SECONDS * delta_time)
 			owner.adjust_disgust(0.3 * delta_time)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.adjust_drowsyness(0.5 * delta_time)
+			owner.adjust_drowsiness(1 SECONDS * delta_time)
 			owner.adjust_disgust(0.6 * delta_time)
 
 			if(DT_PROB(1.5, delta_time))
@@ -175,7 +177,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.adjust_drowsyness(0.8 * delta_time)
+			owner.adjust_drowsiness(1.6 SECONDS * delta_time)
 			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))
@@ -186,7 +188,7 @@
 		return
 
 	var/mob/living/carbon/human/humie_owner = owner
-	if(!humie_owner.getorganslot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
+	if(!humie_owner.get_organ_slot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
@@ -196,27 +198,14 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they(TRUE)] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
 
-/obj/item/organ/internal/liver/on_death(delta_time, times_fired)
-	. = ..()
-	var/mob/living/carbon/carbon_owner = owner
-	if(!owner)//If we're outside of a mob
-		return
-	if(!iscarbon(carbon_owner))
-		CRASH("on_death() called for [src] ([type]) with invalid owner ([isnull(owner) ? "null" : owner.type])")
-	if(carbon_owner.stat != DEAD)
-		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
-	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
-		return
-	for(var/datum/reagent/chem as anything in carbon_owner.reagents.reagent_list)
-		chem.on_mob_dead(carbon_owner, delta_time)
-
-/obj/item/organ/internal/liver/get_availability(datum/species/species)
-	return !(TRAIT_NOMETABOLISM in species.inherent_traits)
+/obj/item/organ/internal/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	return owner_species.mutantliver
 
 /obj/item/organ/internal/liver/plasmaman
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+	status = ORGAN_MINERAL
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien

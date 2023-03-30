@@ -36,7 +36,7 @@
 
 /obj/item/grenade/spawnergrenade/spesscarp
 	name = "carp delivery grenade"
-	spawner_type = /mob/living/simple_animal/hostile/carp
+	spawner_type = /mob/living/basic/carp
 	deliveryamt = 5
 
 /obj/item/grenade/spawnergrenade/syndiesoap

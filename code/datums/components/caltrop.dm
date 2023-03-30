@@ -13,6 +13,9 @@
 	///Probability of actually "firing", stunning and doing damage
 	var/probability
 
+	///Amount of time the spike will paralyze
+	var/paralyze_duration
+
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
@@ -27,7 +30,7 @@
 	///So we can update ant damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, flags = NONE, soundfile = null)
+/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 6 SECONDS, flags = NONE, soundfile = null)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -35,6 +38,7 @@
 	src.min_damage = min_damage
 	src.max_damage = max(min_damage, max_damage)
 	src.probability = probability
+	src.paralyze_duration = paralyze_duration
 	src.flags = flags
 	src.soundfile = soundfile
 
@@ -111,7 +115,7 @@
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
-		H.Paralyze(60)
+		H.Paralyze(paralyze_duration)
 
 	if(!soundfile)
 		return

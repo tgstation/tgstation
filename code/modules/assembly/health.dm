@@ -81,7 +81,7 @@
 	if (secured)
 		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
 	else
-		balloon_alert(user, span_warning("secure it first!"))
+		balloon_alert(user, "secure it first!")
 	toggle_scan()
 
 /obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)

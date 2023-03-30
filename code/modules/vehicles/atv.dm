@@ -41,14 +41,6 @@
 	scan_range = 7
 	density = FALSE
 
-/datum/armor/ridden_atv
-	melee = 50
-	bullet = 25
-	laser = 20
-	bomb = 50
-	fire = 60
-	acid = 60
-
 /obj/vehicle/ridden/atv/turret/Initialize(mapload)
 	. = ..()
 	turret = new(loc)

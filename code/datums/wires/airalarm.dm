@@ -42,11 +42,10 @@
 			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 100)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
-				if(A.mode == 1) // AALARM_MODE_SCRUB
-					A.mode = 3 // AALARM_MODE_PANIC
+				if(istype(A.selected_mode, /datum/air_alarm_mode/filtering))
+					A.select_mode(usr, /datum/air_alarm_mode/panic_siphon)
 				else
-					A.mode = 1 // AALARM_MODE_SCRUB
-				A.apply_mode(usr)
+					A.select_mode(usr, /datum/air_alarm_mode/filtering)
 		if(WIRE_ALARM) // Clear alarms.
 			if(A.alarm_manager.clear_alarm(ALARM_ATMOS))
 				A.danger_level = AIR_ALARM_ALERT_NONE
@@ -66,9 +65,8 @@
 			A.aidisabled = mend // Enable/disable AI control.
 		if(WIRE_PANIC) // Force panic syphon on.
 			if(!mend && !A.shorted)
-				A.mode = 3 // AALARM_MODE_PANIC
-				A.apply_mode(usr)
+				A.select_mode(usr, /datum/air_alarm_mode/panic_siphon)
 		if(WIRE_ALARM) // Post alarm.
 			if(A.alarm_manager.send_alarm(ALARM_ATMOS))
-				A.danger_level = AIR_ALARM_ALERT_SEVERE
+				A.danger_level = AIR_ALARM_ALERT_HAZARD
 			A.update_appearance()

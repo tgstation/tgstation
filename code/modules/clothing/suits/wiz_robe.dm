@@ -52,8 +52,22 @@
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
-	icon_state = "marisa"
+	icon_state = "witch_hat"
+	greyscale_colors = "#343640#e0cab8#e0cab8"
+	greyscale_config = /datum/greyscale_config/witch_hat
+	greyscale_config_worn = /datum/greyscale_config/witch_hat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 	dog_fashion = null
+
+/obj/item/clothing/head/wizard/tape
+	name = "tape hat"
+	desc = "A magically attuned hat made exclusively from duct tape. You can barely see."
+	icon_state = "tapehat"
+	inhand_icon_state = "tapehat"
+	dog_fashion = null
+	worn_y_offset = 6
+	body_parts_covered = HEAD|HAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
@@ -69,6 +83,10 @@
 	inhand_icon_state = "santahat"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
+
+/obj/item/clothing/head/wizard/hood
+	name = "wizard hood"
+	icon_state = "wizhood"
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -121,6 +139,12 @@
 	icon_state = "marisa"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/wizrobe/tape
+	name = "tape robe"
+	desc = "A fine robe made from magically attuned duct tape."
+	icon_state = "taperobe"
+	inhand_icon_state = "taperobe"
+
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
@@ -149,8 +173,12 @@
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/wizard/tape/fake
+	name = "tape hat"
+	desc = "A hat designed exclusively from duct tape. You can barely see."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
@@ -159,6 +187,12 @@
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	inhand_icon_state = null
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/tape/fake
+	name = "tape robe"
+	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
