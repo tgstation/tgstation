@@ -4,7 +4,7 @@
 	. = ..()
 	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
-	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		. += eyes.flash_protect
 	else
@@ -20,7 +20,7 @@
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_DEAF))
 		return INFINITY //For all my homies that can not hear in the world
-	var/obj/item/organ/internal/ears/E = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
 	else
@@ -45,7 +45,7 @@
 	return null
 
 /mob/living/carbon/is_pepper_proof(check_flags = ALL)
-	var/obj/item/organ/internal/eyes/eyes = getorgan(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/internal/eyes/eyes = get_organ_by_type(/obj/item/organ/internal/eyes)
 	if(eyes && eyes.pepperspray_protect)
 		return eyes
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
@@ -59,6 +59,8 @@
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
+		if(P.catastropic_dismemberment)
+			apply_damage(P.damage, P.damtype, BODY_ZONE_CHEST, wound_bonus = P.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
 	. = FALSE
@@ -371,8 +373,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/obj/item/organ/internal_organ as anything in internal_organs)
-		internal_organ.emp_act(severity)
+	for(var/obj/item/organ/organ as anything in organs)
+		organ.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
@@ -442,7 +444,7 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
-	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/external/tail)))
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You pull on [src]'s tail!"))
@@ -554,7 +556,7 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
-	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
 
@@ -569,15 +571,15 @@
 			if(1)
 				to_chat(src, span_warning("Your eyes sting a little."))
 				if(prob(40))
-					eyes.applyOrganDamage(1)
+					eyes.apply_organ_damage(1)
 
 			if(2)
 				to_chat(src, span_warning("Your eyes burn."))
-				eyes.applyOrganDamage(rand(2, 4))
+				eyes.apply_organ_damage(rand(2, 4))
 
 			if(3 to INFINITY)
 				to_chat(src, span_warning("Your eyes itch and burn severely!"))
-				eyes.applyOrganDamage(rand(12, 16))
+				eyes.apply_organ_damage(rand(12, 16))
 
 		if(eyes.damage > 10)
 			adjust_temp_blindness(damage * 2 SECONDS)
@@ -586,11 +588,11 @@
 			if(eyes.damage > eyes.low_threshold)
 				if(!is_nearsighted_from(EYE_DAMAGE) && prob(eyes.damage - eyes.low_threshold))
 					to_chat(src, span_warning("Your eyes start to burn badly!"))
-					eyes.applyOrganDamage(eyes.low_threshold)
+					eyes.apply_organ_damage(eyes.low_threshold)
 
 				else if(!is_blind() && prob(eyes.damage - eyes.high_threshold))
 					to_chat(src, span_warning("You can't see anything!"))
-					eyes.applyOrganDamage(eyes.maxHealth)
+					eyes.apply_organ_damage(eyes.maxHealth)
 
 			else
 				to_chat(src, span_warning("Your eyes are really starting to hurt. This can't be good for you!"))
@@ -605,7 +607,7 @@
 	SEND_SIGNAL(src, COMSIG_CARBON_SOUNDBANG, reflist)
 	intensity = reflist[1]
 	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
@@ -623,7 +625,7 @@
 					to_chat(src, span_userdanger("You can't hear anything!"))
 					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
 					// you need earmuffs, inacusiate, or replacement
-					ears.setOrganDamage(ears.maxHealth)
+					ears.set_organ_damage(ears.maxHealth)
 			else if(ears.damage >= 5)
 				to_chat(src, span_warning("Your ears start to ring!"))
 			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
@@ -647,7 +649,7 @@
 
 /mob/living/carbon/can_hear()
 	. = FALSE
-	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
 	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
@@ -757,5 +759,53 @@
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
+
+/// Randomise a body part and organ of this mob
+/mob/living/carbon/proc/bioscramble(scramble_source)
+	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
+		return FALSE
+
+	if (!length(GLOB.bioscrambler_valid_organs) || !length(GLOB.bioscrambler_valid_parts))
+		init_bioscrambler_lists()
+
+	var/changed_something = FALSE
+	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
+	var/obj/item/organ/replaced = get_organ_slot(initial(new_organ.slot))
+	if (!(replaced?.organ_flags & ORGAN_SYNTHETIC))
+		changed_something = TRUE
+		new_organ = new new_organ()
+		new_organ.replace_into(src)
+
+	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
+	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
+	if (!(picked_user_part?.bodytype & BODYTYPE_ROBOTIC))
+		changed_something = TRUE
+		new_part = new new_part()
+		new_part.replace_limb(src, special = TRUE)
+		if (picked_user_part)
+			qdel(picked_user_part)
+
+	if (!changed_something)
+		to_chat(src, span_notice("Your augmented body protects you from [scramble_source]!"))
+		return FALSE
+	update_body(TRUE)
+	balloon_alert(src, "something has changed about you")
+	return TRUE
+
+/// Fill in the lists of things we can bioscramble into people
+/mob/living/carbon/proc/init_bioscrambler_lists()
+	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
+	for (var/obj/item/bodypart/part as anything in body_parts)
+		if (!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && !(initial(part.bodytype) & BODYTYPE_ROBOTIC))
+			continue
+		body_parts -= part
+	GLOB.bioscrambler_valid_parts = body_parts
+
+	var/list/organs = subtypesof(/obj/item/organ/internal) + subtypesof(/obj/item/organ/external)
+	for (var/obj/item/organ/organ_type as anything in organs)
+		if (!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_SYNTHETIC))
+			continue
+		organs -= organ_type
+	GLOB.bioscrambler_valid_organs = organs
 
 #undef SHAKE_ANIMATION_OFFSET

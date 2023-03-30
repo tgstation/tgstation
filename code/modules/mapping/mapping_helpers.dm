@@ -139,10 +139,12 @@
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
 					here.PlaceOnTop(T.type)
+					qdel(airlock)
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
 				qdel(airlock)
+				qdel(src)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
@@ -213,6 +215,15 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
 	else
 		airlock.abandoned = TRUE
+
+/obj/effect/mapping_helpers/airlock/welded
+	name = "airlock welded helper"
+	icon_state = "airlock_welded"
+
+/obj/effect/mapping_helpers/airlock/welded/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.welded)
+		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] welded but it's already welded closed!")
+	airlock.welded = TRUE
 
 /obj/effect/mapping_helpers/airlock/cutaiwire
 	name = "airlock cut ai wire helper"
@@ -387,8 +398,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/l_hand = NO_REPLACE
 	/// Which slots on the mob should be bloody?
 	var/bloody_slots = NONE
-	/// Directions we generate for the mob.
-	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
 	/// Do we draw more than one frame for the mob?
 	var/animated = TRUE
 
@@ -406,7 +415,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
-	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
+	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, animated)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()
@@ -577,7 +586,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/part in new_human.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else

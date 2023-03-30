@@ -1,6 +1,3 @@
-///Global list of all cardboard cutout datums, cached by name to instance.
-GLOBAL_LIST(cardboard_cutouts)
-
 //Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
@@ -19,15 +16,21 @@ GLOBAL_LIST(cardboard_cutouts)
 
 /obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
-	if(!GLOB.cardboard_cutouts)
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(generate_cardboard_cutouts))
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/cardboard_cutout/LateInitialize()
-	var/datum/cardboard_cutout/cutout = GLOB.cardboard_cutouts[starting_cutout]
-	if(!cutout)
-		CRASH("Given invalid starting_cutout! [starting_cutout]")
+	ASSERT(!isnull(starting_cutout))
+
+	var/datum/cardboard_cutout/cutout
+	for (var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
+		if (initial(cutout_subtype.name) != starting_cutout)
+			continue
+
+		cutout = get_cardboard_cutout_instance(cutout_subtype)
+
+	ASSERT(!isnull(cutout), "No cutout found with name [starting_cutout]")
+
 	cutout.apply(src)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -39,12 +42,10 @@ GLOBAL_LIST(cardboard_cutouts)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
-	name = initial(name)
+	appearance = initial(appearance)
 	desc = "[initial(desc)] It's been pushed over."
-	icon = initial(icon)
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
-	alpha = initial(alpha)
 	pushed_over = TRUE
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
@@ -86,6 +87,16 @@ GLOBAL_LIST(cardboard_cutouts)
 		push_over()
 	return BULLET_ACT_HIT
 
+/proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
+	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")
+
+	var/static/list/cardboard_cutouts = list()
+
+	if(isnull(cardboard_cutouts[cardboard_cutout]))
+		cardboard_cutouts[cardboard_cutout] = new cardboard_cutout
+
+	return cardboard_cutouts[cardboard_cutout]
+
 /**
  * change_appearance: Changes a skin of the cardboard cutout based on a user's choice
  *
@@ -94,10 +105,14 @@ GLOBAL_LIST(cardboard_cutouts)
  * * user The mob choosing a skin of the cardboard cutout
  */
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
+	var/list/appearances_by_name = list()
 	var/list/possible_appearances = list()
-	for(var/cutout_name in GLOB.cardboard_cutouts)
-		var/datum/cardboard_cutout/cutout = GLOB.cardboard_cutouts[cutout_name]
-		possible_appearances[cutout_name] = image(icon = cutout.applied_icon)
+
+	for (var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
+		var/datum/cardboard_cutout/cutout = get_cardboard_cutout_instance(cutout_subtype)
+		appearances_by_name[cutout.name] = cutout
+		possible_appearances[cutout.name] = image(icon = cutout.applied_appearance)
+
 	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, PROC_REF(check_menu), user, crayon), radius = 36, require_near = TRUE)
 	if(!new_appearance)
 		return FALSE
@@ -112,7 +127,7 @@ GLOBAL_LIST(cardboard_cutouts)
 	icon = initial(icon)
 	if(!deceptive)
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
-	var/datum/cardboard_cutout/cutout = GLOB.cardboard_cutouts[new_appearance]
+	var/datum/cardboard_cutout/cutout = appearances_by_name[new_appearance]
 	cutout.apply(src)
 	return TRUE
 
@@ -140,22 +155,19 @@ GLOBAL_LIST(cardboard_cutouts)
 		return FALSE
 	return TRUE
 
+// Cutouts always face forward
+/obj/item/cardboard_cutout/setDir(newdir)
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
-
-///Proc that returns a list of all the cardboard cutouts (we create all subtypes) to be used in the global list.
-/proc/generate_cardboard_cutouts()
-	var/list/cutouts = list()
-	for(var/datum/cardboard_cutout/cutout as anything in subtypesof(/datum/cardboard_cutout))
-		cutout = new cutout()
-		cutouts[cutout.name] = cutout
-	GLOB.cardboard_cutouts = cutouts
 
 /datum/cardboard_cutout
 	/// Name of the cutout, used for radial selection and the global list.
 	var/name = "Boardjak"
-	/// The icon we apply to the cardboard cutout.
-	var/applied_icon = null
+	/// The appearance we apply to the cardboard cutout.
+	var/mutable_appearance/applied_appearance = null
 	/// The base name we actually give to to the cardboard cutout. Can be overridden in get_name().
 	var/applied_name = "boardjak"
 	/// The desc we give to the cardboard cutout.
@@ -178,9 +190,9 @@ GLOBAL_LIST(cardboard_cutouts)
 /datum/cardboard_cutout/New()
 	. = ..()
 	if(direct_icon)
-		applied_icon = icon(direct_icon, direct_icon_state, dir = SOUTH, frame = 1)
+		applied_appearance = mutable_appearance(direct_icon, direct_icon_state)
 	else
-		applied_icon = get_dynamic_human_icon(outfit, species, mob_spawner, l_hand, r_hand, generated_dirs = list(SOUTH), animated = FALSE)
+		applied_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE)
 
 /// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
@@ -188,7 +200,7 @@ GLOBAL_LIST(cardboard_cutouts)
 
 /// This proc sets the cardboard cutout item's vars.
 /datum/cardboard_cutout/proc/apply(obj/item/cardboard_cutout/cutouts)
-	cutouts.icon = applied_icon
+	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc
 

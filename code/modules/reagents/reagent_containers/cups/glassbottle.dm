@@ -18,6 +18,7 @@
 	throwforce = 15
 	demolition_mod = 0.25
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
+	var/broken_inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	drink_type = ALCOHOL
@@ -40,6 +41,7 @@
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.mimic_broken(src, target, break_top)
+	B.inhand_icon_state = broken_inhand_icon_state
 
 	qdel(src)
 	target.Bumped(B)
@@ -305,6 +307,7 @@
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
 	inhand_icon_state = "holyflask"
+	broken_inhand_icon_state = "broken_holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 	drink_type = NONE
 
@@ -359,10 +362,23 @@
 	desc = "There's no label on this wine bottle."
 
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled/generate_vintage()
-	var/current_year = CURRENT_STATION_YEAR
-	var/year = rand(current_year-50,current_year)
-	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
-	var/origin = pick("Nanotrasen","Syndicate","Local")
+	var/year = rand(CURRENT_STATION_YEAR - 50, CURRENT_STATION_YEAR)
+	var/type = pick(
+		"Bold Red",
+		"Dessert",
+		"Dry White",
+		"Light Red",
+		"Medium Red",
+		"Rich White",
+		"Rose",
+		"Sparkling",
+		"Sweet White",
+	)
+	var/origin = pick(
+		"Local",
+		"Nanotrasen",
+		"Syndicate",
+	)
 	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe

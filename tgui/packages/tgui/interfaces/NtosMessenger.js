@@ -104,6 +104,13 @@ const ContactsScreen = (props, context) => {
                 content={`Sort by: ${sortByJob ? 'Job' : 'Name'}`}
                 onClick={() => act('PDA_changeSortStyle')}
               />
+              {!!isSilicon && (
+                <Button
+                  icon="camera"
+                  content="Attach Photo"
+                  onClick={() => act('PDA_selectPhoto')}
+                />
+              )}
               {!!virus_attach && (
                 <Button
                   icon="bug"
@@ -203,7 +210,7 @@ const MessageListScreen = (props, context) => {
                   {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
                 </Box>
                 {message.outgoing ? (
-                  <Box bold>{message.name + ' (' + message.job + ')'}</Box>
+                  <Box bold>{message.target_details}</Box>
                 ) : (
                   <Button
                     transparent
@@ -220,7 +227,9 @@ const MessageListScreen = (props, context) => {
               </Section>
               <Section fill mt={-1}>
                 <Box italic>{message.contents}</Box>
-                {!!message.photo && <Box as="img" src={message.photo} mt={1} />}
+                {!!message.photo && (
+                  <Box as="img" src={message.photo_path} mt={1} />
+                )}
               </Section>
             </Stack>
           ))}

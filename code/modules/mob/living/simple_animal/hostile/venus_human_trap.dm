@@ -160,7 +160,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
-	faction = list("hostile","vines","plants")
+	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	/// A list of all the plant's vines

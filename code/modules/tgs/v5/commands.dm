@@ -30,11 +30,28 @@
 
 	var/datum/tgs_chat_command/sc = custom_commands[command]
 	if(sc)
-		var/text_response = sc.Run(u, params)
+		var/datum/tgs_message_content/response = sc.Run(u, params)
+		response = UpgradeDeprecatedCommandResponse(response, command)
+		
 		var/list/topic_response = list()
-		if(!istext(text_response))
-			TGS_ERROR_LOG("Custom command [command] should return a string! Got: \"[text_response]\"")
-			text_response = null
-		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = text_response
+		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = response?.text
+		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE] = response?._interop_serialize()
 		return json_encode(topic_response)
 	return TopicResponse("Unknown custom chat command: [command]!")
+
+// Common proc b/c it's used by the V3/V4 APIs
+/datum/tgs_api/proc/UpgradeDeprecatedCommandResponse(datum/tgs_message_content/response, command)
+	// Backwards compatibility, used to return a string
+	if(istext(response))
+		warned_deprecated_command_runs = warned_deprecated_command_runs || list()
+		if(!warned_deprecated_command_runs[command])
+			TGS_WARNING_LOG("Custom chat command \"[command]\" is still returning a string. This behaviour is deprecated, please upgrade it to return a [/datum/tgs_message_content].")
+			warned_deprecated_command_runs[command] = TRUE
+
+		return new /datum/tgs_message_content(response)
+
+	if(!istype(response))
+		TGS_ERROR_LOG("Custom chat command \"[command]\" should return a [/datum/tgs_message_content]! Got: \"[response]\"")
+		return null
+
+	return response

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Cult Ghosts can see in the dark and invisible stuff, a mechanic intended for over 5 years and never functional"

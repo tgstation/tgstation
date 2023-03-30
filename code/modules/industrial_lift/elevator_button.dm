@@ -92,11 +92,12 @@
 		loc.balloon_alert(activator, "elevator is moving!")
 		return FALSE
 
-	// We can't call an elevator if it's already at this destination
+	// If the elevator is already here, open the doors.
 	var/obj/structure/industrial_lift/prime_lift = lift.return_closest_platform_to_z(loc.z)
 	if(prime_lift.z == loc.z)
+		INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, open_lift_doors_callback))
 		loc.balloon_alert(activator, "elevator is here!")
-		return FALSE
+		return TRUE
 
 	// At this point, we can start moving.
 
@@ -150,15 +151,16 @@
 /obj/machinery/button/elevator
 	name = "elevator button"
 	desc = "Go back. Go back. Go back. Can you operate the elevator."
-	icon_state = "launcher"
-	skin = "launcher"
+	icon_state = "hallctrl"
+	skin = "hallctrl"
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
+	light_mask = "hall-light-mask"
 
 /obj/machinery/button/elevator/Initialize(mapload, ndir, built)
 	. = ..()
 	// Kind of a cop-out
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Call Elevator")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 28)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)

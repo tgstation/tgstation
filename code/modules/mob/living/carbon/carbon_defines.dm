@@ -12,9 +12,9 @@
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = NONE
 	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/obj/item/organ/internal/internal_organs = list()
-	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
-	var/list/internal_organs_slot = list()
+	var/list/obj/item/organ/internal/organs = list()
+	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
+	var/list/organs_slot = list()
 	///How many dream images we have left to send
 	var/dreaming = 0
 
@@ -112,5 +112,8 @@
 
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
+
+	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
+	var/last_top_offset
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

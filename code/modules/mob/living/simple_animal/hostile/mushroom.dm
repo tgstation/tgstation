@@ -25,7 +25,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	faction = list("mushroom")
+	faction = list(FACTION_MUSHROOM)
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -189,7 +189,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/bullet_act(obj/projectile/P)
 	. = ..()
-	if(P.nodamage)
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/harvest()

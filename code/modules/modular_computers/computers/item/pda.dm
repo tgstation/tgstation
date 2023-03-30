@@ -172,7 +172,7 @@
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
 	var/detomatix_difficulty
 
-	for(var/datum/computer_file/program/downloaded_apps as anything in stored_files)
+	for(var/datum/computer_file/program/downloaded_apps in stored_files)
 		detomatix_difficulty += downloaded_apps.detomatix_resistance
 
 	return detomatix_difficulty
@@ -322,7 +322,7 @@
 		return ..()
 	return FALSE
 
-/obj/item/modular_computer/pda/silicon/get_ntnet_status(specific_action = 0)
+/obj/item/modular_computer/pda/silicon/get_ntnet_status()
 	//No borg found
 	if(!silicon_owner)
 		return FALSE
