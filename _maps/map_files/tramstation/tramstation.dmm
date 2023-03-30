@@ -16730,11 +16730,6 @@
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
-"evT" = (
-/obj/structure/ladder,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "evW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21013,6 +21008,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"gfo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/ladder,
+/turf/open/openspace/airless,
+/area/station/asteroid)
 "gfA" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21851,7 +21851,7 @@
 /area/station/maintenance/disposal/incinerator)
 "gwP" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/north,
+/obj/structure/ladder,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "gwR" = (
@@ -28416,6 +28416,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"iYy" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "iZb" = (
 /turf/closed/wall,
 /area/station/security/office)
@@ -29524,6 +29531,9 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
+"jsx" = (
+/turf/open/openspace/airless,
+/area/station/maintenance/department/science)
 "jsy" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
@@ -39232,11 +39242,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "mSE" = (
-/obj/structure/disposalpipe/trunk/multiz/down{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/airless,
 /area/station/asteroid)
 "mST" = (
 /obj/structure/cable,
@@ -41136,13 +41146,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"nDE" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 4
-	},
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "nDM" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -49755,11 +49758,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
-"qMZ" = (
-/obj/structure/ladder,
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/airless,
-/area/station/asteroid)
 "qNa" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -56904,6 +56902,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"tov" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 8
+	},
+/turf/open/openspace/airless,
+/area/station/asteroid)
 "toy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -56994,6 +57002,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/station/service/barber)
+"tqm" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "tqo" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -112027,10 +112039,10 @@ aaa
 aaa
 aaa
 aac
-evT
-uvv
+aak
+aak
 gwP
-aac
+uvv
 aaa
 aaa
 aaa
@@ -112283,11 +112295,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-sZv
-nDE
-eGe
 aac
+aak
+aak
+aak
+tqm
 aaa
 aaa
 aaa
@@ -112541,9 +112553,9 @@ aaa
 aaa
 aaa
 aac
-aac
-ptD
-aac
+sZv
+iYy
+eGe
 aac
 aaa
 aaa
@@ -112799,7 +112811,7 @@ aaa
 aac
 aac
 aac
-ptD
+ahf
 aac
 aaa
 aaa
@@ -113053,9 +113065,9 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+aaa
+aaa
+aaa
 ptD
 aac
 qVr
@@ -113311,7 +113323,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+aaa
 aac
 ptD
 aac
@@ -177563,10 +177575,10 @@ aaa
 aaa
 aaa
 xAp
-qMZ
-ptD
 aac
-bFw
+ptD
+gfo
+jsx
 aac
 aac
 aaa
@@ -177819,7 +177831,7 @@ aaa
 aaa
 aaa
 aaa
-aap
+xAp
 iAt
 mSE
 lGu
@@ -178076,9 +178088,9 @@ aaa
 aaa
 aac
 aac
-aap
+xAp
 iWf
-iWf
+tov
 gpr
 bFw
 aac
