@@ -21,10 +21,10 @@
 
 ///Checks if the biscuit has been already cracked. If its not then it dipsplays "unopened!" ballon alert. If it is cracked then it lets the code continue.
 /obj/item/folder/biscuit/proc/crack_check(mob/user)
-    if (cracked)
-        return TRUE
-    balloon_alert(user, "unopened!")
-    return FALSE
+	if (cracked)
+		return TRUE
+	balloon_alert(user, "unopened!")
+	return FALSE
 
 //All next is done so you can't reach contents, or put any new contents when its not cracked open
 /obj/item/folder/biscuit/remove_item(obj/item/item, mob/user)
