@@ -8,6 +8,11 @@
 	product_ads = "At least it's not Circuits!;95% GPL Compatible!;Source Exists, Somewhere!;Semi-Standards Compliant!;IETF Cleared!"
 
 	products = list(
+		/obj/item/mcobject/flusher = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/button_panel = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/payment = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/thermal_printer = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/paper_scanner = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/and = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/button = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/delay = STANDARD_COMPONENT_SUPPLY,

@@ -5243,6 +5243,7 @@
 #include "monkestation\code\modules\mech_comp\objects\messages\dispatch.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\handscanner.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\microphone.dm"
+#include "monkestation\code\modules\mech_comp\objects\messages\money.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\or.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\paper_scanner.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\pressure_sensor.dm"
