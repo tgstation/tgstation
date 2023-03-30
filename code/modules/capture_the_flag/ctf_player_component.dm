@@ -5,6 +5,7 @@
 	var/can_respawn = TRUE
 	var/datum/ctf_controller/ctf_game
 	var/death_drop = /obj/effect/powerup/ammo/ctf
+	var/ckey_reference
 
 /datum/component/ctf_player/Initialize(team, ctf_game, death_drop)
 	src.team = team
@@ -12,6 +13,7 @@
 	src.death_drop = death_drop
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
+	ckey_reference = player_mob.ckey
 	if(!istype(parent, /datum/mind))
 		return COMPONENT_INCOMPATIBLE
 	setup_dusting()
@@ -47,7 +49,7 @@
 	send_message(span_notice("You can now respawn in CTF!"))
 
 /datum/component/ctf_player/proc/send_message(message)
-	to_chat(parent, message)
+	to_chat(GLOB.directory[ckey_reference], message)
 
 /datum/component/ctf_player/proc/end_game()
 	if(player_mob)

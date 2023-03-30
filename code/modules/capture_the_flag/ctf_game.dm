@@ -90,6 +90,7 @@
 		get_ctf_voting_controller(game_id).vote(user)
 		return
 	if(!SSticker.HasRoundStarted())
+		to_chat(user, span_warning("Please wait until the round has started."))
 		return
 	if(user.ckey in ctf_game.get_players(team))
 		var/datum/component/ctf_player/ctf_player_component = ctf_game.get_player_component(team, user.ckey)
@@ -152,12 +153,8 @@
 		player_mob.mind.TakeComponent(ctf_player_component)
 	player_mob.faction += team
 	player_mob.equipOutfit(chosen_class)
-	RegisterSignal(player_mob, COMSIG_PARENT_QDELETING, PROC_REF(ctf_qdelled_player)) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
-
-/obj/machinery/ctf/spawner/proc/ctf_qdelled_player(mob/living/body)
-	SIGNAL_HANDLER //ToDo, test chasms and other qdel methods, delete this if we don't need it anymore.
 
 /obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/ctf_flag))
@@ -165,10 +162,6 @@
 		if(flag.team != team)
 			ctf_game.capture_flag(team, user, team_span, flag)
 			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
-
-//Instagib_mode() - Controller but not essential, get back to later
-
-//normal_mode() - Ditto above
 
 /obj/item/ctf_flag
 	name = "banner"
