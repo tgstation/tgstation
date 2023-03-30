@@ -29531,9 +29531,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
-"jsx" = (
-/turf/open/openspace/airless,
-/area/station/maintenance/department/science)
 "jsy" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
@@ -177578,7 +177575,7 @@ xAp
 aac
 ptD
 gfo
-jsx
+xAp
 aac
 aac
 aaa
