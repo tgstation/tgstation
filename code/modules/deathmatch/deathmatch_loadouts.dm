@@ -57,7 +57,6 @@
 	name = "Operative"
 	desc = "A syndicate operative."
 	default_species = /datum/species/human
-	outfit = /datum/outfit/syndicate_empty
 
 /datum/deathmatch_loadout/operative/pre_equip(mob/living/carbon/human/player)
 	player.equip_to_slot(new /obj/item/clothing/under/syndicate, ITEM_SLOT_ICLOTHING)

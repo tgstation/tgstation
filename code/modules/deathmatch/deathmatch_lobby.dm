@@ -53,7 +53,7 @@
 		playing = FALSE
 		return FALSE
 	var/list/spawns = game.load_location(location)
-	if (!spawns)
+	if (!length(spawns) || length(spawns) < length(players))
 		stack_trace("Failed to get spawns when loading deathmatch map [map.name] for lobby [host].")
 		game.clear_location(location)
 		location = null

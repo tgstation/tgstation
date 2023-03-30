@@ -24,9 +24,10 @@
 /area/deathmatch)
 "af" = (
 /obj/machinery/button/door{
-	id = "dm1"
+	id = "dm3";
+	pixel_y = 24
 	},
-/turf/open/floor/carpet/neon/simple/red,
+/turf/open/floor/carpet/neon/simple/teal,
 /area/deathmatch)
 "aj" = (
 /turf/open/floor/engine,
@@ -37,9 +38,9 @@
 "an" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/welding,
-/obj/item/weldingtool,
-/obj/item/inducer/sci,
 /obj/machinery/light/directional/west,
+/obj/item/inducer,
+/obj/item/weldingtool/largetank,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/deathmatch)
 "ao" = (
@@ -55,17 +56,23 @@
 "as" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/box,
+/obj/machinery/button/door{
+	id = "dm1";
+	pixel_x = 24
+	},
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/deathmatch)
 "at" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/box,
+/obj/machinery/button/door{
+	id = "dm4";
+	pixel_y = 0;
+	pixel_x = -24
+	},
 /turf/open/floor/carpet/neon/simple/green,
 /area/deathmatch)
 "aw" = (
-/obj/machinery/button/door{
-	id = "dm4"
-	},
 /turf/open/floor/carpet/neon/simple/purple,
 /area/deathmatch)
 "ax" = (
@@ -232,14 +239,15 @@
 /turf/open/floor/engine,
 /area/deathmatch)
 "bs" = (
-/obj/machinery/button/door{
-	id = "dm2"
-	},
 /turf/open/floor/carpet/neon/simple/blue,
 /area/deathmatch)
 "bt" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/box,
+/obj/machinery/button/door{
+	id = "dm2";
+	pixel_x = 24
+	},
 /turf/open/floor/carpet/neon/simple/orange,
 /area/deathmatch)
 "bu" = (
@@ -248,9 +256,9 @@
 "bv" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/welding,
-/obj/item/weldingtool,
-/obj/item/inducer/sci,
 /obj/machinery/light/directional/east,
+/obj/item/inducer,
+/obj/item/weldingtool/largetank,
 /turf/open/floor/carpet/neon/simple/teal,
 /area/deathmatch)
 "bw" = (
@@ -484,9 +492,9 @@
 "cG" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/welding,
-/obj/item/weldingtool,
-/obj/item/inducer/sci,
 /obj/machinery/light/directional/east,
+/obj/item/inducer,
+/obj/item/weldingtool/largetank,
 /turf/open/floor/carpet/neon/simple/green,
 /area/deathmatch)
 "cH" = (
@@ -560,6 +568,10 @@
 "cX" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/box,
+/obj/machinery/button/door{
+	id = "dm3";
+	pixel_x = -24
+	},
 /turf/open/floor/carpet/neon/simple/teal,
 /area/deathmatch)
 "cY" = (
@@ -605,9 +617,9 @@
 "di" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/welding,
-/obj/item/inducer/sci,
 /obj/item/weldingtool/largetank,
 /obj/machinery/light/directional/west,
+/obj/item/inducer,
 /turf/open/floor/carpet/neon/simple/orange,
 /area/deathmatch)
 "dk" = (
@@ -626,9 +638,6 @@
 /turf/open/floor/engine,
 /area/deathmatch)
 "go" = (
-/obj/machinery/button/door{
-	id = "dm3"
-	},
 /turf/open/floor/carpet/neon/simple/pink,
 /area/deathmatch)
 "gF" = (
@@ -662,6 +671,13 @@
 	},
 /turf/open/floor/engine,
 /area/deathmatch)
+"pD" = (
+/obj/machinery/button/door{
+	id = "dm1";
+	pixel_y = -24
+	},
+/turf/open/floor/carpet/neon/simple/yellow,
+/area/deathmatch)
 "sc" = (
 /obj/structure/table/reinforced,
 /obj/item/mecha_ammo/lmg,
@@ -684,6 +700,13 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
+/area/deathmatch)
+"Br" = (
+/obj/machinery/button/door{
+	id = "dm4";
+	pixel_y = -24
+	},
+/turf/open/floor/carpet/neon/simple/green,
 /area/deathmatch)
 "ES" = (
 /obj/item/storage/bag/trash,
@@ -709,6 +732,13 @@
 /area/deathmatch)
 "RN" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/deathmatch)
+"XP" = (
+/obj/machinery/button/door{
+	id = "dm2";
+	pixel_y = 24
+	},
+/turf/open/floor/carpet/neon/simple/orange,
 /area/deathmatch)
 "Zw" = (
 /obj/structure/table/reinforced,
@@ -782,8 +812,8 @@ ac
 (3,1,1) = {"
 ac
 ao
-af
-bu
+aJ
+pD
 ac
 aj
 ax
@@ -803,7 +833,7 @@ ax
 cC
 aj
 ac
-bh
+XP
 bs
 nE
 ac
@@ -1537,7 +1567,7 @@ ac
 ac
 by
 aw
-am
+Br
 ac
 aj
 aj
@@ -1557,7 +1587,7 @@ cB
 ax
 aj
 ac
-df
+af
 go
 Zw
 ac

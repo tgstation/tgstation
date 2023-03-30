@@ -91,9 +91,6 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
-"T" = (
-/turf/open/space/basic,
-/area/deathmatch/fullbright)
 "V" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/west,
@@ -234,8 +231,8 @@ m
 m
 "}
 (8,1,1) = {"
-T
-T
+m
+m
 l
 A
 A
@@ -251,7 +248,7 @@ m
 m
 "}
 (9,1,1) = {"
-T
+m
 d
 k
 A
@@ -268,8 +265,8 @@ m
 m
 "}
 (10,1,1) = {"
-T
-T
+m
+m
 l
 A
 A
