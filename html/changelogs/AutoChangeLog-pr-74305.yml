@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscdel: "removes being cremated from high burn damage and being on fire (yes this was in the game but has been broken for probably a very long time)"

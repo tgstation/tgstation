@@ -10,7 +10,7 @@
 	desc = "The guy who said 'Whoever fights monsters should see to it that in the process he does not become a monster' clearly didn't see what a goliath miner can do!"
 	threshold_desc = "you can walk on lava!"
 	qualities = list(
-		"can breath both the station and lavaland air, but be careful around pure oxygen",
+		"can breathe both the station and lavaland air, but be careful around pure oxygen",
 		"immune to ashstorms",
 		"eyes that can see in the dark",
 		"a tendril hand can easily dig through basalt and obliterate hostile fauna, but your glove-wearing days are behind you...",

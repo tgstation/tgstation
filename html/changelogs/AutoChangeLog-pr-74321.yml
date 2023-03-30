@@ -1,0 +1,7 @@
+author: "spockye"
+delete-after: True
+changes:
+  - bugfix: "fixed disposals on the starfury"
+  - bugfix: "fixed flooring on the starfury"
+  - bugfix: "fixed missing air alarm on the starfury"
+  - bugfix: "fixed air turfs exposed to space on the starfury"
