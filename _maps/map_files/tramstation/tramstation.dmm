@@ -22664,6 +22664,9 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/item/papercutter{
+	pixel_x = 17
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "gLC" = (
@@ -22816,6 +22819,7 @@
 	name = "Reception Desk";
 	req_access = list("security")
 	},
+/obj/item/papercutter,
 /turf/open/floor/plating,
 /area/station/security/warden)
 "gNX" = (
@@ -36399,6 +36403,9 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/pdas,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lPl" = (
@@ -49782,6 +49789,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qNA" = (
