@@ -200,6 +200,7 @@
 #include "species_config_sanity.dm"
 #include "species_unique_id.dm"
 #include "species_whitelists.dm"
+#include "spell_chuuni_levels.dm"
 #include "spell_invocations.dm"
 #include "spell_mindswap.dm"
 #include "spell_names.dm"

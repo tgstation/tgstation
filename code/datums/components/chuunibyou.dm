@@ -3,34 +3,37 @@
 #define CHUUNIBYOU_HEAL_AMOUNT 5
 
 /**
- * # chuunibyou component!
+ * ## chuunibyou component!
  *
  * Component that makes casted spells always a shout invocation, a very dumb one. And their projectiles are dumb too.
+ * Oh, but it does heal after each spell cast.
  */
 /datum/component/chuunibyou
-
+	/// amount healed per spell cast
 	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
-
-	var/static/list/chuunibyou_invocations = list(
-		SCHOOL_UNSET = "This is embarrassing... I can't remember the words... um... maybe if I just wave my hand like this... no, that's not wor- Ah! There it goes!",
-		SCHOOL_HOLY = "By the grace of the holy one, I summon the light of salvation. Let my allies rejoice. O, Heaven! Bless them!",
-		SCHOOL_PSYCHIC = "By the secret of the hidden one, I reveal the truth of creation. Let my mind expand. O, Mystery! Enlighten me!",
-		SCHOOL_MIME = "O, Silence! Embrace my soul and amplify my gesture. Let me create the illusion and manipulate the perception!",
-		SCHOOL_RESTORATION = "I invoke the name of the goddess of mercy, hear my plea and grant your blessing to this soul! Divine Grace!",
-
-		SCHOOL_EVOCATION = "Behold, the ultimate power of the Dark Flame Master! I call upon the ancient forces of chaos and destruction to unleash their wrath upon my enemies!",
-		SCHOOL_TRANSMUTATION = "I invoke the law of equivalent exchange, the balance of the cosmos. As I offer this sacrifice, I demand a new creation. Reveal, the mystery of transmutation!",
-		SCHOOL_TRANSLOCATION = "By the power of the spatial rifts, I bend the fabric of reality and move across the dimensions! Let nothing stand in my way as I travel to my destination!",
-		SCHOOL_CONJURATION = "With the eye of fate, I see through the threads of destiny. Nothing can hide from me. Witness me, witness the miracle of manifestation!",
-
-		SCHOOL_NECROMANCY = "I am the Lord of the Dead, the Master of Bones, the Ruler of Shadows. I command the legions of the damned to rise from their graves and serve me!",
-		SCHOOL_FORBIDDEN = "I renounce the laws of this world and embrace the chaos of the old gods! Let the forbidden power flow through me and destroy everything in its path!",
-		SCHOOL_SANGUINE = "I cover my eye with an eyepatch to seal my true power, but now I will unleash it upon you. I feast on the life force of my prey and grow stronger with every drop!",
-	)
+	/// invocations per school the spell is from
+	var/static/list/chuunibyou_invocations = list()
 
 /datum/component/chuunibyou/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(!chuunibyou_invocations)
+		chuunibyou_invocations = list(
+			SCHOOL_UNSET = "This is embarrassing... I can't remember the words... um... maybe if I just wave my hand like this... no, that's not wor- Ah! There it goes!",
+			SCHOOL_HOLY = "By the grace of the holy one, I summon the light of salvation. Let my allies rejoice. O, Heaven! Bless them!",
+			SCHOOL_PSYCHIC = "By the secret of the hidden one, I reveal the truth of creation. Let my mind expand. O, Mystery! Enlighten me!",
+			SCHOOL_MIME = "O, Silence! Embrace my soul and amplify my gesture. Let me create the illusion and manipulate the perception!",
+			SCHOOL_RESTORATION = "I invoke the name of the goddess of mercy, hear my plea and grant your blessing to this soul! Divine Grace!",
+
+			SCHOOL_EVOCATION = "Behold, the ultimate power of the Dark Flame Master! I call upon the ancient forces of chaos and destruction to unleash their wrath upon my enemies!",
+			SCHOOL_TRANSMUTATION = "I invoke the law of equivalent exchange, the balance of the cosmos. As I offer this sacrifice, I demand a new creation. Reveal, the mystery of transmutation!",
+			SCHOOL_TRANSLOCATION = "By the power of the spatial rifts, I bend the fabric of reality and move across the dimensions! Let nothing stand in my way as I travel to my destination!",
+			SCHOOL_CONJURATION = "With the eye of fate, I see through the threads of destiny. Nothing can hide from me. Witness me, witness the miracle of manifestation!",
+
+			SCHOOL_NECROMANCY = "I am the Lord of the Dead, the Master of Bones, the Ruler of Shadows. I command the legions of the damned to rise from their graves and serve me!",
+			SCHOOL_FORBIDDEN = "I renounce the laws of this world and embrace the chaos of the old gods! Let the forbidden power flow through me and destroy everything in its path!",
+			SCHOOL_SANGUINE = "I cover my eye with an eyepatch to seal my true power, but now I will unleash it upon you. I feast on the life force of my prey and grow stronger with every drop!",
+		)
 
 /datum/component/chuunibyou/RegisterWithParent()
 	. = ..()
@@ -74,7 +77,7 @@
 	SIGNAL_HANDLER
 
 	source.heal_overall_damage(heal_amount)
-	to_chat(source, span_danger("Your chuuni incantation slightly heals you."))
+	to_chat(source, span_danger("Your chuuni invocation slightly heals you."))
 
 /datum/component/chuunibyou/no_healing
 	heal_amount = 0
