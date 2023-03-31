@@ -4,10 +4,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/Phone_booth)
 "c" = (
-/obj/machinery/scanner_gate/luxury_shuttle{
-	threshold = 50;
-	name = "Phone Booth Access"
-	},
 /obj/machinery/door/window{
 	dir = 1
 	},

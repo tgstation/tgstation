@@ -2,28 +2,24 @@
 "a" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "c" = (
-/obj/machinery/scanner_gate/luxury_shuttle{
-	threshold = 50;
-	name = "Phone Booth Access"
-	},
 /obj/machinery/door/window{
 	dir = 1
 	},
 /obj/machinery/door/window,
 /turf/open/floor/iron/dark/smooth_edge,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "e" = (
 /turf/open/space/basic,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "k" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/snack/green{
 	onstation_override = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "q" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/airalarm/directional/south,
@@ -35,18 +31,18 @@
 	piping_layer = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
 /turf/open/space/basic,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "J" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -71,25 +67,25 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "M" = (
 /turf/closed/wall,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "R" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "V" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 "W" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/Phone_booth)
+/area/ruin/space/phonebooth)
 
 (1,1,1) = {"
 v

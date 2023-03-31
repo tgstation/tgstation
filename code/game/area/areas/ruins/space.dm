@@ -578,3 +578,7 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// The Phonebooth
+/area/ruin/space/phonebooth
+	name = "\improper Phonebooth"
