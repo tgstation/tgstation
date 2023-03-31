@@ -250,6 +250,7 @@
 
 /area/icemoon/underground/unexplored/no_rivers
 	icon_state = "norivers"
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED // same rules as "shoreline" turfs since we might need this to pull double-duty
 	map_generator = /datum/map_generator/cave_generator/icemoon
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
