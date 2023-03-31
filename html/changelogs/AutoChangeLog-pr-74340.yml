@@ -1,0 +1,4 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes:
+  - bugfix: "pais can upload photos to newscasters again"

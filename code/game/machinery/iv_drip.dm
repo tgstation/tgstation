@@ -260,12 +260,12 @@
 		// If the beaker is full, ping
 		if(!amount)
 			set_transfer_rate(MIN_IV_TRANSFER_RATE)
-			visible_message(span_hear("[src] pings."))
+			audible_message(span_hear("[src] pings."))
 			return
 
 		// If the human is losing too much blood, beep.
 		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-			visible_message(span_hear("[src] beeps loudly."))
+			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
 		attached_mob.transfer_blood_to(target, amount)

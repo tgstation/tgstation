@@ -1,0 +1,4 @@
+author: "Deranging"
+delete-after: True
+changes:
+  - bugfix: "The graph in Power Monitor consoles is no longer under half its normal size."

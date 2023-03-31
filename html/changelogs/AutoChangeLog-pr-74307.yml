@@ -1,0 +1,6 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "the victims of kneecapping will now scream."
+  - qol: "you will no longer gain useless message, when you're harming someone in agro-grab in the head with their neck already slicen, instead of continuing killing them."
+  - qol: "you will no longer gain irritating messages, when trying to stab someone in the eye, instead of just stabbing them with screwdriver."
