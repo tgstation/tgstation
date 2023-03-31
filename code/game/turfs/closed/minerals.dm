@@ -361,6 +361,10 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
+/// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/closed/mineral/random/snow/do_not_chasm
+	turf_flags = NO_RUINS
+
 /turf/closed/mineral/random/snow/underground
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	// abundant ore
