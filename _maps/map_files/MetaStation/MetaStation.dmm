@@ -13388,7 +13388,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "eYL" = (
-/obj/structure/table,
+/obj/structure/table/reinforced,
 /obj/item/multitool{
 	pixel_x = -3;
 	pixel_y = -4
