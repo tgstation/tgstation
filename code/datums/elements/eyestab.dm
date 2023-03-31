@@ -41,13 +41,7 @@
 	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(CLUMSY_ATTACK_SELF_CHANCE))
 		target = user
 	
-	if (target.is_eyes_covered())
-		return
-
-	if (isalien(target))
-		return
-
-	if (isbrain(target))
+	if (target.is_eyes_covered() || isalien(target) || isbrain(target))
 		return
 
 	perform_eyestab(source, target, user)
