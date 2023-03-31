@@ -88,5 +88,4 @@
 	heal_amount = 0
 
 #undef CHUUNIBYOU_HEAL_AMOUNT
-
-
+#undef CHUUNIBYOU_COOLDOWN_TIME
