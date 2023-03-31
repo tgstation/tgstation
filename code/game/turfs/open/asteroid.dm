@@ -151,6 +151,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
+/// Used for the lavaland icemoon ruin.
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure

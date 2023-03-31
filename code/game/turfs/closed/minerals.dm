@@ -327,6 +327,12 @@
 		/turf/closed/mineral/gibtonite/volcanic = 4,
 	)
 
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/random/volcanic/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
 	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')

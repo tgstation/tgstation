@@ -171,6 +171,10 @@
 	icon_state = "danger"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
+/// Same thing as parent, but uses a different map generator for the icemoon ruin that needs it.
+/area/lavaland/surface/outdoors/unexplored/danger/no_ruins
+	map_generator = /datum/map_generator/cave_generator/lavaland/ruin_version
+
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
