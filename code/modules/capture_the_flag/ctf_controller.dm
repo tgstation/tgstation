@@ -36,10 +36,10 @@
 /datum/ctf_controller/proc/toggle_ctf()
 	if(!ctf_enabled)
 		start_ctf()
-		. = TRUE
+		return TRUE
 	else
 		stop_ctf()
-		. = FALSE
+		return FALSE
 
 /datum/ctf_controller/proc/start_ctf()
 	if(ctf_enabled)
