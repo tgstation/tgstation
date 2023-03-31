@@ -7468,6 +7468,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"aYv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/station/ai_monitored/command/nuke_storage)
 "aYA" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -8674,6 +8680,12 @@
 	dir = 1
 	},
 /area/station/command/bridge)
+"byn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/station/ai_monitored/command/nuke_storage)
 "byp" = (
 /obj/machinery/modular_computer/console/preset/research,
 /obj/effect/landmark/event_spawn,
@@ -47829,6 +47841,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/command/nuke_storage)
 "qaN" = (
@@ -53398,6 +53411,11 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"sfM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/grimy,
+/area/station/ai_monitored/command/nuke_storage)
 "sgf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -88507,7 +88525,7 @@ uZn
 jYf
 rUR
 iwP
-jFR
+aYv
 jFR
 lQM
 abM
@@ -88764,7 +88782,7 @@ gOh
 rbD
 pAA
 qaM
-jFR
+sfM
 kwe
 lQM
 abM
@@ -89021,7 +89039,7 @@ mdq
 jYf
 rUR
 jll
-jFR
+byn
 jFR
 lQM
 abM
