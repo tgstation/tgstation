@@ -114,11 +114,11 @@
 	if(destination_platform == idle_platform)
 		return
 
-	set_travelling(TRUE)
-	set_controls(LIFT_PLATFORM_LOCKED)
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_distance = get_dist(idle_platform, destination_platform)
 	idle_platform = destination_platform
+	set_travelling(TRUE)
+	set_controls(LIFT_PLATFORM_LOCKED)
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_tram(destination_platform)
 		return
