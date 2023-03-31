@@ -57,6 +57,8 @@ GLOBAL_VAR_INIT(event_vote_enabled, TRUE)
 	var/selected_event = tgui_input_list(vote_creator, "Select an event to vote for", "Select Event", sort_list(events))
 	if(!selected_event)
 		return FALSE
+	if(SSvote.current_vote != null)
+		return FALSE
 	event_to_run = events[selected_event]
 	triggerer = vote_creator.ckey
 	message_admins("EVENT: [vote_creator.client] initiated an event vote for '[event_to_run]'")
