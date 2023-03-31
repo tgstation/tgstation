@@ -129,3 +129,15 @@
 		if(listed_atom == dummy_human)
 			continue
 		listed_atom.forceMove(src.loc)
+
+/obj/item/mcobject/interactor/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(held_item)
+		if(connected_storage)
+			connected_storage.attempt_insert(held_item)
+		else
+			held_item.forceMove(get_turf(src))
+		held_item = null
+
+	held_item = attacking_item
+	dummy_human.put_in_l_hand(attacking_item)
