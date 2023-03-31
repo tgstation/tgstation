@@ -186,6 +186,15 @@
 	result = /obj/item/food/cheese/royal
 	category = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/royalcheesepink
+	name = "Pink Royal Cheese"
+	reqs = list(
+		/obj/item/food/cheese/royal = 1,
+		/obj/item/food/bubblegum = 1
+	)
+	result = /obj/item/food/cheese/royalpink
+	category = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/ant_candy
 	name = "Ant Candy"
 	reqs = list(/obj/item/stack/rods = 1,

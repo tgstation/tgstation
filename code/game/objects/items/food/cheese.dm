@@ -69,6 +69,20 @@
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
 
+/obj/item/food/cheese/royalpink
+	name = "pink royal cheese"
+	desc = "Ascend the throne. Consume the wheel. Feel the... Thiccness?"
+	icon_state = "pinkroyalcheese"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/gold = 20,
+		/datum/reagent/toxin/mutagen = 5,
+	)
+	w_class = WEIGHT_CLASS_BULKY
+	tastes = list("cheese" = 4, "royalty" = 1)
+	rat_heal = 70
+
 //Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
 //I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese
 /obj/item/food/cheese/curd_cheese

@@ -147,11 +147,13 @@
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+	try_consume_cheese(cheese)
+	ai_controller?.CancelActions() // Interrupt any current fleeing
+	if(istype(cheese, /obj/item/food/cheese/royal) || istype(cheese, /obj/item/food/cheese/royalpink))
+		return
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
-	try_consume_cheese(cheese)
-	ai_controller.CancelActions() // Interrupt any current fleeing
 
 /// Attempts to consume a piece of cheese, causing a few effects.
 /mob/living/basic/mouse/proc/try_consume_cheese(obj/item/food/cheese/cheese)
@@ -162,6 +164,14 @@
 			span_notice("You devour [cheese], and start morphing into something... greater!"),
 		)
 		evolve_into_regal_rat()
+		qdel(cheese)
+		return
+	if(istype(cheese, /obj/item/food/cheese/royalpink))
+		visible_message(
+			span_warning("[src] devours [cheese]! They morph into something... thiccer!"),
+			span_notice("You devour [cheese], and start morphing into something... thiccer!"),
+		)
+		evolve_into_regal_rat_thicc()
 		qdel(cheese)
 		return
 
@@ -195,6 +205,12 @@
 	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
+	qdel(src)
+
+/mob/living/basic/mouse/proc/evolve_into_regal_rat_thicc()
+	var/mob/living/simple_animal/hostile/regalrat/thicc/controlled/thicc = new(loc)
+	mind?.transfer_to(thicc)
+	INVOKE_ASYNC(thicc, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
 
 /// Creates a new mouse based on this mouse's subtype.

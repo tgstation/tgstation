@@ -432,3 +432,21 @@
 	else if(prob(5))
 		C.vomit()
 	..()
+
+/mob/living/simple_animal/hostile/regalrat/thicc
+	name = "feral thicc rat"
+	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their thiccness. Not technically a king."
+	icon_state = "regalrat_thicc"
+	icon_living = "regalrat_thicc"
+	icon_dead = "regalrat_thicc_dead"
+
+/mob/living/simple_animal/hostile/regalrat/thicc/controlled/Initialize(mapload)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(get_player))
+	var/thiccness = pick("Hefty","Fat","Bulky","Plump","Stout","Heavy","Boxum")
+	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
+	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
+	name = "[thiccness] [kingdom] [title]"
+	if(prob(20))
+		icon_state = "funnyrat"
+		icon_living = "funnyrat"
