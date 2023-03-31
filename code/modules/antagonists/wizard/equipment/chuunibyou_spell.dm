@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/chuuni_invocations
-	name = "Yuki Starlight's Chuuni Invocations"
-	desc = "Gives you an extra spell point, but makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
+	name = "Chuuni Invocations"
+	desc = "Makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
 	button_icon_state = "chuuni"
 
 	school = SCHOOL_FORBIDDEN
@@ -20,7 +20,7 @@
 		to_chat(cast_on, span_warning("Your focus is broken, and the episodic rom-com moments slowly fade."))
 		return
 
-	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
+	playsound(cast_on, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 	to_chat(cast_on, span_danger("You feel your very essense binding to a slice-of-life format!"))
 
 	cast_on.AddComponent(/datum/component/chuunibyou)

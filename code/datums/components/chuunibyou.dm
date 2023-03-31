@@ -12,14 +12,14 @@
 	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
 
 	var/static/list/chuunibyou_invocations = list(
-		SCHOOL_UNSET = "This is embarrassing... I can’t remember the words... um... maybe if I just wave my hand like this... no, that’s not wor- Ah! There it goes!",
+		SCHOOL_UNSET = "This is embarrassing... I can't remember the words... um... maybe if I just wave my hand like this... no, that's not wor- Ah! There it goes!",
 		SCHOOL_HOLY = "By the grace of the holy one, I summon the light of salvation. Let my allies rejoice. O, Heaven! Bless them!",
 		SCHOOL_PSYCHIC = "By the secret of the hidden one, I reveal the truth of creation. Let my mind expand. O, Mystery! Enlighten me!",
 		SCHOOL_MIME = "O, Silence! Embrace my soul and amplify my gesture. Let me create the illusion and manipulate the perception!",
 		SCHOOL_RESTORATION = "I invoke the name of the goddess of mercy, hear my plea and grant your blessing to this soul! Divine Grace!",
 
 		SCHOOL_EVOCATION = "Behold, the ultimate power of the Dark Flame Master! I call upon the ancient forces of chaos and destruction to unleash their wrath upon my enemies!",
-		SCHOOL_TRANSMUTATION = "I invoke the law of equivalent exchange, the balance of the cosmos. As I offer this sacrifice, I demand a new creation. Reveal, the mystery of transmutation!"
+		SCHOOL_TRANSMUTATION = "I invoke the law of equivalent exchange, the balance of the cosmos. As I offer this sacrifice, I demand a new creation. Reveal, the mystery of transmutation!",
 		SCHOOL_TRANSLOCATION = "By the power of the spatial rifts, I bend the fabric of reality and move across the dimensions! Let nothing stand in my way as I travel to my destination!",
 		SCHOOL_CONJURATION = "With the eye of fate, I see through the threads of destiny. Nothing can hide from me. Witness me, witness the miracle of manifestation!",
 
