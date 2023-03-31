@@ -39249,7 +39249,7 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmos)
 "ods" = (
-/obj/machinery/oven/range,
+/obj/machinery/oven,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "odv" = (

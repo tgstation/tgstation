@@ -454,8 +454,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "by" = (
-/obj/machinery/oven,
-/obj/item/plate/oven_tray,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (

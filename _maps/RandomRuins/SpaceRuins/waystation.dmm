@@ -1772,7 +1772,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "Ga" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,

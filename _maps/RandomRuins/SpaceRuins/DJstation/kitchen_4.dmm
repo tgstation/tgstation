@@ -55,7 +55,7 @@
 /turf/closed/wall,
 /area/ruin/space/djstation)
 "z" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "A" = (
