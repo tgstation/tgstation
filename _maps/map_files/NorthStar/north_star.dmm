@@ -31487,8 +31487,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/medical/virology,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Test Subject Cell";
-	
+	name = "Test Subject Cell"
 	},
 /turf/open/floor/noslip,
 /area/station/medical/virology)
@@ -34134,8 +34133,7 @@
 /area/station/security/medical)
 "jxD" = (
 /obj/machinery/door/airlock/virology/glass{
-	name = "Test Subject Cell";
-	
+	name = "Test Subject Cell"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -36118,11 +36116,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
-"jXy" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/textured_large,
-/area/station/medical/chemistry)
 "jXE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51467,8 +51460,7 @@
 	id = "AI Chamber entrance shutters";
 	name = "AI Chamber Entrance Shutters Control";
 	pixel_x = -24;
-	req_access = list("ai_upload");
-	
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -85544,8 +85536,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Console";
 	pixel_x = 24;
-	req_access = list("virology");
-	
+	req_access = list("virology")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /turf/open/floor/iron/white,
@@ -119919,7 +119910,7 @@ kOR
 eXp
 kOR
 kOR
-jXy
+jHn
 kOR
 kzE
 twx
