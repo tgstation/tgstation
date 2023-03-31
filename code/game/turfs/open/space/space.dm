@@ -297,10 +297,10 @@
 
 /turf/open/space/openspace/enable_starlight()
 	var/turf/below = SSmapping.get_turf_below(src)
-	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
-	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	if(!isspaceturf(below))
 		return
+	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
+	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	set_light(2)
 
 /turf/open/space/openspace/update_starlight()
