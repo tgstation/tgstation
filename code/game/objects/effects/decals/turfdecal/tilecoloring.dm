@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(rainbow_colors, list(
 	COLOR_PRIDE_YELLOW,
 	COLOR_PRIDE_ORANGE,
 	COLOR_PRIDE_RED,
-	))
+))
 
 /obj/effect/turf_decal/tile/Initialize(mapload)
 	if(check_holidays(APRIL_FOOLS))
