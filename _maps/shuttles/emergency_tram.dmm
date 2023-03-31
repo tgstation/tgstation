@@ -63,6 +63,9 @@
 /area/shuttle/escape)
 "ao" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "ap" = (
@@ -161,6 +164,9 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
@@ -254,6 +260,9 @@
 "aV" = (
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aW" = (
@@ -384,6 +393,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
+"eV" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "uu" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -508,7 +521,7 @@ ax
 ak
 aY
 aZ
-aZ
+eV
 ak
 bj
 "}
