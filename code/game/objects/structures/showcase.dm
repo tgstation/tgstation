@@ -169,3 +169,6 @@
 			. += "It has its screws loosened."
 		else
 			. += "If you see this, something is wrong."
+
+#undef SHOWCASE_CONSTRUCTED
+#undef SHOWCASE_SCREWDRIVERED

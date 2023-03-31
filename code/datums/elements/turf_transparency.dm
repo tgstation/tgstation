@@ -274,3 +274,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, offset_spokesman = our_turf, plane = PLANE_SPACE)
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	return underlay_appearance
+
+#undef Z_PILLAR_RADIUS
+#undef Z_PILLAR_TRANSFORM
+#undef Z_KEY_TO_POSITION

@@ -84,6 +84,8 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+		COMSIG_ATOM_ATTACK_ROBOT,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 	))
 
 /datum/component/redirect_attack_hand_from_turf/proc/on_attack_hand(turf/source, mob/user, list/modifiers)

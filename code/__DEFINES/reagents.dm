@@ -176,6 +176,10 @@
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<21)
 
+#define RNGCHEM_INPUT "input"
+#define RNGCHEM_CATALYSTS "catalysts"
+#define RNGCHEM_OUTPUT "output"
+
 /// Below are defines used for reagent associated machines only
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1
@@ -185,6 +189,9 @@
 #define GOLDSCHLAGER_GOLD (1)
 
 #define GOLDSCHLAGER_GOLD_RATIO (GOLDSCHLAGER_GOLD/(GOLDSCHLAGER_VODKA+GOLDSCHLAGER_GOLD))
+
+/// The rate at which alcohol affects the drinker
+#define ALCOHOL_RATE 0.005
 
 #define BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT 3
 #define BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE 3
