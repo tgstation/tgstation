@@ -1,9 +1,9 @@
 /datum/action/item_action/camouflage
 	name = "Activate Camouflage"
-	desc = "Activate your camouflage suit, and blend into your surroundings..."
-	button_icon_state = "alien_sneak"
+	desc = "Activate your camouflage implant, and blend into your surroundings..."
+	button_icon_state = "invisibility"
 	/// The alpha we move to when activating this action.
-	var/camouflage_alpha = 75
+	var/camouflage_alpha = 40
 	/// Are we currently cloaking ourself?
 	var/cloaking = FALSE
 
@@ -37,36 +37,24 @@
 	to_chat(owner, span_notice("You disable the [name], and become visible once again."))
 	cloaking = FALSE
 
-/obj/item/clothing/under/camouflage_suit
-	name = "experimental camouflage suit"
-	desc = "A fancy-looking camouflage undersuit. It can be activated to make the wearer blend in with their surroundings."
-	icon = 'icons/obj/clothing/under/syndicate.dmi'
-	icon_state = "abductor"
-	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+/obj/item/implant/camouflage
+	name = "experimental camouflage implant"
+	desc = "Allows its owner to blend in with their surroundings. Cool!"
 	actions_types = list(/datum/action/item_action/camouflage)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/under/camouflage_suit/Initialize(mapload)
-	. = ..()
-
-	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
-
-/obj/item/clothing/under/camouflage_suit/dropped(mob/user)
-	. = ..()
-
-/obj/item/clothing/under/camouflage_suit/emp_act(severity)
+/obj/item/implant/camouflage/emp_act(severity)
 	. = ..()
 
 	if(prob(15 * severity))
 		visible_message(span_warning("The cloaking systems on the [name] begin to overload."), blind_message = audible_message("You hear a fizzle, and the snapping of sparks."))
 		do_sparks(2, FALSE, src)
-		burn()
+		remove_cloaking()
 
 /obj/item/reagent_containers/hypospray/medipen/invisibility
 	name = "invisibility autoinjector"
 	desc = "An autoinjector containing a stabilized SaturnX compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
+	icon_state = "invispen"
 	volume = 20
 	amount_per_transfer_from_this = 20
-	list_reagents = list(/datum/reagent/drug/saturnx = 20)
+	list_reagents = list(/datum/reagent/drug/saturnx/stable = 20)
 	label_examine = FALSE
