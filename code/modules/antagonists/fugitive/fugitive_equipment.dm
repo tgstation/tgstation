@@ -14,6 +14,7 @@
 /datum/action/item_action/camouflage
 	name = "Activate Camouflage"
 	desc = "Activate your camouflage implant, and blend into your surroundings..."
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "invisibility"
 	/// The alpha we move to when activating this action.
 	var/camouflage_alpha = 35
@@ -56,7 +57,7 @@
 	desc = "An autoinjector containing a stabilized Saturn-X compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
 	icon_state = "invispen"
 	base_icon_state = "invispen"
-	volume = 20 //By my estimate this will last you about 8-ish mintues
+	volume = 20 //By my estimate this will last you about 10-ish mintues
 	amount_per_transfer_from_this = 20
 	list_reagents = list(/datum/reagent/drug/saturnx/stable = 20)
 	label_examine = FALSE
