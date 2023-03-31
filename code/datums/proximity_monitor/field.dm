@@ -5,9 +5,19 @@
  * Movable and easily code-modified fields! Allows for custom AOE effects that affect movement
  * and anything inside of them, and can do custom turf effects!
  * Supports automatic recalculation/reset on movement.
+ *
+ * "What do I gain from using advanced over standard prox monitors?"
+ * - You can set different effects on edge vs field entrance
+ * - You can set effects when the proximity monitor starts and stops tracking a turf
  */
 /datum/proximity_monitor/advanced
+	/// If TRUE, edge turfs will be included as "in the field" for effects
+	/// Can be used in certain situations where you may have effects that trigger only at the edge,
+	/// while also wanting the field effect to trigger at edge turfs as well
+	var/edge_is_a_field = FALSE
+	/// All turfs on the inside of the proximity monitor - range - 1 turfs
 	var/list/turf/field_turfs = list()
+	/// All turfs on the very last tile of the proximity monitor's radius
 	var/list/turf/edge_turfs = list()
 
 /datum/proximity_monitor/advanced/Destroy()
@@ -34,8 +44,10 @@
 		cleanup_edge_turf(old_turf)
 
 	for(var/turf/new_turf as anything in new_field_turfs)
+		field_turfs |= new_turf
 		setup_field_turf(new_turf)
 	for(var/turf/new_turf as anything in new_edge_turfs)
+		edge_turfs |= new_turf
 		setup_edge_turf(new_turf)
 
 /datum/proximity_monitor/advanced/on_entered(turf/source, atom/movable/entered)
@@ -64,16 +76,23 @@
 	else
 		field_turf_uncrossed(gone, source)
 
+/// Called when a turf in the field of the monitor is linked
 /datum/proximity_monitor/advanced/proc/setup_field_turf(turf/target)
-	field_turfs |= target
+	return
 
+/// Called when a turf in the field of the monitor is unlinked
 /datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/target)
 	field_turfs -= target
 
+/// Called when a turf in the edge of the monitor is linked
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/target)
-	edge_turfs |= target
+	if(edge_is_a_field) // If the edge is considered a field, set it up like one
+		setup_field_turf(target)
 
+/// Called when a turf in the edge of the monitor is unlinked
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
+	if(edge_is_a_field) // If the edge is considered a field, clean it up like one
+		cleanup_field_turf(target)
 	edge_turfs -= target
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
@@ -112,11 +131,12 @@
 	return
 
 /datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/movable, turf/location)
-	return
+	if(edge_is_a_field) // If the edge is considered a field, pass crossed to that
+		field_turf_crossed(movable, location)
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/movable, turf/location)
-	return
-
+	if(edge_is_a_field) // If the edge is considered a field, pass uncrossed to that
+		field_turf_uncrossed(movable, location)
 
 //DEBUG FIELD ITEM
 /obj/item/multitool/field_debug
@@ -142,6 +162,10 @@
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)
+
+/obj/item/multitool/field_debug/attack_self_secondary(mob/user, modifiers)
+	current.edge_is_a_field = !current.edge_is_a_field
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //DEBUG FIELDS
 /datum/proximity_monitor/advanced/debug

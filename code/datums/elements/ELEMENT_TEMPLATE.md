@@ -5,8 +5,8 @@ See _element.dm for detailed explanations
 
 ```dm
 /datum/element/myelement
-	element_flags = ELEMENT_BESPOKE | ELEMENT_COMPLEX_DETACH | ELEMENT_DETACH | ELEMENT_NOTAREALFLAG    // code/__DEFINES/dcs/flags.dm
-	//id_arg_index = 2                                                                                  // Use with ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_COMPLEX_DETACH | ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_NOTAREALFLAG    // code/__DEFINES/dcs/flags.dm
+	//argument_hash_start_idx = 2                                                                                  // Use with ELEMENT_BESPOKE
 	var/list/myvar = list()
 
 /datum/element/myelement/Attach(datum/target)

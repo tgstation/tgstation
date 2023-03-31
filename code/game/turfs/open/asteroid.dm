@@ -21,7 +21,7 @@
 	/// Probability floor has a different icon state
 	var/floor_variance = 20
 	/// Itemstack to drop when dug by a shovel
-	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
+	var/obj/item/stack/dig_result = /obj/item/stack/ore/glass
 	/// Whether the turf has been dug or not
 	var/dug = FALSE
 	/// Icon state to use when broken
@@ -42,7 +42,7 @@
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
 	dug = TRUE
-	new digResult(src, 5)
+	new dig_result(src, 5)
 	if (prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
 	icon_state = "[base_icon_state]_dug"
@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "basalt"
 	base_icon_state = "basalt"
 	floor_variance = 15
-	digResult = /obj/item/stack/ore/glass/basalt
+	dig_result = /obj/item/stack/ore/glass/basalt
 	broken_state = "basalt_dug"
 
 /turf/open/misc/asteroid/basalt/getDug()
@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	planetary_atmos = TRUE
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
-	digResult = /obj/item/stack/sheet/mineral/snow
+	dig_result = /obj/item/stack/sheet/mineral/snow
 	var/burnt = FALSE
 
 /turf/open/misc/asteroid/snow/burn_tile()

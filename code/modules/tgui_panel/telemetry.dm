@@ -12,7 +12,7 @@
 /**
  * Maximum time allocated for sending a telemetry packet.
  */
-#define TGUI_TELEMETRY_RESPONSE_WINDOW 30 SECONDS
+#define TGUI_TELEMETRY_RESPONSE_WINDOW (30 SECONDS)
 
 /// Time of telemetry request
 /datum/tgui_panel/var/telemetry_requested_at
@@ -133,8 +133,11 @@
 			"ckey" = ckey,
 			"telemetry_ckey" = one_query["telemetry_ckey"],
 			"address" = one_query["address"],
-			"computer_id" = one_query["computer_id"], 
+			"computer_id" = one_query["computer_id"],
 			"round_id" = GLOB.round_id,
 		))
 		query.Execute()
 		qdel(query)
+
+#undef TGUI_TELEMETRY_MAX_CONNECTIONS
+#undef TGUI_TELEMETRY_RESPONSE_WINDOW

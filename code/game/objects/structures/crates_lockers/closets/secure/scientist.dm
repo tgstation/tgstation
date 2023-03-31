@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/research_director
-	name = "\proper research director's locker"
+	name = "research director's locker"
 	req_access = list(ACCESS_RD)
 	icon_state = "rd"
 
@@ -9,7 +9,7 @@
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/storage/bag/garment/research_director(src)
-	new /obj/item/computer_hardware/hard_drive/portable/command/rd(src)
+	new /obj/item/computer_disk/command/rd(src)
 	new /obj/item/radio/headset/heads/rd(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/storage/lockbox/medal/sci(src)

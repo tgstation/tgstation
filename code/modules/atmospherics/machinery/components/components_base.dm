@@ -36,7 +36,7 @@
 	. = ..()
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(hide_pipe))
 
 // Iconnery
 
@@ -49,9 +49,9 @@
 /**
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
-/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
-	showpipe = !covered
+	showpipe = !!underfloor_accessibility
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
@@ -97,7 +97,7 @@
 	airs[i] = null
 	return ..()
 
-/obj/machinery/atmospherics/components/on_construction()
+/obj/machinery/atmospherics/components/on_construction(mob/user)
 	. = ..()
 	update_parents()
 
@@ -130,6 +130,8 @@
 			parents[i] = null // Disconnects from the machinery side.
 
 	reference.other_atmos_machines -= src
+	if(custom_reconcilation)
+		reference.require_custom_reconcilation -= src
 
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline

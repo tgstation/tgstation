@@ -3,15 +3,25 @@
 /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 60, ACID = 20)
+	armor_type = /datum/armor/rank_engineering
 	resistance_flags = NONE
+
+/datum/armor/rank_engineering
+	bio = 10
+	fire = 60
+	acid = 20
 
 /obj/item/clothing/under/rank/engineering/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". Made from fire resistant materials."
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 40)
+	armor_type = /datum/armor/engineering_chief_engineer
+
+/datum/armor/engineering_chief_engineer
+	bio = 10
+	fire = 80
+	acid = 40
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
 	name = "chief engineer's jumpskirt"

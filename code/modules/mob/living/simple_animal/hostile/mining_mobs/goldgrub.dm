@@ -51,6 +51,7 @@
 
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"
@@ -72,7 +73,7 @@
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/misc/asteroid) || !do_after(G, 30, target = T))
+	if (!isasteroidturf(T) || !do_after(G, 30, target = T))
 		to_chat(G, span_warning("You can only burrow in and out of mining turfs and must stay still!"))
 		return
 	if (get_dist(G, T) != 0)
@@ -102,7 +103,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
+				addtimer(CALLBACK(src, PROC_REF(Burrow)), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/stack/ore))
@@ -132,8 +133,11 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
-	return BULLET_ACT_BLOCK
+	if(stat == DEAD)
+		return BULLET_ACT_FORCE_PIERCE
+	else
+		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
+		return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

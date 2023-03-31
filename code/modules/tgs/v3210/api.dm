@@ -99,7 +99,11 @@
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
 		TGS_ERROR_LOG("Service parameter present but no interface DLL detected. This is symptomatic of running a service less than version 3.1! Please upgrade.")
 		return
+	#if DM_VERSION >= 515
+	call_ext(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command) //trust no retval
+	#else
 	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command) //trust no retval
+	#endif
 	return TRUE
 
 /datum/tgs_api/v3210/OnTopic(T)
@@ -189,16 +193,19 @@
 /datum/tgs_api/v3210/ChatChannelInfo()
 	return list() // :omegalul:
 
-/datum/tgs_api/v3210/ChatBroadcast(message, list/channels)
+/datum/tgs_api/v3210/ChatBroadcast(datum/tgs_message_content/message, list/channels)
 	if(channels)
 		return TGS_UNIMPLEMENTED
+	message = UpgradeDeprecatedChatMessage(message)
 	ChatTargetedBroadcast(message, TRUE)
 	ChatTargetedBroadcast(message, FALSE)
 
-/datum/tgs_api/v3210/ChatTargetedBroadcast(message, admin_only)
-	ExportService("[admin_only ? SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE : SERVICE_REQUEST_IRC_BROADCAST] [message]")
+/datum/tgs_api/v3210/ChatTargetedBroadcast(datum/tgs_message_content/message, admin_only)
+	message = UpgradeDeprecatedChatMessage(message)
+	ExportService("[admin_only ? SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE : SERVICE_REQUEST_IRC_BROADCAST] [message.text]")
 
 /datum/tgs_api/v3210/ChatPrivateMessage(message, datum/tgs_chat_user/user)
+	UpgradeDeprecatedChatMessage(message)
 	return TGS_UNIMPLEMENTED
 
 /datum/tgs_api/v3210/SecurityLevel()

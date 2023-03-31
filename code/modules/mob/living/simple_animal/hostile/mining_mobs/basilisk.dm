@@ -42,7 +42,6 @@
 	icon_state = "ice_2"
 	damage = 10
 	damage_type = BURN
-	nodamage = FALSE
 	armor_flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
 	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
@@ -58,7 +57,6 @@
 	icon_state= "chronobolt"
 	damage = 40
 	damage_type = BRUTE
-	nodamage = FALSE
 	temperature = 0
 	slowdown = FALSE
 
@@ -72,6 +70,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 		if(EXPLODE_HEAVY)
 			adjustBruteLoss(140)
@@ -89,7 +88,7 @@
 			set_varspeed(0)
 			warmed_up = TRUE
 			projectiletype = /obj/projectile/temp/basilisk/heated
-			addtimer(CALLBACK(src, .proc/cool_down), 3000)
+			addtimer(CALLBACK(src, PROC_REF(cool_down)), 3000)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	visible_message(span_warning("[src] appears to be cooling down..."))
@@ -193,7 +192,6 @@
 	icon_state = "lava"
 	damage = 5
 	damage_type = BURN
-	nodamage = FALSE
 	temperature = 200 // Heats you up! per hit!
 	slowdown = FALSE
 
@@ -208,7 +206,6 @@
 /obj/projectile/temp/basilisk/icewing
 	damage = 5
 	damage_type = BURN
-	nodamage = FALSE
 
 /obj/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()

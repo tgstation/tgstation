@@ -1,6 +1,5 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
 #define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
-#define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
 #define STATE_CHANGING_STATUS "changing_status"
@@ -117,7 +116,7 @@
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
-		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(!IS_TRAITOR(user))
 			to_chat(user, span_danger("You get the feeling this is a bad idea."))
 			return
 		var/obj/item/card/emag/battlecruiser/caller_card = emag_card
@@ -126,7 +125,7 @@
 			return
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/summon_battlecruiser, caller_card.team), rand(20 SECONDS, 1 MINUTES))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 
@@ -220,7 +219,7 @@
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
 		if ("emergency_meeting")
-			if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+			if(!check_holidays(APRIL_FOOLS))
 				return
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
@@ -352,7 +351,7 @@
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -445,7 +444,7 @@
 
 			SSjob.safe_code_request_loc = pod_location
 			SSjob.safe_code_requested = TRUE
-			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, /datum/controller/subsystem/job.proc/send_spare_id_safe_code, pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
@@ -530,7 +529,7 @@
 				data["importantActionReady"] = COOLDOWN_FINISHED(src, important_action_cooldown)
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
-				data["aprilFools"] = SSevents.holidays && SSevents.holidays[APRIL_FOOLS]
+				data["aprilFools"] = check_holidays(APRIL_FOOLS)
 				data["alertLevel"] = SSsecurity_level.get_current_level_as_text()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
@@ -735,7 +734,7 @@
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
-	if(!input || !user.canUseTopic(src, !issilicon(usr)))
+	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))
 		//Adds slurs and so on. Someone should make this use languages too.
@@ -769,8 +768,12 @@
 		if("message")
 			status_signal.data["top_text"] = data1
 			status_signal.data["bottom_text"] = data2
+			log_game("[key_name(usr)] has changed the station status display message to \"[data1] [data2]\" [loc_name(usr)]")
+
 		if("alert")
 			status_signal.data["picture_state"] = data1
+			log_game("[key_name(usr)] has changed the station status display message to \"[data1]\" [loc_name(usr)]")
+
 
 	frequency.post_signal(src, status_signal)
 
@@ -806,7 +809,7 @@
 		return FALSE
 
 	AI_notify_hack()
-	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack, hacker)))
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), hacker)))
 		return FALSE
 
 	hack_console(hacker)
@@ -840,15 +843,20 @@
 	// If we have a certain amount of ghosts, we'll add some more !!fun!! options to the list
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
 
-	// Pirates require empty space for the ship, and ghosts for the pirates obviously
-	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_PIRATES))
-		hack_options += HACK_PIRATE
-	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
-	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
-		hack_options += HACK_FUGITIVES
-	// If less than a certain percent of the population is ghosts, consider sleeper agents
-	if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
-		hack_options += HACK_SLEEPER
+	// Pirates / Fugitives have enough lead in time that there's no point summoning them if the shuttle is called
+	// Both of these events also summon space ships and so cannot run on planetary maps
+	if (EMERGENCY_IDLE_OR_RECALLED && !SSmapping.is_planetary())
+		// Pirates require ghosts for the pirates obviously
+		if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES)
+			hack_options += HACK_PIRATE
+		// Fugitives require ghosts for both fugitives and hunters (Please no waldo)
+		if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES)
+			hack_options += HACK_FUGITIVES
+
+	if (!EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		// If less than a certain percent of the population is ghosts, consider sleeper agents
+		if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
+			hack_options += HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
 	message_admins("[ADMIN_LOOKUPFLW(hacker)] hacked a [name] located at [ADMIN_VERBOSEJMP(src)], resulting in: [picked_option]!")
@@ -863,7 +871,7 @@
 			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
 			if(!pirate_event)
 				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
-			addtimer(CALLBACK(pirate_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
+			addtimer(CALLBACK(pirate_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
@@ -874,7 +882,7 @@
 			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
 			if(!fugitive_event)
 				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
-			addtimer(CALLBACK(fugitive_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
+			addtimer(CALLBACK(fugitive_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
@@ -924,7 +932,7 @@
 	var/title
 	var/content
 	var/list/possible_answers = list()
-	var/answered
+	var/answered = FALSE
 	var/datum/callback/answer_callback
 
 /datum/comm_message/New(new_title,new_content,new_possible_answers)

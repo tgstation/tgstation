@@ -3,6 +3,7 @@
 	icon = 'icons/obj/holiday/christmas.dmi'
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
+	w_class = WEIGHT_CLASS_TINY
 	/// The crack state of the toy. If set to TRUE, you can no longer crack it by attacking.
 	var/cracked = FALSE
 
@@ -39,7 +40,7 @@
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	dog_fashion = /datum/dog_fashion/head/festive
 
 /obj/effect/spawner/xmastree
@@ -55,13 +56,11 @@
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
 /obj/effect/spawner/xmastree/Initialize(mapload)
-	..()
-	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
+	. = ..()
+	if(check_holidays(CHRISTMAS) && christmas_tree)
 		new christmas_tree(get_turf(src))
-	else if((FESTIVE_SEASON in SSevents.holidays) && festive_tree)
+	else if(check_holidays(FESTIVE_SEASON) && festive_tree)
 		new festive_tree(get_turf(src))
-
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/xmastree/rdrod
 	name = "festivus pole spawner"

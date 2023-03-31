@@ -16,7 +16,7 @@
 	// Create a space tile that goes to another z-level
 	claimed_tile = run_loc_floor_bottom_left.type
 
-	space_tile = new(locate(run_loc_floor_bottom_left.x, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	space_tile = run_loc_floor_bottom_left.ChangeTurf(/turf/open/space)
 	space_tile.destination_x = round(reserved.bottom_left_coords[1] + (reserved.width-1) / 2)
 	space_tile.destination_y = round(reserved.bottom_left_coords[2] + (reserved.height-1) / 2)
 	space_tile.destination_z = reserved.bottom_left_coords[3]

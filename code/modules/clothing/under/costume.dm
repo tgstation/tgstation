@@ -247,11 +247,17 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
+	armor_type = /datum/armor/costume_russian_officer
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE
+
+/datum/armor/costume_russian_officer
+	melee = 10
+	bio = 10
+	fire = 30
+	acid = 30
 
 /obj/item/clothing/under/costume/buttondown
 	gender = PLURAL
@@ -347,3 +353,10 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/gi
+	name = "Martial Artist Gi"
+	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
+	icon_state = "martial_arts_gi"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE

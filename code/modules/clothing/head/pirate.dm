@@ -26,9 +26,19 @@
 		to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
 
 /obj/item/clothing/head/costume/pirate/armored
-	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
+	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20
+
+/datum/armor/pirate_armored
+	melee = 30
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 60
+	acid = 75
 
 /obj/item/clothing/head/costume/pirate/captain
 	name = "pirate captain hat"
@@ -42,6 +52,16 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/pirate/bandana/armored
-	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
+	armor_type = /datum/armor/bandana_armored
 	strip_delay = 40
 	equip_delay_other = 20
+
+/datum/armor/bandana_armored
+	melee = 30
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 60
+	acid = 75

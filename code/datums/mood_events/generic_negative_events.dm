@@ -393,3 +393,23 @@
 	description = "I just got squeezed way too hard."
 	mood_change = -1
 	timeout = 2 MINUTES
+
+/datum/mood_event/rippedtail
+	description = "I ripped their tail right off, what have I done!"
+	mood_change = -5
+	timeout = 30 SECONDS
+
+/datum/mood_event/sabrage_fail
+	description = "Blast it! That stunt didn't go as planned!"
+	mood_change = -2
+	timeout = 4 MINUTES
+
+/datum/mood_event/body_purist
+	description = "I feel cybernetics attached to me, and I HATE IT!"
+
+/datum/mood_event/body_purist/add_effects(power)
+	mood_change = power
+
+/datum/mood_event/unsatisfied_nomad
+	description = "I've been here too long! I want to go out and explore space!"
+	mood_change = -3

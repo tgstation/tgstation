@@ -37,6 +37,13 @@
 	var/obj/spawned_on_undeploy
 	/// How long it takes for a wrench user to undeploy the object
 	var/undeploy_time = 3 SECONDS
+	/// If TRUE, the turret will not become unanchored when not mounted
+	var/always_anchored = FALSE
+
+/obj/machinery/deployable_turret/Initialize(mapload)
+	. = ..()
+	if(always_anchored)
+		set_anchored(TRUE)
 
 /obj/machinery/deployable_turret/Destroy()
 	target = null
@@ -71,7 +78,8 @@
 		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
-	set_anchored(FALSE)
+	if(!always_anchored)
+		set_anchored(FALSE)
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -185,7 +193,7 @@
 /obj/machinery/deployable_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/deployable_turret/.proc/fire_helper, user), i*rate_of_fire)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/deployable_turret/, fire_helper), user), i*rate_of_fire)
 
 /obj/machinery/deployable_turret/proc/fire_helper(mob/user)
 	if(user.incapacitated() || !(user in buckled_mobs))
@@ -262,6 +270,7 @@
 
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/modifiers = params2list(params)
 	var/obj/machinery/deployable_turret/E = user.buckled
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)

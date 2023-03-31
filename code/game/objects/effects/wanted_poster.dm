@@ -8,7 +8,7 @@
 */
 
 /obj/item/poster/wanted
-	icon_state = "rolled_poster"
+	icon_state = "rolled_poster_legit"
 	var/postHeaderText = "WANTED" // MAX 7 Characters
 	var/postHeaderColor = "#FF0000"
 	var/background = "wanted_background"
@@ -67,8 +67,8 @@
 	print_across_top(the_icon, postHeaderText, postHeaderColor)
 
 	the_icon.Insert(the_icon, "wanted")
-	the_icon.Insert(icon('icons/obj/contraband.dmi', "poster_being_set"), "poster_being_set")
-	the_icon.Insert(icon('icons/obj/contraband.dmi', "poster_ripped"), "poster_ripped")
+	the_icon.Insert(icon('icons/obj/poster.dmi', "poster_being_set"), "poster_being_set")
+	the_icon.Insert(icon('icons/obj/poster.dmi', "poster_ripped"), "poster_ripped")
 
 	icon = the_icon
 

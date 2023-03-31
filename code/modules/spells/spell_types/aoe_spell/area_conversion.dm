@@ -2,7 +2,9 @@
 	name = "Area Conversion"
 	desc = "This spell instantly converts a small area around you."
 	background_icon_state = "bg_cult"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	overlay_icon_state = "bg_cult_border"
+
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "areaconvert"
 
 	school = SCHOOL_TRANSMUTATION

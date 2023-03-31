@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	gas_path = /datum/gas/pluoxium
 	heat_modifier = -1.5
 	power_transmission = -0.5
-	heat_power_generation = 1
+	heat_power_generation = -1
 
 /datum/sm_gas/miasma
 	gas_path = /datum/gas/miasma
@@ -174,12 +174,13 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 		return
 	sm.absorbed_gasmix.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
 	sm.external_power_trickle += consumed_miasma * MIASMA_POWER_GAIN
+	sm.log_activation("miasma absorption")
 
 /datum/sm_gas/freon
 	gas_path = /datum/gas/freon
 	heat_modifier = -9
 	power_transmission = -3
-	heat_power_generation = 1
+	heat_power_generation = -1
 
 /datum/sm_gas/hydrogen
 	gas_path = /datum/gas/hydrogen

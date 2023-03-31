@@ -39,7 +39,7 @@
 	..()
 	new /obj/item/radio/headset/headset_med(src)
 	new /obj/item/defibrillator/loaded(src)
-	new /obj/item/clothing/gloves/color/latex/nitrile(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
 	return
@@ -68,7 +68,7 @@
 	new /obj/item/clothing/glasses/blindfold(src)
 
 /obj/structure/closet/secure_closet/chief_medical
-	name = "\proper chief medical officer's locker"
+	name = "chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
 	icon_state = "cmo"
 
@@ -78,7 +78,7 @@
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
-	new /obj/item/computer_hardware/hard_drive/portable/command/cmo(src)
+	new /obj/item/computer_disk/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/defibrillator/compact/loaded(src)
@@ -100,7 +100,7 @@
 	new /obj/item/reagent_containers/hypospray/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
-	name = "animal control"
+	name = "animal control locker"
 	req_access = list(ACCESS_SURGERY)
 
 /obj/structure/closet/secure_closet/animal/PopulateContents()

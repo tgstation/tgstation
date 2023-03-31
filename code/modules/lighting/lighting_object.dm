@@ -27,13 +27,13 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
 
 	affected_turf.lighting_object = src
-	affected_turf.luminosity = 0
+	// Default to fullbright, so things can "see" if they use view() before we update
+	affected_turf.luminosity = 1
 
 	// This path is really hot. this is faster
 	// Really this should be a global var or something, but lets not think about that yes?
-	if(CONFIG_GET(flag/starlight))
-		for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
-			space_tile.update_starlight()
+	for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
+		space_tile.enable_starlight()
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 #ifdef VISUALIZE_LIGHT_UPDATES
 	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
 	animate(affected_turf, 10, color = null)
-	addtimer(CALLBACK(affected_turf, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(affected_turf, TYPE_PROC_REF(/atom, remove_atom_colour), ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
 #endif
 
 	var/datum/lighting_corner/red_corner = affected_turf.lighting_corner_SW || dummy_lighting_corner

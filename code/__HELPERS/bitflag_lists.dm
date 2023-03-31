@@ -11,15 +11,18 @@ GLOBAL_LIST_EMPTY(bitflag_lists)
  * Arguments:
  * * target - List of integers.
  */
-#define SET_BITFLAG_LIST(target) \
+#define SET_SMOOTHING_GROUPS(target) \
 	do { \
-		var/txt_signature = target.Join("-"); \
-		if(!GLOB.bitflag_lists[txt_signature]) { \
+		var/txt_signature = target; \
+		if(isnull((target = GLOB.bitflag_lists[txt_signature]))) { \
 			var/list/new_bitflag_list = list(); \
-			for(var/value in target) { \
+			var/list/decoded = UNWRAP_SMOOTHING_GROUPS(txt_signature, decoded); \
+			for(var/value in decoded) { \
+				if (value < 0) { \
+					value = MAX_S_TURF + 1 + abs(value); \
+				} \
 				new_bitflag_list["[round(value / 24)]"] |= (1 << (value % 24)); \
 			}; \
-			GLOB.bitflag_lists[txt_signature] = new_bitflag_list; \
+			target = GLOB.bitflag_lists[txt_signature] = new_bitflag_list; \
 		}; \
-		target = GLOB.bitflag_lists[txt_signature]; \
 	} while (FALSE)

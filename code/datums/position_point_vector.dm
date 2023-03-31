@@ -1,14 +1,3 @@
-//Designed for things that need precision trajectories like projectiles.
-//Don't use this for anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
-
-//You might see places where it does - 16 - 1. This is intentionally 17 instead of 16, because of how byond's tiles work and how not doing it will result in rounding errors like things getting put on the wrong turf.
-
-#define RETURN_PRECISE_POSITION(A) new /datum/position(A)
-#define RETURN_PRECISE_POINT(A) new /datum/point(A)
-
-#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
-#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
-
 /proc/point_midpoint_points(datum/point/a, datum/point/b) //Obviously will not support multiZ calculations! Same for the two below.
 	var/datum/point/P = new
 	P.x = a.x + (b.x - a.x) * 0.5
@@ -23,7 +12,7 @@
 	return ATAN2((b.y - a.y), (b.x - a.x))
 
 /// For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
-/datum/position	
+/datum/position
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -68,7 +57,7 @@
 	return new /datum/point(src)
 
 /// A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
-/datum/point		
+/datum/point
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -83,7 +72,7 @@
 	return p
 
 /// First argument can also be a /datum/position or /atom.
-/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0)	
+/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0)
 	if(istype(_x, /datum/position))
 		var/datum/position/P = _x
 		_x = P.x
@@ -110,7 +99,7 @@
 
 /datum/point/proc/debug_out()
 	var/turf/T = return_turf()
-	return "\ref[src] aX [x] aY [y] aZ [z] pX [return_px()] pY [return_py()] mX [T.x] mY [T.y] mZ [T.z]"
+	return "[text_ref(src)] aX [x] aY [y] aZ [z] pX [return_px()] pY [return_py()] mX [T.x] mY [T.y] mZ [T.z]"
 
 /datum/point/proc/move_atom_to_src(atom/movable/AM)
 	AM.forceMove(return_turf())
@@ -134,11 +123,11 @@
 
 /datum/point/vector
 	/// Pixels per iteration
-	var/speed = 32				
+	var/speed = 32
 	var/iteration = 0
 	var/angle = 0
 	/// Calculated x movement amounts to prevent having to do trig every step.
-	var/mpx = 0					
+	var/mpx = 0
 	/// Calculated y movement amounts to prevent having to do trig every step.
 	var/mpy = 0
 	var/starting_x = 0 //just like before, pixels from EDGE of map! This is set in initialize_location().
@@ -158,7 +147,7 @@
 	starting_z = z
 
 /// Same effect as initiliaze_location, but without setting the starting_x/y/z
-/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0) 
+/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	if(!isnull(tile_x))
 		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
 	if(!isnull(tile_y))

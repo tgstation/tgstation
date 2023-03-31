@@ -9,12 +9,14 @@
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
+	///category for plumbing RCD
+	category="Synthesizers"
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

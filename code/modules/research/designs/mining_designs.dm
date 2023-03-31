@@ -26,6 +26,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/pickaxe
+	name = "Pickaxe"
+	id = "pickaxe"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/pickaxe
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
@@ -123,7 +134,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/damage_mod/borg
-	id = "damagemod_b"
+	id = "borg_upgrade_damagemod"
 	build_type = MECHFAB
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -143,7 +154,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/cooldown_mod/borg
-	id = "cooldownmod_b"
+	id = "borg_upgrade_cooldownmod"
 	build_type = MECHFAB
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -163,7 +174,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/range_mod/borg
-	id = "rangemod_b"
+	id = "borg_upgrade_rangemod"
 	build_type = MECHFAB
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -183,9 +194,21 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/hyperaccelerator/borg
-	id = "hypermod_b"
+	id = "borg_upgrade_hypermod"
 	build_type = MECHFAB
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mining_scanner
+	name = "Mining Scanner"
+	id = "mining_scanner"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver = 1000)
+	build_path = /obj/item/t_scanner/adv_mining_scanner/lesser
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+

@@ -1,0 +1,5 @@
+help: "Please replace it with a normal conveyor belt."
+/obj/machinery/conveyor/inverted:
+  banned_variables:
+    dir:
+      deny: [1, 2, 4, 8]

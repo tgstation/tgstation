@@ -37,8 +37,10 @@
 	if(hallucinator.client)
 
 		fake_broken_wall = image('icons/turf/floors.dmi', wall_source, "plating", layer = TURF_LAYER)
+		SET_PLANE_EXPLICIT(fake_broken_wall, FLOOR_PLANE, wall_source)
 		fake_broken_wall.override = TRUE
 		fake_rune = image('icons/effects/96x96.dmi', target_landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+		SET_PLANE_EXPLICIT(fake_rune, FLOOR_PLANE, wall_source)
 
 		hallucinator.client?.images |= fake_broken_wall
 		hallucinator.client?.images |= fake_rune
@@ -49,7 +51,7 @@
 		to_chat(hallucinator, pick(hallucination_lines))
 
 	var/obj/effect/client_image_holder/hallucination/bubblegum/fake_bubbles = new(wall_source, hallucinator, src)
-	addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, target_landing_turf), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(charge_loop), fake_bubbles, target_landing_turf), 1 SECONDS)
 	return TRUE
 
 /**
@@ -89,7 +91,7 @@
 		QDEL_IN(src, 3 SECONDS)
 
 	else
-		addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, landing_turf), 0.2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(charge_loop), fake_bubbles, landing_turf), 0.2 SECONDS)
 
 /// Fake bubblegum hallucination effect for the oh yeah hallucination
 /obj/effect/client_image_holder/hallucination/bubblegum

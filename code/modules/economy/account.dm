@@ -5,6 +5,8 @@
 	var/account_holder = "Rusty Venture"
 	///How many credits are currently held in the bank account.
 	var/account_balance = 0
+	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
+	var/mining_points = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.
@@ -133,11 +135,11 @@
 		if(istype(from, /datum/bank_account/department))
 			reason_to = "Nanotrasen: Salary"
 			reason_from = ""
-		
+
 		if(transfer_reason)
 			reason_to = istype(src, /datum/bank_account/department) ? "" : transfer_reason
 			reason_from = transfer_reason
-		
+
 		adjust_money(amount, reason_to)
 		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
@@ -180,7 +182,7 @@
  * This sends a local chat message to the owner of a bank account, on all ID cards registered to the bank_account.
  * If not held, sends out a message to all nearby players.
  * Arguments:
- * * message - text that will be sent to listeners after the id card icon 
+ * * message - text that will be sent to listeners after the id card icon
  * * force - if TRUE ignore checks on client and client prefernces.
  */
 /datum/bank_account/proc/bank_card_talk(message, force)
@@ -281,7 +283,7 @@
 /datum/bank_account/proc/add_log_to_history(adjusted_money, reason)
 	if(transaction_history.len >= 20)
 		transaction_history.Cut(1,2)
-	
+
 	transaction_history += list(list(
 		"adjusted_money" = adjusted_money,
 		"reason" = reason,

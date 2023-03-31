@@ -6,6 +6,8 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a nightmare, aiming to darken the station."
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1

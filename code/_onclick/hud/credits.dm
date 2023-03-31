@@ -53,7 +53,7 @@
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)
 	target = M
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/FadeOut), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(FadeOut)), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
 	QDEL_IN(src, CREDIT_ROLL_SPEED)
 	if(parent)
 		parent.screen += src
@@ -68,3 +68,9 @@
 
 /atom/movable/screen/credit/proc/FadeOut()
 	animate(src, alpha = 0, transform = target, time = CREDIT_EASE_DURATION)
+
+#undef CREDIT_ANIMATE_HEIGHT
+#undef CREDIT_EASE_DURATION
+#undef CREDIT_ROLL_SPEED
+#undef CREDIT_SPAWN_SPEED
+#undef CREDITS_PATH
