@@ -63,6 +63,7 @@
 			/datum/reagent/medicine/mine_salve,
 			/datum/reagent/medicine/c2/multiver,
 			/datum/reagent/fuel/oil,
+			/datum/reagent/medicine/haloperidol,
 		),
 		list( //level 5
 			/datum/reagent/medicine/synaptizine,
