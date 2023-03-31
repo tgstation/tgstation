@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
 "c" = (
 /obj/structure/cable,
 /obj/structure/grille,
@@ -18,6 +22,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
+/area/deathmatch/fullbright)
+"h" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"i" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
 /area/deathmatch/fullbright)
 "k" = (
 /obj/structure/cable,
@@ -47,10 +59,25 @@
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
+"s" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"t" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
 "w" = (
 /obj/structure/cable,
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"z" = (
+/obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
 "A" = (
@@ -75,6 +102,10 @@
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
+"H" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
 "I" = (
 /obj/structure/grille,
 /obj/structure/cable,
@@ -87,8 +118,28 @@
 	},
 /turf/open/floor/plating/airless,
 /area/deathmatch/fullbright)
+"M" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"P" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
 "Q" = (
 /obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"R" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"U" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/deathmatch/fullbright)
 "V" = (
@@ -186,10 +237,10 @@ l
 A
 A
 A
-A
-A
-A
-A
+H
+z
+P
+b
 A
 A
 Z
@@ -201,11 +252,11 @@ m
 m
 l
 A
-A
+i
 A
 A
 Q
-A
+U
 A
 A
 A
@@ -219,11 +270,11 @@ m
 l
 A
 A
+b
 A
 A
-A
-A
-A
+U
+i
 A
 A
 D
@@ -237,10 +288,10 @@ l
 A
 A
 A
+R
 A
 A
-A
-A
+M
 A
 A
 D
@@ -259,7 +310,7 @@ A
 A
 A
 A
-A
+b
 D
 m
 m
@@ -268,9 +319,9 @@ m
 m
 m
 l
+b
 A
-A
-A
+h
 A
 A
 A
@@ -284,10 +335,10 @@ m
 (11,1,1) = {"
 m
 m
-k
+t
 A
 A
-A
+i
 A
 A
 A
@@ -307,10 +358,10 @@ A
 A
 A
 Q
+b
 A
-A
-A
-A
+i
+R
 D
 m
 m
@@ -321,7 +372,7 @@ m
 o
 A
 A
-A
+s
 A
 A
 A

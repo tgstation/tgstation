@@ -8,6 +8,11 @@
 	},
 /turf/open/space/basic,
 /area/deathmatch)
+"aQ" = (
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood/random,
+/turf/open/indestructible,
+/area/deathmatch)
 "bI" = (
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/indestructible,
@@ -42,11 +47,14 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "ho" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass,
 /area/deathmatch)
 "hB" = (
 /turf/closed/indestructible/fakedoor,
+/area/deathmatch)
+"hD" = (
+/obj/item/flashlight/glowstick/red,
+/turf/open/indestructible,
 /area/deathmatch)
 "hN" = (
 /obj/structure/lattice,
@@ -58,8 +66,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "iC" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/table/reinforced,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/indestructible,
 /area/deathmatch)
 "jc" = (
@@ -92,6 +99,11 @@
 	dir = 1
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch)
+"kA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/glowstick,
 /turf/open/indestructible,
 /area/deathmatch)
 "lA" = (
@@ -164,12 +176,14 @@
 "sV" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
+/obj/item/food/grown/banana,
 /turf/open/indestructible,
 /area/deathmatch)
 "sX" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/pestle,
 /turf/open/indestructible,
 /area/deathmatch)
 "tT" = (
@@ -180,6 +194,7 @@
 /area/deathmatch)
 "vB" = (
 /obj/machinery/light/small/directional/east,
+/obj/item/clothing/head/utility/welding,
 /turf/open/indestructible,
 /area/deathmatch)
 "wi" = (
@@ -225,19 +240,19 @@
 /area/deathmatch)
 "Dh" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/mob_spawn/human/engineer/rig,
 /turf/open/space/basic,
 /area/template_noop)
+"Dl" = (
+/obj/structure/closet/crate/coffin,
+/obj/item/storage/fancy/candle_box,
+/obj/item/clothing/under/costume/skeleton,
+/turf/open/indestructible,
+/area/deathmatch)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/indestructible,
-/area/deathmatch)
-"Er" = (
-/obj/item/clothing/head/welding,
-/obj/structure/table/reinforced,
 /turf/open/indestructible,
 /area/deathmatch)
 "Ew" = (
@@ -293,11 +308,12 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Hp" = (
-/obj/item/reagent_containers/pill/maintenance,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/pill/maintenance,
 /turf/open/indestructible,
 /area/deathmatch)
 "HE" = (
@@ -311,6 +327,10 @@
 "It" = (
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 /obj/effect/turf_decal/box,
+/turf/open/indestructible,
+/area/deathmatch)
+"ID" = (
+/obj/item/flashlight/glowstick/pink,
 /turf/open/indestructible,
 /area/deathmatch)
 "Kt" = (
@@ -331,22 +351,31 @@
 /obj/structure/table/reinforced,
 /turf/open/indestructible,
 /area/deathmatch)
+"LB" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/clothing/neck/heretic_focus,
+/obj/item/knife/shiv,
+/obj/item/trash/boritos,
+/obj/item/trash/candy,
+/turf/open/indestructible,
+/area/deathmatch)
 "LJ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
+/turf/open/indestructible,
+/area/deathmatch)
+"LN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/small/directional/north,
 /turf/open/indestructible,
 /area/deathmatch)
 "Mt" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible,
 /area/deathmatch)
-"MC" = (
-/obj/effect/mob_spawn/human/corpse/assistant,
-/turf/open/space/basic,
-/area/template_noop)
 "Na" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
+/obj/item/stock_parts/cell,
 /turf/open/indestructible,
 /area/deathmatch)
 "Ns" = (
@@ -407,12 +436,6 @@
 /area/deathmatch)
 "Qr" = (
 /obj/structure/closet/wardrobe,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/template_noop)
-"Qs" = (
-/obj/structure/lattice,
 /turf/open/space/basic,
 /area/template_noop)
 "QN" = (
@@ -430,6 +453,13 @@
 /obj/structure/rack,
 /turf/open/indestructible,
 /area/deathmatch)
+"Rn" = (
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/wrench/caravan,
+/obj/item/stack/sticky_tape,
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka,
+/turf/open/indestructible,
+/area/deathmatch)
 "Su" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box,
@@ -442,8 +472,8 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Tu" = (
-/obj/machinery/light/small/directional/north,
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/indestructible,
 /area/deathmatch)
 "TB" = (
@@ -452,8 +482,8 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "TP" = (
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/machinery/door/airlock/public/glass,
+/obj/structure/table/reinforced,
+/obj/machinery/light/small/directional/south,
 /turf/open/indestructible,
 /area/deathmatch)
 "Un" = (
@@ -475,6 +505,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/item/flashlight/glowstick/blue,
 /turf/open/indestructible,
 /area/deathmatch)
 "XC" = (
@@ -649,7 +680,7 @@ Ij
 Ij
 Ij
 aD
-cn
+Dl
 lN
 cn
 pZ
@@ -666,7 +697,7 @@ cn
 sk
 nQ
 mS
-cn
+Rn
 aD
 Ij
 Ij
@@ -680,8 +711,8 @@ Ij
 Ij
 Ij
 aD
-iC
 aD
+TP
 aD
 aD
 aD
@@ -696,8 +727,8 @@ aD
 aD
 aD
 aD
+LN
 aD
-Tu
 aD
 Ij
 Ij
@@ -711,7 +742,7 @@ Ij
 Ij
 Ij
 aD
-cn
+iC
 mS
 nQ
 cn
@@ -728,7 +759,7 @@ nQ
 cn
 ih
 mS
-cn
+LB
 aD
 Ij
 Ij
@@ -742,7 +773,7 @@ Ij
 Ij
 Ij
 aD
-ho
+mZ
 aD
 aD
 aD
@@ -758,8 +789,8 @@ aD
 mZ
 aD
 aD
+sl
 aD
-TP
 aD
 Ij
 Ij
@@ -907,7 +938,7 @@ Ij
 Ij
 Ij
 aD
-jc
+kA
 aD
 jY
 PW
@@ -1021,7 +1052,7 @@ cn
 cn
 cn
 ho
-cn
+hD
 aD
 cn
 aD
@@ -1136,7 +1167,7 @@ ho
 Ij
 Ij
 ga
-MC
+Ij
 "}
 (22,1,1) = {"
 Ij
@@ -1212,7 +1243,7 @@ aD
 nS
 aD
 wi
-Er
+Tu
 Gi
 cn
 Na
@@ -1341,7 +1372,7 @@ aD
 Hd
 nQ
 cn
-cn
+ID
 cn
 cn
 ho
@@ -1428,7 +1459,7 @@ Ij
 Ij
 Ij
 aD
-mZ
+aQ
 cn
 cn
 jc
@@ -1468,7 +1499,6 @@ aD
 ga
 ga
 ga
-Qs
 ga
 ga
 ga
@@ -1476,7 +1506,8 @@ ga
 ga
 ga
 ga
-Qs
+ga
+ga
 ga
 "}
 (33,1,1) = {"

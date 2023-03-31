@@ -3,7 +3,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/deathmatch/fullbright)
 "c" = (
-/turf/open/floor/mineral/abductor,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/deathmatch/fullbright)
+"e" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/circuit/green,
 /area/deathmatch/fullbright)
 "q" = (
 /obj/machinery/door/airlock/titanium/glass,
@@ -12,25 +18,64 @@
 "u" = (
 /turf/template_noop,
 /area/template_noop)
+"v" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/deathmatch/fullbright)
+"y" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/circuit/green,
+/area/deathmatch/fullbright)
+"A" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/deathmatch/fullbright)
+"B" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/deathmatch/fullbright)
 "C" = (
-/turf/open/floor/circuit/red/anim,
+/turf/open/floor/circuit/green,
 /area/deathmatch/fullbright)
 "D" = (
 /turf/closed/indestructible/alien,
 /area/deathmatch/fullbright)
+"E" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/deathmatch/fullbright)
 "F" = (
 /obj/effect/landmark/deathmatch_player_spawn,
+/obj/machinery/light/floor,
 /turf/open/floor/vault/alien,
 /area/deathmatch/fullbright)
 "H" = (
 /turf/open/floor/vault/alien,
+/area/deathmatch/fullbright)
+"I" = (
+/obj/machinery/light,
+/turf/open/floor/vault/alien,
+/area/deathmatch/fullbright)
+"L" = (
+/obj/machinery/light,
+/turf/open/floor/circuit/green,
 /area/deathmatch/fullbright)
 "N" = (
 /obj/machinery/door/airlock/titanium/glass,
 /turf/open/floor/plating/abductor2,
 /area/deathmatch/fullbright)
 "Y" = (
-/turf/open/floor/plating/abductor2,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/deathmatch/fullbright)
 
 (1,1,1) = {"
@@ -205,14 +250,14 @@ a
 a
 H
 H
-H
+I
 a
 Y
 Y
 Y
 Y
 a
-H
+E
 H
 H
 a
@@ -234,7 +279,7 @@ H
 H
 H
 H
-H
+B
 H
 H
 H
@@ -247,7 +292,7 @@ H
 H
 H
 H
-H
+B
 H
 H
 H
@@ -296,16 +341,7 @@ D
 H
 H
 a
-H
-H
-H
-H
-a
-H
-H
-H
-H
-H
+E
 H
 H
 H
@@ -314,6 +350,15 @@ H
 H
 H
 H
+H
+H
+H
+H
+a
+H
+H
+H
+I
 a
 H
 H
@@ -332,16 +377,16 @@ H
 H
 H
 a
+E
 H
 H
-H
+v
 C
 C
-C
-C
+v
 H
 H
-H
+I
 a
 H
 H
@@ -363,9 +408,9 @@ H
 H
 H
 a
-H
+B
 F
-H
+C
 C
 a
 q
@@ -374,7 +419,7 @@ a
 C
 H
 F
-H
+B
 a
 H
 H
@@ -391,7 +436,7 @@ u
 D
 H
 H
-H
+A
 H
 H
 H
@@ -399,18 +444,18 @@ H
 H
 C
 a
-a
+c
+c
 c
 c
 a
-a
+C
 C
 H
 H
 H
 H
-H
-H
+A
 H
 H
 D
@@ -430,12 +475,12 @@ H
 H
 C
 a
-a
 c
 c
 c
 c
-a
+c
+c
 a
 C
 H
@@ -459,18 +504,18 @@ Y
 a
 H
 H
-C
+L
 a
+c
+c
+c
+c
+c
+c
+c
+c
 a
-c
-c
-c
-c
-c
-c
-a
-a
-C
+y
 H
 H
 a
@@ -555,18 +600,18 @@ Y
 a
 H
 H
-C
+L
 a
+c
+c
+c
+c
+c
+c
+c
+c
 a
-c
-c
-c
-c
-c
-c
-a
-a
-C
+y
 H
 H
 a
@@ -590,12 +635,12 @@ H
 H
 C
 a
-a
 c
 c
 c
 c
-a
+c
+c
 a
 C
 H
@@ -615,7 +660,7 @@ u
 D
 H
 H
-H
+B
 H
 H
 H
@@ -623,18 +668,18 @@ H
 H
 C
 a
-a
+c
+c
 c
 c
 a
-a
+C
 H
 H
 H
 H
 H
-H
-H
+B
 H
 H
 D
@@ -651,18 +696,18 @@ H
 H
 H
 a
-H
+A
 F
-H
+C
 C
 a
 q
 q
 a
 C
-H
+C
 F
-H
+A
 a
 H
 H
@@ -684,16 +729,16 @@ H
 H
 H
 a
+E
 H
 H
-H
+e
 C
 C
-C
-C
+e
 H
 H
-H
+I
 a
 H
 H
@@ -712,16 +757,7 @@ D
 H
 H
 a
-H
-H
-H
-H
-a
-H
-H
-H
-H
-H
+E
 H
 H
 H
@@ -730,6 +766,15 @@ H
 H
 H
 H
+H
+H
+H
+H
+a
+H
+H
+H
+I
 a
 H
 H
@@ -778,7 +823,7 @@ H
 H
 H
 H
-H
+A
 H
 H
 H
@@ -791,7 +836,7 @@ H
 H
 H
 H
-H
+A
 H
 H
 H
@@ -813,14 +858,14 @@ a
 a
 H
 H
-H
+I
 a
 Y
 Y
 Y
 Y
 a
-H
+E
 H
 H
 a
