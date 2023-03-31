@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Actually fixes re-attaching heads unintentionally sending brains to the gem room this time. For realsies."
