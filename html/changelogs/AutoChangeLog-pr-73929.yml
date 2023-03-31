@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "On IceBox, there shouldn't be wires looping under the walls near the vault anymore."

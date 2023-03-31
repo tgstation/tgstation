@@ -70,7 +70,6 @@
 	///A sound sent when the mob dies, with the *deathgasp emote
 	var/death_sound
 
-
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
 	var/fire_stacks = 0
@@ -223,3 +222,6 @@
 	// Multiple imaginary friends!
 	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
 	var/list/imaginary_group = null
+
+	/// What our current gravity state is. Used to avoid duplicate animates and such
+	var/gravity_state = null

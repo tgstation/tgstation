@@ -26,3 +26,13 @@
 	falloff_exponent = 10
 	falloff_distance = 1
 	volume = 5
+
+/datum/looping_sound/chainsaw
+	start_sound = list('sound/weapons/chainsaw_start.ogg' = 1)
+	start_length = 0.85 SECONDS
+	mid_sounds = list('sound/weapons/chainsaw_loop.ogg' = 1)
+	mid_length = 0.85 SECONDS
+	end_sound = list('sound/weapons/chainsaw_stop.ogg' = 1)
+	end_volume = 35
+	volume = 40
+	ignore_walls = FALSE
