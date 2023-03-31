@@ -52,9 +52,8 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
-								span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
-				return COMPONENT_CANCEL_ATTACK_CHAIN
+				return 
+
 			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 

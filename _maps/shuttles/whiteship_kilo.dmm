@@ -63,14 +63,14 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "eE" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -91,9 +91,6 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "fL" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -105,6 +102,9 @@
 	},
 /obj/item/organ/internal/stomach,
 /obj/item/trash/syndi_cakes,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -163,9 +163,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/engine)
 "ig" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -175,6 +172,9 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	pixel_y = -24
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
@@ -215,12 +215,12 @@
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 6
 	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
@@ -268,9 +268,6 @@
 /turf/open/floor/bamboo,
 /area/shuttle/abandoned/bar)
 "lg" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes{
 	dir = 9
@@ -280,6 +277,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
@@ -571,7 +571,6 @@
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "zu" = (
-/obj/effect/turf_decal/tile/brown,
 /obj/machinery/cell_charger,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -579,6 +578,7 @@
 	pixel_y = 7;
 	pixel_x = 5
 	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -739,11 +739,11 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "Jd" = (
-/obj/effect/turf_decal/tile/brown,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/gum/happiness,
 /obj/item/stack/cable_coil/five,
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -767,12 +767,12 @@
 /obj/item/food/sausage,
 /obj/item/reagent_containers/cup/glass/bottle/beer,
 /obj/item/food/sandwich,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 10
 	},
 /obj/machinery/light/warm/no_nightlight/directional/north,
 /obj/item/food/grown/potato,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/cafeteria{
 	dir = 1
 	},
