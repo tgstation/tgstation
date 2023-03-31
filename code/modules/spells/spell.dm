@@ -328,21 +328,26 @@
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()
+	//lists can be sent by reference, a string would be sent by value
+	var/list/invocation_list = list(invocation)
+	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, invocation_list)
+	var/used_invocation = invocation_list[1]
+
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
 			if(prob(50))
-				owner.say(invocation, forced = "spell ([src])")
+				owner.say(used_invocation, forced = "spell ([src])")
 			else
-				owner.say(replacetext(invocation," ","`"), forced = "spell ([src])")
+				owner.say(replacetext(used_invocation," ","`"), forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
 			if(prob(50))
-				owner.whisper(invocation, forced = "spell ([src])")
+				owner.whisper(used_invocation, forced = "spell ([src])")
 			else
-				owner.whisper(replacetext(invocation," ","`"), forced = "spell ([src])")
+				owner.whisper(replacetext(used_invocation," ","`"), forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			owner.visible_message(invocation, invocation_self_message)
+			owner.visible_message(used_invocation, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)

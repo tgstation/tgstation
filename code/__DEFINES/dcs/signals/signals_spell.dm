@@ -29,6 +29,8 @@
 #define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
 /// Sent from /datum/action/cooldown/spell/reset_spell_cooldown() to the spell: ()
 #define COMSIG_SPELL_CAST_RESET "spell_cast_reset"
+/// Sent from /datum/action/cooldown/spell/proc/invocation() to the mob: (datum/source, list/invocation)
+#define COMSIG_MOB_PRE_INVOCATION "spell_pre_invocation"
 
 // Spell type signals
 

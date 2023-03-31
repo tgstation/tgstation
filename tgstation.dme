@@ -2662,6 +2662,7 @@
 #include "code\modules\antagonists\wizard\slaughter_antag.dm"
 #include "code\modules\antagonists\wizard\wizard.dm"
 #include "code\modules\antagonists\wizard\equipment\artefact.dm"
+#include "code\modules\antagonists\wizard\equipment\chuunibyou.dm"
 #include "code\modules\antagonists\wizard\equipment\enchanted_clown_suit.dm"
 #include "code\modules\antagonists\wizard\equipment\soulstone.dm"
 #include "code\modules\antagonists\wizard\equipment\wizard_spellbook.dm"
