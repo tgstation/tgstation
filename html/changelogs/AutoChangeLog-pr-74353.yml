@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Some sound related messages from Iv drips, turrets, and the nuke toy are now audible to the blind / hidden from the deaf"
