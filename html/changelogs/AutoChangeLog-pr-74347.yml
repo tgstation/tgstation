@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Fugitive team backstories will now be selected with consideration to the number of people who sign up."
+  - qol: "Fugitives can no longer spawn in atmos-unsafe areas."
