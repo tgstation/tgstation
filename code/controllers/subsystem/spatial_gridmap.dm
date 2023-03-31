@@ -505,7 +505,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
 
-		#ifdef UNIT_TEST
+		#ifdef UNIT_TESTS
 
 		var/input_cell_cords = "([input_cell.x], [input_cell.y], [input_cell.z])"
 
