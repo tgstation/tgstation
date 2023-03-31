@@ -248,6 +248,10 @@
 	icon_state = "unexplored"
 	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
+/area/icemoon/underground/unexplored/no_rivers
+	icon_state = "norivers"
+	map_generator = /datum/map_generator/cave_generator/icemoon
+
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 	map_generator = /datum/map_generator/cave_generator/icemoon
