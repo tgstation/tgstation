@@ -23,6 +23,7 @@
 #_maps/shuttles/emergency_goon.dmm
 #_maps/shuttles/emergency_imfedupwiththisworld.dmm
 #_maps/shuttles/emergency_lance.dmm
+#_maps/shuttles/emergency_loadsamoney.dmm
 #_maps/shuttles/emergency_luxury.dmm
 #_maps/shuttles/emergency_meteor.dmm
 #_maps/shuttles/emergency_raven.dmm
