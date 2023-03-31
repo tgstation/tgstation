@@ -24,12 +24,13 @@
 	)
 	category = CAT_MISC
 
-/datum/crafting_recipe/corppaperslip
+/datum/crafting_recipe/corporate_paper_slip
 	name = "Corporate Plastic Card"
 	result = /obj/item/paper/paperslip/corporate
 	time = 3 SECONDS
-	reqs = list(/obj/item/paper/paperslip = 1,
-				/obj/item/stack/sheet/plastic = 3
+	reqs = list(
+		/obj/item/paper/paperslip = 1,
+		/obj/item/stack/sheet/plastic = 3,
 	)
 	tool_paths = list(/obj/item/stamp/captain)
 	category = CAT_MISC

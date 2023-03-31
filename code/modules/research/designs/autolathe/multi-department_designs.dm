@@ -6,7 +6,7 @@
 	build_path = /obj/item/flashlight
 	category = list(
 		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
 	)
 
 /datum/design/crowbar
@@ -547,7 +547,7 @@
 	build_path = /obj/item/universal_scanner
 	category = list(
 		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -557,10 +557,10 @@
 	id = "biscuit"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = 20)
-	build_path = /obj/item/folder/biscuit/not_sealed
+	build_path = /obj/item/folder/biscuit/unsealed
 	category = list(
 		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
 
@@ -570,10 +570,10 @@
 	id = "confidental_biscuit"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = 30)
-	build_path = /obj/item/folder/biscuit/not_sealed/confidental
+	build_path = /obj/item/folder/biscuit/unsealed/confidental
 	category = list(
 		RND_CATEGORY_HACKED,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
 

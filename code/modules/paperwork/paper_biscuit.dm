@@ -1,6 +1,6 @@
 /obj/item/folder/biscuit
 	name = "\proper biscuit card"
-	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	desc = "An biscuit card. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit"
 	bg_color = "#ffffff"
 	w_class = WEIGHT_CLASS_TINY
@@ -11,8 +11,9 @@
 	var/cracked = FALSE
 
 /obj/item/folder/biscuit/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] tries to eat the 'biscuit'! [user.p_theyre()] trying to commit suicide!"))
-	return TOXLOSS
+	user.visible_message(span_suicide("[user] tries to eat the paper biscuit! [user.p_theyre()] trying to commit suicide!"))
+	playsound(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg', 40, TRUE) //Don't eat plastic cards kids, they get really sharp if you chew on them.
+	return BRUTELOSS
 
 /obj/item/folder/biscuit/update_overlays()
 	. = ..()
@@ -27,6 +28,11 @@
 		return TRUE
 	balloon_alert(user, "unopened!")
 	return FALSE
+
+/obj/item/folder/biscuit/examine()
+	. = ..()
+	if(!cracked)
+		. += span_notice("To reach contents you need to crack it open.")
 
 //All next is done so you can't reach contents, or put any new contents when its not cracked open
 /obj/item/folder/biscuit/remove_item(obj/item/item, mob/user)
@@ -50,28 +56,24 @@
 /obj/item/folder/biscuit/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!cracked)
-		if (tgui_alert(user, "Do you want to crack it open? You cannot close it back.", "Biscuit card", list("Yes", "No")) == "Yes")
-			cracked = TRUE
-			playsound(get_turf(user), 'sound/effects/wounds/crack1.ogg', 60)
-			icon_state = "[icon_state]_cracked"
-			update_appearance()
+		if (tgui_alert(user, "Do you want to crack it open? You cannot uncrack back.", "Biscuit card", list("Yes", "No")) != "Yes")
 			return
-		else
-			return
-	if (cracked)
-		ui_interact(user)
-		return
+		cracked = TRUE
+		playsound(get_turf(user), 'sound/effects/wounds/crack1.ogg', 60)
+		icon_state = "[icon_state]_cracked"
+		update_appearance()
 
+	ui_interact(user)
 //Corporate "confidental" biscuit cards
 /obj/item/folder/biscuit/confidental
 	name = "\proper confidental biscuit card"
-	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_secret"
 	bg_color = "#355e9f"
 
 /obj/item/folder/biscuit/confidental/spare_id_safe_code
 	name = "\proper spare ID safe code biscuit card"
-	desc = "An biscuit card containing confidental spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	desc = "An biscuit card containing confidental spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. Has label which says <b>DO NOT DIGEST</b>."
 
 /obj/item/folder/biscuit/confidental/spare_id_safe_code/Initialize(mapload)
 	. = ..()
@@ -79,45 +81,43 @@
 
 /obj/item/folder/biscuit/confidental/emergency_spare_id_safe_code
 	name = "\proper spare emergency ID safe code biscuit card"
-	desc = "An biscuit card containing <i>not so confidental</i> emergency spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	desc = "An biscuit card containing <i>not so confidental</i> emergency spare ID safe code. In a tasteful blue color with NT logo, looks like a chocolate bar. Has label which says <b>DO NOT DIGEST</b>."
 
 /obj/item/folder/biscuit/confidental/emergency_spare_id_safe_code/Initialize(mapload)
 	. = ..()
 	new /obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code(src)
 
 //Biscuits which start not-sealed/cracked initially for the crafting, printing and such
-/obj/item/folder/biscuit/not_sealed
+/obj/item/folder/biscuit/unsealed
 	name = "\proper biscuit card"
-	desc = "An biscuit card. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
+	desc = "An biscuit card. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_cracked"
-	///What is the sprite for when its not cracked? As it starts already cracked, and for re-sealing needs to have a sprite
-	var/not_cracked_icon = "paperbiscuit"
 	cracked = TRUE
 	///Was the biscuit already sealed by players? To prevent several tgui alerts
 	var/sealed = FALSE
+	///What is the sprite for when its not cracked? As it starts already cracked, and for re-sealing needs to have a sprite
+	var/not_cracked_icon = "paperbiscuit"
 
-/obj/item/folder/biscuit/not_sealed/examine()
+/obj/item/folder/biscuit/unsealed/examine()
 	. = ..()
 	if(!sealed)
-		. += span_notice("This one have never been sealed yet. Put in any contents to seal it by pressing it in hand. After sealing the only way to reach contents is by cracking it which is irreversible.")
+		. += span_notice("This one have not been sealed yet. You many insert anything to seal it by pressing it in hand. Once sealed, the contents are inaccessible until cracked open (irreversible).")
 
-//Se
-/obj/item/folder/biscuit/not_sealed/attack_self(mob/user)
+//Asks if you want to seal the biscuit, after you do that it behaves like normal paper biscuit.
+/obj/item/folder/biscuit/unsealed/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!sealed)
-		if (tgui_alert(user, "Do you want to seal it? After sealing the only way to reach the contents is by cracking the biscuit, you cannot re-seal it again after that.", "Biscuit card", list("Yes", "No")) == "Yes")
-			cracked = FALSE
-			sealed = TRUE
-			playsound(get_turf(user), 'sound/items/duct_tape_snap.ogg', 60)
-			icon_state = "[not_cracked_icon]"
-			update_appearance()
+		if (tgui_alert(user, "Do you want to seal it? After sealing the only way to reach the contents is by cracking the biscuit, you cannot re-seal it again after that.", "Biscuit card", list("Yes", "No")) != "Yes")
 			return
-		else
-			return
-	if (sealed)
-		return ..()
+		cracked = FALSE
+		sealed = TRUE
+		playsound(get_turf(user), 'sound/items/duct_tape_snap.ogg', 60)
+		icon_state = "[not_cracked_icon]"
+		update_appearance()
 
-/obj/item/folder/biscuit/not_sealed/confidental
+	return ..()
+
+/obj/item/folder/biscuit/unsealed/confidental
 	name = "\proper confidental biscuit card"
 	desc = "An confidental biscuit card. In a tasteful blue color with NT logo, looks like a chocolate bar. To reach contents you need to crack it open. Has label which says <b>DO NOT DIGEST</b>."
 	icon_state = "paperbiscuit_secret_cracked"
