@@ -33,9 +33,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 
-/client/Topic(href, href_list, hsrc)
+//the undocumented 4th argument is for ?[0x\ref] style topic links. hsrc is set to the reference and anything after the ] gets put into hsrc_command
+/client/Topic(href, href_list, hsrc, hsrc_command)
 	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
+
+#ifndef TESTING	
+	if (lowertext(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
+		return 
+#endif
 
 	// asset_cache
 	var/asset_cache_job
