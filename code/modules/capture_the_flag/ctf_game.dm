@@ -33,6 +33,7 @@
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
+	///Var that holds a copy of ctf_gear so that if instagib mode is enabled (overwritting ctf_gear) it can be reverted with this var.
 	var/list/default_gear
 	///The powerup dropped when a player spawned by this controller dies.
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
