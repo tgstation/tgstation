@@ -203,23 +203,24 @@
 	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
 
 	if(flashed.stat == DEAD)
-		return
-	else if(flashed.stat != CONSCIOUS)
-		to_chat(source, span_warning("[flashed.p_they(TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
-		return
+		return .
+	if(flashed.stat != CONSCIOUS)
+		to_chat(source, span_warning("[flashed.p_they(capitalized = TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
+		return .
 
 	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
-		return
+		return .
 
 	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
 		if(holiday_meme_chance)
 			INVOKE_ASYNC(src, PROC_REF(_async_holiday_meme_say), flashed)
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
-
 	else
 		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
+
+	return .
 
 /// Used / called async from [proc/on_flash] to deliver a funny meme line
 /datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)

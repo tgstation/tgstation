@@ -13,7 +13,7 @@
 	var/datum/antagonist/rev/head/lead_datum = leader.mind.add_antag_datum(/datum/antagonist/rev/head)
 	var/datum/team/revolution/revolution = lead_datum.get_team()
 
-	var/obj/item/assembly/flash/handheld/converter = new()
+	var/obj/item/assembly/flash/handheld/converter = allocate(/obj/item/assembly/flash/handheld)
 	leader.put_in_active_hand(converter, forced = TRUE)
 	leader.ClickOn(peasant)
 
