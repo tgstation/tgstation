@@ -105,6 +105,53 @@
 	overlay_state_prefix = "plasma"
 	mineral_name = "plasma"
 	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
+	/// What do we multiply our damage by to convert it into power?
+	var/power_multiplier = 5
+	/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
+	var/burn_multiplier = 0.05
+
+/datum/status_effect/golem/plasma/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
+	var/mob/living/carbon/human/human_owner = owner
+	if (istype(human_owner))
+		human_owner.physiology.burn_mod *= burn_multiplier
+	return TRUE
+
+/datum/status_effect/golem/plasma/on_remove()
+	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+	var/mob/living/carbon/human/human_owner = owner
+	if (istype(human_owner))
+		human_owner.physiology.burn_mod /= burn_multiplier
+	return ..()
+
+/// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
+/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+	if(damagetype != BURN)
+		return
+
+	var/power = damage * power_multiplier
+	var/obj/machinery/power/energy_accumulator/ground = get_closest_atom(/obj/machinery/power/energy_accumulator, view(4, owner), owner)
+	if (ground)
+		zap_effect(ground)
+		ground.zap_act(damage, ZAP_GENERATES_POWER)
+		return
+	var/area/our_area = get_area(owner)
+	var/obj/machinery/power/apc/our_apc = our_area.apc
+	if (!our_apc)
+		return
+	zap_effect(our_apc)
+	our_apc.cell?.give(power)
+
+/// Shoot a beam at the target atom
+/datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
+	owner.Beam(target, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+	playsound(owner, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 
 /// Makes you spaceproof
 /datum/status_effect/golem/plasteel
@@ -112,11 +159,33 @@
 	mineral_name = "plasteel"
 	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
 
-/// Makes you reflect projectiles
+/datum/status_effect/golem/plasteel/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/golem/plasteel/on_remove()
+	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+/// Makes you reflect energy projectiles
 /datum/status_effect/golem/gold
 	overlay_state_prefix = "gold"
 	mineral_name = "gold"
 	applied_fluff = "Shining plates form across your body. You feel reflective!"
+
+/datum/status_effect/golem/gold/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.flags_ricochet = RICOCHET_SHINY
+	return TRUE
+
+/datum/status_effect/golem/gold/on_remove()
+	owner.flags_ricochet = NONE
+	return ..()
 
 /// Makes you hard to see
 /datum/status_effect/golem/diamond

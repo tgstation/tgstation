@@ -375,6 +375,7 @@
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf)
+	face_direction = face_direction ? face_direction : get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
 	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
 	var/a_incidence_s = abs(incidence_s)
