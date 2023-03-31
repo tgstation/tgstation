@@ -49,6 +49,9 @@
 		/area/station/ai_monitored/turret_protected/ai,
 	)
 	for(var/area/start_area as anything in start_areas)
+		var/area/area_instance = GLOB.areas_by_type[start_area]
+		if(isnull(area_instance))
+			continue
 		crawl_area(GLOB.areas_by_type[start_area])
 
 	for(var/area/missed as anything in station_areas_remaining)
