@@ -74,3 +74,7 @@
 /obj/effect/mob_spawn/corpse/human/bartender
 	name = "Bartender"
 	outfit = /datum/outfit/spacebartender
+
+/obj/effect/mob_spawn/corpse/human/prisoner
+	name = "Prisoner"
+	outfit = /datum/outfit/job/prisoner

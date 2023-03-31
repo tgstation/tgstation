@@ -537,6 +537,11 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	network_root_id = STATION_NETWORK_ROOT
 
+// CRASHED PRISON SHUTTLE
+/area/ruin/space/prison_shuttle
+	name = "\improper Crashed Prisoner Shuttle"
+
+
 //ABANDONED BOX WHITESHIP
 
 /area/ruin/space/has_grav/whiteship/box

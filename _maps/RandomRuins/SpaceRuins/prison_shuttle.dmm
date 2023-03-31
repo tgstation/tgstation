@@ -1,0 +1,430 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"br" = (
+/obj/structure/closet/secure_closet/contraband{
+	name = "confiscation locker"
+	},
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/random/contraband/prison,
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"bV" = (
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"ei" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"fe" = (
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"gw" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"hG" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet/red/airless,
+/area/template_noop)
+"hO" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"kX" = (
+/turf/closed/indestructible/opshuttle,
+/area/template_noop)
+"lD" = (
+/turf/closed/mineral/random/stationside/asteroid,
+/area/template_noop)
+"lG" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"mu" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"mO" = (
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"oE" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"oS" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/template_noop)
+"pT" = (
+/turf/template_noop,
+/area/template_noop)
+"ql" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"qV" = (
+/turf/closed/wall/mineral/titanium,
+/area/template_noop)
+"sS" = (
+/mob/living/simple_animal/hostile/asteroid/basilisk{
+	environment_smash = 0
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"uc" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/mob_spawn/corpse/human/prisoner,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"ui" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/template_noop,
+/area/template_noop)
+"uw" = (
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"wz" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"Ca" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/template_noop)
+"Cc" = (
+/obj/structure/girder/reinforced,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"Ch" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"Ci" = (
+/obj/structure/closet/secure_closet/security,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"Dg" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"Ds" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/prisoner,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"DD" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"Ej" = (
+/obj/structure/table/reinforced,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/template_noop)
+"FZ" = (
+/turf/open/floor/carpet/red/airless,
+/area/template_noop)
+"GA" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"Ki" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/template_noop)
+"Ln" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+"Mq" = (
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"Oa" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/template_noop)
+"Oy" = (
+/obj/machinery/light/broken/directional/south,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"OK" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"RM" = (
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"RT" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/misc/asteroid/airless,
+/area/template_noop)
+"Ty" = (
+/obj/machinery/modular_computer/console,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/template_noop)
+"TO" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"VV" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/template_noop,
+/area/template_noop)
+"Wz" = (
+/obj/structure/girder/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"Yg" = (
+/mob/living/basic/cockroach,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/template_noop)
+
+(1,1,1) = {"
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+qV
+qV
+qV
+qV
+qV
+ui
+pT
+pT
+Ca
+Ki
+"}
+(2,1,1) = {"
+pT
+Wz
+bV
+pT
+Cc
+qV
+qV
+qV
+Ci
+Mq
+br
+qV
+qV
+qV
+qV
+Ca
+Ki
+"}
+(3,1,1) = {"
+pT
+bV
+lD
+Cc
+hG
+Ej
+OK
+qV
+lG
+Mq
+RM
+qV
+Ds
+wz
+Ln
+Ca
+Ki
+"}
+(4,1,1) = {"
+bV
+lD
+lD
+oS
+bV
+FZ
+RT
+TO
+Mq
+Mq
+Mq
+Ch
+gw
+gw
+Yg
+ei
+pT
+"}
+(5,1,1) = {"
+bV
+lD
+lD
+oS
+Ty
+mu
+Oy
+qV
+qV
+Ch
+kX
+qV
+Yg
+DD
+gw
+ei
+pT
+"}
+(6,1,1) = {"
+bV
+lD
+lD
+lD
+lD
+lD
+bV
+oE
+Mq
+RM
+Mq
+qV
+ql
+hO
+uc
+Ca
+Ki
+"}
+(7,1,1) = {"
+bV
+lD
+lD
+lD
+lD
+Cc
+Cc
+qV
+mO
+Mq
+GA
+qV
+qV
+qV
+qV
+Ca
+Ki
+"}
+(8,1,1) = {"
+bV
+lD
+lD
+lD
+lD
+bV
+pT
+qV
+qV
+Oa
+qV
+qV
+VV
+pT
+pT
+Ca
+Ki
+"}
+(9,1,1) = {"
+pT
+bV
+fe
+fe
+sS
+Dg
+Dg
+uw
+pT
+pT
+uw
+uw
+pT
+pT
+pT
+pT
+pT
+"}
+(10,1,1) = {"
+uw
+uw
+Dg
+Dg
+Dg
+Dg
+uw
+uw
+uw
+uw
+uw
+uw
+pT
+pT
+pT
+pT
+pT
+"}
+(11,1,1) = {"
+uw
+uw
+uw
+uw
+Dg
+uw
+uw
+uw
+uw
+uw
+uw
+uw
+pT
+pT
+pT
+pT
+pT
+"}
