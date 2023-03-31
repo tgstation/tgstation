@@ -33,17 +33,22 @@
 	. = ..()
 	UnregisterSignal(parent, COMSIG_ATOM_HITBY)
 
-/datum/component/artifact/repulsor/proc/pulse(datum/source,atom/movable/thrown)
+/datum/component/artifact/repulsor/proc/pulse(datum/source,atom/movable/thrown, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(!active || !COOLDOWN_FINISHED(src,cooldown))
 		return
 	var/owner_turf = get_turf(holder)
-	for(var/atom/movable/throwee in oview(range,holder))
-		if(throwee.anchored)
-			continue
-		if(attract)
-			throwee.safe_throw_at(holder, strength / 3000, 1, force = strength)
-		else
-			var/throwtarget = get_edge_target_turf(get_turf(throwee), get_dir(owner_turf, get_step_away(throwee, owner_turf)))
-			throwee.safe_throw_at(throwtarget, strength / 3000, 1, force = strength)
+	var/real_cooldown_time = cooldown_time
+	if(isnull(thrown))
+		for(var/atom/movable/throwee in oview(range,holder))
+			if(throwee.anchored)
+				continue
+			if(attract)
+				throwee.safe_throw_at(holder, strength / 3000, 1, force = strength)
+			else
+				var/throwtarget = get_edge_target_turf(get_turf(throwee), get_dir(owner_turf, get_step_away(throwee, owner_turf)))
+				throwee.safe_throw_at(throwtarget, strength / 3000, 1, force = strength)
+	else if(throwingdatum?.thrower)
+		real_cooldown_time = real_cooldown_time / 4
+		thrown.safe_throw_at(throwingdatum.thrower, get_dist(holder, throwingdatum.thrower), 1, force = strength)
 	COOLDOWN_START(src,cooldown,cooldown_time)

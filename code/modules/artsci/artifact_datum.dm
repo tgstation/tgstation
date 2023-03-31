@@ -77,7 +77,7 @@
 		valid_triggers -= selection
 		triggers += new selection()
 		trigger_amount--
-	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE)
+	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
 	setup()
 //Seperate from initialize, for artifact inheritance funnies
 /datum/component/artifact/proc/setup()
@@ -86,11 +86,8 @@
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 
 /datum/component/artifact/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(Destroyed))
-	if(isitem(parent)) // if we registered both on an item it would call twice..
-		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(Touched))
-	else
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(Touched))
+	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_PARENT_QDELETING), PROC_REF(Artifact_Destroyed))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(Touched))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_by))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -130,10 +127,10 @@
 	holder.cut_overlay(act_effect)
 	effect_deactivate()
 
-/datum/component/artifact/proc/Destroyed(atom/source, silent=FALSE)
+/datum/component/artifact/proc/Artifact_Destroyed(atom/source, silent=FALSE)
 	SIGNAL_HANDLER
 	//UnregisterSignal(holder, COMSIG_IN_RANGE_OF_IRRADIATION)
-	if(!silent)
+	if(!silent && !QDELETED(holder))
 		holder.loc.visible_message(span_warning("[holder] [artifact_origin.destroy_message]"))
 	Deactivate(silent=TRUE)
 	if(!QDELETED(holder))

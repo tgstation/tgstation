@@ -54,7 +54,7 @@
 	else
 		payload()
 
-/datum/component/artifact/bomb/Destroyed(silent=FALSE)
+/datum/component/artifact/bomb/Artifact_Destroyed(silent=FALSE)
 	. = ..()
 	if(active)
 		payload()
@@ -88,7 +88,7 @@
 	if(!..())
 		return FALSE
 	explosion(holder, devast,heavy,light,light*1.5)
-	Destroyed(silent = TRUE)
+	Artifact_Destroyed(silent=TRUE)
 
 /obj/structure/artifact/bomb/devastating
 	assoc_comp = /datum/component/artifact/bomb/explosive/devastating
