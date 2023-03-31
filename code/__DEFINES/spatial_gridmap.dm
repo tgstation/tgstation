@@ -23,7 +23,7 @@
 #ifdef UNIT_TESTS
 #define UPDATE_GRID_METADATA(movable_or_list, cell) \
 	do { \
-		var/list/_definitely_list = movable_or_list
+		var/list/_definitely_list = movable_or_list; \
 		if(!istype(movable_or_list, /list)) { \
 			_definitely_list = list(movable_or_list) \
 		} \
