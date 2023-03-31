@@ -67,6 +67,9 @@
 		changed_spell = TRUE
 	if(spell.invocation == initial(spell.invocation))
 		spell.invocation = chuunibyou_invocations[spell.school]
+		if(!spell.invocation) // someone forgot to update the CHUUNI LIST to include a desc for the new school
+			stack_trace("Chunnibyou invocations is missing a line for spell school \"[spell.school]\"")
+			spell.invocation = chuunibyou_invocations[SCHOOL_UNSET]
 	if(changed_spell)
 		//they can't invoke it verbally, perhaps?
 		if(!spell.can_cast_spell(feedback = TRUE))
