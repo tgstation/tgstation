@@ -210,6 +210,10 @@
 
 //Ruin of ancient Space Station (OldStation)
 
+/area/ruin/space/has_grav/abandoned_meta_perma
+	name = "\improper Runaway Prisoner Ship"
+//Ruin of Abandoned Meta Perma
+
 /area/ruin/space/ancientstation
 	icon_state = "oldstation"
 
