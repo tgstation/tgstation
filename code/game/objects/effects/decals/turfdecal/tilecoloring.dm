@@ -27,18 +27,15 @@ GLOBAL_LIST_INIT(rainbow_colors, list(
 	return ..()
 
 /// Given an atom, will return what color it should be to match the pride flag.
-/obj/effect/turf_decal/proc/pride_recolor(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return GLOB.rainbow_colors[(turf.y % GLOB.rainbow_colors.len) + 1]
+/obj/effect/turf_decal/proc/pride_recolor()
+	return GLOB.rainbow_colors[(y % GLOB.rainbow_colors.len) + 1]
 
 /// Tram needs x-axis aligned tiles
-/obj/effect/turf_decal/tile/neutral/tram/pride_recolor(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return GLOB.rainbow_colors[(turf.x % GLOB.rainbow_colors.len) + 1]
+/obj/effect/turf_decal/tile/neutral/tram/pride_recolor()
+	return GLOB.rainbow_colors[(x % GLOB.rainbow_colors.len) + 1]
 
-/obj/effect/turf_decal/trimline/tram/pride_recolor(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return GLOB.rainbow_colors[(turf.x % GLOB.rainbow_colors.len) + 1]
+/obj/effect/turf_decal/trimline/tram/pride_recolor()
+	return GLOB.rainbow_colors[(x % GLOB.rainbow_colors.len) + 1]
 
 /// Automatically generates all subtypes for a decal with the given path.
 #define TILE_DECAL_SUBTYPE_HELPER(path)\
