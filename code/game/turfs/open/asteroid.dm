@@ -194,6 +194,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
+/// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_flags = NO_RUINS
+
 /turf/open/lava/plasma/ice_moon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/ice_moon
