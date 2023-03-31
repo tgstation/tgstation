@@ -236,7 +236,7 @@
 			QDEL_NULL(soup_smoke)
 			if(isnull(particle_type))
 				return
-			// melbert todo: sidemap memes
+			// this gets badly murdered by sidemap
 			soup_smoke = new(parent, particle_type)
 			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
 		return

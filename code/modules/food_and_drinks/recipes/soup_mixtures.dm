@@ -11,7 +11,6 @@
 	fallback_icon = 'icons/obj/food/soupsalad.dmi'
 	fallback_icon_state = "bowl"
 	restaurant_order = /datum/custom_order/reagent/soup
-	// melbert todo : soups need colors
 
 /**
  * ## Soup base chemical reaction.
@@ -182,7 +181,7 @@
 
 	LAZYNULL(pot.added_ingredients)
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
-	// BLACKBOX_LOG_FOOD_MADE(type) // Melbert todo uncomment before merge
+	BLACKBOX_LOG_FOOD_MADE(type)
 
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
 	var/datum/reagents/ingredient_pool = ingredient.reagents
@@ -686,8 +685,7 @@
 
 /datum/chemical_reaction/food/soup/clownstears
 	required_reagents = list(
-		/datum/reagent/water = 40,
-		/datum/reagent/lube = 10,
+		/datum/reagent/lube = 30,
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/banana = 1,
@@ -698,7 +696,6 @@
 		/datum/reagent/consumable/banana = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 12,
 		/datum/reagent/lube = 5,
-		/datum/reagent/water = 5, // Melbert todo: Bananas have potassium
 	)
 	percentage_of_nutriment_converted = 0 // Bananas have a small amount of nutrition naturally
 
@@ -768,7 +765,7 @@
 		/datum/reagent/consumable/blackpepper = 5,
 	)
 	required_ingredients = list(
-		/obj/item/food/monkeycube = 1, // Melbert todo: Monkey powder + water?
+		/obj/item/food/monkeycube = 1, // This will make a monkey if a batch of 2 is made
 		/obj/item/food/grown/banana = 1,
 	)
 	results = list(
