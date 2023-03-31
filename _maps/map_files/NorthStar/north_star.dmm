@@ -683,7 +683,7 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port/aft)
 "aiL" = (
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "aiN" = (
@@ -1914,6 +1914,9 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -4112,9 +4115,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet{
-	name = "Contrband Storage";
-	req_one_access_txt = "1"
+/obj/structure/closet{
+	name = "Contraband Locker"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
@@ -6842,13 +6844,12 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bHw" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Gravity Generator Room";
-	req_access_txt = "19;23"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Tech"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "bHL" = (
@@ -9030,6 +9031,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "clJ" = (
@@ -13426,10 +13428,8 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Head of Security's Office"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "dAi" = (
@@ -19476,6 +19476,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "fnM" = (
@@ -22286,7 +22287,7 @@
 "gbZ" = (
 /obj/structure/bodycontainer/crematorium{
 	dir = 8;
-	id = "crematoriumChapel"
+	id = "crematorium_chapel"
 	},
 /turf/open/floor/mineral/silver,
 /area/station/service/chapel/funeral)
@@ -26144,6 +26145,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "hhX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "hio" = (
@@ -27115,6 +27119,9 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "hwL" = (
 /obj/structure/chair/office{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -28932,9 +28939,7 @@
 /obj/structure/chair/plastic{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "hXu" = (
@@ -31478,13 +31483,13 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "iLJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/any/medical/virology,
 /obj/machinery/door/airlock/virology/glass{
 	name = "Test Subject Cell";
 	req_access_txt = "0"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/any/medical/virology,
 /turf/open/floor/noslip,
 /area/station/medical/virology)
 "iLZ" = (
@@ -33140,7 +33145,7 @@
 	pixel_y = 7
 	},
 /obj/item/radio/intercom/chapel/directional/south,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/monastery)
 "jjC" = (
 /obj/effect/mapping_helpers/airlock/access/any/medical/psychology,
@@ -34001,8 +34006,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "jwo" = (
@@ -50492,9 +50497,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/red,
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -51465,7 +51467,8 @@
 	id = "AI Chamber entrance shutters";
 	name = "AI Chamber Entrance Shutters Control";
 	pixel_x = -24;
-	req_access_txt = "16"
+	req_access = list("ai_upload");
+	req_access_txt = null
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -52971,9 +52974,7 @@
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "ooP" = (
@@ -55412,6 +55413,9 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
@@ -59040,7 +59044,7 @@
 /area/station/security/execution/transfer)
 "qcS" = (
 /obj/structure/chair/stool/bamboo,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/office)
 "qcW" = (
 /obj/machinery/computer/shuttle/mining{
@@ -59461,10 +59465,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Gravity Generator Room";
-	req_access_txt = "19;23"
+	name = "Gravity Generator"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/floor1/port/aft)
 "qjn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61986,7 +61989,7 @@
 	pixel_y = 7
 	},
 /obj/item/radio/intercom/chapel/directional/south,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/office)
 "qPu" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -63350,10 +63353,8 @@
 /turf/open/floor/plating,
 /area/station/construction)
 "rhi" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access_txt = "25"
-	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/closet/secure_closet/bar,
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
 "rhs" = (
@@ -66260,7 +66261,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "scK" = (
@@ -71881,7 +71881,7 @@
 "tKY" = (
 /obj/structure/chair/stool/bamboo,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/monastery)
 "tLa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73566,10 +73566,8 @@
 /area/station/medical/abandoned)
 "ulj" = (
 /obj/machinery/button/crematorium{
-	id = "crematoriumChapel";
-	pixel_x = -5;
-	pixel_y = 26;
-	req_access_txt = "27"
+	id = "crematorium_chapel";
+	pixel_y = 27
 	},
 /turf/open/floor/carpet/orange,
 /area/station/service/chapel/funeral)
@@ -75411,8 +75409,10 @@
 /obj/structure/sign/painting{
 	pixel_x = 32
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "uOM" = (
@@ -76818,10 +76818,9 @@
 /area/station/command/heads_quarters/cmo)
 "viA" = (
 /obj/machinery/door/morgue{
-	name = "Confession Booth (Chaplain)";
-	req_access_txt = "22"
+	name = "Confession Booth"
 	},
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/office)
 "viL" = (
 /obj/effect/turf_decal/trimline/purple/line{
@@ -77676,13 +77675,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
 "vuf" = (
-/obj/structure/closet/secure_closet/contraband/armory,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/contraband/cannabis,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/spawner/random/contraband/armory,
 /obj/effect/spawner/random/contraband,
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access = list("armory")
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vug" = (
@@ -80460,7 +80462,6 @@
 	},
 /area/station/security/prison)
 "wiu" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/chapel/office)
@@ -80549,9 +80550,6 @@
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "wiT" = (
@@ -80632,6 +80630,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
+"wkv" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/brig)
 "wkw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -82092,6 +82099,7 @@
 /area/station/science/breakroom)
 "wDh" = (
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "wDi" = (
@@ -83062,7 +83070,7 @@
 /obj/machinery/door/morgue{
 	name = "Confession Booth"
 	},
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/small,
 /area/station/service/chapel/monastery)
 "wOu" = (
 /obj/structure/cable,
@@ -85536,7 +85544,8 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Console";
 	pixel_x = 24;
-	req_access_txt = list("virology")
+	req_access = list("virology");
+	
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /turf/open/floor/iron/white,
@@ -319605,7 +319614,7 @@ guF
 jiM
 dSF
 sLA
-kTI
+wkv
 kTI
 eWl
 ycM
