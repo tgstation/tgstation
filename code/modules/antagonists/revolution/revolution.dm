@@ -208,11 +208,11 @@
 		to_chat(source, span_warning("[flashed.p_they(TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
 		return
 
-	if(!flashed.mind || !flashed.client)
+	if(isnull(flashed.mind) || !GET_CLIENT(flashed.client))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
 		return
 
-	var/holiday_meme_chance = check_holiday(APRIL_FOOLS) && prob(10)
+	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
 		if(holiday_meme_chance)
 			INVOKE_ASYNC(src, .proc/_async_holiday_meme_say, flashed)

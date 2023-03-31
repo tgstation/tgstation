@@ -279,7 +279,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
 	var/mob/living/carbon/human/human_convertee = convertee
 
-	if(check_holiday(APRIL_FOOLS) && prob(10))
+	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
 			human_convertee.force_say()
