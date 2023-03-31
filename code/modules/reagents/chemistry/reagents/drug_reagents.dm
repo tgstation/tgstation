@@ -754,6 +754,7 @@
 	description = "A chemical extract originating from the Saturn-X compound, stabilized and safer for tactical use. After the recipe was discovered it was planned to be put into mass production, but the program fell apart after its lead disappeared and was never seen again."
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	overdose_threshold = 60
+	addiction_types = list(/datum/addiction/maintenance_drugs = 35)
 
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
