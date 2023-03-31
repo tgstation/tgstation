@@ -174,7 +174,7 @@
 
 /obj/item/reagent_containers/cup/soup_pot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
 	. = ..()
-	if(. && LAZYLEN(added_ingredients))
+	if(!. && LAZYLEN(added_ingredients))
 		// Clearing reagents Will do this for us already, but if we have no reagents this is a failsafe
 		dump_ingredients()
 
