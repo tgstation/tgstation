@@ -16,6 +16,8 @@
 
 /datum/status_effect/golem/on_apply()
 	. = ..()
+	if (!ishuman(owner))
+		return FALSE
 	if (owner.has_status_effect(/datum/status_effect/golem) )
 		return FALSE
 	if (applied_fluff)
@@ -117,16 +119,14 @@
 	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
-	if (istype(human_owner))
-		human_owner.physiology.burn_mod *= burn_multiplier
+	human_owner.physiology.burn_mod *= burn_multiplier
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
-	if (istype(human_owner))
-		human_owner.physiology.burn_mod /= burn_multiplier
+	human_owner.physiology.burn_mod /= burn_multiplier
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
@@ -192,6 +192,62 @@
 	overlay_state_prefix = "diamond"
 	mineral_name = "diamonds"
 	applied_fluff = "Sparkling gems bend light around you. You feel stealthy!"
+	tick_interval = 0.25 SECONDS
+	/// Alpha to remove per second while stood still
+	var/alpha_per_tick = 25
+	/// Alpha to apply while moving
+	var/moving_alpha = 150
+	/// List of arms we have updated
+	var/list/modified_arms
+
+/datum/status_effect/golem/diamond/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	owner.alpha = moving_alpha
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
+
+	var/mob/living/carbon/carbon_owner = owner
+	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
+		if (arm.limb_id != SPECIES_GOLEM)
+			continue
+		LAZYADD(modified_arms, WEAKREF(arm))
+		set_arm_fluff(arm)
+	return TRUE
+
+/datum/status_effect/golem/diamond/tick(delta_time, times_fired)
+	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
+
+/// Reset alpha to starting value
+/datum/status_effect/golem/diamond/proc/on_move()
+	SIGNAL_HANDLER
+	owner.alpha = moving_alpha
+
+/// Make our arm do slashing effects
+/datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
+	arm.unarmed_attack_verb = "slash"
+	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
+	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
+	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/datum/status_effect/golem/diamond/on_remove()
+	owner.alpha = initial(owner.alpha)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	for (var/datum/weakref/weak_arm as anything in modified_arms)
+		reset_arm_fluff(weak_arm.resolve())
+	LAZYCLEARLIST(modified_arms)
+	return ..()
+
+/// Make our arm do whatever it originally did
+/datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
+	if (!arm)
+		return
+	arm.unarmed_attack_verb = initial(arm.unarmed_attack_verb)
+	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
+	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
+	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium

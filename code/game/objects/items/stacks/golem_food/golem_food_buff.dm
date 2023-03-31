@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 
 /datum/golem_food_buff/diamond
 	status_effect = /datum/status_effect/golem/diamond
-	added_info = "If consumed this mineral will reflact light around you, making you harder to see."
+	added_info = "If consumed this mineral will reflact light around you, making you faster and harder to see."
 
 /datum/golem_food_buff/titanium
 	status_effect = /datum/status_effect/golem/titanium
