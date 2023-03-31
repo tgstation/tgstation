@@ -164,14 +164,17 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
+	base_icon_state = "bowl"
 	reagent_flags = OPENCONTAINER | DUNKABLE
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
+	fill_icon_thresholds = list(0)
+	fill_icon_state = "fullbowl"
+	fill_icon = 'icons/obj/food/soupsalad.dmi'
 
 	volume = SOUP_SERVING_SIZE + 5
 	gulp_size = 3
-	// melbert todo: give soup bowls a generic filled overlay
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
@@ -185,6 +188,13 @@
 		base_container_type = /obj/item/reagent_containers/cup/bowl, \
 	)
 
+/obj/item/reagent_containers/cup/bowl/on_cup_change(datum/glass_style/style)
+	. = ..()
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/cup/bowl/on_cup_reset()
+	. = ..()
+	fill_icon_thresholds ||= list(0)
 
 /**
  * Override standard reagent examine

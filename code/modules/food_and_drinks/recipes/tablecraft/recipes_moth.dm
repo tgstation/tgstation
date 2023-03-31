@@ -360,32 +360,32 @@
 // Soups
 
 /datum/crafting_recipe/food/reaction/soup/cottonball
-	name = "flöfrölenmæsch (cottonball soup)"
+	name = "Flöfrölenmæsch (cottonball soup)"
 	reaction = /datum/chemical_reaction/food/soup/cottonball
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/cheese
-	name = "ælosterrmæsch (cheese soup)"
+	name = "Ælosterrmæsch (cheese soup)"
 	reaction = /datum/chemical_reaction/food/soup/cheese
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/seed
-	name = "misklmæsch (seed soup)"
+	name = "Misklmæsch (seed soup)"
 	reaction = /datum/chemical_reaction/food/soup/seed
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/beans
-	name = "prickeldröndolhaskl (spicy bean stew)"
+	name = "Prickeldröndolhaskl (spicy bean stew)"
 	reaction = /datum/chemical_reaction/food/soup/beans
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/moth_oats
-	name = "häfmisklhaskl (oat stew)"
+	name = "Häfmisklhaskl (oat stew)"
 	reaction = /datum/chemical_reaction/food/soup/moth_oats
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/fire_soup
-	name = "tömpröttkrakklmæsch (heartburn soup)"
+	name = "Tömpröttkrakklmæsch (heartburn soup)"
 	reaction = /datum/chemical_reaction/food/soup/fire_soup
 	category = CAT_MOTH
 
@@ -398,7 +398,7 @@
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/red_porridge
-	name = "eltsløsk ül a priktæolk (red porridge and yoghurt)"
+	name = "Eltsløsk ül a priktæolk (red porridge and yoghurt)"
 	reaction = /datum/chemical_reaction/food/soup/red_porridge
 	category = CAT_MOTH
 
@@ -411,6 +411,6 @@
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/reaction/soup/chili_con_carne
-	name = "chili sin carne (vegetarian chili)"
+	name = "Chili Sin Carne (Vegetarian Chili)"
 	reaction = /datum/chemical_reaction/food/soup/chili_con_carne
 	category = CAT_MOTH

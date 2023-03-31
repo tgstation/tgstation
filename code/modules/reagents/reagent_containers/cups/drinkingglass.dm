@@ -36,12 +36,12 @@
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
 
-/// Having our icon state change removes fill thresholds
+// Having our icon state change removes fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
 	. = ..()
 	fill_icon_thresholds = null
 
-/// And having our icon reset restores our fill thresholds
+// And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
 	. = ..()
 	fill_icon_thresholds ||= list(0)
