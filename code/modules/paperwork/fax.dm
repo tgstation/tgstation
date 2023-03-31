@@ -57,7 +57,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
 	if (!fax_id)
-		fax_id = SSnetworks.assign_random_name()
+		fax_id = assign_random_name()
 	if (!fax_name)
 		fax_name = "Unregistered fax " + fax_id
 	wires = new /datum/wires/fax(src)

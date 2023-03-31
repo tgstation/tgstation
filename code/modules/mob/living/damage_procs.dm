@@ -185,12 +185,12 @@
 	if(!forced)
 		if(status_flags & GODMODE)
 			return
-			
-		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
 				return
-		else 
+		else
 			if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
 				return
 	. = oxyloss
@@ -203,12 +203,12 @@
 	if(!forced)
 		if(status_flags & GODMODE)
 			return
-		
-		var/obj/item/organ/internal/lungs/affected_lungs = getorganslot(ORGAN_SLOT_LUNGS)
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(affected_lungs))
 			if(!(mob_respiration_type & required_respiration_type))
 				return
-		else 
+		else
 			if(!(affected_lungs.respiration_type & required_respiration_type))
 				return
 	. = oxyloss
@@ -284,7 +284,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organtype)
 	return
 
-/mob/living/proc/getOrganLoss(slot)
+/mob/living/proc/get_organ_loss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()
