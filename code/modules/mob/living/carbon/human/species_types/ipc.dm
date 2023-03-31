@@ -22,6 +22,7 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/surplus,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/surplus,
 	)
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	mutantheart = /obj/item/organ/internal/lungs/cybernetic/tier2
 	mutantliver = /obj/item/organ/internal/liver/cybernetic/tier2
 	mutantears = /obj/item/organ/internal/ears/cybernetic
@@ -59,7 +60,7 @@
 	head.dismember()
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/human/former_ipc, datum/species/new_species, pref_load)
-	UnregisterSignal(head, COMSIG_CARBON_UNEQUIP_HAT)
+	UnregisterSignal(former_ipc, COMSIG_CARBON_UNEQUIP_HAT)
 	former_ipc.dropItemToGround(head, force = TRUE)
 	head = null
 	return ..()

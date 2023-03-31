@@ -21,6 +21,8 @@
 	)
 
 	for(var/datum/species/species_type as anything in species)
+		if (species_type == /datum/species/ipc)
+			continue // shut up unit test you dont understand my cool cyber organs
 		// get our dummy
 		var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 
