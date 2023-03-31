@@ -67,7 +67,7 @@
 		return
 
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
-	message_admins("[key_name_admin(src)] replied to [key_name_admin(human_recipient ? human_recipient : silicon_recipient)]'s [sender] message with: \"[input]\"")
+	message_admins("[key_name_admin(src)] replied to [key_name_admin(target]'s [sender] message with: \"[input]\"")
 	target.balloon_alert(target, "you hear a voice")
 	to_chat(target, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
 
