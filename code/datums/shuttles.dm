@@ -368,6 +368,14 @@
 	admin_notes = "Seriously big, even larger than the Delta shuttle."
 	credit_cost = CARGO_CRATE_VALUE * 20
 
+/datum/map_template/shuttle/emergency/companionship
+	suffix = "companionship"
+	name = "NTSS Companionship"
+	description = "A disused shuttle built for a still classified Nanotrasen ran experiment. Rather than let it sit in the boneyard, corporate decided stations can use it \
+	for evacuation during emergencies, for a price of course. While the information behind its construction is classified, what we can tell you is that its a shuttle but... \
+	with all* of the amenities of a full station."
+	credit_cost = CARGO_CRATE_VALUE * 20
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
