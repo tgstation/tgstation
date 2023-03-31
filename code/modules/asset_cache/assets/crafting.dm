@@ -39,7 +39,7 @@
 	icon_file ||= initial(preview_item.icon_preview) || initial(preview_item.icon)
 	icon_state ||= initial(preview_item.icon_state_preview) || initial(preview_item.icon_state)
 
-	if(PERFORM_ALL_TESTS(/datum/unit_test/focus_only/bad_cooking_crafting_icons))
+	if(PERFORM_ALL_TESTS(focus_only/bad_cooking_crafting_icons))
 		if(!icon_exists(icon_file, icon_state, scream = TRUE))
 			return
 
