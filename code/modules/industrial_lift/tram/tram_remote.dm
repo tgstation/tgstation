@@ -1,7 +1,7 @@
 #define TRAMCTRL_INBOUND "inbound"
 #define TRAMCTRL_OUTBOUND "outbound"
-#define TRAMCTRL_SAFE "safe"
 #define TRAMCTRL_FAST "fast"
+#define TRAMCTRL_SAFE "safe"
 
 /obj/item/tram_remote
 	icon_state = "tramremote_nis"
@@ -132,3 +132,5 @@
 
 #undef TRAMCTRL_INBOUND
 #undef TRAMCTRL_OUTBOUND
+#undef TRAMCTRL_FAST
+#undef TRAMCTRL_SAFE
