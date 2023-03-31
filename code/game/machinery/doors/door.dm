@@ -212,6 +212,7 @@
 
 	if(requiresID() && allowed(user))
 		open()
+		jumpscare(user)
 	else
 		do_animate("deny")
 
@@ -467,6 +468,16 @@
 /obj/machinery/door/proc/update_freelook_sight()
 	if(!glass && GLOB.cameranet)
 		GLOB.cameranet.updateVisibility(src, 0)
+
+/obj/machinery/door/proc/jumpscare(mob/victim)
+	var/victim_dir = get_dir(get_turf(victim), loc)
+	var/turf/opposite_turf = get_step(loc, victim_dir)
+	var/list/turf/opposite_tiles = opposite_turf.atmos_adjacent_turfs
+	for(var/turf/turf in opposite_tiles)
+		var/mob/scarer = locate(/mob/living) in  turf
+		if(scarer?.has_light_nearby())
+			playsound(loc, 'sound/effects/pz-jumpscare.ogg', vol = 300)
+			return
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
