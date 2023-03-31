@@ -65,6 +65,14 @@
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
 
+/datum/map_template/ruin/space/derelict_construction
+	id = "derelict_construction"
+	suffix = "derelict_construction.dmm"
+	name = "Derelict Construction"
+	description = "Construction supplies are in high demand due to non-trivial damage routinely sustained by most space stations in this sector. \
+	Space pirates who dont attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
+	equipment back to the highest bidder."
+
 /datum/map_template/ruin/space/derelict_sulaco
 	id = "derelict_sulaco"
 	suffix = "derelict_sulaco.dmm"
@@ -356,11 +364,18 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/atmosastroidruin
+	id = "atmosasteroidruin"
+	suffix = "atmosasteroidruin.dmm"
+	name = "Atmos Asteroid"
+	description = "A dead atmos tech in a continuously pressurizing ruin."
+
 /datum/map_template/ruin/space/massdriverrouter
 	id = "fasttravel"
 	suffix = "fasttravel.dmm"
 	name = "Mass driver Router"
 	description = "An old, still functional router for some long destroyed system."
+
 
 /datum/map_template/ruin/space/prey_pod
 	id = "prey"
