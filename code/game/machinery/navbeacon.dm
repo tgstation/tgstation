@@ -12,12 +12,18 @@
 	max_integrity = 500
 	armor_type = /datum/armor/machinery_navbeacon
 
-	var/open = FALSE // true if cover is open
-	var/locked = TRUE // true if controls are locked
+	/// true if cover is open
+	var/open = FALSE
+	/// true if controls are locked
+	var/locked = TRUE
+	/// frequency used by the robots
 	var/freq = FREQ_NAV_BEACON
-	var/location = "" // location response text
-	var/list/codes // assoc. list of transponder codes
-	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	/// location response text
+	var/location = ""
+	/// assoc. list of transponder codes
+	var/list/codes
+	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	var/codes_txt = ""
 
 	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
@@ -49,7 +55,7 @@
 		GLOB.navbeacons["[new_turf?.z]"] += src
 	return ..()
 
-// set the transponder codes assoc list from codes_txt
+///Set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
 	if(!codes_txt)
 		return
@@ -67,12 +73,14 @@
 		else
 			codes[e] = "1"
 
+///Removes the nav beacon from the global beacon lists
 /obj/machinery/navbeacon/proc/glob_lists_deregister()
 	if (GLOB.navbeacons["[z]"])
 		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	GLOB.deliverybeacontags -= location
 
+///Registers the navbeacon to the global beacon lists
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
@@ -86,7 +94,6 @@
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-// update the icon_state
 /obj/machinery/navbeacon/update_icon_state()
 	icon_state = "[base_icon_state][open]"
 	return ..()
