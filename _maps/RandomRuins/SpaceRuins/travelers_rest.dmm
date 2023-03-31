@@ -222,7 +222,6 @@
 /area/ruin/space/has_grav/travelers_rest)
 "xk" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/window/brigdoor{
 	dir = 1
 	},
@@ -534,9 +533,6 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Yd" = (
 /obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/ruin/space/has_grav/travelers_rest)
