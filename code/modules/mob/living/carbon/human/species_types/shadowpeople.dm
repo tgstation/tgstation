@@ -14,7 +14,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
 	)
-	inherent_factions = list("faithless")
+	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
 	mutantbrain = /obj/item/organ/internal/brain/shadow

@@ -11,13 +11,13 @@
 /// Numerical define for dangerous severity advanced virus
 #define ADV_DISEASE_DANGEROUS 5
 /// Percentile for low severity advanced virus
-#define ADV_RNG_LOW 30
+#define ADV_RNG_LOW 40
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
 /// Percentile for low transmissibility advanced virus
-#define ADV_SPREAD_LOW 30
+#define ADV_SPREAD_LOW 15
 /// Percentile for mid transmissibility advanced virus
-#define ADV_SPREAD_MID 90
+#define ADV_SPREAD_MID 85
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -29,7 +29,7 @@
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/disease_outbreak
+	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
@@ -59,28 +59,32 @@
 			continue
 		disease_candidates += candidate
 
-/datum/event_admin_setup/disease_outbreak
-	///Admin selected disease, to be passed down to the round_event
-	var/virus_type
+///Handles checking and alerting admins about the number of valid candidates
+/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak
+	output_text = "There are no candidates eligible to recieve a disease!"
 
-/// Checks for candidates. Returns false if there isn't enough
-/datum/event_admin_setup/disease_outbreak/proc/candidate_check()
+/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak/count_candidates()
 	var/datum/round_event_control/disease_outbreak/disease_control = event_control
 	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 	return length(disease_control.disease_candidates)
 
-/datum/event_admin_setup/disease_outbreak/prompt_admins()
-	var/candidate_count = candidate_check()
-	if(!candidate_count)
-		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
-		return ADMIN_CANCEL_EVENT
-	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	if(tgui_alert(usr, "Select a specific disease?", "Sickening behavior", list("Yes", "No")) == "Yes")
-		virus_type = tgui_input_list(usr, "Warning: Some of these are EXTREMELY dangerous.","Bacteria Hysteria", subtypesof(/datum/disease))
+///Handles actually selecting whicch disease will spawn.
+/datum/event_admin_setup/listed_options/disease_outbreak
+	input_text = "Select a specific disease? Warning: Some are EXTREMELY dangerous."
+	normal_run_option = "Random Classic Disease (Safe)"
+	special_run_option = "Entirely Random Disease (Dangerous)"
 
-/datum/event_admin_setup/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
-	event.virus_type = virus_type
+/datum/event_admin_setup/listed_options/disease_outbreak/get_list()
+	return subtypesof(/datum/disease)
+
+/datum/event_admin_setup/listed_options/disease_outbreak/apply_to_event(datum/round_event/disease_outbreak/event)
+	var/datum/disease/virus
+	if(chosen == special_run_option)
+		virus = pick(get_list())
+	else
+		virus = chosen
+	event.virus_type = virus
 
 /datum/round_event/disease_outbreak
 	announce_when = ADV_ANNOUNCE_DELAY
@@ -121,68 +125,77 @@
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
 
-	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-	if(victim.ForceContractDisease(new_disease, FALSE))
-		log_game("An event has given [key_name(victim)] the [new_disease]")
-		message_admins("An event has triggered a [new_disease.name] virus outbreak on [ADMIN_LOOKUPFLW(victim)]!")
-		announce_to_ghosts(victim)
-	else
-		log_game("An event attempted to trigger a [new_disease.name] virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim
+	while(length(afflicted))
+		victim = pick_n_take(afflicted)
+		if(victim.ForceContractDisease(new_disease, FALSE))
+			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
+			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
+			announce_to_ghosts(victim)
+			return
+		CHECK_TICK //don't lag the server to death
+	if(isnull(victim))
+		log_game("Event Disease Outbreak: Classic attempted to start, but failed.")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 10
+	weight = 15
+	min_players = 35 // To avoid shafting lowpop
+	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
-	admin_setup = /datum/event_admin_setup/disease_outbreak/advanced
-
-/datum/event_admin_setup/disease_outbreak/advanced
-	///Admin selected custom severity rating for the event
-	var/chosen_severity
-	///Admin selected custom value for the maximum symptoms this virus should have
-	var/chosen_max_symptoms
+	admin_setup = list(
+		/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak,
+		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
+		/datum/event_admin_setup/input_number/disease_outbreak_advanced
+	)
 
 /**
  * Admin virus customization
  *
  * If the admin wishes, give them the opportunity to select the severity and number of symptoms.
  */
-/datum/event_admin_setup/disease_outbreak/advanced/prompt_admins()
-	var/candidate_count = candidate_check()
-	if(!candidate_count)
-		tgui_alert(usr, "There are no candidates eligible to recieve a disease!", "Error")
-		return ADMIN_CANCEL_EVENT
-	tgui_alert(usr, "[candidate_count] candidates found!", "Disease Outbreak")
 
-	if(tgui_alert(usr,"Customize your virus?", "Glorified Debug Tool", list("Yes", "No")) == "Yes")
-		chosen_severity = tgui_alert(usr, "Pick a severity!", "In the event of an airborne virus, try not to breathe.", list("Medium", "Harmful", "Dangerous"))
-		switch(chosen_severity)
-			if("Medium")
-				chosen_severity = ADV_DISEASE_MEDIUM
-			if("Harmful")
-				chosen_severity = ADV_DISEASE_HARMFUL
-			if("Dangerous")
-				chosen_severity = ADV_DISEASE_DANGEROUS
-			else
-				return ADMIN_CANCEL_EVENT
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced
+	input_text = "Pick a severity!"
+	normal_run_option = "Random Severity"
 
-		//Ask the admin for max symptoms. Arguments: default, max, min
-		chosen_max_symptoms = tgui_input_number(usr, "How many symptoms do you want your virus to have?", "A pox upon ye!", 4, 7, 1)
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/get_list()
+	return list("Medium", "Harmful", "Dangerous")
 
-	else
-		chosen_severity = null
-		chosen_max_symptoms = null
-		return
+/datum/event_admin_setup/listed_options/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+	switch(chosen)
+		if("Medium")
+			event.requested_severity = ADV_DISEASE_MEDIUM
+		if("Harmful")
+			event.requested_severity = ADV_DISEASE_HARMFUL
+		if("Dangerous")
+			event.requested_severity = ADV_DISEASE_DANGEROUS
+		else
+			event.requested_severity = null
 
-	if(tgui_alert(usr,"Are you happy with your selections?", "Epidemic warning, Standby!", list("Yes", "Cancel")) != "Yes")
-		return ADMIN_CANCEL_EVENT
+/datum/event_admin_setup/input_number/disease_outbreak_advanced
+	input_text = "How many symptoms do you want your virus to have?"
+	default_value = 4
+	max_value = 7
+	min_value = 1
 
-/datum/event_admin_setup/disease_outbreak/advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
-	event.requested_severity = chosen_severity
-	event.max_symptoms = chosen_max_symptoms
+/datum/event_admin_setup/input_number/disease_outbreak_advanced/prompt_admins()
+	var/customize_number_of_symptoms = tgui_alert(usr, "Select number of symptoms?", event_control.name, list("Custom", "Random", "Cancel"))
+	switch(customize_number_of_symptoms)
+		if("Custom")
+			return ..()
+		if("Random")
+			chosen_value = null
+		else
+			return ADMIN_CANCEL_EVENT
+
+
+/datum/event_admin_setup/input_number/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
+	event.max_symptoms = chosen_value
 
 /datum/round_event/disease_outbreak/advanced
 	///Number of symptoms for our virus
@@ -223,13 +236,18 @@
 
 	illness_type = advanced_disease.name
 
-	var/mob/living/carbon/human/victim = pick_n_take(afflicted)
-	if(victim.ForceContractDisease(advanced_disease, FALSE))
-		message_admins("An event has triggered a random advanced virus outbreak on [ADMIN_LOOKUPFLW(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
-		log_game("An event has triggered a random advanced virus outbreak on [key_name(victim)]! It has these symptoms: [english_list(name_symptoms)]. It is transmissable via [advanced_disease.spread_text].")
-		announce_to_ghosts(victim)
-	else
-		log_game("An event attempted to trigger a random advanced virus outbreak on [key_name(victim)], but failed.")
+	var/mob/living/carbon/human/victim
+	while(length(afflicted))
+		victim = pick_n_take(afflicted)
+		if(victim.ForceContractDisease(advanced_disease, FALSE))
+			message_admins("Event triggered: Disease Outbreak: Advanced - starting with patient zero [ADMIN_LOOKUPFLW(victim)]! Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_game("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]. Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
+			log_virus("Disease Outbreak: Advanced has triggered a custom virus outbreak of [advanced_disease.admin_details()] in [victim]!")
+			announce_to_ghosts(victim)
+			return
+		CHECK_TICK //don't lag the server to death
+	if(isnull(victim))
+		log_game("Event Disease Outbreak: Advanced attempted to start, but failed.")
 
 /datum/disease/advance/random/event
 	name = "Event Disease"
@@ -337,6 +355,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(make_visible)), ((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
 
+	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
 	stage_prob = max(0.4 * properties["stage_rate"], 1)
@@ -347,6 +366,7 @@
 	if(properties["stage_rate"] >= 7)
 		name = "Advanced [name]"
 
+	//If severe enough, alert immediately on scanners
 	if(severity == "Dangerous" || severity == "BIOHAZARD")
 		visibility_flags &= ~HIDDEN_SCANNER
 		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
@@ -393,7 +413,7 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	var/res = rand(2, 6)
+	var/res = rand(4, 7)
 	cures = list(pick(advance_cures[res]))
 	oldres = res
 	// Get the cure name from the cure_id

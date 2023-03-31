@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
-	..()
+	. = ..()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -168,14 +168,13 @@
 		accursed.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
 		add_colour = FALSE
 
-/obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
-	..()
+/obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
+	. = ..()
 	last_pump = world.time // give them time to react
-	if(owner)
-		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
+	to_chat(accursed, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
-	..()
+	. = ..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart
@@ -298,16 +297,18 @@
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
+	if(!.)
+		return
+	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
+	RegisterSignal(heart_owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/owner, special = FALSE)
-	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
-	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
-	stop_crystalization_process(owner)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special = FALSE)
+	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
+	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	stop_crystalization_process(heart_owner)
 	QDEL_NULL(current_crystal)
 	return ..()
 
@@ -348,7 +349,7 @@
 		return
 
 
-	if(QDELETED(victim) || victim.suiciding)
+	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
@@ -404,7 +405,7 @@
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
 	if(!succesful)
-		REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+		REMOVE_TRAIT(ethereal, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 		QDEL_NULL(current_crystal)
 
 	if(crystalize_timer_id)
@@ -514,7 +515,7 @@
 	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	regenerating.revive(HEAL_ALL)
+	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.
 	if(!QDELETED(src))

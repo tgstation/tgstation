@@ -214,7 +214,8 @@ Behavior that's still missing from this component that original food items had t
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
-	if(HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(user)))
+	var/datum/mind/mind = user.mind
+	if(mind && HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(mind)))
 		examine_list += span_green("[parent] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
@@ -441,7 +442,7 @@ Behavior that's still missing from this component that original food items had t
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.getorganslot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 

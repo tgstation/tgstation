@@ -9,8 +9,8 @@
  * Glass sheets
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time =  1 SECONDS, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
 	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 0, on_solid_ground = TRUE, category = CAT_MISC), \
 	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass, 1, 4, 20, category = CAT_TILES) \
 ))
@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			var/obj/item/knife/shiv/shiv = new shiv_type
 			cloth.use(1)
 			to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-			remove_item_from_storage(src)
+			remove_item_from_storage(src, user)
 			qdel(src)
 			user.put_in_hands(shiv)
 

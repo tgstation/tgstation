@@ -6,7 +6,6 @@
 	undeletable = TRUE
 	size = 4
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
@@ -118,7 +117,7 @@
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	var/list/access = computer.GetAccess()
 
 	data["downloading"] = !!downloaded_file

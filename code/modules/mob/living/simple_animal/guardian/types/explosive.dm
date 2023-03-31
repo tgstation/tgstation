@@ -45,7 +45,7 @@
 	to_chat(src, span_bolddanger("Success! Bomb armed!"))
 	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)
 	RegisterSignal(planting_on, COMSIG_PARENT_EXAMINE, PROC_REF(display_examine))
-	RegisterSignal(planting_on, boom_signals, PROC_REF(kaboom))
+	RegisterSignals(planting_on, boom_signals, PROC_REF(kaboom))
 	addtimer(CALLBACK(src, PROC_REF(disable), planting_on), decay_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /mob/living/simple_animal/hostile/guardian/explosive/proc/kaboom(atom/source, mob/living/explodee)

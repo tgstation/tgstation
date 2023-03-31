@@ -9,7 +9,7 @@
 	organs_needed = 4
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
-	bonus_traits = TRAIT_SPACEWALK
+	bonus_traits = list(TRAIT_SPACEWALK)
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
@@ -48,7 +48,7 @@
 	AddElement(/datum/element/noticable_organ, "has big sharp teeth.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
-/obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+/obj/item/organ/internal/tongue/carp/on_insert(mob/living/carbon/tongue_owner)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
@@ -62,7 +62,7 @@
 	head.unarmed_damage_high = 15
 	head.unarmed_stun_threshold = 15
 
-/obj/item/organ/internal/tongue/carp/Remove(mob/living/carbon/tongue_owner, special)
+/obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
@@ -110,13 +110,13 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 	AddElement(/datum/element/noticable_organ, "seem%PRONOUN_S unable to stay still.")
 
-/obj/item/organ/internal/brain/carp/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
+/obj/item/organ/internal/brain/carp/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
-/obj/item/organ/internal/brain/carp/Remove(mob/living/carbon/brain_owner, special, no_id_transfer)
+/obj/item/organ/internal/brain/carp/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)

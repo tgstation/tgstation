@@ -26,7 +26,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
-	faction = list("hell")
+	faction = list(FACTION_HELL)
 	attack_verb_continuous = "wildly tears into"
 	attack_verb_simple = "wildly tear into"
 	maxHealth = 200
@@ -180,15 +180,15 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
-/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	..()
+/obj/item/organ/internal/heart/demon/on_insert(mob/living/carbon/heart_owner)
+	. = ..()
 	// Gives a non-eat-people crawl to the new owner
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(M)
-	crawl.Grant(M)
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(heart_owner)
+	crawl.Grant(heart_owner)
 
-/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = FALSE)
-	..()
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = locate() in M.actions
+/obj/item/organ/internal/heart/demon/on_remove(mob/living/carbon/heart_owner, special = FALSE)
+	. = ..()
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = locate() in heart_owner.actions
 	qdel(crawl)
 
 /obj/item/organ/internal/heart/demon/Stop()
@@ -237,4 +237,4 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
-	faction = list("hell", FACTION_NEUTRAL)
+	faction = list(FACTION_HELL, FACTION_NEUTRAL)

@@ -147,3 +147,5 @@
 	ai.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
 	balloon_alert(user, "ai transferred to card")
 	stored_ai = null
+
+#undef AI_FALL_TIME

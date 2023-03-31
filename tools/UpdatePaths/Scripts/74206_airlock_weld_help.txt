@@ -1,0 +1,1 @@
+/obj/machinery/door/airlock/@SUBTYPES{welded = 1} : @OLD{@OLD;welded=@SKIP}, /obj/effect/mapping_helpers/airlock/welded
