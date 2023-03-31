@@ -46,7 +46,7 @@
 	if(winning_option == CHOICE_NOKICK)
 		to_chat(world, span_boldannounce("Vote kicking [display_name] failed, there weren't enough votes! Kicking [initiator], the vote creator instead."))
 		if(initiator)
-			message_admins("VOTEKICK: [initiator] got kicked for failing a kick vote.")
+			message_admins("VOTEKICK: [initiator] got kicked for failing a kick vote.[initiator.holder ? " Being an admin doesn't save you from fate." : ""]")
 			to_chat(initiator, span_danger("You have been kicked from the server instead of your target! How tragic."), confidential = TRUE)
 			QDEL_IN(initiator, 1 DECISECONDS)
 		return
