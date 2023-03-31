@@ -265,7 +265,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	if(planted_on)
 		return
 
-	if(user.mind?.has_antag_datum(/datum/antagonist/traitor))
+	if(IS_TRAITOR(user))
 		if(target_object_type)
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")

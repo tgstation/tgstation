@@ -193,3 +193,8 @@
 	var/mob/living/L = user
 	if(L?.mind)
 		L.clear_mood_event("hope_lavaland")
+
+#undef SINGULAR_SHOT
+#undef MAGIC_BOX
+#undef PANDORA_TELEPORT
+#undef AOE_SQUARES

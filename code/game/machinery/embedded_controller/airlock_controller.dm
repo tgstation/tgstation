@@ -308,3 +308,9 @@
 /obj/machinery/airlock_controller/update_icon_state()
 	icon_state = "[base_icon_state]_[processing ? "process" : "standby"]"
 	return ..()
+
+#undef AIRLOCK_STATE_CLOSED
+#undef AIRLOCK_STATE_DEPRESSURIZE
+#undef AIRLOCK_STATE_INOPEN
+#undef AIRLOCK_STATE_OUTOPEN
+#undef AIRLOCK_STATE_PRESSURIZE

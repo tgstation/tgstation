@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/mecha/ripley = 1,
 		/obj/item/toy/mecha/ripleymkii = 1,

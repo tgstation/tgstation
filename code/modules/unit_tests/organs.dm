@@ -52,13 +52,13 @@
 	TEST_ASSERT(test_organ in lab_rat.organs, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should insert the organ into the human's `internal_organs` list."))
 	if(test_organ.slot)
 		TEST_ASSERT(lab_rat.organs_slot[test_organ.slot] == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add the organ to the human's `internal_organs_slot` list."))
-		TEST_ASSERT(lab_rat.getorganslot(test_organ.slot) == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should make the organ available via human's `getorganslot()` proc."))
+		TEST_ASSERT(lab_rat.get_organ_slot(test_organ.slot) == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should make the organ available via human's `get_organ_slot()` proc."))
 
 	if(LAZYLEN(test_organ.organ_traits))
 		TEST_ASSERT(LAZYLEN(lab_rat.status_traits), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Traits to lazylist `human.status_traits`."))
 		for(var/test_trait in test_organ.organ_traits)
 			TEST_ASSERT(HAS_TRAIT(lab_rat, test_trait), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Trait `[test_trait]` to lazylist `human.status_traits`"))
-	
+
 	if(LAZYLEN(test_organ.actions))
 		TEST_ASSERT(LAZYLEN(lab_rat.actions), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Actions to lazylist `human.actions`."))
 		for(var/datum/action/test_action as anything in test_organ.actions)
@@ -75,7 +75,7 @@
 	TEST_ASSERT(!(test_organ in lab_rat.organs), TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs` list."))
 	if(test_organ.slot)
 		TEST_ASSERT(lab_rat.organs_slot[test_organ.slot] != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `internal_organs_slot` list."))
-		TEST_ASSERT(lab_rat.getorganslot(test_organ.slot) != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `getorganslot()` proc."))
+		TEST_ASSERT(lab_rat.get_organ_slot(test_organ.slot) != test_organ, TEST_ORGAN_REMOVE_MESSAGE(test_organ, "should remove the organ from the human's `get_organ_slot()` proc."))
 
 	return
 

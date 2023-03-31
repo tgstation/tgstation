@@ -357,3 +357,5 @@
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
 	take_damage(max_integrity * 0.6)
+
+#undef CLEAR_TILE_MOVE_LIMIT

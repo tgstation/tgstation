@@ -520,11 +520,10 @@
 /**
  * Getter function for a mob's quirk
  *
- 
  * Arguments:
  * * quirktype - the type of the quirk to acquire e.g. /datum/quirk/some_quirk
  *
- * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure 
+ * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure
  */
 /mob/living/proc/get_quirk(quirktype)
 	for(var/datum/quirk/quirk in quirks)
@@ -760,3 +759,5 @@
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
 	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
+#undef IS_STUN_IMMUNE

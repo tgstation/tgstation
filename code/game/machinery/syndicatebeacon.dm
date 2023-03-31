@@ -22,8 +22,7 @@
 		if(user)
 			to_chat(user, span_notice("The connected wire doesn't have enough current."))
 		return
-	for (var/_singulo in GLOB.singularities)
-		var/datum/component/singularity/singulo = _singulo
+	for (var/datum/component/singularity/singulo as anything in GLOB.singularities)
 		var/atom/singulo_atom = singulo.parent
 		if(singulo_atom.z == z)
 			singulo.target = src
