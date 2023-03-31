@@ -23,6 +23,8 @@
 			clients += client.key
 			clients_assoc[client.key] = client
 	var/selected_player = tgui_input_list(vote_creator, "Who would you like to kick?", "Votekick", sort_list(clients))
+	if(!selected_player)
+		return
 	if(QDELETED(clients_assoc[selected_player]))
 		to_chat(vote_creator, span_danger("The selected player has disconnected!"))
 		return
