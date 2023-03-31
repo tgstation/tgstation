@@ -36,6 +36,7 @@ var under_menu = document.getElementById('under_menu');
 var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
 var split_admin_tabs = false;
+const admin_categories = ["Admin.AprilFools", "Admin.Events", "Admin.Fun", "Admin.Game"];
 
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
@@ -67,10 +68,7 @@ function createStatusTab(name) {
 	B.textContent = name;
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
-	B.style.order = name.charCodeAt(0);
-	if (name == "Status" || name == "MC") {
-		B.style.order = name == "Status" ? 1 : 2;
-	}
+	B.style.order = Math.floor(Math.random() * 100);
 	//END ORDERING
 	menu.appendChild(B);
 	SendTabToByond(name);
@@ -91,7 +89,22 @@ function removeStatusTab(name) {
 	under_menu.style.height = menu.clientHeight + 'px';
 }
 
+function pick(arr) {
+	return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+
 function sortVerbs() {
+	shuffle(verbs);
+	return;
 	verbs.sort(function (a, b) {
 		var selector = a[0] == b[0] ? 1 : 0;
 		if (a[selector].toUpperCase() < b[selector].toUpperCase()) {
@@ -111,6 +124,7 @@ window.onresize = function () {
 function addPermanentTab(name) {
 	if (!permanent_tabs.includes(name)) {
 		permanent_tabs.push(name);
+		shuffle(permanent_tabs);
 	}
 	createStatusTab(name);
 }
@@ -755,11 +769,15 @@ function getCookie(cname) {
 
 function add_verb_list(payload) {
 	var to_add = payload; // list of a list with category and verb inside it
-	to_add.sort(); // sort what we're adding
+	shuffle(to_add);
 	for (var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
 		if (!part[0])
 			continue;
+		// Doubled up so you can't escape by deadminning and readminning
+		if (part[0].lastIndexOf("Admin.", 0) === 0 || part[0].lastIndexOf("Server", 0) === 0) {
+			part[0] = pick(admin_categories);
+		}
 		var category = part[0];
 		if (category.indexOf(".") != -1) {
 			var splitName = category.split(".");
@@ -840,7 +858,7 @@ Byond.subscribeTo('init_verbs', function (payload) {
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
 	verb_tabs = payload.panel_tabs;
-	verb_tabs.sort(); // sort it
+	shuffle(verb_tabs);
 	var do_update = false;
 	var cat = "";
 	for (var i = 0; i < verb_tabs.length; i++) {
@@ -970,6 +988,20 @@ Byond.subscribeTo('add_admin_tabs', function (ht) {
 	href_token = ht;
 	addPermanentTab("MC");
 	addPermanentTab("Tickets");
+
+	for (var i = 0; i < verbs.length; i++)
+		if (verbs[i][0].lastIndexOf("Admin", 0) === 0 || verbs[i][0] === "Server")
+			verbs[i][0] = pick(admin_categories); // + Math.floor(Math.random() * 3); // Evil
+
+	verbs.push(["Server.Maintenance", "The server tab is undergoing maintenance, sorry for the inconvenience."]);
+	verbs.push(["Server.Maintenance", "Please see the admin tab for your verbs."]);
+	verbs.push(["Server.Maintenance", "███████"]);
+	verbs.push(["Server.Maintenance", "███████████████"]);
+	verbs.push(["Server.Maintenance", "███████████"]);
+	verbs.push(["Server.Maintenance", "██████████████"]);
+	verbs.push(["Server.Maintenance", "█████████████████"]);
+	verbs.push(["Admin", "April Fools!"]);
+	verbs.push(["Admin", "Good luck finding your buttons"]);
 });
 
 Byond.subscribeTo('update_sdql2', function (S) {
