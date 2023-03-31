@@ -627,11 +627,10 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/structure/barricade,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/turf/closed/wall,
 /area/ruin/space/has_grav/abandoned_meta_perma)
 "Ue" = (
 /turf/open/floor/iron/freezer,
