@@ -482,20 +482,6 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return TRUE
 
-#ifdef UNIT_TESTS
-/mob/living/carbon/human/species/lizard/trolls_the_maintainer
-	name = "trolls-the-maintainer"
-
-/mob/living/carbon/human/species/lizard/trolls_the_maintainer/Initialize(mapload)
-	. = ..()
-	become_hearing_sensitive()
-	var/list/datum/spatial_grid_cell/nearby_cells = SSspatial_grid.get_cells_in_range(src, 30)
-
-	for(var/datum/spatial_grid_cell/nearby_cell in nearby_cells)
-		GRID_CELL_ADD(nearby_cell, nearby_cell.hearing_contents, src)
-		GRID_CELL_ADD(nearby_cell, nearby_cell.hearing_contents, src)
-#endif
-
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
 	if(!initialized)
