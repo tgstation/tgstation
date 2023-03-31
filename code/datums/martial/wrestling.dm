@@ -136,7 +136,7 @@ If you make a derivative work from this code, you must include this notification
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
 
-	D.Stun(80)
+	D.Stun(8 SECONDS)
 	D.visible_message(span_danger("[A] starts spinning around with [D]!"), \
 					span_userdanger("You're spun around by [A]!"), span_hear("You hear aggressive shuffling!"), null, A)
 	to_chat(A, span_danger("You start spinning around with [D]!"))
@@ -299,7 +299,7 @@ If you make a derivative work from this code, you must include this notification
 		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
 		if (!D.stat)
 			D.emote("scream")
-			D.Paralyze(40)
+			D.Paralyze(4 SECONDS)
 
 			switch(rand(1,3))
 				if (2)
@@ -343,7 +343,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(A, span_danger("You headbutt [D]!"))
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, SFX_SWING_HIT, 50, TRUE)
-		D.Unconscious(20)
+		D.Unconscious(2 SECONDS)
 	log_combat(A, D, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/A, mob/living/D)
@@ -361,7 +361,7 @@ If you make a derivative work from this code, you must include this notification
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Paralyze(20)
+		D.Paralyze(2 SECONDS)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
@@ -433,7 +433,7 @@ If you make a derivative work from this code, you must include this notification
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Paralyze(40)
+		D.Paralyze(4 SECONDS)
 
 		A.pixel_y = A.base_pixel_y
 
@@ -458,7 +458,7 @@ If you make a derivative work from this code, you must include this notification
 	D.visible_message(span_danger("[A] gets [D] in a cinch!"), \
 					span_userdanger("You're put into a cinch by [A]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, span_danger("You get [D] in a cinch!"))
-	D.Stun(rand(60,100))
+	D.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(A, D, "cinched")
 	return 1
 

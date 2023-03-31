@@ -15,12 +15,12 @@
 	var/datum/callback/butcher_callback
 
 /datum/component/butchering/Initialize(
-	speed,
-	effectiveness,
-	bonus_modifier,
-	butcher_sound,
-	disabled,
-	can_be_blunt,
+	speed = 8 SECONDS,
+	effectiveness = 100,
+	bonus_modifier = 0,
+	butcher_sound = 'sound/effects/butcher.ogg',
+	disabled = FALSE,
+	can_be_blunt = FALSE,
 	butcher_callback,
 )
 	src.speed = speed
@@ -61,7 +61,7 @@
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [M]..."))
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, M, speed) && M.Adjacent(source))
+	if(do_after(user, speed, M) && M.Adjacent(source))
 		on_butchering(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
@@ -77,7 +77,7 @@
 	log_combat(user, H, "attempted throat slitting", source)
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, H, clamp(500 / source.force, 30, 100)) && H.Adjacent(source))
+	if(do_after(user, clamp(500 / source.force, 30, 100), H) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
 			user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
 							span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))

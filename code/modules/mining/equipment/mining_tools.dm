@@ -12,7 +12,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=2000) //one sheet, but where can you make them?
+	custom_materials = list(/datum/material/iron=2000)
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
@@ -204,6 +204,7 @@
 	. = ..()
 	. += span_notice("Use in hand to switch configuration.")
 	. += span_notice("It functions as a [tool_behaviour] tool.")
+	. += span_danger("<i>This weapon has no random critical hits.</i>")
 
 /obj/item/trench_tool/update_icon_state()
 	. = ..()

@@ -16,6 +16,10 @@
 	fire = 90
 	acid = 90
 
+/obj/structure/blob/shield/Initialize(mapload, owner_overmind)
+	AddElement(/datum/element/blocks_explosives)
+	return ..()
+
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)
 		return "Will prevent the spread of atmospheric changes."

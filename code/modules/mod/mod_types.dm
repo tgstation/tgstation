@@ -54,6 +54,9 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/magboot,
 	)
+	default_pins = list(
+		/obj/item/mod/module/magboot,
+	)
 
 /obj/item/mod/control/pre_equipped/atmospheric
 	theme = /datum/mod_theme/atmospheric
@@ -77,6 +80,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/magboot/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/loader
@@ -104,6 +108,8 @@
 		/obj/item/mod/module/drill,
 	)
 	default_pins = list(
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/drill,
 		/obj/item/mod/module/sphere_transform,
 	)
 
@@ -336,11 +342,13 @@
 	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia
 	/// Additional module we add, as a treat.
-	var/additional_module = /obj/item/mod/module
+	var/additional_module
 
 /obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin, new_core)
 	applied_modules.Insert(1, insignia_type)
-	applied_modules.Add(additional_module)
+	if(additional_module)
+		applied_modules += additional_module
+		default_pins += additional_module
 	return ..()
 
 /obj/item/mod/control/pre_equipped/responsory/commander
@@ -466,6 +474,12 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
+		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+	)
+	default_pins = list(
+		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,

@@ -145,7 +145,7 @@
 		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
 		span_warning("[pawn] tries to give you [held_item]!")
 	)
-	if(!do_mob(pawn, living_target, 1 SECONDS))
+	if(!do_after(pawn, 1 SECONDS, living_target))
 		return
 
 	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)

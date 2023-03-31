@@ -173,13 +173,13 @@
 	mod_unit = null
 	open_machine()
 
-/obj/machinery/mod_installer/open_machine()
+/obj/machinery/mod_installer/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 	..()
 	return TRUE
 
-/obj/machinery/mod_installer/close_machine(mob/living/carbon/user)
+/obj/machinery/mod_installer/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 	..()
@@ -247,7 +247,7 @@
 		/datum/reagent/yuck = 5,
 		/datum/reagent/consumable/vitfro = 5,
 		// Supplementary for CELL_LINE_TABLE_GRAPE
-		/datum/reagent/liquidgibs = 5
+		/datum/reagent/consumable/liquidgibs = 5
 	)
 
 /obj/machinery/computer/old

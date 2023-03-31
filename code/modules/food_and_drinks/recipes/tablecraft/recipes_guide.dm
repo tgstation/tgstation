@@ -49,7 +49,7 @@
 
 /datum/crafting_recipe/food/reaction/candle
 	reaction = /datum/chemical_reaction/candlefication
-	result = /obj/item/candle
+	result = /obj/item/flashlight/flare/candle
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/reaction/tofu
@@ -629,11 +629,6 @@
 	reqs = list(/obj/item/food/spaghetti/raw = 1)
 	result = /obj/item/food/spaghetti/boiledspaghetti
 	category = CAT_SPAGHETTI
-
-/datum/crafting_recipe/food/microwave/khinkali
-	reqs = list(/obj/item/food/rawkhinkali = 1)
-	result = /obj/item/food/khinkali
-	category = CAT_BREAD
 
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)

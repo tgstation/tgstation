@@ -68,7 +68,7 @@
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
 	if(attacker.combat_mode)
 		return ..()
-	if(victim.is_mouth_covered(head_only = TRUE))
+	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))
 		to_chat(attacker, span_notice("[victim]'s mouth is covered."))
 		return
 	if(!mob_can_equip(victim, ITEM_SLOT_MASK))

@@ -47,8 +47,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link))
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
+	if(stored_research)
 		stored_research.consoles_accessing += src
 
 /obj/machinery/computer/rdconsole/Destroy()
@@ -112,23 +113,26 @@ Nothing else in the console has ID requirements.
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
-				logname = "AI: [user.name]"
+				logname = "AI [user.name]"
 			if(iscyborg(user))
-				logname = "Cyborg: [user.name]"
+				logname = "CYBORG [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
+					logname = "[idcard.registered_name]"
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/I = H.wear_id
 				if(istype(I))
 					var/obj/item/card/id/ID = I.GetID()
 					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			var/i = stored_research.research_logs.len
-			stored_research.research_logs += null
-			stored_research.research_logs[++i] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([src.x],[src.y],[src.z])")
+						logname = "[ID.registered_name]"
+			stored_research.research_logs += list(list(
+				"node_name" = TN.display_name,
+				"node_cost" = price["General Research"],
+				"node_researcher" = logname,
+				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
+			))
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
@@ -180,16 +184,9 @@ Nothing else in the console has ID requirements.
 			"stored_research" = t_disk.stored_research.researched_nodes,
 		)
 	if (d_disk)
-		data["d_disk"] = list (
-			"max_blueprints" = d_disk.max_blueprints,
-			"blueprints" = list(),
-		)
-		for (var/i in 1 to d_disk.max_blueprints)
-			if (d_disk.blueprints[i])
-				var/datum/design/D = d_disk.blueprints[i]
-				data["d_disk"]["blueprints"] += D.id
-			else
-				data["d_disk"]["blueprints"] += null
+		data["d_disk"] = list("blueprints" = list())
+		for (var/datum/design/D in d_disk.blueprints)
+			data["d_disk"]["blueprints"] += D.id
 
 
 	// Serialize all nodes to display
@@ -294,7 +291,7 @@ Nothing else in the console has ID requirements.
 	.["static_data"] = list(
 		"node_cache" = node_cache,
 		"design_cache" = design_cache,
-		"id_cache" = flat_id_cache
+		"id_cache" = flat_id_cache,
 	)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)
@@ -325,55 +322,6 @@ Nothing else in the console has ID requirements.
 		if ("ejectDisk")
 			eject_disk(params["type"])
 			return TRUE
-		if ("writeDesign")
-			if(QDELETED(d_disk))
-				say("No Design Disk Inserted!")
-				return TRUE
-			var/slot = text2num(params["slot"])
-			var/design_id = params["selectedDesign"]
-			if(!stored_research.researched_designs.Find(design_id))
-				stack_trace("ID did not map to a researched datum [design_id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-			if(design)
-				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
-					if(design.autolathe_exportable && !design.reagents_list.len)
-						design.build_type |= AUTOLATHE
-					design.category |= RND_CATEGORY_IMPORTED
-				d_disk.blueprints[slot] = design
-			return TRUE
-		if ("uploadDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk found.")
-				return TRUE
-			var/n = text2num(params["slot"])
-			stored_research.add_design(d_disk.blueprints[n], TRUE)
-			return TRUE
-		if ("clearDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk inserted!")
-				return TRUE
-			var/n = text2num(params["slot"])
-			var/datum/design/D = d_disk.blueprints[n]
-			say("Wiping design [D.name] from design disk.")
-			d_disk.blueprints[n] = null
-			return TRUE
-		if ("eraseDisk")
-			if (params["type"] == RND_DESIGN_DISK)
-				if(QDELETED(d_disk))
-					say("No design disk inserted!")
-					return TRUE
-				say("Wiping design disk.")
-				for(var/i in 1 to d_disk.max_blueprints)
-					d_disk.blueprints[i] = null
-			if (params["type"] == RND_TECH_DISK)
-				if(QDELETED(t_disk))
-					say("No tech disk inserted!")
-					return TRUE
-				qdel(t_disk.stored_research)
-				t_disk.stored_research = new
-				say("Wiping technology disk.")
-			return TRUE
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
@@ -382,6 +330,9 @@ Nothing else in the console has ID requirements.
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
+				say("Uploading blueprints from disk.")
+				d_disk.on_upload(stored_research)
+				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
@@ -389,6 +340,7 @@ Nothing else in the console has ID requirements.
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
+		//Tech disk-only action.
 		if ("loadTech")
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")

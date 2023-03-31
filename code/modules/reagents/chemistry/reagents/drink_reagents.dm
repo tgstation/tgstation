@@ -28,7 +28,7 @@
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getOxyLoss() && DT_PROB(16, delta_time))
-		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	..()
 
@@ -88,17 +88,16 @@
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_eye_blur(-2 SECONDS * REM * delta_time)
-	affected_mob.adjust_blindness(-1 * REM * delta_time)
+	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * delta_time)
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				affected_mob.cure_nearsighted(list(EYE_DAMAGE))
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 		if(110 to INFINITY)
-			affected_mob.cure_nearsighted(list(EYE_DAMAGE))
-	..()
-	return
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+	return ..()
 
 /datum/reagent/consumable/berryjuice
 	name = "Berry Juice"
@@ -186,7 +185,7 @@
 	icon_state = "banana"
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(affected_mob))
 		affected_mob.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -209,7 +208,7 @@
 	icon_state = "nothing"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -308,10 +307,11 @@
 
 	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
-	if(myseed)
-		myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
+	myseed?.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getBruteLoss() && DT_PROB(10, delta_time))
@@ -805,7 +805,9 @@
 // A variety of nutrients are dissolved in club soda, without sugar.
 // These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
@@ -964,9 +966,9 @@
 	affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
-		var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
 			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			affected_mob.adjust_nutrition(-2 * REM * delta_time)
@@ -1489,7 +1491,7 @@
 
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(islizard(affected_mob))
-		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 	. = TRUE
 
@@ -1644,4 +1646,30 @@
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
 	if(doll.getToxLoss() && DT_PROB(10, delta_time))
 		doll.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	return ..()
+
+/datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	description = "If you think you're so hot, how about a victory drink?"
+	color = "#d4422f" // rgb: 212,66,47
+	taste_description = "sludge seeping down your throat"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/mississippi_queen
+	required_drink_type = /datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	desc = "Mullets and cut-up jorts not included."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "mississippiglass"
+
+/datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	switch(current_cycle)
+		if(10 to 20)
+			drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
+		if(20 to 30)
+			if(DT_PROB(15, delta_time))
+				drinker.adjust_confusion(4 SECONDS * REM * delta_time)
+		if(30 to 200)
+			drinker.adjust_hallucinations(60 SECONDS * REM * delta_time)
+
 	return ..()

@@ -175,7 +175,7 @@
 		return
 	if(!pad_ref?.resolve())
 		return
-	if(!usr.canUseTopic(src, be_close = TRUE) || (machine_stat & (NOPOWER|BROKEN)))
+	if(!usr.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -381,3 +381,5 @@
 			new /obj/machinery/computer/piratepad_control/civilian(drop_location())
 			qdel(src)
 	uses--
+
+#undef CIV_BOUNTY_SPLIT

@@ -49,27 +49,31 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
 
+	..() //Skipping the rest of on_construction() would be a bad idea so we clean up after it instead.
+
 	if(check_pipe_on_turf())
-		deconstruct(TRUE)
-		return
-	return..()
+		set_anchored(FALSE)
+		set_panel_open(TRUE)
+		change_pipe_connection(TRUE)
+		icon_state = "thermo-open"
+		balloon_alert(user, "the port is already in use!")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
 	var/calculated_bin_rating = 0
-	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-		calculated_bin_rating += bin.rating
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		calculated_bin_rating += bin.tier
 	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
 
 	var/calculated_laser_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		calculated_laser_rating += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.tier
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 
@@ -213,13 +217,13 @@
 		if(device == src)
 			continue
 		if(device.piping_layer == piping_layer)
-			visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
 			return TRUE
 	return FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open || check_pipe_on_turf())
-		return
+		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_unfasten_wrench(user, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return

@@ -25,7 +25,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/chefcloset
-	name = "\proper chef's closet"
+	name = "chef's closet"
 	desc = "It's a storage unit for foodservice garments and mouse traps."
 	icon_door = "black"
 

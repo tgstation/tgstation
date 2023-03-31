@@ -12,7 +12,7 @@
 
 /datum/action/changeling/augmented_eyesight/on_purchase(mob/user) //The ability starts inactive, so we should be protected from flashes.
 	..()
-	var/obj/item/organ/internal/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/E = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if (E)
 		E.flash_protect = FLASH_PROTECTION_WELDER //Adjust the user's eyes' flash protection
 		to_chat(user, "We adjust our eyes to protect them from bright lights.")
@@ -23,7 +23,7 @@
 	if(!istype(user))
 		return
 	..()
-	var/obj/item/organ/internal/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/E = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(E)
 		if(!active)
 			E.sight_flags |= SEE_MOBS | SEE_OBJS | SEE_TURFS //Add sight flags to the user's eyes
@@ -37,12 +37,12 @@
 			active = FALSE
 		user.update_sight()
 	else
-		to_chat(user, "We can't adjust our eyes if we don't have any!")
-	return 1
+		user.balloon_alert(user, "no eyes!")
+	return TRUE
 
 
 /datum/action/changeling/augmented_eyesight/Remove(mob/user) //Get rid of x-ray vision and flash protection when the user refunds this ability
-	var/obj/item/organ/internal/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/E = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(E)
 		if (active)
 			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS

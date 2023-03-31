@@ -77,7 +77,7 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands= !iscyborg(user)) || !cell_cover_open || !cell)
+	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
 		return ..()
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
@@ -380,7 +380,7 @@
 	grind_results = list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water

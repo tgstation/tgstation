@@ -985,10 +985,10 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "GR" = (
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/item/toy/beach_ball/holoball/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -1358,7 +1358,7 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "Uk" = (
-/obj/structure/sign/barsign,
+/obj/machinery/barsign/all_access,
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "Up" = (

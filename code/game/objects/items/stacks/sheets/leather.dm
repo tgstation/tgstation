@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, category = CAT_CLOTHING), \
@@ -300,6 +301,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/wethide/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/microwavable, /obj/item/stack/sheet/leather)
+	AddComponent(/datum/component/bakeable, /obj/item/stack/sheet/leather, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)

@@ -172,7 +172,7 @@
 				<font color="[patient.getToxLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
 				<font color="[patient.getFireLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
 				[span_danger("[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]")]<br />
-				[span_danger("[patient.getOrganLoss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
+				[span_danger("[patient.get_organ_loss(ORGAN_SLOT_BRAIN) ? "Significant brain damage detected." : ""]")]<br />
 				[span_danger("[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]")]<br />
 				"}
 
@@ -324,7 +324,7 @@
 	if(!LAZYLEN(syringes))
 		to_chat(source, "[icon2html(src, source)]<span class='alert'>No syringes loaded.</span>")
 		return
-	if(reagents.total_volume<=0)
+	if(reagents.total_volume <= 0)
 		to_chat(source, "[icon2html(src, source)]<span class='alert'>No available reagents to load syringe with.</span>")
 		return
 	if(HAS_TRAIT(source, TRAIT_PACIFISM))

@@ -6,13 +6,13 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
+	fire_stack_decay_rate = -0.55
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -54,7 +54,7 @@
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
 	GLOB.silicon_mobs += src
-	faction += "silicon"
+	faction += FACTION_SILICON
 	if(ispath(radio))
 		radio = new radio(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -62,13 +62,17 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
-	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MADNESS_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+	var/static/list/traits_to_apply = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_LITERATE,
+		TRAIT_MADNESS_IMMUNE,
+		TRAIT_MARTIAL_ARTS_IMMUNE,
+		TRAIT_NOFIRE_SPREAD,
+	)
+
+	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)

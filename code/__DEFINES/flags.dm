@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
 #define CULT_PERMITTED (1<<12)
-///Whther this area is iluminated by starlight
+///Whther this area is iluminated by starlight. Used by the aurora_caelus event
 #define AREA_USES_STARLIGHT (1<<13)
 /// If engravings are persistent in this area
 #define PERSISTENT_ENGRAVINGS (1<<14)
@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
 #define MAX_BITFLAG_DIGITS 8
 
-// timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+// timed_action_flags parameter for `/proc/do_after`
 /// Can do the action even if mob moves location
 #define IGNORE_USER_LOC_CHANGE (1<<0)
 /// Can do the action even if the target moves location

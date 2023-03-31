@@ -17,6 +17,7 @@ $ooc: #cca300;
 ////////////////////////////////////////////////
 // Subchannel chat colors
 $ai: #d65d95;
+$admin: #ffbbff;
 $binary: #1e90ff;
 $centcom: #2681a5;
 $command: #fcdf03;
@@ -35,6 +36,7 @@ $_channel_map: (
   'me': $me,
   'ooc': $ooc,
   'ai': $ai,
+  'admin': $admin,
   'binary': $binary,
   'centcom': $centcom,
   'command': $command,

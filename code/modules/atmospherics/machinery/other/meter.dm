@@ -58,6 +58,9 @@
 		icon_state = "meter"
 		SSair.stop_processing_machine(src)
 
+/obj/machinery/meter/return_air()
+	return target?.return_air() || ..()
+
 /obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target.return_air()
 	if(!pipe_air)

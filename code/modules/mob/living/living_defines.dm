@@ -1,6 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 
@@ -33,6 +32,9 @@
 	var/fireloss = 0
 	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/cloneloss = 0
+
+	/// Rate at which fire stacks should decay from this mob
+	var/fire_stack_decay_rate = -0.05
 
 	/// when the mob goes from "normal" to crit
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT
@@ -68,7 +70,6 @@
 	///A sound sent when the mob dies, with the *deathgasp emote
 	var/death_sound
 
-
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
 	var/fire_stacks = 0
@@ -99,7 +100,10 @@
 	var/limb_destroyer = 0
 
 	var/mob_size = MOB_SIZE_HUMAN
+	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
+	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
 	///does the mob have distinct limbs?(arms,legs, chest,head)
@@ -218,3 +222,6 @@
 	// Multiple imaginary friends!
 	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
 	var/list/imaginary_group = null
+
+	/// What our current gravity state is. Used to avoid duplicate animates and such
+	var/gravity_state = null

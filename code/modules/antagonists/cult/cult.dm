@@ -135,7 +135,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	current.faction |= "cult"
+	current.faction |= FACTION_CULT
 	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	if(!cult_team.cult_master)
 		vote.Grant(current)
@@ -156,7 +156,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= "cult"
+	current.faction -= FACTION_CULT
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
@@ -273,6 +273,8 @@
 	var/narsie_summoned = FALSE
 	///How large were we at max size.
 	var/size_at_maximum = 0
+	///list of cultists just before summoning Narsie
+	var/list/true_cultists = list()
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -470,7 +472,7 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		parts += printplayerlist(members)
+		parts += printplayerlist(true_cultists)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
@@ -489,7 +491,8 @@
 			return FALSE
 		if(specific_cult?.is_sacrifice_target(target.mind))
 			return FALSE
-		if(target.mind.enslaved_to && !IS_CULTIST(target.mind.enslaved_to))
+		var/mob/living/master = target.mind.enslaved_to?.resolve()
+		if(master && !IS_CULTIST(master))
 			return FALSE
 		if(target.mind.unconvertable)
 			return FALSE
@@ -572,6 +575,7 @@
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
 
-	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped
-	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
-	hooded.ToggleHood()
+#undef CULT_LOSS
+#undef CULT_NARSIE_KILLED
+#undef CULT_VICTORY
+#undef SUMMON_POSSIBILITIES

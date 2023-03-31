@@ -181,14 +181,11 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "fV" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "ga" = (
@@ -765,18 +762,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
-"rW" = (
-/obj/structure/bed/dogbed/cayenne{
-	name = "Paprika's bed"
-	},
-/mob/living/basic/carp/pet/cayenne{
-	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
-	faction = list("neutral");
-	name = "Paprika";
-	real_name = "Paprika"
-	},
-/turf/open/floor/carpet/black,
-/area/centcom/central_command_areas/holding)
 "sc" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -801,16 +786,6 @@
 	icon_state = "plant-10"
 	},
 /turf/open/floor/stone,
-/area/centcom/central_command_areas/holding)
-"ti" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/candle/infinite{
-	pixel_y = 6
-	},
-/turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "ts" = (
 /obj/item/food/meat/slab/chicken,
@@ -1092,7 +1067,6 @@
 	},
 /area/centcom/central_command_areas/holding)
 "AT" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -1122,6 +1096,7 @@
 /obj/item/clothing/under/misc/syndicate_souvenir{
 	pixel_y = -5
 	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Bn" = (
@@ -1166,6 +1141,18 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
+"Cr" = (
+/obj/structure/bed/dogbed/cayenne{
+	name = "Paprika's bed"
+	},
+/mob/living/basic/carp/pet/cayenne{
+	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
+	faction = list("neutral");
+	name = "Paprika";
+	real_name = "Paprika"
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "CD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1190,8 +1177,8 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Dh" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Dk" = (
@@ -1251,10 +1238,10 @@
 /turf/open/floor/bamboo/tatami,
 /area/centcom/central_command_areas/holding)
 "Ey" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Ez" = (
@@ -1326,7 +1313,6 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Gw" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/clothing/suit/costume/hawaiian{
@@ -1339,6 +1325,7 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/costume/hawaiian,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Gy" = (
@@ -1365,9 +1352,9 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "GX" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/washing_machine,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Hc" = (
@@ -1956,6 +1943,16 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
+"UW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/central_command_areas/holding)
 "UY" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall/mineral/wood,
@@ -2109,11 +2106,8 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Xt" = (
-/obj/effect/turf_decal/tile/dark,
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "XL" = (
@@ -2163,13 +2157,13 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "Yl" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/basket,
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Yu" = (
@@ -2789,7 +2783,7 @@ XP
 dg
 PX
 hO
-ti
+UW
 jf
 hO
 hO
@@ -3159,7 +3153,7 @@ xw
 So
 dg
 xi
-rW
+Cr
 dg
 iH
 mw

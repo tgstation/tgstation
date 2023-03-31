@@ -1,5 +1,3 @@
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -85,9 +83,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// The affected bodytype, if the reagent damages/heals bodyparts (Brute/Fire) of an affected mob.
 	/// See "Bodytype defines" in /code/_DEFINES/mobs.dm
 	var/affected_bodytype = BODYTYPE_ORGANIC
-	/// The affected biotype, if the reagent damages/heals generic damage (Toxin/Oxygen) of an affected mob.
+	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_biotype = MOB_ORGANIC
+	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
+	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
+	var/affected_respiration_type = ALL
 	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
 	var/affected_organtype = ORGAN_ORGANIC
@@ -229,15 +230,17 @@ Primarily used in reagents/reaction_agents
  * New, standardized method for chemicals to affect hydroponics trays.
  * Defined on a per-chem level as opposed to by the tray.
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
- * If you want to exclude subtypes use chems.has_reagent(src, [amount])
- * Forexample: you use radium which is a subtype of uranium but dont want to apply the effect of uranium
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
-		return
+
+/// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
+/datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	ASSERT(mytray)
 	// Check if we have atleast a single amount of the reagent
 	if(!chems.has_reagent(type, 1))
-		return
+		return FALSE
+
+	return TRUE
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)

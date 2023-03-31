@@ -3,6 +3,7 @@
 	desc = "A little robot. It's just vibing, doing its thing."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "vibebot1"
+	base_icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -24,9 +25,9 @@
 
 /mob/living/simple_animal/bot/vibebot/Initialize(mapload)
 	. = ..()
-	update_appearance()
 	vibe_ability = new(src)
 	vibe_ability.Grant(src)
+	update_appearance(UPDATE_ICON)
 
 /mob/living/simple_animal/bot/vibebot/Destroy()
 	QDEL_NULL(vibe_ability)

@@ -1,0 +1,6 @@
+"*":
+  banned_variables:
+  - pixel_w
+  - pixel_z
+  - step_x
+  - step_y

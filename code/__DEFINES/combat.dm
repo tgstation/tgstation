@@ -57,9 +57,9 @@
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
 #define OXYLOSS (1<<3)
-#define SHAME             (1<<4)
+#define SHAME (1<<4)
 #define MANUAL_SUICIDE (1<<5) //suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL (1<<6)  //when the suicide is conditionally lethal
+#define MANUAL_SUICIDE_NONLETHAL (1<<6) //when the suicide is conditionally lethal
 
 #define EFFECT_STUN "stun"
 #define EFFECT_KNOCKDOWN "knockdown"
@@ -87,6 +87,7 @@
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
+#define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
@@ -196,7 +197,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 ///  Example: c20, shotguns, m90
 #define BOLT_TYPE_STANDARD 1
 ///Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
-///  Example: Some SMGs, the L6
+///  Example: Tomson, Uzi, the L6 SAW
 #define BOLT_TYPE_OPEN 2
 ///Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
 ///  Example: Break action shotguns, revolvers
@@ -215,7 +216,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define AMMO_BOX_ONE_SPRITE 0
 ///ammo box will have a different state for each bullet; <icon_state>-<bullets left>
 #define AMMO_BOX_PER_BULLET 1
-///ammo box will have a different state for full and empty; <icon_state>-max_ammo and <icon_state>-0
+/// Ammo box will have a different sprite for any ammo at all, and no ammo, <icon_state>-full <icon_state>-empty
 #define AMMO_BOX_FULL_EMPTY 2
 
 #define SUPPRESSED_NONE 0
@@ -285,6 +286,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
+
+/// Flag for when /afterattack potentially acts on an item.
+/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
+/// Does not necessarily imply success, or even that it did hit an item, just intent.
+// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
+// Doesn't need to be set if proximity flag is FALSE.
+#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
 
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.

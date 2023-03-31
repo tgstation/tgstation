@@ -258,7 +258,6 @@
 		/obj/item/food/grown/peanut = 1,
 		/obj/item/food/chocolatebar = 1,
 		/obj/item/food/no_raisin = 1,
-		/datum/reagent/consumable/sugar = 2,
 	)
 	result = /obj/item/food/granola_bar
 	category = CAT_MISCFOOD
@@ -283,24 +282,13 @@
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/pacoca
-	name = "Pacoca"
+	name = "Paçoca"
 	reqs = list(
 		/obj/item/food/grown/peanut = 2,
 		/datum/reagent/consumable/sugar = 5,
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/pacoca
-	category = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/pickles_jar
-	name = "Jar of pickles"
-	reqs = list(
-		/obj/item/reagent_containers/cup/beaker/large = 1,
-		/obj/item/food/grown/cucumber = 10,
-		/datum/reagent/water = 10,
-		/datum/reagent/consumable/salt = 10,
-	)
-	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/springroll
@@ -373,33 +361,11 @@
 	result = /obj/item/food/meat_pierogi
 	category = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/raw_meat_calzone
-	name = "Meat calzone"
-	reqs = list(
-		/obj/item/food/flatdough = 1,
-		/obj/item/food/cheese/wedge = 2,
-		/obj/item/food/meat/rawcutlet = 3,
-		/obj/item/food/grown/tomato = 1,
-	)
-	result = /obj/item/food/raw_meat_calzone
-	category = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/raw_vegetarian_calzone
-	name = "Vegetarian calzone"
-	reqs = list(
-		/obj/item/food/flatdough = 1,
-		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/grown/cabbage = 1,
-		/obj/item/food/grown/onion = 1,
-	)
-	result = /obj/item/food/raw_vegetarian_calzone
-	category = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/bonbon/caramel_truffle
 	name = "Caramel truffle"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
-		/datum/reagent/consumable/caramel = 5,
+		/datum/reagent/consumable/caramel = 2,
 	)
 	result = /obj/item/food/bonbon/caramel_truffle
 	category = CAT_MISCFOOD
@@ -408,7 +374,7 @@
 	name = "Chocolate truffle"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
-		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/sugar = 2,
 	)
 	result = /obj/item/food/bonbon/chocolate_truffle
 	category = CAT_MISCFOOD
@@ -426,7 +392,19 @@
 	name = "Peanut butter cup"
 	reqs = list(
 		/obj/item/food/chocolatebar = 1,
-		/datum/reagent/consumable/peanut_butter = 5,
+		/datum/reagent/consumable/peanut_butter = 2,
 	)
 	result = /obj/item/food/bonbon/peanut_butter_cup
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/pickles_jar
+	name = "Jar of pickles"
+	reqs = list(
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/food/grown/cucumber = 10,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 10,
+	)
+	result = /obj/item/storage/fancy/pickles_jar
+	category = CAT_MISCFOOD
+	delete_contents = FALSE

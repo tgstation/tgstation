@@ -76,7 +76,7 @@
 	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = FALSE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
-	var/atom/movable/emissive_blocker/em_block
+	var/atom/movable/render_step/emissive_blocker/em_block
 
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
@@ -94,6 +94,11 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// Value used to increment ex_act() if reactionary_explosions is on
+	/// How much we as a source block explosions by
+	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
+	var/explosion_block = 0
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -104,6 +109,11 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
+#ifdef UNIT_TESTS
+	if(explosion_block && !HAS_TRAIT(src, TRAIT_BLOCKING_EXPLOSIVES))
+		stack_trace("[type] blocks explosives, but does not have the managing element applied")
+#endif
+
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
 			var/static/mutable_appearance/emissive_blocker/blocker = new()
@@ -210,6 +220,53 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 		return em_block
+
+/// Generates a space underlay for a turf
+/// This provides proper lighting support alongside just looking nice
+/// Accepts the appearance to make "spaceish", and the turf we're doing this for
+/proc/generate_space_underlay(mutable_appearance/underlay_appearance, turf/generate_for)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = "space"
+	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
+	if(!generate_for.render_target)
+		generate_for.render_target = ref(generate_for)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
+	underlay_appearance.overlays += em_block
+	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
+	QDEL_NULL(em_block)
+	// We're gonna build a light, and mask it with the base turf's appearance
+	// grab a 32x32 square of it
+	var/mutable_appearance/light = new(GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(generate_for) + 1])
+	light.appearance_flags |= KEEP_TOGETHER
+	// Now apply a copy of the turf, set to multiply
+	// This will multiply against our light, so we only light up the bits that aren't "on" the wall
+	var/mutable_appearance/mask = new(generate_for.appearance)
+	mask.blend_mode = BLEND_MULTIPLY
+	mask.render_target = ""
+	mask.pixel_x = 0
+	mask.pixel_y = 0
+	mask.pixel_w = 0
+	mask.pixel_z = 0
+	mask.transform = null
+	mask.underlays = list() // Begone foul lighting overlay
+	SET_PLANE(mask, FLOAT_PLANE, generate_for)
+	mask.layer = FLOAT_LAYER
+
+	// Bump the opacity to full, will this work?
+	mask.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,255, 0,0,0,0)
+	light.overlays += mask
+	underlay_appearance.overlays += light
+
+	// Now, we're going to make a copy of the mask. Instead of using it to multiply against our light
+	// We're going to use it to multiply against the turf lighting plane. Going to mask away the turf light
+	// And rely on LIGHTING_MASK_LAYER to ensure we mask ONLY that bit
+	var/mutable_appearance/turf_mask = new(mask.appearance)
+	SET_PLANE(turf_mask, LIGHTING_PLANE, generate_for)
+	turf_mask.layer = LIGHTING_MASK_LAYER
+	/// Any color becomes white. Anything else is black, and it's fully opaque
+	/// Ought to work
+	turf_mask.color = list(255,255,255,0, 255,255,255,0, 255,255,255,0, 0,0,0,0, 0,0,0,255)
+	underlay_appearance.overlays += turf_mask
 
 /atom/movable/update_overlays()
 	. = ..()
@@ -504,7 +561,7 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direction, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direction, glide_size_override = 0, update_dir = TRUE)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
@@ -512,10 +569,10 @@
 	if(!direction)
 		direction = get_dir(src, newloc)
 
-	if(set_dir_on_move && dir != direction)
+	if(set_dir_on_move && dir != direction && update_dir)
 		setDir(direction)
 
-	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
+	var/is_multi_tile_object = is_multi_tile_object(src)
 
 	var/list/old_locs
 	if(is_multi_tile_object && isturf(loc))
@@ -577,7 +634,7 @@
 
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	var/atom/movable/pullee = pulling
 	var/turf/current_turf = loc
 	if(!moving_from_pull)
@@ -638,7 +695,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!. && set_dir_on_move)
+				if(!. && set_dir_on_move && update_dir)
 					setDir(first_step_dir)
 				else if(!inertia_moving)
 					newtonian_move(direct)
@@ -679,7 +736,7 @@
 
 	last_move = direct
 
-	if(set_dir_on_move && dir != direct)
+	if(set_dir_on_move && dir != direct && update_dir)
 		setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		. = FALSE
@@ -747,7 +804,7 @@
 
 	return TRUE
 
-// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
+// Make sure you know what you're doing if you call this
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/crossed_atom)
 	. = TRUE
@@ -814,7 +871,9 @@
 	var/list/nested_locs = get_nested_locs(src) + src
 	for(var/channel in gone.important_recursive_contents)
 		for(var/atom/movable/location as anything in nested_locs)
+			LAZYINITLIST(location.important_recursive_contents)
 			var/list/recursive_contents = location.important_recursive_contents // blue hedgehog velocity
+			LAZYINITLIST(recursive_contents[channel])
 			recursive_contents[channel] -= gone.important_recursive_contents[channel]
 			switch(channel)
 				if(RECURSIVE_CONTENTS_CLIENT_MOBS, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
@@ -922,7 +981,9 @@
 	SSspatial_grid.remove_grid_membership(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
+		LAZYINITLIST(movable_loc.important_recursive_contents)
 		var/list/recursive_contents = movable_loc.important_recursive_contents // blue hedgehog velocity
+		LAZYINITLIST(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] -= src
 		if(!length(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
@@ -1128,6 +1189,13 @@
 	AddComponent(/datum/component/drift, direction, instant, start_delay)
 
 	return TRUE
+
+/atom/movable/set_explosion_block(explosion_block)
+	var/old_block = src.explosion_block
+	explosive_resistance -= old_block
+	src.explosion_block = explosion_block
+	explosive_resistance += explosion_block
+	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, explosion_block)
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
@@ -1474,16 +1542,14 @@
 	grab_state = newstate
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
-			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 		if(GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK) // Grab got downgraded.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 			else // Grab got upgraded from a passive one.
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+				pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 		if(GRAB_NECK, GRAB_KILL)
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)

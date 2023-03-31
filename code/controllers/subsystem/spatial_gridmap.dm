@@ -634,7 +634,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			turfs = GLOB.station_turfs
 
 		else
-			turfs = block(locate(1,1,z), locate(world.maxx, world.maxy, z))
+			turfs = Z_TURFS(z)
 
 		for(var/client_to_insert in 0 to insert_clients)
 			var/turf/random_turf = pick(turfs)
@@ -756,6 +756,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
+#undef BOUNDING_BOX_MAX
+#undef BOUNDING_BOX_MIN
 #undef GRID_CELL_ADD
 #undef GRID_CELL_REMOVE
 #undef GRID_CELL_SET
+#undef NUMBER_OF_PREGENERATED_ORANGES_EARS

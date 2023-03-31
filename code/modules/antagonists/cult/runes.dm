@@ -89,6 +89,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(req_keyword && keyword)
 			. += "<b>Keyword:</b> [keyword]"
 
+/obj/effect/rune/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /obj/effect/rune/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -342,7 +345,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
-	if(sacrificial.mind && !sacrificial.suiciding)
+	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 		stone.capture_soul(sacrificial, first_invoker, TRUE)
 
 	if(sacrificial)
@@ -552,6 +555,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/rune_turf = get_turf(src)
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		cult_team.true_cultists += cult_mind
 	sleep(4 SECONDS)
 	if(src)
 		color = RUNE_COLOR_RED
@@ -926,7 +931,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	no_brain = TRUE
 	. = ..()
 
-/mob/living/carbon/human/cult_ghost/getorganszone(zone, include_children)
+/mob/living/carbon/human/cult_ghost/get_organs_for_zone(zone, include_children)
 	. = ..()
 	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
@@ -1011,7 +1016,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_cultlarge("An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!"))
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity>=285) // Based on the prior formula, this means the cult makes up <15% of current players
+	if(intensity >= 285) // Based on the prior formula, this means the cult makes up <15% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)

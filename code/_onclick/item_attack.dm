@@ -59,7 +59,15 @@
 		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return TRUE
 
-	return afterattack(target, user, TRUE, params)
+	var/afterattack_result = afterattack(target, user, TRUE, params)
+
+	if (!(afterattack_result & AFTERATTACK_PROCESSED_ITEM) && isitem(target))
+		if (isnull(user.get_inactive_held_item()))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+		else
+			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
+
+	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
@@ -150,7 +158,7 @@
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())
 		return TRUE
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(attacking_item.attack_speed)
 	return attacking_item.attack(src, user, params)
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
@@ -158,7 +166,10 @@
 
 	// Normal attackby updates click cooldown, so we have to make up for it
 	if (result != SECONDARY_ATTACK_CALL_NORMAL)
-		user.changeNext_move(CLICK_CD_MELEE)
+		if(weapon.secondary_attack_speed)
+			user.changeNext_move(weapon.secondary_attack_speed)
+		else
+			user.changeNext_move(weapon.attack_speed)
 
 	return result
 
@@ -221,7 +232,7 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(attack_speed)
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 
@@ -271,7 +282,9 @@
 		return ..()
 
 /**
- * Last proc in the [/obj/item/proc/melee_attack_chain]
+ * Last proc in the [/obj/item/proc/melee_attack_chain].
+ * Returns a bitfield containing AFTERATTACK_PROCESSED_ITEM if the user is likely intending to use this item on another item.
+ * Some consumers currently return TRUE to mean "processed". These are not consistent and should be taken with a grain of salt.
  *
  * Arguments:
  * * atom/target - The thing that was hit
@@ -280,8 +293,11 @@
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	. = NONE
+	. |= SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, src, proximity_flag, click_parameters)
+	SEND_SIGNAL(target, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, proximity_flag, click_parameters)
+	return .
 
 /**
  * Called at the end of the attack chain if the user right-clicked.

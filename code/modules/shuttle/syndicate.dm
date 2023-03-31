@@ -13,11 +13,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 
-/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
-	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
-		return FALSE
-	return ..()
-
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()
 	if(!.)
@@ -40,6 +35,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
+	icon_screen = null
 	light_color = LIGHT_COLOR_BLUE
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"

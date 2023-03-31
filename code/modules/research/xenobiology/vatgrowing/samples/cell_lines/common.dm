@@ -9,7 +9,7 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 2,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 		/datum/reagent/consumable/cornoil = 2,
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
@@ -94,7 +94,7 @@
 	desc = "Feliform cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/liquidgibs)
+		/datum/reagent/consumable/liquidgibs)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 3,
@@ -115,7 +115,7 @@
 	desc = "Canid cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/liquidgibs)
+		/datum/reagent/consumable/liquidgibs)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 3,
@@ -134,7 +134,7 @@
 	desc = "Squat canid cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/liquidgibs)
+		/datum/reagent/consumable/liquidgibs)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 2,
@@ -152,7 +152,7 @@
 	desc = "Ursine cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/liquidgibs,
+		/datum/reagent/consumable/liquidgibs,
 		/datum/reagent/medicine/c2/synthflesh) //Nuke this if the dispenser becomes xenobio meta.
 
 	supplementary_reagents = list(
@@ -214,7 +214,7 @@
 	desc = "Ophidic cells"
 	required_reagents = list(
 		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/liquidgibs)
+		/datum/reagent/consumable/liquidgibs)
 
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 3,
@@ -239,7 +239,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/toxin/slimejelly = 2,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 		/datum/reagent/consumable/enzyme = 1)
 
 	suppressive_reagents = list(
@@ -257,7 +257,7 @@
 
 	supplementary_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 		/datum/reagent/sulfur = 2)
 
 	suppressive_reagents = list(
@@ -277,7 +277,7 @@
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 3,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 		/datum/reagent/consumable/eggyolk = 2,
 		/datum/reagent/consumable/shamblers = 1)
 
@@ -300,11 +300,11 @@
 		/datum/reagent/gold = 2, //This is why they eat so many adventurers.
 		/datum/reagent/consumable/nutriment/peptides = 2,
 		/datum/reagent/consumable/potato_juice = 1,
-		/datum/reagent/liquidgibs = 1,
+		/datum/reagent/consumable/liquidgibs = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/toxin/minttoxin = -3,
+		/datum/reagent/consumable/mintextract = -3,
 		/datum/reagent/consumable/frostoil = -2,
 		/datum/reagent/consumable/ice = -1)
 
@@ -326,7 +326,7 @@
 		/datum/reagent/consumable/ethanol/squirt_cider = 2,
 		/datum/reagent/consumable/doctor_delight = 1,
 		/datum/reagent/medicine/salglu_solution = 1,
-		/datum/reagent/liquidgibs = 1,
+		/datum/reagent/consumable/liquidgibs = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
@@ -437,7 +437,7 @@
 		/datum/reagent/consumable/red_queen = 2,
 		/datum/reagent/consumable/peachjuice = 2,
 		/datum/reagent/uranium = 1,
-		/datum/reagent/liquidgibs = 1)
+		/datum/reagent/consumable/liquidgibs = 1)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/salt = -3,
@@ -468,13 +468,13 @@
 		/datum/reagent/consumable/nutriment/peptides = -6,
 		/datum/reagent/consumable/nutriment/protein = -4,
 		/datum/reagent/consumable/nutriment = -3,
-		/datum/reagent/liquidgibs = -2)
+		/datum/reagent/consumable/liquidgibs = -2)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/netherworld = 1)
+	resulting_atoms = list()
 
 /datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
-	var/random_result = pick(typesof(/mob/living/simple_animal/hostile/netherworld) - /mob/living/simple_animal/hostile/netherworld/statue) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
+	var/random_result = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
 	resulting_atoms = list()
 	resulting_atoms[random_result] = 1
 	return ..()
@@ -530,7 +530,7 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/clownstears = -8,
-		/datum/reagent/toxin/minttoxin = -6,
+		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/ethanol/fernet = -3,
 		/datum/reagent/toxin/lipolicide = -3,
@@ -563,7 +563,7 @@
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
 
 /datum/micro_organism/cell_line/frog
-	desc = "amphibian cells"
+	desc = "anura amphibian cells"
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
@@ -582,6 +582,29 @@
 
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/basic/frog = 1)
+
+/datum/micro_organism/cell_line/axolotl
+	desc = "caudata amphibian cells"
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/ants = 3,
+		/datum/reagent/consumable/liquidgibs = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/eggwhite= 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,)
+
+	suppressive_reagents = list(
+		/datum/reagent/ammonia = -3,
+		/datum/reagent/toxin/bungotoxin = -3,
+		/datum/reagent/toxin/spore = -3,
+		/datum/reagent/toxin/plantbgone = -2, //GAY AXOLOTLS
+		/datum/reagent/drying_agent = -4,
+		/datum/reagent/consumable/mold = -2,
+		/datum/reagent/toxin = -1)
+
+	virus_suspectibility = 0.5
+	resulting_atoms = list(/mob/living/basic/axolotl = 1)
 
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"
@@ -681,7 +704,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 		/datum/reagent/toxin/plasma = 1,
 		/datum/reagent/consumable/nutriment/organ_tissue = 1,
-		/datum/reagent/liquidgibs = 1,
+		/datum/reagent/consumable/liquidgibs = 1,
 		/datum/reagent/consumable/enzyme = 1)
 
 	suppressive_reagents = list(

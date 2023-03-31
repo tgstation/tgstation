@@ -19,6 +19,11 @@
 	name = "hardened shutters"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/machinery/door/poddoor/shutters/indestructible/preopen
+	icon_state = "open"
+	density = FALSE
+	opacity = FALSE
+
 /obj/machinery/door/poddoor/shutters/radiation
 	name = "radiation shutters"
 	desc = "Lead-lined shutters with a radiation hazard symbol. Whilst this won't stop you getting irradiated, especially by a supermatter crystal, it will stop radiation travelling as far."

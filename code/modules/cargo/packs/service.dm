@@ -56,7 +56,7 @@
 /datum/supply_pack/service/janitor/janitank
 	name = "Janitor Backpack Crate"
 	desc = "Call forth divine judgement upon dirt and grime with this high capacity janitor \
-		backpack. Contains 500 units of station-cleansing cleaner. Requires janitor access to open."
+		backpack. Contains 500 units of station-cleansing cleaner."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/watertank/janitor)
@@ -154,7 +154,7 @@
 	desc = "All the miners died too fast? Assistant wants to get a taste of life off-station? \
 		Either way, this kit is the best way to turn a regular crewman into an ore-producing, \
 		monster-slaying machine. Contains meson goggles, a pickaxe, advanced mining scanner, \
-		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade. Requires QM access to open."
+		cargo headset, ore bag, gasmask, an explorer suit and a miner ID upgrade."
 	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_QM
 	access_view = ACCESS_MINING_STATION

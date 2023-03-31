@@ -70,7 +70,7 @@
 	name = "Birthday cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/candle = 1,
+		/obj/item/flashlight/flare/candle = 1,
 		/datum/reagent/consumable/sugar = 5,
 		/datum/reagent/consumable/caramel = 2
 	)

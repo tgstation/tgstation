@@ -247,7 +247,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
-	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
+	if(prob(bonus_value) && target.stat != DEAD)
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
 
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
@@ -264,3 +264,8 @@
 	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
+
+#undef CALL_CHILDREN
+#undef RAGE
+#undef SPAWN_CHILDREN
+#undef TENTACLE_PATCH

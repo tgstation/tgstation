@@ -53,7 +53,7 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target)
 		return FALSE
-	controller.current_movement_target = target
+	set_movement_target(controller, target)
 	return TRUE
 
 /datum/ai_behavior/make_babies/perform(delta_time, datum/ai_controller/controller, target_key, child_types_key)

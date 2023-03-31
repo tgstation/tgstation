@@ -1,24 +1,24 @@
-import { sortBy } from 'common/collections';
-import { ANTAG2GROUP, HEALTH, THREAT } from './constants';
-import type { AntagGroup, Antags, Observable } from './types';
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { HEALTH, THREAT } from './constants';
+import type { AntagGroup, Antagonist, Observable } from './types';
 
-/**
- * Collates antagonist groups into their own separate sections.
- * Some antags are grouped together lest they be listed separately,
- * ie: Nuclear Operatives. See: ANTAG_GROUPS.
- */
-export const collateAntagonists = (antagonists: Antags) => {
-  const collatedAntagonists = {}; // Hate that I cant use a map here
+/** Return a map of strings with each antag in its antag_category */
+export const getAntagCategories = (antagonists: Antagonist[]) => {
+  const categories: Record<string, Antagonist[]> = {};
+
   antagonists.map((player) => {
-    const { antag } = player;
-    const resolvedName: string = ANTAG2GROUP[antag] || antag;
-    if (!collatedAntagonists[resolvedName]) {
-      collatedAntagonists[resolvedName] = [];
+    const { antag_group } = player;
+
+    if (!categories[antag_group]) {
+      categories[antag_group] = [];
     }
-    collatedAntagonists[resolvedName].push(player);
+
+    categories[antag_group].push(player);
   });
+
   const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
-    Object.entries(collatedAntagonists)
+    Object.entries(categories)
   );
 
   return sortedAntagonists;
@@ -29,6 +29,7 @@ export const getDisplayName = (full_name: string, name?: string) => {
   if (!name) {
     return full_name;
   }
+
   if (
     !full_name?.includes('[') ||
     full_name.match(/\(as /) ||
@@ -36,8 +37,27 @@ export const getDisplayName = (full_name: string, name?: string) => {
   ) {
     return name;
   }
+
   // return only the name before the first ' [' or ' ('
   return `"${full_name.split(/ \[| \(/)[0]}"`;
+};
+
+export const getMostRelevant = (
+  searchQuery: string,
+  observables: Observable[][]
+) => {
+  /** Returns the most orbited observable that matches the search. */
+  const mostRelevant: Observable = flow([
+    // Filters out anything that doesn't match search
+    filter<Observable>((observable) =>
+      isJobOrNameMatch(observable, searchQuery)
+    ),
+    // Sorts descending by orbiters
+    sortBy<Observable>((observable) => -(observable.orbiters || 0)),
+    // Makes a single Observables list for an easy search
+  ])(observables.flat())[0];
+
+  return mostRelevant;
 };
 
 /** Returns the display color for certain health percentages */

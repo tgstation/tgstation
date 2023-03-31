@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	spell.projectile_type = spell_type
 	spell.button_icon_state = initial(spell_type.icon_state)
 	spell.Grant(src)
-	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
+	ai_controller.blackboard[BB_MAGICARP_SPELL] = WEAKREF(spell)
 	assign_spell_ai(spell_type)
 
 /// If you have certain spells, use a different targetting datum

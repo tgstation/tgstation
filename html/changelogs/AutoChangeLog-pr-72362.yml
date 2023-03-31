@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - bugfix: "projectile hits on mobs are logged globally"

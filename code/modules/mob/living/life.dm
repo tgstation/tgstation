@@ -67,9 +67,6 @@
 
 		handle_gravity(delta_time, times_fired)
 
-		if(stat != DEAD)
-			handle_traits(delta_time, times_fired) // eye, ear, brain damages
-
 	if(machine)
 		machine.check_eye(src)
 
@@ -136,36 +133,18 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-/mob/living/proc/handle_traits(delta_time, times_fired)
-	//Eyes
-	if(eye_blind) //blindness, heals slowly over time
-		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-1.5 * delta_time)
-		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			adjust_blindness(-0.5 * delta_time)
-
 /mob/living/proc/update_damage_hud()
 	return
 
 /mob/living/proc/handle_gravity(delta_time, times_fired)
-	var/gravity = has_gravity()
-	update_gravity(gravity)
-
-	if(gravity > STANDARD_GRAVITY)
-		gravity_animate()
-		handle_high_gravity(gravity, delta_time, times_fired)
-	else if(get_filter("gravity"))
-		remove_filter("gravity")
+	if(gravity_state > STANDARD_GRAVITY)
+		handle_high_gravity(gravity_state, delta_time, times_fired)
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
-	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
-
-/mob/living/proc/gravity_pulse_animation()
-	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(1 SECONDS)
-	animate(get_filter("gravity"), y = 0, time = 10)
+	animate(get_filter("gravity"), y = 1, time = 10, loop = -1)
+	animate(y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)
 	if(gravity < GRAVITY_DAMAGE_THRESHOLD) //Aka gravity values of 3 or more

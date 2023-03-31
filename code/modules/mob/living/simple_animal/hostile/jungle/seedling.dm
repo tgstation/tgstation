@@ -18,10 +18,8 @@
 	health = 100
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	pixel_x = -16
-	base_pixel_x = -16
-	pixel_y = -14
-	base_pixel_y = -14
+	SET_BASE_PIXEL(-16, -14)
+
 	minimum_distance = 3
 	move_to_delay = 20
 	vision_range = 9
@@ -44,7 +42,7 @@
 	damage_type = BURN
 	light_range = 2
 	armor_flag = ENERGY
-	light_color = LIGHT_COLOR_YELLOW
+	light_color = LIGHT_COLOR_DIM_YELLOW
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
@@ -52,7 +50,7 @@
 /obj/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
 	if(isliving(A))
 		var/mob/living/L = A
-		if("jungle" in L.faction)
+		if(FACTION_JUNGLE in L.faction)
 			return FALSE
 	return ..()
 
@@ -61,6 +59,7 @@
 	icon_state = "solar_beam"
 	icon = 'icons/effects/beam.dmi'
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_PRIMARY_LAYER
 	duration = 5
 	randomdir = FALSE
 

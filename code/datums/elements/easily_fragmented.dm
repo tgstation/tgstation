@@ -30,3 +30,5 @@
 	if(prob(break_chance))
 		user.visible_message(span_danger("[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand."))
 		item.deconstruct(disassembled = FALSE)
+
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM

@@ -28,8 +28,8 @@
 ///AI flags
 /// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
-/// Don't act if you're dead
-#define STOP_ACTING_WHILE_DEAD	(1<<1)
+/// Continue processing even if dead
+#define CAN_ACT_WHILE_DEAD	(1<<1)
 
 //Base Subtree defines
 
@@ -51,6 +51,8 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
+///Path we should use next time we use the JPS movement datum
+#define BB_PATH_TO_USE "BB_path_to_use"
 
 //for songs
 
@@ -219,6 +221,11 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 
+///Targetting keys for something to run away from, if you need to store this separately from current target
+#define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
+#define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
+#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
@@ -236,8 +243,18 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
-///Bileworm AI keys
+// Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+
+// Spider AI keys
+/// Key where we store a turf to put webs on
+#define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
+/// Key where we store the web-spinning ability
+#define BB_SPIDER_WEB_ACTION "BB_spider_web_action"
+
+// Fugu AI keys
+/// Key where we store the inflating ability
+#define BB_FUGU_INFLATE "BB_fugu_inflate"

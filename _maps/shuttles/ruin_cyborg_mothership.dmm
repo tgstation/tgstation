@@ -790,7 +790,7 @@
 "PP" = (
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/razor,
 /obj/structure/mirror/directional/west,

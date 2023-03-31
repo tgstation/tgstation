@@ -11,7 +11,7 @@
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
-	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+	(S.cd == "/" is preferences, S.cd == "/character[integer]" is a character slot, etc)
 
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
@@ -140,14 +140,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
 
 /datum/preferences/proc/load_path(ckey, filename="preferences.json")
-	if(!ckey)
+	if(!ckey || !load_and_save)
 		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_savefile()
-	if(!path)
+	if(load_and_save && !path)
 		CRASH("Attempted to load savefile without first loading a path!")
-	savefile = new /datum/json_savefile(path)
+	savefile = new /datum/json_savefile(load_and_save ? path : null)
 
 /datum/preferences/proc/load_preferences()
 	if(!savefile)
@@ -158,7 +158,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			return FALSE
 
 	var/needs_update = save_data_needs_update(savefile.get_entry())
-	if(needs_update == -2) //fatal, can't load any data
+	if(load_and_save && (needs_update == -2)) //fatal, can't load any data
 		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
@@ -168,19 +168,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	apply_all_client_preferences()
 
 	//general preferences
-	lastchangelog = savefile.get_entry("lastchangelog")
-	be_special = savefile.get_entry("be_special")
-	default_slot = savefile.get_entry("default_slot")
-	chat_toggles = savefile.get_entry("chat_toggles")
-	toggles = savefile.get_entry("toggles")
-	ignoring = savefile.get_entry("ignoring")
+	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
+	be_special = savefile.get_entry("be_special", be_special)
+	default_slot = savefile.get_entry("default_slot", default_slot)
+	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
+	toggles = savefile.get_entry("toggles", toggles)
+	ignoring = savefile.get_entry("ignoring", ignoring)
 
 	// OOC commendations
-	hearted_until = savefile.get_entry("hearted_until")
+	hearted_until = savefile.get_entry("hearted_until", hearted_until)
 	if(hearted_until > world.realtime)
 		hearted = TRUE
 	//favorite outfits
-	favorite_outfits = savefile.get_entry("favorite_outfits")
+	favorite_outfits = savefile.get_entry("favorite_outfits", favorite_outfits)
 
 	var/list/parsed_favs = list()
 	for(var/typetext in favorite_outfits)
@@ -190,7 +190,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	favorite_outfits = unique_list(parsed_favs)
 
 	// Custom hotkeys
-	key_bindings = savefile.get_entry("key_bindings")
+	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -263,7 +263,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_character(slot)
 	SHOULD_NOT_SLEEP(TRUE)
-
 	if(!slot)
 		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
@@ -317,7 +316,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)
-
 	if(!path)
 		return FALSE
 	var/tree_key = "character[default_slot]"

@@ -226,20 +226,21 @@
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/teleshot
-	name ="golden bolt"
-	damage = 0
-	color = rgb(255,255,102)
-
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
 		if(mob_target.faction_check_mob(firer))
-			nodamage = TRUE
+			damage = 0
+
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/rock_target = target
 		rock_target.gets_drilled()
+
+/obj/projectile/herald/teleshot
+	name = "golden bolt"
+	damage = 0
+	color = rgb(255,255,102)
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -270,9 +271,14 @@
 
 /obj/item/clothing/neck/cloak/herald_cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-	if(rand(1,100) > hit_reaction_chance)
+	if(prob(hit_reaction_chance))
 		return
 	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
+
+#undef HERALD_TRISHOT
+#undef HERALD_DIRECTIONALSHOT
+#undef HERALD_TELESHOT
+#undef HERALD_MIRROR
