@@ -32,6 +32,8 @@
 		/area/station/science/ordnance/freezerchamber,
 		// on kilo station in specific this is off in space
 		/area/station/cargo/warehouse,
+		// maintenence areas are not required to be connected
+		/area/station/maintenance,
 	)
 	for(var/ignored_type in ignored_areas)
 		station_areas_remaining -= typesof(ignored_type)
