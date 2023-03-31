@@ -273,6 +273,7 @@
 	},
 /obj/structure/window,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
