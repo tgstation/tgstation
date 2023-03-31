@@ -187,7 +187,7 @@
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, .proc/on_flash)
+	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, PROC_REF(on_flash))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -215,7 +215,7 @@
 	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
 		if(holiday_meme_chance)
-			INVOKE_ASYNC(src, .proc/_async_holiday_meme_say, flashed)
+			INVOKE_ASYNC(src, PROC_REF(_async_holiday_meme_say), flashed)
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
 
 	else
