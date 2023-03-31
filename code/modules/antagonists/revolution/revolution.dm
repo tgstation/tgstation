@@ -199,6 +199,9 @@
 /datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
+	// Always partial flash at the very least
+	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
 	if(flashed.stat == DEAD)
 		return
 	else if(flashed.stat != CONSCIOUS)
@@ -216,10 +219,7 @@
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
 
 	else
-		to_chat(source, span_warning("[flashed] seems resistant to the flash!"))
-
-	// Always partial flash at the very least
-	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
 
 /// Used / called async from [proc/on_flash] to deliver a funny meme line
 /datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)
