@@ -367,16 +367,16 @@ SUBSYSTEM_DEF(spatial_grid)
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 				var/list/new_target_contents = new_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_SET(intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				GRID_CELL_SET(intersecting_cell, intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 				var/list/new_target_contents = new_target.important_recursive_contents
-				GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				GRID_CELL_SET(intersecting_cell, intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-				GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
+				GRID_CELL_SET(intersecting_cell, intersecting_cell.atmos_contents, new_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
 ///acts like enter_cell() but only adds the target to a specified type of grid cell contents list
@@ -397,16 +397,16 @@ SUBSYSTEM_DEF(spatial_grid)
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			var/list/new_target_contents = new_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_SET(intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			GRID_CELL_SET(intersecting_cell, intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 			var/list/new_target_contents = new_target.important_recursive_contents
-			GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			GRID_CELL_SET(intersecting_cell, intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-			GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
+			GRID_CELL_SET(intersecting_cell, intersecting_cell.atmos_contents, new_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
 	return intersecting_cell
@@ -436,16 +436,16 @@ SUBSYSTEM_DEF(spatial_grid)
 		switch(type)
 			if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 				var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 			if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-				GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
+				GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.atmos_contents, old_target)
 				SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), old_target)
 
 	return TRUE
@@ -468,19 +468,33 @@ SUBSYSTEM_DEF(spatial_grid)
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
-			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 			var/list/old_target_contents = old_target.important_recursive_contents
-			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
+			GRID_CELL_REMOVE(intersecting_cell, intersecting_cell.atmos_contents, old_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 
 	return TRUE
+
+#ifdef UNIT_TESTS
+/mob/living/carbon/human/species/lizard/trolls_the_maintainer
+	name = "trolls-the-maintainer"
+
+/mob/living/carbon/human/species/lizard/trolls_the_maintainer/Initialize(mapload)
+	. = ..()
+	become_hearing_sensitive()
+	var/list/datum/spatial_grid_cell/nearby_cells = SSspatial_grid.get_cells_in_range(src, 30)
+
+	for(var/datum/spatial_grid_cell/nearby_cell in nearby_cells)
+		GRID_CELL_ADD(nearby_cell, nearby_cell.hearing_contents, src)
+		GRID_CELL_ADD(nearby_cell, nearby_cell.hearing_contents, src)
+#endif
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
@@ -490,13 +504,56 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
+
+		#ifdef UNIT_TEST
+
+		var/input_cell_cords = "([input_cell.x], [input_cell.y], [input_cell.z])"
+
+		if(input_cell && !(input_cell in to_remove.in_spatial_grid_cells))
+			var/error_data = ""
+			for(var/datum/spatial_grid_cell/cell in to_remove.in_spatial_grid_cells)
+				var/coords = "([cell.x], [cell.y], [cell.z])"
+				var/contents = ""
+
+				if(to_remove in cell.hearing_contents)
+					contents = "hearing contents"
+
+				if(to_remove in cell.client_contents)
+					if(length(contents) > 0)
+						contents = "[contents], client contents"
+					else
+						contents = "client contents"
+
+				if(to_remove in cell.atmos_contents)
+					if(length(contents) > 0)
+						contents = "[contents], atmos contents"
+					else
+						contents = "atmos contents"
+
+				if(length(error_data) > 0)
+					error_data = "[error_data], {[coords] in [contents]}"
+				else
+					error_data = "{[coords] in: [contents]}"
+
+			stack_trace("[to_remove] at cell indices: [input_cell_cords], found in [length(to_remove.in_spatial_grid_cells)] spatial grid cells and they wouldnt have been caught by force_remove_by()! cells: [error_data]")
+
+			find_hanging_cell_refs_for_movable(to_remove, TRUE)
+			return
+
+		#else
 		if(!input_cell)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
 
-	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.atmos_contents, to_remove)
+		#endif
+
+	GRID_CELL_REMOVE(input_cell, input_cell.client_contents, to_remove)
+	GRID_CELL_REMOVE(input_cell, input_cell.hearing_contents, to_remove)
+	GRID_CELL_REMOVE(input_cell, input_cell.atmos_contents, to_remove)
+
+	#ifdef UNIT_TESTS
+	to_remove.in_spatial_grid_cells = null
+	#endif
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
@@ -758,7 +815,5 @@ SUBSYSTEM_DEF(spatial_grid)
 
 #undef BOUNDING_BOX_MAX
 #undef BOUNDING_BOX_MIN
-#undef GRID_CELL_ADD
-#undef GRID_CELL_REMOVE
-#undef GRID_CELL_SET
+
 #undef NUMBER_OF_PREGENERATED_ORANGES_EARS

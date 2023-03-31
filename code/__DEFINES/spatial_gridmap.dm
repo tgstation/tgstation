@@ -15,31 +15,58 @@
 ///all atmos machines are stored in this channel (I'm sorry kyler)
 #define SPATIAL_GRID_CONTENTS_TYPE_ATMOS "spatial_grid_contents_type_atmos"
 
+#define ALL_CHANNELS_OF_CELL(cell) (cell.hearing_contents | cell.client_contents | cell.atmos_contents)
+
 ///whether movable is itself or containing something which should be in one of the spatial grid channels.
 #define HAS_SPATIAL_GRID_CONTENTS(movable) (movable.spatial_grid_key)
+
+#ifdef UNIT_TESTS
+#define UPDATE_GRID_METADATA(movable_or_list, cell) \
+	do { \
+		if(!istype(movable_or_list, /list)) { \
+			movable_or_list = list(movable_or_list) \
+		} \
+		var/list/all_contents = ALL_CHANNELS_OF_CELL(cell); \
+		for(var/atom/movable/_thing in movable_or_list) { \
+			if(_thing in all_contents) { \
+				LAZYOR(_thing.in_spatial_grid_cells, cell) \
+			} else { \
+				LAZYREMOVE(_thing.in_spatial_grid_cells, cell) \
+			} \
+		} \
+	} while(FALSE)
+
+#else
+
+#define UPDATE_GRID_METADATA(movable_or_list, cell)
+
+#endif
 
 // macros meant specifically to add/remove movables from the internal lists of /datum/spatial_grid_cell,
 // when empty they become references to a single list in SSspatial_grid and when filled they become their own list
 // this is to save memory without making them lazylists as that slows down iteration through them
-#define GRID_CELL_ADD(cell_contents_list, movable_or_list) \
+#define GRID_CELL_ADD(cell, cell_contents_list, movable_or_list) \
 	if(!length(cell_contents_list)) { \
 		cell_contents_list = list(); \
 		cell_contents_list += movable_or_list; \
 	} else { \
 		cell_contents_list += movable_or_list; \
-	};
+	};\
+	UPDATE_GRID_METADATA(movable_or_list, cell)
 
-#define GRID_CELL_SET(cell_contents_list, movable_or_list) \
+#define GRID_CELL_SET(cell, cell_contents_list, movable_or_list) \
 	if(!length(cell_contents_list)) { \
 		cell_contents_list = list(); \
 		cell_contents_list += movable_or_list; \
 	} else { \
 		cell_contents_list |= movable_or_list; \
-	};
+	};\
+	UPDATE_GRID_METADATA(movable_or_list, cell)
 
 //dont use these outside of SSspatial_grid's scope use the procs it has for this purpose
-#define GRID_CELL_REMOVE(cell_contents_list, movable_or_list) \
+#define GRID_CELL_REMOVE(cell, cell_contents_list, movable_or_list) \
 	cell_contents_list -= movable_or_list; \
 	if(!length(cell_contents_list)) {\
 		cell_contents_list = dummy_list; \
-	};
+	}; \
+	UPDATE_GRID_METADATA(movable_or_list, cell)
