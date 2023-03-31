@@ -103,5 +103,12 @@
 	)
 
 /mob/living/basic/frog/syndifrog
-	//TODO more health and regen component
-	//TODO some way to sneak through doors
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	poison_per_bite = 6
+
+/mob/living/basic/frog/syndifrog/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/regenerator)
