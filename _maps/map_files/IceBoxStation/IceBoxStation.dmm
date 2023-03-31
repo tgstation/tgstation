@@ -55063,7 +55063,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "rzg" = (
-/turf/open/genturf/alternative,
+/turf/open/genturf/blue,
 /area/icemoon/underground/unexplored/rivers)
 "rzj" = (
 /obj/structure/table,
@@ -63176,7 +63176,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "udC" = (
-/turf/open/genturf/alternative,
+/turf/open/genturf/blue,
 /area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "udE" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -72267,7 +72267,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "wXw" = (
-/turf/open/genturf/alternative,
+/turf/open/genturf/blue,
 /area/icemoon/surface/outdoors/noruins)
 "wXR" = (
 /obj/structure/table,
