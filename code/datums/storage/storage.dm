@@ -407,6 +407,23 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return TRUE
 
 /**
+ * Attempts to insert an item into the storage
+ *
+ * @param datum/source used by the signal handler
+ * @param obj/item/to_insert the item we're inserting
+ * @param force bypass locked storage
+ */
+/datum/storage/proc/attempt_insert_nonmob(obj/item/to_insert, force = FALSE)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return FALSE
+
+	to_insert.item_flags |= IN_STORAGE
+	to_insert.forceMove(resolve_location)
+	resolve_location.update_appearance()
+	return TRUE
+
+/**
  * Inserts every item in a given list, with a progress bar
  *
  * @param mob/user the user who is inserting the items

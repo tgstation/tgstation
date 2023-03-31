@@ -32,6 +32,8 @@
 	usesound = 'sound/weapons/empty.ogg'
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	var/mode = 0
+	///the component buffer
+	var/obj/item/mcobject/component_buffer
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()

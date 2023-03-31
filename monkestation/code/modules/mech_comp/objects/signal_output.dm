@@ -1,3 +1,4 @@
+#define IS_SAFE(number) (!(isnull(number)))
 /obj/item/mcobject/signal_output
 	name = "signal output component"
 
@@ -18,9 +19,9 @@
 	set_frequency(signal_frequency)
 
 /obj/item/mcobject/signal_output/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
+	SSradio.remove_object(src, signal_frequency)
+	signal_frequency = new_frequency
+	radio_connection = SSradio.add_object(src, signal_frequency, RADIO_SIGNALER)
 	return
 
 /obj/item/mcobject/signal_output/proc/send_signal(datum/mcmessage/input)
@@ -45,3 +46,5 @@
 	if(!IS_SAFE(buffer))
 		return
 	code = buffer
+
+#undef IS_SAFE
