@@ -68,7 +68,7 @@
 	points_to_win = 3,
 	victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>",
 	auto_restart = FALSE,
-	)
+)
 	src.points_to_win = points_to_win
 	src.victory_rejoin_text = victory_rejoin_text
 	src.auto_restart = auto_restart
