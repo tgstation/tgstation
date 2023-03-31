@@ -20206,6 +20206,15 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
+"gsN" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "gsT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -237249,11 +237258,11 @@ wNO
 wNO
 wNO
 wNO
-mZf
-oot
-oot
-oot
-rwt
+lbc
+bln
+bln
+bln
+lbc
 bln
 bln
 bln
@@ -237506,16 +237515,16 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+mZf
+oot
+oot
+gsN
+rwt
+bln
+bln
+bln
+bln
+bln
 bUx
 xmO
 ubE
