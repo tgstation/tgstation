@@ -3207,7 +3207,6 @@
 #include "code\modules\events\ghost_role\alien_infestation.dm"
 #include "code\modules\events\ghost_role\blob.dm"
 #include "code\modules\events\ghost_role\changeling_event.dm"
-#include "code\modules\events\ghost_role\frogression_traitor_event.dm"
 #include "code\modules\events\ghost_role\fugitive_event.dm"
 #include "code\modules\events\ghost_role\morph_event.dm"
 #include "code\modules\events\ghost_role\nightmare.dm"
