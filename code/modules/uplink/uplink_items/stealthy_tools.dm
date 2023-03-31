@@ -123,3 +123,17 @@
 	var/datum/round_event_control/event = locate(/datum/round_event_control/grid_check) in SSevents.control
 	event.runEvent()
 	return source //For log icon
+
+/datum/uplink_item/stealthy_tools/randomize
+	name = "Trigger Unfortunate Occurence"
+	desc = "When purchased, syndicate probabilty matrixes will cause a random event to occur on the station."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	cost = 1
+	progression_minimum = 10 MINUTES
+	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_tools/randomize/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	SSevents.spawnEvent()
+	return source //For log icon
