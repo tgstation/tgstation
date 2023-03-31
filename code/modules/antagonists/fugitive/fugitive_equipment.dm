@@ -53,7 +53,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/invisibility
 	name = "invisibility autoinjector"
-	desc = "An autoinjector containing a stabilized SaturnX compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
+	desc = "An autoinjector containing a stabilized Saturn-X compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
 	icon_state = "invispen"
 	base_icon_state = "invispen"
 	volume = 20 //By my estimate this will last you about 8-ish mintues
