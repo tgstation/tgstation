@@ -35,6 +35,12 @@
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 
+	//frogs can see color even in very low light situations
+	//they do struggle with red tones however
+	lighting_cutoff_red = 15
+	lighting_cutoff_green = 30
+	lighting_cutoff_blue = 30
+
 	habitable_atmos = list("min_oxy" = 3, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 15, "min_co2" = 0, "max_co2" = 15, "min_n2" = 0, "max_n2" = 0)
 
 	ai_controller = /datum/ai_controller/basic_controller/frog
