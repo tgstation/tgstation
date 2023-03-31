@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Lava and plasma rivers (openspace on icebox too) will generate now. This was broken for 2 years wtf man"
