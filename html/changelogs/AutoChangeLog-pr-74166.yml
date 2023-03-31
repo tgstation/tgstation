@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Lightbulb removal code is a little bit easier to read"
+  - spellcheck: "The lightbulb remover skillchip implant (which I know you guys LOVE to use) has a slightly different message now."

@@ -830,3 +830,39 @@
   - bugfix: aux construction console RCD works again
   kawoppi:
   - bugfix: added lights to the tramstation head of personnel's office
+2023-03-24:
+  Jacquerel:
+  - rscadd: Bioscrambler anomalies will once again swap your organs with other organs.
+  - balance: Bioscrambler anomalies no longer affect synthetic parts.
+  LordVollkorn / Gage Gaebler:
+  - rscadd: Added Traveler's Rest, a tiny space structure for space travellers to
+      relax and to prepare for the explorations ahead.
+  Rhials:
+  - rscadd: Xenomorphs born in the room the roundstart delivery egg was spawned in
+      will be part of a special "captive xenomorph" team, tasked with escaping and
+      tracked in the roundend report.
+  - bugfix: Regular Xenomorphs no longer receive a blank objectives popup on spawn.
+  SmoSmoSmoSmok:
+  - bugfix: the orm will no longer display weird decimals
+  SyncIt21:
+  - bugfix: canvas getting finalized with untitled name when naming is cancelled
+  atosti:
+  - bugfix: machines can now be pried open more than once.
+  - bugfix: machines now have the correct density when pried open.
+  flowercuco:
+  - qol: Prosthesis organ manipulation now warns you if you are using the incorrect
+      engineering tool
+  lizardqueenlexi:
+  - bugfix: all space ruins can now appear on Linux servers
+  softcerv:
+  - bugfix: drawing from an empty tarot card deck no longer causes runtimes
+  vinylspiders:
+  - bugfix: fixes gondola meatslab not being able to be placed into the DNA infuser
+  - qol: adjusted the blood deficiency quirk for slimepeople to not cause excessive
+      hunger as long as blood volume is kept above 550 via an IV drip (or other means
+      of getting welding fluid/some other toxin etc into the bloodstream, e.g. ingestion)
+  - qol: speciees with exotic blood types will now receive the correct blood bag in
+      the mail from having the blood deficiency perk
+  - rscadd: 'adds new blood bag types: TOX (slimepeople), H2O (podpeople), S (snail)'
+  - bugfix: fixed blood deficiency quirk causing wild fluctuations in blood volume
+      on the analyzer, giving more accurate readings

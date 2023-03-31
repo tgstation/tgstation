@@ -575,6 +575,6 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
-//PHONEBOOTH
-/area/ruin/space/Phone_booth
-	name = "\improper Phone Booth"
+// The abandoned capsule 'The Traveler's Rest'
+/area/ruin/space/has_grav/travelers_rest
+	name = "\improper Traveler's Rest"

@@ -361,3 +361,9 @@
 	suffix = "prey_pod.dmm"
 	name = "Crashed Mimic Escape Pod"
 	description = "A pod with a person who has died to a mimic."
+
+/datum/map_template/ruin/space/travelers_rest
+	id = "travelers_rest"
+	suffix = "travelers_rest.dmm"
+	name = "Traveler's Rest"
+	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
