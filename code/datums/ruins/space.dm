@@ -395,3 +395,8 @@
 	suffix = "waystation.dmm"
 	name = "Waystation"
 	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+/datum/map_template/ruin/space/mimesvclowns
+	id = "mimesvclowns"
+	suffix = "mimesvclowns.dmm"
+	name = "Abandoned Mime Outpost"
+	description = "When you fight mimes, you better bring more than slips."
