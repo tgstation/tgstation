@@ -45,15 +45,16 @@
 ///Dusts the player and starts a respawn countdown.
 /datum/component/ctf_player/proc/ctf_dust()
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(player_mob, TRAIT_CRITICAL_CONDITION) || player_mob.stat == DEAD || !player_mob.client)
-		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
-		var/turf/death_turf = get_turf(player_mob)
-		player_mob.dust()
-		player_mob = null
-		can_respawn = FALSE
-		addtimer(CALLBACK(src, PROC_REF(allow_respawns)), ctf_game.respawn_cooldown, TIMER_UNIQUE)
-		if(death_drop)
-			new death_drop(death_turf)
+	if(!HAS_TRAIT(player_mob, TRAIT_CRITICAL_CONDITION) && !player_mob.stat == DEAD && player_mob.client)
+		return
+	UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
+	var/turf/death_turf = get_turf(player_mob)
+	player_mob.dust()
+	player_mob = null
+	can_respawn = FALSE
+	addtimer(CALLBACK(src, PROC_REF(allow_respawns)), ctf_game.respawn_cooldown, TIMER_UNIQUE)
+	if(death_drop)
+		new death_drop(death_turf)
 
 ///Called after a period of time pulled from ctf_game, allows the player to respawn in CTF.
 /datum/component/ctf_player/proc/allow_respawns()

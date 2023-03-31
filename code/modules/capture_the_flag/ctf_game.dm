@@ -109,7 +109,7 @@
 				to_chat(user, span_warning("You cannot respawn yet!"))
 		return
 	if(ctf_game.team_valid_to_join(team, user))
-		to_chat(user, "<span class='userdanger'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
+		to_chat(user, span_userdanger("You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!"))
 		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
 		spawn_team_member(new_team_member)	
@@ -358,6 +358,7 @@
 		return
 	capture(user)
 
+///Proc called when a player interacts with the control point to handle capturing it. Performs a do after and then verifies what team ther capturer belongs to.
 /obj/machinery/ctf/control_point/proc/capture(mob/user)
 	if(do_after(user, 3 SECONDS, target = src))
 		var/datum/component/ctf_player/ctf_player = user.mind.GetComponent(/datum/component/ctf_player)
@@ -390,7 +391,7 @@
 	if(!is_ctf_target(living))
 		return
 	if(!(src.team in living.faction))
-		to_chat(living, span_danger("<B>Stay out of the enemy spawn!</B>"))
+		to_chat(living, span_bolddanger("Stay out of the enemy spawn!"))
 		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
 		living.apply_damage(200) //Damage instead of instant death so we trigger the damage signal.
 

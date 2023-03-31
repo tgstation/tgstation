@@ -18,7 +18,7 @@
 	///How many points a team needs to win.
 	var/points_to_win = 3
 	///The text shown once this CTF match ends.
-	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
+	var/victory_rejoin_text = "Teams have been cleared. Click on the machines to vote to begin another round."
 	///When this CTF match ends should it automatically restart.
 	var/auto_restart = FALSE
 	///Weather or not instagib mode has been enabled.
@@ -66,7 +66,7 @@
 ///Some CTF maps may require alternate rulesets, this proc is called by the medisim spawners and CTF maploading.
 /datum/ctf_controller/proc/setup_rules(
 	points_to_win = 3,
-	victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>",
+	victory_rejoin_text = "Teams have been cleared. Click on the machines to vote to begin another round.",
 	auto_restart = FALSE,
 )
 	src.points_to_win = points_to_win
@@ -148,7 +148,7 @@
 	for(var/team in teams)
 		var/datum/ctf_team/ctf_team = teams[team]
 		ctf_team.message_team("<span class='narsie [winning_ctf_team.team_span]'>[winning_team] team wins!</span>")
-		ctf_team.message_team(victory_rejoin_text)
+		ctf_team.message_team(span_userdanger(victory_rejoin_text))
 		ctf_team.reset_team()
 	if(auto_restart)
 		toggle_id_ctf(null, game_id, TRUE)
@@ -185,10 +185,15 @@
 
 ///A datum that holds details about individual CTF teams, any team specific CTF functionality should be implimented here.
 /datum/ctf_team
+	///Reference to the spawn point that this team uses.
 	var/obj/machinery/ctf/spawner/spawner
+	///What color this team is, also acts as a team name.
 	var/team_color
+	///Total score that this team currently has.
 	var/points = 0
+	///Assoc list containing a list of team members ckeys and the associated ctf_player components.
 	var/list/team_members = list()
+	///Span used for messages sent to this team.
 	var/team_span = ""
 
 /datum/ctf_team/New(obj/machinery/ctf/spawner/spawner)
