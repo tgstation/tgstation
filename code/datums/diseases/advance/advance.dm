@@ -90,7 +90,7 @@
 		list( // level 9
 			/datum/reagent/toxin/lipolicide,
 			/datum/reagent/medicine/sal_acid,
-			/datum/reagent/medicine/haloperidol,
+			/datum/reagent/toxin/chloralhydrate,
 		),
 		list( // level 10
 			/datum/reagent/drug/aranesp,
