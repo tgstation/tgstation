@@ -6,8 +6,9 @@
 		"How can anyone believe this stuff?",
 		"...Why am I wasting my time on this?",
 		"Coming up with the invocations on demand is actually a skill...",
-		"I can't believe I'm reading this!",
+		"I should get a medical eyepatch to complete the look...",
 		"According to this manga, my power goes up by 5000% by using invocations...",
+		"Who is this \"dark lord\" fellow? Why does he grant all the powers?",
 	)
 
 /obj/item/book/granter/chuunibyou/can_learn(mob/living/user)
