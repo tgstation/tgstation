@@ -208,7 +208,7 @@
 		to_chat(source, span_warning("[flashed.p_they(TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
 		return
 
-	if(isnull(flashed.mind) || !GET_CLIENT(flashed.client))
+	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
 		return
 
