@@ -57,3 +57,7 @@
 #_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
 #_maps/RandomRuins/SpaceRuins/abandoned_meta_perma.dmm
+#_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
+#_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
+#_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
