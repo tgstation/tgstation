@@ -56,7 +56,7 @@
 /obj/item/folder/biscuit/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!cracked)
-		if (tgui_alert(user, "Do you want to crack it open? You cannot uncrack back.", "Biscuit card", list("Yes", "No")) != "Yes")
+		if (tgui_alert(user, "Do you want to crack it open?", "Biscuit Cracking", list("Yes", "No")) != "Yes")
 			return
 		cracked = TRUE
 		playsound(get_turf(user), 'sound/effects/wounds/crack1.ogg', 60)
@@ -107,7 +107,7 @@
 /obj/item/folder/biscuit/unsealed/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!sealed)
-		if (tgui_alert(user, "Do you want to seal it? After sealing the only way to reach the contents is by cracking the biscuit, you cannot re-seal it again after that.", "Biscuit card", list("Yes", "No")) != "Yes")
+		if (tgui_alert(user, "Do you want to seal it? You must crack it open to reach the contents again!", "Biscuit Sealing", list("Yes", "No")) != "Yes")
 			return
 		cracked = FALSE
 		sealed = TRUE
