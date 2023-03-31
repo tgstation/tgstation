@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(vote)
 		return
 	if(!voter?.ckey)
 		return
-	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
+	if((CONFIG_GET(flag/no_dead_vote) || istype(current_vote, /datum/vote/run_event)) && voter.stat == DEAD && !voter.client?.holder)
 		return
 
 	// If user has already voted, remove their specific vote

@@ -1398,6 +1398,7 @@
 #include "code\datums\storage\subtypes\trash.dm"
 #include "code\datums\votes\_vote_datum.dm"
 #include "code\datums\votes\custom_vote.dm"
+#include "code\datums\votes\event_vote.dm"
 #include "code\datums\votes\map_vote.dm"
 #include "code\datums\votes\restart_vote.dm"
 #include "code\datums\votes\rock_the_vote.dm"
