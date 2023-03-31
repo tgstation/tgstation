@@ -173,7 +173,7 @@
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
 
 
-	if(!TICK_CHECK)
+	if(!VERB_SHOULD_YIELD)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
 
 	var/datum/callback/our_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
