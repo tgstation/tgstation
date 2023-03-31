@@ -46,9 +46,11 @@ at the cost of risking a vicious bite.**/
 		fish_source.fish_table[picked_item] = 5
 		fish_source.fish_counts[picked_item] = 1;
 	AddComponent(/datum/component/fishing_spot, fish_source)
+	GLOB.moisture_traps += src
 
 
 /obj/structure/moisture_trap/Destroy()
+	GLOB.moisture_traps -= src
 	if(hidden_item)
 		QDEL_NULL(hidden_item)
 	return ..()
