@@ -73,4 +73,3 @@
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
 #_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
-#_maps/RandomRuins/SpaceRuins/mimesvsclowns.dmm
