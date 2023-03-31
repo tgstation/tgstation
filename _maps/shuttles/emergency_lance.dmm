@@ -582,6 +582,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"tk" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/station_crash/devastating,
+/turf/open/floor/iron/checker,
+/area/shuttle/escape)
 "tx" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -683,16 +690,6 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/shuttle/escape)
-"wD" = (
-/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
-	dir = 4
-	},
-/obj/effect/station_crash/devastating,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xa" = (
 /obj/structure/table/reinforced,
@@ -2116,7 +2113,7 @@ cz
 (10,1,1) = {"
 jo
 Sg
-wD
+Yq
 ce
 jM
 jY
@@ -2126,7 +2123,7 @@ Yq
 Yq
 Hq
 cw
-Hd
+tk
 Hd
 Hd
 JN
