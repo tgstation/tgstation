@@ -377,6 +377,11 @@
 	description = "An old, still functional router for some long destroyed system."
 
 
+/datum/map_template/ruin/space/prey_pod
+	id = "prey"
+	suffix = "prey_pod.dmm"
+	name = "Crashed Mimic Escape Pod"
+	description = "A pod with a person who has died to a mimic."
 
 /datum/map_template/ruin/space/travelers_rest
 	id = "travelers_rest"
