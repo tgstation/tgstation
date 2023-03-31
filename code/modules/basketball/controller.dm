@@ -341,6 +341,7 @@ GLOBAL_VAR(basketball_game)
 	return GLOB.always_state
 
 /datum/basketball_controller/ui_interact(mob/user, datum/tgui/ui)
+	check_signups()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BasketballPanel")
@@ -378,8 +379,9 @@ GLOBAL_VAR(basketball_game)
 
 	switch(action)
 		if("basketball_signup")
-			if(GLOB.basketball_signup[ghost_client.ckey])
-				GLOB.basketball_signup -= ghost_client.ckey // double check this works?
+			if(GLOB.basketball_signup[ghost_client.ckey] || GLOB.basketball_bad_signup[ghost_client.ckey])
+				GLOB.basketball_signup -= ghost_client.ckey
+				GLOB.basketball_bad_signup -= ghost_client.ckey
 				to_chat(ghost_client, span_notice("You unregister from basketball."))
 			else
 				GLOB.basketball_signup[ghost_client.ckey] = ghost_client
