@@ -1,0 +1,1056 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aH" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"aZ" = (
+/obj/structure/cable,
+/obj/machinery/computer/old,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"bt" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"bE" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"bJ" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/door/window{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"bM" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"ci" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"cL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"dj" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
+/obj/structure/cable,
+/obj/item/secateurs{
+	pixel_y = -4;
+	pixel_x = -5
+	},
+/obj/item/shovel/spade{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/cultivator{
+	pixel_x = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/bucket{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"dZ" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"eR" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/garbage,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/grey_tide{
+	pixel_y = -25
+	},
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"eW" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"fr" = (
+/obj/item/radio/intercom/prison/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/restraints/handcuffs{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/contraband/permabrig_weapon{
+	pixel_x = -12
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"jF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/hydroponics/soil,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"lw" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"lS" = (
+/obj/structure/cable,
+/obj/machinery/hydroponics/soil,
+/obj/structure/sink/kitchen/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"ns" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"oc" = (
+/obj/item/storage/backpack/satchel/flat{
+	loot = /obj/effect/spawner/random/contraband
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"od" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"oE" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"pw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"rW" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"sa" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"sk" = (
+/obj/structure/lattice,
+/obj/structure/disposalpipe/segment,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"sD" = (
+/obj/structure/sign/poster/contraband/punch_shit{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"sP" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"to" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/biogenerator,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"tQ" = (
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/security{
+	name = "Permabrig Access";
+	desc = "It opens and closes. This one looks haphazardly wrenched into place."
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"uo" = (
+/obj/machinery/washing_machine{
+	anchored = 0;
+	name = "broken washing machine"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"uV" = (
+/obj/structure/sign/warning/electric_shock/directional/south,
+/turf/open/space/basic,
+/area/space)
+"vh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"vL" = (
+/obj/structure/cable,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/ambrosia/deus{
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/grown/ambrosia/gaia{
+	pixel_y = 3;
+	pixel_x = -7
+	},
+/obj/item/seeds/tower{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/effect/spawner/random/food_or_drink/seed_rare{
+	pixel_x = 6
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"wU" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"wY" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"xB" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/computer/camera_advanced{
+	network = RPS;
+	name = "Security Camera Console"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"yt" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/crate_loot{
+	loot = list(/obj/structure/closet/crate/maint=1,/obj/structure/closet/crate/secure/loot=1)
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_y = -3;
+	pixel_x = -8;
+	charges_left = 4;
+	has_cap = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"AP" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Bi" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	is_operational = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Bj" = (
+/obj/structure/fluff/broken_flooring{
+	anchored = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"BB" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ct" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/holohoop{
+	dir = 8;
+	pixel_x = 14;
+	name = "trashketball hoop"
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Df" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/sink/kitchen/directional/east{
+	dir = 2;
+	pixel_x = 0;
+	pixel_y = 16
+	},
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"DM" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ek" = (
+/obj/structure/cable,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular";
+	anchored = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Fe" = (
+/obj/structure/lattice,
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"FJ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Gg" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Garden Security Camera";
+	network = RPS;
+	name = "Garden Security Camera"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"GE" = (
+/obj/structure/cable,
+/obj/item/chair/stool{
+	pixel_y = -1;
+	pixel_x = -6;
+	name = "gaming stool";
+	desc = '"Not yet!"'
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"HG" = (
+/obj/structure/cable,
+/obj/structure/punching_bag,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/blood/splatter{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ir" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"II" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/public{
+	name = "Permabrig";
+	desc = 'Itopensandcloses."Priznerz rool"isscrawledonitusingcrayon.'
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"IL" = (
+/turf/open/floor/catwalk_floor,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"IU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"KX" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Li" = (
+/obj/structure/sign/poster/official/bless_this_spess{
+	pixel_y = 34
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Lw" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = -32;
+	pixel_y = 3
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Foyer Camera";
+	network = RPS;
+	dir = 10;
+	pixel_y = 22;
+	view_range = 3;
+	name = "Foyer Security Camera"
+	},
+/obj/structure/reagent_dispensers/fueltank{
+	name = "energency fuel tank";
+	desc = "A tank full of industrial welding fuel. it's labeled "merjencyscapetool" on the side."
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Lz" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"LE" = (
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"LV" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/closed/wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Mf" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/table,
+/obj/item/wrench{
+	pixel_x = -6
+	},
+/obj/item/screwdriver/nuke{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/effect/spawner/random/medical/surgery_tool{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ms" = (
+/turf/open/space/basic,
+/area/space)
+"NI" = (
+/obj/machinery/light/directional/west,
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/toolbox{
+	pixel_x = -3
+	},
+/obj/effect/spawner/random/medical/surgery_tool{
+	pixel_x = -3
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/random/contraband/permabrig_weapon{
+	pixel_x = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ps" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Prison Laundry";
+	network = list("ss13","prison")
+	},
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Qu" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Qy" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/window/reinforced/fulltile/damaged,
+/obj/structure/grille/broken,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"QG" = (
+/obj/machinery/computer,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"QZ" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ro" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"RV" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Sy" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/spawner/random/trash/mess,
+/obj/machinery/camera/directional/east{
+	c_tag = "Laundry Security Camera";
+	network = RPS;
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"SE" = (
+/obj/structure/lattice,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Tv" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/closet/crate/secure/gear{
+	anchored = 1;
+	locked = 0;
+	secure = 0;
+	desc = "A once-secure gear crate."
+	},
+/obj/item/clothing/head/helmet/old{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/helmet/old{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/clothing/head/helmet/monkey_sentience{
+	pixel_y = -7;
+	pixel_x = -6
+	},
+/obj/item/clothing/suit/armor/vest/alt/sec,
+/obj/item/circuitboard/machine/recharger,
+/obj/item/spear,
+/obj/item/spear{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"TI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/barricade,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Ue" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"UK" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/structure/chair_comfy{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Vc" = (
+/obj/structure/lattice,
+/turf/closed/wall,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"VD" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/ants{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/obj/structure/sink/directional/north{
+	pixel_y = -16;
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/trash/botanical_waste{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/effect/spawner/random/trash/botanical_waste{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"VO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/clothing/under/rank/prisoner,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/ants{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/hypospray/medipen/pumpup{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"WO" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Xn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/obj/structure/sign/poster/ripped{
+	pixel_y = -26
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"XF" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"XJ" = (
+/obj/structure/cable,
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile";
+	anchored = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Yc" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+"Yy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/abandoned_meta_perma)
+
+(1,1,1) = {"
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(2,1,1) = {"
+Ms
+Ms
+Ms
+Ms
+Ro
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+sa
+sa
+sa
+"}
+(3,1,1) = {"
+Ms
+Ms
+Ms
+Ms
+Ro
+Ms
+Ro
+Ro
+Ms
+Ms
+Ro
+Ms
+Ms
+Ro
+Ms
+"}
+(4,1,1) = {"
+Ms
+Ms
+Ms
+AP
+Ir
+vh
+Ir
+sa
+Ro
+XF
+Ro
+XF
+XF
+Ro
+Ro
+"}
+(5,1,1) = {"
+Ms
+Ms
+vh
+vh
+sD
+dj
+Lz
+sP
+RV
+lw
+Ro
+Ms
+Ms
+Ro
+Ms
+"}
+(6,1,1) = {"
+Ms
+Ms
+WO
+jF
+lS
+vL
+Lz
+Df
+bE
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(7,1,1) = {"
+Ms
+Ir
+Ir
+to
+bJ
+eR
+ns
+bt
+DM
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(8,1,1) = {"
+Ms
+vh
+xB
+od
+wY
+Gg
+ns
+Ir
+rW
+Ir
+SE
+Ro
+XF
+sa
+sa
+"}
+(9,1,1) = {"
+Ms
+WO
+aZ
+UK
+XJ
+Yc
+NI
+Mf
+Qy
+Lw
+LV
+Li
+Ro
+IL
+Ms
+"}
+(10,1,1) = {"
+Ms
+Ir
+fr
+pw
+wY
+Ek
+wY
+oE
+II
+RV
+tQ
+bM
+IL
+Ms
+Ms
+"}
+(11,1,1) = {"
+Ms
+Ir
+QG
+KX
+oc
+HG
+Yy
+IU
+TI
+yt
+ci
+sk
+Fe
+IL
+Ms
+"}
+(12,1,1) = {"
+Ms
+vh
+Tv
+Bi
+Bj
+Yc
+Xn
+ns
+ns
+Vc
+ns
+Ms
+Ms
+Ms
+Ms
+"}
+(13,1,1) = {"
+Ms
+WO
+dZ
+GE
+eW
+Qu
+Ct
+ci
+Ue
+Ro
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(14,1,1) = {"
+uV
+Ir
+Ir
+Sy
+VO
+cL
+VD
+ns
+BB
+aH
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(15,1,1) = {"
+Ms
+LE
+Ir
+Ir
+Ps
+uo
+FJ
+Lz
+BB
+aH
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(16,1,1) = {"
+Ms
+Ms
+AP
+Ir
+Ir
+wU
+wU
+Ir
+sa
+sa
+Ro
+QZ
+sa
+Ms
+Ro
+"}
+(17,1,1) = {"
+Ms
+Ms
+Ms
+Ro
+Ms
+Ro
+Ro
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
+(18,1,1) = {"
+Ms
+Ms
+Ms
+Ms
+AP
+sa
+sa
+sa
+sa
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+"}
