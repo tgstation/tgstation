@@ -3,7 +3,7 @@
 	desc = "Activate your camouflage implant, and blend into your surroundings..."
 	button_icon_state = "invisibility"
 	/// The alpha we move to when activating this action.
-	var/camouflage_alpha = 40
+	var/camouflage_alpha = 45
 	/// Are we currently cloaking ourself?
 	var/cloaking = FALSE
 
@@ -47,8 +47,8 @@
 
 	if(prob(15 * severity))
 		visible_message(span_warning("The cloaking systems on the [name] begin to overload."), blind_message = audible_message("You hear a fizzle, and the snapping of sparks."))
-		do_sparks(2, FALSE, src)
-		remove_cloaking()
+		for(var/datum/action/item_action/camouflage/cloaking_ability in actions)
+			cloaking_ability.remove_cloaking()
 
 /obj/item/reagent_containers/hypospray/medipen/invisibility
 	name = "invisibility autoinjector"
