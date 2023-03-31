@@ -1,5 +1,110 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"br" = (
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/girder/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/girder/reinforced,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"d" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"e" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet/red/airless,
+/area/ruin/space/prison_shuttle)
+"f" = (
+/obj/machinery/modular_computer/console,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"g" = (
+/mob/living/simple_animal/hostile/asteroid/basilisk{
+	environment_smash = 0
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"h" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/prison_shuttle)
+"i" = (
+/obj/structure/table/reinforced,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"j" = (
+/turf/open/floor/carpet/red/airless,
+/area/ruin/space/prison_shuttle)
+"m" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"p" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"q" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"r" = (
+/obj/machinery/light/broken/directional/south,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"s" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"t" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"u" = (
+/obj/structure/closet/secure_closet/security,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"w" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"x" = (
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"y" = (
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"z" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"B" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"E" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"F" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"G" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"H" = (
 /obj/structure/closet/secure_closet/contraband{
 	name = "confiscation locker"
 	},
@@ -9,127 +114,19 @@
 /obj/effect/spawner/random/contraband/prison,
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"bV" = (
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
-"ei" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"fe" = (
-/turf/closed/mineral/random/stationside/asteroid,
 /area/ruin/space/prison_shuttle)
-"gw" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"hG" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/carpet/red/airless,
-/area/template_noop)
-"hO" = (
-/obj/effect/spawner/random/contraband/narcotics,
-/obj/machinery/light/broken{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"kX" = (
+"I" = (
 /turf/closed/indestructible/opshuttle,
-/area/template_noop)
-"lD" = (
-/turf/closed/mineral/random/stationside/asteroid,
-/area/template_noop)
-"lG" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"mu" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
-"mO" = (
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"oE" = (
-/obj/structure/girder/reinforced,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"oS" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/template_noop)
-"pT" = (
-/turf/template_noop,
-/area/template_noop)
-"ql" = (
-/obj/structure/bed,
-/obj/item/bedsheet/orange,
-/obj/effect/spawner/random/contraband/narcotics,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"qV" = (
-/turf/closed/wall/mineral/titanium,
-/area/template_noop)
-"sS" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk{
-	environment_smash = 0
-	},
-/turf/open/misc/asteroid/airless,
 /area/ruin/space/prison_shuttle)
-"uc" = (
-/obj/structure/bed,
-/obj/item/bedsheet/orange,
-/obj/effect/mob_spawn/corpse/human/prisoner,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"ui" = (
+"J" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"L" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /turf/template_noop,
-/area/template_noop)
-"uw" = (
-/turf/template_noop,
 /area/ruin/space/prison_shuttle)
-"wz" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"Ca" = (
-/obj/machinery/power/shuttle_engine/heater,
-/turf/closed/wall/mineral/titanium,
-/area/template_noop)
-"Cc" = (
-/obj/structure/girder/reinforced,
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
-"Ch" = (
-/obj/machinery/door/airlock/security,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/security,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"Ci" = (
-/obj/structure/closet/secure_closet/security,
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"Dg" = (
-/turf/open/misc/asteroid/airless,
-/area/ruin/space/prison_shuttle)
-"Ds" = (
+"M" = (
 /obj/structure/bed{
 	dir = 4
 	},
@@ -140,28 +137,55 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"DD" = (
+/area/ruin/space/prison_shuttle)
+"N" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"O" = (
+/mob/living/basic/cockroach,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"P" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"R" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"S" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"T" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"Ej" = (
-/obj/structure/table/reinforced,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/template_noop)
-"FZ" = (
-/turf/open/floor/carpet/red/airless,
-/area/template_noop)
-"GA" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"Ki" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/turf/template_noop,
-/area/template_noop)
-"Ln" = (
+/area/ruin/space/prison_shuttle)
+"U" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"V" = (
 /obj/structure/bed{
 	dir = 4
 	},
@@ -170,261 +194,228 @@
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/template_noop)
-"Mq" = (
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"Oa" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/security,
-/turf/open/floor/mineral/titanium/tiled/airless,
-/area/template_noop)
-"Oy" = (
-/obj/machinery/light/broken/directional/south,
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
-"OK" = (
-/obj/structure/filingcabinet,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"RM" = (
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"RT" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
-/turf/open/misc/asteroid/airless,
-/area/template_noop)
-"Ty" = (
-/obj/machinery/modular_computer/console,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/template_noop)
-"TO" = (
-/obj/machinery/door/airlock/security,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/security/hos,
-/turf/open/floor/plating/airless,
-/area/template_noop)
-"VV" = (
-/obj/machinery/power/shuttle_engine/propulsion/burst/right,
-/turf/template_noop,
-/area/template_noop)
-"Wz" = (
-/obj/structure/girder/reinforced,
-/turf/template_noop,
-/area/template_noop)
-"Yg" = (
-/mob/living/basic/cockroach,
+/area/ruin/space/prison_shuttle)
+"X" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/mob_spawn/corpse/human/prisoner,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/template_noop)
+/area/ruin/space/prison_shuttle)
+"Y" = (
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"Z" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/prison_shuttle)
 
 (1,1,1) = {"
-pT
-pT
-pT
-pT
-pT
-pT
-pT
-qV
-qV
-qV
-qV
-qV
-ui
-pT
-pT
-Ca
-Ki
+a
+a
+a
+a
+a
+a
+a
+h
+h
+h
+h
+h
+L
+a
+a
+Z
+F
 "}
 (2,1,1) = {"
-pT
-Wz
-bV
-pT
-Cc
-qV
-qV
-qV
-Ci
-Mq
-br
-qV
-qV
-qV
-qV
-Ca
-Ki
+a
+b
+E
+a
+c
+h
+h
+h
+u
+x
+H
+h
+h
+h
+h
+Z
+F
 "}
 (3,1,1) = {"
-pT
-bV
-lD
-Cc
-hG
-Ej
-OK
-qV
-lG
-Mq
-RM
-qV
-Ds
-wz
-Ln
-Ca
-Ki
+a
+E
+Y
+c
+e
+i
+p
+h
+w
+x
+B
+h
+M
+S
+V
+Z
+F
 "}
 (4,1,1) = {"
-bV
-lD
-lD
-oS
-bV
-FZ
-RT
-TO
-Mq
-Mq
-Mq
-Ch
-gw
-gw
-Yg
-ei
-pT
+E
+Y
+Y
+d
+E
+j
+q
+s
+x
+x
+x
+z
+N
+N
+O
+Q
+a
 "}
 (5,1,1) = {"
-bV
-lD
-lD
-oS
-Ty
-mu
-Oy
-qV
-qV
-Ch
-kX
-qV
-Yg
-DD
-gw
-ei
-pT
+E
+Y
+Y
+d
+f
+m
+r
+h
+h
+z
+I
+h
+O
+T
+N
+Q
+a
 "}
 (6,1,1) = {"
-bV
-lD
-lD
-lD
-lD
-lD
-bV
-oE
-Mq
-RM
-Mq
-qV
-ql
-hO
-uc
-Ca
-Ki
+E
+Y
+Y
+Y
+Y
+Y
+E
+t
+x
+B
+x
+h
+P
+U
+X
+Z
+F
 "}
 (7,1,1) = {"
-bV
-lD
-lD
-lD
-lD
-Cc
-Cc
-qV
-mO
-Mq
-GA
-qV
-qV
-qV
-qV
-Ca
-Ki
+E
+Y
+Y
+Y
+Y
+c
+c
+h
+y
+x
+J
+h
+h
+h
+h
+Z
+F
 "}
 (8,1,1) = {"
-bV
-lD
-lD
-lD
-lD
-bV
-pT
-qV
-qV
-Oa
-qV
-qV
-VV
-pT
-pT
-Ca
-Ki
+E
+Y
+Y
+Y
+Y
+E
+a
+h
+h
+G
+h
+h
+R
+a
+a
+Z
+F
 "}
 (9,1,1) = {"
-pT
-bV
-fe
-fe
-sS
-Dg
-Dg
-uw
-pT
-pT
-uw
-uw
-pT
-pT
-pT
-pT
-pT
+a
+E
+Y
+Y
+g
+E
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
 (10,1,1) = {"
-uw
-uw
-Dg
-Dg
-Dg
-Dg
-uw
-uw
-uw
-uw
-uw
-uw
-pT
-pT
-pT
-pT
-pT
+a
+a
+E
+E
+E
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
 (11,1,1) = {"
-uw
-uw
-uw
-uw
-Dg
-uw
-uw
-uw
-uw
-uw
-uw
-uw
-pT
-pT
-pT
-pT
-pT
+a
+a
+a
+a
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
