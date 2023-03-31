@@ -322,7 +322,7 @@ Security HUDs! Basic mode shows only the job.
 		if(WANTED_PRISONER)
 			holder.icon_state = "hudincarcerated"
 		if(WANTED_SUSPECT)
-			holder.icon_state = "hudsuspected"
+			holder.icon_state = "[check_holidays(APRIL_FOOLS) ? "hudsussy" : "hudsuspected"]"
 		if(WANTED_PAROLE)
 			holder.icon_state = "hudparolled"
 		if(WANTED_DISCHARGED)
