@@ -11,6 +11,11 @@
 
 /datum/antagonist/frogression_traitor/greet()
 	..()
+	to_chat(owner, span_boldannounce("You emerge from the moisture trap with your small, webbed hands and feet. \
+		You can't help but feel like this was not the intention of the long-ranged mindswap experiment... \
+		One small hiccup is no excuse to abandon the mission though! \
+		You've still got your wits and your training. \
+		This makes you more dangerous and durable than most other amphibians."))
 	owner.announce_objectives()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
