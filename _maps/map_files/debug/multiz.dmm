@@ -104,8 +104,14 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"aH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "aI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -160,6 +166,9 @@
 /area/station/engineering/main)
 "aU" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aV" = (
@@ -167,6 +176,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aW" = (
@@ -268,7 +280,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "bo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
 /obj/item/screwdriver/power,
 /obj/item/crowbar/power,
@@ -309,6 +320,9 @@
 "bx" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "by" = (
@@ -476,7 +490,6 @@
 	},
 /area/station/command/bridge)
 "ct" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -1737,10 +1750,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
-"OY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "Pa" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -1813,6 +1822,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Sv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "SF" = (
 /turf/open/openspace/airless,
 /area/space)
@@ -3463,11 +3479,11 @@ yl
 aS
 bd
 bo
-OY
-bN
-bN
+aj
+bE
+bE
 ct
-bN
+bE
 cF
 bN
 bN
@@ -3513,15 +3529,15 @@ ad
 af
 aj
 aq
-yl
-yl
-yl
-yl
+aH
+Sv
+Sv
+Sv
 bx
-bO
-bO
-bO
-bO
+WX
+WX
+WX
+WX
 gY
 bE
 bE
@@ -3568,7 +3584,7 @@ af
 aj
 ar
 dW
-yl
+Sv
 bf
 bp
 aj
