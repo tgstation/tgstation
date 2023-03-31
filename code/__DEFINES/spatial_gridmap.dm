@@ -23,11 +23,12 @@
 #ifdef UNIT_TESTS
 #define UPDATE_GRID_METADATA(movable_or_list, cell) \
 	do { \
+		var/list/_definitely_list = movable_or_list
 		if(!istype(movable_or_list, /list)) { \
-			movable_or_list = list(movable_or_list) \
+			_definitely_list = list(movable_or_list) \
 		} \
 		var/list/all_contents = ALL_CHANNELS_OF_CELL(cell); \
-		for(var/atom/movable/_thing in movable_or_list) { \
+		for(var/atom/movable/_thing in _definitely_list) { \
 			if(_thing in all_contents) { \
 				LAZYOR(_thing.in_spatial_grid_cells, cell) \
 			} else { \
