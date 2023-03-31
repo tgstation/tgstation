@@ -1,0 +1,4 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "The Lance goes deeper into the station when it docks."
