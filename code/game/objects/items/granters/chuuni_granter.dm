@@ -24,4 +24,5 @@
 
 /obj/item/book/granter/chuunibyou/on_reading_finished(mob/living/user)
 	..()
+	to_chat(user, span_notice("You've learned how to cast spells in a more chuunibyou-like style!"))
 	user.AddComponent(/datum/component/chuunibyou/no_healing)

@@ -65,6 +65,8 @@
 	var/invocation
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
 	var/invocation_self_message
+	/// if true, doesn't garble the invocation sometimes with backticks
+	var/garbled_invocation = TRUE
 	/// What type of invocation the spell is.
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
@@ -321,33 +323,35 @@
 	if(!owner)
 		return
 
-	if(invocation_type != INVOCATION_NONE)
-		invocation()
+	///even INVOCATION_NONE should go through this because the signal might change that
+	invocation()
 	if(sound)
 		playsound(get_turf(owner), sound, 50, TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()
 	//lists can be sent by reference, a string would be sent by value
-	var/list/invocation_list = list(invocation)
-	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, invocation_list)
-	var/used_invocation = invocation_list[1]
+	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation)
+	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
+	var/used_invocation_message = invocation_list[INVOCATION_MESSAGE]
+	var/used_invocation_type = invocation_list[INVOCATION_TYPE]
+	var/used_invocation_garble = invocation_list[INVOCATION_GARBLE]
 
-	switch(invocation_type)
+	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
-			if(prob(50))
-				owner.say(used_invocation, forced = "spell ([src])")
+			if(used_invocation_garble && prob(50))
+				owner.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.say(replacetext(used_invocation," ","`"), forced = "spell ([src])")
+				owner.say(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
-			if(prob(50))
-				owner.whisper(used_invocation, forced = "spell ([src])")
+			if(used_invocation_garble && prob(50))
+				owner.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.whisper(replacetext(used_invocation," ","`"), forced = "spell ([src])")
+				owner.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			owner.visible_message(used_invocation, invocation_self_message)
+			owner.visible_message(used_invocation_message, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)

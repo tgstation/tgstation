@@ -1,7 +1,7 @@
 
 /// how much health healed from casting a chuuni spell
 #define CHUUNIBYOU_HEAL_AMOUNT 3
-
+///cooldown between healing to prevent stuff like instant blink spell spam healing
 #define CHUUNIBYOU_COOLDOWN_TIME 5 SECONDS
 
 /**
@@ -42,13 +42,13 @@
 /datum/component/chuunibyou/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
-	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(on_before_spell_cast))
+	RegisterSignal(parent, COMSIG_MOB_PRE_INVOCATION, PROC_REF(on_pre_invocation))
 	if(heal_amount)
 		RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
 
 /datum/component/chuunibyou/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_BEFORE_SPELL_CAST))
+	UnregisterSignal(parent, list(COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_PRE_INVOCATION))
 	if(heal_amount)
 		UnregisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST)
 
@@ -56,22 +56,22 @@
 /datum/component/chuunibyou/proc/on_spell_projectile(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
 	SIGNAL_HANDLER
 
-	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)
+	playsound(to_fire,'sound/magic/staff_change.ogg', 75, TRUE)
 	to_fire.color = "#f825f8"
 	to_fire.name = "chuuni-[to_fire.name]"
 	to_fire.set_light(2, 2, LIGHT_COLOR_PINK, TRUE)
 
-///signal sent before parent casts a spell
-/datum/component/chuunibyou/proc/on_before_spell_cast(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on)
+///signal sent before parent invokes a spell
+/datum/component/chuunibyou/proc/on_pre_invocation(mob/living/source, datum/action/cooldown/spell/spell, list/invocation_list)
 	SIGNAL_HANDLER
 
-	if(spell.invocation_type != INVOCATION_SHOUT)
-		spell.invocation_type = INVOCATION_SHOUT
-	if(spell.invocation == initial(spell.invocation))
-		spell.invocation = chuunibyou_invocations[spell.school]
-		if(!spell.invocation) // someone forgot to update the CHUUNI LIST to include a desc for the new school
-			stack_trace("Chunnibyou invocations is missing a line for spell school \"[spell.school]\"")
-			spell.invocation = chuunibyou_invocations[SCHOOL_UNSET]
+	invocation_list[INVOCATION_TYPE] = INVOCATION_SHOUT
+	invocation_list[INVOCATION_GARBLE] = FALSE
+	var/chuuni_invocation = chuunibyou_invocations[spell.school]
+	if(!chuuni_invocation) // someone forgot to update the CHUUNI LIST to include a desc for the new school
+		stack_trace("Chunnibyou invocations is missing a line for spell school \"[spell.school]\"")
+		chuuni_invocation = chuunibyou_invocations[SCHOOL_UNSET]
+	invocation_list[INVOCATION_MESSAGE] = chuuni_invocation
 
 ///signal sent after parent casts a spell
 /datum/component/chuunibyou/proc/on_after_spell_cast(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on)
