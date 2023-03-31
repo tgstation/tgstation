@@ -1,6 +1,8 @@
 
 /// how much health healed from casting a chuuni spell
-#define CHUUNIBYOU_HEAL_AMOUNT 5
+#define CHUUNIBYOU_HEAL_AMOUNT 3
+
+#define CHUUNIBYOU_COOLDOWN_TIME 5 SECONDS
 
 /**
  * ## chuunibyou component!
@@ -9,10 +11,12 @@
  * Oh, but it does heal after each spell cast.
  */
 /datum/component/chuunibyou
-	/// amount healed per spell cast
-	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
 	/// invocations per school the spell is from
 	var/static/list/chuunibyou_invocations
+	/// amount healed per spell cast
+	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
+	/// cooldown for healing
+	COOLDOWN_DECLARE(heal_cooldown)
 
 /datum/component/chuunibyou/Initialize()
 	if(!isliving(parent))
@@ -61,26 +65,24 @@
 /datum/component/chuunibyou/proc/on_before_spell_cast(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on)
 	SIGNAL_HANDLER
 
-	var/changed_spell = FALSE
 	if(spell.invocation_type != INVOCATION_SHOUT)
 		spell.invocation_type = INVOCATION_SHOUT
-		changed_spell = TRUE
 	if(spell.invocation == initial(spell.invocation))
 		spell.invocation = chuunibyou_invocations[spell.school]
 		if(!spell.invocation) // someone forgot to update the CHUUNI LIST to include a desc for the new school
 			stack_trace("Chunnibyou invocations is missing a line for spell school \"[spell.school]\"")
 			spell.invocation = chuunibyou_invocations[SCHOOL_UNSET]
-	if(changed_spell)
-		//they can't invoke it verbally, perhaps?
-		if(!spell.can_cast_spell(feedback = TRUE))
-			return SPELL_CANCEL_CAST
 
 ///signal sent after parent casts a spell
 /datum/component/chuunibyou/proc/on_after_spell_cast(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on)
 	SIGNAL_HANDLER
 
+	if(!COOLDOWN_FINISHED(src, heal_cooldown))
+		return
+	COOLDOWN_START(src, heal_cooldown, CHUUNIBYOU_COOLDOWN_TIME)
+
 	source.heal_overall_damage(heal_amount)
-	to_chat(source, span_danger("Your chuuni invocation slightly heals you."))
+	to_chat(source, span_danger("You feel slightly healed by your chuuni powers."))
 
 /datum/component/chuunibyou/no_healing
 	heal_amount = 0
