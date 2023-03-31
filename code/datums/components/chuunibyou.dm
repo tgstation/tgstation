@@ -12,7 +12,7 @@
 	/// amount healed per spell cast
 	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
 	/// invocations per school the spell is from
-	var/static/list/chuunibyou_invocations = list()
+	var/static/list/chuunibyou_invocations
 
 /datum/component/chuunibyou/Initialize()
 	if(!isliving(parent))
