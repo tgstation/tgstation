@@ -585,6 +585,9 @@
 /area/ruin/space/has_grav/derelictconstruction
 	name = "\improper Derelict Construction Site"
 
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
+
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
 	name = "Waystation Maintenance"
