@@ -46,8 +46,8 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+	playing = TRUE
 	location = game.reserve_location(map)
-		playing = TRUE
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve a map location (all locations used?), try again later."))
 		playing = FALSE
@@ -380,4 +380,3 @@
 				if ("Force start")
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
 					start_game()
-
