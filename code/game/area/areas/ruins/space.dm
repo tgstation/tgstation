@@ -616,6 +616,6 @@
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
 
-//SYN-C Brutus
+//SYN-C Brutus, derelict frigate
 /area/ruin/space/infested_frigate
     name = "SYN-C Brutus"
