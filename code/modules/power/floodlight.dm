@@ -281,6 +281,23 @@
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
 
+/obj/machinery/power/floodlight/ragecage
+	name = "rage-cage floodlight"
+	setting = FLOODLIGHT_MED
+	max_integrity = 1200
+	integrity_failure = 0
+	light_power_coefficient = 50
+	light_power = 1.3
+	anchored = TRUE
+
+/obj/machinery/power/floodlight/ragecage/wrench_act(mob/living/user, obj/item/tool)
+	return TOOL_ACT_SIGNAL_BLOCKING
+/obj/machinery/power/floodlight/ragecage/screwdriver_act(mob/living/user, obj/item/tool)
+	return TOOL_ACT_SIGNAL_BLOCKING
+/obj/machinery/power/floodlight/ragecage/Initialize(mapload)
+	. = ..()
+	connect_to_network()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/power/floodlight, change_setting), setting), 10 SECONDS) // for shuttle load moments
 #undef FLOODLIGHT_OFF
 #undef FLOODLIGHT_LOW
 #undef FLOODLIGHT_MED
