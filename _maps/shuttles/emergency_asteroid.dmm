@@ -313,6 +313,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bx" = (
@@ -320,6 +321,7 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "by" = (
@@ -337,7 +339,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bC" = (
-/obj/item/radio/intercom/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bD" = (
@@ -357,6 +359,7 @@
 /obj/item/hemostat,
 /obj/item/scalpel,
 /obj/item/surgicaldrill,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bG" = (
@@ -377,12 +380,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bM" = (
-/obj/machinery/light/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bN" = (
@@ -390,8 +391,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bP" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "hJ" = (
 /obj/machinery/status_display/ai/directional/west,
@@ -449,7 +450,7 @@ ac
 ac
 ac
 at
-at
+bP
 at
 ac
 ac
@@ -539,7 +540,7 @@ ac
 aH
 at
 hJ
-at
+bP
 Id
 at
 at
@@ -581,13 +582,13 @@ aa
 ai
 at
 at
-at
+bP
 at
 aZ
 ah
 aK
 at
-bP
+aS
 ac
 aa
 aa
@@ -596,7 +597,7 @@ aa
 ah
 ah
 aB
-bK
+aK
 at
 aZ
 ah
@@ -656,7 +657,7 @@ aa
 ah
 ah
 aB
-bK
+aK
 at
 aZ
 ah
@@ -671,13 +672,13 @@ aa
 aj
 at
 at
-at
+bP
 at
 aZ
 ah
 aK
 at
-bP
+aS
 ac
 aa
 aa
@@ -719,7 +720,7 @@ ac
 aN
 at
 at
-at
+bP
 at
 at
 aN
@@ -744,8 +745,8 @@ ac
 "}
 (23,1,1) = {"
 ac
-av
 aE
+bK
 av
 aw
 bb
@@ -778,9 +779,9 @@ ax
 ax
 ax
 aw
-bM
+aw
 ac
-bN
+Jx
 Jx
 bz
 bD
