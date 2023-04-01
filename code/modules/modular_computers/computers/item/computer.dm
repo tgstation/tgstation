@@ -621,13 +621,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status()
-	// NTNet is down and we are not connected via wired connection. No signal.
-	if(!SSmodular_computers.check_relay_operation())
-		return NTNET_NO_SIGNAL
-
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
+
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!find_functional_ntnet_relay())
+		return NTNET_NO_SIGNAL
 
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf || !istype(current_turf))
@@ -646,7 +646,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSnetworks.add_log("[src]: [text]", network_id)
+	return SSmodular_computers.add_log("[src]: [text]", network_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

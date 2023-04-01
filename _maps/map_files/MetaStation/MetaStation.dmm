@@ -4527,6 +4527,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
+"bCM" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "bCO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -5956,13 +5963,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"cmw" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/greater)
 "cmB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -10128,10 +10128,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
-"dPw" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "dPy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -13392,7 +13388,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "eYL" = (
-/obj/structure/table,
+/obj/structure/table/reinforced,
 /obj/item/multitool{
 	pixel_x = -3;
 	pixel_y = -4
@@ -23978,6 +23974,7 @@
 "iNB" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/table/glass,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iNC" = (
@@ -32210,7 +32207,7 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/paperslip{
+/obj/item/paper/paperslip{
 	pixel_x = -5;
 	pixel_y = 10
 	},
@@ -34386,6 +34383,9 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/item/papercutter{
+	pixel_x = 17
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "mwS" = (
@@ -35506,6 +35506,13 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
+"mPH" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "mPK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49159,6 +49166,9 @@
 /obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (
@@ -51073,13 +51083,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"sqT" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/greater)
 "src" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
@@ -58726,14 +58729,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
 "uXt" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	name = "northwest of station";
-	shuttle_id = "syndicate_nw";
-	width = 23
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
@@ -62683,6 +62680,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wst" = (
@@ -64165,6 +64164,7 @@
 	name = "Requests Window"
 	},
 /obj/item/pen,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wTs" = (
@@ -78801,7 +78801,7 @@ aaa
 aaa
 aaa
 aaa
-dPw
+lMJ
 aaa
 aIw
 aaa
@@ -87398,7 +87398,7 @@ bTn
 dLs
 tSw
 gOp
-sqT
+bCM
 lOf
 drm
 tSw
@@ -87655,7 +87655,7 @@ bpK
 wMM
 tSw
 lah
-cmw
+mPH
 fje
 jgW
 tSw
@@ -112558,8 +112558,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
@@ -113072,8 +113072,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 uhs
@@ -113586,8 +113586,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 oyj
@@ -114100,8 +114100,8 @@ eoU
 lMJ
 aaa
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
