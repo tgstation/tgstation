@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - admin: "Exiting the highlander delay window without selecting an option will no longer start highlander mode."

@@ -27,6 +27,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
+#_maps/RandomRuins/SpaceRuins/derelict_construction.dmm
 #_maps/RandomRuins/SpaceRuins/derelict_sulaco.dmm
 #_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
@@ -37,6 +38,7 @@
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
+#_maps/RandomRuins/SpaceRuins/meateor.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right
 #_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
@@ -60,4 +62,14 @@
 #_maps/RandomRuins/SpaceRuins/way_home.dmm
 #_maps/RandomRuins/SpaceRuins/waystation.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
+#_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+#_maps/RandomRuins/SpaceRuins/forgottenship.dmm
+#_maps/RandomRuins/SpaceRuins/hellfactory.dmm
+#_maps/RandomRuins/SpaceRuins/space_billboard.dmm
+#_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
+#_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
+#_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
+#_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
+#_maps/RandomRuins/SpaceRuins/prey_pod.dmm
+#_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
