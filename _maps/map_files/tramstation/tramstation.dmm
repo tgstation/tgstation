@@ -1670,7 +1670,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	dir = 8;
-	freq = 1400;
 	location = "QM #3"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -1696,7 +1695,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	dir = 8;
-	freq = 1400;
 	location = "QM #2"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -1943,11 +1941,9 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	dir = 8;
-	freq = 1400;
 	location = "QM #1"
 	},
 /mob/living/simple_animal/bot/mulebot{
-	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
@@ -2316,7 +2312,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 8;
-	freq = 1400;
 	location = "QM #6"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -17584,7 +17579,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 1;
-	freq = 1400;
 	location = "Chapel";
 	name = "navigation beacon (Chapel Delivery)"
 	},
@@ -24631,7 +24625,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	dir = 1;
-	freq = 1400;
 	location = "Theatre";
 	name = "navigation beacon (Theatre Delivery)"
 	},
@@ -28117,7 +28110,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	dir = 1;
-	freq = 1400;
 	location = "Science";
 	name = "navigation beacon (Science Delivery)"
 	},
@@ -31517,7 +31509,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	dir = 1;
-	freq = 1400;
 	location = "Medical";
 	name = "navigation beacon (Medical Delivery)"
 	},
@@ -32360,7 +32351,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 8;
-	freq = 1400;
 	location = "QM #5"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -34636,7 +34626,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 8;
-	freq = 1400;
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -45153,7 +45142,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 1;
-	freq = 1400;
 	location = "Kitchen";
 	name = "navigation beacon (Kitchen Delivery)"
 	},
@@ -45842,7 +45830,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 1;
-	freq = 1400;
 	location = "Bar";
 	name = "navigation beacon (Bar Delivery)"
 	},
@@ -65334,7 +65321,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 1;
-	freq = 1400;
 	location = "Atmoshperics";
 	name = "navigation beacon (Atmoshperics Delivery)"
 	},
@@ -65717,7 +65703,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 1;
-	freq = 1400;
 	location = "Security";
 	name = "navigation beacon (Security Delivery)"
 	},
@@ -69854,7 +69839,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
 	dir = 1;
-	freq = 1400;
 	location = "Library";
 	name = "navigation beacon (Library Delivery)"
 	},

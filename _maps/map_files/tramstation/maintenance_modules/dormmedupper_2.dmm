@@ -45,7 +45,6 @@
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	dir = 1;
-	freq = 1400;
 	location = "Engineering";
 	name = "navigation beacon (Engineering Delivery)"
 	},

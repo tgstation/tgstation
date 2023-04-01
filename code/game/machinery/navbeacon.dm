@@ -15,9 +15,7 @@
 	/// true if cover is open
 	var/open = FALSE
 	/// true if controls are locked
-	var/locked = TRUE
-	/// frequency used by the robots
-	var/freq = FREQ_NAV_BEACON
+	var/locked = TRUEN
 	/// location response text
 	var/location = ""
 	/// assoc. list of transponder codes

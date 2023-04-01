@@ -97,7 +97,6 @@
 	///The nearest beacon's location
 	var/turf/nearest_beacon_loc
 
-	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	var/datum/atom_hud/data/bot_path/path_hud
