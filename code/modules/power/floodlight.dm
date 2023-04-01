@@ -292,12 +292,15 @@
 
 /obj/machinery/power/floodlight/ragecage/wrench_act(mob/living/user, obj/item/tool)
 	return TOOL_ACT_SIGNAL_BLOCKING
+	
 /obj/machinery/power/floodlight/ragecage/screwdriver_act(mob/living/user, obj/item/tool)
 	return TOOL_ACT_SIGNAL_BLOCKING
+	
 /obj/machinery/power/floodlight/ragecage/Initialize(mapload)
 	. = ..()
 	connect_to_network()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/power/floodlight, change_setting), setting), 10 SECONDS) // for shuttle load moments
+	
 #undef FLOODLIGHT_OFF
 #undef FLOODLIGHT_LOW
 #undef FLOODLIGHT_MED
