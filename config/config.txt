@@ -9,20 +9,20 @@ $include lua.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
-# @SERVERNAME tgstation
+@SERVERNAME CoaStation
 # Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
 # @LOG_TWITTER 0
 # Which explicitly disables LOG_TWITTER, as well as locking it.
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+# SERVERNAME CoaStation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+SERVERSQLNAME CoaStation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+STATIONNAME Coa Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
@@ -198,10 +198,10 @@ ALLOW_ADMIN_ASAYCOLOR
 ID_CONSOLE_JOBSLOT_DELAY 30
 
 ## allow players to initiate a restart vote
-#ALLOW_VOTE_RESTART
+ALLOW_VOTE_RESTART
 
 ## allow players to initiate a map-change vote
-#ALLOW_VOTE_MAP
+ALLOW_VOTE_MAP
 
 ## allow players to rock the vote, or to vote on the map again if they didn't like the last results
 #ALLOW_ROCK_THE_VOTE
@@ -225,10 +225,10 @@ VOTE_PERIOD 600
 NORESPAWN
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY Techniker
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+#GUEST_BAN
 
 ## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
 CHECK_RANDOMIZER
