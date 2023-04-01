@@ -209,6 +209,8 @@
 
 /// wizard version
 /obj/item/clothing/glasses/eyepatch/medical/chuuni
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = CASTING_CLOTHES
 
 /obj/item/clothing/glasses/eyepatch/medical/chuuni/Initialize(mapload)
 	. = ..()
