@@ -3,6 +3,7 @@
 	access = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/gear
 	var/obj/item_path = null
+	var/path_to_spawn
 	var/amt = 1
 	var/noun_used = "Crate"
 	var/generated = FALSE
@@ -21,10 +22,12 @@
 	new_supply_pack.crate_type = crate_type
 	var/name_used = initial(item_path.name)
 	new_supply_pack.name = "[name_used] [noun_used]"
+	new_supply_pack.path_to_spawn = item_path
+	new_supply_pack.amt = amt
 	new_supply_pack.desc = "A [noun_used] of [amt] [name_used]"
 	new_supply_pack.cost = (CARGO_CRATE_VALUE * 2) * amt
 	new_supply_pack.contains = list(
-		item_path = amt,
+		new_supply_pack.path_to_spawn = new_supply_pack.amt,
 	)
 	return list(new_supply_pack)
 
@@ -35,6 +38,7 @@
 	var/obj/item_path = null
 	var/amt = 5
 	var/generated = FALSE
+	var/path_to_spawn
 
 /datum/supply_pack/ammo/generate_supply_packs()
 	if(!item_path || generated)
@@ -45,11 +49,13 @@
 	new_supply_pack.access = access
 	new_supply_pack.crate_type = crate_type
 	var/name_used = initial(item_path.name)
+	new_supply_pack.path_to_spawn = item_path
+	new_supply_pack.amt = amt
 	new_supply_pack.name = "[name_used] crate"
 	new_supply_pack.desc = "A crate of [name_used] ammo."
 	new_supply_pack.cost = (CARGO_CRATE_VALUE * 2) * amt
 	new_supply_pack.contains = list(
-		item_path = amt,
+		new_supply_pack.path_to_spawn = new_supply_pack.amt,
 	)
 	return list(new_supply_pack)
 

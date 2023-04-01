@@ -94,6 +94,7 @@
 			haircut_target.update_hair()
 			dummy.update_hair()
 			haircut_target.dna.update_dna_identity()
+			haircut_target.regenerate_icons()
 			playsound(haircut_target, 'sound/items/scissors.ogg', 100)
 			. = TRUE
 		if("select_beard")
@@ -103,6 +104,7 @@
 			haircut_target.update_hair()
 			dummy.update_hair()
 			haircut_target.dna.update_dna_identity()
+			haircut_target.regenerate_icons()
 			playsound(haircut_target, 'sound/items/scissors.ogg', 100)
 			. = TRUE
 
