@@ -3,6 +3,7 @@
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens 'magical forces'. That's what the guidebook says, anyway."
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "nullrod"
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -82,6 +83,7 @@
 /obj/item/nullrod/staff
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -109,6 +111,7 @@
 /obj/item/nullrod/claymore
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
@@ -216,6 +219,7 @@
 /obj/item/nullrod/sord
 	name = "\improper UNREAL SORD"
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "sord"
 	inhand_icon_state = "sord"
 	worn_icon_state = "sord"
@@ -237,6 +241,7 @@
 /obj/item/nullrod/scythe
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -260,6 +265,7 @@
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "hfrequency0"
 	inhand_icon_state = "hfrequency1"
 	worn_icon_state = "hfrequency0"
@@ -273,18 +279,19 @@
 /obj/item/nullrod/scythe/spellblade
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "spellblade"
 	inhand_icon_state = "spellblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
-	icon = 'icons/obj/weapons/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/talking
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "talking_sword"
 	inhand_icon_state = "talking_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -410,6 +417,7 @@
 /obj/item/nullrod/whip
 	name = "holy whip"
 	desc = "What a terrible night to be on Space Station 13."
+	icon = 'icons/obj/weapons/whip.dmi'
 	icon_state = "chain"
 	inhand_icon_state = "chain"
 	worn_icon_state = "whip"
@@ -504,7 +512,7 @@
 	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	inhand_icon_state = "bostaff0"
 	worn_icon_state = "bostaff0"
@@ -513,12 +521,13 @@
 	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
 
 /obj/item/nullrod/tribal_knife
-	icon_state = "crysknife"
+	name = "arrhythmic knife"
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
+	icon = 'icons/obj/cult/sword.dmi'
+	icon_state = "crysknife"
 	inhand_icon_state = "crysknife"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	name = "arrhythmic knife"
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	slot_flags = null

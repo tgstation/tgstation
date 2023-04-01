@@ -177,7 +177,7 @@
 	throw_speed = 2
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'

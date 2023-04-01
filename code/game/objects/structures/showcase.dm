@@ -123,7 +123,7 @@
 	name = "seppuku katana"
 	density = 0
 	desc = "Welp, only one way to recover your honour."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
 
 //Deconstructing

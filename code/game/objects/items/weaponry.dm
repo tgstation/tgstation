@@ -43,6 +43,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "sord"
 	inhand_icon_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -63,6 +64,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "claymore"
 	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -261,6 +263,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
@@ -388,6 +391,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade
 	name = "switchblade"
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "switchblade"
 	base_icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -465,7 +469,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/cane
 	name = "cane"
 	desc = "A cane used by a true gentleman. Or a clown."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -547,7 +551,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -821,7 +825,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -921,6 +925,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/moonlight_greatsword
 	name = "moonlight greatsword"
 	desc = "Don't tell anyone you put any points into dex, though."
+	icon = 'icons/obj/cult/sword.dmi'
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
 	worn_icon_state = "swordon"
@@ -942,6 +947,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "high frequency blade"
 	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
 		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "hfrequency0"
 	worn_icon_state = "hfrequency0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
