@@ -137,8 +137,8 @@
 	. += span_notice("With the panel open:")
 	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
 	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
-	. += span_notice(" -AltClick to cycle between temperaure ranges.")
-	. += span_notice(" -CtrlClick to toggle on/off.")
+	. += span_notice(" -<b>Alt-Click</b> to cycle between temperaure ranges.")
+	. += span_notice(" -<b>Ctrl-Click</b> to toggle on/off.")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(in_range(user, src) || isobserver(user))
