@@ -64,7 +64,8 @@
 
 /obj/structure/syndicate_uplink_beacon/Destroy()
 	QDEL_NULL(listening_radio)
-	QDEL_NULL(teleport_beacon)
+	if(teleport_beacon)
+		QDEL_NULL(teleport_beacon)
 	return ..()
 
 /// Proc reads the user, sets radio to the correct frequency and starts to listen for the replacement uplink code
