@@ -45518,6 +45518,7 @@
 	},
 /obj/item/poster/random_official,
 /obj/structure/cable,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "lmC" = (
@@ -47929,6 +47930,7 @@
 	req_access = list("hop")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "lQV" = (
@@ -52570,6 +52572,7 @@
 	department = "Bridge";
 	name = "Bridge Requests Console"
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
 "nal" = (
@@ -89773,6 +89776,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "wpQ" = (

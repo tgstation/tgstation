@@ -27,6 +27,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict6.dmm
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
+#_maps/RandomRuins/SpaceRuins/derelict_construction.dmm
 #_maps/RandomRuins/SpaceRuins/derelict_sulaco.dmm
 #_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
@@ -37,6 +38,7 @@
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
+#_maps/RandomRuins/SpaceRuins/meateor.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right
 #_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
