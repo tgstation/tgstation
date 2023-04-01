@@ -38,6 +38,8 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
+	///Particle holder to attach to the turf for cool effects
+	var/particle_holder = /obj/effect/abstract/particle_holder/lava
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -45,6 +47,10 @@
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
+
+	var/obj/effect/particle = new particle_holder (src)
+
+	RegisterSignal(particle, COMSIG_TURF_CHANGE, GLOBAL_PROC_REF(qdel), particle)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -317,6 +323,25 @@
 		burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
 		burn_living.ignite_mob()
 
+/particles/lava
+	icon = 'icons/effects/particles/lava.dmi'
+	icon_state = list("lava" = 20, "smoke" = 1)
+	width = 100
+	height = 500
+	count = 100
+	spawning = 0.2
+	lifespan = 2 SECONDS
+	fadein = 0.1 SECONDS
+	fade = 0.5 SECONDS
+	grow = 0.01
+	friction = 0.03
+	velocity = list(0, 2)
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_SPHERE, 0.1, 0, NORMAL_RAND)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), UNIFORM_RAND)
+	rotation = 30
+	spin = generator(GEN_NUM, -20, 20)
+
 /turf/open/lava/smooth
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
@@ -344,6 +369,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
+	particle_holder = /obj/effect/abstract/particle_holder/plasma
 
 	light_range = 3
 	light_power = 0.75
@@ -419,6 +445,10 @@
 		burn_human.set_species(/datum/species/plasmaman)
 		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
 			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
+
+/particles/lava/plasma
+	icon_state = "plasma"
+	count = 20
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
