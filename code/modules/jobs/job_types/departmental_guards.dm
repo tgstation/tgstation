@@ -14,13 +14,13 @@
 	worn_icon_state = "customs_uniform"
 
 /obj/item/clothing/suit/armor/vest/blueshirt
-	icon_state = "barney_armor"
-	worn_icon_state = "barney_armor"
+	icon_state = "barney_armor_symbol"
+	worn_icon_state = "barney_armor_symbol"
 	unique_reskin = null
 
 /obj/item/clothing/suit/armor/vest/blueshirt/guard
-	icon_state = "guard_armor"
-	worn_icon_state = "guard_armor"
+	icon_state = "barney_armor"
+	worn_icon_state = "barney_armor"
 
 /obj/item/clothing/suit/armor/vest/blueshirt/orderly
 	name = "armored orderly coat"
@@ -53,6 +53,7 @@
 	description = "Defend the medical department, hold down idiots who refuse the vaccine, flex your muscles at people who fuck with medical."
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
+	config_tag = "ORDERLY"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer, <b>NOT SECURITY</b>"
@@ -148,6 +149,7 @@
 	spawn_positions = 2
 	supervisors = "the research director, <b>NOT SECURITY</b>"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "SCIENCE_GUARD"
 
 	outfit = /datum/outfit/job/science_guard
 	plasmaman_outfit = /datum/outfit/plasmaman/science
@@ -245,7 +247,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel, <b>NOT SECURITY</b>"
 	exp_granted_type = EXP_TYPE_CREW
-
+	config_tag = "BOUNCER"
 	outfit = /datum/outfit/job/bouncer
 	plasmaman_outfit = /datum/outfit/plasmaman/party_bouncer
 
@@ -340,6 +342,7 @@
 	spawn_positions = 2
 	supervisors = "the quartermaster, <b>NOT SECURITY</b>"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CUSTOMS_AGENT"
 
 	outfit = /datum/outfit/job/customs_agent
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
@@ -431,6 +434,7 @@
 	spawn_positions = 2
 	supervisors = "the chief engineer, <b>NOT SECURITY</b>"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "ENGINEERING_GUARD"
 
 	outfit = /datum/outfit/job/engineering_guard
 	plasmaman_outfit = /datum/outfit/plasmaman/engineering
