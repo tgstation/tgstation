@@ -38,8 +38,8 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
-	///Particle holder to attach to the turf for cool effects
-	var/particle_holder = /obj/effect/abstract/particle_holder/lava
+	///Cool particles that we put on the lava
+	var/particle_type = /particles/lava
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -48,9 +48,7 @@
 	if(!smoothing_flags)
 		update_appearance()
 
-	var/obj/effect/particle = new particle_holder (src)
-
-	RegisterSignal(particle, COMSIG_TURF_CHANGE, GLOBAL_PROC_REF(qdel), particle)
+	new /obj/effect/abstract/particle_holder (src, particle_type)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -369,7 +367,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
-	particle_holder = /obj/effect/abstract/particle_holder/plasma
+	particle_type = /particles/lava/plasma
 
 	light_range = 3
 	light_power = 0.75
