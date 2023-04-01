@@ -49,6 +49,9 @@
 	/// broadcasted to as long as the other guys network is on the same branch or above.
 	var/network_id = null
 
+	/// Can get critical hits
+	var/can_crit = TRUE
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
