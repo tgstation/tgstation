@@ -1,0 +1,27 @@
+2023-04-01:
+  Cheshify:
+  - bugfix: The Lance goes deeper into the station when it docks.
+  Deranging:
+  - bugfix: The graph in Power Monitor consoles is no longer under half its normal
+      size.
+  Helg2:
+  - rscadd: the victims of kneecapping will now scream.
+  - qol: you will no longer gain useless message, when you're harming someone in agro-grab
+      in the head with their neck already slicen, instead of continuing killing them.
+  - qol: you will no longer gain irritating messages, when trying to stab someone
+      in the eye, instead of just stabbing them with screwdriver.
+  LT3:
+  - balance: 'Random Disease: Fluids transmission frequency reduced'
+  - balance: 'Random Disease: Respiration transmission frequency increased'
+  - balance: 'Random Disease: Low severity frequency increased'
+  - balance: 'Random Disease: Cures list removes dispenser reagents and food products'
+  - balance: 'Random Disease: Minimum pop and minimum round timer added to event check'
+  LemonInTheDark:
+  - bugfix: Lava and plasma rivers (openspace on icebox too) will generate now. This
+      was broken for 2 years wtf man
+  Rhials:
+  - balance: Fugitive team backstories will now be selected with consideration to
+      the number of people who sign up.
+  - qol: Fugitives can no longer spawn in atmos-unsafe areas.
+  SmoSmoSmoSmok:
+  - bugfix: pais can upload photos to newscasters again

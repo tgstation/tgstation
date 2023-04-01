@@ -562,7 +562,7 @@
 	name = "Holding Area"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bu" = (
 /obj/machinery/door/airlock/command/glass{
@@ -583,16 +583,16 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape/brig)
 "bw" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bz" = (
 /obj/item/kirbyplants{
@@ -639,7 +639,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bF" = (
 /obj/effect/turf_decal/tile/red{
@@ -682,18 +682,18 @@
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -731,13 +731,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bV" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
 /obj/item/radio/intercom/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bW" = (
 /obj/structure/table/reinforced,
@@ -871,7 +871,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "cH" = (
 /obj/effect/turf_decal/bot,

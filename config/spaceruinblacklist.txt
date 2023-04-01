@@ -38,6 +38,7 @@
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
+#_maps/RandomRuins/SpaceRuins/meateor.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right
 #_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
