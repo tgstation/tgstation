@@ -5,19 +5,28 @@
 	var/obj/item_path = null
 	var/amt = 1
 	var/noun_used = "Crate"
+	var/generated = FALSE
 
 /datum/supply_pack/guns/shipment
 	amt = 10
 	noun_used = "Shipment"
 
-/datum/supply_pack/guns/New()
+/datum/supply_pack/guns/generate_supply_packs()
+	if(!item_path || generated)
+		return null
+	var/datum/supply_pack/guns/new_supply_pack = new type
+	new_supply_pack.generated = TRUE
+	new_supply_pack.group = group
+	new_supply_pack.access = access
+	new_supply_pack.crate_type = crate_type
 	var/name_used = initial(item_path.name)
-	name = "[name_used] [noun_used]"
-	desc = "A [noun_used] of [amt] [name_used]"
-	cost = (CARGO_CRATE_VALUE * 2) * amt
-	contains = list(
+	new_supply_pack.name = "[name_used] [noun_used]"
+	new_supply_pack.desc = "A [noun_used] of [amt] [name_used]"
+	new_supply_pack.cost = (CARGO_CRATE_VALUE * 2) * amt
+	new_supply_pack.contains = list(
 		item_path = amt,
 	)
+	return list(new_supply_pack)
 
 /datum/supply_pack/ammo
 	group = "Ammunition"
@@ -25,14 +34,24 @@
 	crate_type = /obj/structure/closet/crate/secure/gear
 	var/obj/item_path = null
 	var/amt = 5
+	var/generated = FALSE
 
-/datum/supply_pack/ammo/New()
+/datum/supply_pack/ammo/generate_supply_packs()
+	if(!item_path || generated)
+		return null
+	var/datum/supply_pack/ammo/new_supply_pack = new type
+	new_supply_pack.generated = TRUE
+	new_supply_pack.group = group
+	new_supply_pack.access = access
+	new_supply_pack.crate_type = crate_type
 	var/name_used = initial(item_path.name)
-	name = "[name_used] Crate"
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(
+	new_supply_pack.name = "[name_used] crate"
+	new_supply_pack.desc = "A crate of [name_used] ammo."
+	new_supply_pack.cost = (CARGO_CRATE_VALUE * 2) * amt
+	new_supply_pack.contains = list(
 		item_path = amt,
 	)
+	return list(new_supply_pack)
 
 /datum/supply_pack/guns/proto
 	item_path = /obj/item/gun/ballistic/automatic/proto/unrestricted
