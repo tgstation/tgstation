@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "Reagent containers that splash on people when thrown (e.g. molotovs) now spill their contents on both target and turf. (This means that throwing molotovs with enough fuel spills fuel puddles, throwing beakers with acid spills acid on the floor, etc. etc.) Unfortunately, molotovs still lack the ability to ignite their own spilled fuel, but we'll get there one day."
