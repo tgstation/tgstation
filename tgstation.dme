@@ -3702,7 +3702,6 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\originalcontent.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\spacehotel.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\TheDerelict.dm"
-#include "code\modules\mapfluff\ruins\spaceruin_code\transit_booth.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\waystation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\mapping\access_helpers.dm"
