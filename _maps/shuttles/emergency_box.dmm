@@ -339,7 +339,7 @@
 /obj/machinery/camera/autoname{
 	dir = 5
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Dk" = (
 /obj/machinery/vending/wallmed/directional/north{
