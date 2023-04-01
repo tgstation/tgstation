@@ -24,7 +24,7 @@
 #define UPDATE_GRID_METADATA(movable_or_list, cell) \
 	do { \
 		var/list/_definitely_list = movable_or_list; \
-		if(!istype(movable_or_list, /list)) { \
+		if(!islist(movable_or_list)) { \
 			_definitely_list = list(movable_or_list) \
 		} \
 		var/list/all_contents = ALL_CHANNELS_OF_CELL(cell); \
