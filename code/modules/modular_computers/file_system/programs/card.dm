@@ -77,7 +77,6 @@
 	. = ..()
 	if(.)
 		return
-
 	var/mob/user = usr
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 
@@ -287,7 +286,7 @@
 	return data
 
 /datum/computer_file/program/card_mod/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	var/obj/item/card/id/inserted_id = computer.computer_id_slot
 	data["authIDName"] = inserted_id ? inserted_id.name : "-----"

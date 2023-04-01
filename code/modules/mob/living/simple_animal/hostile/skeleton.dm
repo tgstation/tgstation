@@ -25,7 +25,7 @@
 	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
-	faction = list("skeleton")
+	faction = list(FACTION_SKELETON)
 	// Going for a sort of pale bluegreen here, shooting for boneish
 	lighting_cutoff_red = 15
 	lighting_cutoff_green = 25

@@ -24,7 +24,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	robust_searching = 1
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	// Gold, supermatter tinted
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 30

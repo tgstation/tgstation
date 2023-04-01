@@ -174,6 +174,8 @@
 	var/unarmed_damage_high = 1
 	///Damage at which attacks from this bodypart will stun
 	var/unarmed_stun_threshold = 2
+	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
+	var/top_offset = 0
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -204,6 +206,14 @@
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
+
+	if(length(external_organs))
+		for(var/obj/item/organ/external/external_organ as anything in external_organs)
+			external_organs -= external_organ
+			qdel(external_organ) // It handles removing its references to this limb on its own.
+
+		external_organs = list()
+
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
@@ -380,7 +390,7 @@
 		return FALSE
 
 	var/list/bodypart_organs
-	for(var/obj/item/organ/organ_check as anything in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+	for(var/obj/item/organ/organ_check as anything in owner.organs) //internal organs inside the dismembered limb are dropped.
 		if(check_zone(organ_check.zone) == body_zone)
 			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
 
@@ -642,8 +652,10 @@
 	return old_owner
 
 /obj/item/bodypart/proc/on_removal()
-	for(var/trait in bodypart_traits)
-		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
+	if(!length(bodypart_traits))
+		return
+
+	owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_can_be_disabled(new_can_be_disabled)

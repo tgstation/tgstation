@@ -57,7 +57,7 @@
 		return ..()
 
 	if (poster_structure.trap?.resolve())
-		to_chat(user, span_warning("This poster is already booby-trapped!"))
+		balloon_alert(user, "already trapped!")
 		return
 
 	if(!user.transferItemToLoc(I, poster_structure))
@@ -215,16 +215,16 @@
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), TRUE))
+	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
 	else
 		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
-	if (!istype(user))
+	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 		return FALSE
-	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
+	return !user.gloves || !(user.gloves.body_parts_covered & HANDS) || HAS_TRAIT(user, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(user.gloves, TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/structure/sign/poster/proc/roll_and_drop(atom/location)
 	pixel_x = 0
@@ -249,15 +249,14 @@
 	var/stuff_on_wall = 0
 	for(var/obj/contained_object in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(contained_object, /obj/structure/sign/poster))
-			to_chat(user, span_warning("The wall is far too cluttered to place a poster!"))
+			balloon_alert(user, "no room!")
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			to_chat(user, span_warning("The wall is far too cluttered to place a poster!"))
+			balloon_alert(user, "no room!")
 			return
 
-	to_chat(user, span_notice("You start placing the poster on the wall...") )
-
+	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = rolled_poster.poster_structure
 
 	flick("poster_being_set", placed_poster)
@@ -266,7 +265,6 @@
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_wall_turf_check), src)))
-		to_chat(user, span_notice("The poster falls down!"))
 		placed_poster.roll_and_drop(user_drop_location)
 		return
 

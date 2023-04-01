@@ -6,12 +6,14 @@
 		/datum/traitor_objective/ultimate/space_dragon = 1,
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
 		/datum/traitor_objective/ultimate/infect_ai = 1,
+		/datum/traitor_objective/ultimate/dark_matteor = 1,
 	)
 	weight = 100
 
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
 	progression_minimum = 140 MINUTES
+	needs_reward = FALSE
 
 	var/progression_points_in_objectives = 20 MINUTES
 

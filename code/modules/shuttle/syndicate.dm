@@ -35,6 +35,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
+	icon_screen = null
 	light_color = LIGHT_COLOR_BLUE
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"

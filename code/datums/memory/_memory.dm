@@ -57,7 +57,7 @@
 	src.deuteragonist_name = build_story_character(deuteragonist)
 	src.antagonist_name = build_story_character(antagonist)
 
-	if(protagonist && !(memory_flags & MEMORY_FLAG_NOLOCATION))
+	if(!src.where && isatom(protagonist) && !(memory_flags & MEMORY_FLAG_NOLOCATION))
 		src.where = get_area_name(protagonist)
 
 	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
@@ -380,3 +380,29 @@
 
 	// Generic result - mobs get "the guy", objs / turfs get "a thing"
 	return ismob(character) ? "\the [character]" : "\a [character]"
+
+/**
+ * Creates a "quick copy" of the memory for another mind,
+ * copying just basic memory information (name, major charactecrs) over.
+ *
+ * The copied memory cannot be used for stories or anything.
+ * They should generally only be used to give a new mind an idea of another mind's memories.
+ */
+/datum/memory/proc/quick_copy_memory(datum/mind/new_memorizer)
+	var/datum/memory/copy/new_copy = new(new_memorizer, protagonist_name, deuteragonist_name, antagonist_name, where, memory_flags)
+	new_copy.name = name
+	new_copy.story_value = story_value
+	return new_copy
+
+// To only be used by quick copies of memories
+/datum/memory/copy
+	memory_flags = MEMORY_NO_STORY
+
+/datum/memory/copy/New(datum/mind/memorizer_mind, atom/protagonist, atom/deuteragonist, atom/antagonist, where, new_memory_flags)
+	src.where = where
+	src.memory_flags |= new_memory_flags
+	return ..()
+
+/datum/memory/copy/generate_memory_name()
+	// We just copy the original memory's name anyways
+	return

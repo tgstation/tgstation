@@ -208,7 +208,7 @@
  * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
  * * random - creates random mobs. self explanatory.
  */
-/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = FACTION_CHEMICAL_SUMMON, random = TRUE)
 	if(holder?.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)

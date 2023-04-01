@@ -1,25 +1,56 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"b" = (
+/turf/template_noop,
 /area/template_noop)
 "c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
-"e" = (
+"h" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"g" = (
+"i" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"h" = (
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"n" = (
+/obj/structure/training_machine,
+/obj/item/target/syndicate,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"p" = (
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -37,33 +68,36 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"i" = (
+"q" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"r" = (
 /obj/structure/rack,
+/obj/item/gun/energy/laser/redtag,
+/obj/item/gun/energy/laser/bluetag{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/syringe{
-	pixel_y = -3;
-	pixel_x = -1
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"j" = (
-/turf/closed/wall,
-/area/station/maintenance/department/science)
-"k" = (
+"t" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/structure/chair/stool/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"m" = (
-/turf/template_noop,
-/area/template_noop)
-"n" = (
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/engine,
+/area/station/maintenance/department/science)
+"x" = (
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -79,36 +113,88 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"o" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/engine,
-/area/station/maintenance/department/science)
-"r" = (
+"z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/mob_spawn/corpse/human/monkey,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine,
 /area/station/maintenance/department/science)
-"t" = (
+"A" = (
+/obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 4
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Testing Range Maintenance Hatch"
 	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 1
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"u" = (
+"B" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"w" = (
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"J" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/syringe{
+	pixel_y = -3;
+	pixel_x = -1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"K" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"U" = (
+/obj/structure/table,
+/obj/item/target/syndicate,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/target/clown,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32;
+	name = "TESTING RANGE sign";
+	desc = "A warning sign which reads 'TESTING RANGE'."
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"Z" = (
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -125,116 +211,19 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
-"y" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"A" = (
-/obj/structure/table,
-/obj/item/target/syndicate,
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/target/clown,
-/obj/structure/sign/warning/secure_area{
-	pixel_x = 32;
-	name = "TESTING RANGE sign";
-	desc = "A warning sign which reads 'TESTING RANGE'."
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"B" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/landmark/blobstart,
-/turf/open/floor/engine,
-/area/station/maintenance/department/science)
-"D" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"J" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/item/gun/energy/laser/redtag,
-/obj/item/gun/energy/laser/bluetag{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 9
-	},
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"N" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"O" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Testing Range Maintenance Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
-"X" = (
-/obj/structure/training_machine,
-/obj/item/target/syndicate,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/engine,
-/area/station/maintenance/department/science)
-"Z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/science)
 
 (1,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
 "}
 (2,1,1) = {"
-m
-m
-a
-a
-a
-a
+b
 a
 a
 a
@@ -244,14 +233,9 @@ a
 a
 "}
 (3,1,1) = {"
-m
-j
-j
-j
-j
-j
-j
-j
+b
+a
+a
 a
 a
 a
@@ -259,14 +243,9 @@ a
 a
 "}
 (4,1,1) = {"
-m
-j
-J
-z
-u
-u
-i
-j
+b
+a
+a
 a
 a
 a
@@ -274,122 +253,92 @@ a
 a
 "}
 (5,1,1) = {"
-m
-m
-g
-N
-N
-N
-D
-j
-a
-a
-a
-a
-a
+b
+b
+K
+K
+K
+K
+K
+K
 "}
 (6,1,1) = {"
-m
-O
-t
-Z
-N
-Z
-D
-j
-a
-a
-a
-a
-a
+b
+A
+o
+B
+B
+r
+J
+K
 "}
 (7,1,1) = {"
-m
-m
-A
-n
-y
-w
+b
+b
+i
+q
 h
-j
-a
-a
-a
-a
-a
+h
+N
+K
 "}
 (8,1,1) = {"
-m
-m
-m
-e
+b
+b
+i
 k
-e
-j
-j
-a
-a
-a
-a
-a
+h
+t
+N
+K
 "}
 (9,1,1) = {"
-m
-m
-m
-c
-B
-k
-j
-a
-a
-a
-a
-a
-a
+b
+b
+U
+x
+O
+Z
+p
+K
 "}
 (10,1,1) = {"
-m
-m
-m
-r
-X
-o
-j
-a
-a
-a
-a
-a
-a
+b
+b
+b
+d
+c
+G
+K
+K
 "}
 (11,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
-a
-a
+b
+b
+b
+z
+n
+v
+K
+b
 "}
 (12,1,1) = {"
-m
-m
-m
-m
-m
-m
-m
-m
-m
-a
-a
-a
-a
+b
+b
+b
+K
+K
+K
+K
+b
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
 "}

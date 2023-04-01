@@ -25,7 +25,7 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/cat_butcher, /obj/item/circular_saw)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = TRUE
@@ -38,7 +38,7 @@
 	. = ..()
 	if(. && prob(35) && iscarbon(target))
 		var/mob/living/carbon/human/L = target
-		var/obj/item/organ/external/tail/cat/tail = L.getorgan(/obj/item/organ/external/tail/cat)
+		var/obj/item/organ/external/tail/cat/tail = L.get_organ_by_type(/obj/item/organ/external/tail/cat)
 		if(!QDELETED(tail))
 			visible_message(span_notice("[src] severs [L]'s tail in one swift swipe!"), span_notice("You sever [L]'s tail in one swift swipe."))
 			tail.Remove(L)

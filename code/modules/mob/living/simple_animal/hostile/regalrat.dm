@@ -14,7 +14,7 @@
 	lighting_cutoff_green = 8
 	lighting_cutoff_blue = 5
 	obj_damage = 10
-	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
+	butcher_results = list(/obj/item/food/meat/slab/mouse = 2, /obj/item/clothing/head/costume/crown = 1)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"
@@ -90,7 +90,8 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/living_target = the_target
-		return !living_target.faction_check_mob(src, exact_match = TRUE)
+		if (living_target.stat != DEAD)
+			return !living_target.faction_check_mob(src, exact_match = TRUE)
 
 	return ..()
 
@@ -117,27 +118,19 @@
 #define REGALRAT_INTERACTION "regalrat"
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
-		return
-	if (QDELETED(target))
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION) || QDELETED(target))
 		return
 	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
 		pry_door(target)
 		return
-
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
+	if (src.mind && !src.combat_mode && target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
 		if (do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
-			return
+		return
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
-		if(QDELETED(target))
-			return
-
-	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
-		return
 	return ..()
 
 #undef REGALRAT_INTERACTION
@@ -181,7 +174,7 @@
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
 	if(do_after(src, time_to_open, prying_door))
 		opening_airlock = FALSE
-		if(prying_door.density && !prying_door.open(2))
+		if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
 			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
 			return FALSE
 		prying_door.open()

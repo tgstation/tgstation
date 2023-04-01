@@ -23,6 +23,8 @@
 
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
+/// Determines the rate at which humans lose blood when they have the blood deficiency quirk. The default is BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER.
+#define BLOOD_DEFICIENCY_MODIFIER 0.025
 
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
@@ -54,9 +56,8 @@
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
-#define RESPIRATION_CO2 (1 << 1)
-#define RESPIRATION_N2 (1 << 2)
-#define RESPIRATION_PLASMA (1 << 3)
+#define RESPIRATION_N2 (1 << 1)
+#define RESPIRATION_PLASMA (1 << 2)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC 1
@@ -109,6 +110,8 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
+#define SPECIES_MONKEY_FREAK "monkey_freak"
+#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -116,6 +119,7 @@
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
+#define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
@@ -351,11 +355,18 @@
 #define ENVIRONMENT_SMASH_WALLS 2 //walls
 #define ENVIRONMENT_SMASH_RWALLS 3 //rwalls
 
+// Slip flags, also known as lube flags
+/// The mob will not slip if they're walking intent
 #define NO_SLIP_WHEN_WALKING (1<<0)
+/// Slipping on this will send them sliding a few tiles down
 #define SLIDE (1<<1)
-#define GALOSHES_DONT_HELP (1<<2)
-#define SLIDE_ICE (1<<3)
-#define SLIP_WHEN_CRAWLING (1<<4) //clown planet ruin
+/// Ice slides only go one tile and don't knock you over, they're intended to cause a "slip chain"
+/// where you slip on ice until you reach a non-slippable tile (ice puzzles)
+#define SLIDE_ICE (1<<2)
+/// [TRAIT_NO_SLIP_WATER] does not work on this slip. ONLY [TRAIT_NO_SLIP_ALL] will
+#define GALOSHES_DONT_HELP (1<<3)
+/// Slip works even if you're already on the ground
+#define SLIP_WHEN_CRAWLING (1<<4)
 
 #define MAX_CHICKENS 50
 
@@ -431,6 +442,7 @@
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+#define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
@@ -586,6 +598,8 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
+/// Icon state to use for ai displays that just turns them off
+#define AI_DISPLAY_DONT_GLOW "ai_off"
 /// Throw modes, defines whether or not to turn off throw mode after
 #define THROW_MODE_DISABLED 0
 #define THROW_MODE_TOGGLE 1
@@ -825,33 +839,35 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_STAM (1<<6)
 /// Restore all limbs to their initial state.
 #define HEAL_LIMBS (1<<7)
-/// Heals all organs from failing. If done as a part of an admin heal, will instead restore all organs to their initial state.
+/// Heals all organs from failing.
 #define HEAL_ORGANS (1<<8)
+/// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
+#define HEAL_REFRESH_ORGANS (1<<9)
 /// Removes all wounds.
-#define HEAL_WOUNDS (1<<9)
+#define HEAL_WOUNDS (1<<10)
 /// Removes all brain traumas, not including permanent ones.
-#define HEAL_TRAUMAS (1<<10)
+#define HEAL_TRAUMAS (1<<11)
 /// Removes all reagents present.
-#define HEAL_ALL_REAGENTS (1<<11)
+#define HEAL_ALL_REAGENTS (1<<12)
 /// Removes all non-positive diseases.
-#define HEAL_NEGATIVE_DISEASES (1<<12)
+#define HEAL_NEGATIVE_DISEASES (1<<13)
 /// Restores body temperature back to nominal.
-#define HEAL_TEMP (1<<13)
+#define HEAL_TEMP (1<<14)
 /// Restores blood levels to normal.
-#define HEAL_BLOOD (1<<14)
+#define HEAL_BLOOD (1<<15)
 /// Removes all non-positive mutations (neutral included).
-#define HEAL_NEGATIVE_MUTATIONS (1<<15)
+#define HEAL_NEGATIVE_MUTATIONS (1<<16)
 /// Removes status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_STATUS (1<<16)
+#define HEAL_STATUS (1<<17)
 /// Same as above, removes all CC related status effects with this flag set that also have remove_on_fullheal = TRUE.
-#define HEAL_CC_STATUS (1<<17)
+#define HEAL_CC_STATUS (1<<18)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
-#define HEAL_RESTRAINTS (1<<18)
+#define HEAL_RESTRAINTS (1<<19)
 
 /// Combination flag to only heal the main damage types.
 #define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
 /// Combination flag to only heal things messed up things about the mob's body itself.
-#define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
+#define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_REFRESH_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
 /// Combination flag to heal negative things affecting the mob.
 #define HEAL_AFFLICTIONS (HEAL_NEGATIVE_DISEASES|HEAL_NEGATIVE_MUTATIONS|HEAL_ALL_REAGENTS|HEAL_STATUS|HEAL_CC_STATUS)
 
@@ -876,3 +892,11 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NPC_DEFAULT_MIN_TEMP 250
 /// Default maximum body temperature mobs can exist in before taking damage
 #define NPC_DEFAULT_MAX_TEMP 350
+
+// Flags for mobs which can't do certain things while someone is looking at them
+/// Flag which stops you from moving while observed
+#define NO_OBSERVED_MOVEMENT (1<<0)
+/// Flag which stops you from using actions while observed
+#define NO_OBSERVED_ACTIONS (1<<1)
+/// Flag which stops you from attacking while observed
+#define NO_OBSERVED_ATTACKS (1<<2)

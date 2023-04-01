@@ -1,4 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - rscadd: "Adds privacy shutters for quartermaster. Shutters on Kilo/IceBox and blastdoors on Meta/Delta/Tram. Also changed doors with glass to common ones."

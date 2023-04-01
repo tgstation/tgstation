@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Painting with the slippery spraycan will now once again correctly make that tile slippery."
-  - bugfix: "Spraying the ground with the hellcan will now once again correctly set that tile, you, and other surrounding objects on fire."

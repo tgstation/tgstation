@@ -1829,7 +1829,7 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver)
 		// Heads of staff and the captain have a "royal metabolism"
 		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
@@ -2334,7 +2334,7 @@
 /datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_ZOMBIE))
+	if(!exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
 		ZI.Insert(exposed_mob)
 
@@ -2424,6 +2424,13 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/glitter/confetti
+	name = "Confetti"
+	description = "Tiny plastic flakes that are impossible to sweep up."
+	color = "#7dd87b"
+	glitter_type = /obj/effect/decal/cleanable/confetti
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/pax

@@ -34,7 +34,7 @@
 	friendly_verb_continuous = "floats near"
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 	see_in_dark = 8
 	// Nice and dark purple, to match le vibes
 	lighting_cutoff_red = 20
@@ -50,8 +50,7 @@
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, loot = list(/obj/item/fugu_gland))
-	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)
 	expand = new(src)
 	expand.Grant(src)
 	ai_controller.blackboard[BB_FUGU_INFLATE] = WEAKREF(expand)

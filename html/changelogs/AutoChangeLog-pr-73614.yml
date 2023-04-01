@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Gaining nobreath in an N2O heavy environment doesn't make you forever aware of it"
