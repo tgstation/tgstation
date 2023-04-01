@@ -93,6 +93,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	head =  /obj/item/clothing/head/helmet/blueshirt/guard
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt/orderly
+	l_hand = /obj/item/melee/baton/security/loaded/departmental/medical
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
@@ -185,6 +186,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	head =  /obj/item/clothing/head/helmet/blueshirt
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	l_hand = /obj/item/melee/baton/security/loaded/departmental/science
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
@@ -378,6 +380,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt/customs_agent
 	head =  /obj/item/clothing/head/helmet/blueshirt/guard
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt/customs_agent
+	l_hand = /obj/item/melee/baton/security/loaded/departmental/cargo
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
@@ -470,6 +473,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt/engineering_guard
 	head =  /obj/item/clothing/head/helmet/blueshirt/guard
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt/engineering_guard
+	l_hand = /obj/item/melee/baton/security/loaded/departmental/engineering
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
