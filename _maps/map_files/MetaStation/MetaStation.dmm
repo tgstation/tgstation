@@ -23974,6 +23974,7 @@
 "iNB" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/table/glass,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iNC" = (
@@ -32206,7 +32207,7 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/paperslip{
+/obj/item/paper/paperslip{
 	pixel_x = -5;
 	pixel_y = 10
 	},
@@ -34381,6 +34382,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
+	},
+/obj/item/papercutter{
+	pixel_x = 17
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -49162,6 +49166,9 @@
 /obj/item/storage/box/silver_ids,
 /obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (
@@ -64157,6 +64164,7 @@
 	name = "Requests Window"
 	},
 /obj/item/pen,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wTs" = (
