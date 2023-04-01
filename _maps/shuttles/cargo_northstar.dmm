@@ -61,7 +61,8 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "q" = (
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
 /area/shuttle/supply)
 "s" = (
 /turf/template_noop,
@@ -75,7 +76,8 @@
 /area/shuttle/supply)
 "u" = (
 /obj/machinery/power/shuttle_engine/large,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
 /area/shuttle/supply)
 "v" = (
 /obj/machinery/conveyor{
