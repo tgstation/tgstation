@@ -1031,6 +1031,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Civilian - Courtroom"
 	},
+/obj/effect/landmark/start/magistrate,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "acX" = (
@@ -1243,6 +1244,7 @@
 	name = "Judge"
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/landmark/start/magistrate,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "ads" = (
@@ -9835,6 +9837,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/magistrate,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "bSS" = (
@@ -18984,6 +18987,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "fnZ" = (
+/obj/effect/landmark/start/science_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "fof" = (
@@ -19753,6 +19757,14 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
+"fDe" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/gun_dealer,
+/turf/open/floor/iron,
+/area/station/cargo/office)
 "fDm" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -22186,6 +22198,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
+/obj/effect/landmark/start/corrections_officer,
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "gAQ" = (
@@ -34591,6 +34604,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
+/obj/effect/landmark/start/customs_agent,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "ldy" = (
@@ -39982,6 +39996,7 @@
 	},
 /obj/machinery/light_switch/directional/south,
 /obj/structure/cable,
+/obj/effect/landmark/start/customs_agent,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "nfB" = (
@@ -41800,6 +41815,10 @@
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"nMm" = (
+/obj/effect/landmark/start/gun_dealer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "nMu" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -42767,6 +42786,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/effect/landmark/start/corrections_officer,
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "odC" = (
@@ -44537,6 +44557,7 @@
 	req_access = list("brig_entrance")
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/customs_agent,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "oSE" = (
@@ -46559,6 +46580,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/obj/effect/landmark/start/corrections_officer,
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "pCg" = (
@@ -49360,6 +49382,10 @@
 /obj/structure/cable,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qCV" = (
+/obj/effect/landmark/start/gun_dealer,
+/turf/open/floor/iron,
+/area/station/cargo/office)
 "qCW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -52585,6 +52611,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/effect/landmark/start/corrections_officer,
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "rMS" = (
@@ -56011,6 +56038,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/start/science_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "sVL" = (
@@ -56187,6 +56215,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/landmark/start/customs_agent,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "sYU" = (
@@ -59015,6 +59044,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/science_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "tYc" = (
@@ -59212,6 +59242,7 @@
 	name = "Science Cell";
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/science_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "ubW" = (
@@ -61939,6 +61970,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/customs_agent,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "uZb" = (
@@ -62611,6 +62643,7 @@
 	c_tag = "Medical - Security Checkpoint";
 	network = list("ss13","rd","Security")
 	},
+/obj/effect/landmark/start/science_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "vlF" = (
@@ -181127,7 +181160,7 @@ oAV
 snK
 aBc
 sFc
-cwG
+qCV
 aCb
 aCv
 aCJ
@@ -181382,7 +181415,7 @@ vSI
 vSI
 vYl
 oZm
-cwG
+qCV
 sFc
 cwG
 ccj
@@ -181626,7 +181659,7 @@ akr
 akr
 cTU
 ett
-uax
+nMm
 uax
 uax
 axH
@@ -181898,7 +181931,7 @@ vYl
 kkq
 cwG
 gpm
-cwG
+qCV
 whI
 vYl
 eBF
@@ -182153,7 +182186,7 @@ tkP
 roj
 rSb
 ouE
-dPu
+fDe
 dPu
 tXI
 rqD
