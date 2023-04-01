@@ -3,7 +3,9 @@
 /// can have as many different checks as you desire to prevent people from doing the deed to themselves.
 /mob/living/verb/suicide()
 	set hidden = TRUE
-	handle_suicide()
+
+	visible_message(span_rose("[src] looks like [p_theyre()] about to commit suicide..."))
+	say("I just can't do it. I need a [pick("therapist", "psychologist", "friend", "hug")].")
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
 /// Override this ENTIRELY if you want to add any special behavior to your suicide handling, if you fuck up the order of operations then shit will break.
