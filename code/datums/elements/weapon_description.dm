@@ -76,12 +76,12 @@
 	if(!source.override_notes)
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to kill."
+			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
 		else
 			readout += "[source.p_they(capitalized = TRUE)] does not deal noticeable melee damage."
 
 		if(source.throwforce > 0)
-			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to kill."
+			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
 		else
 			readout += "[source.p_they(capitalized = TRUE)] does not deal noticeable throwing damage."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
