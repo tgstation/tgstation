@@ -618,4 +618,4 @@
 
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/infested_frigate
-    name = "SYN-C Brutus"
+	name = "SYN-C Brutus"
