@@ -90,11 +90,11 @@
 	COOLDOWN_START(src, beacon_cooldown, 10 MINUTES)
 
 	var/mob/living/resolved_owner = owner.resolve()
-	if(!resolved_owner)
+	if(isnull(resolved_owner))
 		return
 
 	var/datum/antagonist/traitor/traitor_datum = resolved_owner.mind.has_antag_datum(/datum/antagonist/traitor)
-	if(!traitor_datum)
+	if(isnull(traitor_datum))
 		return
 
 	var/datum/uplink_handler/uplink_handler = traitor_datum.uplink_handler
@@ -107,9 +107,7 @@
 
 // Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item)
-		return NONE
-	if(!IS_TRAITOR(user))
+	if(held_item || !IS_TRAITOR(user))
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Synchronize with beacon"
 	return CONTEXTUAL_SCREENTIP_SET
