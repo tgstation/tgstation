@@ -41,7 +41,7 @@
 	if(owner != null)
 		balloon_alert(user, "already claimed!")
 		return
-	var/datum/looping_sound/typing/typing_sounds = new(src, /*start_immediately =*/TRUE)
+	var/datum/looping_sound/typing/typing_sounds = new(src, start_immediately = TRUE)
 	balloon_alert(user, "synchronizing...")
 	if(!do_after(user = user, delay = 3 SECONDS, target = src, interaction_key = REF(src)))
 		typing_sounds.stop()
@@ -100,11 +100,10 @@
 	var/datum/uplink_handler/uplink_handler = traitor_datum.uplink_handler
 
 	SEND_SIGNAL(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED)
-	new /obj/item/uplink/replacement(get_turf(src), resolved_owner, 0, uplink_handler)
+	new /obj/item/uplink/replacement(get_turf(src), /*owner = */resolved_owner, /*tc_amount = */0, /*uplink_handler_override = */uplink_handler)
 	flick("relay_traitor_activate", src)
 	do_sparks(number = 5, cardinal_only = FALSE, source = src)
-	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
-
+	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon."
 // Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item || !IS_TRAITOR(user))
