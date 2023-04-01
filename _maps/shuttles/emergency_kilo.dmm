@@ -45,9 +45,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "an" = (
@@ -709,6 +708,12 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen{
+	dir = 8;
+	name = "Shuttle Camera Monitor";
+	network = list("emergency_ss13");
+	pixel_x = 26
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "kB" = (
@@ -775,8 +780,12 @@
 /area/shuttle/escape)
 "nR" = (
 /obj/structure/table/reinforced,
+/obj/item/folder/blue,
+/obj/item/folder/red{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/item/gun/energy/e_gun/mini,
-/obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "oj" = (
