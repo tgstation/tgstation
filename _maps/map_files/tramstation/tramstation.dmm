@@ -63318,19 +63318,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/papercutter,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "vvK" = (
