@@ -137,6 +137,8 @@
 	. += span_notice("With the panel open:")
 	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
 	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
+	. += span_notice(" -AltClick to cycle between temperaure ranges.")
+	. += span_notice(" -CtrlClick to toggle on/off.")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(in_range(user, src) || isobserver(user))
@@ -149,7 +151,14 @@
 		return
 	if(!can_interact(user))
 		return
-	target_temperature = T20C
+
+	if(target_temperature == T20C)
+		target_temperature =  max_temperature
+	else if(target_temperature == max_temperature)
+		target_temperature = min_temperature
+	else
+		target_temperature = T20C
+
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
