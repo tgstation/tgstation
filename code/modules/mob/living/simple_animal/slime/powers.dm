@@ -229,11 +229,11 @@
 /mob/living/simple_animal/slime/proc/make_baby(drop_loc, new_adult, new_nutrition, new_powerlevel, force_original_colour=FALSE, step_away=TRUE)
 	var/child_colour = colour
 	if(!force_original_colour)
-		if(prob(mutation_chance))
+		if(mutation_chance >= 100)
+			child_colour = "rainbow"
+		else if(prob(mutation_chance))
 			if(transformeffects & SLIME_EFFECT_PYRITE)
 				slime_mutation = mutation_table(pick(slime_colours - list("rainbow")))
-			else if(mutation_chance >= 100)
-				child_colour = "rainbow"
 			child_colour = slime_mutation[rand(1,4)]
 		else
 			child_colour = colour
