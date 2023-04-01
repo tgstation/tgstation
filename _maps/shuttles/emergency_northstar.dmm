@@ -84,7 +84,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
 /obj/item/radio/intercom/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "jU" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
@@ -239,7 +239,7 @@
 /obj/machinery/door/airlock/survival_pod/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "uJ" = (
 /obj/structure/chair/comfy/shuttle{
@@ -252,7 +252,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/escape)
 "wy" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "xe" = (
 /obj/machinery/stasis,
@@ -382,14 +382,14 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "IT" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/vending/wallmed/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "Jd" = (
 /obj/structure/railing/corner,
@@ -410,7 +410,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "Lk" = (
 /obj/machinery/computer/emergency_shuttle,
@@ -438,7 +438,7 @@
 "NU" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "Oo" = (
 /obj/structure/railing{
@@ -543,7 +543,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "TL" = (
 /obj/item/storage/toolbox/mechanical,
