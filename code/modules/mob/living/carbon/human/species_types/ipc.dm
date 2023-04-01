@@ -101,3 +101,6 @@
 	)
 
 	return to_add
+
+/datum/species/ipc/check_roundstart_eligible()
+	return TRUE
