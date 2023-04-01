@@ -711,7 +711,7 @@
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
 	name = "Shuttle Camera Monitor";
-	network = list("emergency_ss13");
+	network = list("ss13");
 	pixel_x = 26
 	},
 /turf/open/floor/mineral/plastitanium,
