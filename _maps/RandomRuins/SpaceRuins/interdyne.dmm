@@ -83,6 +83,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"dC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "dI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -102,7 +108,6 @@
 /area/ruin/space/has_grav/interdyne)
 "eh" = (
 /obj/structure/table/reinforced/rglass,
-/obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/molotov,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
@@ -119,11 +124,6 @@
 "et" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"ez" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "eE" = (
 /obj/structure/cable,
@@ -254,11 +254,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"jm" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "jA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
@@ -275,7 +270,8 @@
 /area/ruin/space/has_grav/interdyne)
 "kg" = (
 /obj/item/toy/plush/beeplushie{
-	desc = "How did this get here?"
+	desc = "How did this get here?";
+	name = "Secret bee plushie"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
@@ -289,6 +285,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"kz" = (
+/turf/open/floor/engine/air,
 /area/ruin/space/has_grav/interdyne)
 "kA" = (
 /obj/structure/cable,
@@ -320,7 +319,7 @@
 /area/ruin/space/has_grav/interdyne)
 "li" = (
 /obj/machinery/door/poddoor{
-	id = "vault"
+	id = "interdyne_vault"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -492,8 +491,8 @@
 /area/ruin/space/has_grav/interdyne)
 "qR" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "qS" = (
@@ -539,6 +538,12 @@
 /obj/structure/desk_bell,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"si" = (
+/obj/machinery/air_sensor{
+	chamber_id = "interdyne_atmos"
+	},
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/interdyne)
 "sD" = (
 /obj/item/paper/fluff/ruins/interdyne/note_5,
 /turf/open/floor/iron/smooth,
@@ -554,6 +559,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"tm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "interdyne_atmos";
+	dir = 1;
+	pipe_color = "#0000FF"
+	},
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/engine/air,
 /area/ruin/space/has_grav/interdyne)
 "tx" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
@@ -635,6 +649,7 @@
 /obj/item/clothing/under/syndicate/scrubs,
 /obj/item/clothing/head/beret/medical,
 /obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "xf" = (
@@ -672,6 +687,11 @@
 /obj/machinery/light/blacklight/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"Ai" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "Am" = (
 /obj/structure/table/wood,
@@ -830,6 +850,13 @@
 /obj/machinery/chem_master,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"GK" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "GY" = (
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -853,6 +880,10 @@
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"IL" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "Jm" = (
 /obj/machinery/light/blacklight/directional/south,
@@ -950,7 +981,6 @@
 "LB" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
@@ -1035,6 +1065,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
+"OR" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("interdyne_atmos"="Air Supply");
+	dir = 4
+	},
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "Pj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
@@ -1065,11 +1103,6 @@
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
-"Qq" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "Qw" = (
 /obj/effect/decal/cleanable/oil/streak,
@@ -1201,9 +1234,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "UN" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/effect/spawner/structure/electrified_grille,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "US" = (
@@ -1304,6 +1336,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"Ys" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/interdyne)
 "Yv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/interdyne)
@@ -1394,7 +1433,7 @@ Rn
 Rn
 Rn
 Rn
-Me
+Rn
 bW
 bW
 bW
@@ -1779,7 +1818,7 @@ gV
 bV
 QD
 Zi
-KP
+Rn
 Me
 Lx
 bW
@@ -1827,7 +1866,7 @@ Rn
 Rn
 Rn
 Zi
-jm
+nm
 QD
 vd
 Rg
@@ -1872,7 +1911,7 @@ Zi
 dU
 kV
 sD
-Qq
+IL
 UN
 qR
 dU
@@ -1907,7 +1946,7 @@ Zi
 dU
 BW
 EM
-Qq
+IL
 ox
 uS
 dU
@@ -1973,7 +2012,7 @@ QD
 nm
 nm
 Ro
-Zi
+Yv
 Zi
 Zi
 Zi
@@ -1989,9 +2028,9 @@ Zi
 Zi
 Zi
 Yv
+Yv
 Rn
-Me
-Lx
+Rn
 bW
 "}
 (20,1,1) = {"
@@ -2021,12 +2060,12 @@ Pj
 qa
 JM
 Zi
+OR
+IL
+si
+Zi
 Rn
 Rn
-Rn
-Rn
-Me
-Me
 bW
 "}
 (21,1,1) = {"
@@ -2056,11 +2095,11 @@ dI
 Nl
 JM
 Zi
+dC
+Ys
+tm
+Zi
 Rn
-Rn
-Rn
-Rn
-Kz
 KP
 bW
 "}
@@ -2090,13 +2129,13 @@ aY
 Nr
 Jo
 OD
+GK
+Ai
+IL
+kz
 Zi
 Rn
 Rn
-Rn
-Rn
-Me
-Me
 bW
 "}
 (23,1,1) = {"
@@ -2115,7 +2154,7 @@ Eh
 Zi
 Zi
 oO
-Zi
+Yv
 WM
 US
 QD
@@ -2128,9 +2167,9 @@ Aw
 Yv
 Zi
 Yv
+Zi
+Yv
 Rn
-Rn
-Me
 Rn
 bW
 "}
@@ -2193,9 +2232,9 @@ ga
 Zi
 Wa
 eh
-ez
+Nr
 eQ
-iR
+aY
 HQ
 Zi
 Rn
@@ -2393,10 +2432,10 @@ Rn
 Rn
 Rn
 Me
-Me
+Rn
 Lx
 Kz
-Me
+Rn
 zx
 Me
 Me
