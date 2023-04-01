@@ -364,7 +364,7 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
-/datum/map_template/ruin/space/atmosastroidruin
+/datum/map_template/ruin/space/atmosasteroidruin
 	id = "atmosasteroidruin"
 	suffix = "atmosasteroidruin.dmm"
 	name = "Atmos Asteroid"
