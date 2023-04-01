@@ -32,7 +32,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/clowny
 
-/mob/living/basic/migo/Initialize(mapload)
+/mob/living/basic/clowny/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/venomous, /datum/reagent/consumable/superlaughter, 3)
