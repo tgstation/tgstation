@@ -14,7 +14,7 @@
 
 	outfit = /datum/outfit/job/gun_dealer
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
-
+	config_tag = "GUN_DEALER"
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
