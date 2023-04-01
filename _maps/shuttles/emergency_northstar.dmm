@@ -254,15 +254,6 @@
 "wy" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"wQ" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/item/radio/intercom/directional/east,
-/turf/open/floor/iron/smooth_edge{
-	dir = 8
-	},
-/area/shuttle/escape)
 "xe" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/anticorner{
@@ -283,6 +274,9 @@
 	name = "Emergency Shuttle Access"
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"AW" = (
+/turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/escape)
 "Bk" = (
 /obj/structure/chair/comfy/shuttle{
@@ -475,6 +469,15 @@
 	dir = 8
 	},
 /area/shuttle/escape)
+"Qr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/escape)
 "Qw" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/shuttle/escape)
@@ -616,8 +619,8 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
-Qw
-Qw
+AW
+AW
 FQ
 FQ
 FQ
@@ -635,13 +638,13 @@ zg
 FQ
 FQ
 FQ
-FQ
-Qw
+AW
+AW
 Ei
 Ei
 "}
 (2,1,1) = {"
-Qw
+AW
 yq
 tq
 mw
@@ -650,7 +653,7 @@ OL
 QT
 OL
 rV
-rV
+Qr
 mw
 rV
 rV
@@ -661,8 +664,8 @@ rV
 mw
 tq
 Wd
-Qw
-Qw
+AW
+AW
 Ei
 "}
 (3,1,1) = {"
@@ -694,12 +697,12 @@ Tg
 Qw
 nh
 Qo
-Qo
 aK
+Qo
 rK
 rK
 rK
-wQ
+Qo
 eZ
 Qo
 eZ
@@ -720,15 +723,15 @@ FQ
 FQ
 OI
 FQ
-FQ
+AW
 XU
 ez
 cs
-FQ
+AW
 FQ
 OI
 FQ
-FQ
+AW
 cs
 ez
 os
@@ -841,7 +844,7 @@ BS
 BS
 "}
 (10,1,1) = {"
-Qw
+AW
 HY
 Tz
 Do
@@ -861,13 +864,13 @@ FQ
 NU
 Ir
 is
-Qw
-Qw
+AW
+AW
 Ei
 "}
 (11,1,1) = {"
-Qw
-Qw
+AW
+AW
 FQ
 FQ
 FQ
@@ -885,8 +888,8 @@ FQ
 FQ
 FQ
 FQ
-FQ
-Qw
+AW
+AW
 Ei
 Ei
 "}

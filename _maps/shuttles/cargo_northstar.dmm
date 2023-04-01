@@ -5,6 +5,10 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/supply)
+"b" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -47,6 +51,10 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/supply)
+"o" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
 "p" = (
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor";
@@ -61,8 +69,10 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "q" = (
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
+/obj/machinery/power/shuttle_engine/heater{
+	icon_state = "router"
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "s" = (
 /turf/template_noop,
@@ -75,9 +85,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/supply)
 "u" = (
-/obj/machinery/power/shuttle_engine/large,
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
 /obj/machinery/conveyor{
@@ -122,6 +131,13 @@
 /obj/docking_port/mobile/supply,
 /turf/open/floor/pod/dark,
 /area/shuttle/supply)
+"I" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
 "M" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/survival_pod{
@@ -151,7 +167,7 @@
 /area/shuttle/supply)
 
 (1,1,1) = {"
-h
+i
 h
 i
 i
@@ -173,8 +189,8 @@ x
 x
 C
 x
-i
-s
+I
+o
 "}
 (3,1,1) = {"
 w
@@ -200,7 +216,7 @@ N
 a
 M
 q
-q
+u
 "}
 (5,1,1) = {"
 h
@@ -212,11 +228,11 @@ x
 x
 x
 x
-i
-s
+I
+b
 "}
 (6,1,1) = {"
-h
+i
 g
 h
 T
