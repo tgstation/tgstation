@@ -466,7 +466,7 @@
 
 
 /mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
-	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
+	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance") || HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_APPEARANCE)
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 

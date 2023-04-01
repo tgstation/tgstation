@@ -1,3 +1,10 @@
+/datum/station_trait/random_appearance
+	name = "Cloning Records Mishap"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	report_message = "Due to a records mishap, the crew DNA profiles used during the reconstitution process into flesh automatons powered by neurotransmitters were scrambled."
+	trait_to_give = STATION_TRAIT_RANDOM_APPEARANCE
+
 /datum/station_trait/bananium_shipment
 	name = "Bananium Shipment"
 	trait_type = STATION_TRAIT_NEUTRAL
