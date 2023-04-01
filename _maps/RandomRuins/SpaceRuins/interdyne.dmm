@@ -489,12 +489,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
-"qR" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/interdyne)
 "qS" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/beakers,
@@ -1913,7 +1907,7 @@ kV
 sD
 IL
 UN
-qR
+UN
 dU
 Zi
 AV
