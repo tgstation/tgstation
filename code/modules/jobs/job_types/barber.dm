@@ -14,7 +14,7 @@
 
 	outfit = /datum/outfit/job/barber
 	plasmaman_outfit = /datum/outfit/plasmaman
-
+	config_tag = "BARBER"
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARBER
