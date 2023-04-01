@@ -1,0 +1,8 @@
+author: "DrDiasyl aka DrTuxedo#0931"
+delete-after: True
+changes:
+  - rscadd: "Added 'biscuit' cards! They can contain documents and can only be accessed by cracking them open, you can't close them back. Nanotrasen now stores spare ID safe codes in them."
+  - rscadd: "Placed paper cutters around the station. They're in Bridge, HoP office, Warden office, and Cargo."
+  - rscadd: "Now you can order paper cutters at cargo."
+  - bugfix: "Now the paper slip is actually paper."
+  - imageadd: "The paper slips sprite was slightly tweaked to have text lay more logically, added the corporate paper slip."

@@ -174,9 +174,6 @@
 /turf/open/floor/mineral/plastitanium/red/snow_cabin
 	temperature = 180
 
-/turf/open/floor/mineral/plastitanium/red/brig
-	name = "brig floor"
-
 //BANANIUM
 
 /turf/open/floor/mineral/bananium
