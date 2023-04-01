@@ -101,6 +101,22 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"s" = (
+/obj/structure/closet/crate,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/obj/item/flashlight/lantern,
+/obj/item/card/id/advanced/mining,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
 "t" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/purple,
@@ -159,13 +175,13 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
 /obj/item/storage/medkit/fire,
 /obj/structure/table/wood,
 /obj/item/storage/medkit/fire,
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
@@ -227,8 +243,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "O" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/purple,
+/obj/structure/ore_box,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small/directional/south,
@@ -333,7 +350,7 @@ a
 a
 a
 b
-L
+l
 l
 j
 l
@@ -351,11 +368,11 @@ b
 b
 b
 b
-l
+L
 l
 b
 l
-Q
+l
 G
 l
 Q
@@ -366,20 +383,20 @@ b
 "}
 (7,1,1) = {"
 b
-c
+s
 f
 j
 l
 l
 b
 l
-l
+Q
 G
 l
 l
 j
 f
-F
+O
 b
 "}
 (8,1,1) = {"
@@ -390,7 +407,7 @@ j
 l
 l
 b
-L
+l
 l
 G
 l
@@ -403,18 +420,18 @@ b
 (9,1,1) = {"
 b
 c
-I
+f
 b
 M
 o
 b
-l
+L
 l
 G
 o
 U
 b
-V
+f
 F
 b
 "}
@@ -439,7 +456,7 @@ b
 (11,1,1) = {"
 b
 c
-f
+I
 b
 b
 j
@@ -450,25 +467,25 @@ G
 j
 b
 b
-f
+V
 F
 b
 "}
 (12,1,1) = {"
 b
 c
-I
+f
 b
 l
 l
-O
 l
 l
-O
+l
+l
 l
 z
 b
-V
+f
 F
 b
 "}
@@ -513,7 +530,7 @@ b
 d
 f
 b
-l
+N
 l
 l
 l
@@ -531,7 +548,7 @@ T
 e
 I
 b
-N
+l
 l
 l
 l
