@@ -293,28 +293,33 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 /client/proc/create_mapping_job_icons()
 	set name = "Generate job landmarks icons"
 	set category = "Mapping"
-	var/icon/final = icon()
-	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
-	D.setDir(SOUTH)
+	var/list/job_key_to_icon = list()
 	for(var/job in subtypesof(/datum/job))
+		var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
+		D.setDir(SOUTH)
 		var/datum/job/JB = new job
+		to_chat(world, "Generating icon for job [JB.title]")
 		switch(JB.title)
-			if(JOB_AI)
-				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
-			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+			if("AI")
+				job_key_to_icon["AI"] = icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1)
+			if("Cyborg")
+				job_key_to_icon["Cyborg"] = icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1)
 			else
-				for(var/obj/item/I in D)
-					qdel(I)
 				randomize_human(D)
-				D.dress_up_as_job(JB, TRUE)
+				if(JB.outfit)
+					D.equipOutfit(JB.outfit, TRUE)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
-				final.Insert(I, JB.title)
-	qdel(D)
+				job_key_to_icon[JB.title] = I
+		qdel(D)
+	to_chat(world, "Done generating icons.")
+	var/icon/final = icon()
+	for(var/job_key in job_key_to_icon)
+		final.Insert(job_key_to_icon[job_key], job_key)
 	//Also add the x
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
+	to_chat(world, "Done generating landmarks.dmi.")
 
 /client/proc/debug_z_levels()
 	set name = "Debug Z-Levels"

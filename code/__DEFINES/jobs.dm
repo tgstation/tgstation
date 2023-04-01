@@ -40,6 +40,8 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BLUESHIELD "Blueshield"
+#define JOB_NT_REP "Nanotrasen Consultant"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -52,22 +54,31 @@
 #define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
 #define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
 #define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
+#define JOB_CORRECTIONS_OFFICER "Corrections Officer"
+#define JOB_SECURITY_MEDIC "Security Medic"
+#define JOB_SECURITY_SERGEANT "Security Sergeant"
+#define JOB_MAGISTRATE "Magistrate"
 //Engineering
 #define JOB_STATION_ENGINEER "Station Engineer"
 #define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
+#define JOB_ENGINEERING_GUARD "Engineering Guard"
 //Medical
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
 #define JOB_VIROLOGIST "Virologist"
+#define JOB_ORDERLY "Orderly"
 //Science
 #define JOB_SCIENTIST "Scientist"
 #define JOB_ROBOTICIST "Roboticist"
 #define JOB_GENETICIST "Geneticist"
+#define JOB_SCIENCE_GUARD "Science Guard"
 //Supply
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
 #define JOB_SHAFT_MINER "Shaft Miner"
+#define JOB_CUSTOMS_AGENT "Customs Agent"
+#define JOB_GUN_DEALER "Gun Dealer"
 //Service
 #define JOB_BARTENDER "Bartender"
 #define JOB_BOTANIST "Botanist"
@@ -79,6 +90,8 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+#define JOB_BARBER "Barber"
+#define JOB_BOUNCER "Bouncer"
 //ERTs
 #define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
@@ -138,7 +151,19 @@
 #define JOB_DISPLAY_ORDER_DETECTIVE 33
 #define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
 #define JOB_DISPLAY_ORDER_PRISONER 35
-
+#define JOB_DISPLAY_ORDER_SECURITY_MEDIC 36
+#define JOB_DISPLAY_ORDER_CORRECTIONS_OFFICER 37
+#define JOB_DISPLAY_ORDER_NANOTRASEN_CONSULTANT 38
+#define JOB_DISPLAY_ORDER_BLUESHIELD 39
+#define JOB_DISPLAY_ORDER_ORDERLY 40
+#define JOB_DISPLAY_ORDER_SCIENCE_GUARD 41
+#define JOB_DISPLAY_ORDER_BOUNCER 42
+#define JOB_DISPLAY_ORDER_ENGINEER_GUARD 43
+#define JOB_DISPLAY_ORDER_CUSTOMS_AGENT 44
+#define JOB_DISPLAY_ORDER_SECURITY_SERGEANT 45
+#define JOB_DISPLAY_ORDER_MAGISTRATE 46
+#define JOB_DISPLAY_ORDER_BARBER 47
+#define JOB_DISPLAY_ORDER_GUN_DEALER 48
 
 #define DEPARTMENT_UNASSIGNED "No Department"
 

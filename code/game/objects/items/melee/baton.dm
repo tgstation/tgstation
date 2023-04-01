@@ -780,3 +780,9 @@
 		else
 			stuff_in_hand.forceMove(user.drop_location())
 			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+
+/obj/item/melee/baton/security/loaded/lance
+	name = "security lance"
+	desc = "A stun lance for security sergeants."
+	icon_state = "lance"
+	inhand_icon_state = "lance"

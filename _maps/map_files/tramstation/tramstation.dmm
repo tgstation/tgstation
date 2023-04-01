@@ -2676,8 +2676,8 @@
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/camera/directional/east{
-	network = list("ss13","rd","xeno");
-	c_tag = "Science - Cytology East"
+	c_tag = "Science - Cytology East";
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -4184,6 +4184,7 @@
 	dir = 9;
 	network = list("ss13","Security")
 	},
+/obj/effect/landmark/start/security_sergeant,
 /turf/open/floor/iron,
 /area/station/security/office)
 "avf" = (
@@ -6265,6 +6266,7 @@
 "aKX" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "aKZ" = (
@@ -8661,6 +8663,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/security_medic,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "bxN" = (
@@ -9611,6 +9614,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"bND" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/bouncer,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "bNF" = (
 /obj/machinery/door/airlock/command{
 	name = "Conference Room"
@@ -10106,6 +10114,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/landmark/start/bouncer,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "bXp" = (
@@ -13811,6 +13820,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/engineering_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "doC" = (
@@ -15971,6 +15981,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/sign/clock/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/orderly,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "egb" = (
@@ -18874,6 +18885,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/start/engineering_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "flZ" = (
@@ -20113,6 +20125,7 @@
 "fJe" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "fJf" = (
@@ -20394,6 +20407,10 @@
 /obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"fOz" = (
+/obj/effect/landmark/start/bouncer,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "fOG" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -20930,6 +20947,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/security_medic,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "gby" = (
@@ -21734,6 +21752,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "grR" = (
 /obj/machinery/status_display/evac/directional/west,
+/obj/effect/landmark/start/nanotrasen_consultant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gsg" = (
@@ -22680,6 +22699,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "gKy" = (
@@ -23350,6 +23370,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/nanotrasen_consultant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gXA" = (
@@ -23439,6 +23460,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/orderly,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "haB" = (
@@ -24830,6 +24852,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/orderly,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "hEK" = (
@@ -31122,6 +31145,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jWe" = (
@@ -34346,6 +34370,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
+"lae" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/landmark/start/security_sergeant,
+/turf/open/floor/iron,
+/area/station/security/office)
 "lai" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -39898,6 +39929,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
+"ner" = (
+/obj/effect/landmark/start/barber,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "net" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -41530,6 +41565,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
+/obj/effect/landmark/start/security_medic,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "nHu" = (
@@ -42928,6 +42964,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/cable,
+/obj/effect/landmark/start/engineering_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "oih" = (
@@ -44780,6 +44817,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start/orderly,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "oYh" = (
@@ -46989,6 +47027,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/start/engineering_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "pKa" = (
@@ -53622,6 +53661,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/start/engineering_guard,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "sjE" = (
@@ -62039,8 +62079,8 @@
 "vbb" = (
 /obj/structure/table,
 /obj/structure/closet/mini_fridge{
-	name = "mini-fridge";
-	anchored = 1
+	anchored = 1;
+	name = "mini-fridge"
 	},
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/cup/soda_cans/cola,
@@ -64369,6 +64409,7 @@
 /area/station/command/heads_quarters/ce)
 "vRy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/security_medic,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "vRK" = (
@@ -64902,6 +64943,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
+/obj/effect/landmark/start/bouncer,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "wcy" = (
@@ -65685,6 +65727,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "wrr" = (
 /obj/machinery/status_display/ai/directional/east,
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "wru" = (
@@ -68058,6 +68101,16 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"xoC" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/landmark/start/bouncer,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "xoM" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -154119,7 +154172,7 @@ aJi
 aJi
 aJi
 cdV
-ufO
+ner
 gKr
 tDT
 tDT
@@ -154633,7 +154686,7 @@ aJi
 aJi
 aJi
 cdV
-ufO
+ner
 fJe
 tDT
 tDT
@@ -156625,7 +156678,7 @@ scC
 scC
 iSo
 mAT
-auW
+lae
 uYd
 avk
 fBk
@@ -167199,8 +167252,8 @@ crT
 crT
 mMG
 mzb
-wev
-mHc
+xoC
+fOz
 jJz
 vyH
 aEj
@@ -167457,7 +167510,7 @@ nKz
 sDo
 vsB
 bXo
-wWH
+bND
 wWH
 nRZ
 eyK
@@ -167714,7 +167767,7 @@ eKq
 aCa
 crT
 wcv
-mHc
+fOz
 mHc
 beW
 aEl

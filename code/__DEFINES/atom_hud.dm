@@ -113,6 +113,20 @@
 #define SECHUD_VIROLOGIST "hudvirologist"
 #define SECHUD_WARDEN "hudwarden"
 
+#define SECHUD_CORRECTIONS_OFFICER "hudcorrectionsofficer"
+#define SECHUD_SECURITY_MEDIC "hudsecuritymedic"
+#define SECHUD_ENGINEERING_GUARD "hudengineeringguard"
+#define SECHUD_ORDERLY "hudorderly"
+#define SECHUD_CUSTOMS_AGENT "hudcustomsagent"
+#define SECHUD_BOUNCER "hudbouncer"
+#define SECHUD_SCIENCE_GUARD "hudscienceguard"
+#define SECHUD_BLUESHIELD "hudblueshield"
+#define SECHUD_NT_CONSULTANT "hudnanotrasenconsultant"
+#define SECHUD_BARBER "hudbarber"
+#define SECHUD_SECURITYSERGEANT "hudsecuritysergeant"
+#define SECHUD_MAGISTRATE "hudmagistrate"
+#define SECHUD_GUN_DEALER "hudgundealer"
+
 #define SECHUD_CHEF "hudchef"
 
 #define SECHUD_DEATH_COMMANDO "huddeathcommando"
