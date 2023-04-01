@@ -15,7 +15,7 @@
 	/// true if cover is open
 	var/open = FALSE
 	/// true if controls are locked
-	var/locked = TRUEN
+	var/locked = TRUE
 	/// location response text
 	var/location = ""
 	/// assoc. list of transponder codes
