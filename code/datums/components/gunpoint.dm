@@ -44,7 +44,7 @@
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
 	var/distance_description = (distance <= 1 ? "point blank " : "")
 
-	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"), \
+	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
 		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] aims [weapon] [distance_description]at you!"))
 
