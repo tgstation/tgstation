@@ -718,7 +718,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ka" = (
 /obj/structure/flora/bush/ferny/style_random,
@@ -1442,7 +1442,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "uX" = (
 /obj/machinery/power/smes,
@@ -1852,7 +1852,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ax" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ay" = (
 /obj/structure/chair/wood,
@@ -2979,7 +2979,7 @@
 /area/shuttle/escape)
 "OY" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Pb" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -3368,7 +3368,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "SV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -3905,7 +3905,7 @@
 	dir = 4;
 	req_access = list("security")
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Zj" = (
 /mob/living/simple_animal/butterfly,
@@ -3923,7 +3923,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Zr" = (
 /obj/machinery/power/apc/auto_name/directional/north,

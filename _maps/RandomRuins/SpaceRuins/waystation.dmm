@@ -32,7 +32,7 @@
 "aA" = (
 /obj/structure/marker_beacon/olive,
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "aO" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -115,7 +115,7 @@
 /area/ruin/space/has_grav/waystation/cargooffice)
 "cF" = (
 /obj/item/stack/rods/two,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "dl" = (
 /obj/machinery/door/airlock/mining/glass,
@@ -414,7 +414,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "hp" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "hq" = (
 /obj/effect/turf_decal/stripes/red/end,
@@ -503,7 +503,7 @@
 	shuttle_id = "whiteship_waystation";
 	width = 35
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "iT" = (
 /obj/machinery/light/dim/directional/north,
@@ -667,7 +667,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "lt" = (
-/turf/open/floor/catwalk_floor,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
 /area/ruin/space)
 "lx" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -785,7 +786,7 @@
 	dir = 1;
 	icon_state = "pile"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "nj" = (
 /obj/effect/turf_decal/tile/bar{
@@ -1217,7 +1218,7 @@
 	dir = 4;
 	icon_state = "pile"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "vn" = (
 /obj/effect/turf_decal/siding/red{
@@ -1299,7 +1300,7 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "wn" = (
 /obj/item/shell/airlock,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "wt" = (
 /obj/structure/cable,
@@ -1424,7 +1425,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "yF" = (
 /obj/structure/girder,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "yS" = (
 /obj/effect/spawner/random/entertainment/arcade{
@@ -1782,7 +1783,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "Gx" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "GI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1804,7 +1805,7 @@
 	dir = 8;
 	icon_state = "pile"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Hc" = (
 /obj/structure/sign/warning/electric_shock,
