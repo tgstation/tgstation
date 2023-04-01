@@ -348,7 +348,6 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "kb" = (
-/obj/machinery/light/directional/north,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_y = 32
 	},
@@ -374,7 +373,7 @@
 /area/ruin/powered/beach)
 "kp" = (
 /obj/structure/chair/wood,
-/obj/machinery/light/directional/north,
+/obj/machinery/light/directional/west,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "ks" = (
@@ -570,7 +569,6 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "sM" = (
-/obj/machinery/light/directional/east,
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
@@ -583,6 +581,7 @@
 /obj/item/clothing/neck/beads,
 /obj/item/clothing/glasses/sunglasses/reagent,
 /obj/item/clothing/suit/costume/hawaiian,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sV" = (
@@ -605,7 +604,6 @@
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "tn" = (
@@ -874,6 +872,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
+"Dp" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/sand,
+/area/ruin/powered/beach)
 "Ds" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = null
@@ -911,7 +913,6 @@
 "Fi" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Fr" = (
@@ -935,6 +936,7 @@
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/reagent_containers/cup/rag,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "FO" = (
@@ -994,7 +996,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Hn" = (
-/obj/machinery/light/directional/south,
+/obj/item/melee/skateboard/hoverboard,
+/obj/machinery/light/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "Hy" = (
@@ -1125,6 +1128,7 @@
 "Mb" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/sign/warning/no_smoking/circle/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Md" = (
@@ -1144,12 +1148,12 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "MO" = (
-/obj/machinery/light/directional/east,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "MZ" = (
@@ -1502,8 +1506,9 @@
 /turf/closed/mineral/random/volcanic,
 /area/template_noop)
 "ZZ" = (
+/obj/machinery/hydroponics/constructable,
 /obj/machinery/light/directional/east,
-/turf/open/floor/pod/light,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 
 (1,1,1) = {"
@@ -1623,7 +1628,7 @@ VI
 IG
 VI
 VI
-VI
+Dp
 aj
 sM
 aC
@@ -1875,7 +1880,7 @@ Il
 GB
 RE
 Uk
-VI
+bd
 VI
 bC
 Ti
@@ -2204,7 +2209,7 @@ wY
 wY
 wY
 AE
-AE
+Hn
 qf
 MZ
 Bp
@@ -2237,7 +2242,7 @@ VO
 og
 wY
 wY
-Hn
+wY
 Fr
 yc
 Bp
@@ -2329,7 +2334,7 @@ Lm
 Lm
 Mb
 wY
-ZZ
+wY
 wY
 gC
 oF
@@ -2396,7 +2401,7 @@ IL
 MZ
 sV
 Dg
-sV
+ZZ
 CZ
 sV
 Zi
