@@ -493,9 +493,11 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		#ifdef UNIT_TESTS
 
-		var/input_cell_cords = "([input_cell.cell_x], [input_cell.cell_y], [input_cell.cell_z])"
+		var/input_cell_coords = "NONE!"
+		if(input_cell)
+			input_cell_coords = "([input_cell.cell_x], [input_cell.cell_y], [input_cell.cell_z])"
 
-		if(input_cell && !(input_cell in to_remove.in_spatial_grid_cells))
+		if(input_cell && length(to_remove.in_spatial_grid_cells) && !(input_cell in to_remove.in_spatial_grid_cells))
 			var/error_data = ""
 			for(var/datum/spatial_grid_cell/cell in to_remove.in_spatial_grid_cells)
 				var/coords = "([cell.cell_x], [cell.cell_y], [cell.cell_z])"
@@ -521,7 +523,7 @@ SUBSYSTEM_DEF(spatial_grid)
 				else
 					error_data = "{[coords] in: [contents]}"
 
-			stack_trace("[to_remove] at cell indices: [input_cell_cords], found in [length(to_remove.in_spatial_grid_cells)] spatial grid cells and they wouldnt have been caught by force_remove_by()! cells: [error_data]")
+			stack_trace("[to_remove] at cell indices: [input_cell_coords], found in [length(to_remove.in_spatial_grid_cells)] spatial grid cells and they wouldnt have been caught by force_remove_by()! cells: [error_data]")
 
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
