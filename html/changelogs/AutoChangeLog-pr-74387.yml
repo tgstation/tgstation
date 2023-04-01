@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "admins may now send headset messages to silicon mobs as long as they have a radio"
