@@ -34,7 +34,7 @@
 	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/list/instagib_gear = list("Instagib" = /datum/outfit/ctf/instagib)
 	///Var that holds a copy of ctf_gear so that if instagib mode is enabled (overwritting ctf_gear) it can be reverted with this var.
-	var/list/default_gear
+	var/list/default_gear = list()
 	///The powerup dropped when a player spawned by this controller dies.
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
