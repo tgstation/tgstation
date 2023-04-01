@@ -129,6 +129,7 @@
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
 		/mob/living/basic/cockroach = 5,
+		/mob/living/basic/clowny = 4,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
@@ -142,6 +143,7 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
+		/mob/living/basic/clowny = 3,
 		/mob/living/basic/frog = 2,
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,

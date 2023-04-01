@@ -3858,6 +3858,7 @@
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_heart_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\spine_traps.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\blankbody.dm"
+#include "code\modules\mob\living\basic\space_fauna\netherworld\clowny.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\creature.dm"
 #include "code\modules\mob\living\basic\space_fauna\netherworld\migo.dm"
 #include "code\modules\mob\living\basic\space_fauna\statue\statue.dm"
