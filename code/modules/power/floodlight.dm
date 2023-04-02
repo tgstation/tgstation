@@ -280,3 +280,8 @@
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+
+#undef FLOODLIGHT_OFF
+#undef FLOODLIGHT_LOW
+#undef FLOODLIGHT_MED
+#undef FLOODLIGHT_HIGH

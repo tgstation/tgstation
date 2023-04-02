@@ -580,3 +580,38 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
+
+// Ruin of Waystation
+/area/ruin/space/has_grav/waystation
+	name = "Waystation Maintenance"
+
+/area/ruin/space/has_grav/waystation/qm
+	name = "Quartermaster Office"
+
+/area/ruin/space/has_grav/waystation/dorms
+	name = "Living Space"
+
+/area/ruin/space/has_grav/waystation/kitchen
+	name = "Kitchen"
+
+/area/ruin/space/has_grav/waystation/cargobay
+	name = "Cargo Bay"
+
+/area/ruin/space/has_grav/waystation/securestorage
+	name = "Secure Storage"
+
+/area/ruin/space/has_grav/waystation/cargooffice
+	name = "Cargo Office"
+
+/area/ruin/space/has_grav/powered/waystation/assaultpod
+	name = "Assault Pod"
+
+/area/ruin/space/has_grav/waystation/power
+	name = "Waystation Electrical"
