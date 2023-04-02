@@ -61,6 +61,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "en" = (
@@ -129,6 +130,7 @@
 	anchored = 1;
 	name = "statue of an AI core."
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "kd" = (
@@ -204,20 +206,9 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"oH" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "oZ" = (
 /obj/machinery/computer/crew,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"pk" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qd" = (
@@ -240,6 +231,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qw" = (
@@ -259,13 +251,6 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"rs" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rw" = (
 /obj/structure/chair/comfy/shuttle{
@@ -319,6 +304,7 @@
 	anchored = 1;
 	name = "statue of an AI hologram"
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -434,6 +420,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zm" = (
@@ -469,11 +456,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"BB" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Cn" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -487,11 +469,6 @@
 "Cw" = (
 /obj/machinery/vending/snack/orange,
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"CK" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/shuttle,
@@ -517,10 +494,10 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Do" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Dq" = (
@@ -540,11 +517,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"En" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Eo" = (
@@ -634,7 +606,6 @@
 /area/shuttle/escape)
 "Iu" = (
 /obj/machinery/computer/slot_machine,
-/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "IL" = (
@@ -656,7 +627,6 @@
 	max_integrity = 2500;
 	name = "seraph mech exhibit"
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Kc" = (
@@ -750,11 +720,13 @@
 	max_integrity = 2500;
 	name = "marauder mech exhibit"
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Pr" = (
-/obj/machinery/light/directional/north,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "So" = (
@@ -820,7 +792,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "UJ" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "UN" = (
@@ -839,11 +811,6 @@
 /area/shuttle/escape)
 "Vm" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/escape)
-"Vv" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "VO" = (
 /obj/structure/table/reinforced,
@@ -1003,7 +970,7 @@ aY
 jt
 WT
 nU
-WT
+UJ
 jt
 kd
 kd
@@ -1038,7 +1005,7 @@ WT
 WT
 WT
 WT
-YZ
+WT
 WT
 WT
 WT
@@ -1073,7 +1040,7 @@ WT
 WT
 WT
 WT
-oo
+WT
 WT
 WT
 WT
@@ -1139,7 +1106,7 @@ Vm
 dQ
 Vm
 Vm
-oo
+WT
 WT
 WT
 WT
@@ -1170,14 +1137,14 @@ TI
 qw
 jT
 Vm
-TI
-rs
-TI
-TI
+Do
+yn
 TI
 TI
-En
 TI
+TI
+HA
+Do
 Vm
 jT
 qw
@@ -1208,13 +1175,13 @@ qw
 Ud
 Bp
 Vm
-Pr
+KD
 qw
 qw
 qw
 qw
 qw
-oH
+KD
 Vm
 HA
 qw
@@ -1231,7 +1198,7 @@ qw
 qw
 cf
 KD
-Vv
+jT
 Vm
 Vm
 WT
@@ -1251,7 +1218,7 @@ en
 qd
 KB
 qw
-Uo
+qw
 uV
 Vm
 KD
@@ -1299,7 +1266,7 @@ qw
 qw
 qw
 Vm
-BB
+jT
 KD
 qw
 Ki
@@ -1307,16 +1274,16 @@ Ki
 Ki
 qw
 KD
-CK
+jT
 Vm
-DJ
+qw
 Ki
 Ki
 Ki
 Ki
 Uo
 Vm
-BB
+jT
 Vk
 Nv
 xB
@@ -1437,7 +1404,7 @@ qw
 qw
 qw
 Vm
-BB
+jT
 KD
 qw
 TI
@@ -1445,16 +1412,16 @@ TI
 TI
 qw
 KD
-CK
+jT
 Vm
 DJ
 TI
 TI
 TI
 TI
-Uo
+qw
 Vm
-BB
+jT
 ju
 Nv
 vL
@@ -1481,7 +1448,7 @@ en
 oZ
 Ho
 qw
-Uo
+qw
 uV
 Vm
 KD
@@ -1530,13 +1497,13 @@ qw
 IL
 eb
 Vm
-Pr
+KD
 qw
 qw
 qw
 qw
 qw
-oH
+KD
 Vm
 rX
 qw
@@ -1584,14 +1551,14 @@ Ki
 qw
 jT
 Vm
-Ki
-Do
-Ki
-Ki
+Pr
+mv
 Ki
 Ki
-pk
 Ki
+Ki
+rX
+Pr
 Vm
 jT
 qw
@@ -1645,7 +1612,7 @@ Vm
 dQ
 Vm
 Vm
-YZ
+WT
 WT
 WT
 EC
@@ -1671,7 +1638,7 @@ WT
 WT
 WT
 WT
-YZ
+WT
 WT
 WT
 WT
@@ -1728,7 +1695,7 @@ WT
 WT
 WT
 WT
-oo
+WT
 WT
 WT
 WT
@@ -1785,7 +1752,7 @@ qE
 jt
 WT
 NH
-WT
+UJ
 jt
 kd
 kd
