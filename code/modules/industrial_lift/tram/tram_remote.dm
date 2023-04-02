@@ -62,7 +62,9 @@
 			if(TRAMCTRL_SAFE)
 				. += "The rapid mode light is off."
 		if (!COOLDOWN_FINISHED(src, tram_remote))
-			. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)] seconds."
+			. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]."
+		else
+			. += "The display indicates ready."
 		. += "Left-click to dispatch tram."
 		. += "Right-click to toggle direction."
 		. += "CTRL-click to toggle safety bypass."
@@ -82,7 +84,7 @@
 
 /obj/item/tram_remote/attack_self(mob/user)
 	if (!COOLDOWN_FINISHED(src, tram_remote))
-		balloon_alert(user, "cooldown: [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)] seconds")
+		balloon_alert(user, "cooldown: [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]")
 		return FALSE
 	if(try_force_tram(user))
 		COOLDOWN_START(src, tram_remote, 2 MINUTES)
