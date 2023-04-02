@@ -53,20 +53,21 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "k" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed/directional/east{
 	use_power = 0
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/chair/comfy/shuttle{
-	dir = 8
+	dir = 4
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "n" = (
@@ -127,7 +128,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/directional/west,
 /obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -153,7 +153,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/light/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "G" = (
@@ -269,7 +272,7 @@ a
 b
 b
 e
-k
+X
 X
 p
 f
@@ -277,7 +280,7 @@ M
 M
 M
 M
-M
+E
 f
 M
 M
@@ -322,15 +325,15 @@ f
 K
 K
 K
-y
+K
 K
 K
 K
 f
 w
 b
-t
 f
+k
 R
 n
 "}
@@ -361,7 +364,7 @@ n
 c
 d
 h
-h
+m
 n
 r
 f
@@ -373,10 +376,10 @@ M
 M
 M
 f
-E
+r
 b
 L
-f
+k
 R
 n
 "}
@@ -407,7 +410,7 @@ n
 b
 b
 j
-m
+j
 n
 s
 f
@@ -415,7 +418,7 @@ K
 K
 K
 K
-K
+y
 f
 K
 K
