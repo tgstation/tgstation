@@ -294,7 +294,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -312,7 +311,6 @@
 	dir = 1
 	},
 /obj/structure/closet,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
@@ -512,10 +510,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cd" = (
-/obj/machinery/light/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ce" = (
@@ -526,7 +521,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cf" = (
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -980,6 +974,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"pX" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "qy" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
@@ -1010,6 +1008,10 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"zc" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/recharge_floor,
+/area/shuttle/escape)
 "zj" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -1017,16 +1019,16 @@
 	pixel_y = 3
 	},
 /obj/item/storage/medkit/o2,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ax" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "CO" = (
@@ -1039,6 +1041,13 @@
 "DS" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"GU" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Ie" = (
 /obj/structure/table,
@@ -1081,6 +1090,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"Tn" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/recharge_floor,
+/area/shuttle/escape)
 "UA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 5
@@ -1096,6 +1109,13 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Zz" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1202,18 +1222,18 @@ be
 be
 be
 ab
+cd
+bc
+bc
+bc
 bc
 bQ
 bc
 bc
 bc
-bQ
 bc
-bc
-bc
-bQ
 ca
-ca
+GU
 cf
 aZ
 aZ
@@ -1572,7 +1592,7 @@ bc
 bc
 bc
 bc
-cg
+pX
 bc
 ab
 de
@@ -1597,7 +1617,7 @@ aZ
 aZ
 aZ
 aZ
-aZ
+Zz
 bL
 bc
 bT
@@ -1725,7 +1745,7 @@ uN
 aP
 ab
 bb
-bj
+zc
 bo
 bs
 bB
@@ -1872,7 +1892,7 @@ bc
 bc
 bc
 bc
-cd
+ca
 ab
 NP
 UA
@@ -1901,7 +1921,7 @@ ab
 ab
 ab
 bb
-bj
+Tn
 dA
 bu
 bD
