@@ -242,6 +242,7 @@
 		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
 	if(electronics)
 		. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
+	. += span_notice("Use an airlock painter to change its texture.")
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
@@ -472,7 +473,37 @@
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(!broken && !locked && welded && istype(W, /obj/item/stock_parts/card_reader))
+	if(istype(W, /obj/item/airlock_painter))
+		var/static/choices = list(
+			"Bar" = list("icon_state" = "cabinet"),
+			"Cargo" = list("icon_state" = "qm"),
+			"Engineering" = list("icon_state" = "ce"),
+			"Engineering Secure" = list("icon_state" = "eng_secure"),
+			"Radiation" = list("icon_state" = "eng", "icon_door" = "eng_rad"),
+			"Tool Storage" = list("icon_state" = "eng", "icon_door" = "eng_tool"),
+			"Fire Equipment" = list("icon_state" = "fire"),
+			"Emergency" = list("icon_state" = "emergency"),
+			"Hydroponics" = list("icon_state" = "hydro"),
+			"Medical" = list("icon_state" = "med"),
+			"Science" = list("icon_state" = "rd"),
+			"Security" = list("icon_state" = "cap"),
+			"Mining" = list("icon_state" = "mining"),
+			"Virology" = list("icon_state" = "bio_viro"),
+		)
+		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", choices)
+		if(isnull(choice))
+			return TRUE
+
+		var/obj/item/airlock_painter/painter = W
+		if(!painter.use_paint(user))
+			return TRUE
+		var/list/paint_job = choices[choice]
+		icon_state = paint_job["icon_state"]
+		icon_door = paint_job["icon_door"]
+
+		update_appearance()
+
+	else if(!broken && !locked && welded && istype(W, /obj/item/stock_parts/card_reader))
 		if(card_reader_installed)
 			balloon_alert(user, "already installed!")
 			return TRUE

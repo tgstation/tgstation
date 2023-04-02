@@ -33,37 +33,3 @@
 			continue
 		locked = FALSE
 		update_appearance(UPDATE_ICON)
-
-/obj/structure/closet/secure_closet/customizable
-
-/obj/structure/closet/secure_closet/customizable/examine(mob/user)
-	. = ..()
-	. += span_notice("Use an airlock painter to change its texture.")
-
-/obj/structure/closet/secure_closet/customizable/tool_interact(obj/item/W, mob/living/user)
-	if(istype(W, /obj/item/airlock_painter))
-		var/static/choices = list(
-			"Bar" = "cabinet",
-			"Cargo" = "qm",
-			"Engineering" = "ce",
-			"Hydroponics" = "hydro",
-			"Medical" = "med",
-			"Personal" = "personal closet",
-			"Science" = "rd",
-			"Security" = "cap",
-			"Mining" = "mining",
-			"Virology" = "bio_viro",
-		)
-		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", choices)
-		if(isnull(choice))
-			return TRUE
-
-		var/obj/item/airlock_painter/painter = W
-		if(!painter.use_paint(user))
-			return TRUE
-		icon_state = choices[choice]
-
-		update_appearance()
-		return TRUE
-
-	return ..()

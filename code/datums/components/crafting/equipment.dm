@@ -73,7 +73,7 @@
 
 /datum/crafting_recipe/secure_closet
 	name = "Secure Closet"
-	result = /obj/structure/closet/secure_closet/customizable
+	result = /obj/structure/closet/secure_closet
 	reqs = list(
 		/obj/item/stack/sheet/plasteel = 2,
 		/obj/item/electronics/airlock = 1,
