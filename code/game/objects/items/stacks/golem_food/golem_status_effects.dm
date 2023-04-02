@@ -212,7 +212,6 @@
 	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
 		if (arm.limb_id != SPECIES_GOLEM)
 			continue
-		LAZYADD(modified_arms, WEAKREF(arm))
 		set_arm_fluff(arm)
 	return TRUE
 
@@ -230,6 +229,7 @@
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	LAZYADD(modified_arms, WEAKREF(arm))
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
@@ -254,3 +254,64 @@
 	overlay_state_prefix = "platinum"
 	mineral_name = "titanium"
 	applied_fluff = "Titanium rings burst from your arms. You feel ready to take on the world!"
+	/// Amount to reduce brute damage by
+	var/brute_modifier = 0.5
+	/// How much extra damage do we do with our fists?
+	var/damage_increase = 5
+	/// List of arms we have updated
+	var/list/modified_arms
+
+/datum/status_effect/golem/titanium/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.brute_mod *= brute_modifier
+	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
+		if (arm.limb_id != SPECIES_GOLEM)
+			continue
+		buff_arm(arm)
+
+/// Make the targeted arm big and strong
+/datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
+	arm.unarmed_damage_low += damage_increase
+	arm.unarmed_damage_high += damage_increase
+	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
+	LAZYADD(modified_arms, WEAKREF(arm))
+
+/datum/status_effect/golem/titanium/on_remove()
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.brute_mod /= brute_modifier
+	for (var/datum/weakref/weak_arm as anything in modified_arms)
+		debuff_arm(weak_arm.resolve())
+	LAZYCLEARLIST(modified_arms)
+	return ..()
+
+/// Make the targeted arm small and weak
+/datum/status_effect/golem/titanium/proc/debuff_arm(obj/item/bodypart/arm/arm)
+	if (!arm)
+		return
+	arm.unarmed_damage_low -= damage_increase
+	arm.unarmed_damage_high -= damage_increase
+	arm.unarmed_stun_threshold -= damage_increase
+
+/// Makes you slippery
+/datum/status_effect/golem/bananium
+	overlay_state_prefix = "banana"
+	mineral_name = "bananium"
+	applied_fluff = "Bananium veins ooze from your crags. You feel a little funny!"
+	var/datum/component/slippery/slipperiness
+
+/datum/status_effect/golem/bananium/on_apply()
+	. = ..()
+	if (!.)
+		return
+	owner.AddElement(/datum/element/waddling)
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
+	slipperiness = owner.AddComponent(/datum/component/slippery, knockdown = 12 SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
+
+/datum/status_effect/golem/bananium/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
+	owner.RemoveElement(/datum/element/waddling)
+	QDEL_NULL(slipperiness)
+	return ..()

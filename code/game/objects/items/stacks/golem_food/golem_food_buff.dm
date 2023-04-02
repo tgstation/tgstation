@@ -16,6 +16,8 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	/obj/item/stack/sheet/mineral/titanium = new /datum/golem_food_buff/titanium(),
 	/obj/item/stack/ore/titanium = new /datum/golem_food_buff/titanium(),
 	/obj/item/stack/sheet/plasteel = new /datum/golem_food_buff/plasteel(),
+	/obj/item/stack/ore/bananium = new /datum/golem_food_buff/bananium(),
+	/obj/item/stack/sheet/mineral/bananium = new /datum/golem_food_buff/bananium(),
 ))
 
 /// An effect you gain from eating minerals
@@ -96,3 +98,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 /datum/golem_food_buff/titanium
 	status_effect = /datum/status_effect/golem/titanium
 	added_info = "If consumed this mineral will make you tougher and punch harder."
+
+/datum/golem_food_buff/bananium
+	status_effect = /datum/status_effect/golem/bananium
+	added_info = "If consumed this mineral will make you funnier."
