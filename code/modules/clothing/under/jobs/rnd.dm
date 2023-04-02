@@ -112,7 +112,7 @@
 
 /obj/item/clothing/under/rank/rnd/roboticist/boiler/skirt
 	name = "roboticist's boilerskirt"
-	desc = "It's a comfortable black boilersuit, perfect for hiding oil stains from your RD."
+	desc = "It's a comfortable black boilerskirt, perfect for hiding oil stains from your RD."
 	icon_state = "robotics_boilerskirt"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
