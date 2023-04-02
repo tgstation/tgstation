@@ -336,6 +336,11 @@
 /obj/machinery/power/turbine/core_rotor,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/atmosasteroid)
+"zM" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
 "Ak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/co2_pressurized,
@@ -506,7 +511,9 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "LI" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/tank_holder/extinguisher/advanced,
+/obj/structure/tank_holder/extinguisher/advanced{
+	anchored = 1
+	},
 /turf/open/floor/iron/dark/side/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "LJ" = (
@@ -659,11 +666,6 @@
 	},
 /obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/co2_pressurized,
-/area/ruin/space/has_grav/atmosasteroid)
-"Ut" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/atmosasteroid)
 "Uz" = (
 /obj/effect/turf_decal/tile/yellow/anticorner{
@@ -930,7 +932,7 @@ af
 KT
 zD
 Cb
-Ut
+zM
 NP
 hj
 gG
@@ -1030,7 +1032,7 @@ tC
 pw
 kB
 Cb
-Ut
+zM
 om
 vG
 gG
