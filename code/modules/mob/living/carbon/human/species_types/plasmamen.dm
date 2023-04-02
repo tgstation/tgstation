@@ -175,6 +175,16 @@
 			H.adjust_hallucinations(2.5 SECONDS * delta_time)
 		// Do normal metabolism
 		return FALSE
+	if(chem.type == /datum/reagent/consumable/milk)
+		if(chem.volume > 50)
+			H.reagents.remove_reagent(chem.type, chem.volume - 5)
+			to_chat(H, span_warning("The excess milk is dripping off your bones!"))
+		H.heal_bodypart_damage(2.5 * REM * delta_time)
+
+		for(var/datum/wound/iter_wound as anything in H.all_wounds)
+			iter_wound.on_xadone(1 * REM * delta_time)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
+		return FALSE
 
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
