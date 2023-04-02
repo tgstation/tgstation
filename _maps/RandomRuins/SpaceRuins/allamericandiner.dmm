@@ -742,7 +742,6 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "GX" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,
@@ -750,6 +749,9 @@
 /obj/item/storage/fancy/egg_box,
 /obj/effect/turf_decal/bot,
 /obj/item/storage/fancy/egg_box,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Hg" = (
@@ -903,10 +905,12 @@
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
 "KT" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/reagent_containers/condiment/flour,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Lp" = (
@@ -977,6 +981,11 @@
 "NH" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
+"NR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "OE" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
@@ -1054,6 +1063,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
+"Sn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
 "ST" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -1085,7 +1099,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "TF" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
 "TN" = (
@@ -1138,7 +1152,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/dim/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "Uv" = (
@@ -1187,7 +1201,7 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/dim/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "WC" = (
@@ -1306,11 +1320,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "ZS" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/storage/box/ingredients/american,
 /obj/item/storage/box/ingredients/american,
 /obj/item/storage/box/ingredients/american,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 
@@ -2073,7 +2089,7 @@ eN
 zN
 EK
 MJ
-YX
+Sn
 YX
 EK
 qY
@@ -2221,7 +2237,7 @@ WS
 Dv
 EK
 MJ
-YX
+NR
 Kp
 EK
 ST
