@@ -264,7 +264,7 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bj" = (
@@ -272,21 +272,21 @@
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/obj/machinery/light/directional/east,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light/warm/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hD" = (
@@ -370,9 +370,9 @@ be
 "}
 (3,1,1) = {"
 ac
+bj
 ag
 ag
-bi
 Bi
 ag
 ag
@@ -514,9 +514,9 @@ aa
 "}
 (9,1,1) = {"
 ac
+bi
 ag
 ag
-bj
 pb
 ag
 ag
