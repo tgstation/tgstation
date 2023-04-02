@@ -397,9 +397,9 @@
 					continue
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
-					var/location = get_turf(player.mind.current)
+					var/location = get_area(player.mind.current)
 					//Non-antag present. Can't hijack.
-					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /area/shuttle/escape/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
 					var/prevent = FALSE

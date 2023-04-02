@@ -195,11 +195,12 @@
 			healing += 0.1
 
 		// don't forget the bedsheet
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
-				continue
+		if(locate(/obj/item/bedsheet) in owner.loc)
 			healing += 0.1
-			break //Only count the first bedsheet
+
+		// you forgot the pillow
+		if(locate(/obj/item/pillow) in owner.loc)
+			healing += 0.1
 
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -631,7 +632,7 @@
 
 /datum/status_effect/convulsing
 	id = "convulsing"
-	duration = 10 SECONDS
+	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
 
@@ -909,22 +910,12 @@
 	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
 	return ..()
 
-/datum/status_effect/progenitor_curse
-	duration = 200
-	tick_interval = 5
+///Maddly teleports the victim around all of space for 10 seconds
+/datum/status_effect/teleport_madness
+	id = "teleport_madness"
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.1 SECONDS
 
-/datum/status_effect/progenitor_curse/tick()
-	if(owner.stat == DEAD)
-		return
-	var/grab_dir = turn(owner.dir, rand(-180, 180)) //grab them from a random direction
-	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
-	if(spawn_turf)
-		grasp(spawn_turf)
-
-/datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
-	set waitfor = FALSE
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
-	var/obj/projectile/curse_hand/progenitor/C = new (spawn_turf)
-	C.preparePixelProjectile(owner, spawn_turf)
-	C.fire()
+/datum/status_effect/teleport_madness/tick()
+	dump_in_space(owner)

@@ -9,7 +9,7 @@
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints[1] = new modkit_design
+	blueprints += new modkit_design
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"

@@ -1,13 +1,9 @@
-// File ordered based on progression
-
 /datum/uplink_category/device_tools
 	name = "Misc. Gadgets"
 	weight = 3
 
 /datum/uplink_item/device_tools
 	category = /datum/uplink_category/device_tools
-
-// No progression cost
 
 /datum/uplink_item/device_tools/soap
 	name = "Syndicate Soap"
@@ -190,8 +186,6 @@
 	surplus = 75
 	restricted = TRUE
 
-// Low progression cost
-
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
@@ -213,8 +207,6 @@
 			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
 	item = /obj/item/stack/sticky_tape/pointy/super
 	cost = 1
-
-// Medium progression cost
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"

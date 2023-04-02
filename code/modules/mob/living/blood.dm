@@ -34,7 +34,7 @@
 			nutrition_ratio *= 1.25
 		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
 		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
-		
+
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
 		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
@@ -373,3 +373,5 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+#undef BLOOD_DRIP_RATE_MOD

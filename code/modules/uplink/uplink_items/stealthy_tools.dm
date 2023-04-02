@@ -1,5 +1,3 @@
-// File ordered based on progression
-
 /datum/uplink_category/stealthy_tools
 	name = "Stealth Gadgets"
 	weight = 4
@@ -7,7 +5,6 @@
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
 
-// No progression cost
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"

@@ -11,6 +11,7 @@ GLOBAL_VAR(station_level_z_scratch)
 // Called a lot, somewhat slow, so has its own cache
 #define is_station_level(z) \
 	( \
+		z && \
 		( \
 			/* The right hand side of this guarantees that we'll have the space to fill later on, while also not failing the condition */ \
 			(GLOB.station_levels_cache.len < (GLOB.station_level_z_scratch = z) && (GLOB.station_levels_cache.len = GLOB.station_level_z_scratch)) \

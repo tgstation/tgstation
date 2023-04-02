@@ -1,5 +1,3 @@
-// File organised based on progression
-
 /datum/uplink_category/role_restricted
 	name = "Role-Restricted"
 	weight = 1
@@ -8,7 +6,6 @@
 	category = /datum/uplink_category/role_restricted
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-// No progression cost
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
 	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
@@ -159,8 +156,6 @@
 	cost = 6
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
-// Medium progression cost
-
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
@@ -260,6 +255,22 @@
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
+
+/datum/uplink_item/role_restricted/his_grace
+	name = "His Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
+	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
+	However, if left alone for long enough, He will fall back to slumber. \
+	To activate His Grace, simply unlatch Him."
+	// It has a low progression cost because it's the sort of item that only works well early in the round
+	// Plus, it costs all your TC and will lock your uplink.
+	progression_minimum = 5 MINUTES
+	lock_other_purchases = TRUE
+	cant_discount = TRUE
+	item = /obj/item/his_grace
+	cost = 20
+	surplus = 0
+	restricted_roles = list(JOB_CHAPLAIN)
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"

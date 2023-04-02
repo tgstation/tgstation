@@ -65,7 +65,7 @@
 /datum/round_event/heart_attack/proc/attack_heart()
 	var/mob/living/carbon/human/winner = pick_weight(victims)
 	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
-		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching their breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
+		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching [winner.p_their()] breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster."), span_hear("You hear someone's breathing sharpen for a moment, followed by a sigh of relief."), 4)
 		winner.playsound_local(get_turf(winner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		winner.Stun(3 SECONDS)

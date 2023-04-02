@@ -240,7 +240,7 @@
 /area/shuttle/escape)
 "iz" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ji" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -341,7 +341,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
+/turf/open/floor/mineral/plastitanium/red{
 	icon_state = "darkfull"
 	},
 /area/shuttle/escape/brig)
@@ -416,7 +416,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/mineral/plastitanium/red/brig{
+/turf/open/floor/mineral/plastitanium/red{
 	icon_state = "darkfull"
 	},
 /area/shuttle/escape/brig)
@@ -582,6 +582,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"tk" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/station_crash/devastating,
+/turf/open/floor/iron/checker,
+/area/shuttle/escape)
 "tx" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -684,16 +691,6 @@
 	dir = 4
 	},
 /area/shuttle/escape)
-"wD" = (
-/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
-	dir = 4
-	},
-/obj/effect/station_crash/devastating,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "xa" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -730,7 +727,7 @@
 "yB" = (
 /obj/structure/window/reinforced/survival_pod/spawner/north,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "zc" = (
 /obj/structure/chair/comfy/shuttle{
@@ -774,7 +771,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "AE" = (
 /obj/machinery/computer/operating{
@@ -856,7 +853,7 @@
 /area/shuttle/escape)
 "Dd" = (
 /obj/structure/window/reinforced/survival_pod/spawner,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Dg" = (
 /obj/structure/chair/comfy/shuttle{
@@ -872,7 +869,7 @@
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
+/turf/open/floor/mineral/plastitanium/red{
 	icon_state = "darkfull"
 	},
 /area/shuttle/escape/brig)
@@ -914,7 +911,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "FX" = (
 /obj/structure/table/reinforced,
@@ -1080,7 +1077,7 @@
 /obj/item/toy/nuke,
 /obj/machinery/light/small/directional/south,
 /obj/item/storage/medkit/regular,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ke" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1271,7 +1268,7 @@
 	pixel_y = 3
 	},
 /obj/item/restraints/handcuffs,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "OE" = (
 /obj/structure/cable,
@@ -1525,7 +1522,7 @@
 	name = "Holding Cell B";
 	req_access = list("security")
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "WO" = (
 /obj/effect/decal/cleanable/oil/streak,
@@ -1578,7 +1575,7 @@
 	name = "Holding Cell A";
 	req_access = list("security")
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Yq" = (
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
@@ -1598,7 +1595,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "YN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2116,7 +2113,7 @@ cz
 (10,1,1) = {"
 jo
 Sg
-wD
+Yq
 ce
 jM
 jY
@@ -2126,7 +2123,7 @@ Yq
 Yq
 Hq
 cw
-Hd
+tk
 Hd
 Hd
 JN

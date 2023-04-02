@@ -1,5 +1,3 @@
-// File ordered based on progression.
-
 /datum/uplink_category/explosives
 	name = "Explosives"
 	weight = 6
@@ -7,14 +5,11 @@
 /datum/uplink_item/explosives
 	category = /datum/uplink_category/explosives
 
-// Low progression cost
 /datum/uplink_item/explosives/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 3
-
-// Medium progression cost
 
 /datum/uplink_item/explosives/c4
 	name = "Composition C-4"
@@ -88,8 +83,6 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		cost *= 2
-
-// High progression cost
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
