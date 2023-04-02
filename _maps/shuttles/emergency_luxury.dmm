@@ -206,12 +206,10 @@
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "jQ" = (
-/obj/effect/spawner/random/maintenance/six,
-/obj/structure/closet/crate/trashcart/filled,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/escape)
+/obj/item/kirbyplants/random,
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
 "jZ" = (
 /obj/item/food/spaghetti/chowmein{
 	pixel_y = 5
@@ -344,6 +342,7 @@
 /obj/structure/chair/wood{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "oA" = (
@@ -358,7 +357,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -508,7 +506,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "vP" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "wP" = (
@@ -516,6 +514,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xq" = (
@@ -542,7 +541,6 @@
 "xO" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small/directional/west,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/glass/waterbottle,
@@ -674,9 +672,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "CZ" = (
-/obj/machinery/light/small/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/glass,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Dc" = (
@@ -799,7 +800,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "Gz" = (
@@ -1153,7 +1153,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "UX" = (
@@ -1234,6 +1233,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "Yo" = (
@@ -1408,7 +1408,7 @@ QU
 kt
 Gz
 JV
-jQ
+IB
 Br
 kJ
 iD
@@ -1461,11 +1461,11 @@ Hn
 iD
 xy
 kJ
-CZ
+AB
 ty
 kJ
 Yb
-xy
+CZ
 JV
 "}
 (10,1,1) = {"
@@ -1487,7 +1487,7 @@ Yj
 gG
 gG
 gG
-gG
+Yj
 Yj
 "}
 (11,1,1) = {"
@@ -1509,7 +1509,7 @@ Du
 JB
 jJ
 jJ
-Hq
+jQ
 Ex
 "}
 (12,1,1) = {"
@@ -1553,7 +1553,7 @@ PY
 We
 PD
 Na
-dA
+PY
 Ex
 "}
 (14,1,1) = {"
@@ -1602,7 +1602,7 @@ Ex
 "}
 (16,1,1) = {"
 Ex
-Hq
+Yo
 jJ
 jJ
 jJ
@@ -1619,7 +1619,7 @@ PY
 We
 bS
 rZ
-PY
+dA
 Ex
 "}
 (17,1,1) = {"
@@ -1646,7 +1646,7 @@ Ex
 "}
 (18,1,1) = {"
 Ex
-Yo
+Hq
 SN
 ho
 SN
@@ -1663,7 +1663,7 @@ PY
 We
 UX
 jZ
-dA
+PY
 Ex
 "}
 (19,1,1) = {"
@@ -1825,7 +1825,7 @@ Ex
 vP
 dm
 dm
-Kb
+vP
 Ex
 mE
 WF
