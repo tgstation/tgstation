@@ -12857,7 +12857,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/delivery,
@@ -23148,7 +23147,6 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Security"
 	},
 /obj/effect/turf_decal/delivery,
@@ -37990,7 +37988,6 @@
 "juU" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/delivery,
@@ -54171,7 +54168,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "Atmospherics"
 	},
 /obj/effect/turf_decal/delivery,
@@ -65405,7 +65401,6 @@
 "qof" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "QM #3"
 	},
 /obj/effect/turf_decal/delivery,
@@ -76139,7 +76134,6 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Engineering"
 	},
 /obj/effect/turf_decal/delivery,
@@ -79018,7 +79012,6 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 4;
 	location = "Robotics"
 	},
 /obj/effect/turf_decal/delivery,
@@ -92737,7 +92730,6 @@
 "xeo" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/delivery,

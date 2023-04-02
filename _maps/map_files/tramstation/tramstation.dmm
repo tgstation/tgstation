@@ -1669,7 +1669,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	dir = 8;
 	location = "QM #3"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -1694,7 +1693,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	dir = 8;
 	location = "QM #2"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -1940,7 +1938,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	dir = 8;
 	location = "QM #1"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -2311,7 +2308,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 8;
 	location = "QM #6"
 	},
 /mob/living/simple_animal/bot/mulebot{
@@ -17577,8 +17573,7 @@
 	dir = 8
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
+	codes_txt = "delivery;dir=8";
 	location = "Chapel";
 	name = "navigation beacon (Chapel Delivery)"
 	},
@@ -24624,7 +24619,6 @@
 "hBk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	dir = 1;
 	location = "Theatre";
 	name = "navigation beacon (Theatre Delivery)"
 	},
@@ -28108,8 +28102,7 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 1;
+	codes_txt = "delivery;dir=4";
 	location = "Science";
 	name = "navigation beacon (Science Delivery)"
 	},
@@ -31507,8 +31500,7 @@
 	name = "Medical Delivery Chute"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 1;
+	codes_txt = "delivery;dir=4";
 	location = "Medical";
 	name = "navigation beacon (Medical Delivery)"
 	},
@@ -32350,7 +32342,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 8;
 	location = "QM #5"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -34625,7 +34616,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 8;
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -45140,8 +45130,7 @@
 /area/station/engineering/main)
 "pfH" = (
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
+	codes_txt = "delivery;dir=8";
 	location = "Kitchen";
 	name = "navigation beacon (Kitchen Delivery)"
 	},
@@ -45829,7 +45818,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Bar";
 	name = "navigation beacon (Bar Delivery)"
 	},
@@ -65319,8 +65307,7 @@
 /area/station/engineering/supermatter/room)
 "wki" = (
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
+	codes_txt = "delivery;dir=8";
 	location = "Atmoshperics";
 	name = "navigation beacon (Atmoshperics Delivery)"
 	},
@@ -65701,8 +65688,7 @@
 /area/station/medical/pharmacy)
 "wrU" = (
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
+	codes_txt = "delivery;dir=8";
 	location = "Security";
 	name = "navigation beacon (Security Delivery)"
 	},
@@ -69837,8 +69823,7 @@
 	name = "Library Delivery Chute"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 1;
+	codes_txt = "delivery;dir=4";
 	location = "Library";
 	name = "navigation beacon (Library Delivery)"
 	},

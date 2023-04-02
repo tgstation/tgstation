@@ -217,3 +217,9 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 	"CLEANBOT_CLEAN_PESTS" = CLEANBOT_CLEAN_PESTS,
 	"CLEANBOT_CLEAN_DRAWINGS" = CLEANBOT_CLEAN_DRAWINGS,
 ))
+
+//bot navigation beacon defines
+#define NAVBEACON_PATROL_MODE "patrol"
+#define NAVBEACON_PATROL_NEXT "next_patrol"
+#define NAVBEACON_DELIVERY_MODE "delivery"
+#define NAVBEACON_DELIVERY_DIRECTION "dir"

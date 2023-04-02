@@ -10,7 +10,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Law Office";
 	name = "navigation beacon (Law Office Delivery)"
 	},

@@ -1925,7 +1925,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/delivery,
@@ -3506,7 +3505,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Medbay"
 	},
 /turf/open/floor/plating,
@@ -21360,7 +21358,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Service"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -22669,7 +22666,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Hydroponics"
 	},
 /turf/open/floor/iron,
@@ -28655,7 +28651,6 @@
 "ktq" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "Security"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -31310,7 +31305,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #2"
 	},
 /turf/open/floor/iron,
@@ -42630,7 +42624,6 @@
 "psF" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Bridge"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -44627,7 +44620,6 @@
 "qeV" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Engineering"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -45708,7 +45700,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "Kitchen"
 	},
 /obj/structure/disposalpipe/segment{
@@ -63471,7 +63462,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Research"
 	},
 /turf/open/floor/iron,

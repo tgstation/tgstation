@@ -350,7 +350,6 @@
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	dir = 1;
 	location = "Engineering";
 	name = "navigation beacon (Engineering Delivery)"
 	},

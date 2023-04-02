@@ -6996,7 +6996,6 @@
 "chW" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #3"
 	},
 /obj/effect/turf_decal/bot,
@@ -10638,7 +10637,6 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -15353,7 +15351,6 @@
 "eOv" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Bridge"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -19366,7 +19363,6 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Medbay"
 	},
 /turf/open/floor/iron/dark,
@@ -20356,7 +20352,6 @@
 "gxe" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
@@ -25240,7 +25235,6 @@
 "idU" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/bot,
@@ -25542,7 +25536,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
 	location = "Atmospherics"
 	},
 /turf/open/floor/iron,
@@ -27980,7 +27973,6 @@
 "iWx" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 1;
 	location = "Janitor"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -51519,7 +51511,6 @@
 "qrB" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/bot,
@@ -66198,7 +66189,6 @@
 "veF" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
 	location = "Security"
 	},
 /obj/structure/plasticflaps/opaque,
