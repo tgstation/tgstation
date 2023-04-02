@@ -11,12 +11,13 @@
 	..()
 	ticks += delta_time
 	if(ticks < releasedelay)
-		return
+		return FALSE
 	else
 		ticks -= releasedelay
 	var/turf/open/tile = get_turf(src)
 	if(istype(tile))
 		tile.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
+	return TRUE
 
 /obj/effect/anomaly/pyro/detonate()
 	INVOKE_ASYNC(src, PROC_REF(makepyroslime))
@@ -43,3 +44,32 @@
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
+
+///Bigger, meaner, immortal pyro anomaly
+/obj/effect/anomaly/pyro/big
+	immortal = TRUE
+	aSignal = null
+	releasedelay = 2
+	move_force = MOVE_FORCE_OVERPOWERING
+
+/obj/effect/anomaly/pyro/big/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+
+	transform *= 3
+
+/obj/effect/anomaly/pyro/big/Bumped(atom/movable/bumpee)
+	. = ..()
+
+	if(isliving(bumpee))
+		var/mob/living/living = bumpee
+		living.dust()
+
+/obj/effect/anomaly/pyro/big/anomalyEffect(delta_time)
+	. = ..()
+
+	if(!.)
+		return
+
+	var/turf/turf = get_turf(src)
+	if(!isgroundlessturf(turf))
+		turf.TerraformTurf(/turf/open/lava/smooth/weak, flags = CHANGETURF_INHERIT_AIR)
