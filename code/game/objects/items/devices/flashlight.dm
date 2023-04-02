@@ -3,6 +3,7 @@
 	desc = "A hand-held emergency light."
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/lighting.dmi'
+	dir = WEST
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
 	worn_icon_state = "flashlight"
@@ -48,8 +49,12 @@
 /obj/item/flashlight/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
+		if(!isnull(inhand_icon_state))
+			inhand_icon_state = "[initial(inhand_icon_state)]-on"
 	else
 		icon_state = initial(icon_state)
+		if(!isnull(inhand_icon_state))
+			inhand_icon_state = initial(inhand_icon_state)
 	set_light_on(on)
 	if(light_system == STATIC_LIGHT)
 		update_light()
@@ -188,9 +193,14 @@
 	else
 		return ..()
 
+/obj/item/flashlight/equipped(mob/user, slot, initial)
+	. = ..()
+	dir = initial(dir) // so we get the same sprite each time we pick one up
+
 /obj/item/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
+	dir = EAST
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
@@ -238,6 +248,7 @@
 /obj/item/flashlight/seclite
 	name = "seclite"
 	desc = "A robust flashlight used by security."
+	dir = EAST
 	icon_state = "seclite"
 	inhand_icon_state = "seclite"
 	worn_icon_state = "seclite"
