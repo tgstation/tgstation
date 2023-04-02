@@ -179,7 +179,7 @@
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav/atmosasteroid)
 "nB" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
 /turf/open/floor/iron/co2_pressurized,
@@ -258,8 +258,8 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/atmosasteroid)
 "sp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "tC" = (
@@ -283,6 +283,7 @@
 	},
 /obj/structure/window,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "tL" = (
@@ -394,11 +395,11 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "Dw" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
@@ -547,10 +548,10 @@
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ns" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/green{
+/obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow/half{
+/obj/machinery/atmospherics/pipe/layer_manifold/green/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/co2_pressurized,
@@ -658,6 +659,11 @@
 	},
 /obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ut" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/atmosasteroid)
 "Uz" = (
 /obj/effect/turf_decal/tile/yellow/anticorner{
@@ -924,7 +930,7 @@ af
 KT
 zD
 Cb
-zd
+Ut
 NP
 hj
 gG
@@ -1024,7 +1030,7 @@ tC
 pw
 kB
 Cb
-zd
+Ut
 om
 vG
 gG
