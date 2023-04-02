@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(auxtools_initialized)
 	if (GLOB.auxtools_initialized[LIB] && fexists(LIB)){\
 		LIBCALL(LIB,"auxtools_full_shutdown")();\
 		GLOB.auxtools_initialized[LIB] = FALSE;\
-	}\
+	}
 
 /proc/auxtools_stack_trace(msg)
 	CRASH(msg)
