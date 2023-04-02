@@ -84,6 +84,7 @@
 /area/shuttle/escape)
 "fL" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "fW" = (
@@ -280,7 +281,6 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/east,
 /turf/template_noop,
 /area/shuttle/escape)
 "kS" = (
@@ -342,6 +342,10 @@
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
+"oH" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "oK" = (
 /obj/machinery/teambuilder/blue,
 /turf/open/indestructible/binary,
@@ -485,7 +489,6 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/east,
 /turf/template_noop,
 /area/shuttle/escape)
 "uG" = (
@@ -581,6 +584,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"AU" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "Bd" = (
 /obj/structure/railing/corner,
@@ -689,6 +696,10 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/misc/grass,
 /area/shuttle/escape/simulation)
+"DU" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "En" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/sand/plating,
@@ -711,7 +722,7 @@
 /area/template_noop)
 "EV" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "EZ" = (
 /turf/open/floor/mineral/titanium,
@@ -840,10 +851,8 @@
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "HE" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Io" = (
 /obj/item/banner/blue{
@@ -933,6 +942,10 @@
 	},
 /turf/closed/indestructible/iron,
 /area/shuttle/escape/simulation)
+"Mc" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Mj" = (
 /obj/structure/railing{
 	dir = 1
@@ -1011,6 +1024,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Pa" = (
@@ -1033,6 +1047,10 @@
 "Pr" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"QB" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "QH" = (
 /obj/structure/rack,
@@ -1084,7 +1102,6 @@
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/utility/hardhat/red,
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Sf" = (
@@ -1171,7 +1188,6 @@
 /area/shuttle/escape)
 "Vn" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Vv" = (
@@ -1203,7 +1219,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "WN" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Xb" = (
@@ -1268,7 +1284,6 @@
 /obj/item/crowbar,
 /obj/item/storage/medkit/fire,
 /obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Yp" = (
@@ -1285,7 +1300,6 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/sign/warning/vacuum/external/directional/south,
-/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "YC" = (
@@ -1371,7 +1385,6 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 
@@ -1476,7 +1489,7 @@ Xv
 Xv
 Yn
 Ki
-Zx
+WN
 Pi
 YB
 Xv
@@ -1534,7 +1547,7 @@ Xv
 CT
 Zx
 Zx
-cc
+EZ
 Zx
 Zx
 CT
@@ -1583,11 +1596,11 @@ Xv
 Zx
 EZ
 EZ
-kS
+Mc
 Zx
 Zx
 Zx
-kS
+EZ
 Zx
 Zx
 EZ
@@ -1597,11 +1610,11 @@ Pr
 EZ
 Zx
 EZ
-kS
+EZ
 Zx
 Zx
-Zx
-kS
+QB
+EZ
 EZ
 EZ
 Zx
@@ -1618,13 +1631,13 @@ ZB
 ZB
 Xv
 Xv
-Zx
+HE
 Zx
 Kw
 ZB
 Pr
 Zx
-Zx
+HE
 Xv
 Xv
 ZB
@@ -1703,7 +1716,7 @@ ll
 qM
 so
 un
-HE
+un
 Xv
 sS
 Zx
@@ -1762,15 +1775,15 @@ wY
 CP
 uG
 nA
-nA
+AU
 Be
-EV
+Zx
 Rl
 Rl
 Rl
-WN
+Zx
 RB
-Xb
+oH
 Xb
 Yk
 Yk
@@ -1966,13 +1979,13 @@ Yj
 Ho
 gt
 pF
-hw
+EV
 FK
 FK
 FK
 FK
 FK
-hw
+DU
 pF
 Fs
 jf
