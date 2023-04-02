@@ -145,6 +145,7 @@
 	icon_state = "plant-11"
 	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aC" = (
@@ -167,7 +168,6 @@
 "aE" = (
 /obj/structure/chair/comfy,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
@@ -186,7 +186,6 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/machinery/light/directional/north,
 /obj/item/food/butterdog,
 /obj/item/food/cakeslice/apple,
 /obj/item/food/cakeslice/brioche,
@@ -217,7 +216,6 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -285,7 +283,6 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -327,13 +324,11 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aZ" = (
 /obj/structure/table/glass,
-/obj/machinery/light/directional/north,
 /obj/item/storage/medkit/regular,
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -385,6 +380,7 @@
 /obj/structure/table,
 /obj/item/storage/bag/tray,
 /obj/item/clothing/under/suit/waiter,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "bg" = (
@@ -432,7 +428,6 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/machinery/light/directional/south,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -471,6 +466,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bv" = (
@@ -529,18 +525,23 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/plating,
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bH" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "bI" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bK" = (
@@ -580,12 +581,32 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
+"wj" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "xt" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Ax" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Lu" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -663,7 +684,7 @@ ap
 aN
 az
 at
-az
+bG
 at
 aD
 ab
@@ -671,7 +692,7 @@ aa
 ab
 aJ
 aM
-aO
+wj
 aM
 aO
 aM
@@ -683,7 +704,7 @@ aX
 bb
 be
 bh
-bl
+bH
 bg
 bg
 ab
@@ -737,7 +758,7 @@ bn
 ab
 aa
 bs
-bH
+ax
 ax
 ax
 ax
@@ -877,11 +898,11 @@ bd
 bj
 bj
 bo
-bG
+bq
 ab
 aa
 bs
-bH
+ax
 ax
 ax
 ax
@@ -913,7 +934,7 @@ aL
 au
 aQ
 au
-aQ
+Ax
 aR
 aU
 ab
