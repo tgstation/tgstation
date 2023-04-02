@@ -56,11 +56,6 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
-"am" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -116,6 +111,7 @@
 	pixel_y = 4;
 	use_power = 0
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ay" = (
@@ -241,11 +237,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
@@ -382,7 +378,7 @@ aI
 aL
 aC
 aC
-aT
+aS
 ah
 ab
 "}
@@ -399,7 +395,7 @@ aC
 aC
 aC
 aC
-aB
+aT
 ab
 "}
 (8,1,1) = {"
@@ -437,7 +433,7 @@ ac
 (10,1,1) = {"
 aa
 ab
-am
+al
 at
 at
 ac
