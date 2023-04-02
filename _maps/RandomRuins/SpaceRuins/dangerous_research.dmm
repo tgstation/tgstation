@@ -1002,6 +1002,7 @@
 	},
 /obj/item/trash/cheesie,
 /obj/item/trash/ready_donk,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white/small,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "nY" = (
@@ -1079,6 +1080,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
 "oH" = (
@@ -1298,6 +1300,7 @@
 "qO" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "qR" = (
@@ -1308,7 +1311,6 @@
 "ra" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil,
-/obj/machinery/light/dim/directional/east,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -1768,13 +1770,13 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/machinery/light/dim/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
 "wt" = (
@@ -1878,11 +1880,6 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "xN" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/dangerous_research)
-"xS" = (
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "xW" = (
@@ -2017,7 +2014,6 @@
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/machinery/light/warm/directional/south,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/mapping_helpers/atom_injector/element_injector{
 	element_type = /datum/element/decal/blood;
@@ -2296,12 +2292,12 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/light/warm/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "CB" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_b" = "Air Supply B");
+	atmos_chambers = list("asrc_b"="Air Supply B");
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3092,7 +3088,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Ob" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_a" = "Air Supply A")
+	atmos_chambers = list("asrc_a"="Air Supply A")
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -3171,7 +3167,6 @@
 /area/ruin/space/has_grav/dangerous_research)
 "OR" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/obj/machinery/light/warm/directional/north,
 /obj/machinery/computer/arcade/battle,
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
@@ -5272,7 +5267,7 @@ wt
 WG
 tE
 nS
-xS
+xN
 xN
 pk
 Bg
