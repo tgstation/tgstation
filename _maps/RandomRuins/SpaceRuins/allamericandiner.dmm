@@ -9,6 +9,7 @@
 	dir = 1
 	},
 /obj/structure/sink/kitchen/directional/east,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "aA" = (
@@ -296,6 +297,7 @@
 	dir = 1
 	},
 /obj/structure/sink/kitchen/directional/west,
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "nM" = (
@@ -553,6 +555,10 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "yQ" = (
@@ -665,6 +671,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/allamericandiner)
+"Ey" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "EK" = (
 /turf/closed/wall,
@@ -913,13 +925,6 @@
 /obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
-"Ml" = (
-/obj/effect/spawner/structure/electrified_grille,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
 "Mq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1035,6 +1040,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "Sl" = (
@@ -1127,6 +1133,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
+"Un" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
 "Uv" = (
 /obj/structure/toilet{
 	dir = 8
@@ -1167,6 +1181,13 @@
 	dir = 5
 	},
 /obj/item/kirbyplants/random,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"Wn" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "WC" = (
@@ -1650,7 +1671,7 @@ rd
 Id
 FP
 xa
-xa
+Ey
 EK
 EK
 EK
@@ -1761,7 +1782,7 @@ rd
 gB
 XE
 xa
-xa
+Ey
 EK
 EK
 EK
@@ -2047,7 +2068,7 @@ HB
 Go
 EK
 ue
-eN
+Un
 eN
 zN
 EK
@@ -2315,7 +2336,7 @@ Mq
 SZ
 Eo
 Uh
-Ml
+Yr
 bA
 EK
 oN
@@ -2343,7 +2364,7 @@ Bn
 Bn
 EK
 Vy
-aA
+Wn
 aA
 na
 EK
