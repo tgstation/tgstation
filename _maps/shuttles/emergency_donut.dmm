@@ -40,7 +40,6 @@
 "aj" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
-/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ak" = (
@@ -74,6 +73,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
@@ -168,12 +168,10 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aG" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
+/obj/structure/closet/emcloset,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "aH" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -186,7 +184,6 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aJ" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
 	},
@@ -196,6 +193,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aL" = (
@@ -246,8 +244,6 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/light/directional/south,
-/obj/machinery/light/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
@@ -255,7 +251,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aV" = (
-/obj/machinery/light/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -333,7 +328,6 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bi" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -363,7 +357,6 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/directional/south,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
@@ -410,7 +403,6 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
@@ -434,7 +426,6 @@
 "bq" = (
 /obj/structure/table,
 /obj/item/defibrillator/loaded,
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "br" = (
@@ -460,6 +451,11 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/optable,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"hk" = (
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "im" = (
@@ -467,6 +463,23 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"lk" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"nu" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Pa" = (
+/obj/machinery/stasis,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ws" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -552,7 +565,7 @@ ab
 ay
 ay
 ay
-aG
+ay
 aC
 aC
 aC
@@ -562,13 +575,13 @@ am
 am
 am
 am
+hk
 am
 am
 am
 am
 am
-am
-am
+hk
 bb
 bb
 bb
@@ -593,7 +606,7 @@ aC
 aC
 aQ
 ab
-ak
+Ws
 am
 am
 aM
@@ -762,7 +775,7 @@ ac
 ai
 al
 am
-am
+lk
 ad
 ab
 ab
@@ -822,7 +835,7 @@ aW
 aX
 aY
 ab
-bf
+Pa
 bk
 bq
 ab
@@ -872,27 +885,27 @@ ac
 ac
 ab
 ad
-ax
+aG
 ax
 aq
 ak
 ak
+nu
+am
+am
+am
+am
+nu
+am
+am
+am
+nu
 am
 am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
+nu
 bb
 bb
 bb
