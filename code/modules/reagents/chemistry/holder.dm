@@ -1444,7 +1444,7 @@
 		return // no div/0 please
 	if(!old_heat_capacity)
 		old_heat_capacity = heat_capacity
-	set_temperature(clamp((chem_temp * old_heat_capacity + delta_energy) / heat_capacity), min_temp, max_temp)
+	set_temperature(clamp((chem_temp * old_heat_capacity + delta_energy) / heat_capacity, min_temp, max_temp))
 
 /// Applies heat to this holder
 /datum/reagents/proc/expose_temperature(temperature, coeff=0.02)
