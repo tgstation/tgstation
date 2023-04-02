@@ -318,7 +318,8 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
-	if(anchored)
+	if(!anchored)
+		return ..()
 		if(panel_open)
 			balloon_alert(user, "close panel!")
 			return
