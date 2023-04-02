@@ -42,6 +42,7 @@
 	var/description = ""
 	///What costume will this map force players to start with?
 	var/custom_outfit
+	should_place_on_top = FALSE
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
