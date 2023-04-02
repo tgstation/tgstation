@@ -52,8 +52,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "am" = (
 /turf/open/floor/mineral/titanium/tiled,
@@ -62,13 +62,17 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "ao" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "ap" = (
 /obj/machinery/computer/crew{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "aq" = (
@@ -87,6 +91,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "at" = (
@@ -114,7 +119,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "ay" = (
@@ -132,7 +136,6 @@
 	dir = 4
 	},
 /obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "aB" = (
@@ -161,10 +164,10 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/button/flasher{
 	id = "shuttle_flasher";
 	pixel_x = -24;
@@ -214,6 +217,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aO" = (
@@ -369,7 +373,6 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bk" = (
@@ -381,7 +384,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "uu" = (
@@ -459,7 +461,7 @@ aH
 aI
 aO
 aE
-aS
+ao
 ak
 aU
 ak
@@ -482,7 +484,7 @@ bi
 ab
 ab
 af
-al
+af
 aq
 Ej
 ak
@@ -550,7 +552,7 @@ bk
 ab
 ad
 ah
-an
+al
 an
 an
 aw
@@ -559,7 +561,7 @@ aw
 aD
 aE
 aE
-aP
+aE
 aE
 aE
 aT
@@ -618,7 +620,7 @@ bk
 ab
 ab
 af
-ao
+af
 ar
 WP
 ak
