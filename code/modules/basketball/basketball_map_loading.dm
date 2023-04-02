@@ -41,6 +41,7 @@
 	var/team_name
 	/// The basketball teams home stadium uniform
 	var/home_team_uniform
+	should_place_on_top = FALSE
 
 /datum/map_template/basketball/stadium
 	name = "Stadium"

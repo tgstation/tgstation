@@ -64,6 +64,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 
 /datum/map_template/ctf
 	var/description = ""
+	should_place_on_top = FALSE
 
 /datum/map_template/ctf/classic
 	name = "Classic"

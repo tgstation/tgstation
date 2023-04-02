@@ -143,6 +143,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					qdel(obj) //Clear objects
 
 			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			thunderdome_template.should_place_on_top = FALSE
 			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
 			thunderdome_template.load(thunderdome_corner)
 
