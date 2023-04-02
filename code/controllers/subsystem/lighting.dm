@@ -41,7 +41,9 @@ SUBSYSTEM_DEF(lighting)
 		L.needs_update = LIGHTING_NO_UPDATE
 
 		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
-		if(init_tick_checks && TICK_CHECK)
+		if(init_tick_checks)
+			if(!TICK_CHECK)
+				continue
 			queue.Cut(1, i+1)
 			i = 0
 			stoplag()
@@ -63,7 +65,9 @@ SUBSYSTEM_DEF(lighting)
 		C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
 		C.update_objects()
 
-		if(init_tick_checks && TICK_CHECK)
+		if(init_tick_checks)
+			if(!TICK_CHECK)
+				continue 
 			queue.Cut(1, i+1)
 			i = 0
 			stoplag()
@@ -89,7 +93,9 @@ SUBSYSTEM_DEF(lighting)
 		O.update()
 		O.needs_update = FALSE
 
-		if(init_tick_checks && TICK_CHECK)
+		if(init_tick_checks)
+			if(!TICK_CHECK)
+				continue
 			queue.Cut(1, i+1)
 			i = 0
 			stoplag()
