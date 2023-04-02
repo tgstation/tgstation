@@ -43,6 +43,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	return data
 
 #define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
+#define HIGHLANDER_DELAY_TEXT "40 seconds (crush the hope of a normal shift)"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -260,11 +261,14 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		if("onlyone")
 			if(!is_funmin)
 				return
-			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
-			if(response == "Instant!")
-				holder.only_one()
-			else
-				holder.only_one_delayed()
+			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", HIGHLANDER_DELAY_TEXT))
+			switch(response)
+				if("Instant!")
+					holder.only_one()
+				if(HIGHLANDER_DELAY_TEXT)
+					holder.only_one_delayed()
+				else
+					return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
 		if("guns")
 			if(!is_funmin)
@@ -588,6 +592,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
 #undef THUNDERDOME_TEMPLATE_FILE
+#undef HIGHLANDER_DELAY_TEXT
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

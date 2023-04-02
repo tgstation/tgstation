@@ -12,11 +12,6 @@
 "ad" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"ae" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/turf/open/floor/carpet,
-/area/shuttle/escape)
 "af" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -69,27 +64,12 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"ao" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_y = -24
-	},
-/obj/structure/table/wood/poker,
-/turf/open/floor/carpet,
-/area/shuttle/escape)
 "ap" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"aq" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "ar" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit"
@@ -103,10 +83,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"at" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "au" = (
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
@@ -121,20 +97,6 @@
 "aw" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"ax" = (
-/obj/machinery/flasher/directional/west{
-	id = "shuttle_flasher"
-	},
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = -6
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"ay" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "az" = (
 /obj/structure/grille,
 /obj/machinery/door/airlock/public/glass{
@@ -156,19 +118,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
-/area/shuttle/escape/brig)
-"aD" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/table,
-/obj/item/extinguisher,
-/obj/item/crowbar,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aE" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aF" = (
 /obj/item/kirbyplants/random,
@@ -257,12 +206,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aU" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aV" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aW" = (
@@ -365,13 +308,6 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bo" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "bp" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -379,14 +315,78 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"pp" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium,
+"go" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"gB" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"kb" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"sJ" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet,
 /area/shuttle/escape)
+"tg" = (
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_y = -24
+	},
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"uo" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"BJ" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"EP" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Fs" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"NA" = (
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Pa" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/table,
+/obj/item/extinguisher,
+/obj/item/crowbar,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Sg" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -420,8 +420,8 @@ ab
 ab
 ac
 ac
-ax
-aD
+NA
+Pa
 ab
 bp
 aA
@@ -442,10 +442,10 @@ ab
 ad
 ai
 am
-aq
-at
-ay
-bo
+EP
+BJ
+kb
+go
 ab
 aL
 ac
@@ -463,13 +463,13 @@ bn
 "}
 (4,1,1) = {"
 ac
-ae
+sJ
 aj
 ak
 ac
 ac
-ay
-aE
+kb
+gB
 ab
 aL
 ac
@@ -513,12 +513,12 @@ bn
 ac
 ag
 ak
-ao
+tg
 ab
 au
 aA
 aF
-pp
+Sg
 aw
 aw
 aw
@@ -619,7 +619,7 @@ aL
 ac
 aG
 aw
-aV
+uo
 ab
 aa
 aa

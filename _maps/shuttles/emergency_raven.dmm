@@ -219,17 +219,6 @@
 /obj/effect/turf_decal/raven/one,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aK" = (
-/obj/machinery/button/door{
-	id = "escape_cockpit_blast";
-	name = "Cockpit Airlock Blast Doors";
-	pixel_y = -26;
-	req_access = list("command")
-	},
-/obj/effect/turf_decal/raven/two,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "aL" = (
 /obj/effect/turf_decal/raven/three,
 /turf/open/floor/iron/dark,
@@ -254,29 +243,6 @@
 "aO" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
-"aP" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "aS" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit"
@@ -319,46 +285,6 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"aW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/restraints/handcuffs{
-	pixel_y = 3
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aX" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aY" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"aZ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"ba" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "bb" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/door/poddoor/preopen{
@@ -408,25 +334,6 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"bi" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/storage/lockbox/loyalty,
-/obj/item/radio/intercom/directional/west,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "bk" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Holding Area"
@@ -440,14 +347,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"bm" = (
-/obj/effect/turf_decal/stripes/white/line,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -485,41 +384,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bs" = (
-/obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/shieldgen{
-	anchored = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkfull"
-	},
-/area/shuttle/escape/brig)
-"bt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bu" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bv" = (
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "bx" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit"
@@ -558,28 +422,6 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape/brig)
-"bD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bE" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bG" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -982,13 +824,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"cK" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "cL" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/decal/cleanable/dirt,
@@ -1004,14 +839,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"cO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cP" = (
@@ -1302,11 +1129,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"dp" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dq" = (
@@ -1665,6 +1487,184 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"hu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"iE" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"jy" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"kP" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"mt" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"mC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"mO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"oH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"sZ" = (
+/obj/machinery/button/door{
+	id = "escape_cockpit_blast";
+	name = "Cockpit Airlock Blast Doors";
+	pixel_y = -26;
+	req_access = list("command")
+	},
+/obj/effect/turf_decal/raven/two,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"uE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"uW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/lockbox/loyalty,
+/obj/item/radio/intercom/directional/west,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"wf" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/shieldgen{
+	anchored = 1
+	},
+/turf/open/floor/mineral/plastitanium/red{
+	icon_state = "darkfull"
+	},
+/area/shuttle/escape/brig)
+"xh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"zr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"CA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"CB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"FA" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Gw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"HR" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"LQ" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"QE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"UH" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Wd" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
@@ -1744,7 +1744,7 @@ aa
 aO
 ax
 ax
-bs
+wf
 ax
 ax
 bV
@@ -1776,9 +1776,9 @@ aa
 aa
 aH
 ax
-aW
-bi
-bt
+QE
+uW
+CB
 bC
 ax
 ax
@@ -1788,7 +1788,7 @@ ax
 ax
 cH
 cJ
-cO
+mC
 ax
 ax
 cd
@@ -1809,11 +1809,11 @@ aa
 aa
 aa
 ax
-aP
-bu
-aY
-aZ
-bD
+uE
+Wd
+iE
+LQ
+mO
 br
 bW
 ch
@@ -1843,11 +1843,11 @@ ab
 ab
 ax
 ax
-aQ
-aY
-aY
-aY
-bE
+xh
+iE
+iE
+iE
+UH
 bk
 bX
 ci
@@ -1860,7 +1860,7 @@ bP
 bP
 da
 dh
-dp
+HR
 bP
 dA
 dJ
@@ -1877,11 +1877,11 @@ aj
 ap
 ay
 ax
-aR
-aX
-aY
-bv
-bF
+oH
+kP
+iE
+FA
+Gw
 br
 bX
 cj
@@ -1912,9 +1912,9 @@ aq
 az
 ax
 ax
-ba
-bj
-bw
+hu
+CA
+zr
 ax
 bN
 bY
@@ -2012,13 +2012,13 @@ af
 al
 at
 aC
-aK
+sZ
 ax
 bc
-bm
+jy
 ax
 bH
-dp
+HR
 bP
 bP
 bQ
@@ -2200,7 +2200,7 @@ bP
 bP
 de
 dn
-dp
+HR
 bP
 dA
 dJ
@@ -2264,7 +2264,7 @@ ax
 ax
 cI
 cN
-cK
+mt
 ax
 ax
 cd

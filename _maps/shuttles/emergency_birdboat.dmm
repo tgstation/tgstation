@@ -52,10 +52,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"al" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -90,9 +86,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"at" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "au" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
@@ -103,29 +96,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"ax" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	active_power_usage = 0;
-	idle_power_usage = 0;
-	pixel_y = 4;
-	use_power = 0
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"ay" = (
-/obj/structure/table,
-/obj/item/storage/box/handcuffs,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"az" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "aA" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium/white,
@@ -236,13 +206,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
-"aT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/brute{
@@ -279,12 +242,49 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/brig)
+"fA" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "iP" = (
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"lh" = (
+/obj/structure/table,
+/obj/item/storage/box/handcuffs,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"mt" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"qX" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Bi" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"IQ" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	pixel_y = 4;
+	use_power = 0
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
@@ -395,15 +395,15 @@ aC
 aC
 aC
 aC
-aT
+fA
 ab
 "}
 (8,1,1) = {"
 aa
 ab
-al
-at
-at
+mt
+qX
+qX
 ac
 aB
 aC
@@ -417,10 +417,10 @@ ab
 (9,1,1) = {"
 aa
 ab
-al
-at
-at
-az
+mt
+qX
+qX
+Bi
 aC
 aC
 aN
@@ -433,9 +433,9 @@ ac
 (10,1,1) = {"
 aa
 ab
-al
-at
-at
+mt
+qX
+qX
 ac
 aC
 aC
@@ -449,9 +449,9 @@ ac
 (11,1,1) = {"
 aa
 ab
-al
-at
-ax
+mt
+qX
+IQ
 ab
 aC
 aC
@@ -465,9 +465,9 @@ ac
 (12,1,1) = {"
 aa
 ab
-al
-at
-ay
+mt
+qX
+lh
 ab
 aC
 aC

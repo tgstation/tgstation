@@ -42,25 +42,6 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/cult,
 /area/shuttle/escape)
-"ak" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"al" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"am" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle/infinite,
@@ -80,15 +61,6 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"at" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/flasher/directional/west{
-	id = "shuttle_flasher"
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
 /turf/open/floor/cult,
@@ -130,13 +102,6 @@
 /obj/item/coin/mythril,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aB" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Brig"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "aC" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
@@ -284,10 +249,6 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"bj" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "bk" = (
 /obj/structure/chair/wood,
 /obj/machinery/light/directional/west,
@@ -313,19 +274,32 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"gz" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "ji" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"oE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"qG" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"rV" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "sM" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
@@ -341,6 +315,12 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"DA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Ec" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -350,6 +330,16 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"HK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"HL" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "IH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -357,6 +347,16 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"Kc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Mz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -416,9 +416,9 @@ ab
 ab
 ab
 ab
-ak
-at
-al
+Kc
+oE
+HL
 as
 aq
 bo
@@ -440,10 +440,10 @@ ab
 ag
 ae
 ab
-bj
-al
-al
-aB
+rV
+HL
+HL
+qG
 aq
 aq
 aq
@@ -464,9 +464,9 @@ ad
 ae
 ad
 ab
-am
-am
-am
+DA
+DA
+DA
 as
 aq
 aJ
@@ -500,7 +500,7 @@ aq
 ab
 ji
 ji
-gz
+HK
 ji
 be
 bf

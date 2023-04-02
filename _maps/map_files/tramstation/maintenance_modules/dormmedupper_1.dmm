@@ -384,10 +384,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Wp" = (
-/obj/machinery/newscaster/directional/south,
-/turf/closed/wall,
-/area/station/maintenance/department/crew_quarters/dorms)
 
 (1,1,1) = {"
 LS
@@ -553,7 +549,7 @@ SD
 vL
 PV
 uH
-Wp
+SD
 Oi
 Oi
 Oi

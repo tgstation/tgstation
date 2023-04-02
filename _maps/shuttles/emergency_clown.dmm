@@ -82,11 +82,6 @@
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
-"aq" = (
-/obj/item/toy/snappop/phoenix,
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/bluespace,
-/area/shuttle/escape)
 "ar" = (
 /obj/machinery/computer/communications{
 	dir = 8
@@ -102,12 +97,6 @@
 "au" = (
 /turf/open/chasm,
 /area/shuttle/escape)
-"av" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
@@ -118,12 +107,6 @@
 /obj/item/crowbar,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
-"az" = (
-/obj/item/greentext/quiet{
-	anchored = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
 "aA" = (
 /obj/machinery/door/airlock/bananium/glass{
 	name = "Emergency Shuttle Greentext"
@@ -148,12 +131,6 @@
 "aF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"aG" = (
-/obj/structure/table,
-/obj/item/toy/sword,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
 "aH" = (
 /obj/structure/table,
 /obj/item/toy/sword,
@@ -168,18 +145,8 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"aJ" = (
-/obj/item/toy/snappop/phoenix,
-/obj/machinery/light/floor,
-/turf/open/floor/bluespace,
-/area/shuttle/escape)
 "aK" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/item/toy/snappop/phoenix,
-/turf/open/floor/bluespace,
-/area/shuttle/escape)
-"aL" = (
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -201,16 +168,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"aR" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/random{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -300,14 +257,31 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
-"lT" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/light/small/directional/north,
+"mR" = (
+/obj/structure/table,
+/obj/item/toy/sword,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "ns" = (
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/light/directional/south,
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
+"ug" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/item/toy/snappop/phoenix,
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
+"uK" = (
+/obj/item/greentext/quiet{
+	anchored = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"CE" = (
+/obj/item/toy/snappop/phoenix,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "EM" = (
@@ -322,11 +296,37 @@
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
+"HG" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"Nd" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
 "RX" = (
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
+"Tc" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"TD" = (
+/obj/item/toy/snappop/phoenix,
+/obj/machinery/light/floor,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "Zf" = (
@@ -370,11 +370,11 @@ au
 au
 ab
 ak
-aR
+Nd
 kT
 kT
 kT
-aR
+Nd
 ak
 ab
 aV
@@ -390,7 +390,7 @@ ai
 an
 ab
 au
-az
+uK
 au
 ab
 aK
@@ -464,14 +464,14 @@ ab
 aV
 ak
 aC
-aG
+mR
 ak
 ak
 ak
-aJ
+TD
 ak
 ak
-aq
+CE
 ab
 ab
 ab
@@ -509,7 +509,7 @@ ah
 al
 al
 ab
-lT
+Tc
 ak
 aE
 aH
@@ -561,13 +561,13 @@ ay
 aZ
 aV
 aV
-aL
-av
+ug
+HG
 aM
 aM
 aM
-av
-aL
+HG
+ug
 ac
 aX
 bb
