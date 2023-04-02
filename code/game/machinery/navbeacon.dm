@@ -4,16 +4,14 @@
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "navbeacon0-f"
-	base_icon_state = "navbeacon"
+	icon_state = "navbeacon0"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
 	armor_type = /datum/armor/machinery_navbeacon
+	circuit = /obj/item/circuitboard/machine/navbeacon
 
-	/// true if cover is open
-	var/open = FALSE
 	/// true if controls are locked
 	var/locked = TRUE
 	/// location response text
@@ -58,18 +56,18 @@
 	if(!codes_txt)
 		return
 
-	codes = new()
+	codes = list()
 
 	var/list/entries = splittext(codes_txt, ";") // entries are separated by semicolons
 
-	for(var/e in entries)
-		var/index = findtext(e, "=") // format is "key=value"
+	for(var/entry in entries)
+		var/index = findtext(entry, "=") // format is "key=value"
 		if(index)
-			var/key = copytext(e, 1, index)
-			var/val = copytext(e, index + length(e[index]))
+			var/key = copytext(entry, 1, index)
+			var/val = copytext(entry, index + length(entry[index]))
 			codes[key] = val
 		else
-			codes[e] = "1"
+			codes[entry] = "1"
 
 ///Removes the nav beacon from the global beacon lists
 /obj/machinery/navbeacon/proc/glob_lists_deregister()
@@ -92,17 +90,12 @@
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-/obj/machinery/navbeacon/update_icon_state()
-	icon_state = "[base_icon_state][open]"
-	return ..()
+/obj/machinery/navbeacon/crowbar_act(mob/living/user, obj/item/I)
+	if(default_deconstruction_crowbar(I))
+		return TRUE
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
-	add_fingerprint(user)
-	open = !open
-	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
-	update_appearance()
-	tool.play_tool_sound(src, 50)
-	return TRUE
+	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
@@ -110,21 +103,21 @@
 		return // prevent intraction when T-scanner revealed
 
 	if (isidcard(I) || istype(I, /obj/item/modular_computer/pda))
-		if(open)
+		if(!panel_open)
 			if (allowed(user))
 				locked = !locked
-				to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+				balloon_alert(user, "controls [locked ? "locked" : "unlocked"]")
 			else
-				to_chat(user, span_danger("Access denied."))
+				balloon_alert(user, "access denied")
 			updateDialog()
 		else
-			to_chat(user, span_warning("You must open the cover first!"))
+			balloon_alert(user, "panel open!")
 		return
 
 	return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
-	interact(user, 1)
+	interact(user)
 
 /obj/machinery/navbeacon/attack_paw(mob/user, list/modifiers)
 	return
@@ -132,30 +125,25 @@
 /obj/machinery/navbeacon/ui_interact(mob/user)
 	. = ..()
 	var/ai = isAI(user)
-	var/turf/T = loc
-	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+	var/turf/our_turf = loc
+	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	if(!open && !ai) // can't alter controls if not open, unless you're an AI
-		to_chat(user, span_warning("The beacon's control cover is closed!"))
-		return
-
-
-	var/t
+	var/data
 
 	if(locked && !ai)
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
+		data = {"<TT><B>Navigation Beacon</B><HR><BR>
 <i>(swipe card to unlock controls)</i><BR>
 Location: [location ? location : "(none)"]</A><BR>
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
-			t += "<LI>[key] ... [codes[key]]"
-		t+= "<UL></TT>"
+			data += "<LI>[key] ... [codes[key]]"
+		data+= "<UL></TT>"
 
 	else
 
-		t = {"<TT><B>Navigation Beacon</B><HR><BR>
+		data = {"<TT><B>Navigation Beacon</B><HR><BR>
 <i>(swipe card to lock controls)</i><BR>
 
 <HR>
@@ -163,21 +151,21 @@ Location: <A href='byond://?src=[REF(src)];locedit=1'>[location ? location : "No
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
-			t += "<LI>[key] ... [codes[key]]"
-			t += " <A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
-			t += " <A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
-		t += " <A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
-		t+= "<UL></TT>"
+			data += "<LI>[key] ... [codes[key]]"
+			data += " <A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
+			data += " <A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
+		data += " <A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
+		data += "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)
-	popup.set_content(t)
+	popup.set_content(data)
 	popup.open()
 	return
 
 /obj/machinery/navbeacon/Topic(href, href_list)
 	if(..())
 		return
-	if(open && !locked)
+	if(isAI(usr) || (!panel_open && !locked))
 		usr.set_machine(src)
 
 		if(href_list["locedit"])
