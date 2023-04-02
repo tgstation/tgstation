@@ -16931,6 +16931,7 @@
 	name = "Brig Control Desk";
 	req_access = list("armory")
 	},
+/obj/item/papercutter,
 /turf/open/floor/plating,
 /area/station/security/warden)
 "fEj" = (
@@ -19673,6 +19674,9 @@
 /obj/item/storage/box/ids,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
+	},
+/obj/item/papercutter{
+	pixel_x = -9
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -23333,6 +23337,7 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "hEw" = (
@@ -68399,6 +68404,9 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
+	},
+/obj/item/papercutter{
+	pixel_x = -4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
