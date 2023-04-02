@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - bugfix: "Removes errant newscaster in the dorm maints of Tramstation."
