@@ -371,7 +371,7 @@
 		holder.chem_temp += clamp((reaction.thermic_constant* total_step_added*thermic_mod), 0, CHEMICAL_MAXIMUM_TEMPERATURE) //old method - for every bit added, the whole temperature is adjusted
 	else //Standard mechanics
 		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT
-		holder.adjust_thermal_energy(heat_energy, TCMB, CHEMICAL_MAXIMUM_TEMPERATURE, old_heat_capacity = cached_heat_capacity) //heat is relative to the beaker conditions
+		holder.adjust_thermal_energy(delta_energy = heat_energy, old_heat_capacity = cached_heat_capacity) //heat is relative to the beaker conditions
 
 	//Give a chance of sounds
 	if(prob(5))
