@@ -829,10 +829,10 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/carbon_dioxide, air)
+	ASSERT_GAS(/datum/gas/pluoxium, air)
 	cached_gases[/datum/gas/halon][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency * 20
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] += heat_efficency * 5
+	cached_gases[/datum/gas/pluoxium][MOLES] += heat_efficency * 2.5
 
 	SET_REACTION_RESULTS(heat_efficency * 5)
 	var/energy_used = heat_efficency * HALON_COMBUSTION_ENERGY
