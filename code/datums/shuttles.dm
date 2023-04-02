@@ -485,7 +485,6 @@
 	name = "Rage-Cage Victimizing Evacuation System"
 	description = "Ever wanted to beat someone up while getting beat up yourself? Introducing the RVES, a shuttle whose interior is mostly taken up by its brutal ragecage."
 	admin_notes = "Shuttle console is in the middle of the ragecage, contains bats and other makeshift weapons and electrified grilles. Does not have a brig."
-	emag_only = TRUE
 	credit_cost = CARGO_CRATE_VALUE * 18
 
 /datum/map_template/shuttle/ferry/base
