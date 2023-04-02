@@ -1436,12 +1436,15 @@
  * - delta_energy: The amount to change the thermal energy by.
  * - min_temp: The minimum temperature that can be reached.
  * - max_temp: The maximum temperature that can be reached.
+ * - old_heat_capacity: Heat capacity before thermal energy change if they are part of the reaction.
  */
-/datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
+/datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000, old_heat_capacity)
 	var/heat_capacity = heat_capacity()
 	if(!heat_capacity)
 		return // no div/0 please
-	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
+	if(!old_heat_capacity)
+		old_heat_capacity = heat_capacity
+	set_temperature(clamp((chem_temp * old_heat_capacity + delta_energy) / heat_capacity), min_temp, max_temp)
 
 /// Applies heat to this holder
 /datum/reagents/proc/expose_temperature(temperature, coeff=0.02)
