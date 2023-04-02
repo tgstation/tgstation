@@ -25,3 +25,59 @@
   - qol: Fugitives can no longer spawn in atmos-unsafe areas.
   SmoSmoSmoSmok:
   - bugfix: pais can upload photos to newscasters again
+2023-04-02:
+  13spacemen:
+  - bugfix: Volume pump overclocking animation is much slower, no more headaches
+  - qol: 'Added screentips to the RPD; screentips and balloon alerts to many atmos
+      machines and devices
+
+      :cl:'
+  DrDiasyl aka DrTuxedo#0931:
+  - rscadd: Added 'biscuit' cards! They can contain documents and can only be accessed
+      by cracking them open, you can't close them back. Nanotrasen now stores spare
+      ID safe codes in them.
+  - rscadd: Placed paper cutters around the station. They're in Bridge, HoP office,
+      Warden office, and Cargo.
+  - rscadd: Now you can order paper cutters at cargo.
+  - bugfix: Now the paper slip is actually paper.
+  - imageadd: The paper slips sprite was slightly tweaked to have text lay more logically,
+      added the corporate paper slip.
+  EOBGames:
+  - qol: Bluespace tags are gone. The information contained within is still available
+      in the same way, just in a more out-of-character format.
+  Hatterhat:
+  - rscadd: Reagent containers that splash on people when thrown (e.g. molotovs) now
+      spill their contents on both target and turf. (This means that throwing molotovs
+      with enough fuel spills fuel puddles, throwing beakers with acid spills acid
+      on the floor, etc. etc.) Unfortunately, molotovs still lack the ability to ignite
+      their own spilled fuel, but we'll get there one day.
+  Helg2:
+  - rscadd: Sleeping with a pillow restores more health.
+  Jacquerel:
+  - rscadd: A new meat-themed space ruin.
+  - bugfix: Organ box now actually requires coolant in order to work.
+  JohnFulpWillard:
+  - balance: Sentient Diseases (and diseases in general) can no longer roll Anacea,
+      Haloperidol & Spaceacillin as their cure, however they've been replaced with
+      chemicals that are either harder to make, or have larger drawbacks (such as
+      putting you to sleep).
+  LT3:
+  - bugfix: The missing table reinforcement for MetaStation's cargo office has been
+      found
+  Melbert:
+  - bugfix: Plates are no longer ephemeral when throwing at people.
+  NamelessFairy:
+  - admin: Exiting the highlander delay window without selecting an option will no
+      longer start highlander mode.
+  Xander3359:
+  - bugfix: Maid in the mirror no longer drops a sprite-less suit.
+  san7890:
+  - bugfix: The prison on IceBox should no longer leak air as often.
+  tralezab:
+  - rscdel: Votes out some sussy emergency meeting code
+  vinylspiders:
+  - bugfix: fixes emissives blocker layering issue that was causing emissives on clothing
+      to not display at all
+  - bugfix: admins may now send headset messages to silicon mobs as long as they have
+      a radio
+  - bugfix: fixes floating point inaccuracies in numeric prefs
