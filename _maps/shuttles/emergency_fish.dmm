@@ -22,25 +22,18 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "aE" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aF" = (
 /obj/structure/chair/pew/right{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/dark/half/contrasted,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "aR" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/misc/beach/coastline_t{
-	dir = 4
-	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/chair/comfy/shuttle{
@@ -92,6 +85,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "fh" = (
@@ -206,7 +200,6 @@
 /area/shuttle/escape)
 "kE" = (
 /obj/structure/closet/crate/internals,
-/obj/machinery/light/directional/south,
 /obj/item/clothing/mask/breath{
 	pixel_x = -3;
 	pixel_y = -3
@@ -223,6 +216,7 @@
 	name = "emergency lifejacket"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "kX" = (
@@ -243,7 +237,6 @@
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 1
 	},
@@ -266,7 +259,6 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -287,7 +279,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pa" = (
@@ -302,7 +294,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "pk" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
@@ -356,7 +347,6 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "rk" = (
-/obj/machinery/light/directional/south,
 /obj/structure/railing/corner{
 	dir = 4
 	},
@@ -389,7 +379,6 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "tR" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
@@ -409,7 +398,6 @@
 /turf/open/water/beach/biodome,
 /area/shuttle/escape)
 "wq" = (
-/obj/machinery/light/directional/east,
 /obj/machinery/computer/security{
 	dir = 8
 	},
@@ -452,7 +440,6 @@
 /area/shuttle/escape)
 "AN" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/light/directional/west,
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
@@ -488,17 +475,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "CG" = (
-/obj/machinery/light/directional/south,
-/obj/machinery/stasis{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape)
 "CI" = (
 /obj/item/kirbyplants/random,
@@ -573,7 +554,6 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Hk" = (
-/obj/machinery/light/directional/west,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
@@ -694,10 +674,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Ml" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/escape)
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "Mp" = (
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
@@ -708,7 +691,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "MO" = (
-/obj/machinery/light/directional/north,
 /obj/item/fishing_line/bouncy,
 /obj/item/fishing_line/bouncy,
 /obj/item/fishing_line/cloaked,
@@ -720,6 +702,7 @@
 /obj/structure/closet{
 	anchored = 1
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Nc" = (
@@ -756,7 +739,6 @@
 /area/shuttle/escape)
 "OF" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 1
 	},
@@ -806,7 +788,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Sf" = (
@@ -910,20 +892,12 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
-"WT" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/dark/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "WX" = (
 /obj/structure/sign/warning,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "WY" = (
 /obj/machinery/vending/wallmed/directional/east,
-/obj/machinery/light/directional/east,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -1004,13 +978,13 @@ Lo
 Id
 Sf
 YO
-WT
+Id
 xH
 Me
 pk
 FA
 VD
-CG
+FA
 kd
 Me
 UW
@@ -1142,7 +1116,7 @@ Kg
 aa
 WO
 aT
-qA
+aR
 KW
 sh
 Ih
@@ -1152,16 +1126,16 @@ Ih
 Ih
 Tn
 Tn
+CG
 Tn
 Tn
 Tn
-Tn
-Tn
+CG
 Tn
 Tn
 PQ
 jw
-Nc
+Ml
 gX
 Pd
 Ie
@@ -1236,7 +1210,7 @@ gI
 UL
 UL
 gI
-aR
+UL
 Me
 eQ
 rk
@@ -1272,7 +1246,7 @@ pa
 jL
 gd
 sr
-Ml
+sr
 jL
 Me
 UW
