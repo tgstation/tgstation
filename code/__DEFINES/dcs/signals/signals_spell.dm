@@ -35,8 +35,8 @@
 	#define INVOCATION_MESSAGE 1
 	///index for the invocation type string
 	#define INVOCATION_TYPE 2
-	///index for the invocation garble boolean
-	#define INVOCATION_GARBLE 3
+	///index for the invocation garble probability number
+	#define INVOCATION_GARBLE_PROB 3
 
 // Spell type signals
 

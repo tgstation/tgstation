@@ -212,9 +212,13 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = CASTING_CLOTHES
 
+/obj/item/clothing/glasses/eyepatch/medical/chuuni/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_EYES)
+		ADD_TRAIT(src, TRAIT_NODROP, type)
+
 /obj/item/clothing/glasses/eyepatch/medical/chuuni/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, type)
 	var/static/list/chuuni_backstories
 	if(!chuuni_backstories)
 		chuuni_backstories = list(

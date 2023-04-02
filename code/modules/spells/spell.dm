@@ -66,7 +66,7 @@
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
 	var/invocation_self_message
 	/// if true, doesn't garble the invocation sometimes with backticks
-	var/garbled_invocation = TRUE
+	var/garbled_invocation_prob = 50
 	/// What type of invocation the spell is.
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
@@ -331,21 +331,21 @@
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()
 	//lists can be sent by reference, a string would be sent by value
-	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation)
+	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation_prob)
 	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
 	var/used_invocation_message = invocation_list[INVOCATION_MESSAGE]
 	var/used_invocation_type = invocation_list[INVOCATION_TYPE]
-	var/used_invocation_garble = invocation_list[INVOCATION_GARBLE]
+	var/used_invocation_garble_prob = invocation_list[INVOCATION_GARBLE_PROB]
 
 	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
-			if(used_invocation_garble && prob(50))
+			if(prob(used_invocation_garble_prob))
 				owner.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
 				owner.say(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
-			if(used_invocation_garble && prob(50))
+			if(prob(used_invocation_garble_prob))
 				owner.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
 				owner.whisper(used_invocation_message, forced = "spell ([src])")

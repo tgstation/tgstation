@@ -75,7 +75,7 @@
 	var/static/chuuni_book_spawned = FALSE
 
 /obj/structure/bookcase/random/fiction/after_random_load()
-	if(!chuuni_book_spawned)
+	if(!chuuni_book_spawned && is_station_level(z))
 		chuuni_book_spawned = TRUE
 		new /obj/item/book/granter/chuunibyou(src)
 

@@ -82,7 +82,7 @@
 	// this lets mimes cast with it, but, um... might get them lynched
 	casting_spell = TRUE
 	invocation_list[INVOCATION_TYPE] = INVOCATION_SHOUT
-	invocation_list[INVOCATION_GARBLE] = FALSE
+	invocation_list[INVOCATION_GARBLE_PROB] = 0
 	var/chuuni_invocation = chuunibyou_invocations[spell.school]
 	if(!chuuni_invocation) // someone forgot to update the CHUUNI LIST to include a desc for the new school
 		stack_trace("Chunnibyou invocations is missing a line for spell school \"[spell.school]\"")
