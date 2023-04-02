@@ -84,7 +84,6 @@
 /area/shuttle/escape)
 "aq" = (
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/directional/south,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -104,7 +103,9 @@
 /turf/open/chasm,
 /area/shuttle/escape)
 "av" = (
-/obj/machinery/light/directional/north,
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "ay" = (
@@ -150,7 +151,7 @@
 "aG" = (
 /obj/structure/table,
 /obj/item/toy/sword,
-/obj/machinery/light/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aH" = (
@@ -169,7 +170,7 @@
 /area/shuttle/escape)
 "aJ" = (
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/floor,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aK" = (
@@ -180,7 +181,6 @@
 "aL" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aM" = (
@@ -203,9 +203,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aR" = (
-/obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/bluespace,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -297,6 +302,7 @@
 /area/shuttle/escape)
 "lT" = (
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "ns" = (
@@ -363,13 +369,13 @@ au
 au
 au
 ab
-aJ
-kT
-kT
+ak
+aR
 kT
 kT
 kT
 aR
+ak
 ab
 aV
 aY
@@ -455,14 +461,14 @@ ag
 ak
 ns
 ab
-av
+aV
 ak
 aC
 aG
 ak
 ak
 ak
-ak
+aJ
 ak
 ak
 aq
@@ -556,11 +562,11 @@ aZ
 aV
 aV
 aL
+av
 aM
 aM
 aM
-aM
-aM
+av
 aL
 ac
 aX
