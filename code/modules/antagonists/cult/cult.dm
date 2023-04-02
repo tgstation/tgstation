@@ -472,7 +472,7 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
+		if(length(true_cultists))
 			parts += printplayerlist(true_cultists)
 		else
 			parts += printplayerlist(members)
