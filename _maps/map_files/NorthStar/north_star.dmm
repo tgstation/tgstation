@@ -2774,6 +2774,8 @@
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/syringe,
+/obj/structure/sign/poster/official/random/directional/west,
+/obj/structure/sign/departments/medbay/alt/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "aIV" = (
@@ -15217,6 +15219,7 @@
 "dXy" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/structure/closet/secure_closet/medical1,
+/obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "dXz" = (
@@ -35014,6 +35017,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "jHc" = (
@@ -37113,6 +37117,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "kkr" = (
@@ -60363,6 +60368,7 @@
 /obj/item/reagent_containers/chem_pack{
 	pixel_x = 6
 	},
+/obj/structure/sign/departments/medbay/alt/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "qsy" = (
@@ -63722,6 +63728,7 @@
 "rip" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/structure/closet/crate/freezer/blood,
+/obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "riy" = (
@@ -70235,6 +70242,7 @@
 /obj/structure/table/glass,
 /obj/item/bonesetter,
 /obj/item/stack/medical/bone_gel/four,
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "tgq" = (
