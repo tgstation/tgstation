@@ -320,18 +320,18 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
 	if(!anchored)
 		return ..()
-		if(panel_open)
-			balloon_alert(user, "close panel!")
-			return
-		if(!can_interact(user))
-			return
-		on = !on
-
-		balloon_alert(user, "turned [on ? "on" : "off"]")
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+	if(panel_open)
+		balloon_alert(user, "close panel!")
 		return
-	return ..()
+	if(!can_interact(user))
+		return
+
+	on = !on
+	balloon_alert(user, "turned [on ? "on" : "off"]")
+	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+	update_appearance()
+
+	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
