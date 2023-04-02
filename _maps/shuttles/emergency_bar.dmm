@@ -507,19 +507,8 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bX" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"bY" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"bZ" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "ca" = (
 /obj/machinery/light/directional/south,
@@ -582,13 +571,13 @@ aC
 aH
 aL
 ab
-bY
-bH
+aE
+bX
 aZ
 bc
 aZ
-bH
-bZ
+bX
+aE
 ab
 bp
 bs
@@ -677,7 +666,7 @@ ab
 aD
 aE
 aE
-bX
+aE
 aE
 aE
 aE
