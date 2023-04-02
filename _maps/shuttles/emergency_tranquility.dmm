@@ -324,7 +324,6 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "hh" = (
-/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "hk" = (
@@ -555,7 +554,6 @@
 	},
 /obj/machinery/microwave,
 /obj/structure/table/wood,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "kE" = (
@@ -609,18 +607,14 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "mj" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark/textured_half,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/light/directional/south,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "mq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "mL" = (
@@ -630,7 +624,6 @@
 	pixel_y = 2
 	},
 /obj/item/lighter,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -749,6 +742,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "nV" = (
@@ -831,7 +825,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/line,
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "oV" = (
@@ -893,7 +886,6 @@
 /obj/structure/table/reinforced{
 	color = "#c1b6a5"
 	},
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -964,7 +956,6 @@
 	pixel_y = -11;
 	pixel_x = 4
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "qn" = (
@@ -991,14 +982,6 @@
 /area/shuttle/escape)
 "qU" = (
 /turf/open/floor/carpet/red,
-/area/shuttle/escape)
-"ri" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark/textured_half,
 /area/shuttle/escape)
 "rK" = (
 /obj/machinery/vending/wallmed/directional/south,
@@ -1105,7 +1088,6 @@
 "ts" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/stasis,
-/obj/machinery/light/directional,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1230,8 +1212,13 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "vX" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/catwalk_floor,
+/obj/structure/railing{
+	layer = 3.1
+	},
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "wi" = (
 /obj/structure/table/reinforced,
@@ -1280,7 +1267,6 @@
 "wV" = (
 /obj/machinery/computer/crew,
 /obj/structure/sign/flag/nanotrasen/directional/north,
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "xK" = (
@@ -1424,6 +1410,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zB" = (
@@ -1474,8 +1461,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "AC" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "AF" = (
 /turf/open/floor/wood/tile,
@@ -1533,7 +1520,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "BC" = (
@@ -1552,7 +1538,6 @@
 /obj/structure/hedge{
 	icon_state = "hedge-8"
 	},
-/obj/machinery/light/floor,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
@@ -1574,6 +1559,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "CR" = (
@@ -1584,10 +1570,10 @@
 /obj/machinery/computer/operating{
 	dir = 4
 	},
-/obj/machinery/light/directional,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Dk" = (
@@ -1928,6 +1914,7 @@
 "IO" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/keycard_auth/directional/south,
+/obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "IR" = (
@@ -2198,6 +2185,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "NV" = (
@@ -2277,7 +2265,6 @@
 /area/shuttle/escape)
 "Pi" = (
 /obj/structure/closet/secure_closet/bar,
-/obj/machinery/light/directional/west,
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "Pq" = (
@@ -2350,7 +2337,6 @@
 /area/shuttle/escape)
 "Rx" = (
 /mob/living/simple_animal/bot/hygienebot,
-/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "RD" = (
@@ -2483,7 +2469,6 @@
 /area/shuttle/escape)
 "SU" = (
 /obj/structure/closet/radiation,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2578,6 +2563,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "VR" = (
@@ -2606,7 +2592,6 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "VZ" = (
@@ -2934,7 +2919,7 @@ fC
 ZJ
 kp
 yj
-IZ
+AC
 ux
 eW
 hx
@@ -2984,7 +2969,7 @@ IH
 hT
 Pi
 ux
-vX
+IZ
 ux
 Km
 gg
@@ -3116,7 +3101,7 @@ si
 sY
 sY
 qB
-AC
+CR
 ux
 jt
 Kg
@@ -3192,7 +3177,7 @@ ag
 ag
 nA
 bS
-Sz
+mj
 oe
 oe
 Sz
@@ -3209,7 +3194,7 @@ XC
 kn
 vB
 Zh
-Or
+AF
 wG
 zI
 yy
@@ -3234,7 +3219,7 @@ ag
 HL
 pf
 Zh
-AF
+Or
 nE
 HS
 EH
@@ -3316,7 +3301,7 @@ zb
 xS
 xS
 tB
-AC
+CR
 ux
 Ty
 Kg
@@ -3456,7 +3441,7 @@ fL
 ux
 nM
 GM
-ri
+GM
 Sz
 hP
 jI
@@ -3531,7 +3516,7 @@ fL
 ux
 DZ
 xQ
-mj
+xQ
 ux
 Sz
 KV
@@ -3632,7 +3617,7 @@ fL
 Sz
 LG
 XX
-Hq
+vX
 OM
 GK
 Jo
