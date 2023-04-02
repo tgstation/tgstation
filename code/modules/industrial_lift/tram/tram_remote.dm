@@ -18,6 +18,8 @@
 	var/mode = TRAMCTRL_FAST
 	///weakref to the tram piece we control
 	var/datum/weakref/tram_ref
+	///cooldown for the remote
+	COOLDOWN_DECLARE(tram_remote)
 
 ///set tram control direction
 /obj/item/tram_remote/attack_self_secondary(mob/user)
@@ -59,6 +61,8 @@
 				. += "The rapid mode light is on."
 			if(TRAMCTRL_SAFE)
 				. += "The rapid mode light is off."
+		if (!COOLDOWN_FINISHED(src, tram_remote))
+			. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)] seconds."
 		. += "Left-click to dispatch tram."
 		. += "Right-click to toggle direction."
 		. += "CTRL-click to toggle safety bypass."
@@ -77,17 +81,21 @@
 		. += mutable_appearance(icon, "tramremote_emag")
 
 /obj/item/tram_remote/attack_self(mob/user)
-	try_force_tram(user)
+	if (!COOLDOWN_FINISHED(src, tram_remote))
+		balloon_alert(user, "cooldown: [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)] seconds")
+		return FALSE
+	if(try_force_tram(user))
+		COOLDOWN_START(src, tram_remote, 2 MINUTES)
 
 ///send our selected commands to the tram
 /obj/item/tram_remote/proc/try_force_tram(mob/user)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!tram_part)
 		balloon_alert(user, "no tram linked!")
-		return
+		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		balloon_alert(user, "tram busy!")
-		return
+		return FALSE
 	var/tram_id = tram_part.specific_lift_id
 	var/destination_platform = null
 	var/platform = 0
@@ -98,14 +106,14 @@
 			platform = clamp(tram_part.idle_platform.platform_code + 1, 1, INFINITY)
 	if(platform == tram_part.idle_platform.platform_code)
 		balloon_alert(user, "invalid command!")
-		return
+		return FALSE
 	for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks[tram_id])
 		if(destination.platform_code == platform)
 			destination_platform = destination
 			break
 	if(!destination_platform)
 		balloon_alert(user, "invalid command!")
-		return
+		return FALSE
 	else
 		switch(mode)
 			if(TRAMCTRL_FAST) // arg is TRUE to bypass safeties
@@ -113,6 +121,7 @@
 			if(TRAMCTRL_SAFE)
 				tram_part.tram_travel(destination_platform, FALSE)
 		balloon_alert(user, "tram dispatched")
+		return TRUE
 
 /obj/item/tram_remote/afterattack(atom/target, mob/user)
 	link_tram(user, target)

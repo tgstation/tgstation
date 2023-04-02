@@ -44,7 +44,7 @@
 	name = "Tram Remote Control"
 	desc = "When linked to a tram's on board computer systems, this device allows the user to manipulate the controls remotely. \
 			Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
-			Perfect for running someone over in the name of a tram malfunction!"
+			Perfect for running someone over in the name of a tram malfunction! Has a 2 minute cooldown."
 	item = /obj/item/tram_remote
 	cost = 2
 
