@@ -17,6 +17,8 @@
 	var/heal_amount = CHUUNIBYOU_HEAL_AMOUNT
 	/// cooldown for healing
 	COOLDOWN_DECLARE(heal_cooldown)
+	/// are we casting a spell right now
+	var/casting_spell = FALSE
 
 /datum/component/chuunibyou/Initialize()
 	if(!isliving(parent))
@@ -43,14 +45,25 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
 	RegisterSignal(parent, COMSIG_MOB_PRE_INVOCATION, PROC_REF(on_pre_invocation))
-	if(heal_amount)
-		RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
+	RegisterSignal(parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
+	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
 
 /datum/component/chuunibyou/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_PRE_INVOCATION))
-	if(heal_amount)
-		UnregisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST)
+	UnregisterSignal(parent, list(
+		COMSIG_MOB_SPELL_PROJECTILE,
+		COMSIG_MOB_PRE_INVOCATION,
+		COMSIG_LIVING_TRY_SPEECH,
+		COMSIG_MOB_AFTER_SPELL_CAST,
+	))
+
+/// signal sent when the parent tries to speak. we let speech pass if we are casting a spell so mimes still chuuni their spellcasts
+/// (this may end in the mime dying)
+/datum/component/chuunibyou/proc/on_try_speech(datum/source, message, ignore_spam, forced)
+	SIGNAL_HANDLER
+
+	if(casting_spell)
+		return COMPONENT_CAN_ALWAYS_SPEAK
 
 ///signal sent when the parent casts a spell that has a projectile
 /datum/component/chuunibyou/proc/on_spell_projectile(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
@@ -65,6 +78,9 @@
 /datum/component/chuunibyou/proc/on_pre_invocation(mob/living/source, datum/action/cooldown/spell/spell, list/invocation_list)
 	SIGNAL_HANDLER
 
+	// this makes it bypass speech checks (being a mime) until the spell is done casting
+	// this lets mimes cast with it, but, um... might get them lynched
+	casting_spell = TRUE
 	invocation_list[INVOCATION_TYPE] = INVOCATION_SHOUT
 	invocation_list[INVOCATION_GARBLE] = FALSE
 	var/chuuni_invocation = chuunibyou_invocations[spell.school]
@@ -77,11 +93,13 @@
 /datum/component/chuunibyou/proc/on_after_spell_cast(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on)
 	SIGNAL_HANDLER
 
+	casting_spell = FALSE
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
 		return
 	COOLDOWN_START(src, heal_cooldown, CHUUNIBYOU_COOLDOWN_TIME)
 
 	source.heal_overall_damage(heal_amount)
+	playsound(source, 'sound/magic/staff_healing.ogg', 30)
 	to_chat(source, span_danger("You feel slightly healed by your chuuni powers."))
 
 /datum/component/chuunibyou/no_healing
