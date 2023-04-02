@@ -11,13 +11,13 @@
 /// Numerical define for dangerous severity advanced virus
 #define ADV_DISEASE_DANGEROUS 5
 /// Percentile for low severity advanced virus
-#define ADV_RNG_LOW 30
+#define ADV_RNG_LOW 40
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
 /// Percentile for low transmissibility advanced virus
-#define ADV_SPREAD_LOW 30
+#define ADV_SPREAD_LOW 15
 /// Percentile for mid transmissibility advanced virus
-#define ADV_SPREAD_MID 90
+#define ADV_SPREAD_MID 85
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -82,7 +82,7 @@
 	var/datum/disease/virus
 	if(chosen == special_run_option)
 		virus = pick(get_list())
-	else 
+	else
 		virus = chosen
 	event.virus_type = virus
 
@@ -141,7 +141,9 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 10
+	weight = 15
+	min_players = 35 // To avoid shafting lowpop
+	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
@@ -190,7 +192,7 @@
 			chosen_value = null
 		else
 			return ADMIN_CANCEL_EVENT
-	
+
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
 	event.max_symptoms = chosen_value
@@ -411,7 +413,7 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	var/res = rand(2, 6)
+	var/res = rand(4, 7)
 	cures = list(pick(advance_cures[res]))
 	oldres = res
 	// Get the cure name from the cure_id

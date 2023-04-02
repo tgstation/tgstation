@@ -99,3 +99,14 @@
 /obj/effect/anomaly/grav/high/Destroy()
 	QDEL_NULL(grav_field)
 	. = ..()
+
+///Bigger, meaner, immortal gravity anomaly. although this is just the super grav anomaly but bigger and shattering move force
+/obj/effect/anomaly/grav/high/big
+	immortal = TRUE
+	aSignal = null
+	move_force = MOVE_FORCE_OVERPOWERING
+
+/obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+
+	transform *= 3
