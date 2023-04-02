@@ -177,7 +177,7 @@
 
 // Halon:
 /// Energy released per mole of BZ consumed during halon formation.
-#define HALON_FORMATION_ENERGY 90685.8
+#define HALON_FORMATION_ENERGY 91232.1
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
