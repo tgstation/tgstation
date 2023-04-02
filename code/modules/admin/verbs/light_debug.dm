@@ -21,8 +21,9 @@
 /// Sets up this light source to be debugged, setting up in world buttons to control and move it
 /// Also freezes it, so it can't change in future
 /datum/light_source/proc/debug()
-	if(QDELETED(src) || isturf(source_atom))
+	if(QDELETED(src) || isturf(source_atom) || HAS_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED))
 		return
+	ADD_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, REF(src))
 	source_atom.add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
 	var/static/uid = 0
 	if(!source_atom.render_target)
