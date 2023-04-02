@@ -167,7 +167,6 @@
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aG" = (
@@ -444,13 +443,13 @@
 "bC" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bF" = (
@@ -499,11 +498,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bM" = (
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "bN" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bO" = (
@@ -519,7 +518,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bQ" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
@@ -541,6 +539,16 @@
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"sf" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"tQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/bear/fightpit,
+/obj/machinery/light/small/red/dim/directional/east,
+/turf/open/floor/engine,
+/area/shuttle/escape)
 "wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/optable,
@@ -554,11 +562,25 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"HD" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "Jl" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"Rf" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/engine,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -595,7 +617,7 @@ aF
 aH
 ad
 ax
-aJ
+bO
 aJ
 aJ
 aJ
@@ -616,7 +638,7 @@ aa
 ad
 Jl
 aG
-aP
+HD
 ad
 aX
 ax
@@ -642,7 +664,7 @@ av
 aH
 aP
 ab
-ax
+sf
 bc
 bc
 bc
@@ -666,7 +688,7 @@ ac
 aI
 ac
 ad
-bN
+ax
 bd
 bd
 bd
@@ -734,7 +756,7 @@ ag
 ak
 ap
 ab
-ay
+Rf
 ay
 ay
 aS
@@ -768,7 +790,7 @@ ax
 bl
 ax
 ax
-ax
+bN
 ad
 bA
 gn
@@ -880,7 +902,7 @@ aa
 ab
 aE
 aN
-aN
+tQ
 aV
 aD
 bi
