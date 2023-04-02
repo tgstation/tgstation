@@ -183,7 +183,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -649,7 +648,6 @@
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -746,6 +744,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bX" = (
@@ -839,15 +838,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cB" = (
@@ -860,10 +853,6 @@
 /area/shuttle/escape)
 "cC" = (
 /obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"cF" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cG" = (
@@ -1122,7 +1111,7 @@ ab
 ad
 af
 ah
-cA
+an
 av
 av
 aH
@@ -1134,7 +1123,7 @@ an
 av
 av
 av
-cA
+an
 aE
 af
 bw
@@ -1510,7 +1499,7 @@ bl
 bq
 af
 bC
-cF
+bH
 ae
 af
 af
@@ -1574,7 +1563,7 @@ af
 no
 bo
 ai
-bZ
+cA
 hB
 aa
 aa
