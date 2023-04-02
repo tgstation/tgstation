@@ -27,7 +27,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/west,
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "al" = (
@@ -207,7 +206,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -216,7 +214,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/vending/wallmed/directional/west{
 	use_power = 0
 	},
@@ -247,7 +244,6 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
@@ -328,7 +324,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "be" = (
@@ -384,6 +379,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bk" = (
@@ -491,7 +487,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/evac/directional/east,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -511,6 +506,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "fC" = (
@@ -543,10 +539,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"kZ" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Holding Area"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
 "oY" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -558,6 +560,7 @@
 /obj/machinery/vending/wallmed/directional/east{
 	use_power = 0
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "qX" = (
@@ -631,6 +634,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IX" = (
@@ -658,12 +662,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"TB" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Holding Area"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+"Rs" = (
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"TB" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "UY" = (
 /obj/item/storage/medkit/fire,
@@ -675,6 +680,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "UZ" = (
@@ -707,8 +713,8 @@ bu
 aa
 dW
 ak
-al
-sY
+Rs
+aZ
 az
 aD
 aJ
@@ -750,7 +756,7 @@ sY
 ae
 al
 al
-sY
+kZ
 aA
 aF
 aK
@@ -855,7 +861,7 @@ sY
 Dh
 Kj
 fC
-ab
+sY
 aA
 UZ
 UZ
