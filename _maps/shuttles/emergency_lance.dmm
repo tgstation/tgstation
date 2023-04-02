@@ -80,7 +80,6 @@
 /obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
 	dir = 4
 	},
-/obj/structure/marker_beacon/indigo,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cw" = (
@@ -233,10 +232,12 @@
 /turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "iy" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured,
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
 /area/shuttle/escape)
 "iz" = (
 /obj/structure/chair/comfy/shuttle,
@@ -692,6 +693,7 @@
 	dir = 4
 	},
 /obj/effect/station_crash/devastating,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xa" = (
@@ -709,6 +711,7 @@
 /obj/machinery/iv_drip,
 /obj/structure/bed/roller,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -724,7 +727,6 @@
 "xR" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "yB" = (
@@ -783,6 +785,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "AS" = (
@@ -807,7 +810,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 4
 	},
@@ -1017,7 +1019,6 @@
 /obj/machinery/recharger{
 	pixel_x = 5
 	},
-/obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
@@ -1248,7 +1249,6 @@
 /obj/item/storage/medkit/emergency{
 	pixel_x = -2
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/dark/side{
 	dir = 9
@@ -1290,7 +1290,6 @@
 /area/shuttle/escape)
 "OM" = (
 /obj/machinery/computer/crew,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
@@ -1323,7 +1322,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 1
 	},
@@ -1399,8 +1397,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
 	dir = 4
 	},
-/obj/structure/marker_beacon/indigo,
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "So" = (
@@ -1734,7 +1731,7 @@ MZ
 Lj
 Gw
 YN
-mx
+vf
 WQ
 nS
 Lg
@@ -2050,7 +2047,7 @@ gF
 WQ
 XA
 WQ
-re
+iy
 eD
 EX
 WI
@@ -2070,7 +2067,7 @@ WQ
 Wg
 kN
 So
-iy
+xR
 Px
 WQ
 GA
@@ -2115,14 +2112,14 @@ cz
 "}
 (10,1,1) = {"
 jo
-Sg
+jY
 wD
 ce
 jM
 jY
+Sg
 Yq
-Yq
-Yq
+Sg
 Yq
 Hq
 cw
