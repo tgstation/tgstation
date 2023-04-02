@@ -10,6 +10,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bc" = (
@@ -57,7 +58,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ea" = (
-/obj/machinery/light/cold/directional/south,
 /obj/structure/chair{
 	dir = 1;
 	name = "Ringside Seat";
@@ -301,6 +301,7 @@
 	pixel_y = 9
 	},
 /obj/structure/fireaxecabinet/directional/east,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "st" = (
@@ -314,8 +315,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "su" = (
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "sQ" = (
 /obj/machinery/door/airlock/public/glass{
@@ -338,8 +340,8 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "tQ" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "uk" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -356,10 +358,6 @@
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"vt" = (
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "vu" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -453,7 +451,6 @@
 /area/shuttle/escape)
 "Ba" = (
 /obj/structure/table,
-/obj/machinery/light/small/directional/west,
 /obj/item/storage/medkit/fire{
 	pixel_y = 3;
 	pixel_x = -4
@@ -474,6 +471,7 @@
 /obj/machinery/vending/wallmed/directional/east{
 	name = "Hooper's First Medical Kit"
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "BJ" = (
@@ -536,6 +534,7 @@
 "Db" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/item/toy/basketball,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/diagonal,
 /area/shuttle/escape)
 "DO" = (
@@ -566,7 +565,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Fp" = (
-/obj/machinery/light/cold/directional/north,
 /obj/structure/rack{
 	name = "Referee's Gear"
 	},
@@ -642,7 +640,6 @@
 	pixel_x = 8;
 	pixel_y = -5
 	},
-/obj/machinery/light/cold/directional/north,
 /obj/item/clothing/head/utility/hardhat/red{
 	name = "A La Penners' Helmet";
 	pixel_x = 8;
@@ -697,7 +694,6 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "MD" = (
-/obj/machinery/light/cold/directional/east,
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
@@ -728,7 +724,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Oq" = (
-/obj/machinery/light/cold/directional/north,
 /obj/structure/rack{
 	name = "SPARE B-BALLS"
 	},
@@ -790,6 +785,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/north,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Sv" = (
@@ -860,6 +856,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ty" = (
@@ -875,7 +872,85 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TH" = (
-/obj/machinery/light/cold/directional/west,
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate{
+	name = "lifejackets"
+	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Ua" = (
@@ -968,7 +1043,7 @@ Qy
 Qy
 Qy
 Qy
-TH
+Qy
 Qy
 Qy
 KL
@@ -978,9 +1053,9 @@ Tf
 "}
 (3,1,1) = {"
 NO
-KW
+tQ
 NO
-gY
+TH
 Qy
 Qy
 Qy
@@ -995,7 +1070,7 @@ Tf
 "}
 (4,1,1) = {"
 NO
-su
+KW
 IJ
 NO
 IJ
@@ -1073,16 +1148,16 @@ Jv
 Jv
 Jv
 DW
-Ce
+bF
 NO
 QW
 Tf
 "}
 (9,1,1) = {"
 NO
-vt
+QN
 BJ
-qL
+su
 go
 Qy
 HO
@@ -1175,7 +1250,7 @@ Jv
 Jv
 Jv
 Ku
-Ce
+bF
 NO
 QW
 Tf
@@ -1269,7 +1344,7 @@ Tf
 NO
 Uh
 By
-tQ
+Uh
 Ja
 Tg
 Qy
