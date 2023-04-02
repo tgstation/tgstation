@@ -111,7 +111,6 @@
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
 	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
@@ -119,6 +118,7 @@
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/closet/emcloset,
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aE" = (
@@ -137,7 +137,6 @@
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/machinery/light/small/directional/west,
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
@@ -278,20 +277,22 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bl" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "bm" = (
-/obj/structure/table,
-/obj/machinery/light/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bn" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/light/small/directional/south,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
@@ -321,7 +322,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Nt" = (
-/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "XC" = (
@@ -363,13 +364,13 @@ aA
 aF
 aG
 ad
-bn
+aC
+bm
 ao
 ao
 ao
-ao
-ao
-bo
+bm
+aC
 ad
 bb
 bq
@@ -385,7 +386,7 @@ aq
 ad
 aA
 aG
-aJ
+bl
 ad
 aQ
 aC
@@ -458,7 +459,7 @@ ad
 aB
 aC
 aK
-bm
+aM
 aC
 aC
 aC
@@ -552,10 +553,10 @@ ad
 ad
 ad
 aE
-bl
 an
 an
-aR
+an
+bo
 am
 am
 am
