@@ -1438,7 +1438,7 @@
  * - max_temp: The maximum temperature that can be reached.
  * - old_heat_capacity: Heat capacity before thermal energy change if they are part of the reaction.
  */
-/datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000, old_heat_capacity)
+/datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = TCMB, max_temp = CHEMICAL_MAXIMUM_TEMPERATURE, old_heat_capacity)
 	var/heat_capacity = heat_capacity()
 	if(!heat_capacity)
 		return // no div/0 please
