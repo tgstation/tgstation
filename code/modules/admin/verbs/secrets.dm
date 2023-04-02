@@ -348,8 +348,16 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
-			message_admins("[key_name_admin(holder)] broke all lights")
+			var/station_only = tgui_alert(usr,"Break which lights?", "And the lord said...", list("All Lights", "Station Z Only"))
+			switch(station_only)
+				if("All Lights")
+					station_only = FALSE
+				if("Station Z Only")
+					station_only = TRUE
+			message_admins("[key_name_admin(holder)] broke [station_only ? "all station" : "all"] lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
+				if(station_only && !is_station_level(L.z))
+					continue
 				L.break_light_tube()
 				stoplag()
 		if("whiteout")
