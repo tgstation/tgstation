@@ -227,6 +227,7 @@
 	req_access = list("command")
 	},
 /obj/effect/turf_decal/raven/two,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aL" = (
@@ -447,7 +448,6 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -983,8 +983,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cK" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cL" = (
@@ -1009,6 +1011,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cP" = (
@@ -1302,11 +1305,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dp" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dq" = (
@@ -1327,14 +1327,6 @@
 "ds" = (
 /obj/machinery/light/directional/south,
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"dt" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1834,7 +1826,7 @@ bP
 cU
 br
 dg
-dp
+cr
 dv
 ax
 dI
@@ -1868,7 +1860,7 @@ bP
 bP
 da
 dh
-bP
+dp
 bP
 dA
 dJ
@@ -1931,7 +1923,7 @@ bP
 bP
 bP
 bP
-cK
+bP
 cP
 ax
 ax
@@ -2026,7 +2018,7 @@ bc
 bm
 ax
 bH
-bP
+dp
 bP
 bP
 bQ
@@ -2135,7 +2127,7 @@ bP
 bP
 bP
 bP
-cK
+bP
 cP
 ax
 ax
@@ -2208,7 +2200,7 @@ bP
 bP
 de
 dn
-bP
+dp
 bP
 dA
 dJ
@@ -2242,7 +2234,7 @@ bP
 cU
 br
 do
-dt
+cs
 dy
 ax
 dQ
@@ -2272,7 +2264,7 @@ ax
 ax
 cI
 cN
-cN
+cK
 ax
 ax
 cd
