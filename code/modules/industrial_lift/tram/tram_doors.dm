@@ -46,9 +46,8 @@
 
 /obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
 	if(command == "open" && icon_state == "[base_state]open")
-		if(!forced)
-			if(!hasPower())
-				return FALSE
+		if(!forced && !hasPower())
+			return FALSE
 		return TRUE
 	if(command == "close" && icon_state == base_state)
 		return TRUE
