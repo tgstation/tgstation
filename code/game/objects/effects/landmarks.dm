@@ -306,14 +306,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-//xenos, morphs and nightmares spawn here
-/obj/effect/landmark/xeno_spawn
-	name = "xeno_spawn"
+//generic maintenance locations
+/obj/effect/landmark/generic_maintenance_landmark
+	name = "generic_maintenance_spawn"
 	icon_state = "xeno_spawn"
 
-/obj/effect/landmark/xeno_spawn/Initialize(mapload)
+/obj/effect/landmark/generic_maintenance_landmark/Initialize(mapload)
 	..()
-	GLOB.xeno_spawn += loc
+	GLOB.generic_maintenance_landmarks += loc
 	return INITIALIZE_HINT_QDEL
 
 //objects with the stationloving component (nuke disk) respawn here.

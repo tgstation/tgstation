@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes emissives blocker layering issue that was causing emissives on clothing to not display at all"

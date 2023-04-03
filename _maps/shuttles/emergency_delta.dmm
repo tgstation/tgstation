@@ -226,6 +226,9 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "as" = (
@@ -555,6 +558,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bt" = (
@@ -718,6 +722,9 @@
 "bS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -896,6 +903,17 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ii" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "jU" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -933,6 +951,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"nJ" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/camera/autoname,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"pd" = (
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "pR" = (
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/regular{
@@ -1137,7 +1166,7 @@ av
 cA
 aE
 af
-bw
+pd
 bE
 bM
 bU
@@ -1259,7 +1288,7 @@ av
 av
 av
 nD
-bo
+nJ
 af
 by
 bw
@@ -1312,7 +1341,7 @@ nD
 aw
 nB
 aw
-hg
+ii
 aw
 nD
 aw
