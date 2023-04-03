@@ -20,7 +20,7 @@
 "cO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "da" = (

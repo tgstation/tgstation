@@ -1605,7 +1605,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aAE" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
@@ -9420,7 +9420,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
@@ -10712,7 +10712,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "dng" = (
@@ -11040,7 +11040,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dst" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/construction)
 "dsA" = (
@@ -23309,7 +23309,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/generic,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
@@ -27176,7 +27176,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "iKk" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
@@ -28253,7 +28253,7 @@
 "iZT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/decal/cleanable/confetti,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/white,
@@ -29640,7 +29640,7 @@
 /area/station/science/genetics)
 "jxl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "jxq" = (
@@ -31732,7 +31732,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "kgE" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kgN" = (
@@ -40989,7 +40989,7 @@
 /turf/open/floor/circuit/green,
 /area/mine/mechbay)
 "nfb" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -49166,7 +49166,7 @@
 "pBX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -49745,7 +49745,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pKW" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -64810,7 +64810,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "uDT" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/item/bikehorn/rubberducky,
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
@@ -67795,7 +67795,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "vCv" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
@@ -72612,7 +72612,7 @@
 "xcF" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "xcZ" = (
