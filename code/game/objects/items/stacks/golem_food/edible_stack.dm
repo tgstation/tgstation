@@ -5,6 +5,8 @@
 	bite_consumption = 2
 	food_reagents = list(/datum/reagent/consumable/nutriment/mineral = INFINITY) // Destroyed when stack runs out, not when reagents do
 	foodtypes = STONE
+	/// If we use up a stack of food on use or not
+	var/consume_food = TRUE
 	/// A weak reference to the stack which created us
 	var/datum/weakref/material
 	/// Golem food buff to apply on consumption
@@ -24,10 +26,15 @@
 	if (!resolved_material)
 		qdel(src)
 		return
+
+	food_buff.on_consumption(eater, resolved_material)
+	if (!consume_food)
+		qdel(src)
+		return
+
 	if (isstack(resolved_material))
 		resolved_material.use(used = 1)
 	else
 		qdel(resolved_material)
-	food_buff.on_consumption(eater)
 	if (!resolved_material)
 		qdel(src)

@@ -39,13 +39,13 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	return !existing || istype(existing, status_effect)
 
 /// Called when someone actually eats this
-/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer)
+/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed)
 	if (!HAS_TRAIT(consumer, TRAIT_ROCK_METAMORPHIC))
 		return
-	apply_effects(consumer)
+	apply_effects(consumer, consumed)
 
 /// Apply our desired effects to the eater
-/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer)
+/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer, atom/movable/consumed)
 	if (status_effect)
 		consumer.apply_status_effect(status_effect)
 
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	/// Order in which to heal damage types
 	var/static/list/damage_heal_order = list(BRUTE, BURN, TOX, OXY)
 
-/datum/golem_food_buff/iron/apply_effects(mob/living/carbon/consumer)
+/datum/golem_food_buff/iron/apply_effects(mob/living/carbon/consumer, atom/movable/consumed)
 	if (consumer.health == consumer.maxHealth)
 		return
 	consumer.heal_ordered_damage(healed_amount, damage_heal_order)
@@ -115,3 +115,15 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 /datum/golem_food_buff/gibtonite
 	exclusive = FALSE
 	added_info = "After consumption, you can launch this mineral like a rocket. It's a little hard to keep down."
+
+/datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed)
+	var/obj/item/gun/gibtonite_hand/new_hand = new(null, /* held_gibtonite = */ consumed)
+	if(consumer.put_in_hands(new_hand))
+		return
+	consumer.drop_all_held_items()
+	if(consumer.put_in_hands(new_hand))
+		return
+	consumed.forceMove(get_turf(consumer))
+	new_hand.held_gibtonite = null
+	qdel(new_hand)
+	consumer.visible_message(span_warning("[consumer] can't keep [consumed] down, and coughs it onto the ground!"))
