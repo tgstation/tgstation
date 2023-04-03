@@ -27,12 +27,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
-/obj/structure/marker_beacon/cerulean,
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space)
@@ -87,7 +89,9 @@
 	pixel_y = 32
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/cerulean,
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
+	},
 /turf/template_noop,
 /area/ruin/space)
 "cj" = (
@@ -149,7 +153,6 @@
 /obj/item/storage/box/donkpockets{
 	pixel_x = 2
 	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "dW" = (
@@ -351,7 +354,9 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "tl" = (
-/obj/structure/marker_beacon/cerulean,
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "tm" = (
@@ -405,12 +410,14 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "wy" = (
-/obj/structure/marker_beacon/cerulean,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space)
@@ -681,9 +688,11 @@
 /area/ruin/space/has_grav/listeningstation)
 "Jj" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/cerulean,
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
+	},
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
 	},
 /turf/template_noop,
 /area/ruin/space)
@@ -812,16 +821,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"QI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/red/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
 "RB" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "RK" = (
@@ -836,6 +840,7 @@
 "RP" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Sx" = (
@@ -865,9 +870,11 @@
 /area/ruin/space/has_grav/listeningstation)
 "SQ" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/cerulean,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
+	},
+/obj/structure/marker_beacon/cerulean{
+	light_color = "#66CCFF"
 	},
 /turf/template_noop,
 /area/ruin/space)
@@ -897,8 +904,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "Uu" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/light/red/directional/east,
 /obj/structure/cable,
+/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "UI" = (
@@ -997,9 +1004,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "Zj" = (
 /obj/structure/cable,
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 
@@ -1397,7 +1404,7 @@ FV
 ca
 BX
 dW
-QI
+Sz
 JB
 vI
 vI
