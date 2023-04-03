@@ -53,6 +53,7 @@
 #_maps/RandomRuins/SpaceRuins/russian_derelict.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
+#_maps/RandomRuins/SpaceRuins/space_ghost_restaurant.dmm
 #_maps/RandomRuins/SpaceRuins/spacehotel.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
