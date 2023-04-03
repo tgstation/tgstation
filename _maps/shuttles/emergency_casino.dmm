@@ -100,7 +100,7 @@
 /area/shuttle/escape)
 "dp" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "dr" = (
 /obj/structure/window/reinforced/tinted{
@@ -109,7 +109,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "dy" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "dL" = (
 /obj/machinery/space_heater,
@@ -123,7 +123,7 @@
 "ep" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "et" = (
 /obj/structure/chair/sofa/corp{
@@ -357,7 +357,7 @@
 "kn" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "kz" = (
 /obj/structure/chair/stool/directional/west,
@@ -540,7 +540,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/head/collectable/police,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ok" = (
 /obj/structure/chair/stool/bar/directional/west,
@@ -548,7 +548,7 @@
 /area/shuttle/escape)
 "oz" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "oB" = (
 /obj/machinery/computer/slot_machine,
@@ -678,7 +678,7 @@
 /obj/item/grown/bananapeel,
 /obj/item/bikehorn,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "sj" = (
 /obj/effect/spawner/random/entertainment/arcade,
@@ -715,7 +715,7 @@
 "vi" = (
 /obj/structure/table,
 /obj/item/toy/gun,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "vn" = (
 /obj/effect/turf_decal/siding{
@@ -760,7 +760,7 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "vL" = (
 /obj/structure/table/optable,
@@ -909,7 +909,7 @@
 	use_power = 0
 	},
 /obj/item/toy/figure/clown,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ab" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1044,7 +1044,7 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ff" = (
 /obj/machinery/light/directional/east,
@@ -1171,7 +1171,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Lz" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1224,7 +1224,7 @@
 	idle_power_usage = 0;
 	use_power = 0
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Nw" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -1283,7 +1283,7 @@
 /area/shuttle/escape)
 "Pg" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Pj" = (
 /obj/machinery/recharge_station,
@@ -1342,7 +1342,7 @@
 /area/shuttle/escape)
 "PW" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Qk" = (
 /obj/effect/turf_decal/siding{
@@ -1358,7 +1358,7 @@
 /area/shuttle/escape)
 "Ru" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "RQ" = (
 /obj/structure/table,
@@ -1393,7 +1393,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Tb" = (
 /obj/structure/chair/stool/directional/north,
@@ -1528,7 +1528,7 @@
 /obj/item/storage/box/handcuffs,
 /obj/machinery/status_display/evac/directional/south,
 /obj/item/coin/antagtoken,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "YF" = (
 /obj/structure/table/wood/poker,

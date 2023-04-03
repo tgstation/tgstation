@@ -572,6 +572,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
 //Mass-driver hub ruin
 /area/ruin/space/massdriverhub
 	name = "\improper Mass Driver Router"
@@ -580,6 +584,13 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
 
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
