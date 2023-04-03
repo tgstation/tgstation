@@ -75,7 +75,7 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/obj/machinery/light/dim/directional/east,
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "ij" = (
@@ -172,6 +172,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/atmosasteroid)
+"nl" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
 "nz" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	dir = 1
@@ -221,6 +225,7 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "ps" = (
 /obj/machinery/atmospherics/miner/oxygen,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/atmosasteroid)
 "pw" = (
@@ -347,6 +352,7 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "AJ" = (
@@ -536,6 +542,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
+"MQ" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
 "MR" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
@@ -545,6 +555,11 @@
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/machinery/portable_atmospherics/scrubber/huge/movable,
 /turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ns" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
@@ -610,6 +625,10 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark/corner/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
+"RU" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
 "So" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -656,7 +675,6 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "Uz" = (
@@ -679,7 +697,14 @@
 "Vw" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"VX" = (
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/atmosasteroid)
 "Wc" = (
 /obj/effect/turf_decal/tile/yellow/half,
@@ -687,6 +712,7 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "Wn" = (
 /obj/machinery/atmospherics/miner/nitrogen,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ws" = (
@@ -817,7 +843,7 @@ QP
 QP
 gG
 pU
-Co
+MX
 fm
 gG
 rg
@@ -948,7 +974,7 @@ FU
 FU
 KT
 uH
-bF
+Wc
 gG
 gG
 gG
@@ -1016,7 +1042,7 @@ og
 vW
 mC
 gG
-Lj
+HF
 Lv
 MG
 OY
@@ -1101,7 +1127,7 @@ af
 ZN
 zd
 eL
-eL
+RU
 gG
 QP
 "}
@@ -1192,13 +1218,13 @@ QP
 QP
 gG
 UR
-iD
+nl
 gG
 Kg
-Rp
+MQ
 gG
 fz
-TU
+VX
 gG
 QP
 QP
