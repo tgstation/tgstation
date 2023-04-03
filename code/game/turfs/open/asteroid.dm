@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
-	turf_flags = NO_RUINS
+	turf_flags = NO_RUINS | NO_SCRAPING
 
 /turf/open/lava/plasma/ice_moon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

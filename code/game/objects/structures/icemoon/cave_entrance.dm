@@ -26,16 +26,16 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	clear_rock()
 
 /**
- * Clears rocks around the spawner when it is created
+ * Clears rocks around the spawner when it is created. Ignore any rocks that explicitly do not want to be cleared.
  *
  */
 /obj/structure/spawner/ice_moon/proc/clear_rock()
-	for(var/turf/F in RANGE_TURFS(2, src))
-		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
+	for(var/turf/potential in RANGE_TURFS(2, src))
+		if(abs(src.x - potential.x) + abs(src.y - potential.y) > 3)
 			continue
-		if(ismineralturf(F))
-			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+		if(ismineralturf(potential))
+			var/turf/closed/mineral/clearable = potential
+			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/deconstruct(disassembled)
 	destroy_effect()
@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	for(var/turf/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+			M.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/demonic_portal
 	name = "demonic portal"
@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			continue
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+			M.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/demonic_portal/destroy_effect()
 	new /obj/effect/collapsing_demonic_portal(loc)
