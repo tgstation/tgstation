@@ -6,4 +6,7 @@
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/slime/mood/slime_mood in GLOB.emote_list[key])
+			//intentionally does not have a mood key.
+			if(!slime_mood.mood_key)
+				continue
 			TEST_ASSERT((slime_mood.mood_key in icon_states(this_guy.icon)), "[slime_mood] is set to give [this_guy] an emote, but has no Icon for it.")
