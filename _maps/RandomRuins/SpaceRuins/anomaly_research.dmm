@@ -204,11 +204,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/misc/anomaly_research)
-"gi" = (
-/obj/structure/table/wood,
-/obj/machinery/light/warm/no_nightlight/directional/north,
-/turf/open/floor/wood,
-/area/misc/anomaly_research)
 "gr" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -564,13 +559,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
-"og" = (
-/obj/machinery/light/warm/no_nightlight/directional/south,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "ok" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -628,7 +616,6 @@
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
 "pE" = (
-/obj/machinery/light/broken/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -675,6 +662,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"qR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "rk" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/glass/fifty,
@@ -707,7 +700,6 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "sp" = (
-/obj/machinery/light/broken/directional/north,
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -735,6 +727,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"sQ" = (
+/obj/machinery/light/warm/no_nightlight/directional/east,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "sU" = (
 /obj/structure/table/reinforced,
@@ -1335,12 +1331,6 @@
 /obj/item/anomaly_releaser,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
-"Ii" = (
-/obj/machinery/light/broken/directional/west,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "Is" = (
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/north,
@@ -1385,6 +1375,7 @@
 	dir = 1
 	},
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
 "Jw" = (
@@ -1669,7 +1660,6 @@
 "Sj" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_mass_spec,
-/obj/machinery/light/warm/no_nightlight/directional/north,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
@@ -2321,7 +2311,7 @@ pl
 pl
 PY
 Lo
-Gj
+FK
 AV
 vm
 Zh
@@ -2355,11 +2345,11 @@ UD
 IC
 IC
 AV
-gi
+VL
 VL
 mk
 As
-FK
+Gj
 AV
 Kc
 AV
@@ -2432,7 +2422,7 @@ AV
 xE
 AV
 eZ
-PY
+sQ
 PY
 As
 pk
@@ -2579,7 +2569,7 @@ tR
 iP
 yR
 Ls
-og
+QP
 MG
 mY
 Fg
@@ -3263,7 +3253,7 @@ AV
 Nc
 Op
 AV
-xh
+qR
 nI
 fm
 II
@@ -3306,7 +3296,7 @@ nI
 nI
 pn
 nI
-Ii
+xh
 xQ
 AV
 nA
