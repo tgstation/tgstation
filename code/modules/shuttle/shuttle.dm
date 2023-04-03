@@ -622,7 +622,7 @@
 /obj/docking_port/mobile/proc/linkup(obj/docking_port/stationary/dock)
 	for(var/area/place as anything in shuttle_areas)
 		place.connect_to_shuttle(TRUE, src, dock)
-		for(var/atom/individual_atoms in place)
+		for(var/atom/individual_atoms in place.contents - src)
 			individual_atoms.connect_to_shuttle(TRUE, src, dock)
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
