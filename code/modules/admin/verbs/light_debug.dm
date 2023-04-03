@@ -18,6 +18,11 @@
 	text += "total iterated: [total]"
 	message_admins(text)
 
+/proc/undebug_sources()
+	GLOB.light_debug_enabled = FALSE
+	for(var/datum/light_source/source)
+		source.undebug()
+
 /// Sets up this light source to be debugged, setting up in world buttons to control and move it
 /// Also freezes it, so it can't change in future
 /datum/light_source/proc/debug()
@@ -39,6 +44,23 @@
 	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/toggle(source_atom)
 	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/edit(source_atom)
 	lie_to_areas.vis_contents += new /atom/movable/screen/light_button/move(source_atom)
+
+/// Disables light debugging, so you can let a scene fall to what it visually should be, or just fix admin fuckups
+/datum/light_source/proc/undebug()
+	if(QDELETED(src) || isturf(source_atom) || !HAS_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED))
+		return
+	REMOVE_TRAIT(source_atom, TRAIT_LIGHTING_DEBUGGED, REF(src))
+	source_atom.remove_filter("debug_light")
+	// Removes the glow overlay via stupid, sorry
+	var/atom/movable/render_step/color/above_light = new(null, source_atom.render_target, "#ffffff23")
+	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, source_atom)
+	source_atom.cut_overlay(above_light)
+	QDEL_NULL(above_light)
+	var/atom/movable/lie_to_areas = source_atom
+	// Freeze our light would you please
+	source_atom.light_flags &= ~LIGHT_FROZEN
+	for(var/atom/movable/screen/light_button/button in lie_to_areas.vis_contents)
+		qdel(button)
 
 /atom/movable/screen/light_button
 	icon = 'icons/testing/lighting_debug.dmi'

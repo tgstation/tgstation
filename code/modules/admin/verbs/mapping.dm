@@ -486,11 +486,17 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		popup.open()
 
 /client/proc/modify_lights()
-	set name = "Modify Lights"
+	set name = "Toggle Light Debug"
 	set category = "Mapping"
 	if(!check_rights(R_DEBUG))
 		return
-	for(var/obj/machinery/light/L in GLOB.machines)
-		L.fix()
+	if(GLOB.light_debug_enabled)
+		undebug_sources()
+		return
+
+	for(var/obj/machinery/light/fix_up in GLOB.machines)
+		// Only fix lights that started out fixed
+		if(initial(fix_up.status) == LIGHT_OK)
+			fix_up.fix()
 		CHECK_TICK
 	debug_sources()
