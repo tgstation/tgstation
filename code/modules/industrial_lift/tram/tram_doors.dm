@@ -69,7 +69,7 @@
 			do_animate("closing")
 			icon_state = base_state
 			sleep(19 DECISECONDS)
-			if(obj_flags & EMAGGED | malfunctioning)
+			if((obj_flags & EMAGGED) || malfunctioning)
 				if(malfunctioning && prob(85))
 					return
 				for(var/i=1 to 3)
