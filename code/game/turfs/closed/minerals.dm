@@ -602,9 +602,8 @@
 /// This snowy mountain will never be scraped away for any reason what so ever.
 /turf/closed/mineral/snowmountain/icemoon/unscrapeable
 	turf_flags = IS_SOLID | NO_SCRAPING
-	// using the do_not_chasm subtypes because they provide both functions that we both need and want here.
-	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
-	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
 
 /turf/closed/mineral/snowmountain/cavern
 	name = "ice cavern rock"
