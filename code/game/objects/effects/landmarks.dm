@@ -313,7 +313,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/generic_maintenance_landmark/Initialize(mapload)
 	..()
-	GLOB.generic_maintenance_landmark += loc
+	GLOB.generic_maintenance_landmarks += loc
 	return INITIALIZE_HINT_QDEL
 
 //objects with the stationloving component (nuke disk) respawn here.

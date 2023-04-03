@@ -25,7 +25,7 @@
 	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
-	for(var/spawn_area in GLOB.generic_maintenance_landmark)
+	for(var/spawn_area in GLOB.generic_maintenance_landmarks)
 		var/turf/spawn_turf = get_turf(spawn_area)
 		var/light_amount = spawn_turf.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && is_safe_turf(spawn_turf))

@@ -512,7 +512,7 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
-	for(var/X in GLOB.generic_maintenance_landmark)
+	for(var/X in GLOB.generic_maintenance_landmarks)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
@@ -850,7 +850,7 @@
 	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	for(var/turf/warp_point in GLOB.generic_maintenance_landmark)
+	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
 		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
 			possible_spawns += warp_point
 	if(!possible_spawns.len)

@@ -23,7 +23,7 @@
 	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
-	for(var/spawn_area in GLOB.generic_maintenance_landmark)
+	for(var/spawn_area in GLOB.generic_maintenance_landmarks)
 		var/turf/spawn_turf = get_turf(spawn_area)
 		if(is_safe_turf(spawn_turf))
 			spawn_locs += spawn_turf
