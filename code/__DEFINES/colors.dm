@@ -184,6 +184,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)

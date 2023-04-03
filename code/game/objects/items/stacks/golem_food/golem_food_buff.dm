@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 
 /// Returns true if the passed mob can currently gain this buff
 /datum/golem_food_buff/proc/can_consume(mob/living/consumer)
-	if (!exclusive || !status_effect)
+	if (!exclusive)
 		return TRUE
 	var/datum/status_effect/golem/existing = consumer.has_status_effect(/datum/status_effect/golem)
 	return !existing || istype(existing, status_effect)
@@ -57,9 +57,8 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 
 /// More filling, and heals you
 /datum/golem_food_buff/iron
-	exclusive = FALSE
 	nutrition = 3
-	added_info = "This mineral can be consumed at any time. It's filling and even heals you a little."
+	added_info = "This mineral is filling and even heals you a little."
 	/// Amount by which you heal from eating some iron
 	var/healed_amount = 3
 	/// Order in which to heal damage types
@@ -102,3 +101,17 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 /datum/golem_food_buff/bananium
 	status_effect = /datum/status_effect/golem/bananium
 	added_info = "If consumed this mineral will make you funnier."
+
+/datum/golem_food_buff/lightbulb
+	nutrition = 0
+	exclusive = FALSE
+	status_effect = /datum/status_effect/golem_lightbulb
+	added_info = "Not nutritious, but gives you a health glow if eaten."
+
+/datum/golem_food_buff/bluespace
+	exclusive = FALSE
+	added_info = "If consumed, this mineral will allow you to teleport somewhere."
+
+/datum/golem_food_buff/gibtonite
+	exclusive = FALSE
+	added_info = "After consumption, you can launch this mineral like a rocket. It's a little hard to keep down."

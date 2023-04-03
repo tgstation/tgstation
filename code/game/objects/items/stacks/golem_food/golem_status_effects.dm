@@ -315,3 +315,32 @@
 	owner.RemoveElement(/datum/element/waddling)
 	QDEL_NULL(slipperiness)
 	return ..()
+
+#define LIGHTBULB_FILTER "filter_lightbulb_glow"
+
+/// Lights up the golem, NOT using the golem subtype because it is not exclusive with other status effects
+/datum/status_effect/golem_lightbulb
+	id = "golem_lightbulb"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 2 MINUTES
+	var/glow_range = 3
+	var/glow_power = 1
+	var/glow_color = LIGHT_COLOR_DEFAULT
+	var/datum/component/overlay_lighting/lightbulb
+
+/datum/status_effect/golem_lightbulb/on_apply()
+	. = ..()
+	if (!.)
+		return
+	to_chat(owner, span_notice("You start to emit a healthy glow."))
+	owner.light_system = MOVABLE_LIGHT
+	lightbulb = owner.AddComponent(/datum/component/overlay_lighting, _range = glow_range, _power = glow_power, _color = glow_color)
+	owner.add_filter(LIGHTBULB_FILTER, 2, list("type" = "outline", "color" = glow_color, "alpha" = 60, "size" = 1))
+
+/datum/status_effect/golem_lightbulb/on_remove()
+	QDEL_NULL(lightbulb)
+	owner.remove_filter(LIGHTBULB_FILTER)
+	to_chat(owner, span_warning("Your glow fades."))
+	return ..()
+
+#undef LIGHTBULB_FILTER

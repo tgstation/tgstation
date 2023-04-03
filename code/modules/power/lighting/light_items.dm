@@ -18,6 +18,15 @@
 	///Number of times switched on and off
 	var/switchcount = 0
 
+// Feed to golem
+/obj/item/light/attack(mob/living/target, mob/living/user, params)
+	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER) || status != LIGHT_OK)
+		return ..()
+	var/obj/item/food/material/snack = new(null, new /datum/golem_food_buff/lightbulb())
+	snack.name = name
+	snack.material = WEAKREF(src)
+	snack.attack(target, user, params)
+
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
