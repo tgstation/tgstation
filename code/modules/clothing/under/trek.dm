@@ -16,6 +16,10 @@
 	icon_state = "trek_tos_com" //Shirt has gold wrist-bands
 	inhand_icon_state = "y_suit"
 	greyscale_colors = "#fab342"
+	armor_type = /datum/armor/security_head_of_security
+	strip_delay = 50
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/trek/engsec
 	name = "engsec uniform"
@@ -23,6 +27,10 @@
 	icon_state = "trek_tos_sec" //Tucked-in shirt
 	inhand_icon_state = "r_suit"
 	greyscale_colors = "#B72B2F"
+	armor_type = /datum/armor/rank_security
+	strip_delay = 50
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
@@ -30,6 +38,7 @@
 	icon_state = "trek_tos"
 	inhand_icon_state = "b_suit"
 	greyscale_colors = "#5FA4CC"
+	armor_type = /datum/armor/rank_medical
 
 /obj/item/clothing/under/trek/srvcar
 	name = "service uniform"
@@ -37,6 +46,7 @@
 	icon_state = "trek_tos"
 	inhand_icon_state = "g_suit"
 	greyscale_colors = "#9FED58"
+	armor_type = /datum/armor/cargo_miner
 
 /obj/item/clothing/under/trek/assistant
 	name = "assistant uniform"
