@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "The missing table reinforcement for MetaStation's cargo office has been found"
