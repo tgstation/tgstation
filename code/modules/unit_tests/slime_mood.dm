@@ -9,4 +9,4 @@
 			//intentionally does not have a mood key.
 			if(!slime_mood.mood_key)
 				continue
-			TEST_ASSERT((slime_mood.mood_key in icon_states(this_guy.icon)), "[slime_mood] is set to give [this_guy] an emote, but has no Icon for it.")
+			TEST_ASSERT(("aslime-[slime_mood.mood_key]" in icon_states(this_guy.icon)), "[slime_mood] is set to give [this_guy] the [slime_mood.mood_key] emote, but the icon state can't be found in [this_guy.icon].")
