@@ -319,13 +319,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
-"ll" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/dim{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space)
 "lX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -385,12 +378,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/basalt/airless,
-/area/ruin/space)
-"qL" = (
-/obj/machinery/light/dim{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "qO" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -619,9 +606,7 @@
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
 "AE" = (
-/obj/machinery/light/dim{
-	dir = 1
-	},
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "AV" = (
@@ -1040,6 +1025,7 @@
 /obj/item/ammo_casing/a357{
 	pixel_x = -6
 	},
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Vn" = (
@@ -1092,7 +1078,7 @@
 "VQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/mineral/wood/fifty,
-/obj/machinery/light/dim,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "VX" = (
@@ -1191,12 +1177,6 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/airless,
-/area/ruin/space)
-"ZZ" = (
-/obj/machinery/light/dim{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
 
 (1,1,1) = {"
@@ -1653,7 +1633,7 @@ Er
 ED
 ED
 uq
-ll
+Tu
 BV
 Tu
 Tu
@@ -1912,7 +1892,7 @@ ED
 ED
 uq
 ED
-qL
+ZC
 CT
 Tu
 pD
@@ -2026,7 +2006,7 @@ Er
 Er
 Er
 ED
-Jh
+kC
 pl
 Vn
 GA
@@ -2101,10 +2081,10 @@ Cf
 Er
 ED
 mG
-Rt
 ED
+Rt
 zx
-ZZ
+ds
 Tp
 ds
 ZC
