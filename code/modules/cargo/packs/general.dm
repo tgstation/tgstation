@@ -297,3 +297,12 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/machinery/fishing_portal_generator)
 	crate_name = "fishing portal crate"
+
+/datum/supply_pack/misc/papercutter
+	name = "Paper Cutters Crate"
+	desc = "Contains 3 office duty paper cutters.\
+		Those are equipped with sharp blades that can cut any paper into two slick paper slips.\
+		Blade can be removed from the cutter using screwdriver for cleaning and sharpening of course."
+	cost = CARGO_CRATE_VALUE * 3.2
+	contains = list(/obj/item/papercutter = 3)
+	crate_name = "paper cutters crate"

@@ -32,7 +32,6 @@
 
 	job_tone = "slip"
 
-
 /datum/outfit/job/janitor
 	name = "Janitor"
 	jobtype = /datum/job/janitor
@@ -42,11 +41,16 @@
 	belt = /obj/item/modular_computer/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 
-/datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/human_equipper, visuals_only)
 	. = ..()
 	if(check_holidays(GARBAGEDAY))
 		backpack_contents += list(/obj/item/gun/ballistic/revolver)
 		r_pocket = /obj/item/ammo_box/a357
+
+	var/static/access_key_given = FALSE
+	if(!access_key_given && !visuals_only)
+		access_key_given = TRUE
+		backpack_contents += list(/obj/item/access_key)
 
 /datum/outfit/job/janitor/get_types_to_preload()
 	. = ..()

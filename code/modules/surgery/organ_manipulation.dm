@@ -51,6 +51,30 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/organ_manipulation/mechanic/next_step(mob/living/user, modifiers)
+	if(location != user.zone_selected)
+		return FALSE
+	if(user.combat_mode)
+		return FALSE
+	if(step_in_progress)
+		return TRUE
+
+	var/try_to_fail = FALSE
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		try_to_fail = TRUE
+
+	var/datum/surgery_step/step = get_surgery_step()
+	if(isnull(step))
+		return FALSE
+	var/obj/item/tool = user.get_active_held_item()
+	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		return TRUE
+	if(tool && tool.item_flags) //Mechanic organ manipulation isn't done with just surgery tools
+		to_chat(user, span_warning("This step requires a different tool!"))
+		return TRUE
+
+	return FALSE
+
 /datum/surgery/organ_manipulation/mechanic/soft
 	possible_locs = list(
 		BODY_ZONE_PRECISE_GROIN,
@@ -123,7 +147,7 @@
 		preop_sound = 'sound/surgery/hemostat1.ogg'
 		success_sound = 'sound/surgery/organ2.ogg'
 		target_organ = tool
-		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
+		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
@@ -148,7 +172,7 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/unfiltered_organs = target.getorganszone(target_zone)
+		var/list/unfiltered_organs = target.get_organs_for_zone(target_zone)
 		var/list/organs = list()
 		for(var/organ in unfiltered_organs)
 			if(can_use_organ(user, organ))
@@ -182,7 +206,7 @@
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."),
 				)
-				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
+				display_pain(target, "You can feel your [target_organ.name] being removed from your [parse_zone(target_zone)]!")
 			else
 				return SURGERY_STEP_FAIL
 
@@ -208,7 +232,7 @@
 				span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
 			)
-			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
+			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool.name] comes to life!")
 		else
 			target_organ.forceMove(target.loc)
 
@@ -221,7 +245,7 @@
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
 			)
-			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
+			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))

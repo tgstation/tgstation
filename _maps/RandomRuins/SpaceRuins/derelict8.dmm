@@ -39,12 +39,9 @@
 /turf/template_noop,
 /area/template_noop)
 "hs" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "ii" = (
@@ -56,12 +53,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "ki" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/engineering/tank,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "kp" = (
@@ -111,12 +105,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "uV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "wM" = (
@@ -166,15 +157,12 @@
 /turf/template_noop,
 /area/template_noop)
 "BD" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
 /obj/item/gps/spaceruin{
 	pixel_x = -5;
 	pixel_y = 2
 	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "BX" = (
@@ -261,13 +249,10 @@
 /turf/template_noop,
 /area/template_noop)
 "OM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/spawner/random/bureaucracy/paper,
 /obj/structure/table,
 /obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "OO" = (
@@ -278,12 +263,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
 "Pu" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/tank_holder/oxygen/red,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "Px" = (

@@ -4,6 +4,10 @@
 
 	var/list/obj/machinery/atmospherics/pipe/members
 	var/list/obj/machinery/atmospherics/components/other_atmos_machines
+	/// List of other_atmos_machines that have custom_reconcilation set
+	/// We're essentially caching this to avoid needing to filter over it when processing our machines
+	var/list/obj/machinery/atmospherics/components/require_custom_reconcilation
+
 
 	///Should we equalize air amoung all our members?
 	var/update = TRUE
@@ -14,6 +18,7 @@
 	other_airs = list()
 	members = list()
 	other_atmos_machines = list()
+	require_custom_reconcilation = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -121,6 +126,8 @@
 
 /datum/pipeline/proc/add_machinery_member(obj/machinery/atmospherics/components/considered_component)
 	other_atmos_machines |= considered_component
+	if(considered_component.custom_reconcilation)
+		require_custom_reconcilation |= considered_component
 	var/list/returned_airs = considered_component.return_pipenet_airs(src)
 	if (!length(returned_airs) || (null in returned_airs))
 		stack_trace("addMachineryMember: Nonexistent (empty list) or null machinery gasmix added to pipeline datum from [considered_component] \
@@ -156,10 +163,13 @@
 	air.merge(parent_pipeline.air)
 	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmos_machines)
 		reference_component.replace_pipenet(parent_pipeline, src)
+		if(reference_component.custom_reconcilation)
+			require_custom_reconcilation |= reference_component
 	other_atmos_machines |= parent_pipeline.other_atmos_machines
 	other_airs |= parent_pipeline.other_airs
 	parent_pipeline.members.Cut()
 	parent_pipeline.other_atmos_machines.Cut()
+	parent_pipeline.require_custom_reconcilation.Cut()
 	update = TRUE
 	qdel(parent_pipeline)
 
@@ -182,7 +192,7 @@
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air, member.volume / air.volume)
+		member.air_temporary.copy_from_ratio(air, member.volume / air.volume)
 
 		member.air_temporary.temperature = air.temperature
 
@@ -223,11 +233,9 @@
 			continue
 		gas_mixture_list += pipeline.other_airs
 		gas_mixture_list += pipeline.air
-		for(var/obj/machinery/atmospherics/components/atmos_machine as anything in pipeline.other_atmos_machines)
-			if(!atmos_machine.custom_reconcilation)
-				continue
+		for(var/obj/machinery/atmospherics/components/atmos_machine as anything in pipeline.require_custom_reconcilation)
 			pipeline_list |= atmos_machine.return_pipenets_for_reconcilation(src)
-			gas_mixture_list |= atmos_machine.return_airs_for_reconcilation(src)
+			gas_mixture_list += atmos_machine.return_airs_for_reconcilation(src)
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
@@ -235,27 +243,38 @@
 
 	var/list/total_gases = total_gas_mixture.gases
 
+	var/volume_sum = 0
+
+	var/static/process_id = 0
+	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
+
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-		total_gas_mixture.volume += gas_mixture.volume
+		// Ensure we never walk the same mix twice
+		if(gas_mixture.pipeline_cycle == process_id)
+			gas_mixture_list -= gas_mixture
+			continue
+		gas_mixture.pipeline_cycle = process_id
+		volume_sum += gas_mixture.volume
 
 		// This is sort of a combined merge + heat_capacity calculation
 
 		var/list/giver_gases = gas_mixture.gases
+		var/heat_capacity = 0
 		//gas transfer
 		for(var/giver_id in giver_gases)
 			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS(giver_id, total_gas_mixture)
+			ASSERT_GAS_IN_LIST(giver_id, total_gases)
 			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+			heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-		total_thermal_energy += THERMAL_ENERGY(gas_mixture)
+		total_heat_capacity += heat_capacity
+		total_thermal_energy += gas_mixture.temperature * heat_capacity
 
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
-
+	total_gas_mixture.volume = volume_sum
 	total_gas_mixture.garbage_collect()
 
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
-		for(var/mixture in gas_mixture_list)
-			var/datum/gas_mixture/gas_mixture = mixture
-			gas_mixture.copy_from(total_gas_mixture, gas_mixture.volume / total_gas_mixture.volume)
+		for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
+			gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
