@@ -391,7 +391,7 @@
 		else if (DT_PROB(0.5, delta_time))
 			newmood = pick("sad", ":3", "pout")
 
-	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
+	if ((current_mood == "sad" || current_mood == ":3" || current_mood == "pout") && !newmood)
 		if(DT_PROB(50, delta_time))
 			newmood = mood
 
@@ -533,7 +533,7 @@
 				phrases += "Hrr..."
 				phrases += "Nhuu..."
 				phrases += "Unn..."
-			if (mood == ":3")
+			if (current_mood == ":3")
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
@@ -554,7 +554,7 @@
 				phrases += "Zap..."
 			if (powerlevel > 8)
 				phrases += "Zap... Bzz..."
-			if (mood == "sad")
+			if (current_mood == "sad")
 				phrases += "Bored..."
 			if (slimes_near)
 				phrases += "Slime friend..."
