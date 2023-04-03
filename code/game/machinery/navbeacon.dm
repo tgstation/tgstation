@@ -155,9 +155,18 @@
 	data["delivery_direction"] = codes[NAVBEACON_DELIVERY_DIRECTION]
 	return data
 
+/obj/machinery/navbeacon/ui_static_data(mob/user)
+	var/list/data = list()
+	data["direction_options"] = list("None" = null, "East" = EAST, "North" = NORTH, "South" = SOUTH, "West" = WEST)
+	return data
+
 /obj/machinery/navbeacon/ui_act(action, params)
 	. = ..()
 	if(.)
+		return
+
+	if(action == "lock" && allowed(usr))
+		locked = !locked
 		return
 
 	if(locked && !issilicon(usr))
@@ -170,27 +179,23 @@
 		if("toggle_delivery")
 			toggle_code(NAVBEACON_DELIVERY_MODE)
 			return TRUE
-		if("change_location")
-			var/input_text = tgui_input_text(usr, "Enter this Beacon's location tag", "Beacon Location", location, 20)
+		if("set_location")
+			var/input_text = tgui_input_text(usr, "Enter the beacon's location tag", "Beacon Location", location, 20)
 			if (!input_text || location == input_text)
 				return
 			GLOB.deliverybeacontags -= location
 			location = input_text
 			GLOB.deliverybeacontags += input_text
 			return TRUE
-		if("change_patrol_next")
+		if("set_patrol_next")
 			var/next_patrol = codes[NAVBEACON_PATROL_NEXT]
 			var/input_text = tgui_input_text(usr, "Enter the tag of the next patrol location", "Beacon Location", next_patrol, 20)
 			if (!input_text || location == input_text)
 				return
 			codes[NAVBEACON_PATROL_NEXT] = input_text
 			return TRUE
-		if("change_delivery_direction")
-			var/delivery_direction = codes[NAVBEACON_DELIVERY_DIRECTION]
-			var/input_text = tgui_input_text(usr, "Enter the direction the M.U.L.E. will deposit their crate", "Beacon Direction", delivery_direction, 20)
-			if (!input_text || location == input_text)
-				return
-			codes[NAVBEACON_DELIVERY_DIRECTION] = input_text
+		if("set_delivery_direction")
+			codes[NAVBEACON_DELIVERY_DIRECTION] = params["direction"]
 			return TRUE
 
 ///Adds or removes a specific code
