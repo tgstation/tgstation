@@ -25,7 +25,7 @@
 /obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z))
 
 	check_z(new_turf = loc)
 
@@ -63,7 +63,7 @@
 	if(id_card)
 		gps_name = id_card.registered_name
 	AddComponent(/datum/component/gps/kheiral_cuffs, "*[gps_name]'s Kheiral Link")
-	balloon_alert(user, "GPS activated")
+	balloon_alert(user, "gps activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = TRUE
 
@@ -73,7 +73,7 @@
 		return
 	if(on_wrist && far_from_home)
 		return
-	balloon_alert(user, "GPS de-activated")
+	balloon_alert(user, "gps de-activated")
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
@@ -104,12 +104,11 @@
 	. += emissive_appearance(icon, "strand_light", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
-	var/mob/living/carbon/human/victim
-	if(ishuman(user))
-		victim = user
-	else
-		return ..()
-	user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/victim = user
+	victim.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
 		if(!do_after(victim, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
 			break

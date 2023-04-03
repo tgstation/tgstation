@@ -7,8 +7,8 @@
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
 	has_ceiling = TRUE
-	ceiling_turf = /turf/closed/mineral/random/snow
-	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon)
+	ceiling_turf = /turf/closed/mineral/random/snow/do_not_chasm
+	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon/do_not_chasm)
 
 // above ground only
 
@@ -55,6 +55,12 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/smoking_room
+	name = "Smoking Room"
+	id = "smoking_room"
+	description = "Here lies Charles Morlbaro. He died the way he lived."
+	suffix = "icemoon_surface_smoking_room.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -70,6 +76,7 @@
 	id = "miningsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
+	has_ceiling = FALSE
 	unpickable = TRUE
 
 // below ground only

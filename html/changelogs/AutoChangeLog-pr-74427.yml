@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes:
+  - bugfix: "The notify restart verb in the ooc tab should now actually work."

@@ -60,7 +60,7 @@ export const PowerMonitorContent = (props, context) => {
               <Icon name="plug-circle-exclamation" size={2} />
             </Stack.Item>
             <Stack.Item>
-              <h1>No powernet found!</h1>
+              <h1>No APCs found!</h1>
             </Stack.Item>
           </Stack>
         </Dimmer>
@@ -91,7 +91,7 @@ export const PowerMonitorContent = (props, context) => {
           </Section>
         </Flex.Item>
         <Flex.Item mx={0.5} grow={1}>
-          <Section position="relative" height="100%">
+          <Section position="relative" height="100%" fill="true">
             <Chart.Line
               fillPositionedParent
               data={supplyData}

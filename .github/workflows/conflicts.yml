@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - 'project/**'
 jobs:
   triage:
     runs-on: ubuntu-20.04

@@ -8,6 +8,7 @@
 
 # Cyberboss
 
+/.tgs.yml @Cyberboss
 /code/__HELPERS/jatum.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
@@ -19,8 +20,11 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/tgs_scripts/ @Cyberboss
+/tools/tgs_test/ @Cyberboss
 
 # Dragomagol/Tattle
+
 /code/__HELPERS/logging/ @dragomagol
 
 # Fikou
@@ -28,8 +32,8 @@
 /code/modules/awaymissions/ @Fikou
 /code/modules/mining/ @Fikou
 /code/modules/mod/ @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/mapfluff/ruins/lavalandruin_code/ @Fikou
+/code/modules/mapfluff/ruins/lavaland_ruin_code.dm @Fikou
 
 # JohnFulpWizard
 
@@ -54,10 +58,10 @@
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
-/code/modules/preferences.dm @Mothblocks
-/code/modules/preferences_menu.dm @Mothblocks
-/code/modules/preferences_savefile.dm @Mothblocks
+/code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/maplint/source/ @Mothblocks
+/tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
 /tools/test_merge_bot/ @Mothblocks
 
@@ -101,13 +105,23 @@
 
 /tgui/packages/tgui/interfaces/
 /tgui/packages/tgui/styles/interfaces/
-/tgui/packages/tgui-panel/styles/goon/chat-dark.scss
-/tgui/packages/tgui-panel/styles/goon/chat-light.scss
+/tgui/packages/tgui-panel/styles/tgchat/chat-dark.scss
+/tgui/packages/tgui-panel/styles/tgchat/chat-light.scss
 
 # SuperNovaa41
 
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
+
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
+
+# tralezab
+/code/__DEFINES/basic_mobs.dm @tralezab
+/code/datums/ai @tralezab
+/code/modules/mob/living/basic/ @tralezab
 
 # Watermelon914
 
@@ -159,20 +173,25 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# Time-Green
+# ZephyrTFA
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
 
 # MULTIPLE OWNERS
 
-/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
+/_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
+/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll

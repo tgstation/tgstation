@@ -56,10 +56,13 @@
 /**
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
+ * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
+ * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
+ * otherwise a moving camera can run out of its own view before updating static.
  */
-/datum/camerachunk/proc/hasChanged(update_now = 0)
+/datum/camerachunk/proc/hasChanged(update_now = 0, update_delay_buffer = UPDATE_BUFFER_TIME)
 	if(seenby.len || update_now)
-		addtimer(CALLBACK(src, .proc/update), UPDATE_BUFFER_TIME, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(update)), update_delay_buffer, TIMER_UNIQUE)
 	else
 		changed = TRUE
 
@@ -145,10 +148,15 @@
 			if(sillycone.builtInCamera?.can_use())
 				local_cameras += sillycone.builtInCamera
 
+		for(var/obj/vehicle/sealed/mecha/mech in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
+			if(mech.chassis_camera?.can_use())
+				local_cameras += mech.chassis_camera
+
 		cameras["[z_level]"] = local_cameras
 
 		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
-		for(var/turf/lad as anything in block(locate(max(x, 1), max(y, 1), z_level), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z_level)))
+		var/turf/chunk_corner = locate(x, y, z_level)
+		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
 			var/image/our_image = new /image(mirror_from)
 			our_image.loc = lad
 			turfs[lad] = our_image
@@ -170,5 +178,3 @@
 		obscuredTurfs[obscured_turf] = new_static
 
 #undef UPDATE_BUFFER_TIME
-#undef CHUNK_SIZE
-#undef GET_CHUNK_COORD

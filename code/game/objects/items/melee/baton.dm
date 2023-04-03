@@ -1,6 +1,7 @@
 /obj/item/melee/baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
+	desc = "A wooden truncheon for beating criminal scum."
+	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -36,6 +37,8 @@
 	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
+	/// Boolean on whether people with chunky fingers can use this baton.
+	var/chunky_finger_usable = FALSE
 
 	/// The context to show when the baton is active and targetting a living thing
 	var/context_living_target_active = "Stun"
@@ -59,7 +62,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
+		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -119,6 +122,12 @@
 
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
+
+	if(!chunky_finger_usable && ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_finger_human = user
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
+			return BATON_ATTACK_DONE
 
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK
@@ -188,7 +197,7 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		target.apply_damage(stamina_damage, STAMINA)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
@@ -256,7 +265,7 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
 		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
@@ -271,7 +280,7 @@
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_COMMAND * 4.5
 
@@ -309,11 +318,11 @@
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/melee/baton/telescopic/suicide_act(mob/user)
+/obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/internal/brain/our_brain = human_user.get_organ_by_type(/obj/item/organ/internal/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
@@ -326,10 +335,10 @@
 	if (QDELETED(human_user))
 		return
 	if(!QDELETED(our_brain))
-		human_user.internal_organs -= our_brain
+		human_user.organs -= our_brain
 		qdel(our_brain)
 	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -376,8 +385,8 @@
 
 /obj/item/melee/baton/security
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
-
+	desc = "A stun baton for incapacitating people with."
+	desc_controls = "Left click to stun, right click to harm."
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
@@ -387,7 +396,7 @@
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 80)
+	armor_type = /datum/armor/baton_security
 
 	throwforce = 7
 	stamina_damage = 60
@@ -407,6 +416,11 @@
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
+/datum/armor/baton_security
+	bomb = 50
+	fire = 80
+	acid = 80
+
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
@@ -414,20 +428,20 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
 	return cell
 
-/obj/item/melee/baton/security/suicide_act(mob/user)
+/obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
-		. = (FIRELOSS)
 		attack(user, user)
+		return FIRELOSS
 	else
 		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
-		. = (OXYLOSS)
+		return OXYLOSS
 
 /obj/item/melee/baton/security/Destroy()
 	if(cell)
@@ -568,7 +582,7 @@
 	target.set_stutter_if_lower(16 SECONDS)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
@@ -576,7 +590,8 @@
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
-	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
+	if(!trait_check)
+		target.Knockdown(knockdown_time)
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -609,7 +624,7 @@
 		scramble_mode()
 		for(var/loops in 1 to rand(6, 12))
 			scramble_time = rand(5, 15) / (1 SECONDS)
-			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(scramble_mode)), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
 	if (!cell || cell.charge < cell_hit_cost)
@@ -624,7 +639,8 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton. Left click to stun, right click to harm."
+	desc = "An improvised stun baton."
+	desc_controls = "Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -638,24 +654,44 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
+	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
+	var/can_upgrade = TRUE
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(!istype(item, /obj/item/stack/ore/bluespace_crystal))
+/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+	if(!istype(item, /obj/item/stack))
 		return ..()
-	if(!cell)
-		var/obj/item/stack/ore/bluespace_crystal/crystal = item
-		var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
-		remove_item_from_storage(user)
-		qdel(src)
-		crystal.use(1)
-		user.put_in_hands(prod)
-		to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
-	else
+
+	if(!can_upgrade)
+		user.visible_message(span_warning("This prod is already improved!"))
+		return ..()
+
+	if(cell)
 		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
+		return ..()
+
+	var/our_prod
+	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/our_crystal = item
+		our_crystal.use(1)
+		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
+
+	else if(istype(item, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = item
+		our_crystal.use(1)
+		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
+	else
+		to_chat(user, span_notice("You don't think the [item.name] will do anything to improve the [src]."))
+		return ..()
+
+	to_chat(user, span_notice("You place the [item.name] firmly into the igniter."))
+	remove_item_from_storage(user)
+	qdel(src)
+	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
+	user.put_in_hands(brand_new_prod)
 
 /obj/item/melee/baton/security/cattleprod/baton_effect()
 	if(!sparkler.activate())
@@ -703,6 +739,7 @@
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
+	can_upgrade = FALSE
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -715,3 +752,31 @@
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
 	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod
+	name = "snatcherprod"
+	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "telecrystalprod"
+	inhand_icon_state = "telecrystalprod"
+	slot_flags = null
+	throw_stun_chance = 50 //I think it'd be funny
+	can_upgrade = FALSE
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
+
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/stuff_in_hand = target.get_active_held_item()
+	if(stuff_in_hand && target.temporarilyRemoveItemFromInventory(stuff_in_hand))
+		if(user.put_in_inactive_hand(stuff_in_hand))
+			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
+		else
+			stuff_in_hand.forceMove(user.drop_location())
+			stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))

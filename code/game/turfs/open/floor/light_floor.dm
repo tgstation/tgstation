@@ -14,7 +14,7 @@
 	///defines on top
 	var/state = LIGHTFLOOR_FINE
 	///list of colours to choose
-	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, COLOR_SOFT_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP, LIGHT_COLOR_FIRE)
+	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, COLOR_SOFT_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_DIM_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP, LIGHT_COLOR_FIRE)
 	///current light color
 	var/currentcolor = LIGHT_COLOR_CYAN
 	///var to prevent changing color on certain admin spawn only tiles
@@ -25,7 +25,7 @@
 	///used for light floors that cycle colours
 	var/cycle = FALSE
 
-/turf/open/floor/light/setup_broken_states()
+/turf/open/floor/light/broken_states()
 	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
@@ -43,7 +43,7 @@
 		COLOR_SOFT_RED = image(icon = src.icon, icon_state = "light_on-2"),
 		LIGHT_COLOR_ORANGE = image(icon = src.icon, icon_state = "light_on-3"),
 		LIGHT_COLOR_GREEN = image(icon = src.icon, icon_state = "light_on-4"),
-		LIGHT_COLOR_YELLOW = image(icon = src.icon, icon_state = "light_on-5"),
+		LIGHT_COLOR_DIM_YELLOW = image(icon = src.icon, icon_state = "light_on-5"),
 		LIGHT_COLOR_DARK_BLUE = image(icon = src.icon, icon_state = "light_on-6"),
 		LIGHT_COLOR_LAVENDER = image(icon = src.icon, icon_state = "light_on-7"),
 		COLOR_WHITE = image(icon = src.icon, icon_state = "light_on-8"),
@@ -106,7 +106,7 @@
 			icon_state = "light_off"
 	return ..()
 
-/turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/light/ChangeTurf(path, new_baseturfs, flags)
 	set_light(0)
 	return ..()
 
@@ -123,7 +123,7 @@
 		return
 	if(!can_modify_colour)
 		return FALSE
-	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, .proc/check_menu, user, I), radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, I), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	currentcolor = choice

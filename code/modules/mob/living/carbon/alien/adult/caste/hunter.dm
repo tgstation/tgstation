@@ -7,7 +7,7 @@
 	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
 //Hunter verbs
@@ -50,7 +50,7 @@
 		body_position_pixel_y_offset = -32
 		update_icons()
 		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
 
 /mob/living/carbon/alien/adult/hunter/proc/leap_end()
 	leaping = FALSE
@@ -86,3 +86,4 @@
 			visible_message(span_danger("[src] smashes into [hit_atom]!"), span_alertalien("[src] smashes into [hit_atom]!"))
 			Paralyze(40, ignore_canstun = TRUE)
 
+#undef MAX_ALIEN_LEAP_DIST

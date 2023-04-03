@@ -47,9 +47,6 @@
 	hidden = TRUE
 	dir = NORTH
 	port_direction = SOUTH
-	width = 5
-	height = 7
-	dwidth = 2
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_one
 	name = "syndicate fighter one"
@@ -71,9 +68,6 @@
 	dir = NORTH
 	port_direction = SOUTH
 	preferred_direction = WEST
-	width = 14
-	dwidth = 6
-	height = 7
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter
 	name = "syndicate fighter navigation computer"
@@ -171,7 +165,7 @@
 			spawner.antag_team = team
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
-				spawner.create(our_candidate)
+				spawner.create_from_ghost(our_candidate)
 				spawner.antag_team.players_spawned += (our_candidate.ckey)
 				candidates.Splice(1, 2)
 				notify_ghosts(

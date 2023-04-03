@@ -1,15 +1,13 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
 ///Wizard tower item
-/obj/item/disk/design_disk/adv/knight_gear
+/obj/item/disk/design_disk/knight_gear
 	name = "Magic Disk of Smithing"
 
-/obj/item/disk/design_disk/adv/knight_gear/Initialize(mapload)
+/obj/item/disk/design_disk/knight_gear/Initialize(mapload)
 	. = ..()
-	var/datum/design/knight_armour/A = new
-	var/datum/design/knight_helmet/H = new
-	blueprints[1] = A
-	blueprints[2] = H
+	blueprints += new /datum/design/knight_armour
+	blueprints += new /datum/design/knight_helmet
 
 //Free Golems
 
@@ -17,12 +15,10 @@
 	name = "Golem Creation Disk"
 	desc = "A gift from the Liberator."
 	icon_state = "datadisk1"
-	max_blueprints = 1
 
 /obj/item/disk/design_disk/golem_shell/Initialize(mapload)
 	. = ..()
-	var/datum/design/golem_shell/G = new
-	blueprints[1] = G
+	blueprints += new /datum/design/golem_shell
 
 /datum/design/golem_shell
 	name = "Golem Shell Construction"
@@ -38,9 +34,9 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
-	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
-	var/has_owner = FALSE //if the resulting golem obeys someone
 	w_class = WEIGHT_CLASS_BULKY
+
+	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	. = ..()

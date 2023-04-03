@@ -12,7 +12,7 @@
 	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
+	armor_type = /datum/armor/structure_bookcase
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
@@ -20,6 +20,9 @@
 	var/random_category = null
 	/// How many random books to generate.
 	var/books_to_load = 0
+
+/datum/armor/structure_bookcase
+	fire = 50
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
@@ -35,9 +38,13 @@
 	update_appearance()
 
 	if(SSlibrary.initialized)
-		INVOKE_ASYNC(src, .proc/load_shelf)
+		INVOKE_ASYNC(src, PROC_REF(load_shelf))
 	else
 		SSlibrary.shelves_to_load += src
+
+///proc for doing things after a bookcase is randomly populated
+/obj/structure/bookcase/proc/after_random_load()
+	return
 
 ///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
 /obj/structure/bookcase/proc/load_shelf()
@@ -45,6 +52,7 @@
 	//To send to library consoles as a starting inventory
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
+		after_random_load()
 		update_appearance() //Make sure you look proper
 
 	var/area/our_area = get_area(src)
@@ -123,10 +131,10 @@
 				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
 			else if(istype(I, /obj/item/pen))
-				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				if(!newname)
 					return

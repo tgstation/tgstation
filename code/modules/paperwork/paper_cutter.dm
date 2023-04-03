@@ -18,7 +18,7 @@
 	update_appearance()
 
 
-/obj/item/papercutter/suicide_act(mob/user)
+/obj/item/papercutter/suicide_act(mob/living/user)
 	if(storedcutter)
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		if(iscarbon(user))
@@ -27,11 +27,11 @@
 			if(BP)
 				BP.drop_limb()
 				playsound(loc, SFX_DESECRATION ,50, TRUE, -1)
-		return (BRUTELOSS)
+		return BRUTELOSS
 	else
 		user.visible_message(span_suicide("[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 
 /obj/item/papercutter/update_icon_state()
@@ -53,7 +53,7 @@
 
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/paper) && !storedpaper)
+	if(istype(P, /obj/item/paper) && !storedpaper && !istype(P, /obj/item/paper/paperslip))
 		if(!user.transferItemToLoc(P, src))
 			return
 		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
@@ -91,8 +91,8 @@
 		to_chat(user, span_notice("You neatly cut [storedpaper]."))
 		storedpaper = null
 		qdel(storedpaper)
-		new /obj/item/paperslip(get_turf(src))
-		new /obj/item/paperslip(get_turf(src))
+		new /obj/item/paper/paperslip(get_turf(src))
+		new /obj/item/paper/paperslip(get_turf(src))
 		update_appearance()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
@@ -109,25 +109,25 @@
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
-/obj/item/paperslip
+/obj/item/paper/paperslip
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
-	icon = 'icons/obj/bureaucracy.dmi'
-	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	inhand_icon_state = "silver_id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
-/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
-	if(burn_paper_product_attackby_check(I, user))
-		return
-	return ..()
-
-
-/obj/item/paperslip/Initialize(mapload)
-	. = ..()
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
-
+/obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+	name = "corporate plastic card"
+	desc = "A plastic card for confidental corporate matters. Can be written on with pen somehow."
+	icon_state = "corppaperslip"
+	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
+	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
+	throw_range = 6
+	throw_speed = 2
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter"

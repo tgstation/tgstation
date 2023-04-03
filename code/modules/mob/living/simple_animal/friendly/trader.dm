@@ -26,7 +26,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader
 	name = "Trader"
 	desc = "Come buy some!"
-	icon = 'icons/mob/simple/simple_human.dmi'
+	icon = 'icons/mob/simple/traders.dmi'
 	icon_state = "faceless"
 	maxHealth = 200
 	health = 200
@@ -167,7 +167,7 @@
 		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
 	if(!npc_options.len)
 		return FALSE
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(npc_result)
 		if("Buy")
 			buy_item(user)
@@ -199,7 +199,7 @@
 		"Selling?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
 		"Buying?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
 	)
-	var/pick = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(pick)
 		if("Lore")
 			say(return_trader_phrase(TRADER_LORE_PHRASE))
@@ -257,7 +257,7 @@
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //out of stock
 			item_image.overlays += image(icon = 'icons/hud/radial.dmi', icon_state = "radial_center")
 		items += list("[initial(thing.name)]" = item_image)
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 	var/obj/item/item_to_buy = display_names[pick]
@@ -271,7 +271,7 @@
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
 	)
-	var/buyer_will_buy = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/buyer_will_buy = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(buyer_will_buy != "Yes")
 		return
 	face_atom(user)
@@ -350,7 +350,7 @@
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
 	)
 	face_atom(user)
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(npc_result != "Yes")
 		say(return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
@@ -482,3 +482,20 @@
 		/obj/item/reagent_containers/condiment/milk = list(1000, INFINITY, ""),
 		/obj/item/stack/sheet/bone = list(420, INFINITY, ", per sheet of bone"),
 		)
+
+#undef ITEM_REJECTED_PHRASE
+#undef ITEM_SELLING_CANCELED_PHRASE
+#undef ITEM_SELLING_ACCEPTED_PHRASE
+#undef INTERESTED_PHRASE
+#undef BUY_PHRASE
+#undef NO_CASH_PHRASE
+#undef NO_STOCK_PHRASE
+#undef NOT_WILLING_TO_BUY_PHRASE
+#undef ITEM_IS_WORTHLESS_PHRASE
+#undef TRADER_HAS_ENOUGH_ITEM_PHRASE
+#undef TRADER_LORE_PHRASE
+#undef TRADER_NOT_BUYING_ANYTHING
+#undef TRADER_NOT_SELLING_ANYTHING
+#undef TRADER_PRODUCT_INFO_PRICE
+#undef TRADER_PRODUCT_INFO_QUANTITY
+#undef TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION

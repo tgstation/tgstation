@@ -11,6 +11,7 @@
 	severity = "Dangerous!"
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spread_text = "Organ failure"
 	visibility_flags = HIDDEN_PANDEMIC
 	required_organs = list(/obj/item/organ/internal/heart)
 	bypasses_immunity = TRUE // Immunity is based on not having an appendix; this isn't a virus
@@ -39,7 +40,7 @@
 				to_chat(affected_mob, span_warning("You feel dizzy."))
 				affected_mob.adjust_confusion(6 SECONDS)
 			if(DT_PROB(1.5, delta_time))
-				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short on breath", "uneasy")]."))
+				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short of breath", "uneasy")]."))
 		if(3 to 4)
 			if(!sound)
 				affected_mob.playsound_local(affected_mob, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)

@@ -1,0 +1,102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+"b" = (
+/obj/structure/closet/wardrobe/pjs,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/maintenance/department/medical)
+"m" = (
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+"p" = (
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/obj/item/toy/plush/moth{
+	name = "Delivers-The-Pizza"
+	},
+/obj/item/clothing/head/soft/red{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Morgue Maintenance"
+	},
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/maintenance/department/medical)
+"Q" = (
+/obj/machinery/vending/wallmed/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/pkplush{
+	pixel_x = -3
+	},
+/obj/item/toy/plush/rouny{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+"U" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+"X" = (
+/obj/item/pizzabox/margherita{
+	pixel_y = 27
+	},
+/obj/structure/dresser,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+Q
+m
+"}
+(2,1,1) = {"
+a
+b
+"}
+(3,1,1) = {"
+a
+U
+"}
+(4,1,1) = {"
+a
+L
+"}
+(5,1,1) = {"
+q
+X
+"}
+(6,1,1) = {"
+H
+p
+"}

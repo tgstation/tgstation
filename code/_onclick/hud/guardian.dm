@@ -69,7 +69,7 @@
 		static_inventory += using
 
 	pull_icon = new /atom/movable/screen/pull()
-	pull_icon.icon = 'icons/hud/guardian.dmi'
+	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_living_pull
 	pull_icon.hud = src
@@ -103,15 +103,15 @@
 	if(!mymob)
 		return
 	if(istype(mymob, /mob/living/simple_animal/hostile/guardian/dextrous))
-		var/mob/living/simple_animal/hostile/guardian/dextrous/D = mymob
+		var/mob/living/simple_animal/hostile/guardian/dextrous/dex_guardian = mymob
 
 		if(hud_shown)
-			if(D.internal_storage)
-				D.internal_storage.screen_loc = ui_id
-				D.client.screen += D.internal_storage
+			if(dex_guardian.internal_storage)
+				dex_guardian.internal_storage.screen_loc = ui_id
+				dex_guardian.client.screen += dex_guardian.internal_storage
 		else
-			if(D.internal_storage)
-				D.internal_storage.screen_loc = null
+			if(dex_guardian.internal_storage)
+				dex_guardian.internal_storage.screen_loc = null
 
 	..()
 
@@ -125,8 +125,8 @@
 
 /atom/movable/screen/guardian/manifest/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Manifest()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.manifest()
 
 
 /atom/movable/screen/guardian/recall
@@ -136,8 +136,8 @@
 
 /atom/movable/screen/guardian/recall/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Recall()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.recall()
 
 /atom/movable/screen/guardian/toggle_mode
 	icon_state = "toggle"
@@ -146,8 +146,8 @@
 
 /atom/movable/screen/guardian/toggle_mode/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleMode()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.toggle_modes()
 
 /atom/movable/screen/guardian/toggle_mode/inactive
 	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
@@ -157,6 +157,11 @@
 	name = "Toggle Stealth"
 	desc = "Enter or exit stealth."
 
+/atom/movable/screen/guardian/toggle_mode/gases
+	icon_state = "gases"
+	name = "Toggle Gas"
+	desc = "Switch between possible gases."
+
 /atom/movable/screen/guardian/communicate
 	icon_state = "communicate"
 	name = "Communicate"
@@ -164,8 +169,8 @@
 
 /atom/movable/screen/guardian/communicate/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Communicate()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.communicate()
 
 
 /atom/movable/screen/guardian/toggle_light
@@ -175,5 +180,5 @@
 
 /atom/movable/screen/guardian/toggle_light/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.ToggleLight()
+		var/mob/living/simple_animal/hostile/guardian/user = usr
+		user.toggle_light()

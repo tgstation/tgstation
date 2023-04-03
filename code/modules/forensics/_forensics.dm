@@ -45,7 +45,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_act))
 
 	src.parent = WEAKREF(parent)
 	src.fingerprints = fingerprints
@@ -147,7 +147,8 @@
 /// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
-	var/item_multiplier = isitem(src) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
+	var/atom/actual_parent = parent.resolve()
+	var/item_multiplier = isitem(actual_parent) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
@@ -229,7 +230,7 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!isitem(parent.resolve()))
+	if(!parent || !isitem(parent.resolve()))
 		return
 	if(!length(blood_DNA))
 		return

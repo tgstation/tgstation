@@ -16,14 +16,13 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("UpdateNote")
 			written_note = params["newnote"]
 			return UI_UPDATE
 
 /datum/computer_file/program/notepad/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["note"] = written_note
 

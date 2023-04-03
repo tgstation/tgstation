@@ -7,7 +7,6 @@
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = SUPERVISOR_CE
-	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
@@ -33,6 +32,7 @@
 		/obj/item/storage/box/lights/mixed = 20,
 		/obj/item/lightreplacer = 10,
 		/obj/item/holosign_creator/engineering = 8,
+		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
 	)
 	rpg_title = "Crystallomancer"
@@ -49,7 +49,7 @@
 	ears = /obj/item/radio/headset/headset_eng
 	head = /obj/item/clothing/head/utility/hardhat
 	shoes = /obj/item/clothing/shoes/workboots
-	l_pocket = /obj/item/modular_computer/tablet/pda/engineering
+	l_pocket = /obj/item/modular_computer/pda/engineering
 	r_pocket = /obj/item/t_scanner
 
 	backpack = /obj/item/storage/backpack/industrial

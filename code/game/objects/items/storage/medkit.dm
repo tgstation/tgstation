@@ -11,6 +11,7 @@
 /obj/item/storage/medkit
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
+	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "medkit"
 	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -35,7 +36,8 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/emergency
@@ -52,7 +54,8 @@
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
-		/obj/item/storage/pill_bottle/iron = 1)
+		/obj/item/storage/pill_bottle/iron = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/surgery
@@ -115,8 +118,8 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/stack/sticky_tape //surgical tape
-		))
+		/obj/item/stack/sticky_tape, //surgical tape
+	))
 
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
@@ -130,7 +133,8 @@
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1)
+		/obj/item/cautery = 1,
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/ancient
@@ -263,22 +267,55 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/defibrillator/compact/combat/loaded(src)
-	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	var/static/list/items_inside = list(
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/reagent_containers/pill/patch/libital = 4,
+		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/stack/medical/gauze = 2,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/cautery = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/tactical/premium
+	name = "premium combat medical kit"
+	desc = "May or may not contain traces of lead."
+	grind_results = list(/datum/reagent/lead = 10)
+
+/obj/item/storage/medkit/tactical/premium/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/reagent_containers/pill/patch/libital = 3,
+		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/stack/medical/gauze = 2,
+		/obj/item/mod/module/thread_ripper = 1,
+		/obj/item/mod/module/surgical_processor/preloaded = 1,
+		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
+		/obj/item/reagent_containers/hypospray/combat/empty = 1,
+		/obj/item/storage/box/evilmeds = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/clothing/glasses/hud/health/night/science = 1,
+	)
+	generate_items_inside(items_inside,src)
 
 //medibot assembly
 /obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/l_arm/robot)) && (!istype(bodypart, /obj/item/bodypart/r_arm/robot)))
+	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
 		return ..()
 
 	//Making a medibot!
@@ -323,9 +360,9 @@
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
 
-/obj/item/storage/pill_bottle/suicide_act(mob/user)
+/obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/storage/pill_bottle/multiver
 	name = "bottle of multiver pills"
@@ -513,9 +550,11 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
+/// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "organbox"
 	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -529,7 +568,7 @@
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
+	create_storage(storage_type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
 	atom_storage.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
@@ -541,55 +580,38 @@
 
 /obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
-	var/cool = FALSE
-	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
-	if(amount > 0)
-		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
-		cool = TRUE
-	else
-		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
-		if(amount > 0)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
-			cool = TRUE
-	if(!cooling && cool)
-		cooling = TRUE
-		update_appearance()
-		for(var/C in contents)
-			freeze_contents(C)
+	var/using_coolant = coolant_to_spend()
+	if (isnull(using_coolant))
+		if (cooling)
+			cooling = FALSE
+			update_appearance()
+			for(var/obj/stored in contents)
+				stored.unfreeze()
 		return
-	if(cooling && !cool)
-		cooling = FALSE
-		update_appearance()
-		for(var/C in contents)
-			unfreeze_contents(C)
+
+	var/amount_used = 0.05 * delta_time
+	if (using_coolant != /datum/reagent/cryostylane)
+		amount_used *= 2
+	reagents.remove_reagent(using_coolant, amount_used)
+
+	if(cooling)
+		return
+	cooling = TRUE
+	update_appearance()
+	for(var/obj/stored in contents)
+		stored.freeze()
+
+/// Returns which coolant we are about to use, or null if there isn't any
+/obj/item/storage/organbox/proc/coolant_to_spend()
+	if (reagents.get_reagent_amount(/datum/reagent/cryostylane))
+		return /datum/reagent/cryostylane
+	if (reagents.get_reagent_amount(/datum/reagent/consumable/ice))
+		return /datum/reagent/consumable/ice
+	return null
 
 /obj/item/storage/organbox/update_icon_state()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
-
-///freezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/freeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags |= ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags |= ORGAN_FROZEN
-
-///unfreezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/unfreeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags &= ~ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(is_reagent_container(I) && I.is_open_container())
@@ -621,3 +643,10 @@
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
 	return FIRELOSS
+
+/// A subtype of organ storage box which starts with a full coolant tank
+/obj/item/storage/organbox/preloaded
+
+/obj/item/storage/organbox/preloaded/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)

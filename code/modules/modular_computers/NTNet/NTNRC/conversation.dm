@@ -1,35 +1,45 @@
 #define MAX_CHANNELS 1000
 
 /datum/ntnet_conversation
-	var/id = null
+	///The title of the conversation, seen in the UI.
 	var/title = "Untitled Conversation"
-	var/datum/computer_file/program/chatclient/operator // "Administrator" of this channel. Creator starts as channel's operator,
-	var/list/messages = list()
-	///chat clients who are active or minimized
-	var/list/active_clients = list()
-	///chat clients who have exited out of the program.
-	var/list/offline_clients = list()
-	///clients muted by operator
-	var/list/muted_clients = list()
-	//if a channel is strong, it cannot be renamed or deleted.
+	//If a channel is strong, it cannot be renamed or deleted.
 	var/strong = FALSE
+	///The password to join a channel, set by an Administrator.
 	var/password
-	var/static/ntnrc_uid = 0
 
-/datum/ntnet_conversation/New()
-	id = ntnrc_uid + 1
+	///A static UID to ensure no conversations are the same.
+	var/static/ntnrc_uid = 0
+	///ID using the UID.
+	var/id
+
+	///List of all messages sent in the conversation.
+	var/list/messages = list()
+
+	///The "Administrator" of the channel, the creator starts as channel's operator by default.
+	var/datum/computer_file/program/chatclient/channel_operator
+	///Chat clients who are active or minimized.
+	var/list/datum/computer_file/program/chatclient/active_clients = list()
+	///Chat clients who have exited out of the program.
+	var/list/datum/computer_file/program/chatclient/offline_clients = list()
+	///Chat clients currently muted by the operator, rendering them unable to ping other people.
+	var/list/datum/computer_file/program/chatclient/muted_clients = list()
+
+/datum/ntnet_conversation/New(title, strong = FALSE)
+	src.title = title
+	src.strong = strong
+
+	id = ntnrc_uid
+	ntnrc_uid++
 	if(id > MAX_CHANNELS)
 		qdel(src)
 		return
-	ntnrc_uid = id
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.chat_channels.Add(src)
-	..()
+	SSmodular_computers.chat_channels.Add(src)
+	return ..()
 
 /datum/ntnet_conversation/Destroy()
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.chat_channels.Remove(src)
-	for(var/datum/computer_file/program/chatclient/chatterbox in (active_clients | offline_clients | muted_clients))
+	SSmodular_computers.chat_channels.Remove(src)
+	for(var/datum/computer_file/program/chatclient/chatterbox as anything in (active_clients | offline_clients))
 		purge_client(chatterbox)
 	return ..()
 
@@ -54,15 +64,13 @@
 	active_clients.Add(new_user)
 	if(!silent)
 		add_status_message("[new_user.username] has joined the channel.")
-	// No operator, so we assume the channel was empty. Assign this user as operator.
-	if(!operator)
-		changeop(new_user)
+	// No operator, so we assume the channel was empty. Assign this user as operator, without the message, since you're the creator.
+	if(!channel_operator)
+		changeop(new_user, silent = TRUE)
 
 //Clear all of our references to a client, used for client deletion
 /datum/ntnet_conversation/proc/purge_client(datum/computer_file/program/chatclient/forget)
 	remove_client(forget)
-	muted_clients -= forget
-	offline_clients -= forget
 	forget.conversations -= src
 
 /datum/ntnet_conversation/proc/remove_client(datum/computer_file/program/chatclient/leaving)
@@ -71,10 +79,12 @@
 	if(leaving in active_clients)
 		active_clients.Remove(leaving)
 		add_status_message("[leaving.username] has left the channel.")
+	muted_clients -= leaving
+	offline_clients -= leaving
 
 	// Channel operator left, pick new operator
-	if(leaving == operator)
-		operator = null
+	if(leaving == channel_operator)
+		channel_operator = null
 		if(active_clients.len)
 			var/datum/computer_file/program/chatclient/newop = pick(active_clients)
 			changeop(newop)
@@ -86,7 +96,7 @@
 	offline_clients.Add(offline)
 
 /datum/ntnet_conversation/proc/mute_user(datum/computer_file/program/chatclient/op, datum/computer_file/program/chatclient/muted)
-	if(!op.netadmin_mode && operator != op) //sanity even if the person shouldn't be able to see the mute button
+	if(!op.netadmin_mode && (channel_operator != op)) //sanity even if the person shouldn't be able to see the mute button
 		return
 	if(muted in muted_clients)
 		muted_clients.Remove(muted)
@@ -101,15 +111,16 @@
 	add_status_message("[pinger.username] pinged [pinged.username].")
 	pinged.computer.alert_call(pinged, "You have been pinged in [title] by [pinger.username]!", 'sound/machines/ping.ogg')
 
-/datum/ntnet_conversation/proc/changeop(datum/computer_file/program/chatclient/newop)
-	if(istype(newop))
-		operator = newop
+/datum/ntnet_conversation/proc/changeop(datum/computer_file/program/chatclient/newop, silent = FALSE)
+	if(!istype(newop))
+		CRASH("[src] is attempting to add [newop] as the operator, but it isn't a chat client.")
+	channel_operator = newop
+	if(!silent)
 		add_status_message("Channel operator status transferred to [newop.username].")
 
 /datum/ntnet_conversation/proc/change_title(newtitle, datum/computer_file/program/chatclient/renamer)
-	if(operator != renamer || strong)
-		return FALSE // Not Authorised or channel cannot be editted
-
+	if((channel_operator != renamer) || strong) // Not Authorised or channel cannot be editted
+		return FALSE
 	add_status_message("[renamer.username] has changed channel title from [title] to [newtitle]")
 	title = newtitle
 

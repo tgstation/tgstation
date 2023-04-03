@@ -1,0 +1,67 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+$nanotrasen: #ffffff;
+
+@use '../colors.scss' with (
+   $primary: #000000,
+   $label: #000000,
+ );
+@use '../base.scss' with (
+   $color-bg: white,
+ );
+
+.theme-ntos_lightmode {
+  @include meta.load-css('../atomic/color.scss', $with: ());
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: ('color-default': $nanotrasen)
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: (
+      'color-default-fill': $nanotrasen,
+      'background-color': rgba(0, 0, 0, 0.5)
+    )
+  );
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(119, 119, 119, 0.4))
+  );
+  @include meta.load-css(
+    '../components/Tooltip.scss',
+    $with: ('background-color': white)
+  );
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': gray)
+  );
+  .Button {
+    color: #161613;
+  }
+  .Button:hover {
+    background-color: #777777;
+    transition: 0.1s;
+  }
+
+  .Section {
+    color: black;
+  }
+  .Tab {
+    color: black;
+  }
+  .Tab--selected {
+    color: white;
+    background-color: darkgray;
+  }
+}

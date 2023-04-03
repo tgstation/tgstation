@@ -1,4 +1,4 @@
-/// Generic away/pffstation trim.
+/// Generic away/offstation trim.
 /datum/id_trim/away
 	access = list(ACCESS_AWAY_GENERAL)
 
@@ -111,15 +111,47 @@
 	subdepartment_color = COLOR_MOSTLY_PURE_RED
 	access = list(ACCESS_SYNDICATE)
 
-/// Trim for pirates.
-/datum/id_trim/pirate/silverscale
-	assignment = "Silver Scale Member"
-
 /// Trim for the pirate captain.
 /datum/id_trim/pirate/captain
 	assignment = "Pirate Captain"
 	trim_state = "trim_captain"
 
-/// Trim for the pirate captain.
+/datum/id_trim/pirate/silverscale
+	assignment = "Silver Scale Member"
+
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
+
+/datum/id_trim/pirate/psykers
+	assignment = "Psyker-gang Member"
+
+/datum/id_trim/pirate/captain/psykers
+	assignment = "Psyker-gang Leader"
+
+//Trims for Dangerous Research, used in ``dangerous_research.dm``
+/datum/id_trim/away/dangerous_research
+	assignment = "Researcher"
+	access = list(ACCESS_AWAY_SCIENCE)
+
+/datum/id_trim/away/dangerous_research/head_occultist
+	assignment = "Head Occultist"
+	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_COMMAND)
+
+//Trims for waystation.dmm space ruin
+/datum/id_trim/away/waystation/cargo_technician
+	assignment = "Waystation Cargo Hauler"
+	trim_state = "trim_cargotechnician"
+	department_color = COLOR_CARGO_BROWN
+	access = list(ACCESS_AWAY_SUPPLY)
+
+/datum/id_trim/away/waystation/quartermaster
+	assignment = "Waystation Quartermaster"
+	trim_state = "trim_quartermaster"
+	department_color = COLOR_CARGO_BROWN
+	access = list(ACCESS_AWAY_SUPPLY, ACCESS_AWAY_COMMAND)
+
+/datum/id_trim/away/waystation/security
+	assignment = "Waystation Security Officer"
+	trim_state = "trim_securityofficer"
+	department_color = COLOR_CARGO_BROWN
+	access = list(ACCESS_AWAY_SUPPLY, ACCESS_AWAY_SEC)

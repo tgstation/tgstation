@@ -106,7 +106,7 @@
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
 	sound_loop()
-	timer_id = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
 /**
  * A simple proc handling the looping of the sound itself.
@@ -120,9 +120,18 @@
 		return
 	// If we have a timer, we're varying mid length, and this is happening while we're runnin mid_sounds
 	if(timer_id && mid_length_vary && start_time)
-		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary))
+		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 	if(!chance || prob(chance))
 		play(get_sound())
+
+/**
+ * Applies a new mid length to the sound
+ */
+/datum/looping_sound/proc/set_mid_length(new_mid)
+	mid_length = new_mid
+	if(!timer_id)
+		return
+	updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 
 /**
  * The proc that handles actually playing the sound.
@@ -194,7 +203,7 @@
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	timer_id = addtimer(CALLBACK(src, .proc/start_sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(start_sound_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
@@ -207,7 +216,7 @@
 		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_parent
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
 
 /// A simple proc that lets us know whether the sounds are currently active or not.
 /datum/looping_sound/proc/is_active()
