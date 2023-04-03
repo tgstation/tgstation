@@ -409,7 +409,9 @@
 		humankind. The jewelry he kept for himself."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
-	inhand_icon_state = null
+	inhand_icon_state = "candle"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
@@ -429,11 +431,15 @@
 		if(0 to 15 MINUTES)
 			wax_level = 3
 	icon_state = "candle[wax_level][on ? "_lit" : ""]"
+	inhand_icon_state = "candle[on ? "_lit" : ""]"
 
 /obj/item/flashlight/flare/candle/attackby(obj/item/fire_starter, mob/user, params)
 	var/success_msg = fire_starter.ignition_effect(src, user)
 	if(success_msg && ignition(user))
 		user.visible_message(success_msg)
+		if(ismob(loc))
+			var/mob/candle_holder = loc
+			candle_holder.update_held_items()
 	else
 		return ..()
 
@@ -486,7 +492,7 @@
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
-	inhand_icon_state = null
+	inhand_icon_state = "syndilantern"
 	light_range = 10
 
 /obj/item/flashlight/lantern/jade
