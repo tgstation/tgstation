@@ -77,7 +77,7 @@
 				to_chat(M, span_boldannounce("You stand paralyzed in the shadow of the cold as it descends from on high."))
 				L.Stun(20)
 	time_to_next_roar = world.time + 30 SECONDS
-
+/*
 /datum/action/cooldown/spell/pointed/progenitor_curse
 	name = "Viscerate Mind"
 	desc = "Unleash a powerful psionic barrage into the mind of the target."
@@ -95,6 +95,7 @@
 	usr.visible_message(span_warning("[usr]'s sigils flare as it glances at [cast_on]!"), \
 						span_velvet("You direct [zoinks]% of your psionic power into [cast_on]'s mind!."))
 	cast_on.apply_status_effect(STATUS_EFFECT_PROGENITORCURSE)
+*/
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/narsie_act()
 	return
