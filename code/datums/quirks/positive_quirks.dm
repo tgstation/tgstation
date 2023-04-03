@@ -337,3 +337,34 @@
 
 /datum/quirk/item_quirk/signer/remove()
 	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
+
+/datum/quirk/augmented
+	name = "Augmented"
+	desc = "All your limbs are replaced with robotic ones, which are more durable, but are vulnerable to EMPs and can be healed only by welding tools and cable coils."
+	icon = "tg-prosthetic-full"
+	value = 2
+	medical_record_text = "During physical examination, patient was found to have all robotic limbs."
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+
+/datum/quirk/augmented/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot) 
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot)
+	var/style
+	if(human_holder.mind)
+		var/datum/job/role = human_holder.mind?.assigned_role
+		if(/datum/job_department/engineering in role.departments_list)
+			style = 'icons/mob/augmentation/augments_engineer.dmi'
+		else if(/datum/job_department/security in role.departments_list)
+			style = 'icons/mob/augmentation/augments_security.dmi'
+		else if(/datum/job_department/cargo in role.departments_list)
+			style = 'icons/mob/augmentation/augments_mining.dmi'
+	if(style)
+		for(var/obj/item/bodypart/body_part in human_holder.bodyparts)
+			body_part.change_appearance(style, greyscale = FALSE)
+
+/datum/quirk/augmented/post_add()
+	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with robotic ones. They are more durable and reistant to damage. Additionally, \
+	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
