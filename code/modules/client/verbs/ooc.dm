@@ -13,8 +13,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(!mob)
 		return
 
-	if(!client.fully_created)
+	if(!fully_created)
 		to_chat(usr, span_danger("Please wait while we validate your client before you use OOC."))
+		return
 
 	if(!holder)
 		if(!GLOB.ooc_allowed)
