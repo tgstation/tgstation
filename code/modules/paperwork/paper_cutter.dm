@@ -33,6 +33,7 @@
 
 /obj/item/papercutter/examine(mob/user)
 	. = ..()
+	. += "<b>Right-Click</b> to cut paper once it's inside."
 	. += "The blade could be [blade_secured ? "un" : ""]secured with a <b>screwdriver</b>."
 
 /obj/item/papercutter/suicide_act(mob/living/user)
