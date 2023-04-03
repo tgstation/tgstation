@@ -1,6 +1,6 @@
 /// Take off the top layer turf and replace it with the next baseturf down
 /turf/proc/ScrapeAway(amount=1, flags)
-	if(!amount || (turf_flags & NO_SCRAPING))
+	if(!amount)
 		return
 	if(length(baseturfs))
 		var/list/new_baseturfs = baseturfs.Copy()

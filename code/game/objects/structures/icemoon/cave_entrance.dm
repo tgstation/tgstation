@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	for(var/turf/potential in RANGE_TURFS(2, src))
 		if(abs(src.x - potential.x) + abs(src.y - potential.y) > 3)
 			continue
-		if(ismineralturf(potential))
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
 			var/turf/closed/mineral/clearable = potential
 			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()
 	for(var/turf/potential in RANGE_TURFS(1, src))
-		if(ismineralturf(potential))
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
 			var/turf/closed/mineral/clearable = potential
 			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	for(var/turf/potential in RANGE_TURFS(3, src))
 		if(abs(src.x - potential.x) + abs(src.y - potential.y) > 5)
 			continue
-		if(ismineralturf(potential))
+		if(ismineralturf(potential) && !(potential.turf_flags & NO_CLEARING))
 			var/turf/closed/mineral/clearable = potential
 			clearable.ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
