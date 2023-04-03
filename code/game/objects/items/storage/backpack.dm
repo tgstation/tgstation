@@ -233,6 +233,36 @@
 	. = ..()
 	atom_storage.max_total_storage = 26
 
+// MEAT MEAT MEAT MEAT MEAT
+
+/obj/item/storage/backpack/meat
+	name = "\improper MEAT"
+	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
+	icon_state = "meatmeatmeat"
+	inhand_icon_state = "meatmeatmeat"
+	force = 15
+	throwforce = 15
+	attack_verb_continuous = list("MEATS", "MEAT MEATS")
+	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	var/list/meat_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
+	var/foodtypes = MEAT | RAW
+	var/list/tastes = list("MEAT" = 1)
+	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
+
+/obj/item/storage/backpack/meat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible,\
+		initial_reagents = meat_reagents,\
+		foodtypes = foodtypes,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+	)
+	AddComponent(/datum/component/squeak, meat_sounds)
+
 /*
  * Satchel Types
  */
@@ -330,7 +360,7 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
+	var/datum/supply_pack/imports/contraband/C = new
 	for(var/i in 1 to 2)
 		var/ctype = pick(C.contains)
 		new ctype(src)

@@ -831,8 +831,8 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime,
-/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime{
+/obj/item/gun/ballistic/rifle/boltaction/prime,
+/obj/item/gun/ballistic/rifle/boltaction/prime{
 	pixel_y = 4
 	},
 /turf/open/floor/pod/dark,

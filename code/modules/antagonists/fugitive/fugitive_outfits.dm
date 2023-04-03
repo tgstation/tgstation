@@ -98,7 +98,7 @@
 	id = /obj/item/card/id/advanced
 	uniform = /obj/item/clothing/under/costume/soviet
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses

@@ -28,7 +28,8 @@
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
-		/obj/item/gun/energy/laser/thermal
+		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 		))
 
 /obj/item/storage/belt/holster/energy
@@ -90,7 +91,8 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
-		/obj/item/gun/energy/laser/thermal
+		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 		))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()

@@ -25,6 +25,11 @@
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
+/obj/projectile/bullet/a762/surplus
+	name = "7.62 surplus bullet"
+	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
+	armour_penetration = 0
+
 /obj/projectile/bullet/a762/enchanted
 	name = "enchanted 7.62 bullet"
 	damage = 20

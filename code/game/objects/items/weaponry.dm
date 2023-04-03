@@ -1083,3 +1083,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/melee/error
+	name = "ERROR"
+	desc = "404 - WEAPON NOT FOUND - PLEASE ENSURE THAT YOUR MOD LOAD ORDER IS CORRECT BEFORE PROCEEDING"
+	icon_state = "error_deliberate"
+	inhand_icon_state = "pen"
+	worn_icon_state = null //this purposely causes the horrid pink sproite
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	force = 0
+	attack_verb_continuous = list("ERRORS", "WARNINGS", "NULLS")
+	attack_verb_simple = list("ERROR", "WARNING", "NULL")
