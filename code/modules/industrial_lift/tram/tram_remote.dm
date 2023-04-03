@@ -1,7 +1,7 @@
-#define TRAMCTRL_INBOUND "inbound"
-#define TRAMCTRL_OUTBOUND "outbound"
-#define TRAMCTRL_FAST "fast"
-#define TRAMCTRL_SAFE "safe"
+#define TRAMCTRL_INBOUND 1
+#define TRAMCTRL_OUTBOUND 0
+#define TRAMCTRL_FAST 1
+#define TRAMCTRL_SAFE 0
 
 /obj/item/tram_remote
 	icon_state = "tramremote_nis"
@@ -23,26 +23,24 @@
 
 ///set tram control direction
 /obj/item/tram_remote/attack_self_secondary(mob/user)
-	var/static/list/desc = list(TRAMCTRL_INBOUND = "< inbound", TRAMCTRL_OUTBOUND = "outbound >")
 	switch(direction)
 		if(TRAMCTRL_INBOUND)
 			direction = TRAMCTRL_OUTBOUND
 		if(TRAMCTRL_OUTBOUND)
 			direction = TRAMCTRL_INBOUND
 	update_appearance()
-	balloon_alert(user, "direction: [desc[direction]]")
+	balloon_alert(user, "[direction ? "< inbound" : "outbound >"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///set safety bypass
 /obj/item/tram_remote/CtrlClick(mob/user)
-	var/static/list/desc = list(TRAMCTRL_SAFE = "safe", TRAMCTRL_FAST = "fast")
 	switch(mode)
 		if(TRAMCTRL_SAFE)
 			mode = TRAMCTRL_FAST
 		if(TRAMCTRL_FAST)
 			mode = TRAMCTRL_SAFE
 	update_appearance()
-	balloon_alert(user, "mode: [desc[mode]]")
+	balloon_alert(user, "mode: [mode ? "fast" : "safe"]")
 
 /obj/item/tram_remote/examine(mob/user)
 	. = ..()
@@ -50,26 +48,17 @@
 		. += "There is an X showing on the display."
 		. += "Left-click a tram request button to link."
 		return
+	. += "The arrow on the display is pointing [direction ? "inbound" : "outbound"]."
+	. += "The rapid mode light is [mode ? "on" : "off"]."
+	if (!COOLDOWN_FINISHED(src, tram_remote))
+		. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]."
 	else
-		switch(direction)
-			if(TRAMCTRL_INBOUND)
-				. += "The arrow on the display is pointing inbound."
-			if(TRAMCTRL_OUTBOUND)
-				. += "The arrow on the display is pointing outbound."
-		switch(mode)
-			if(TRAMCTRL_FAST)
-				. += "The rapid mode light is on."
-			if(TRAMCTRL_SAFE)
-				. += "The rapid mode light is off."
-		if (!COOLDOWN_FINISHED(src, tram_remote))
-			. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]."
-		else
-			. += "The display indicates ready."
-		. += "Left-click to dispatch tram."
-		. += "Right-click to toggle direction."
-		. += "CTRL-click to toggle safety bypass."
+		. += "The display indicates ready."
+	. += "Left-click to dispatch tram."
+	. += "Right-click to toggle direction."
+	. += "Ctrl-click to toggle safety bypass."
 
-/obj/item/tram_remote/update_overlays()
+/obj/item/tram_remote/update_icon_state()
 	. = ..()
 	if(!tram_ref)
 		icon_state = "tramremote_nis"
@@ -118,10 +107,10 @@
 		return FALSE
 	else
 		switch(mode)
-			if(TRAMCTRL_FAST) // arg is TRUE to bypass safeties
-				tram_part.tram_travel(destination_platform, TRUE)
+			if(TRAMCTRL_FAST)
+				tram_part.tram_travel(destination_platform, TRAMCTRL_FAST)
 			if(TRAMCTRL_SAFE)
-				tram_part.tram_travel(destination_platform, FALSE)
+				tram_part.tram_travel(destination_platform, TRAMCTRL_SAFE)
 		balloon_alert(user, "tram dispatched")
 		return TRUE
 
@@ -130,16 +119,18 @@
 
 /obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
 	var/obj/machinery/button/tram/smacked_device = target
-	if(istype(smacked_device, /obj/machinery/button/tram))
-		for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-			if(lift.specific_lift_id == smacked_device.lift_id)
-				tram_ref = WEAKREF(lift)
-				break
-		if(tram_ref)
-			balloon_alert(user, "tram linked")
-		else
-			balloon_alert(user, "link failed!")
-		update_appearance()
+	if(!istype(smacked_device, /obj/machinery/button/tram))
+		return
+	tram_ref = null
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(lift.specific_lift_id == smacked_device.lift_id)
+			tram_ref = WEAKREF(lift)
+			break
+	if(tram_ref)
+		balloon_alert(user, "tram linked")
+	else
+		balloon_alert(user, "link failed!")
+	update_appearance()
 
 #undef TRAMCTRL_INBOUND
 #undef TRAMCTRL_OUTBOUND
