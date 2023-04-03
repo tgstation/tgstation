@@ -1,8 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
 "dq" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
@@ -14,6 +10,11 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/space/nearstation)
+"ix" = (
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/light/directional/south,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
 "mR" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
@@ -86,13 +87,7 @@
 "AW" = (
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
-"CK" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/machinery/light/directional/south,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/spinwardsmoothies)
 "CV" = (
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 8
 	},
@@ -139,6 +134,14 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
+"IF" = (
+/obj/structure/hedge{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
 "JG" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/reagentgrinder,
@@ -146,10 +149,6 @@
 	dir = 4
 	},
 /turf/open/floor/bamboo,
-/area/ruin/space/has_grav/spinwardsmoothies)
-"KV" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "OI" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -470,11 +469,11 @@ Qi
 Qi
 TE
 TE
-aa
+AW
 AW
 Gd
 uX
-KV
+AW
 TE
 TE
 TE
@@ -490,7 +489,7 @@ YB
 Qi
 Qi
 TE
-Zs
+IF
 OI
 AW
 AW
@@ -498,7 +497,7 @@ AW
 Pk
 AW
 Gd
-Pk
+ix
 TE
 Qi
 Qi
@@ -583,7 +582,7 @@ Pk
 Gd
 Pk
 AW
-CK
+Gd
 TE
 Qi
 Qi
