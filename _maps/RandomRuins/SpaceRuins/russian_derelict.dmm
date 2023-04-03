@@ -744,7 +744,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
-/area/space/nearstation)
+/area/ruin/space/ks13/dorms)
 "kK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -832,7 +832,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/command/bridge)
 "lW" = (
 /obj/structure/rack,
 /obj/item/stock_parts/cell/lead,
@@ -854,7 +854,7 @@
 /obj/structure/lattice,
 /obj/machinery/light/small/directional/north,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/security/sec)
 "mp" = (
 /obj/structure/sign/departments/medbay/alt/directional/west,
 /obj/item/kirbyplants/dead,
@@ -3783,7 +3783,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/ks13/command/bridge)
 "Dl" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -4706,7 +4706,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/ks13/command/bridge)
 "HO" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -5191,6 +5191,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/dorms)
+"KI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/command/bridge)
 "KJ" = (
 /obj/structure/table,
 /obj/item/clothing/head/costume/powdered_wig,
@@ -7025,7 +7030,7 @@
 /obj/item/chair,
 /obj/machinery/light/small/broken/directional/east,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/engineering/singulo)
 "TQ" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -15916,7 +15921,7 @@ Dz
 ag
 Jz
 JC
-Wm
+KI
 Rs
 rk
 vY
