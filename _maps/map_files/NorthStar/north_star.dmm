@@ -18207,6 +18207,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard)
+"eQG" = (
+/obj/effect/turf_decal/caution,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/exit)
 "eQN" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
@@ -28246,10 +28250,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/lobby)
-"hKs" = (
-/obj/structure/sign/warning/docking,
-/turf/closed/wall,
-/area/station/hallway/secondary/exit)
 "hKt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -29579,12 +29579,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard)
-"ieh" = (
-/obj/docking_port/stationary/mining_home{
-	dir = 8
-	},
-/turf/open/floor/pod,
-/area/station/cargo/miningdock)
 "ieu" = (
 /obj/structure/chair/stool/directional/north,
 /obj/structure/railing{
@@ -30546,6 +30540,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/sign/warning/docking/directional/south,
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -37541,6 +37536,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
+"kop" = (
+/turf/open/floor/plating/airless,
+/area/station/hallway/secondary/exit)
 "kor" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/landmark/start/medical_doctor,
@@ -40583,6 +40581,7 @@
 "len" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/docking/directional/south,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -52721,12 +52720,6 @@
 	dir = 1
 	},
 /area/station/service/lawoffice)
-"ofF" = (
-/obj/docking_port/stationary/mining_home/common{
-	dir = 2
-	},
-/turf/open/floor/plating/airless,
-/area/station/maintenance/floor1/port/fore)
 "ofH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -74166,8 +74159,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
 "ujv" = (
+/obj/docking_port/stationary/mining_home/common/northstar{
+	dir = 2
+	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/floor1/port/fore)
+/area/station/hallway/secondary/exit)
 "ujC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -82499,6 +82495,12 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/floor1/port)
+"wxW" = (
+/obj/docking_port/stationary/mining_home/northstar{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/station/cargo/miningdock)
 "wxY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
@@ -103263,13 +103265,13 @@ hhx
 hhx
 hhx
 hhx
-hJy
-hJy
-hJy
-hJy
+hhx
+hhx
+hhx
+hhx
+hhx
 aux
 iST
-owI
 owI
 owI
 owI
@@ -103519,14 +103521,14 @@ lJn
 wxH
 hpn
 len
-hKs
-ujv
-ujv
-ujv
-ujv
-ujv
+hhx
+kop
+kop
+kop
+kop
+kop
+kop
 aux
-owI
 owI
 owI
 owI
@@ -103777,13 +103779,13 @@ lQm
 aRS
 hFa
 pRk
-ujv
-ujv
-ujv
-ujv
-ujv
+kop
+kop
+kop
+kop
+kop
+kop
 cHX
-owI
 owI
 owI
 owI
@@ -104034,13 +104036,13 @@ mly
 bje
 fiO
 pRk
-ujv
-ujv
-ujv
-ujv
-ujv
+pRk
+kop
+kop
+kop
+kop
+kop
 cHX
-owI
 owI
 owI
 owI
@@ -104290,14 +104292,14 @@ hhx
 vBS
 onw
 rzK
+eQG
 uCl
-ofF
 ujv
-ujv
-ujv
-ujv
+kop
+kop
+kop
+kop
 cHX
-owI
 owI
 owI
 owI
@@ -104548,13 +104550,13 @@ mFP
 isq
 rzK
 pRk
-ujv
-ujv
-ujv
-ujv
-ujv
+pRk
+kop
+kop
+kop
+kop
+kop
 cHX
-owI
 owI
 owI
 owI
@@ -104805,13 +104807,13 @@ xEY
 xlD
 rzK
 pRk
-ujv
-ujv
-ujv
-ujv
-ujv
+kop
+kop
+kop
+kop
+kop
+kop
 cHX
-owI
 owI
 owI
 owI
@@ -105061,14 +105063,14 @@ wBR
 dzs
 ast
 isK
-hKs
-ujv
-ujv
-ujv
-ujv
-ujv
+hhx
+kop
+kop
+kop
+kop
+kop
+kop
 aux
-owI
 owI
 owI
 owI
@@ -105323,9 +105325,9 @@ wBR
 wBR
 wBR
 wBR
+hJy
 aux
 iST
-owI
 owI
 owI
 owI
@@ -120185,7 +120187,7 @@ hee
 rJy
 rJy
 rJy
-rJy
+wxW
 rJy
 rJy
 rJy
@@ -121470,7 +121472,7 @@ hee
 rJy
 rJy
 rJy
-ieh
+rJy
 rJy
 rJy
 rJy

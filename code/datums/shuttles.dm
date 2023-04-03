@@ -673,6 +673,10 @@
 	suffix = "large"
 	name = "mining shuttle (Large)"
 
+/datum/map_template/shuttle/mining/northstar
+	suffix = "northstar"
+	name = "mining shuttle (North Star)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
@@ -688,6 +692,10 @@
 /datum/map_template/shuttle/mining_common/kilo
 	suffix = "kilo"
 	name = "lavaland shuttle (Kilo)"
+
+/datum/map_template/shuttle/mining_common/northstar
+	suffix = "northstar"
+	name = "lavaland shuttle (North Star)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
