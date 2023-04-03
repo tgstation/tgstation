@@ -441,6 +441,14 @@
 	icon_state = "candle[wax_level][on ? "_lit" : ""]"
 	inhand_icon_state = "candle[on ? "_lit" : ""]"
 
+
+/// So we update the mob's inhands icon as well
+/obj/item/flashlight/flare/candle/update_appearance()
+	. = ..()
+	if(ismob(loc))
+		var/mob/candle_holder = loc
+		candle_holder.update_held_items()
+
 /obj/item/flashlight/flare/candle/get_temperature()
 	return on * heat
 
@@ -448,14 +456,12 @@
 	var/success_msg = fire_starter.ignition_effect(src, user)
 	if(success_msg && ignition(user))
 		user.visible_message(success_msg)
-		if(ismob(loc))
-			var/mob/candle_holder = loc
-			candle_holder.update_held_items()
+		update_appearance()
 	else
 		return ..()
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
-	if(on && fuel != INFINITY && !can_be_extinguished) // can't extinguish eternal candles
+	if(on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles
 		turn_off()
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
