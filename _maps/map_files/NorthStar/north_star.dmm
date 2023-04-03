@@ -1457,7 +1457,7 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/captain/private)
@@ -9920,7 +9920,7 @@
 	},
 /area/station/science/ordnance/bomb)
 "cxX" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -13698,7 +13698,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "dDn" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "dDs" = (
@@ -27960,7 +27960,7 @@
 /area/station/security/checkpoint/second)
 "hGy" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/pod,
 /area/station/maintenance/floor4/port/fore)
 "hGA" = (
@@ -30440,7 +30440,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "irp" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -40314,7 +40314,7 @@
 "lak" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/starboard)
 "lao" = (
@@ -42235,7 +42235,7 @@
 /turf/open/floor/carpet/green,
 /area/station/commons/dorms/apartment2)
 "lzI" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
 "lzX" = (
@@ -45769,7 +45769,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor1/port)
 "mtI" = (
@@ -56049,7 +56049,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
 "pcq" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -58402,7 +58402,7 @@
 /area/station/hallway/secondary/entry)
 "pMx" = (
 /obj/item/ammo_casing/shotgun/beanbag,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -83850,7 +83850,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard)
 "wOy" = (
@@ -87607,7 +87607,7 @@
 /turf/open/space/openspace,
 /area/space/nearstation)
 "xRG" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "xRJ" = (
