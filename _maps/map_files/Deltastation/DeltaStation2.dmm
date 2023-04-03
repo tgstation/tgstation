@@ -64758,7 +64758,6 @@
 "qfe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -80060,6 +80059,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "tXF" = (
