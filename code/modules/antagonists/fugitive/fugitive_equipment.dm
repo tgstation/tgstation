@@ -7,7 +7,7 @@
 	. = ..()
 
 	if(prob(15 * severity))
-		visible_message(span_warning("The cloaking systems on the [name] begin to overload."), blind_message = audible_message("You hear a fizzle, and the snapping of sparks."))
+		visible_message(span_warning("The cloaking systems inside your implant begin to overload!"), blind_message = span_hear("You hear a fizzle, and the snapping of sparks."))
 		for(var/datum/action/item_action/camouflage/cloaking_ability in actions)
 			cloaking_ability.remove_cloaking()
 
@@ -29,12 +29,14 @@
 
 /datum/action/item_action/camouflage/Trigger(trigger_flags)
 	. = ..()
+	if(!.)
+		return
 
 	if(cloaking)
 		remove_cloaking()
 	else
 		owner.alpha = camouflage_alpha
-		to_chat(owner, span_notice("You activate the [name] and blend into your surroundings..."))
+		to_chat(owner, span_notice("You activate your camouflage and blend into your surroundings..."))
 		cloaking = TRUE
 
 	return TRUE
@@ -49,12 +51,12 @@
 /datum/action/item_action/camouflage/proc/remove_cloaking()
 	do_sparks(2, FALSE, owner)
 	owner.alpha = initial(owner.alpha)
-	to_chat(owner, span_notice("You disable the [name], and become visible once again."))
+	to_chat(owner, span_notice("You disable your camouflage, and become visible once again."))
 	cloaking = FALSE
 
 /obj/item/reagent_containers/hypospray/medipen/invisibility
 	name = "invisibility autoinjector"
-	desc = "An autoinjector containing a stabilized Saturn-X compound. Produced for use in tactical stealth operations, by operatives were presumably comfortable with nudity."
+	desc = "An autoinjector containing a stabilized Saturn-X compound. Produced for use in tactical stealth operations, by operatives who were presumably comfortable with nudity."
 	icon_state = "invispen"
 	base_icon_state = "invispen"
 	volume = 20 //By my estimate this will last you about 10-ish mintues
