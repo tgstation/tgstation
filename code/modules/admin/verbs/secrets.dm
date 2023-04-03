@@ -348,12 +348,14 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
-			var/station_only = tgui_alert(usr,"Break which lights?", "And the lord said...", list("All Lights", "Station Z Only"))
+			var/station_only = tgui_alert(usr,"Break which lights?", "And the lord said...", list("All Lights", "Station Z Only", "Cancel"))
 			switch(station_only)
 				if("All Lights")
 					station_only = FALSE
 				if("Station Z Only")
 					station_only = TRUE
+				if("Cancel")
+					return
 			message_admins("[key_name_admin(holder)] broke [station_only ? "all station" : "all"] lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				if(station_only && !is_station_level(L.z))
@@ -364,8 +366,18 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Fix All Lights"))
-			message_admins("[key_name_admin(holder)] fixed all lights")
+			var/station_only = tgui_alert(usr,"Fix which lights?", "And the lord said...", list("All Lights", "Station Z Only", "Cancel"))
+			switch(station_only)
+				if("All Lights")
+					station_only = FALSE
+				if("Station Z Only")
+					station_only = TRUE
+				if("Cancel")
+					return
+			message_admins("[key_name_admin(holder)] fixed [station_only ? "all station" : "all"] lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
+				if(station_only && !is_station_level(L.z))
+					continue
 				L.fix()
 				stoplag()
 		if("customportal")
