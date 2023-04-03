@@ -4,5 +4,6 @@
 /datum/unit_test/slime_mood/Run()
 	var/mob/living/simple_animal/slime/this_guy = allocate(/mob/living/simple_animal/slime)
 
-	for(var/datum/emote/slime/mood/moods as anything in subtypesof(/datum/emote/slime/mood))
-		TEST_ASSERT((moods.mood_key in icon_states(this_guy.icon)), "[moods] is set to give [this_guy] an emote, but has no Icon for it.")
+	for(var/key in GLOB.emote_list)
+		for(var/datum/emote/slime/mood/slime_mood in GLOB.emote_list[key])
+			TEST_ASSERT((slime_mood.mood_key in icon_states(this_guy.icon)), "[slime_mood] is set to give [this_guy] an emote, but has no Icon for it.")
