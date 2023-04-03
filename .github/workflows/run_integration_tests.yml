@@ -73,7 +73,7 @@ jobs:
           path: data/screenshots_new/
           retention-days: 1
       - name: Check client Compatibility
-        if: always() && steps.compile_tests.outcome == "success"
+        if: always() && steps.compile_tests.outcome == 'success'
         uses: MrStonedOne/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
