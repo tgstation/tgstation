@@ -20,8 +20,8 @@
 
 /obj/item/folder/biscuit/Destroy()
 	if(contained_slip)
-		contained_slip = null
-	. = ..()
+		QDEL_NULL(contained_slip)
+	return ..()
 
 /obj/item/folder/biscuit/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] tries to eat [src]! [user.p_theyre()] trying to commit suicide!"))

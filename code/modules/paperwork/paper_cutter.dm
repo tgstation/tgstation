@@ -29,12 +29,13 @@
 	if(stored_blade)
 		stored_blade.forceMove(get_turf(src))
 		stored_blade = null
-	. = ..()
+	return ..()
 
 /obj/item/papercutter/examine(mob/user)
 	. = ..()
 	. += "<b>Right-Click</b> to cut paper once it's inside."
-	. += "The blade could be [blade_secured ? "un" : ""]secured with a <b>screwdriver</b>."
+	if(stored_blade)
+		. += "The blade could be [blade_secured ? "un" : ""]secured with a <b>screwdriver</b>[blade_secured ? "" : " or removed with an <b>empty hand</b>"]."
 
 /obj/item/papercutter/suicide_act(mob/living/user)
 	if(iscarbon(user) && stored_blade)
@@ -94,11 +95,9 @@
 
 	update_appearance()
 
-	..()
+	return ..()
 
 /obj/item/papercutter/attack_hand(mob/user, list/modifiers)
-	if(.)
-		return
 	add_fingerprint(user)
 
 	if(!stored_blade && stored_paper)
@@ -120,7 +119,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	// If there's a secured blade but no paper, just pick it up
-	. = ..()
+	return ..()
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
 	if(!stored_blade)
@@ -135,10 +134,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
+	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
+	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
-		to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 		var/obj/item/bodypart/finger = user.get_active_hand()
 		var/datum/wound/slash/moderate/papercut = new
 		papercut.apply_wound(finger)

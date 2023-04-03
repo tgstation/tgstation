@@ -305,6 +305,6 @@
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(
 		/obj/item/papercutter = 3,
-		/obj/item/hatchet/cutterblade,
-		)
+		/obj/item/hatchet/cutterblade = 1,
+	)
 	crate_name = "paper cutters crate"
