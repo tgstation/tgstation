@@ -71,7 +71,7 @@
 			if((obj_flags & EMAGGED) || malfunctioning)
 				if(malfunctioning && prob(85))
 					return
-				for(var/i=1 to 3)
+				for(var/i in 1 to 3)
 					for(var/mob/living/crushee in get_turf(src))
 						crush()
 					sleep(2 DECISECONDS)
@@ -107,7 +107,7 @@
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower()  && density)
-		balloon_alert(user, "activating emergency exit")
+		balloon_alert(user, "pulling emergency exit...")
 		if(do_after(user, 7 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
