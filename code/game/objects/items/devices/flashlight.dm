@@ -193,9 +193,16 @@
 	else
 		return ..()
 
+/// for directional sprites - so we get the same sprite in the inventory each time we pick one up
 /obj/item/flashlight/equipped(mob/user, slot, initial)
 	. = ..()
-	dir = initial(dir) // so we get the same sprite each time we pick one up
+	dir = initial(dir) 
+
+/// for directional sprites - so when we drop the flashlight, it drops facing the same way the user is facing
+/obj/item/flashlight/dropped(mob/user, silent = FALSE)
+	. = ..()
+	if(istype(user) && dir != user.dir)
+		setDir(user.dir)
 
 /obj/item/flashlight/pen
 	name = "penlight"
