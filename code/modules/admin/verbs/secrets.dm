@@ -354,6 +354,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					station_only = FALSE
 				if("Station Z Only")
 					station_only = TRUE
+				if("Cancel")
+					return
 				else
 					return
 			message_admins("[key_name_admin(holder)] broke [station_only ? "all station" : "all"] lights")
@@ -372,6 +374,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					station_only = FALSE
 				if("Station Z Only")
 					station_only = TRUE
+				if("Cancel")
+					return
 				else
 					return
 			message_admins("[key_name_admin(holder)] fixed [station_only ? "all station" : "all"] lights")
