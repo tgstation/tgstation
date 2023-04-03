@@ -373,6 +373,7 @@
 	dir = 1
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
@@ -989,13 +990,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
-"qr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/dim/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "qs" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -1076,7 +1070,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "rC" = (
 /obj/structure/curtain,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/dorms)
 "rK" = (
@@ -1575,12 +1569,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/kitchen)
-"BN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/dim/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "BZ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -2351,13 +2339,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
-"PV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/dim/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "PX" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
@@ -2750,6 +2731,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "WF" = (
@@ -4211,19 +4193,19 @@ pK
 Ls
 El
 xw
-PV
 zZ
-xw
-xw
-xw
 zZ
-qr
 xw
 xw
 xw
 zZ
 zZ
-BN
+xw
+xw
+xw
+zZ
+zZ
+xw
 HA
 Uy
 QN
