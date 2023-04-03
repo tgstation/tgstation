@@ -32,6 +32,11 @@
 /turf/open/floor/noslip/tram_platform/burnt_states()
 	return list("tram_platform-scorched1","tram_platform-scorched2")
 
+/turf/open/floor/noslip/tram_plate/energized/Initialize(mapload)
+	. = ..()
+	if(isnull(inbound) || isnull(outbound))
+		stack_trace("Tried to energize [src] at [loc] but it's missing tram signal information!")
+
 /turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
 	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
 		if(tram.specific_lift_id != MAIN_STATION_TRAM)
