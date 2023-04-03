@@ -702,3 +702,7 @@
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
+
+/obj/machinery/light/floor/broken
+	status = LIGHT_BROKEN
+	icon_state = "floor-broken"
