@@ -83,7 +83,7 @@
 	},
 /obj/machinery/door/window/brigdoor/left/directional/north,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "babyproofing";
+	id = "ragecage";
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -288,7 +288,7 @@
 	},
 /obj/machinery/door/window/brigdoor/right/directional/south,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "babyproofing"
+	id = "ragecage"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -451,7 +451,7 @@
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "babyproofing";
+	id = "ragecage";
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -543,7 +543,7 @@
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "babyproofing"
+	id = "ragecage"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -772,8 +772,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	name = "rage-cage entry control";
-	id = "ragecage";
-	pixel_x = -5
+	id = "ragecage"
 	},
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_x = 6;
@@ -790,11 +789,6 @@
 /obj/item/reagent_containers/hypospray/medipen/blood_loss{
 	pixel_x = -5;
 	pixel_y = 7
-	},
-/obj/machinery/button/door{
-	name = "chute shutter control";
-	id = "babyproofing";
-	pixel_x = 5
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/escape)
