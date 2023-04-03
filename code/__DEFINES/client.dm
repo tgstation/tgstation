@@ -6,6 +6,6 @@
 #define VALIDATE_CLIENT(target)\
 	if (!target.fully_created) {\
 		to_chat(target, span_warning("You are not fully initialized yet! Please wait a moment."));\
-		log_filter_raw("Client [key_name(target)] attempted to execute a verb before being fully initialized.");\
+		log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.");\
 		return\
 	}
