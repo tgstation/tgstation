@@ -46,9 +46,7 @@
 			var/reject_message = "Failed Login: [key] - New Account attempting to connect during panic bunker, but was rejected due to no prior connections to game servers (no database entry)"
 			log_access(reject_message)
 			message_admins(span_adminnotice("[reject_message]"))
-			var/message = "Sorry but the server is currently not accepting connections from never before seen players"
-			
-			return list("reason"="panicbunker", "desc" = message)
+			return list("reason"="panicbunker", "desc" = "Sorry but the server is currently not accepting connections from never before seen players")
 
 	//Whitelist
 	if(!real_bans_only && !C && CONFIG_GET(flag/usewhitelist))
