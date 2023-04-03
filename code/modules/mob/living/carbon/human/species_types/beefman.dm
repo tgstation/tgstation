@@ -56,6 +56,8 @@
 	siemens_coeff = 0.7 // base electrocution coefficient
 	bodytemp_normal = T20C
 
+	outfit_important_for_life = /datum/outfit/beefman
+
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/beef, \
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/beef, \
@@ -302,6 +304,12 @@
 	if(dropped_meat)
 		user.put_in_hands(dropped_meat)
 	return TRUE
+
+/datum/species/beefman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	if(job?.beefman_outfit)
+		equipping.equipOutfit(job.beefman_outfit, visuals_only)
+	else
+		give_important_for_life(equipping)
 
 /datum/species/beefman/spec_attacked_by(obj/item/meat, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/beefboy)
 	if(!istype(meat, /obj/item/food/meat/slab))
