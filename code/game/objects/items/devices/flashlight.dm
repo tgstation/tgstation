@@ -413,6 +413,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	heat = 1000
 	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
 	fuel = 35 MINUTES
@@ -432,6 +433,9 @@
 			wax_level = 3
 	icon_state = "candle[wax_level][on ? "_lit" : ""]"
 	inhand_icon_state = "candle[on ? "_lit" : ""]"
+
+/obj/item/flashlight/flare/candle/get_temperature()
+	return on * heat
 
 /obj/item/flashlight/flare/candle/attackby(obj/item/fire_starter, mob/user, params)
 	var/success_msg = fire_starter.ignition_effect(src, user)
