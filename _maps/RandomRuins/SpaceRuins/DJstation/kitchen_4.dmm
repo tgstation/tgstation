@@ -6,10 +6,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-"c" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/ruin/space/djstation)
 "e" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
@@ -42,10 +38,6 @@
 /obj/item/storage/bag/tray,
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
-"j" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/ruin/space/djstation)
 "k" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/iron/freezer,
@@ -60,6 +52,7 @@
 /area/ruin/space/djstation)
 "A" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "F" = (
@@ -237,10 +230,10 @@ a
 L
 L
 L
-c
+W
 O
 J
-j
+W
 L
 L
 b

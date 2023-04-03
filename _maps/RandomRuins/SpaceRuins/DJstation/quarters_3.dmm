@@ -49,7 +49,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "t" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/tile,
 /area/ruin/space/djstation)
 "u" = (
