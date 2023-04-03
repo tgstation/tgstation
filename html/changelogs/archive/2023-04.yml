@@ -81,3 +81,22 @@
   - bugfix: admins may now send headset messages to silicon mobs as long as they have
       a radio
   - bugfix: fixes floating point inaccuracies in numeric prefs
+2023-04-03:
+  Ical92:
+  - rscadd: Added security cameras to the five "default" shuttles
+  - rscadd: Added camera telescreen to KiloStation Emergency Shuttle
+  - bugfix: fixes telescreens showing static when reopening a camera
+  Jacquerel:
+  - bugfix: Traitors should be able to summon their satellite hacking supply kit.
+  - bugfix: Dark Matteor shouldn't crash on spawn and fail to arrive.
+  SomeRandomOwl:
+  - bugfix: Play Internet Sound will no longer show an admins Character name and returns
+      back to showing CKEY as previously
+  Time-Green:
+  - rscadd: Researcher Anna Nomally has disappeared into space, carrying 20 anomaly
+      cores. What could she be up to?
+  iwishforducks:
+  - bugfix: Removes errant newscaster in the dorm maints of Tramstation.
+  vinylspiders:
+  - bugfix: the 'natural wig' item will no longer show a broken icon when it mimics
+      a hairstyle whose icon path something other than the default 'icons/mob/species/human/human_face.dmi'
