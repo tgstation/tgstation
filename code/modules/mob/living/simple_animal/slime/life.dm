@@ -393,9 +393,9 @@
 
 	if ((current_mood == "sad" || current_mood == ":3" || current_mood == "pout") && !newmood)
 		if(DT_PROB(50, delta_time))
-			newmood = mood
+			newmood = current_mood
 
-	if (newmood != mood) // This is so we don't redraw them every time
+	if (newmood != current_mood) // This is so we don't redraw them every time
 		current_mood = newmood
 		regenerate_icons()
 
