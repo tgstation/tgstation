@@ -97,7 +97,6 @@
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
-	SIGNAL_HANDLER
 	if(global_frozen_atoms[A] || !istype(A))
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
@@ -144,6 +143,7 @@
 		unfreeze_turf(T)
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_atom(atom/movable/A)
+	SIGNAL_HANDLER
 	if(A.throwing)
 		unfreeze_throwing(A)
 	if(isliving(A))
@@ -169,7 +169,6 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/vehicle/sealed/mecha/M)
 	M.completely_disabled = FALSE
-
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
 	var/datum/thrownthing/T = AM.throwing
