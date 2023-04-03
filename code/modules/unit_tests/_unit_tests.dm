@@ -192,6 +192,7 @@
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
+#include "slime_mood.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
