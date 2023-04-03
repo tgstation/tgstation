@@ -354,7 +354,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					station_only = FALSE
 				if("Station Z Only")
 					station_only = TRUE
-				if("Cancel")
+				else
 					return
 			message_admins("[key_name_admin(holder)] broke [station_only ? "all station" : "all"] lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
@@ -372,7 +372,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					station_only = FALSE
 				if("Station Z Only")
 					station_only = TRUE
-				if("Cancel")
+				else
 					return
 			message_admins("[key_name_admin(holder)] fixed [station_only ? "all station" : "all"] lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
