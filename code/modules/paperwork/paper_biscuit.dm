@@ -18,6 +18,11 @@
 	if(contained_slip)
 		new contained_slip(src)
 
+/obj/item/folder/biscuit/Destroy()
+	if(contained_slip)
+		contained_slip = null
+	. = ..()
+
 /obj/item/folder/biscuit/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] tries to eat [src]! [user.p_theyre()] trying to commit suicide!"))
 	playsound(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg', 40, TRUE) //Don't eat plastic cards kids, they get really sharp if you chew on them.

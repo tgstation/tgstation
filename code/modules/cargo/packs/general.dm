@@ -303,7 +303,8 @@
 	desc = "Contains 3 office-grade paper cutters, equipped with sharp blades that can cut any paper into two thin slips.\
 		Comes with one replacement blade."
 	cost = CARGO_CRATE_VALUE * 3.5
-	contains = list(/obj/item/papercutter = 3,
-					/obj/item/hatchet/cutterblade,
-				)
+	contains = list(
+		/obj/item/papercutter = 3,
+		/obj/item/hatchet/cutterblade,
+		)
 	crate_name = "paper cutters crate"
