@@ -36,6 +36,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ag" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
@@ -43,7 +44,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ai" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aj" = (
@@ -106,6 +107,7 @@
 "av" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aw" = (
@@ -133,6 +135,7 @@
 /obj/item/dnainjector/thermal,
 /obj/item/storage/box/firingpins/syndicate,
 /obj/item/storage/box/firingpins/syndicate,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "az" = (
@@ -143,17 +146,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aA" = (
-/obj/machinery/light/directional/north,
 /obj/structure/table/reinforced,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aB" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aC" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aD" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
@@ -161,10 +160,6 @@
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aF" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aG" = (
 /obj/machinery/turretid{
@@ -174,7 +169,6 @@
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -193,16 +187,11 @@
 	name = "Room shutters control";
 	req_access = list("syndicate")
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aJ" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aK" = (
-/obj/machinery/light/directional/west,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aL" = (
@@ -221,7 +210,6 @@
 	amount = 15
 	},
 /obj/structure/cable,
-/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aO" = (
@@ -277,10 +265,6 @@
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"aX" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "aY" = (
 /turf/template_noop,
 /area/ruin/space)
@@ -294,7 +278,6 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bc" = (
-/obj/machinery/light/directional/south,
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -354,7 +337,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bi" = (
-/obj/machinery/light/directional/north,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical,
@@ -380,6 +362,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bl" = (
 /obj/machinery/ore_silo,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bm" = (
@@ -397,10 +380,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bo" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bp" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -549,7 +528,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black;
 	suit_type = /obj/item/clothing/suit/space/syndicate/black
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bL" = (
@@ -612,16 +591,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bU" = (
-/obj/machinery/light/directional/south,
 /obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bV" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bW" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bX" = (
@@ -726,7 +700,6 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cl" = (
-/obj/machinery/light/directional/north,
 /obj/item/ai_module/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
@@ -778,6 +751,7 @@
 	},
 /obj/item/toy/sword,
 /obj/item/toy/balloon/syndicate,
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "ct" = (
@@ -813,7 +787,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cy" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
@@ -903,6 +876,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cJ" = (
@@ -937,6 +911,7 @@
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cN" = (
@@ -1013,13 +988,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"cV" = (
-/obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -1034,6 +1002,7 @@
 	network = list("fsc");
 	screen_loc = ""
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cY" = (
@@ -1189,6 +1158,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"iy" = (
+/obj/structure/cable,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "jN" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1207,6 +1181,19 @@
 	},
 /obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"tj" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"yq" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Go" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Ia" = (
 /obj/structure/closet/crate/secure/gear{
@@ -2047,7 +2034,7 @@ bn
 bZ
 cy
 cE
-cV
+aS
 bZ
 bY
 bE
@@ -2235,7 +2222,7 @@ cj
 bZ
 aJ
 cI
-aC
+al
 bZ
 bH
 cd
@@ -2298,10 +2285,10 @@ aY
 ba
 ba
 bX
-aX
 bj
 bj
-bo
+bj
+bj
 bb
 ba
 ba
@@ -2373,11 +2360,11 @@ bS
 bZ
 bv
 aP
-aK
 aP
+iy
 cH
 aP
-aK
+aP
 aP
 al
 bZ
@@ -2509,7 +2496,7 @@ aa
 aa
 aa
 bZ
-ai
+al
 al
 an
 al
@@ -2523,7 +2510,7 @@ aL
 al
 an
 al
-bK
+bJ
 bZ
 aa
 aa
@@ -2604,19 +2591,19 @@ aa
 aa
 ac
 bZ
-ah
+Go
 bZ
 cr
 al
-aF
+al
 al
 cR
 cX
-aF
+al
 al
 al
 bZ
-ah
+Go
 bZ
 ac
 aa
@@ -2702,11 +2689,11 @@ aa
 aq
 kY
 ce
-bW
+aw
 aw
 cS
 aw
-bW
+aw
 cg
 ce
 bZ
@@ -2794,7 +2781,7 @@ bZ
 aG
 aw
 bZ
-aw
+br
 aw
 aw
 cB
@@ -2802,7 +2789,7 @@ cT
 aw
 aw
 aw
-aw
+bt
 bZ
 df
 df
@@ -2838,7 +2825,7 @@ aa
 aa
 aa
 bZ
-br
+yq
 aw
 cp
 aw
@@ -2852,7 +2839,7 @@ aV
 aw
 cJ
 aw
-bt
+tj
 bZ
 aa
 aa
