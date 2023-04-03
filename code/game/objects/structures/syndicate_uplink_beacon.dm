@@ -7,7 +7,7 @@
 	density = TRUE
 	anchored = TRUE
 	/// Traitor's code that they speak into the radio
-	var/uplink_code
+	var/uplink_code = ""
 	/// weakref to person who is going to use the beacon to get a replacement uplink
 	var/datum/weakref/owner
 	/// while constructed the teleport beacon is still active
@@ -105,7 +105,7 @@
 	flick("relay_traitor_activate", src)
 	do_sparks(number = 5, cardinal_only = FALSE, source = src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
-	
+
 // Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item || !IS_TRAITOR(user))

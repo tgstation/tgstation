@@ -19,9 +19,9 @@
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
 	/// Code that allows traitor to get a replacement uplink
-	var/replacement_uplink_code
+	var/replacement_uplink_code = ""
 	/// Radio frequency that traitor must speak on to get a replacement uplink
-	var/replacement_uplink_frequency
+	var/replacement_uplink_frequency = ""
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
