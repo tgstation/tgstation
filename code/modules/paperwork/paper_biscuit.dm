@@ -15,8 +15,8 @@
 
 /obj/item/folder/biscuit/Initialize(mapload)
 	. = ..()
-	if(contained_slip)
-		new contained_slip(src)
+	if(!isnull(contained_slip))
+		contained_slip = new contained_slip(src)
 
 /obj/item/folder/biscuit/Destroy()
 	if(contained_slip)
