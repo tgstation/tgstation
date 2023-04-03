@@ -8,8 +8,6 @@
 
 /turf/open/floor/noslip/tram_plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."
-	/// Weakref to the tram piece we power
-	var/datum/weakref/tram_ref
 	/// Inbound station
 	var/inbound
 	/// Outbound station
@@ -34,16 +32,14 @@
 /turf/open/floor/noslip/tram_platform/burnt_states()
 	return list("tram_platform-scorched1","tram_platform-scorched2")
 
-/turf/open/floor/noslip/tram_plate/energized/proc/link_tram()
+/turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
 	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
 		if(tram.specific_lift_id != MAIN_STATION_TRAM)
 			continue
-		tram_ref = WEAKREF(tram)
-		break
+		return tram
 
 /turf/open/floor/noslip/tram_plate/energized/proc/toast(mob/living/future_tram_victim)
-	link_tram()
-	var/datum/lift_master/tram/tram = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram = find_tram()
 
 	// Check for stopped states.
 	if(!tram || !tram.is_operational || !inbound || !outbound)
