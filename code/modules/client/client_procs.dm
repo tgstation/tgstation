@@ -38,9 +38,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
-#ifndef TESTING	
+#ifndef TESTING
 	if (lowertext(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
-		return 
+		return
 #endif
 
 	// asset_cache
@@ -1313,6 +1313,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				continue
 
 		screen -= object
+
+
+/// Ensures that the client has been fully initialized via New(), and can't somehow execute actions before that. Security measure.
+/// Returns TRUE if we can prove the client is fully initialized, FALSE otherwise. This is explicitly set up this way to ensure that we always default to "FALSE" or other falsey values (null).
+/client/proc/validate_client()
+	if (fully_created)
+		return TRUE
+
+	var/message = "Client [key_name(src)] attempted to execute a verb before being fully initialized."
+	log_filter_raw(message)
+	tgui_alert(src, "Your client is not fully initialized yet! Please wait a few seconds.", "Client Initialization Check")
+	return FALSE
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE
