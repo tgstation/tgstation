@@ -43,10 +43,10 @@
 "dI" = (
 /obj/structure/cable,
 /obj/machinery/power/floodlight/ragecage,
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -78,10 +78,14 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor/left/directional/north,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "babyproofing";
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fn" = (
@@ -98,7 +102,7 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "fM" = (
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -229,7 +233,7 @@
 /area/shuttle/escape)
 "nw" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -256,7 +260,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oU" = (
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -279,10 +283,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "babyproofing"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "re" = (
@@ -339,10 +346,10 @@
 "sZ" = (
 /obj/machinery/power/floodlight/ragecage,
 /obj/structure/cable,
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window,
+/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "tj" = (
@@ -420,10 +427,10 @@
 "xG" = (
 /obj/machinery/power/floodlight/ragecage,
 /obj/structure/cable,
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -439,10 +446,14 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "babyproofing";
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ah" = (
@@ -486,7 +497,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "BF" = (
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -497,7 +508,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "CL" = (
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -505,7 +516,7 @@
 /area/shuttle/escape)
 "Dd" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -527,10 +538,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/window{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "babyproofing"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Fe" = (
@@ -540,7 +554,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "Fi" = (
-/obj/effect/spawner/structure/window/hollow/directional,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -636,7 +650,7 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "OD" = (
-/obj/effect/spawner/structure/window/hollow/directional,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -655,7 +669,7 @@
 /area/shuttle/escape)
 "Pn" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -725,8 +739,8 @@
 "Sm" = (
 /obj/structure/cable,
 /obj/machinery/power/floodlight/ragecage,
-/obj/structure/window,
-/obj/structure/window{
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -758,7 +772,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	name = "rage-cage entry control";
-	id = "ragecage"
+	id = "ragecage";
+	pixel_x = -5
 	},
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_x = 6;
@@ -775,6 +790,11 @@
 /obj/item/reagent_containers/hypospray/medipen/blood_loss{
 	pixel_x = -5;
 	pixel_y = 7
+	},
+/obj/machinery/button/door{
+	name = "chute shutter control";
+	id = "babyproofing";
+	pixel_x = 5
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/escape)
@@ -894,7 +914,7 @@
 /area/shuttle/escape)
 "Yp" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
 	},
 /turf/open/floor/plating,
