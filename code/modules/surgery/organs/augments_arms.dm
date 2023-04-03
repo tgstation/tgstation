@@ -42,6 +42,9 @@
 	items_list.Cut()
 	return ..()
 
+/datum/action/item_action/organ_action/toggle/toolkit
+	desc = "You can also activate your empty hand or the tool in your hand to open the tools radial menu."
+
 /obj/item/organ/internal/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
@@ -169,7 +172,7 @@
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
 	if(length(items_list) > 1)
-		RegisterSignal(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(swap_tools))) // secondary for welders
+		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders
 
 /obj/item/organ/internal/cyberimp/arm/proc/swap_tools(active_item)
 	SIGNAL_HANDLER
@@ -237,6 +240,7 @@
 /obj/item/organ/internal/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/screwdriver/cyborg,
 		/obj/item/wrench/cyborg,
@@ -321,6 +325,7 @@
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/retractor/augment,
 		/obj/item/hemostat/augment,
