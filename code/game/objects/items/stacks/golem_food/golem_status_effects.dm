@@ -255,9 +255,11 @@
 	mineral_name = "titanium"
 	applied_fluff = "Titanium rings burst from your arms. You feel ready to take on the world!"
 	/// Amount to reduce brute damage by
-	var/brute_modifier = 0.5
+	var/brute_modifier = 0.7
 	/// How much extra damage do we do with our fists?
-	var/damage_increase = 5
+	var/damage_increase = 3
+	/// Deal this much extra damage to mining mobs, most of which take 0 unarmed damage usually
+	var/mining_bonus = 30
 	/// List of arms we have updated
 	var/list/modified_arms
 
@@ -266,11 +268,22 @@
 	if (!.)
 		return FALSE
 	var/mob/living/carbon/human/human_owner = owner
+	RegisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
 	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if (arm.limb_id != SPECIES_GOLEM)
 			continue
 		buff_arm(arm)
+
+/// Give mining mobs an extra slap
+/datum/status_effect/golem/titanium/proc/on_punched(mob/living/puncher, atom/punchee, proximity)
+	SIGNAL_HANDLER
+	if (!proximity || !isliving(punchee))
+		return
+	var/mob/living/victim = punchee
+	if (victim.body_position == LYING_DOWN || (!(FACTION_MINING in victim.faction) && !(FACTION_BOSS in victim.faction)))
+		return
+	victim.apply_damage(mining_bonus, BRUTE)
 
 /// Make the targeted arm big and strong
 /datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
@@ -281,6 +294,7 @@
 
 /datum/status_effect/golem/titanium/on_remove()
 	var/mob/living/carbon/human/human_owner = owner
+	UnregisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
 	for (var/datum/weakref/weak_arm as anything in modified_arms)
 		debuff_arm(weak_arm.resolve())
