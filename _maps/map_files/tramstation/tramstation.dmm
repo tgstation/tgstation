@@ -6454,6 +6454,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"aMy" = (
+/obj/machinery/light/directional/north,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/right)
 "aMz" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
@@ -6538,6 +6542,7 @@
 "aMY" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/mid/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aNa" = (
@@ -6613,12 +6618,12 @@
 	c_tag = "Civilian - Chapel North"
 	},
 /obj/structure/cable,
+/obj/machinery/light/warm/directional/north,
 /turf/open/floor/iron/chapel{
 	dir = 6
 	},
 /area/station/service/chapel)
 "aNT" = (
-/obj/machinery/light/warm/directional/north,
 /obj/structure/sign/clock/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -6947,6 +6952,7 @@
 "aQc" = (
 /obj/item/storage/book/bible,
 /obj/structure/altar_of_gods,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "aQf" = (
@@ -8473,6 +8479,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
+"buU" = (
+/obj/machinery/light/directional/south,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/right)
 "buW" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -11133,7 +11143,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cpN" = (
-/obj/machinery/light/warm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -13879,6 +13888,7 @@
 /area/station/medical/treatment_center)
 "dpG" = (
 /obj/machinery/holopad,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "dpU" = (
@@ -16667,6 +16677,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo - Warehouse North"
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "etC" = (
@@ -34028,6 +34039,7 @@
 "kWp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "kWq" = (
@@ -38227,6 +38239,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "muK" = (
@@ -50242,6 +50255,10 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
+"qUx" = (
+/obj/machinery/light/directional/north,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/left)
 "qUy" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Civilian - Holodeck South";
@@ -57232,6 +57249,7 @@
 /area/station/command/heads_quarters/captain)
 "tqT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/warm/directional/north,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
@@ -61424,6 +61442,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "uPv" = (
@@ -66271,6 +66290,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"wBr" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "wBw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -68019,6 +68048,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"xnQ" = (
+/obj/machinery/light/directional/south,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/left)
 "xnS" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Upload Access"
@@ -69533,6 +69566,7 @@
 "xVH" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/window/reinforced/tram/mid/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xVJ" = (
@@ -154365,11 +154399,11 @@ lPY
 eaT
 oMZ
 aII
-cFs
+qUx
 bEt
 lkr
 rib
-cFs
+xnQ
 aMD
 gek
 pyf
@@ -166710,7 +166744,7 @@ izU
 aGN
 lRC
 ofT
-ofT
+wBr
 uvI
 eSz
 eSz
@@ -181607,11 +181641,11 @@ iMj
 wPN
 ewz
 dCf
-brm
+aMy
 puY
 qyI
 bTT
-brm
+buU
 nwQ
 sGU
 fTP
