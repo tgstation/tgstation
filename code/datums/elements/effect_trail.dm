@@ -3,20 +3,21 @@
  */
 
 /datum/element/effect_trail
+	/// The effect used for the trail generation.
 	var/obj/effect/chosen_effect
 
 /datum/element/effect_trail/Attach(datum/target)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(generate_carpet))
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(generate_effect))
 
 /datum/element/effect_trail/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
-/// Generates a trail of cosmic fields
-/datum/element/effect_trail/proc/generate_carpet(atom/movable/target_object)
+/// Generates an effect
+/datum/element/effect_trail/proc/generate_effect(atom/movable/target_object)
 	SIGNAL_HANDLER
 
 	var/turf/open/open_turf = get_turf(target_object)

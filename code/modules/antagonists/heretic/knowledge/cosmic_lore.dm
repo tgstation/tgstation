@@ -142,7 +142,7 @@
 	/// When this timer completes we reset our combo.
 	var/combo_timer
 	/// The duration of the combo.
-	var/combo_duration = 2 SECONDS
+	var/combo_duration = 2.5 SECONDS
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
 
@@ -159,7 +159,7 @@
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
-	if(target.mind && !target.stat == DEAD)
+	if(target.mind && target.stat != DEAD)
 		combo_counter += 1
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
@@ -173,7 +173,7 @@
 			third_target_resolved.adjustCloneLoss(12)
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
-				if(target.mind && !target.stat == DEAD)
+				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
 					if(combo_counter == 4)
 						source.AddElement(/datum/element/effect_trail/cosmic_trail)
