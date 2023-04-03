@@ -1,4 +1,0 @@
-author: "SomeRandomOwl"
-delete-after: True
-changes:
-  - bugfix: "Play Internet Sound will no longer show an admins Character name and returns back to showing CKEY as previously"
