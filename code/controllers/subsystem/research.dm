@@ -35,6 +35,8 @@ SUBSYSTEM_DEF(research)
 	///Node ids that should be hidden by default.
 	var/list/techweb_nodes_hidden = list()
 	///Node ids that are exclusive to the BEPIS.
+	var/list/techweb_nodes_experimental = list()
+	///Node ids that are exclusive to the BEPIS.
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
@@ -261,6 +263,8 @@ SUBSYSTEM_DEF(research)
 			D.unlocked_by += node.id
 		if(node.hidden)
 			techweb_nodes_hidden[node.id] = TRUE
+		if(node.experimental)
+			techweb_nodes_experimental[node.id] = TRUE
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 
