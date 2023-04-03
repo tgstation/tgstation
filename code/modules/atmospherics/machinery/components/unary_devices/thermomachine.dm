@@ -43,6 +43,24 @@
 	. = ..()
 	RefreshParts()
 	update_appearance()
+	register_context()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset temperature"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unan" : "An"]chor"
+		if(TOOL_MULTITOOL)
+			context[SCREENTIP_CONTEXT_LMB] = "Change piping layer"
+			context[SCREENTIP_CONTEXT_RMB] = "Change piping color"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/unary/thermomachine/is_connectable()
 	if(!anchored || panel_open)
@@ -126,6 +144,9 @@
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/AltClick(mob/living/user)
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return
 	if(!can_interact(user))
 		return
 	target_temperature = T20C
@@ -172,10 +193,10 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
-		to_chat(user, span_notice("You can't open [src] while it's on!"))
+		balloon_alert(user, "turn off!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
-		to_chat(user, span_notice("Anchor [src] first!"))
+		balloon_alert(user, "anchor!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
 		change_pipe_connection(panel_open)
@@ -189,7 +210,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
-		return
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 	update_appearance()
@@ -204,7 +226,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		return
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
 	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
 	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
@@ -286,6 +309,9 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return
 	if(!panel_open)
 		if(!can_interact(user))
 			return

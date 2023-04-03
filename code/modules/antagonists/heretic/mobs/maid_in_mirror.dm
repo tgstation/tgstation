@@ -19,7 +19,7 @@
 	loot = list(
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
-		/obj/item/clothing/suit/armor,
+		/obj/item/clothing/suit/armor/vest,
 		/obj/item/organ/internal/lungs,
 	)
 	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)

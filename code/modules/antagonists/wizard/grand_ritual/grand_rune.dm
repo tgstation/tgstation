@@ -333,3 +333,5 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
 	layer = SIGIL_LAYER
+
+#undef PICK_NOTHING

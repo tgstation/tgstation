@@ -87,7 +87,7 @@
 /datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)
 	SIGNAL_HANDLER
 
-	if(shot.damage_type == BURN && !shot.nodamage)
+	if(shot.damage_type == BURN && shot.damage > 0)
 		detonate()
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.

@@ -82,7 +82,7 @@
 	update_appearance()
 
 /obj/item/assembly_holder/proc/attach(obj/item/assembly/A, mob/user)
-	if(!A.remove_item_from_storage(src))
+	if(!A.remove_item_from_storage(src, user))
 		if(user)
 			user.transferItemToLoc(A, src)
 		else

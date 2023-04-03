@@ -7,7 +7,7 @@
 	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
 //Hunter verbs
@@ -86,3 +86,4 @@
 			visible_message(span_danger("[src] smashes into [hit_atom]!"), span_alertalien("[src] smashes into [hit_atom]!"))
 			Paralyze(40, ignore_canstun = TRUE)
 
+#undef MAX_ALIEN_LEAP_DIST

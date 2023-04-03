@@ -55,3 +55,9 @@
 #define WIRE_ZAP "High Voltage Circuit"
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
+
+// Wire states for the AI
+#define AI_WIRE_NORMAL 0
+#define AI_WIRE_DISABLED 1
+#define AI_WIRE_HACKED 2
+#define AI_WIRE_DISABLED_HACKED -1

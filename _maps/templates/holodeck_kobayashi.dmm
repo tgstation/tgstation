@@ -52,14 +52,11 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "m" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -81,10 +78,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "s" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
@@ -103,11 +97,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -152,15 +143,12 @@
 /obj/structure/rack,
 /obj/item/clothing/under/trek/engsec,
 /obj/item/clothing/under/trek/engsec,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -172,15 +160,12 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "J" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -199,11 +184,8 @@
 	},
 /obj/item/folder,
 /obj/item/pen/red,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -212,14 +194,11 @@
 /obj/item/clothing/under/trek/medsci,
 /obj/item/clothing/under/trek/medsci,
 /obj/item/clothing/under/trek/command,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -248,11 +227,8 @@
 /obj/structure/table,
 /obj/item/folder,
 /obj/item/pen,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
