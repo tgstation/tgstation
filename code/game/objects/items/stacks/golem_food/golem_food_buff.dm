@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	added_info = "After consumption, you can launch this mineral like a rocket. It's a little hard to keep down."
 
 /datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed)
-	var/obj/item/gun/gibtonite_hand/new_hand = new(null, /* held_gibtonite = */ consumed)
+	var/obj/item/gibtonite_hand/new_hand = new(null, /* held_gibtonite = */ consumed)
 	if(consumer.put_in_hands(new_hand))
 		return
 	consumer.drop_all_held_items()

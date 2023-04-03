@@ -2024,7 +2024,7 @@
 #include "code\game\objects\items\stacks\wrap.dm"
 #include "code\game\objects\items\stacks\golem_food\edible_stack.dm"
 #include "code\game\objects\items\stacks\golem_food\golem_food_buff.dm"
-#include "code\game\objects\items\stacks\golem_food\golem_special_actions.dm"
+#include "code\game\objects\items\stacks\golem_food\golem_hand_actions.dm"
 #include "code\game\objects\items\stacks\golem_food\golem_status_effects.dm"
 #include "code\game\objects\items\stacks\sheets\glass.dm"
 #include "code\game\objects\items\stacks\sheets\hot_ice.dm"
