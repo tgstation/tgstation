@@ -106,12 +106,12 @@
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
+/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, params)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	if (isidcard(I) || istype(I, /obj/item/modular_computer/pda))
+	if (attacking_item.GetID())
 		if(!panel_open)
 			if (allowed(user))
 				locked = !locked
@@ -152,12 +152,13 @@
 	data["patrol_enabled"] = codes[NAVBEACON_PATROL_MODE] ? TRUE : FALSE
 	data["patrol_next"] = codes[NAVBEACON_PATROL_NEXT]
 	data["delivery_enabled"] = codes[NAVBEACON_DELIVERY_MODE] ? TRUE : FALSE
-	data["delivery_direction"] = codes[NAVBEACON_DELIVERY_DIRECTION]
+	data["delivery_direction"] = dir2text(text2num(codes[NAVBEACON_DELIVERY_DIRECTION]))
 	return data
 
 /obj/machinery/navbeacon/ui_static_data(mob/user)
 	var/list/data = list()
-	data["direction_options"] = list("None" = null, "East" = EAST, "North" = NORTH, "South" = SOUTH, "West" = WEST)
+	var/static/list/direction_options = list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST))
+	data["direction_options"] = direction_options
 	return data
 
 /obj/machinery/navbeacon/ui_act(action, params)
@@ -195,7 +196,7 @@
 			codes[NAVBEACON_PATROL_NEXT] = input_text
 			return TRUE
 		if("set_delivery_direction")
-			codes[NAVBEACON_DELIVERY_DIRECTION] = params["direction"]
+			codes[NAVBEACON_DELIVERY_DIRECTION] = "[text2dir(params["direction"])]"
 			return TRUE
 
 ///Adds or removes a specific code

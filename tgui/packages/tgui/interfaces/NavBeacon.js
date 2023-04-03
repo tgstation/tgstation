@@ -58,11 +58,11 @@ export const NavBeacon = (props, context) => {
             <LabeledList.Item label="Delivery Direction">
               <Dropdown
                 disabled={locked && !silicon_user}
-                options={Object.keys(direction_options)}
-                selected={direction_options[delivery_direction] || 'None'}
+                options={direction_options}
+                displayText={delivery_direction || 'none'}
                 onSelected={(value) =>
                   act('set_delivery_direction', {
-                    direction: direction_options[value],
+                    direction: value,
                   })
                 }
               />
