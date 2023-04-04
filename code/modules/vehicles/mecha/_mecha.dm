@@ -442,16 +442,16 @@
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(flat_equipment))
-		. += "It's equipped with:"
+		. += span_notice("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
-			. += "[icon2html(ME, user)] \A [ME]."
+			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(enclosed)
 		return
 	if(mecha_flags & SILICON_PILOT)
-		. += "[src] appears to be piloting itself..."
+		. += span_notice("[src] appears to be piloting itself...")
 	else
 		for(var/occupante in occupants)
-			. += "You can see [occupante] inside."
+			. += span_notice("You can see [occupante] inside.")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			for(var/held_item in H.held_items)
