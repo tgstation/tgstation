@@ -515,8 +515,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
 
-	sleep(2 SECONDS)
-
 /// Helper used in callbacks to open all the doors our lift is on
 /datum/lift_master/proc/open_lift_doors_callback()
 	update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
