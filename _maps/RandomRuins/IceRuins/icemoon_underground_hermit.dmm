@@ -22,8 +22,6 @@
 /area/ruin/powered/hermit)
 "ec" = (
 /obj/structure/chair/comfy/beige,
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/hermit)
 "gr" = (
@@ -56,18 +54,9 @@
 "jG" = (
 /turf/closed/wall/mineral/wood,
 /area/icemoon/underground/explored)
-"mN" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/wood,
-/area/ruin/powered/hermit)
 "oJ" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating,
-/area/ruin/powered/hermit)
-"sj" = (
-/obj/machinery/hydroponics/soil,
-/obj/machinery/light/directional/north,
-/turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "sC" = (
 /obj/item/chair/wood/wings,
@@ -82,10 +71,6 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,
-/area/ruin/powered/hermit)
-"wH" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "zd" = (
 /obj/item/pickaxe/improvised,
@@ -273,7 +258,7 @@ TL
 ec
 ii
 ha
-mN
+JI
 TL
 aM
 aM
@@ -301,7 +286,7 @@ aM
 (9,1,1) = {"
 YN
 jG
-sj
+uw
 bp
 Si
 oJ
@@ -342,7 +327,7 @@ YN
 uw
 bp
 bp
-wH
+bp
 WK
 gr
 bp
