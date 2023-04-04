@@ -24,8 +24,10 @@
 		Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy = 2,
-					/obj/item/ammo_box/magazine/toy/pistol = 2)
+	contains = list(
+		/obj/item/gun/ballistic/automatic/pistol/toy = 2,
+		/obj/item/ammo_box/magazine/toy/pistol = 2,
+	)
 	crate_name = "foam force crate"
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
