@@ -2,6 +2,7 @@
 "aa" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/engine)
 "ab" = (
@@ -19,6 +20,7 @@
 "ac" = (
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/suit_storage_unit/mining/eva,
+/obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/engine)
 "ad" = (
@@ -61,7 +63,6 @@
 /obj/item/flashlight,
 /obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/light/cold/no_nightlight/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
@@ -72,7 +73,6 @@
 /obj/item/mining_voucher,
 /obj/item/weldingtool/largetank,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "ak" = (
@@ -167,8 +167,7 @@
 /area/shuttle/abandoned/cargo)
 "ax" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 1;
-	opacity = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_abandoned,
@@ -176,8 +175,7 @@
 /area/shuttle/abandoned/cargo)
 "az" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 1;
-	opacity = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate,
@@ -187,8 +185,7 @@
 /area/shuttle/abandoned/cargo)
 "aA" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 1;
-	opacity = 1
+	dir = 1
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_loot,
@@ -206,8 +203,6 @@
 /area/shuttle/abandoned/cargo)
 "aE" = (
 /obj/structure/cable,
-/obj/machinery/light/cold/no_nightlight/directional/east,
-/obj/machinery/light/cold/no_nightlight/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
@@ -336,8 +331,7 @@
 /area/shuttle/abandoned/cargo)
 "bc" = (
 /obj/machinery/door/window/survival_pod{
-	dir = 8;
-	opacity = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/pod,
@@ -359,8 +353,7 @@
 /area/shuttle/abandoned/cargo)
 "bg" = (
 /obj/machinery/door/window/survival_pod{
-	dir = 4;
-	opacity = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/pod,
@@ -402,8 +395,7 @@
 /area/shuttle/abandoned/cargo)
 "bo" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 4;
-	opacity = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -476,9 +468,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "bA" = (
-/obj/structure/window/reinforced/survival_pod{
-	opacity = 1
-	},
+/obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/food_or_drink/snack,
@@ -488,9 +478,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "bB" = (
-/obj/structure/window/reinforced/survival_pod{
-	opacity = 1
-	},
+/obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/bot_red,
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/iron/dark/textured_large,
@@ -644,6 +632,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/crew)
 "ca" = (
@@ -713,8 +702,7 @@
 /area/shuttle/abandoned/cargo)
 "cr" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 8;
-	opacity = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/engineering/tank,
@@ -762,8 +750,6 @@
 /area/shuttle/abandoned/cargo)
 "cE" = (
 /obj/structure/cable,
-/obj/machinery/light/cold/no_nightlight/directional/east,
-/obj/machinery/light/cold/no_nightlight/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
@@ -798,9 +784,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "cL" = (
-/obj/structure/window/reinforced/survival_pod{
-	opacity = 1
-	},
+/obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/maintenance/two,
@@ -872,9 +856,9 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/light/cold/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -951,13 +935,6 @@
 "dj" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
-"dk" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/bot_white,
-/obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "dl" = (
@@ -1171,6 +1148,7 @@
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "sE" = (
@@ -1350,6 +1328,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/floor,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/bridge)
 "LM" = (
@@ -1460,7 +1439,6 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/obj/machinery/light/cold/no_nightlight/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/bridge)
 "WR" = (
@@ -1481,6 +1459,9 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
+"Zq" = (
+/turf/open/space/basic,
+/area/shuttle/abandoned/cargo)
 "ZA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1500,7 +1481,7 @@ ci
 ci
 cS
 au
-cI
+Zq
 aP
 ba
 cI
@@ -1714,7 +1695,7 @@ Fp
 Fp
 Fp
 dx
-dk
+dj
 LM
 du
 dx
