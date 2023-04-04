@@ -21,6 +21,10 @@
 	///cooldown for the remote
 	COOLDOWN_DECLARE(tram_remote)
 
+/obj/item/tram_remote/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Link/Send Tram", rmb_text = "Change Direction")
+
 ///set tram control direction
 /obj/item/tram_remote/attack_self_secondary(mob/user)
 	switch(direction)
@@ -68,6 +72,9 @@
 			icon_state = "tramremote_ib"
 		if(TRAMCTRL_OUTBOUND)
 			icon_state = "tramremote_ob"
+
+/obj/item/tram_remote/update_overlays()
+	. = ..()
 	if(mode == TRAMCTRL_FAST)
 		. += mutable_appearance(icon, "tramremote_emag")
 
