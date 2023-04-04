@@ -2,7 +2,7 @@
  * omen.dm: For when you want someone to have a really bad day
  *
  * When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
- * or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.
+ * or hitting your head really hard when you slip and fall, or you get shocked by the tram rails at an unfortunate moment.
  *
  * Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.
  */
@@ -69,7 +69,16 @@
 				qdel(src)
 			return
 
+	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
+		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
+		if(future_tram_victim.toast(living_guy))
+			if(!permanent)
+				qdel(src)
+			return
+
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
+		if(istype(the_turf, /turf/open/floor/glass/reinforced/tram)) // don't fall off the tram bridge, we want to hit you instead
+			return
 		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
