@@ -6934,12 +6934,12 @@
 "Io" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 2;
-	height = 13;
+	dwidth = 10;
+	height = 30;
 	json_key = "ferry";
 	name = "CentCom Ferry Dock";
 	shuttle_id = "ferry_away";
-	width = 5
+	width = 21
 	},
 /turf/open/space,
 /area/space)
