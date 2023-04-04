@@ -1,256 +1,268 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ad" = (
-/obj/item/shard/plasma,
+"af" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ba" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"bH" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded{
-	anchored = 1
-	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron{
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"bF" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"df" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"eL" = (
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"fm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"fz" = (
+/obj/machinery/atmospherics/miner/carbon_dioxide,
+/turf/open/floor/engine{
 	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
-/area/ruin/space/has_grav)
-"cI" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"fV" = (
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"gG" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/atmosasteroid)
+"gU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"hj" = (
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"hD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"hP" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"cY" = (
-/obj/machinery/atmospherics/miner/plasma,
-/turf/open/floor/engine/plasma,
-/area/ruin/space/has_grav)
-"da" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"hX" = (
 /obj/item/analyzer/ranged,
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"dk" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ij" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"dC" = (
-/obj/item/clothing/mask/gas/atmos,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"dN" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/anticorner{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"dR" = (
-/turf/open/misc/asteroid/airless,
-/area/space)
-"eE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"fv" = (
-/obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"fD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
-	dir = 8
-	},
-/turf/open/floor/engine/n2o,
-/area/ruin/space/has_grav)
-"gz" = (
-/obj/machinery/atmospherics/miner/carbon_dioxide,
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"hG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 1
-	},
-/turf/open/floor/engine/o2,
-/area/ruin/space/has_grav)
-"hY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
-	dir = 1
-	},
-/turf/open/floor/engine/n2,
-/area/ruin/space/has_grav)
-"iP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"jI" = (
-/obj/effect/decal/cleanable/blood/gibs{
-	pixel_y = 8;
-	pixel_x = -6
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"kn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 1
-	},
-/turf/open/floor/engine/n2,
-/area/ruin/space/has_grav)
-"kt" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"lF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron/dark/side{
-	dir = 1;
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"lS" = (
-/obj/machinery/atmospherics/components/unary/portables_connector,
+/area/ruin/space/has_grav/atmosasteroid)
+"iu" = (
 /obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"iD" = (
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"jB" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
 	},
-/area/ruin/space/has_grav)
-"mg" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"mL" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"jP" = (
+/obj/machinery/door/airlock/atmos/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/reagent_dispensers/fueltank/large,
-/obj/effect/turf_decal/delivery/red,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"nd" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"nf" = (
-/obj/machinery/atmospherics/components/unary/thermomachine,
-/obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"oe" = (
-/turf/open/floor/engine/n2o,
-/area/ruin/space/has_grav)
-"oj" = (
-/obj/machinery/atmospherics/miner/nitrogen,
-/turf/open/floor/engine/n2,
-/area/ruin/space/has_grav)
-"ok" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"oA" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/suit_storage_unit,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"qP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
 	dir = 1
 	},
-/turf/open/floor/engine/air,
-/area/ruin/space/has_grav)
-"rb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/engine/airless,
-/area/ruin/space/has_grav)
-"rf" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"ry" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/tank_holder/extinguisher/advanced,
-/turf/open/floor/iron/dark/side{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/area/ruin/space/has_grav)
-"ti" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"jV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"kB" = (
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
+	dir = 4
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"kJ" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"lx" = (
+/obj/item/tank/internals/emergency_oxygen/double,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"mA" = (
 /obj/item/shard/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/tile/yellow/anticorner,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"mC" = (
+/obj/item/construction/rcd,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"mI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ni" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
-/area/ruin/space/has_grav)
-"tY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"ud" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"nz" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
+	},
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"nB" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"og" = (
+/obj/machinery/power/turbine/inlet_compressor,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"om" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"os" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"oz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/side/co2_pressurized{
+	dir = 1
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"oZ" = (
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"ps" = (
+/obj/machinery/atmospherics/miner/oxygen,
+/turf/open/floor/engine/o2,
+/area/ruin/space/has_grav/atmosasteroid)
+"pw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 1
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"pU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"rg" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"rp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"rC" = (
 /obj/machinery/power/turbine/turbine_outlet,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"va" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"sp" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"tC" = (
 /obj/structure/rack,
 /obj/item/rpd_upgrade{
 	pixel_x = -4;
@@ -271,199 +283,146 @@
 	},
 /obj/structure/window,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"tL" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
 	},
-/area/ruin/space/has_grav)
-"vy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"wh" = (
-/obj/structure/grille/broken,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"wq" = (
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"uH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"uS" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/atmosasteroid)
+"vo" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"vG" = (
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"vT" = (
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"vW" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"xr" = (
+/obj/machinery/light/small/directional/south,
+/obj/item/clothing/glasses/meson/engine,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"zd" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"zD" = (
+/obj/machinery/atmospherics/pipe/bridge_pipe/general/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"zH" = (
+/obj/machinery/power/turbine/core_rotor,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ak" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Al" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	anchored = 1
 	},
-/area/ruin/space/has_grav)
-"wI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/engine/air,
-/area/ruin/space/has_grav)
-"wP" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"AJ" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"xp" = (
-/obj/machinery/power/turbine/core_rotor,
+/area/ruin/space/has_grav/atmosasteroid)
+"AZ" = (
+/obj/structure/girder/reinforced,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"xK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/area/ruin/space/has_grav/atmosasteroid)
+"Bq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 4
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"xL" = (
-/turf/open/floor/engine/air,
-/area/ruin/space/has_grav)
-"yA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"yJ" = (
-/obj/item/tank/internals/emergency_oxygen/double,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"zR" = (
-/obj/machinery/door/airlock/atmos/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
+/area/ruin/space/has_grav/atmosasteroid)
+"Cb" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Cn" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/turf_decal/stripes/full,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"Ar" = (
-/turf/open/misc/asteroid/airless,
-/area/ruin/space/has_grav)
-"Bf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Bz" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
-	dir = 8
-	},
-/turf/open/floor/engine/plasma,
-/area/ruin/space/has_grav)
-"BB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
-	dir = 8
-	},
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Ce" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Cw" = (
-/obj/effect/turf_decal/tile/yellow/anticorner{
-	dir = 1
-	},
-/obj/structure/closet/firecloset/full,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"CI" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
-	},
+/area/ruin/space/has_grav/atmosasteroid)
+"Co" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /turf/open/floor/engine/airless,
-/area/ruin/space/has_grav)
-"CL" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"Cz" = (
+/obj/item/pipe_dispenser,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Dw" = (
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"DN" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	locked = 1
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"CQ" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Dd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Dp" = (
-/turf/open/floor/engine/n2,
-/area/ruin/space/has_grav)
-"DJ" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/turf_decal/tile/yellow/anticorner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Eh" = (
-/obj/machinery/power/turbine/inlet_compressor,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"EU" = (
-/obj/machinery/atmospherics/miner/n2o,
-/turf/open/floor/engine/n2o,
-/area/ruin/space/has_grav)
-"Ff" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/stripes/corner{
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ep" = (
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron/dark/corner{
-	dir = 1;
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Fj" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
 	},
-/area/ruin/space/has_grav)
-"Fv" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ft" = (
 /obj/effect/decal/cleanable/blood/gibs/core{
 	pixel_x = -12;
 	pixel_y = 15
@@ -475,232 +434,166 @@
 /obj/effect/decal/cleanable/blood/gibs/down{
 	pixel_y = -6
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Fx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
-/turf/open/floor/iron/dark/corner{
-	dir = 4;
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Fy" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"FR" = (
-/obj/machinery/electrolyzer,
-/obj/effect/turf_decal/box,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav)
-"FT" = (
-/obj/machinery/door/airlock/external/glass/ruin,
-/obj/effect/turf_decal/stripes/full,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"Gd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"FU" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 4
 	},
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/iron/dark{
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"HD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine{
 	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
 	},
-/area/ruin/space/has_grav)
-"Gy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"GY" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"HF" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"HW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 1
 	},
-/area/ruin/space/has_grav)
-"Hi" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/turf/open/floor/engine/air,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ju" = (
+/obj/item/clothing/mask/gas/atmos,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Kg" = (
+/obj/machinery/atmospherics/miner/n2o,
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"KN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"KR" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
 	},
-/area/ruin/space/has_grav)
-"HH" = (
-/turf/closed/mineral,
-/area/ruin/space/has_grav)
-"HP" = (
-/turf/open/floor/engine/plasma,
-/area/ruin/space/has_grav)
-"Jp" = (
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Jq" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"KT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Lj" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Lv" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
-/area/ruin/space/has_grav)
-"Jx" = (
-/obj/item/pickaxe,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"JR" = (
-/obj/structure/girder/reinforced,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"Kd" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/dark/corner/co2_pressurized{
+	dir = 8
 	},
-/area/ruin/space/has_grav)
-"Kn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/iron/dark/corner{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/area/ruin/space/has_grav/atmosasteroid)
+"LI" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/tank_holder/extinguisher/advanced,
+/turf/open/floor/iron/dark/side/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"LJ" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
+	dir = 4
 	},
-/area/ruin/space/has_grav)
-"Ko" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 4
 	},
-/area/ruin/space/has_grav)
-"KV" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Mt" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
-/area/ruin/space/has_grav)
-"Ll" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	locked = 1
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"Lw" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/general/visible/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"LS" = (
-/obj/machinery/atmospherics/miner/oxygen,
-/turf/open/floor/engine/o2,
-/area/ruin/space/has_grav)
-"LY" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Mh" = (
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MI" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
+/turf/open/floor/plating/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"MR" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"MT" = (
+/obj/effect/turf_decal/tile/yellow/full,
+/obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ns" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Mv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Nf" = (
-/obj/effect/turf_decal/tile/yellow/full,
-/obj/machinery/portable_atmospherics/scrubber/huge/movable,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"NE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Ol" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ny" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/atmosasteroid)
+"NP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
-/area/ruin/space/has_grav)
-"Oo" = (
-/obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/area/ruin/space/has_grav/atmosasteroid)
+"Oe" = (
+/obj/item/pickaxe,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"Oz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"OY" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/light/directional/west,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"QP" = (
+/turf/closed/mineral,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ra" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"OF" = (
 /turf/open/floor/engine/o2,
-/area/ruin/space/has_grav)
-"Pa" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4
-	},
-/turf/open/floor/engine/airless,
-/area/ruin/space/has_grav)
-"Pb" = (
-/obj/machinery/atmospherics/components/unary/thermomachine,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"PO" = (
-/obj/machinery/light/small/directional/south,
-/obj/item/clothing/glasses/meson/engine,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"PX" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav)
-"PY" = (
+/area/ruin/space/has_grav/atmosasteroid)
+"Rp" = (
+/turf/open/floor/engine/n2o,
+/area/ruin/space/has_grav/atmosasteroid)
+"RJ" = (
 /obj/item/stack/rods,
 /obj/machinery/atmospherics/pipe/layer_manifold/dark/visible{
 	dir = 4
@@ -710,119 +603,107 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Qv" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/corner{
-	dir = 8;
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"RV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
-/turf/open/floor/engine/airless,
-/area/ruin/space/has_grav)
-"Si" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Sw" = (
-/obj/item/construction/rcd,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"SF" = (
-/turf/open/floor/engine/co2{
-	initial_gas_mix = "co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"SK" = (
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"Tg" = (
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Up" = (
-/turf/template_noop,
-/area/template_noop)
-"Us" = (
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"RK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"UU" = (
-/obj/effect/turf_decal/tile/yellow/anticorner{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"WI" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Xn" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav)
-"XT" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Yo" = (
-/obj/item/pipe_dispenser,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
-/area/ruin/space/has_grav)
-"Yr" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/corner/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"So" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/misc/asteroid,
-/area/ruin/space/has_grav)
-"Yz" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/atmosasteroid)
+"Sy" = (
+/obj/effect/decal/cleanable/blood/gibs{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"TP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+	dir = 8
+	},
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"TU" = (
+/turf/open/floor/engine{
+	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/atmosasteroid)
+"Ub" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/reagent_dispensers/foamtank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ue" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible/layer4,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Up" = (
+/turf/template_noop,
+/area/template_noop)
+"Ur" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Uz" = (
+/obj/effect/turf_decal/tile/yellow/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"UL" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"UR" = (
+/obj/machinery/atmospherics/miner/plasma,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/atmosasteroid)
+"Vw" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Wc" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"Wn" = (
+/obj/machinery/atmospherics/miner/nitrogen,
+/turf/open/floor/engine/n2,
+/area/ruin/space/has_grav/atmosasteroid)
+"Ws" = (
+/obj/item/shard/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
+"YB" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/atmosasteroid)
+"ZN" = (
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/obj/effect/turf_decal/tile/yellow/half,
+/turf/open/floor/iron/co2_pressurized,
+/area/ruin/space/has_grav/atmosasteroid)
 
 (1,1,1) = {"
 Up
@@ -839,9 +720,9 @@ Up
 Up
 Up
 Up
-Yz
-FT
-Yz
+gG
+Cn
+gG
 Up
 Up
 Up
@@ -862,13 +743,13 @@ Up
 Up
 Up
 Up
-HH
-HH
-Yz
-tY
-Yz
-HH
-Ar
+QP
+QP
+gG
+os
+gG
+QP
+uS
 Up
 Up
 Up
@@ -883,19 +764,19 @@ Up
 Up
 Up
 Up
-HH
-HH
-HH
-HH
-HH
-HH
-Yz
-xK
-Yz
-HH
-HH
-HH
-HH
+QP
+QP
+QP
+QP
+QP
+QP
+gG
+ni
+gG
+QP
+QP
+QP
+QP
 Up
 Up
 "}
@@ -903,475 +784,475 @@ Up
 Up
 Up
 Up
-Ar
-Ar
-Ar
-HH
-HH
-HH
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-zR
-Yz
-Yz
-Yz
-Yz
-HH
-HH
+uS
+uS
+uS
+QP
+QP
+QP
+gG
+gG
+gG
+gG
+gG
+gG
+jP
+gG
+gG
+gG
+gG
+QP
+QP
 Up
 "}
 (5,1,1) = {"
 Up
 Up
-Ar
-Ar
-Ar
-HH
-HH
-HH
-HH
-Yz
-rb
-RV
-CI
-Yz
-DJ
-NE
-CL
-UU
-Nf
-Yz
-HH
-HH
-HH
+uS
+uS
+uS
+QP
+QP
+QP
+QP
+gG
+pU
+Co
+fm
+gG
+rg
+gU
+kJ
+Uz
+MT
+gG
+QP
+QP
+QP
 "}
 (6,1,1) = {"
 Up
-Ar
-Ar
-Ar
-HH
-HH
-HH
-HH
-HH
-Yz
-rb
-RV
-Pa
-Yz
-rf
-vy
-Jp
-KV
-Yz
-Yz
-Yz
-Yz
-HH
+uS
+uS
+uS
+QP
+QP
+QP
+QP
+QP
+gG
+pU
+Co
+hD
+gG
+UL
+Ak
+af
+Vw
+gG
+gG
+gG
+gG
+QP
 "}
 (7,1,1) = {"
 Up
-Ar
-Ar
-HH
-HH
-HH
-HH
-SK
-HH
-Yz
-Yz
-dk
-wP
-Yz
-Jq
-vy
-Jp
-lS
-dk
-hG
-OF
-Yz
-HH
+uS
+uS
+QP
+QP
+QP
+QP
+vW
+QP
+gG
+gG
+ij
+AJ
+gG
+Lj
+Ak
+af
+sp
+ij
+Ra
+hj
+gG
+QP
 "}
 (8,1,1) = {"
 Up
-HH
-HH
-HH
-HH
-HH
-SK
-SK
-SK
-Yz
-Cw
-Tg
-wq
-Oo
-WI
-vy
-Jp
-Ko
-kt
-OF
-LS
-Yz
-HH
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+gG
+oZ
+fV
+vo
+Dw
+Ep
+Ak
+af
+Wc
+zd
+hj
+ps
+gG
+QP
 "}
 (9,1,1) = {"
-HH
-HH
-HH
-HH
-HH
-SK
-SK
-xp
-SK
-Yz
-Si
-Hi
-Hi
-Jp
-Jp
-iP
-Lw
-Kd
-kt
-Ol
-OF
-Yz
-HH
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+zH
+vW
+gG
+jB
+nB
+nB
+af
+af
+KT
+zD
+Cb
+zd
+NP
+hj
+gG
+QP
 "}
 (10,1,1) = {"
-HH
-HH
-HH
-HH
-HH
-SK
-ud
-SK
-Yr
-Yz
-bH
-Jp
-Ce
-eE
-eE
-iP
-Gy
-LY
-Yz
-Yz
-Yz
-Yz
-HH
+QP
+QP
+QP
+QP
+QP
+vW
+rC
+vW
+So
+gG
+Al
+af
+jV
+FU
+FU
+KT
+uH
+bF
+gG
+gG
+gG
+gG
+QP
 "}
 (11,1,1) = {"
-HH
-HH
-HH
-HH
-SK
-SK
-SK
-SK
-yA
-Ll
-Bf
-Kn
-Gd
-mL
-Mv
-Fx
-Gy
-lS
-dk
-kn
-Dp
-Yz
-HH
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+KN
+DN
+ba
+RK
+Ub
+Oz
+mI
+Bq
+uH
+sp
+ij
+tL
+vG
+gG
+QP
 "}
 (12,1,1) = {"
-HH
-HH
-HH
-HH
-SK
-Pb
-SK
-Jx
-PO
-Yz
-GY
-ry
-PX
-PX
-PX
-lF
-Gy
-Ko
-kt
-Dp
-oj
-Yz
-HH
+QP
+QP
+QP
+QP
+vW
+vT
+vW
+Oe
+xr
+gG
+HF
+LI
+Ny
+Ny
+Ny
+oz
+uH
+Wc
+zd
+vG
+Wn
+gG
+QP
 "}
 (13,1,1) = {"
-HH
-HH
-HH
-HH
-SK
-SK
-Eh
-SK
-Sw
-Yz
-Jq
-Qv
-oA
-FR
-va
-Ff
-CQ
-Kd
-kt
-hY
-Dp
-Yz
-HH
+QP
+QP
+QP
+QP
+vW
+vW
+og
+vW
+mC
+gG
+Lj
+Lv
+MG
+OY
+tC
+pw
+kB
+Cb
+zd
+om
+vG
+gG
+QP
 "}
 (14,1,1) = {"
-HH
-HH
-HH
-HH
-SK
-SK
-SK
-SK
-SK
-Yz
-fv
-Jp
-ok
-dC
-Yo
-iP
-Gy
-LY
-Yz
-Yz
-Yz
-Yz
-HH
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+vW
+gG
+Fj
+af
+Mt
+Ju
+Cz
+KT
+uH
+bF
+gG
+gG
+gG
+gG
+QP
 "}
 (15,1,1) = {"
-HH
-HH
-HH
-HH
-HH
-SK
-SK
-SK
-SK
-Yz
-GY
-Jp
-Jp
-Fv
-Dd
-iP
-Gy
-XT
-Xn
-qP
-xL
-Yz
-HH
+QP
+QP
+QP
+QP
+QP
+vW
+vW
+vW
+vW
+gG
+HF
+af
+af
+Ft
+Ue
+KT
+uH
+iu
+MR
+nz
+eL
+gG
+QP
 "}
 (16,1,1) = {"
 Up
-HH
-HH
-HH
-HH
-SK
-JR
-SK
-SK
-Yz
-GY
-Jp
-yJ
-jI
-Jp
-ad
-Jp
-nf
-kt
-xL
-xL
-Yz
-HH
+QP
+QP
+QP
+QP
+vW
+AZ
+vW
+vW
+gG
+HF
+af
+lx
+Sy
+af
+Ws
+af
+ZN
+zd
+eL
+eL
+gG
+QP
 "}
 (17,1,1) = {"
 Up
-HH
-HH
-HH
-HH
-JR
-Yz
-Yz
-Yz
-Yz
-dN
-nd
-da
-Mh
-nd
-Us
-PY
-ti
-Fy
-wI
-xL
-Yz
-HH
+QP
+QP
+QP
+QP
+AZ
+gG
+gG
+gG
+gG
+LJ
+KR
+hX
+Ns
+KR
+Ur
+RJ
+mA
+df
+HW
+eL
+gG
+QP
 "}
 (18,1,1) = {"
 Up
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-Yz
-mg
-kt
-Yz
-cI
-kt
-Yz
-wh
-kt
-Yz
-Yz
-Yz
-Yz
-HH
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+gG
+YB
+zd
+gG
+hP
+zd
+gG
+MI
+zd
+gG
+gG
+gG
+gG
+QP
 "}
 (19,1,1) = {"
 Up
 Up
-HH
-HH
-Ar
-Ar
-HH
-HH
-HH
-Yz
-Bz
-HP
-Yz
-fD
-oe
-Yz
-BB
-SF
-Yz
-HH
-HH
-HH
-HH
+QP
+QP
+uS
+uS
+QP
+QP
+QP
+gG
+TP
+iD
+gG
+rp
+Rp
+gG
+HD
+TU
+gG
+QP
+QP
+QP
+QP
 "}
 (20,1,1) = {"
 Up
 Up
-HH
-Ar
-Ar
-Ar
-Ar
-HH
-HH
-Yz
-cY
-HP
-Yz
-EU
-oe
-Yz
-gz
-SF
-Yz
-HH
-HH
-HH
-dR
+QP
+uS
+uS
+uS
+uS
+QP
+QP
+gG
+UR
+iD
+gG
+Kg
+Rp
+gG
+fz
+TU
+gG
+QP
+QP
+QP
+uS
 "}
 (21,1,1) = {"
 Up
 Up
 Up
-Ar
-Ar
-Ar
-Ar
-HH
-HH
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-Yz
-HH
-HH
-dR
-dR
+uS
+uS
+uS
+uS
+QP
+QP
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+gG
+QP
+QP
+uS
+uS
 "}
 (22,1,1) = {"
 Up
 Up
 Up
 Up
-Ar
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-dR
-dR
+uS
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+uS
+uS
 Up
 "}
 (23,1,1) = {"
@@ -1381,16 +1262,16 @@ Up
 Up
 Up
 Up
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
-HH
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
+QP
 Up
 Up
 Up

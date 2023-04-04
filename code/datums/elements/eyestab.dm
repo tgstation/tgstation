@@ -40,6 +40,9 @@
 
 	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(CLUMSY_ATTACK_SELF_CHANCE))
 		target = user
+	
+	if (target.is_eyes_covered() || isalien(target) || isbrain(target))
+		return
 
 	perform_eyestab(source, target, user)
 
@@ -47,32 +50,16 @@
 
 /datum/element/eyestab/proc/perform_eyestab(obj/item/item, mob/living/target, mob/living/user)
 	var/obj/item/bodypart/target_limb = target.get_bodypart(BODY_ZONE_HEAD)
-
 	if (ishuman(target) && isnull(target_limb))
 		return
 
-	if (target.is_eyes_covered())
-		to_chat(user, span_warning("You failed to stab [target.p_their()] eyes, you need to remove [target.p_their()] eye protection first!"))
-		return
-
-	if (isalien(target))
-		to_chat(user, span_warning("You cannot locate any eyes on this creature!"))
-		return
-
-	if (isbrain(target))
-		to_chat(user, span_warning("You cannot locate any organic eyes on this brain!"))
-		return
-
 	item.add_fingerprint(user)
-
 	playsound(item, item.hitsound, 30, TRUE, -1)
-
 	user.do_attack_animation(target)
-
 	if (target == user)
 		user.visible_message(
-			span_danger("[user] stabs [user.p_them()]self in the eyes with [item]!"),
-			span_userdanger("You stab yourself in the eyes with [item]!"),
+			span_danger("[user] stabs [user.p_them()]self in the eye with [item]!"),
+			span_userdanger("You stab yourself in the eye with [item]!"),
 		)
 	else
 		target.visible_message(
@@ -86,7 +73,6 @@
 		target.take_bodypart_damage(damage)
 
 	target.add_mood_event("eye_stab", /datum/mood_event/eye_stab)
-
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
@@ -95,7 +81,6 @@
 
 	target.adjust_eye_blur_up_to(6 SECONDS, EYESTAB_MAX_BLUR)
 	eyes.apply_organ_damage(rand(2, 4))
-
 	if(eyes.damage < EYESTAB_BLEEDING_THRESHOLD)
 		return
 

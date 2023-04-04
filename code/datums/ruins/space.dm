@@ -65,6 +65,14 @@
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
 
+/datum/map_template/ruin/space/derelict_construction
+	id = "derelict_construction"
+	suffix = "derelict_construction.dmm"
+	name = "Derelict Construction"
+	description = "Construction supplies are in high demand due to non-trivial damage routinely sustained by most space stations in this sector. \
+	Space pirates who dont attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
+	equipment back to the highest bidder."
+
 /datum/map_template/ruin/space/derelict_sulaco
 	id = "derelict_sulaco"
 	suffix = "derelict_sulaco.dmm"
@@ -350,13 +358,31 @@
 	name = "Alternate Sciences Research Center"
 	description = "When you're messing with the occult, who knows what you're going to get?"
 
+/datum/map_template/ruin/space/anomaly_research
+	id = "anomaly_research"
+	suffix = "anomaly_research.dmm"
+	name = "Anomaly Research"
+	description = "A secret research lab embedded in arctic rock, belonging to a Dr Anna Molly. What could she have been researching?"
+
+/datum/map_template/ruin/space/meateor
+	id = "meateor"
+	suffix = "meateor.dmm"
+	name = "Meateor"
+	description = "A big chunk of meat floating in space. How did it get there?"
+
 /datum/map_template/ruin/space/the_faceoff
 	id = "the_faceoff"
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
-/datum/map_template/ruin/space/atmosastroidruin
+/datum/map_template/ruin/space/ghost_restaurant
+	id = "space_ghost_restaurant.dmm"
+	suffix = "space_ghost_restaurant.dmm"
+	name = "Space Ghost Restaurant"
+	description = "Ever wondered where the restaurant robots come from? On this ruined station, NTgrub interns dressed up robots in clothes, and sent them to stations to cook their meal orders for them."
+
+/datum/map_template/ruin/space/atmosasteroidruin
 	id = "atmosasteroidruin"
 	suffix = "atmosasteroidruin.dmm"
 	name = "Atmos Asteroid"
@@ -392,3 +418,9 @@
 	suffix = "waystation.dmm"
 	name = "Waystation"
 	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+
+/datum/map_template/ruin/space/transit_booth
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
+	description = "Make sure to check out the duty-free store!"
