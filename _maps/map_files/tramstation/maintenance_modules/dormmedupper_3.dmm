@@ -79,7 +79,7 @@
 /turf/open/openspace,
 /area/station/maintenance/department/crew_quarters/dorms)
 "lb" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/crew_quarters/dorms)
 "lr" = (
