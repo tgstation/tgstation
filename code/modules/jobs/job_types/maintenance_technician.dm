@@ -1,19 +1,16 @@
-/datum/job/station_engineer
-	title = JOB_STATION_ENGINEER
-	description = "Start the Supermatter, wire the solars, repair station hull \
-		and wiring damage."
+/datum/job/maintenance_technician
+	title = JOB_MAINTENANCE_TECHNICIAN
+	description = "Fix everything you are told to fix, get yelled at by engineers after you fail,\
+		hope nobody notices when you accidentally break something."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = SUPERVISOR_CE
-	exp_requirements = 60
-	exp_required_type = EXP_TYPE_CREW
-	exp_required_type_department = EXP_TYPE_ENGINEERING
+	supervisors = "the engineering department and Chief Engineer"
 	exp_granted_type = EXP_TYPE_CREW
-	config_tag = "STATION_ENGINEER"
+	config_tag = "MAINTENANCE_TECHNICIAN"
 
-	outfit = /datum/outfit/job/engineer
+	outfit = /datum/outfit/job/maintenance_technician
 	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 	paycheck = PAYCHECK_CREW
@@ -36,19 +33,18 @@
 		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
 	)
-	rpg_title = "Crystallomancer"
+	rpg_title = "Junior Crystallomancer"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
-/datum/outfit/job/engineer
-	name = "Station Engineer"
-	jobtype = /datum/job/station_engineer
+/datum/outfit/job/maintenance_technician
+	name = "Maintenance Technician"
+	jobtype = /datum/job/maintenance_technician
 
-	id_trim = /datum/id_trim/job/station_engineer
-	uniform = /obj/item/clothing/under/rank/engineering/engineer
-	belt = /obj/item/storage/belt/utility/full/engi
+	id_trim = /datum/id_trim/job/maintenance_technician
+	uniform = /obj/item/clothing/under/rank/engineering/engineer/hazard
 	ears = /obj/item/radio/headset/headset_eng
-	head = /obj/item/clothing/head/utility/hardhat
+	head = /obj/item/clothing/head/soft/yellow
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/engineering
 	r_pocket = /obj/item/t_scanner
@@ -60,17 +56,3 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
-
-/datum/outfit/job/engineer/gloved
-	name = "Station Engineer (Gloves)"
-
-	gloves = /obj/item/clothing/gloves/color/yellow
-
-/datum/outfit/job/engineer/mod
-	name = "Station Engineer (MODsuit)"
-
-	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/engineering
-	head = null
-	mask = /obj/item/clothing/mask/breath
-	internals_slot = ITEM_SLOT_SUITSTORE

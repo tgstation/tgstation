@@ -7,6 +7,9 @@
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = SUPERVISOR_CMO
+	exp_requirements = 60
+	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_MEDICAL
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MEDICAL_DOCTOR"
 

@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_RD
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SCIENCE
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "GENETICIST"
 

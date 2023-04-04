@@ -1,12 +1,12 @@
-/datum/job/doctor
+/datum/job/nurse
 	title = JOB_NURSE
-	description = "Assist the doctors and keep the medical department running smoothly. \
-	Put on bandages, administer medication, and try not to accidentally kill anyone."
+	description = "Assist the doctors and other medical personnel. \
+		Put on bandages, administer medication, and try not to accidentally kill anyone."
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = "the medical department and CMO"
+	supervisors = "the medical department and Chief Medical Officer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "NURSE"
 
@@ -55,5 +55,6 @@
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = /obj/item/gun/syringe
 	box = /obj/item/storage/box/survival/medical
 	skillchips = list(/obj/item/skillchip/entrails_reader)

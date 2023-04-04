@@ -1,13 +1,16 @@
 /datum/job/adjutant
 	title = JOB_ADJUTANT
-	description = "Be the ultimate sidekick to the command team, follow them around, \
+	description = "Be the ultimate sidekick to the command team, follow them around assisting, \
 		fetch their coffee, and nod approvingly at their decisions (even if they're terrible).\
-		Die at the bridge with Captain after it gets bombed."
+		Watch computers at bridge with the Captain."
 	department_head = list(JOB_CAPTAIN)
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "department heads and the Captain"
+	minimal_player_age = 7
+	exp_requirements = 60 //Play one round, we hope you at least know how to talk
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_COMMAND
 	config_tag = "ADJUTANT"

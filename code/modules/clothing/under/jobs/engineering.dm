@@ -62,7 +62,14 @@
 	icon_state = "hazard"
 	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
-
+/obj/item/clothing/under/rank/engineering/engineer/hazard/skirt
+	name = "engineer's hazard jumpskirt"
+	desc = "A high visibility jumpskirt. Made from fire resistant materials."
+	icon_state = "hazard_skirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"
 	desc = "It's an orange high visibility jumpskirt worn by engineers. Made from fire resistant materials."
