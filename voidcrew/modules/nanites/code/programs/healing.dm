@@ -75,7 +75,7 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+	if(host_mob.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 
@@ -197,7 +197,7 @@
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
 			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+	if(host_mob.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
 	return problems ? ..() : FALSE
 

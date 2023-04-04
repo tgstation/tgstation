@@ -127,7 +127,7 @@
 		return
 
 	if(state_open)
-		close_machine(null, user)
+		close_machine(user)
 		return
 
 	else if(locked)
@@ -159,15 +159,11 @@
 		)
 		open_machine()
 
-/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, mob/living/attacker)
+/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
-
-	..()
-
-	. = TRUE
-
-	addtimer(CALLBACK(src, PROC_REF(try_inject_nanites), attacker), 30) //If someone is shoved in give them a chance to get out before the injection starts
+	addtimer(CALLBACK(src, PROC_REF(try_inject_nanites), user), 3 SECONDS) //If someone is shoved in give them a chance to get out before the injection starts
+	return ..()
 
 /obj/machinery/public_nanite_chamber/proc/try_inject_nanites(mob/living/attacker)
 	if(occupant)
@@ -180,7 +176,7 @@
 		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
 			inject_nanites(attacker)
 
-/obj/machinery/public_nanite_chamber/open_machine()
+/obj/machinery/public_nanite_chamber/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -224,6 +220,6 @@
 /obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !Adjacent(target) || !user.Adjacent(target))
 		return
-	if(close_machine(target, user))
+	if(close_machine(user))
 		log_combat(user, target, "inserted", null, "into [src].")
 	add_fingerprint(user)

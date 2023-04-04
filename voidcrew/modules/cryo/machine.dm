@@ -30,16 +30,15 @@
 	. = ..()
 	close_machine(joining_mob)
 
-/obj/machinery/cryopod/open_machine()
-	. = ..()
+/obj/machinery/cryopod/open_machine(drop = TRUE, density_to_set = FALSE)
 	icon_state = initial(icon_state)
-	set_density(TRUE)
+	return ..()
 
-/obj/machinery/cryopod/close_machine(mob/living/carbon/user)
-	. = ..()
+/obj/machinery/cryopod/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	to_chat(user, span_boldnotice("You begin to wake from cryosleep..."))
 	icon_state = close_state
 	user.SetStun(5 SECONDS)
+	return ..()
 
 /obj/machinery/cryopod/container_resist_act(mob/living/user)
 	visible_message(
