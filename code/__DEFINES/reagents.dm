@@ -72,7 +72,7 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
-#define REAGENT_STANDARD_PURITY 0.75
+#define REAGENT_STANDARD_PURITY 1.00
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
