@@ -108,7 +108,8 @@
 
 /obj/item/ammo_box/magazine/r10mm
 	name = "regal condor magazine (10mm)"
-	icon_state = "50ae"
+	icon_state = "r10mm-8"
+	base_icon_state = "r10mm"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
 	max_ammo = 8
