@@ -25,13 +25,13 @@
 
 /proc/create_midwife_eggs(amount)
 	var/list/spawn_locs = list()
-	for(var/x in GLOB.xeno_spawn)
+	for(var/x in GLOB.generic_maintenance_landmarks)
 		var/turf/spawn_turf = x
 		var/light_amount = spawn_turf.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && is_safe_turf(spawn_turf))
 			spawn_locs += spawn_turf
 	if(!length(spawn_locs))
-		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
+		message_admins("No valid spawn locations found in GLOB.generic_maintenance_landmarks, aborting spider spawning...")
 		return MAP_ERROR
 	while(amount > 0)
 		var/turf/spawn_loc = pick_n_take(spawn_locs)
