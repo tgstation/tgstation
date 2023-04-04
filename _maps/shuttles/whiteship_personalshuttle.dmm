@@ -259,9 +259,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "ds" = (
-/obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light/cold/no_nightlight/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "dt" = (
@@ -401,11 +401,11 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
 "ue" = (
-/obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/medkit,
 /obj/structure/table,
 /obj/effect/spawner/random/medical/minor_healing,
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "wp" = (
