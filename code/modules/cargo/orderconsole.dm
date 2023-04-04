@@ -329,10 +329,11 @@
 				requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
 				var/paying_account = "[order.paying_account]"
 				if(paying_account)
-					requisition_text += "Paid by: [order.paying_account.account_holder]<br/>"
+					requisition_text += "Paid Privatly by: [order.paying_account.account_holder]<br/>"
 				var/reason = "[order.reason]"
 				if(reason != "")
-					requisition_text += "- Reason given: [reason]</br></br></br>"
+					requisition_text += "- Reason given: [reason]</br>"
+				requisition_text += "</br></br>"
 			requisition_paper.add_raw_text(requisition_text)
 			requisition_paper.update_appearance()
 
