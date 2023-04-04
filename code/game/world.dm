@@ -294,20 +294,26 @@ GLOBAL_VAR(restart_counter)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
+			auxcleanup()
 			TgsEndProcess()
 
 	log_world("World rebooted at [time_stamp()]")
-
-	TgsReboot()
+	
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
-	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
+	auxcleanup()
+	
+	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
+	
 	..()
 
-/world/Del()
+/world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
 		LIBCALL(debug_server, "auxtools_shutdown")()
+
+/world/Del()
+	auxcleanup()
 	. = ..()
 
 /world/proc/update_status()
