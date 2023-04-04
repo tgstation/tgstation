@@ -413,7 +413,7 @@
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
 
-/datum/map_template/ruin/space/Interdyne
+/datum/map_template/ruin/space/interdyne
 	id = "interdyne"
 	suffix = "interdyne.dmm"
 	name = "Interdyne Spinward Research Base"
