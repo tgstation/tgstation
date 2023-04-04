@@ -2,10 +2,11 @@
 /datum/unit_test/slime_mood
 
 /datum/unit_test/slime_mood/Run()
-	var/mob/living/simple_animal/slime/this_guy = allocate(/mob/living/simple_animal/slime)
+	var/mob/living/simple_animal/slime/emoting_slime = allocate(/mob/living/simple_animal/slime)
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/slime/mood/slime_mood in GLOB.emote_list[key])
+			var/list/states = icon_states(emoting_slime.icon)
 			if(!slime_mood.mood_key)
 				continue
-			TEST_ASSERT(("aslime-[slime_mood.mood_key]" in icon_states(this_guy.icon)), "[slime_mood] is set to give [this_guy] the [slime_mood.mood_key] emote, but the icon state can't be found in [this_guy.icon].")
+			TEST_ASSERT(("aslime-[slime_mood.mood_key]" in states), "[slime_mood] is set to give [emoting_slime] the [slime_mood.mood_key] emote, but the icon state can't be found in [emoting_slime.icon].")
