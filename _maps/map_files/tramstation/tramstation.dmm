@@ -44534,6 +44534,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
+"oSP" = (
+/obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal,
+/turf/open/space/basic,
+/area/space)
 "oTa" = (
 /obj/structure/railing{
 	dir = 9
@@ -70706,7 +70710,7 @@ vXM
 "}
 (2,1,1) = {"
 vXM
-vXM
+oSP
 vXM
 vXM
 vXM

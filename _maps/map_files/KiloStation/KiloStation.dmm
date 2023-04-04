@@ -13384,6 +13384,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
+"eAg" = (
+/obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal,
+/turf/open/space/basic,
+/area/space)
 "eAk" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/chair/wood{
@@ -75281,7 +75285,7 @@ aaa
 "}
 (2,1,1) = {"
 aaa
-aaa
+eAg
 aaa
 aaa
 aaa

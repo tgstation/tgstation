@@ -31,18 +31,36 @@
 		starting_areas |= get_area(start_marker)
 
 	remaining_areas = list()
-	for(var/obj/effect/landmark/atmospheric_sanity/goal_area/goal_marker in GLOB.landmarks_list)
-		var/area/goal_area = get_area(goal_marker)
-		if(goal_area in remaining_areas)
-			TEST_FAIL("Duplicate atmospherics sanity goal marker in '[goal_area]'([goal_area.type]) at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
-			continue
-		if(goal_area.outdoors)
-			TEST_FAIL("Atmospherics sanity goal marker in outdoors area '[goal_area]'([goal_area.type]) at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
-			continue
-		if(istype(goal_area, /area/space))
-			TEST_FAIL("Atmospherics sanity goal marker in space at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
-			continue
-		remaining_areas |= get_area(goal_marker)
+
+	var/atom/mark_all_station_areas_marker = locate(/obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal) in GLOB.landmarks_list
+	if(!isnull(mark_all_station_areas_marker))
+		log_world("Marking all station areas as goal areas due to marker at ([mark_all_station_areas_marker.x], [mark_all_station_areas_marker.y], [mark_all_station_areas_marker.z])")
+		mark_station_areas_as_goals()
+	else
+		for(var/obj/effect/landmark/atmospheric_sanity/goal_area/goal_marker in GLOB.landmarks_list)
+			var/area/goal_area = get_area(goal_marker)
+			if(goal_area in remaining_areas)
+				TEST_FAIL("Duplicate atmospherics sanity goal marker in '[goal_area]'([goal_area.type]) at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
+				continue
+			if(goal_area.outdoors)
+				TEST_FAIL("Atmospherics sanity goal marker in outdoors area '[goal_area]'([goal_area.type]) at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
+				continue
+			if(istype(goal_area, /area/space))
+				TEST_FAIL("Atmospherics sanity goal marker in space at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
+				continue
+			remaining_areas |= get_area(goal_marker)
+
+/datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
+	var/list/area/ignored_types = list(
+		/area/station/maintenance,
+		/area/station/asteroid,
+	)
+
+	for(var/area/ignored as anything in ignored_types)
+		ignored_types |= subtypesof(ignored)
+
+	for(var/area/station/station_area_type as anything in subtypesof(/area/station) - ignored_types)
+		remaining_areas |= GLOB.areas_by_type[station_area_type]
 
 /datum/unit_test/atmospherics_sanity/Run()
 	get_areas()
