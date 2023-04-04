@@ -35,6 +35,9 @@
 /turf/open/floor/iron/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/turf/open/floor/iron/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/iron/edge
 	icon_state = "floor_edge"
 	base_icon_state = "floor_edge"
@@ -89,6 +92,9 @@
 	icon_state = "diagonal"
 	base_icon_state = "diagonal"
 	floor_tile = /obj/item/stack/tile/iron/diagonal
+
+/turf/open/floor/iron/diagonal/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/iron/herringbone
 	icon_state = "herringbone"
@@ -407,6 +413,9 @@
 
 /turf/open/floor/iron/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/freezer/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
