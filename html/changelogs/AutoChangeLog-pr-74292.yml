@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Suffocation-handling reagents work on all species once more."
-  - spellcheck: "Added a previous tip for handling plasmaman suffocation back into the game."

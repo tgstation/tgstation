@@ -1,9 +1,9 @@
 /datum/storage/organ_box
 
-/datum/storage/organ_box/handle_enter(datum/source, obj/item/arrived)
+/datum/storage/organ_box/handle_enter(obj/item/storage/organbox/source, obj/item/arrived)
 	. = ..()
 
-	if(!istype(arrived))
+	if(!istype(arrived) || !istype(source) || !source.coolant_to_spend())
 		return
 
 	arrived.freeze()
