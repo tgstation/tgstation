@@ -25,6 +25,7 @@
 /area/shuttle/transport)
 "ai" = (
 /obj/machinery/vending/liberationstation,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aj" = (
@@ -204,6 +205,7 @@
 	dir = 1;
 	id = "garbage"
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bb" = (
@@ -262,6 +264,10 @@
 "bj" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"rL" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood,
 /area/shuttle/transport)
 
 (1,1,1) = {"
@@ -381,7 +387,7 @@ aM
 ar
 au
 au
-au
+rL
 au
 au
 aL
