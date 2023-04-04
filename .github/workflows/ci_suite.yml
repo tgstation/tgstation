@@ -91,7 +91,7 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
       - name: Check client Compatibility
-        uses: MrStonedOne/byond-client-compatibility-check@v3
+        uses: tgstation/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
