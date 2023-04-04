@@ -95,7 +95,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/automatic/wt550
-	name = "\improper WT-550 Autorifle."
+	name = "\improper WT-550 Autorifle"
 	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
