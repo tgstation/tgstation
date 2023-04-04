@@ -46,12 +46,12 @@
 	. = ..()
 	var/ore_multiplier_temp = 1
 	for(var/datum/stock_part/matter_bin/internal_bin in component_parts)
-		ore_multiplier_temp = 0.80 + (0.20 * internal_bin.rating)
+		ore_multiplier_temp = 0.80 + (0.20 * internal_bin.tier)
 	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 	var/point_upgrade_temp = 1
 	for(var/datum/stock_part/micro_laser/internal_laser in component_parts)
-		point_upgrade_temp = 0.80 + (0.20 * internal_laser.rating)
+		point_upgrade_temp = 0.80 + (0.20 * internal_laser.tier)
 	point_upgrade = point_upgrade_temp
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
