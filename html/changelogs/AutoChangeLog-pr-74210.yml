@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - rscadd: "Tram signs will now malfunction when the tram is malfunctioning"

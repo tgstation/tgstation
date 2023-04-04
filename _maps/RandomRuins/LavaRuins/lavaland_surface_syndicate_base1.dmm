@@ -955,11 +955,11 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/cargo)
 "gP" = (
-/obj/machinery/photocopier,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/machinery/photocopier/gratis,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "gQ" = (

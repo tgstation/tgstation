@@ -1,0 +1,4 @@
+author: "DrDiasyl aka DrTuxedo#0931"
+delete-after: True
+changes:
+  - bugfix: "Floor lights no longer become invisible when the fire alarm is turned on"

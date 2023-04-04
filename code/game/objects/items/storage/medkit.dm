@@ -550,6 +550,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
+/// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
@@ -579,55 +580,38 @@
 
 /obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
-	var/cool = FALSE
-	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
-	if(amount > 0)
-		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
-		cool = TRUE
-	else
-		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
-		if(amount > 0)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
-			cool = TRUE
-	if(!cooling && cool)
-		cooling = TRUE
-		update_appearance()
-		for(var/C in contents)
-			freeze_contents(C)
+	var/using_coolant = coolant_to_spend()
+	if (isnull(using_coolant))
+		if (cooling)
+			cooling = FALSE
+			update_appearance()
+			for(var/obj/stored in contents)
+				stored.unfreeze()
 		return
-	if(cooling && !cool)
-		cooling = FALSE
-		update_appearance()
-		for(var/C in contents)
-			unfreeze_contents(C)
+
+	var/amount_used = 0.05 * delta_time
+	if (using_coolant != /datum/reagent/cryostylane)
+		amount_used *= 2
+	reagents.remove_reagent(using_coolant, amount_used)
+
+	if(cooling)
+		return
+	cooling = TRUE
+	update_appearance()
+	for(var/obj/stored in contents)
+		stored.freeze()
+
+/// Returns which coolant we are about to use, or null if there isn't any
+/obj/item/storage/organbox/proc/coolant_to_spend()
+	if (reagents.get_reagent_amount(/datum/reagent/cryostylane))
+		return /datum/reagent/cryostylane
+	if (reagents.get_reagent_amount(/datum/reagent/consumable/ice))
+		return /datum/reagent/consumable/ice
+	return null
 
 /obj/item/storage/organbox/update_icon_state()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
-
-///freezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/freeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags |= ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags |= ORGAN_FROZEN
-
-///unfreezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/unfreeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags &= ~ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(is_reagent_container(I) && I.is_open_container())
@@ -659,3 +643,10 @@
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
 	return FIRELOSS
+
+/// A subtype of organ storage box which starts with a full coolant tank
+/obj/item/storage/organbox/preloaded
+
+/obj/item/storage/organbox/preloaded/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)
