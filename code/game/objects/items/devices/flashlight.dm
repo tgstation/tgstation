@@ -392,11 +392,11 @@
 /obj/item/flashlight/flare/proc/ignition(mob/user)
 	if(!fuel)
 		if(user)
-			balloon_alert(user,"[src] is out of fuel!")
+			balloon_alert(user, "out of fuel!")
 		return NO_FUEL
 	if(on)
 		if(user)
-			balloon_alert(user, "[src] is already lit!")
+			balloon_alert(user, "already lit!")
 		return ALREADY_LIT
 	if(!toggle_light())
 		return FAILURE
@@ -488,9 +488,9 @@
 			update_appearance(UPDATE_ICON | UPDATE_NAME)
 			user.visible_message(success_msg)
 		if(ALREADY_LIT)
-			balloon_alert(user, "[src] is already lit!")
+			balloon_alert(user, "already lit!")
 		if(NO_FUEL)
-			balloon_alert(user, "[src] is out of fuel!")
+			balloon_alert(user, "out of fuel!")
 
 /// if the attacking_item is another unlit candle then try to light it with (src)
 /// otherwise, try to light the (src) candle
@@ -692,10 +692,10 @@
 
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)
-		balloon_alert(user, "[src] is spent.")
+		balloon_alert(user, "glowstick is spent!")
 		return
 	if(on)
-		balloon_alert(user,"[src] is already lit!")
+		balloon_alert(user, "already lit!")
 		return
 
 	. = ..()
