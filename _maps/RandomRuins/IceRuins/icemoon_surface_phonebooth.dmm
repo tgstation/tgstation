@@ -15,9 +15,7 @@
 /area/ruin/unpowered/Phone_booth)
 "k" = (
 /obj/structure/window/reinforced/spawner/east,
-/obj/machinery/vending/snack/green{
-	onstation_override = 1
-	},
+/obj/machinery/vending/coffee,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "q" = (
@@ -69,7 +67,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/Phone_booth)
 "M" = (
-/turf/closed/wall,
+/turf/closed/wall/ice,
 /area/ruin/unpowered/Phone_booth)
 "R" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,

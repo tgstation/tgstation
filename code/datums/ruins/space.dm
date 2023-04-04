@@ -367,3 +367,9 @@
 	suffix = "travelers_rest.dmm"
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
+
+/datum/map_template/ruin/space/Space_phonebooth
+	id = "Space_phonebooth"
+	suffix = "phonebooth.dmm"
+	name = "Space Phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads."
