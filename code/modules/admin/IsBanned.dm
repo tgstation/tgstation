@@ -44,7 +44,7 @@
 		var/client_is_in_db = query_client_in_db.NextRow()
 		if(!client_is_in_db)
 			
-			var/reject_message = "Failed Login: [key] - New Account attempting to connect during panic bunker, but was rejected due to no prior connections to game servers (no database entry)"
+			var/reject_message = "Failed Login: [key] [address]-[computer_id] - New Account attempting to connect during panic bunker, but was rejected due to no prior connections to game servers (no database entry)"
 			log_access(reject_message)
 			if (message)
 				message_admins(span_adminnotice("[reject_message]"))
