@@ -117,10 +117,11 @@
 		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
 	cost = CARGO_CRATE_VALUE * 20
 	contraband = TRUE
-	contains = list(/obj/item/circuitboard/machine/ltsrbt,
-					/obj/item/stack/ore/bluespace_crystal/artificial = 2,
-					/obj/item/stock_parts/subspace/ansible,
-				)
+	contains = list(
+		/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
+		/obj/item/stock_parts/subspace/ansible,
+	)
 
 /datum/supply_pack/imports/contraband
 	name = "'Contraband' Crate"
