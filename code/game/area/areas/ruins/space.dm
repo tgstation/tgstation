@@ -572,6 +572,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
 //Mass-driver hub ruin
 /area/ruin/space/massdriverhub
 	name = "\improper Mass Driver Router"
@@ -615,6 +619,14 @@
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
+
+// Transit Booth
+/area/ruin/space/has_grav/transit_booth
+	name = "transit_booth"
+	icon = 'icons/area/areas_ruins.dmi'
+	icon_state = "ruins"
+	requires_power = FALSE
+	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
 
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/infested_frigate

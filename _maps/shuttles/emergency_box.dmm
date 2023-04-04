@@ -79,6 +79,9 @@
 /area/shuttle/escape)
 "as" = (
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -305,15 +308,39 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ga" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"jA" = (
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"oY" = (
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"pW" = (
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Dk" = (
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
@@ -361,7 +388,7 @@ ad
 ad
 aA
 aF
-aG
+pW
 ad
 bn
 ao
@@ -441,7 +468,7 @@ aT
 aT
 aT
 aT
-aC
+jA
 ad
 bc
 br
@@ -554,7 +581,7 @@ ad
 aE
 bl
 an
-an
+oY
 aR
 am
 am

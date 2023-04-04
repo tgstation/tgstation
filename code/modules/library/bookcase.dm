@@ -42,12 +42,17 @@
 	else
 		SSlibrary.shelves_to_load += src
 
+///proc for doing things after a bookcase is randomly populated
+/obj/structure/bookcase/proc/after_random_load()
+	return
+
 ///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
 /obj/structure/bookcase/proc/load_shelf()
 	//Loads a random selection of books in from the db, adds a copy of their info to a global list
 	//To send to library consoles as a starting inventory
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
+		after_random_load()
 		update_appearance() //Make sure you look proper
 
 	var/area/our_area = get_area(src)

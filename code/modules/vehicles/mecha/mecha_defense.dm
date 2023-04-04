@@ -245,7 +245,7 @@
 	if(istype(W, /obj/item/stock_parts/scanning_module))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!scanmod)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the scanning module."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
@@ -259,7 +259,7 @@
 	if(istype(W, /obj/item/stock_parts/capacitor))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!capacitor)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the capacitor."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
@@ -300,31 +300,46 @@
 	if(.)
 		try_damage_component(., user.zone_selected)
 
-/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/sealed/mecha/examine(mob/user)
+	.=..()
+	if(construction_state > MECHA_LOCKED)
+		switch(construction_state)
+			if(MECHA_SECURE_BOLTS)
+				. += span_notice("Use a <b>wrench</b> to adjust bolts securing the cover.")
+			if(MECHA_LOOSE_BOLTS)
+				. += span_notice("Use a <b>crowbar</b> to unlock the hatch to the power unit.")
+			if(MECHA_OPEN_HATCH)
+				. += span_notice("Use <b>interface</b> to eject stock parts from the mech.")
+
+/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
 	if(construction_state == MECHA_SECURE_BOLTS)
 		construction_state = MECHA_LOOSE_BOLTS
 		to_chat(user, span_notice("You undo the securing bolts."))
+		tool.play_tool_sound(src)
 		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_SECURE_BOLTS
 		to_chat(user, span_notice("You tighten the securing bolts."))
+		tool.play_tool_sound(src)
 
-/obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
+/obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
-	if(istype(I, /obj/item/crowbar/mechremoval))
-		var/obj/item/crowbar/mechremoval/remover = I
+	if(istype(tool, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = tool
 		remover.empty_mech(src, user)
 		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))
+		tool.play_tool_sound(src)
 		return
 	if(construction_state == MECHA_OPEN_HATCH)
 		construction_state = MECHA_LOOSE_BOLTS
 		to_chat(user, span_notice("You close the hatch to the power unit."))
+		tool.play_tool_sound(src)
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)
