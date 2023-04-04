@@ -85,7 +85,7 @@
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
 
-/obj/machinery/computer/cargo/on_construction()
+/obj/machinery/computer/cargo/on_construction(mob/user)
 	. = ..()
 	circuit.configure_machine(src)
 
