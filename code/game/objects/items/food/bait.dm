@@ -33,6 +33,8 @@
 	desc = "Fish can't seem to get enough of this!"
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pill9"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "pen"
 	food_reagents = list(/datum/reagent/drug/kronkaine = 1)
 	tastes = list("hypocrisy" = 1)
