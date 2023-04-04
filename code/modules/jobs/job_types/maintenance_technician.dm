@@ -46,7 +46,7 @@
 	ears = /obj/item/radio/headset/headset_eng
 	head = /obj/item/clothing/head/soft/yellow
 	shoes = /obj/item/clothing/shoes/workboots
-	l_pocket = /obj/item/modular_computer/pda/engineering
+	belt = /obj/item/modular_computer/pda/engineering
 	r_pocket = /obj/item/t_scanner
 
 	backpack = /obj/item/storage/backpack/industrial

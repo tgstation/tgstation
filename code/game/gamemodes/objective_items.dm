@@ -89,6 +89,7 @@
 		JOB_QUARTERMASTER,
 		JOB_RESEARCH_DIRECTOR,
 		JOB_STATION_ENGINEER,
+		JOB_MAINTENANCE_TECHNICIAN,
 	)
 	exists_on_map = TRUE
 
@@ -102,6 +103,7 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SCIENTIST,
 		JOB_ROBOTICIST,
+		JOB_SCIENCE_STUDENT,
 	)
 	item_owner = list(JOB_ROBOTICIST)
 	exists_on_map = TRUE
@@ -122,7 +124,12 @@
 /datum/objective_item/steal/traitor/clown_shoes
 	name = "the clown's shoes"
 	targetitem = /obj/item/clothing/shoes/clown_shoes
-	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	excludefromjob = list(
+		JOB_CLOWN,
+		JOB_CARGO_TECHNICIAN,
+		JOB_QUARTERMASTER,
+		JOB_CARGO_CLERK,
+	)
 	item_owner = list(JOB_CLOWN)
 
 /datum/objective_item/steal/traitor/det_revolver
@@ -321,7 +328,13 @@
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for Project Goon from the master R&D server mainframe"
 	targetitem = /obj/item/computer_disk/hdd_theft
-	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
+	excludefromjob = list(
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SCIENTIST,
+		JOB_ROBOTICIST,
+		JOB_GENETICIST,
+		JOB_SCIENCE_STUDENT,
+		)
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 

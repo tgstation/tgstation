@@ -1226,7 +1226,7 @@
 
 /datum/id_trim/job/steward
 	assignment = "Steward"
-	trim_state = "trim_steward"
+	trim_state = "trim_tavernkeeper"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_ASSISTANT_GRAY
 	sechud_icon_state = SECHUD_STEWARD

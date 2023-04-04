@@ -43,7 +43,8 @@
 		/obj/item/clipboard = 1,
 	)
 	id_trim = /datum/id_trim/job/cargo_clerk
-	uniform = /obj/item/clothing/under/suit/beige
+	uniform = /obj/item/clothing/under/rank/cargo/clerk
 	belt = /obj/item/modular_computer/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
+	neck = /obj/item/clothing/neck/tie/black/tied
 	l_hand = /obj/item/universal_scanner

@@ -36,6 +36,24 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
+/obj/item/clothing/under/rank/cargo/clerk
+	name = "cargo clerk's jumpsuit"
+	desc = "Shorts with a formal shirt... who have thought of that?"
+	icon_state = "cargoclerk"
+	inhand_icon_state = "lb_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/under/rank/cargo/clerk/skirt
+	name = "cargo clerk's jumpskirt"
+	desc = "Short skirt with a formal shirt... who have thought of that?"
+	icon_state = "cargoclerk_skirt"
+	inhand_icon_state = "lb_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
 /obj/item/clothing/under/rank/cargo/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
