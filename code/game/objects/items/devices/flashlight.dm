@@ -1,3 +1,8 @@
+#define FAILURE 0
+#define SUCCESS 1
+#define NO_FUEL 2
+#define ALREADY_LIT 3
+
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -336,6 +341,10 @@
 		damtype = BURN
 		update_brightness()
 
+/obj/item/flashlight/flare/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/item/flashlight/flare/toggle_light()
 	if(on || !fuel)
 		return FALSE
@@ -380,32 +389,30 @@
 			new trash_type(loc)
 			qdel(src)
 
-/obj/item/flashlight/flare/ignition_effect(atom/A, mob/user)
-	if(get_temperature())
-		. = span_notice("[user] lights [A] with [src].")
-
 /obj/item/flashlight/flare/proc/ignition(mob/user)
-	if(user && !fuel)
-		to_chat(user, span_warning("[src] is out of fuel!"))
-		return FALSE
-	if(user && on)
-		to_chat(user, span_warning("[src] is already lit!"))
-		return FALSE
+	if(!fuel)
+		if(user)
+			balloon_alert(user, span_warning("[src] is out of fuel!"))
+		return NO_FUEL
+	if(on)
+		if(user)
+			balloon_alert(user, span_warning("[src] is already lit!"))
+		return ALREADY_LIT
 	if(!toggle_light())
-		return FALSE
+		return FAILURE
 
 	if(fuel != INFINITY)
 		START_PROCESSING(SSobj, src)
 
-	return TRUE
+	return SUCCESS
 
 /obj/item/flashlight/flare/fire_act(exposed_temperature, exposed_volume)
 	ignition()
 	return ..()
 
 /obj/item/flashlight/flare/attack_self(mob/user)
-	if(ignition(user))
-		user.visible_message(span_notice("[user] lights \the [src]."), span_notice("You light \the [src]!"))
+	if(ignition(user) == SUCCESS)
+		user.visible_message(span_notice("[user] lights \the [src]."), span_notice("You light \the [initial(src.name)]!"))
 
 /obj/item/flashlight/flare/get_temperature()
 	return on * heat
@@ -427,38 +434,74 @@
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
 	can_be_extinguished = TRUE
+	/// The current wax level, used for drawing the correct icon
+	var/current_wax_level = 1
+	/// The previous wax level, remembered so we only have to make 3 update_appearance calls total as opposed to every tick
+	var/last_wax_level = 1
+
+/obj/item/flashlight/flare/candle/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+
+/obj/item/flashlight/flare/candle/proc/update_wax()
+	switch(fuel)
+		if(25 MINUTES to INFINITY)
+			current_wax_level = 1
+		if(15 MINUTES to 25 MINUTES)
+			current_wax_level = 2
+		if(0 to 15 MINUTES)
+			current_wax_level = 3
+			
+	if(last_wax_level != current_wax_level)
+		last_wax_level = current_wax_level
+		update_appearance(UPDATE_ICON | UPDATE_NAME)
 
 /obj/item/flashlight/flare/candle/update_icon_state()
 	. = ..()
-	var/wax_level
-	switch(fuel)
-		if(25 MINUTES to INFINITY)
-			wax_level = 1
-		if(15 MINUTES to 25 MINUTES)
-			wax_level = 2
-		if(0 to 15 MINUTES)
-			wax_level = 3
-	icon_state = "candle[wax_level][on ? "_lit" : ""]"
+	icon_state = "candle[current_wax_level][on ? "_lit" : ""]"
 	inhand_icon_state = "candle[on ? "_lit" : ""]"
 
+/**
+ * Try to ignite the candle.
+ *
+ * Candles are ignited a bit differently from flares, in that they must be manually lit from other fire sources.
+ * This will perform all the necessary checks to ensure that can happen, and display a message if it worked.
+ *
+ * Arguments:
+ * * obj/item/fire_starter - the item being used to ignite
+ * * mob/user - the user to display a message to
+ */
+/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user)
+	if(!istype(fire_starter))
+		return
+	if(!istype(user))
+		return
 
-/// So we update the mob's inhands icon as well
-/obj/item/flashlight/flare/candle/update_appearance()
-	. = ..()
-	if(ismob(loc))
-		var/mob/candle_holder = loc
-		candle_holder.update_held_items()
-
-/obj/item/flashlight/flare/candle/get_temperature()
-	return on * heat
-
-/obj/item/flashlight/flare/candle/attackby(obj/item/fire_starter, mob/user, params)
 	var/success_msg = fire_starter.ignition_effect(src, user)
-	if(success_msg && ignition(user))
-		user.visible_message(success_msg)
-		update_appearance()
+	var/ignition_result
+
+	if(success_msg)
+		ignition_result = ignition()
+
+	switch(ignition_result)
+		if(SUCCESS)
+			update_appearance(UPDATE_ICON | UPDATE_NAME)
+			user.visible_message(success_msg)
+		if(ALREADY_LIT)
+			balloon_alert(user, span_warning("[src] is already lit!"))
+		if(NO_FUEL)
+			balloon_alert(user, span_warning("[src] is out of fuel!"))
+
+/// if the attacking_item is another unlit candle then try to light it with (src)
+/// otherwise, try to light the (src) candle
+/obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	var/obj/item/flashlight/flare/candle/candle = attacking_item
+	
+	if(istype(candle) && !candle.on)
+		candle.try_light_candle(src, user)
 	else
-		return ..()
+		try_light_candle(attacking_item, user)
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
 	if(on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles
@@ -467,7 +510,7 @@
 
 /obj/item/flashlight/flare/candle/process(delta_time)
 	. = ..()
-	update_appearance()
+	update_wax()
 
 /obj/item/flashlight/flare/candle/infinite
 	name = "eternal candle"
@@ -544,7 +587,7 @@
 
 /obj/item/flashlight/emp/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/flashlight/emp/process(delta_time)
 	charge_timer += delta_time
@@ -619,11 +662,10 @@
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
-		update_appearance()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	on = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/item/flashlight/glowstick/update_appearance(updates=ALL)
 	. = ..()
@@ -761,3 +803,8 @@
 	human emit the smallest amount of light possible. Thanks for reading :)"
 	light_range = 1
 	light_power = 0.07
+
+#undef FAILURE 
+#undef SUCCESS 
+#undef NO_FUEL 
+#undef ALREADY_LIT 
