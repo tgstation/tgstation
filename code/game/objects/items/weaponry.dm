@@ -360,6 +360,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "throwingstar"
 	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -448,7 +449,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2
@@ -607,6 +608,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
+	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "tailclub"
 	force = 14
 	throwforce = 1 // why are you throwing a club do you even weapon
@@ -886,7 +888,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/extendohand
 	name = "extendo-hand"
 	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "extendohand"
 	inhand_icon_state = "extendohand"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -916,7 +918,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "gohei"
 	inhand_icon_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'

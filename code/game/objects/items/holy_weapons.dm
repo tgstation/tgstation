@@ -342,6 +342,7 @@
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
+	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw_on"
 	inhand_icon_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'

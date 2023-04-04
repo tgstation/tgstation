@@ -706,7 +706,7 @@
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
-	icon = 'icons/obj/weapons/boomerang.dmi'
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5
