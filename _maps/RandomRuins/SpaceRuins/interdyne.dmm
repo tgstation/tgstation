@@ -192,7 +192,6 @@
 "gi" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
@@ -314,7 +313,6 @@
 /area/ruin/space/has_grav/interdyne)
 "kV" = (
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "li" = (
@@ -349,8 +347,8 @@
 /area/ruin/space/has_grav/interdyne)
 "me" = (
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/item/storage/toolbox/mechanical/old,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "mf" = (
@@ -430,14 +428,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"oV" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering{
-	input_available = 100000;
-	output_level = 40000
-	},
-/turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "pb" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -524,7 +514,6 @@
 /area/ruin/space/has_grav/interdyne)
 "rQ" = (
 /obj/item/reagent_containers/cup/bottle,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "rW" = (
@@ -753,7 +742,6 @@
 /obj/structure/safe,
 /obj/item/documents/syndicate,
 /obj/machinery/light/blacklight/directional/north,
-/obj/structure/cable,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
@@ -882,7 +870,6 @@
 "Jm" = (
 /obj/machinery/light/blacklight/directional/south,
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
@@ -916,7 +903,6 @@
 /area/ruin/space/has_grav/interdyne)
 "JH" = (
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
@@ -1066,6 +1052,13 @@
 	},
 /obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
+"OW" = (
+/obj/machinery/power/smes/engineering{
+	input_available = 100000;
+	output_level = 40000
+	},
+/turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Pj" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1219,7 +1212,6 @@
 /area/ruin/space/has_grav/interdyne)
 "Ul" = (
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/item/clothing/mask/chameleon/broken,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
@@ -1228,8 +1220,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "UN" = (
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "US" = (
@@ -1245,7 +1237,6 @@
 /area/ruin/space/has_grav/interdyne)
 "Vp" = (
 /obj/structure/rack,
-/obj/structure/cable,
 /obj/item/clothing/shoes/chameleon,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
@@ -1330,6 +1321,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"Yo" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
 "Ys" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
 	dir = 1
@@ -1345,6 +1341,7 @@
 /obj/structure/rack,
 /obj/structure/rack,
 /obj/item/storage/medkit/regular,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Zi" = (
@@ -1801,7 +1798,7 @@ dU
 Vp
 EM
 YB
-oJ
+Yo
 me
 dU
 Zi
@@ -1836,7 +1833,7 @@ dU
 Fe
 wE
 XD
-wE
+EM
 wE
 li
 fu
@@ -1870,9 +1867,9 @@ Zi
 dU
 rQ
 EM
-EM
-oV
+OW
 iN
+EM
 dU
 Zi
 Yi
@@ -1907,7 +1904,7 @@ kV
 sD
 IL
 UN
-UN
+IL
 dU
 Zi
 AV
