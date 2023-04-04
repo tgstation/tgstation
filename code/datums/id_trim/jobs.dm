@@ -1246,7 +1246,32 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/steward
-
+/datum/id_trim/job/test_subject
+	assignment = "Test Subject"
+	trim_state = "trim_testsubject"
+	department_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_ASSISTANT_GRAY
+	sechud_icon_state = SECHUD_TEST_SUBJECT
+	minimal_access = list(
+		ACCESS_MECH_SCIENCE,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_ORDNANCE,
+		ACCESS_RESEARCH,
+		ACCESS_SCIENCE,
+		ACCESS_XENOBIOLOGY,
+		)
+	extra_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_GENETICS,
+		ACCESS_ROBOTICS,
+		ACCESS_ORDNANCE_STORAGE,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_RD,
+		)
+	job = /datum/job/test_subject
 /datum/id_trim/job/virologist
 	assignment = "Virologist"
 	trim_state = "trim_virologist"

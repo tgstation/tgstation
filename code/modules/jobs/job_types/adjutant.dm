@@ -1,8 +1,8 @@
 /datum/job/adjutant
 	title = JOB_ADJUTANT
 	description = "Be the ultimate sidekick to the command team, follow them around assisting, \
-		fetch their coffee, and nod approvingly at their decisions (even if they're terrible).\
-		Watch computers at bridge with the Captain."
+		 fetch their coffee, and nod approvingly at their decisions (even if they're terrible).\
+		 Watch computers at bridge with the Captain."
 	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	faction = FACTION_STATION

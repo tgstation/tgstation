@@ -1,8 +1,8 @@
 /datum/job/security_cadet
 	title = JOB_SECURITY_CADET
 	description = "Maintain order, detain space criminals with the Security Officers,\
-		help Warden with securing and proccesing prisoners,\
-		accidentaly pepperspray yourself."
+		 help Warden with securing and proccesing prisoners,\
+		 accidentaly pepperspray yourself."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION

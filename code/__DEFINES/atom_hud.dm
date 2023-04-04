@@ -113,7 +113,7 @@
 #define SECHUD_SECURITY_OFFICER "hudsecurityofficer"
 #define SECHUD_SECURITY_CADET "hudsecuritycadet"
 #define SECHUD_SCIENTIST "hudscientist"
-#define SECHUD_SCIENCE_STUDENT "hudsciencestudent"
+#define SECHUD_TEST_SUBJECT "hudtestsubject"
 #define SECHUD_SHAFT_MINER "hudshaftminer"
 #define SECHUD_STATION_ENGINEER "hudstationengineer"
 #define SECHUD_STEWARD "hudsteward"

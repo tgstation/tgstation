@@ -1,8 +1,8 @@
 /datum/job/cargo_clerk
 	title = JOB_CARGO_CLERK
 	description = "Keep track of crates, containers, and packages,\
-		make sure they're sent to the right recipients,\
-		accept orders from the front desk."
+		 make sure they're sent to the right recipients,\
+		 accept orders from the front desk."
 	department_head = list(JOB_QUARTERMASTER)
 	faction = FACTION_STATION
 	total_positions = 5
