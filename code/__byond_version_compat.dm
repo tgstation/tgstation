@@ -43,8 +43,7 @@
 
 /// Call by name proc reference, checks if the proc is AN existing global proc
 #define GLOBAL_PROC_REF(X) GLOBAL_GENERIC_REF(##X, proc)
-/// Call by name verb reference, checks if the verb is AN existing global verb. Note: This is only here for completeness, and will probably not actually ever be used in practice. (update this comment if you do use it)
-#define GLOBAL_VERB_REF(X) GLOBAL_GENERIC_REF(##X, verb)
+// GLOBAL_VERB_REF would be useless as verbs can't be global. It would be here though.
 
 // Now, these are what actually performs the compile-level analysis we want.
 
@@ -57,7 +56,7 @@
 #define GLOBAL_GENERIC_REF(X, INVOKE_METHOD) (/##INVOKE_METHOD/##X)
 #else
 /// Call by name method reference, checks if the method exists on this type or as a global method
-#define GENERIC_REF(X, INVOKE_METHOD) (nameof(.##INVOKE/##X))
+#define GENERIC_REF(X, INVOKE_METHOD) (nameof(.##INVOKE_METHOD/##X))
 /// Call by name method reference, checks if the method exists on given type or as a global method
 #define TYPE_GENERIC_REF(TYPE, X, INVOKE_METHOD) (nameof(##TYPE.##INVOKE_METHOD/##X))
 /// Call by name method reference, checks if the method is AN existing global method
