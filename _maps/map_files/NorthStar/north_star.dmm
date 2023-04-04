@@ -2965,10 +2965,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible/layer2{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "Emergency Release Valve"
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "aLo" = (
@@ -3299,6 +3295,10 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"aPH" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "aPM" = (
 /obj/effect/turf_decal/tile/green/half{
 	dir = 8
@@ -4680,6 +4680,7 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/light/directional/west,
+/obj/item/screwdriver,
 /turf/open/floor/iron/large,
 /area/station/science/robotics/lab)
 "bho" = (
@@ -6008,8 +6009,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "buQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
+	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
@@ -7256,6 +7257,7 @@
 	name = "Hydroponics Garden";
 	req_access = list("hydroponics")
 	},
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "bMa" = (
@@ -9093,6 +9095,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/sign/warning/yes_smoking/circle/directional/east,
 /turf/open/floor/iron/white,
 /area/station/hallway/floor2/aft)
 "clf" = (
@@ -12638,9 +12641,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 10
-	},
 /turf/open/floor/iron,
 /area/station/engineering/storage/tcomms)
 "dlt" = (
@@ -14460,6 +14460,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Hydroponics - Garden"
 	},
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "dMb" = (
@@ -19366,6 +19367,7 @@
 "fiX" = (
 /obj/structure/chair/comfy/brown,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
 "fja" = (
@@ -19623,6 +19625,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
 /area/station/hallway/secondary/entry)
+"fmg" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/storage/tcomms)
 "fmk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -25094,13 +25100,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/floor1/port/aft)
-"gNG" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "gNN" = (
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/starboard)
@@ -28849,6 +28848,7 @@
 "hQX" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/south,
+/obj/effect/spawner/random/entertainment/money_small,
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
 "hRc" = (
@@ -34331,6 +34331,11 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor1/fore)
+"juM" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "juW" = (
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "Courtroom Access";
@@ -37459,6 +37464,8 @@
 /area/station/medical/treatment_center)
 "kkr" = (
 /obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/cigar,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
 "kkt" = (
@@ -37484,6 +37491,7 @@
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
 	dir = 1
 	},
+/obj/structure/sign/warning/no_smoking/circle/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "kkI" = (
@@ -39889,7 +39897,6 @@
 /obj/item/stock_parts/subspace/treatment,
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tcomms)
 "kRw" = (
@@ -40242,6 +40249,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/eva,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
+"kWa" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/white,
+/area/station/maintenance/floor3/starboard/aft)
 "kWd" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/airalarm/directional/east,
@@ -45141,9 +45153,6 @@
 	name = "Telecomms Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -51099,6 +51108,11 @@
 /obj/machinery/light/blacklight/directional/east,
 /turf/open/floor/carpet/neon/simple/pink/nodots,
 /area/station/maintenance/floor2/port/fore)
+"nGG" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/beebox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "nGJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -51794,9 +51808,6 @@
 "nPZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/pink/visible/layer2{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 5
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
@@ -55686,7 +55697,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
 "oSA" = (
-/obj/effect/landmark/start/cook,
 /obj/machinery/holopad,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -62351,6 +62361,7 @@
 "qIS" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/south,
+/obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
 "qIT" = (
@@ -64179,6 +64190,7 @@
 /area/station/cargo/warehouse)
 "rhu" = (
 /obj/machinery/light/directional/east,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "rhx" = (
@@ -66601,6 +66613,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
 "rTa" = (
@@ -69998,6 +70011,7 @@
 /obj/structure/chair/comfy/brown,
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/landmark/start/assistant,
+/obj/structure/sign/warning/yes_smoking/circle/directional/west,
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
 "sVi" = (
@@ -71816,6 +71830,8 @@
 /area/station/science/xenobiology)
 "tuH" = (
 /obj/structure/window/reinforced/spawner/north,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "tuT" = (
@@ -86158,6 +86174,22 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/port/aft)
+"xpR" = (
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/closet/crate{
+	name = "Box O' Bees"
+	},
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/hooded/bee_costume,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/head/hooded/bee_hood,
+/obj/item/melee/flyswatter,
+/obj/item/queen_bee/bought,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "xqs" = (
 /obj/structure/closet/crate,
 /obj/item/stock_parts/subspace/ansible,
@@ -87637,11 +87669,6 @@
 /obj/structure/railing/corner,
 /turf/open/space/openspace,
 /area/space)
-"xKx" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/science/robotics/mechbay)
 "xKy" = (
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 8
@@ -87792,6 +87819,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
+"xNf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor3/starboard)
 "xNg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -138640,8 +138672,8 @@ hQp
 toC
 dlp
 kRo
-aVA
-gNG
+fmg
+cHX
 res
 jIP
 jIP
@@ -185177,7 +185209,7 @@ kxV
 dKI
 fjm
 xkF
-xkF
+juM
 xkF
 jWV
 wCX
@@ -199305,7 +199337,7 @@ hpg
 gCD
 smf
 igE
-xKx
+aWR
 fYf
 aPd
 mki
@@ -249407,7 +249439,7 @@ wIN
 iHm
 fNq
 iKT
-iKT
+xNf
 mpy
 drB
 iHm
@@ -249430,7 +249462,7 @@ grb
 fNg
 mFB
 smi
-smi
+xpR
 tGn
 tGn
 nsw
@@ -249685,9 +249717,9 @@ yhz
 fNg
 xmM
 fNg
-tuH
+nGG
 rhu
-smi
+aPH
 oZE
 lxK
 lYD
@@ -264053,7 +264085,7 @@ uCP
 vCy
 kRw
 gJM
-wWo
+kWa
 wQX
 ekO
 kRw
