@@ -59,3 +59,7 @@
 
 /area/ruin/unpowered/Phone_booth
 	name = "\improper Phonebooth"
+
+/area/ruin/powered/hermit
+	name = "\improper Hermit's Cabin"
+
