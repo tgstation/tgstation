@@ -19599,7 +19599,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -21103,7 +21103,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "gfX" = (
@@ -22733,6 +22733,9 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/item/papercutter{
+	pixel_x = 17
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "gLC" = (
@@ -22885,6 +22888,7 @@
 	name = "Reception Desk";
 	req_access = list("security")
 	},
+/obj/item/papercutter,
 /turf/open/floor/plating,
 /area/station/security/warden)
 "gNX" = (
@@ -32713,7 +32717,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
@@ -36490,6 +36494,9 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/pdas,
+/obj/item/papercutter{
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lPl" = (
@@ -37999,7 +38006,7 @@
 "mqi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
@@ -40365,7 +40372,7 @@
 /area/station/science/ordnance/bomb)
 "nmz" = (
 /obj/machinery/light/small/directional/south,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
 "nmK" = (
@@ -46821,7 +46828,7 @@
 /area/station/hallway/primary/tram/center)
 "pGM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "pGS" = (
@@ -49387,7 +49394,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "qEb" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -49922,6 +49929,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qNA" = (
@@ -59769,7 +59777,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "und" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ung" = (
@@ -69544,7 +69552,7 @@
 /area/station/commons/fitness/recreation/entertainment)
 "xVR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
@@ -69604,7 +69612,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "xWY" = (
