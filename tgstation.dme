@@ -3493,6 +3493,7 @@
 #include "code\modules\industrial_lift\lift_indicator.dm"
 #include "code\modules\industrial_lift\lift_master.dm"
 #include "code\modules\industrial_lift\tram\tram_doors.dm"
+#include "code\modules\industrial_lift\tram\tram_floors.dm"
 #include "code\modules\industrial_lift\tram\tram_landmark.dm"
 #include "code\modules\industrial_lift\tram\tram_lift_master.dm"
 #include "code\modules\industrial_lift\tram\tram_machinery.dm"

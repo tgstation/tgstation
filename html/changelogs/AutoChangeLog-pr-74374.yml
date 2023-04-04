@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "The xeno_spawn landmark is now the generic_maintenance_landmark landmark."
-  - bugfix: "Certain midrounds will now check for atmos safety before spawning."
