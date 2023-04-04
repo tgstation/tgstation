@@ -121,7 +121,7 @@
 /obj/item/greentext/quiet{
 	anchored = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aA" = (
 /obj/machinery/door/airlock/bananium/glass{
