@@ -209,6 +209,7 @@
 	description = "We require further testing of the stock part designs to push their efficiency and market price even further."
 	required_points = 15
 	required_atoms = list(
+		/obj/machinery/mineral/ore_redemption = 1,
 		/obj/machinery/autolathe = 1,
 		/obj/machinery/rnd/production/circuit_imprinter/department/science = 1,
 		/obj/machinery/monkey_recycler = 1,
@@ -241,6 +242,7 @@
 	description = "Our Nanotrasen High-Power Office-Ready Laser Pointer ™ isn't powerful enough to strike airborne Syndidrones out of the sky yet. Find us some diode applications for hints on how to improve them!"
 	required_points = 10
 	required_atoms = list(
+		/obj/machinery/mineral/ore_redemption = 1,
 		/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/dna_scannernew = 1,
