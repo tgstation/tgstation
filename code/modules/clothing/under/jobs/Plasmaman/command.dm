@@ -1,3 +1,11 @@
+/obj/item/clothing/under/plasmaman/adjutant
+	name = "adjutant's plasma envirosuit"
+	desc = "It's a light blue envirosuit, its resistant to the hardest profanities and coffee spills."
+	icon_state = "adjutant_envirosuit"
+	inhand_icon_state = null
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
+	armor_type = /datum/armor/plasmaman_captain
 /obj/item/clothing/under/plasmaman/captain
 	name = "captain's plasma envirosuit"
 	desc = "It's a blue envirosuit with some gold markings denoting the rank of \"Captain\"."

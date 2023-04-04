@@ -7,7 +7,12 @@
 	mask = /obj/item/clothing/mask/breath
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
 	internals_slot = ITEM_SLOT_HANDS
+/datum/outfit/plasmaman/adjutant
+	name = "Adjutant Plasmaman"
 
+	uniform = /obj/item/clothing/under/plasmaman/adjutant
+	gloves = /obj/item/clothing/gloves/color/plasmaman/white
+	head = /obj/item/clothing/head/helmet/space/plasmaman/adjutant
 /datum/outfit/plasmaman/security
 	name = "Security Plasmaman"
 

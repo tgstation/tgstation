@@ -184,6 +184,12 @@
 	attached_hat = null
 	update_appearance()
 
+/obj/item/clothing/head/helmet/space/plasmaman/adjutant
+	name = "adjutant plasma envirosuit helmet"
+	desc = "A plasmaman containment helmet designed for adjutants, protecting them from burning alive, alongside other undesirables."
+	icon_state = "adjutant_envirohelm"
+	inhand_icon_state = null
+	armor_type = /datum/armor/plasmaman_captain
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from burning alive, alongside other undesirables."
