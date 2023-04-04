@@ -15,14 +15,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
-"d" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/supply)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -112,7 +104,6 @@
 	name = "Loading Doors";
 	pixel_y = 8
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "q" = (
@@ -146,6 +137,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "u" = (
@@ -207,6 +199,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/supply)
 
 (1,1,1) = {"
 a
@@ -225,7 +225,7 @@ B
 (2,1,1) = {"
 a
 b
-g
+W
 g
 o
 p
@@ -252,7 +252,7 @@ D
 "}
 (4,1,1) = {"
 a
-d
+e
 i
 i
 i
