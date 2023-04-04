@@ -1,7 +1,7 @@
 /datum/job/steward
 	title = JOB_STEWARD
-	description = "Serve the crew,\
-		pass food complaints to the Chef,\
+	description = "Serve the crew, \
+		pass food complaints to the Chef, \
 		help Bartender solve bar fights."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION

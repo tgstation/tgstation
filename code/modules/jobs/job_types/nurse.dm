@@ -1,7 +1,7 @@
 /datum/job/nurse
 	title = JOB_NURSE
 	description = "Assist the doctors and other medical personnel. \
-		 Put on bandages, administer medication, and try not to accidentally kill anyone."
+		Put on bandages, administer medication, and try not to accidentally kill anyone."
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 5
@@ -44,7 +44,7 @@
 	jobtype = /datum/job/nurse
 
 	id_trim = /datum/id_trim/job/nurse
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/purple
+	uniform = /obj/item/clothing/under/rank/medical/doctor/nurse
 	belt = /obj/item/modular_computer/pda/medical
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/costume/nursehat

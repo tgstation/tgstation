@@ -3567,7 +3567,6 @@
 #include "code\modules\jobs\job_types\shaft_miner.dm"
 #include "code\modules\jobs\job_types\station_engineer.dm"
 #include "code\modules\jobs\job_types\steward.dm"
-#include "code\modules\jobs\job_types\test_subject.dm"
 #include "code\modules\jobs\job_types\unassigned.dm"
 #include "code\modules\jobs\job_types\virologist.dm"
 #include "code\modules\jobs\job_types\warden.dm"

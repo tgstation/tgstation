@@ -1,8 +1,8 @@
 /datum/job/test_subject
 	title = JOB_TEST_SUBJECT
-	description = "Be involved in experiments, have Geneticist mutate you into bloody mess,\
-		 get your brain put into a mech,\
-		 get feed to the slimes."
+	description = "Be involved in experiments, have Geneticist mutate you into bloody mess, \
+		get your brain put into a mech, \
+		get feed to the slimes."
 	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
@@ -11,7 +11,7 @@
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "TEST_SUBJECT"
 
-	outfit = /datum/outfit/job/science_student
+	outfit = /datum/outfit/job/test_subject
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
 	paycheck = PAYCHECK_CREW
