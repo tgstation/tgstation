@@ -424,3 +424,9 @@
 	suffix = "transit_booth.dmm"
 	name = "Transit Booth"
 	description = "Make sure to check out the duty-free store!"
+
+/datum/map_template/ruin/space/Space_phonebooth
+	id = "Space_phonebooth"
+	suffix = "phonebooth.dmm"
+	name = "Space Phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads."
