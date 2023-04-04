@@ -419,6 +419,12 @@
 	name = "Waystation"
 	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
 
+/datum/map_template/ruin/space/transit_booth
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
+	description = "Make sure to check out the duty-free store!"
+
 /datum/map_template/ruin/space/the_outlet
 	id = "the_outlet"
 	suffix = "the_outlet.dmm"
