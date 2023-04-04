@@ -43,7 +43,7 @@
 
 /// Call by name proc reference, checks if the proc is AN existing global proc
 #define GLOBAL_PROC_REF(X) GLOBAL_GENERIC_REF(##X, proc)
-/// Call by name verb reference, checks if the verb is AN existing global verb
+/// Call by name verb reference, checks if the verb is AN existing global verb. Note: This is only here for completeness, and will probably not actually ever be used in practice. (update this comment if you do use it)
 #define GLOBAL_VERB_REF(X) GLOBAL_GENERIC_REF(##X, verb)
 
 // Now, these are what actually performs the compile-level analysis we want.
