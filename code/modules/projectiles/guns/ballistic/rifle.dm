@@ -101,13 +101,18 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
 	. = ..()
-	if(can_jam)
-		if(bolt_locked)
-			if(istype(item, /obj/item/gun_maintenance_supplies))
-				if(do_after(user, 10 SECONDS, target = src))
-					user.visible_message(span_notice("[user] finishes maintenance of [src]."))
-					jamming_chance = initial(jamming_chance)
-					qdel(item)
+	if(!can_jam)
+		balloon_alert(user, "can't jam!")
+		return
+
+	if(!bolt_locked)
+		balloon_alert(user, "bolt closed!")
+		return
+
+	if(istype(item, /obj/item/gun_maintenance_supplies) && do_after(user, 10 SECONDS, target = src))
+		user.visible_message(span_notice("[user] finishes maintenance of [src]."))
+		jamming_chance = initial(jamming_chance)
+		qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
