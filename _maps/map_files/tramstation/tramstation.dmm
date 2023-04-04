@@ -9913,6 +9913,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bVe" = (
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -11411,6 +11412,9 @@
 	dir = 10
 	},
 /obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -27038,7 +27042,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/disposalpipe/segment{
-	dir = 9
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -29044,6 +29048,9 @@
 "jkq" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -38922,12 +38929,12 @@
 	name = "Bridge Requests Console";
 	pixel_y = 30
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "mKP" = (
@@ -43164,17 +43171,11 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
+/obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "onl" = (
 /obj/structure/disposalpipe/segment,
@@ -47920,6 +47921,9 @@
 	},
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -63314,11 +63318,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/cable/multilayer/multiz,
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/obj/structure/table/reinforced,
+/obj/item/papercutter,
+/turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vvK" = (
 /obj/effect/spawner/structure/window,
