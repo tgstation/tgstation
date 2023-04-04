@@ -23,7 +23,16 @@
 
 /obj/item/tram_remote/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Link/Send Tram", rmb_text = "Change Direction")
+	register_context()
+
+/obj/item/tram_remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!tram_ref)
+		context[SCREENTIP_CONTEXT_LMB] = "Link tram"
+		return CONTEXTUAL_SCREENTIP_SET
+	context[SCREENTIP_CONTEXT_LMB] = "Dispatch tram"
+	context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle door safeties"
+	return CONTEXTUAL_SCREENTIP_SET
 
 ///set tram control direction
 /obj/item/tram_remote/attack_self_secondary(mob/user)
