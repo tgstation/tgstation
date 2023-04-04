@@ -32,11 +32,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
-"af" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
 "ag" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
@@ -62,6 +57,7 @@
 "ak" = (
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "al" = (
@@ -77,6 +73,7 @@
 /area/shuttle/abandoned)
 "an" = (
 /obj/effect/spawner/random/exotic/ripley,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
@@ -115,15 +112,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
-"at" = (
-/obj/effect/turf_decal/delivery{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "au" = (
@@ -284,15 +272,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
-"aL" = (
-/obj/effect/turf_decal/delivery{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/abandoned)
 "aM" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -314,12 +293,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
-"aP" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -340,7 +313,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aU" = (
@@ -351,6 +323,7 @@
 "aV" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aW" = (
@@ -363,6 +336,7 @@
 "aX" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -386,6 +360,13 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Ad" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "We" = (
@@ -469,17 +450,17 @@ aa
 "}
 (5,1,1) = {"
 ab
-af
+ag
 ag
 ag
 ab
-at
+aA
 aA
 am
 aG
 aJ
 ab
-aP
+aU
 aU
 aS
 ab
@@ -516,7 +497,7 @@ aG
 aG
 ar
 aR
-aQ
+Ad
 aQ
 ba
 ar
@@ -541,7 +522,7 @@ ar
 "}
 (9,1,1) = {"
 ab
-af
+ag
 ag
 ag
 ab
@@ -549,7 +530,7 @@ aw
 aC
 am
 am
-aL
+aA
 ab
 aT
 aU
