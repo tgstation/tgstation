@@ -376,6 +376,12 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/ghost_restaurant
+	id = "space_ghost_restaurant.dmm"
+	suffix = "space_ghost_restaurant.dmm"
+	name = "Space Ghost Restaurant"
+	description = "Ever wondered where the restaurant robots come from? On this ruined station, NTgrub interns dressed up robots in clothes, and sent them to stations to cook their meal orders for them."
+
 /datum/map_template/ruin/space/atmosasteroidruin
 	id = "atmosasteroidruin"
 	suffix = "atmosasteroidruin.dmm"
@@ -418,3 +424,9 @@
 	suffix = "allamericandiner.dmm"
 	name = "The All-American Diner"
 	description = "A mothballed \"Restaurant\" station of the popular \"The All-American Diner\" franchise."
+
+/datum/map_template/ruin/space/transit_booth
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
+	description = "Make sure to check out the duty-free store!"

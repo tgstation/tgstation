@@ -572,6 +572,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
 //Mass-driver hub ruin
 /area/ruin/space/massdriverhub
 	name = "\improper Mass Driver Router"
@@ -619,3 +623,11 @@
 // Ruin of The All-American Diner
 /area/ruin/space/has_grav/allamericandiner
 	name = "\improper The All-American Diner"
+
+// Transit Booth
+/area/ruin/space/has_grav/transit_booth
+	name = "transit_booth"
+	icon = 'icons/area/areas_ruins.dmi'
+	icon_state = "ruins"
+	requires_power = FALSE
+	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
