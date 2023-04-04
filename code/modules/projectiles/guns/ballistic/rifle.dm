@@ -106,7 +106,7 @@
 			if(istype(item, /obj/item/gun_maintenance_supplies))
 				if(do_after(user, 10 SECONDS, target = src))
 					user.visible_message(span_notice("[user] finishes maintenance of [src]."))
-					jamming_chance = 10
+					jamming_chance = initial(jamming_chance)
 					qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)

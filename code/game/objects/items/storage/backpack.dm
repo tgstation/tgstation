@@ -360,12 +360,12 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/imports/contraband/C = new
-	for(var/i in 1 to 2)
-		var/ctype = pick(C.contains)
-		new ctype(src)
+	var/datum/supply_pack/imports/contraband/smuggled_goods = new
+	for(var/items in 1 to 2)
+		var/smuggled_goods_type = pick(smuggled_goods.contains)
+		new smuggled_goods_type(src)
 
-	qdel(C)
+	qdel(smuggled_goods)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)

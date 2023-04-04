@@ -89,10 +89,10 @@
 
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
-	desc = "Why is the screen blinking red?"
+	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
 	cost = CARGO_CRATE_VALUE * 100
 	hidden = TRUE
-	contains = list(/obj/item/melee/error)
+	contains = list(/obj/item/book/granter/crafting_recipe/regal_condor)
 
 /datum/supply_pack/imports/mafia
 	name = "Cosa Nostra Starter Pack"
@@ -129,25 +129,26 @@
 		sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/poster/random_contraband = 2,
-					/obj/item/food/grown/cannabis,
-					/obj/item/food/grown/cannabis/rainbow,
-					/obj/item/food/grown/cannabis/white,
-					/obj/item/storage/box/fireworks/dangerous,
-					/obj/item/storage/pill_bottle/zoom,
-					/obj/item/storage/pill_bottle/happy,
-					/obj/item/storage/pill_bottle/lsd,
-					/obj/item/storage/pill_bottle/aranesp,
-					/obj/item/storage/pill_bottle/stimulant,
-					/obj/item/toy/cards/deck/syndicate,
-					/obj/item/reagent_containers/cup/glass/bottle/absinthe,
-					/obj/item/clothing/under/syndicate/tacticool,
-					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
-					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-					/obj/item/clothing/mask/gas/syndicate,
-					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft,
-				)
+	contains = list(
+		/obj/item/poster/random_contraband = 2,
+		/obj/item/food/grown/cannabis,
+		/obj/item/food/grown/cannabis/rainbow,
+		/obj/item/food/grown/cannabis/white,
+		/obj/item/storage/box/fireworks/dangerous,
+		/obj/item/storage/pill_bottle/zoom,
+		/obj/item/storage/pill_bottle/happy,
+		/obj/item/storage/pill_bottle/lsd,
+		/obj/item/storage/pill_bottle/aranesp,
+		/obj/item/storage/pill_bottle/stimulant,
+		/obj/item/toy/cards/deck/syndicate,
+		/obj/item/reagent_containers/cup/glass/bottle/absinthe,
+		/obj/item/clothing/under/syndicate/tacticool,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/clothing/neck/necklace/dope,
+		/obj/item/vending_refill/donksoft,
+	)
 	crate_name = "crate"
 
 /datum/supply_pack/imports/contraband/fill(obj/structure/closet/crate/C)
@@ -173,10 +174,11 @@
 	desc = "(*!&@#OPERATIVE, YOU LIKE THAT WT-550? THEN WHY NOT EQUIP YOURSELF WITH SOME MORE AMMO!!#@*$"
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/ammo_box/magazine/wt550m9 = 2,
-					/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
-					/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
-				)
+	contains = list(
+		/obj/item/ammo_box/magazine/wt550m9 = 2,
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
+	)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -186,11 +188,12 @@
 		CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/item/storage/box/emps,
-					/obj/item/grenade/smokebomb = 3,
-					/obj/item/grenade/gluon = 2,
-					/obj/item/grenade/frag = 2,
-				)
+	contains = list(
+		/obj/item/storage/box/emps,
+		/obj/item/grenade/smokebomb = 3,
+		/obj/item/grenade/gluon = 2,
+		/obj/item/grenade/frag = 2,
+	)
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -198,11 +201,12 @@
 		CONTAINS A CHAMELEON MASK, A CHAMELEON JUMPSUIT AND AN AGENT CARD! AND A KNIFE!!#@*$"
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/item/clothing/mask/chameleon,
-					/obj/item/clothing/under/chameleon,
-					/obj/item/card/id/advanced/chameleon,
-					/obj/item/knife/combat/survival,
-				)
+	contains = list(
+		/obj/item/clothing/mask/chameleon,
+		/obj/item/clothing/under/chameleon,
+		/obj/item/card/id/advanced/chameleon,
+		/obj/item/knife/combat/survival,
+	)
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
@@ -211,24 +215,25 @@
 		No lock, best price."
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 12
-	contains = list(/obj/item/food/rationpack,
-					/obj/item/ammo_box/a762,
-					/obj/item/ammo_box/a762/surplus,
-					/obj/item/storage/toolbox/a762,
-					/obj/item/storage/toolbox/a762/surplus,
-					/obj/item/storage/toolbox/maint_kit,
-					/obj/item/clothing/suit/armor/vest/russian,
-					/obj/item/clothing/head/helmet/rus_helmet,
-					/obj/item/clothing/shoes/russian,
-					/obj/item/clothing/gloves/tackler/combat,
-					/obj/item/clothing/under/syndicate/rus_army,
-					/obj/item/clothing/under/costume/soviet,
-					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/head/helmet/rus_ushanka,
-					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/rifle/boltaction,
-					/obj/item/gun/ballistic/rifle/boltaction/surplus = 2,
-				)
+	contains = list(
+		/obj/item/food/rationpack,
+		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/a762/surplus,
+		/obj/item/storage/toolbox/a762,
+		/obj/item/storage/toolbox/a762/surplus,
+		/obj/item/storage/toolbox/maint_kit,
+		/obj/item/clothing/suit/armor/vest/russian,
+		/obj/item/clothing/head/helmet/rus_helmet,
+		/obj/item/clothing/shoes/russian,
+		/obj/item/clothing/gloves/tackler/combat,
+		/obj/item/clothing/under/syndicate/rus_army,
+		/obj/item/clothing/under/costume/soviet,
+		/obj/item/clothing/mask/russian_balaclava,
+		/obj/item/clothing/head/helmet/rus_ushanka,
+		/obj/item/clothing/suit/armor/vest/russian_coat,
+		/obj/item/gun/ballistic/rifle/boltaction,
+		/obj/item/gun/ballistic/rifle/boltaction/surplus = 2,
+	)
 
 /datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 10)
@@ -243,8 +248,7 @@
 		dead comrade when you run out."
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/gun/ballistic/rifle/boltaction = 6,
-				)
+	contains = list(/obj/item/gun/ballistic/rifle/boltaction = 6)
 
 /datum/supply_pack/imports/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
@@ -252,12 +256,13 @@
 		complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
 	cost = CARGO_CRATE_VALUE * 4
 	contraband = TRUE
-	contains = list(/obj/vehicle/ridden/atv,
-					/obj/item/key/atv,
-					/obj/item/clothing/suit/jacket/leather/biker,
-					/obj/item/clothing/gloves/color/black,
-					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/skull/black,
-				)//so you can properly #cargoniabikergang
+	contains = list(
+		/obj/vehicle/ridden/atv,
+		/obj/item/key/atv,
+		/obj/item/clothing/suit/jacket/leather/biker,
+		/obj/item/clothing/gloves/color/black,
+		/obj/item/clothing/head/soft,
+		/obj/item/clothing/mask/bandana/skull/black,
+	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
