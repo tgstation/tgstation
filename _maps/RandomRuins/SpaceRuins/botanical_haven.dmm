@@ -179,7 +179,7 @@
 /area/ruin/space/has_grav/powered/botanical_haven)
 "P" = (
 /obj/structure/door_assembly/door_assembly_ext,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "Q" = (
 /obj/effect/turf_decal/sand,
