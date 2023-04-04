@@ -40,13 +40,13 @@
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
 	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
-	data["auxtools_enabled"] = GLOB.auxtools_enabled
+	data["auxtools_enabled"] = CONFIG_GET(flag/auxtools_enabled)
 	data["ss_lua_init"] = SSlua.initialized
 	return data
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
-	if(!GLOB.auxtools_enabled)
+	if(!CONFIG_GET(flag/auxtools_enabled) || !SSlua.initialized)
 		return data
 
 	data["noStateYet"] = !current_state
