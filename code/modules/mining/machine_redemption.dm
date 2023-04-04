@@ -44,11 +44,6 @@
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	. = ..()
-	var/ore_multiplier_temp = 1
-	for(var/datum/stock_part/matter_bin/internal_bin in component_parts)
-		ore_multiplier_temp = 0.80 + (0.20 * internal_bin.tier)
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
-
 	var/point_upgrade_temp = 1
 	for(var/datum/stock_part/micro_laser/internal_laser in component_parts)
 		point_upgrade_temp = 0.80 + (0.20 * internal_laser.tier)
