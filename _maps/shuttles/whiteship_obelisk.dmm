@@ -192,7 +192,6 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = -24
 	},
-/obj/machinery/light/broken/directional/east,
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/spawner/random/entertainment/cigar,
@@ -260,7 +259,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/button/door{
 	id = "whiteship_bridgewindows";
@@ -670,6 +668,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "MD" = (
