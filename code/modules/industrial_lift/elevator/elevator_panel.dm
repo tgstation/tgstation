@@ -97,6 +97,8 @@
 	if(obj_flags & EMAGGED)
 		return
 
+	obj_flags |= EMAGGED
+
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift)
 		return
@@ -115,7 +117,6 @@
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
-	obj_flags |= EMAGGED
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()
