@@ -7,5 +7,5 @@
 /datum/config_entry/flag/auxtools_enabled/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		GLOB.auxtools_enabled = value
+		GLOB.auxtools_enabled = config_entry_value
 	return .
