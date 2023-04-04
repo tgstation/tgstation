@@ -18,7 +18,12 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	/obj/item/stack/sheet/plasteel = new /datum/golem_food_buff/plasteel(),
 	/obj/item/stack/ore/bananium = new /datum/golem_food_buff/bananium(),
 	/obj/item/stack/sheet/mineral/bananium = new /datum/golem_food_buff/bananium(),
+	/obj/item/stack/ore/bluespace_crystal = new /datum/golem_food_buff/bluespace(),
+	/obj/item/stack/ore/bluespace_crystal/refined = new /datum/golem_food_buff/bluespace(),
+	/obj/item/stack/ore/bluespace_crystal/artificial = new /datum/golem_food_buff/bluespace(),
+	/obj/item/stack/sheet/bluespace_crystal = new /datum/golem_food_buff/bluespace(),
 ))
+// TODO: make this a two stage key/value thing so i dont have several instances of the same datum probably
 
 /// An effect you gain from eating minerals
 /datum/golem_food_buff
@@ -106,11 +111,7 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 	nutrition = 0
 	exclusive = FALSE
 	status_effect = /datum/status_effect/golem_lightbulb
-	added_info = "Not nutritious, but gives you a health glow if eaten."
-
-/datum/golem_food_buff/bluespace
-	exclusive = FALSE
-	added_info = "If consumed, this mineral will allow you to teleport somewhere."
+	added_info = "Not nutritious, but gives you a healthy glow if eaten."
 
 /datum/golem_food_buff/gibtonite
 	exclusive = FALSE
@@ -118,12 +119,26 @@ GLOBAL_LIST_INIT(golem_stack_food_directory, list(
 
 /datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed)
 	var/obj/item/gibtonite_hand/new_hand = new(null, /* held_gibtonite = */ consumed)
+
 	if(consumer.put_in_hands(new_hand))
 		return
 	consumer.drop_all_held_items()
 	if(consumer.put_in_hands(new_hand))
 		return
+
 	consumed.forceMove(get_turf(consumer))
 	new_hand.held_gibtonite = null
 	qdel(new_hand)
 	consumer.visible_message(span_warning("[consumer] can't keep [consumed] down, and coughs it onto the ground!"))
+
+/datum/golem_food_buff/bluespace
+	exclusive = FALSE
+	added_info = "After consumption, you can use the stored power to teleport yourself."
+
+/datum/golem_food_buff/bluespace/apply_effects(mob/living/carbon/human/consumer, obj/item/stack/consumed)
+	var/obj/item/bluespace_finger/new_hand = new
+	if (consumed.amount == 1)
+		consumer.dropItemToGround(consumed)
+	if (consumer.put_in_hands(new_hand, del_on_fail = TRUE))
+		return
+	consumer.balloon_alert(consumer, "no free hands!")
