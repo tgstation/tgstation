@@ -33,9 +33,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "aP" = (
@@ -89,9 +87,7 @@
 	pixel_y = 32
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
 /area/ruin/space)
 "cj" = (
@@ -354,9 +350,7 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "tl" = (
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "tm" = (
@@ -416,9 +410,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "xh" = (
@@ -691,9 +683,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
 /area/ruin/space)
 "JB" = (
@@ -873,9 +863,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/obj/structure/marker_beacon/cerulean{
-	light_color = "#66CCFF"
-	},
+/obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
 /area/ruin/space)
 "TK" = (
