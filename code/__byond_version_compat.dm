@@ -27,39 +27,19 @@
 #define LIBCALL call_ext
 #endif
 
-// So we want to have compile time guarantees these methods exist on local type, unfortunately 515 killed the .proc/procname and .verb/verbname syntax so we have to use nameof()
-
-// These are the generic defines that wrap for the either the sub-515 or post-515 syntax.
-
-/// Call by name proc references, checks if the proc exists on this type or as a global proc.
-#define PROC_REF(X) GENERIC_REF(##X, proc)
-/// Call by name verb references, checks if the verb exists on this type or as a global verb.
-#define VERB_REF(X) GENERIC_REF(##X, verb)
-
-/// Call by name proc reference, checks if the proc exists on given type or as a global proc
-#define TYPE_PROC_REF(TYPE, X) TYPE_GENERIC_REF(##TYPE, ##X, proc)
-/// Call by name verb reference, checks if the verb exists on given type or as a global verb
-#define TYPE_VERB_REF(TYPE, X) TYPE_GENERIC_REF(##TYPE, ##X, verb)
-
-/// Call by name proc reference, checks if the proc is AN existing global proc
-#define GLOBAL_PROC_REF(X) GLOBAL_GENERIC_REF(##X, proc)
-/// Call by name verb reference, checks if the verb is AN existing global verb. Note: This is only here for completeness, and will probably not actually ever be used in practice. (update this comment if you do use it)
-#define GLOBAL_VERB_REF(X) GLOBAL_GENERIC_REF(##X, verb)
-
-// Now, these are what actually performs the compile-level analysis we want.
 
 #if DM_VERSION < 515
-/// Call by name method reference, checks if the method exists on this type or as a global method
-#define GENERIC_REF(X, INVOKE_METHOD) (.##INVOKE_METHOD/##X)
-/// Call by name method reference, checks if the method exists on given type or as a global method
-#define TYPE_GENERIC_REF(TYPE, X, INVOKE_METHOD) (##TYPE.##INVOKE_METHOD/##X)
-/// Call by name method reference, checks if the proc is AN existing global proc
-#define GLOBAL_GENERIC_REF(X, INVOKE_METHOD) (/##INVOKE_METHOD/##X)
+/// Call by name proc reference, checks if the proc exists on this type or as a global proc
+#define PROC_REF(X) (.proc/##X)
+/// Call by name proc reference, checks if the proc exists on given type or as a global proc
+#define TYPE_PROC_REF(TYPE, X) (##TYPE.proc/##X)
+/// Call by name proc reference, checks if the proc is existing global proc
+#define GLOBAL_PROC_REF(X) (/proc/##X)
 #else
-/// Call by name method reference, checks if the method exists on this type or as a global method
-#define GENERIC_REF(X, INVOKE_METHOD) (nameof(.##INVOKE/##X))
-/// Call by name method reference, checks if the method exists on given type or as a global method
-#define TYPE_GENERIC_REF(TYPE, X, INVOKE_METHOD) (nameof(##TYPE.##INVOKE_METHOD/##X))
-/// Call by name method reference, checks if the method is AN existing global method
-#define GLOBAL_GENERIC_REF(X, INVOKE_METHOD) (/##INVOKE_METHOD/##X)
+/// Call by name proc reference, checks if the proc exists on this type or as a global proc
+#define PROC_REF(X) (nameof(.proc/##X))
+/// Call by name proc reference, checks if the proc exists on given type or as a global proc
+#define TYPE_PROC_REF(TYPE, X) (nameof(##TYPE.proc/##X))
+/// Call by name proc reference, checks if the proc is existing global proc
+#define GLOBAL_PROC_REF(X) (/proc/##X)
 #endif
