@@ -100,3 +100,25 @@
   vinylspiders:
   - bugfix: the 'natural wig' item will no longer show a broken icon when it mimics
       a hairstyle whose icon path something other than the default 'icons/mob/species/human/human_face.dmi'
+2023-04-04:
+  13spacemen:
+  - bugfix: Roundend Report properly lists cultist names if the cult failed and didn't
+      summon Narsie
+  DrDiasyl aka DrTuxedo#0931:
+  - bugfix: Floor lights no longer become invisible when the fire alarm is turned
+      on
+  Ebin-Halcyon:
+  - imageadd: The maid costume has gotten it's colors slightly tweaked, should look
+      nicer.
+  LemonInTheDark:
+  - bugfix: Directional frosted/tinted windows will no longer fuck up vision
+  MrStonedOne:
+  - bugfix: The notify restart verb in the ooc tab should now actually work.
+  Profakos:
+  - rscadd: adds the ruins of a restaurant robot portal hub
+  Rhials:
+  - code_imp: The xeno_spawn landmark is now the generic_maintenance_landmark landmark.
+  - bugfix: Certain midrounds will now check for atmos safety before spawning.
+  tralezab:
+  - rscadd: Chuunibyou wizards, and chunni granters in the library
+  - rscadd: Medical eyepatches
