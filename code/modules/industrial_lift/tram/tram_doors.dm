@@ -5,6 +5,7 @@
 	req_access = list("tcomms")
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
+	/// Are the doors in a malfunctioning state (dangerous)
 	var/malfunctioning = FALSE
 
 /obj/machinery/door/window/tram/left
@@ -30,6 +31,8 @@
 	balloon_alert(user, "disabled motion sensors")
 	obj_flags |= EMAGGED
 
+/// Random event called by code\modules\events\tram_malfunction.dm
+/// Makes the doors malfunction
 /obj/machinery/door/window/tram/proc/start_malfunction()
 	if(obj_flags & EMAGGED)
 		return
@@ -37,6 +40,8 @@
 	malfunctioning = TRUE
 	process()
 
+/// Random event called by code\modules\events\tram_malfunction.dm
+/// Returns doors to their original status
 /obj/machinery/door/window/tram/proc/end_malfunction()
 	if(obj_flags & EMAGGED)
 		return
