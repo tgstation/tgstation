@@ -111,15 +111,6 @@
 /datum/wound/slash/handle_process(delta_time, times_fired)
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
 	if(!no_bleeding)
-		if(victim.stat == DEAD)
-			adjust_blood_flow(-max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time)
-			if(blood_flow < minimum_flow)
-				if(demotes_to)
-					replace_wound(demotes_to)
-					return
-				qdel(src)
-				return
-
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
