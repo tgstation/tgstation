@@ -142,7 +142,7 @@ Example:
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(funny)), 100))
 ```
 
-Note that the same rules go for verbs too! We have VERB_REF() and TYPE_VERB_REF() as you need it in these same cases. There's likely no reason to use GLOBAL_VERB_REF() though.
+Note that the same rules go for verbs too! We have VERB_REF() and TYPE_VERB_REF() as you need it in these same cases. GLOBAL_VERB_REF() isn't a thing however, as verbs are not global.
 
 #### Signal Handlers
 
