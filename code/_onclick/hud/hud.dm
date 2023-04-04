@@ -39,6 +39,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
+	var/atom/movable/screen/strafe_icon
 	var/atom/movable/screen/module_store_icon
 
 	var/list/static_inventory = list() //the screen objects which are static

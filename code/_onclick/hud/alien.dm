@@ -90,6 +90,12 @@
 	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
+	strafe_icon = new /atom/movable/screen/strafe()
+	strafe_icon.icon = ui_style
+	strafe_icon.screen_loc = ui_strafe
+	strafe_icon.hud = src
+	hotkeybuttons += strafe_icon
+
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_appearance()

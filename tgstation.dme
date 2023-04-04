@@ -823,6 +823,7 @@
 #include "code\datums\armor\_atom_armor.dm"
 #include "code\datums\atmosphere\_atmosphere.dm"
 #include "code\datums\atmosphere\planetary.dm"
+#include "code\datums\attack_style\_attack_style.dm"
 #include "code\datums\bodypart_overlays\bodypart_overlay.dm"
 #include "code\datums\bodypart_overlays\emote_bodypart_overlay.dm"
 #include "code\datums\bodypart_overlays\mutant_bodypart_overlay.dm"

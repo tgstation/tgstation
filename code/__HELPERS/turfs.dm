@@ -409,3 +409,39 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(locate(type_to_find) in location)
 		return TRUE
 	return FALSE
+
+/proc/get_turfs_and_adjacent_in_direction(atom/base, general_dir)
+	var/right_dir
+	var/left_dir
+	switch(general_dir)
+		if(NORTH)
+			right_dir = EAST
+			left_dir = WEST
+		if(SOUTH)
+			right_dir = WEST
+			left_dir = EAST
+		if(EAST)
+			right_dir = SOUTH
+			left_dir = NORTH
+		if(WEST)
+			right_dir = NORTH
+			left_dir = SOUTH
+		if(NORTHWEST)
+			right_dir = SOUTH
+			left_dir = EAST
+		if(SOUTHEAST)
+			right_dir = WEST
+			left_dir = NORTH
+		if(NORTHEAST)
+			right_dir = SOUTH
+			left_dir = WEST
+		if(SOUTHWEST)
+			right_dir = NORTH
+			left_dir = EAST
+
+	var/turf/middle_turf = get_step(base, general_dir)
+	return list(
+		get_step(middle_turf, right_dir),
+		middle_turf,
+		get_step(middle_turf, left_dir),
+	)

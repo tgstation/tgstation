@@ -66,6 +66,7 @@
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
+#define ui_strafe "EAST-2:26,SOUTH+1:7"
 #define ui_above_movement "EAST-2:26,SOUTH+1:7"
 #define ui_above_intent "EAST-3:24, SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"

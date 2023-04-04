@@ -140,3 +140,6 @@
 
 /datum/movespeed_modifier/health_scaling_speed_buff
 	variable = TRUE
+
+/datum/movespeed_modifier/strafing
+	multiplicative_slowdown = 1.2

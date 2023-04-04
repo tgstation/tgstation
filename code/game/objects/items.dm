@@ -213,8 +213,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
 
-/obj/item/Initialize(mapload)
+	var/datum/attack_style/attack_style
 
+/obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
@@ -235,6 +236,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		add_item_action(path)
 
 	actions_types = null
+
+	if(ispath(attack_style, /datum/attack_style))
+		attack_style = GLOB.attack_styles[attack_style]
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -262,6 +266,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	// Handle cleaning up our actions list
 	for(var/datum/action/action as anything in actions)
 		remove_item_action(action)
+
+	attack_style = null
 
 	return ..()
 

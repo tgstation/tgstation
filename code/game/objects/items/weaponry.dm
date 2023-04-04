@@ -685,6 +685,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
+	attack_style = /datum/attack_style/swing
 	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
 	/// Are we ready to do a homerun?

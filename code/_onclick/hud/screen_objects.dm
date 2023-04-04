@@ -418,6 +418,21 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 
+/atom/movable/screen/strafe
+	name = "strafe"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "act_throw_off"
+
+/atom/movable/screen/strafe/Click(location, control, params)
+	if(isliving(usr))
+		var/mob/living/living_user = usr
+		living_user.toggle_strafe_lock()
+		update_appearance(UPDATE_ICON_STATE)
+
+/atom/movable/screen/strafe/update_icon_state()
+	. = ..()
+	icon_state = hud.mymob?.set_dir_on_move ? "act_throw_off" : "act_throw_on"
+
 /atom/movable/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"

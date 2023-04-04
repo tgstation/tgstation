@@ -82,6 +82,7 @@
 /obj/item/knife/kitchen
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	attack_style = /datum/attack_style/stab_out
 
 /obj/item/knife/plastic
 	name = "plastic knife"

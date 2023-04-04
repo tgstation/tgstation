@@ -165,6 +165,11 @@
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A,1,modifiers)
+
+	else if(isturf(loc) && istype(W.attack_style))
+		if(W.attack_style.process_attack(src, W, A))
+			return
+
 	else
 		if(W)
 			if(LAZYACCESS(modifiers, RIGHT_CLICK))

@@ -131,6 +131,14 @@
 	else
 		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above
 
+/mob/living/proc/toggle_strafe_lock()
+	set_dir_on_move = !set_dir_on_move
+	if(set_dir_on_move)
+		remove_movespeed_modifier(/datum/movespeed_modifier/strafing)
+	else
+		add_movespeed_modifier(/datum/movespeed_modifier/strafing)
+	hud_used?.strafe_icon.update_appearance(UPDATE_ICON_STATE)
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))
 		var/obj/item/thrown_item = AM
