@@ -2,6 +2,10 @@
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
+"c" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
 "e" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
@@ -34,7 +38,6 @@
 	name = "Loading Doors";
 	pixel_y = -8
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "i" = (
@@ -81,10 +84,6 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"w" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
 "x" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
@@ -107,10 +106,10 @@ s
 (2,1,1) = {"
 b
 e
-e
-e
-e
 x
+e
+e
+e
 e
 e
 e
@@ -134,7 +133,7 @@ u
 "}
 (4,1,1) = {"
 b
-w
+e
 e
 e
 e
@@ -169,7 +168,7 @@ e
 h
 e
 e
-e
+c
 l
 b
 v
