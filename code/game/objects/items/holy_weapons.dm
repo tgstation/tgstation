@@ -111,7 +111,7 @@
 /obj/item/nullrod/claymore
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
-	icon = 'icons/obj/cult/sword.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
@@ -219,7 +219,7 @@
 /obj/item/nullrod/sord
 	name = "\improper UNREAL SORD"
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
-	icon = 'icons/obj/cult/sword.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "sord"
 	inhand_icon_state = "sord"
 	worn_icon_state = "sord"
@@ -291,7 +291,7 @@
 /obj/item/nullrod/scythe/talking
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
-	icon = 'icons/obj/cult/sword.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "talking_sword"
 	inhand_icon_state = "talking_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -524,7 +524,7 @@
 /obj/item/nullrod/tribal_knife
 	name = "arrhythmic knife"
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
-	icon = 'icons/obj/cult/sword.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "crysknife"
 	inhand_icon_state = "crysknife"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
