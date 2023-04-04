@@ -417,9 +417,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
-		INVOKE_ASYNC(src, name_of(.verb/fit_viewport))
+		INVOKE_ASYNC(src, nameof(.verb/fit_viewport))
 	else //Delayed to avoid wingets from Login calls.
-		addtimer(CALLBACK(src, name_of(.verb/fit_viewport), 1 SECONDS))
+		addtimer(CALLBACK(src, nameof(.verb/fit_viewport), 1 SECONDS))
 
 /client/verb/policy()
 	set name = "Show Policy"
