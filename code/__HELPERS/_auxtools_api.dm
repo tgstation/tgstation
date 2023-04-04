@@ -4,12 +4,8 @@
 GLOBAL_LIST_EMPTY(auxtools_initialized)
 GLOBAL_PROTECT(auxtools_initialized)
 
-/// Set at config load, see AUXTOOLS_ENABLED
-GLOBAL_VAR_INIT(auxtools_enabled, FALSE)
-GLOBAL_PROTECT(auxtools_enabled)
-
 #define AUXTOOLS_CHECK(LIB)\
-	if (!GLOB.auxtools_enabled) {\
+	if (!CONFIG_GET(flag/auxtools_enabled)) {\
 		CRASH("Auxtools is not enabled in config!");\
 	}\
 	if (GLOB.auxtools_initialized[LIB] != AUXTOOLS_FULL_INIT) {\
