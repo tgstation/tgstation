@@ -469,10 +469,11 @@
  *
  * Arguments:
  * * obj/item/fire_starter - the item being used to ignite the candle.
- * * mob/user - the user to display a message to
- * * quiet - suppresses the balloon alerts
+ * * mob/user - the user to display a message to.
+ * * quiet - suppresses the to_chat message.
+ * * silent - suppresses the balloon alerts as well as the to_chat message.
  */
-/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user, quiet)
+/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user, quiet, silent)
 	if(!istype(fire_starter))
 		return
 	if(!istype(user))
@@ -487,28 +488,32 @@
 	switch(ignition_result)
 		if(SUCCESS)
 			update_appearance(UPDATE_ICON | UPDATE_NAME)
-			user.visible_message(success_msg)
+			if(!quiet && !silent)
+				user.visible_message(success_msg)
 			return SUCCESS
 		if(ALREADY_LIT)
-			if(!quiet)
+			if(!silent)
 				balloon_alert(user, "already lit!")
+				return ALREADY_LIT
 		if(NO_FUEL)
-			if(!quiet)
+			if(!silent)
 				balloon_alert(user, "out of fuel!")
+				return NO_FUEL
 
-/// allows lighting a candle with something else
+/// allows lighting an unlit candle from some fire source by left clicking the candle with the source
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
-	if(try_light_candle(attacking_item, user, quiet = istype(attacking_item, src.type)) == SUCCESS) // if we attack a candle with a candle, balloon alert only once
+	if(try_light_candle(attacking_item, user, silent = istype(attacking_item, src.type))) // so we don't double balloon alerts when a candle is used to light another candle
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else 
 		return ..()
 
-// allows lighting something else with a candle
+// allows lighting an unlit candle from some fire source by left clicking the source with the candle
 /obj/item/flashlight/flare/candle/pre_attack(atom/target, mob/living/user, params)
 	if(ismob(target))
 		return ..()
 
-	try_light_candle(target, user)
+	if(try_light_candle(target, user, quiet = TRUE))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return ..()
 
