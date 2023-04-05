@@ -327,62 +327,55 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	//Uses of the device left
+	/// Uses of the device left
 	var/charges = 4
-	//The maximum number of stored uses
+	/// The maximum number of stored uses
 	var/max_charges = 4
-	///Minimum distance to teleport user forward
+	/// Time required for a recharge.
+	var/charge_time = 15 SECONDS
+	/// Minimum distance to teleport user forward
 	var/minimum_teleport_distance = 4
-	///Maximum distance to teleport user forward
+	/// Maximum distance to teleport user forward
 	var/maximum_teleport_distance = 8
-	//How far the emergency teleport checks for a safe position
-	var/parallel_teleport_distance = 3
+	/// How far the emergency teleport checks for a safe position
+	var/parallel_teleport_distance = 1
+	/// List of all the charge timers.
+	var/list/charge_timers = list()
 
-/obj/item/syndicate_teleporter/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
+/obj/item/syndicate_teleporter/proc/use_charge()
+	charges--
+	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 
-/obj/item/syndicate_teleporter/Destroy(force)
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+/obj/item/syndicate_teleporter/proc/recharge()
+	charges = min(charges+1, max_charges)
+	playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	charge_timers.Remove(charge_timers[1])
 
 /obj/item/syndicate_teleporter/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] has <b>[charges]</b> out of [max_charges] charges left.")
+	. += span_notice("It has [charges] charges remaining.")
+	if(length(charge_timers))
+		. += "[span_notice("<b>A small display on the back reads:")]</b>"
+	for(var/i in 1 to length(charge_timers))
+		var/timeleft = timeleft(charge_timers[i])
+		var/loadingbar = num2loadingbar(timeleft/charge_time)
+		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([DisplayTimeText(timeleft)])</b>")
 
 /obj/item/syndicate_teleporter/attack_self(mob/user)
 	. = ..()
 	if(.)
 		return
-	attempt_teleport(user = user, triggered_by_emp = FALSE)
+	attempt_teleport(user)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && charges < max_charges)
-		charges++
-		if(ishuman(loc))
-			var/mob/living/carbon/human/holder = loc
-			balloon_alert(holder, "teleporter beeps")
-		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
-
 /obj/item/syndicate_teleporter/emp_act(severity)
-	if(!prob(50/severity))
+	if(!charges)
 		return
-	var/teleported_something = FALSE
-	if(ishuman(loc))
-		var/mob/living/carbon/human/holder = loc
-		balloon_alert(holder, "teleporter buzzes!")
-		attempt_teleport(user = holder, triggered_by_emp = TRUE)
-	else
-		var/turf/teleport_turf = get_turf(src)
-		for(var/mob/living/mob_on_same_tile in teleport_turf)
-			if(!teleported_something)
-				teleported_something = TRUE
-			attempt_teleport(user = mob_on_same_tile, triggered_by_emp = TRUE, not_holding_tele = TRUE)
-		if(!teleported_something)
-			visible_message(span_danger("[src] blinks out of existence!"))
-			do_sparks(2, 1, src)
-			qdel(src)
+	if(severity == EMP_LIGHT)
+		use_charge()
+		return
+	for(var/charge in 1 to charges) /// Fully drain it
+		use_charge()
 
 /**
  * Tries to teleport the user forward based on random number between min/max teleport distance vars.
@@ -390,8 +383,8 @@
  * Wearing bag of holding or triggering teleport via EMP removes panic teleport, higher chance of being gibbed.
  * Mobs on same tile as destination get telefragged.
  **/
-/obj/item/syndicate_teleporter/proc/attempt_teleport(mob/user, triggered_by_emp = FALSE, not_holding_tele = FALSE)
-	if(!charges && !triggered_by_emp)
+/obj/item/syndicate_teleporter/proc/attempt_teleport(mob/user, not_holding_tele = FALSE)
+	if(!charges)
 		balloon_alert(user, "recharging!")
 		return
 
@@ -412,16 +405,16 @@
 			bagholdingcheck = TRUE
 
 	if(isclosedturf(destination))
-		if(!triggered_by_emp && !bagholdingcheck)
+		if(!bagholdingcheck)
 			panic_teleport(user, destination) //We're in a wall, engage emergency parallel teleport.
 		else
-			if(bagholdingcheck && !not_holding_tele)
+			if(!not_holding_tele)
 				to_chat(user, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
 			get_fragged(user, destination, not_holding_tele) //EMP teleported you into a wall? Wearing a BoH? You're dead.
 	else
 		telefrag(destination, user)
 		do_teleport(user, destination, channel = TELEPORT_CHANNEL_FREE)
-		charges = max(charges - 1, 0)
+		use_charge()
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -455,7 +448,7 @@
 	if(emergency_destination)
 		telefrag(emergency_destination, user)
 		do_teleport(user, emergency_destination, channel = TELEPORT_CHANNEL_FREE)
-		charges = max(charges - 1, 0)
+		use_charge()
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
@@ -487,7 +480,7 @@
 /obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.
 	for(var/mob/living/victim in fragging_location)//Hit everything in the turf
 		victim.apply_damage(20, BRUTE)
-		victim.Paralyze(6 SECONDS)
+		victim.Knockdown(5 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 /obj/item/paper/syndicate_teleporter
@@ -497,9 +490,9 @@
 		<br>
 		This teleporter will teleport the user 4-8 meters in the direction they are facing.<br>
 		<br>
-		It has 4 charges, and will recharge over time randomly. No, sticking the teleporter into an APC, microwave, or electrified airlock will not make it charge faster.<br>
+		It has 4 charges, and will recharge over time. No, sticking the teleporter into an APC, microwave, or electrified airlock will not make it charge faster.<br>
 		<br>
-		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
+		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to a meter, but the user will be ripped apart if it fails to find a safe location.<br>
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
 		"}
