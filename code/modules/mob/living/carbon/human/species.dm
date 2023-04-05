@@ -814,7 +814,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							else if(hair_color == "fixedmutcolor")
 								accessory_overlay.color = fixed_mut_color
 							else
-								accessory_overlay.color = source.hair_color
+								if (source.hairstyle == "Bald" && istype(accessory, /datum/sprite_accessory/ears/cat))
+									accessory_overlay.color = skintone2hex(source.skin_tone)
+								else
+									accessory_overlay.color = source.hair_color
 						if(FACEHAIR)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
