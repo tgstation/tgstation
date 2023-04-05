@@ -958,7 +958,6 @@
 	subdepartment_color = COLOR_ASSISTANT_GRAY
 	sechud_icon_state = SECHUD_SECURITY_CADET
 	minimal_access = list(
-		ACCESS_BRIG,
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_COURT,
 		ACCESS_MECH_SECURITY,
@@ -967,6 +966,7 @@
 		ACCESS_WEAPONS,
 		)
 	extra_access = list(
+		ACCESS_BRIG,
 		ACCESS_DETECTIVE,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MORGUE,
