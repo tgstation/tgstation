@@ -25,7 +25,6 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/way_home
 	name = "\improper Salvation"
@@ -208,6 +207,11 @@
 /area/ruin/space/has_grav/dangerous_research/maint
 	name = "\improper ASRC Maintenance"
 
+//Interdyne Ruin
+
+/area/ruin/space/has_grav/interdyne
+	name = "\improper Interdyne Research Base"
+
 //Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/ancientstation
@@ -291,7 +295,6 @@
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
@@ -564,7 +567,6 @@
 /area/ruin/space/has_grav/spinwardsmoothies
 	name = "Spinward Smoothies"
 
-
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
@@ -574,6 +576,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
 //Mass-driver hub ruin
 /area/ruin/space/massdriverhub
 	name = "\improper Mass Driver Router"
@@ -582,3 +588,46 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
+
+// Ruin of Waystation
+/area/ruin/space/has_grav/waystation
+	name = "Waystation Maintenance"
+
+/area/ruin/space/has_grav/waystation/qm
+	name = "Quartermaster Office"
+
+/area/ruin/space/has_grav/waystation/dorms
+	name = "Living Space"
+
+/area/ruin/space/has_grav/waystation/kitchen
+	name = "Kitchen"
+
+/area/ruin/space/has_grav/waystation/cargobay
+	name = "Cargo Bay"
+
+/area/ruin/space/has_grav/waystation/securestorage
+	name = "Secure Storage"
+
+/area/ruin/space/has_grav/waystation/cargooffice
+	name = "Cargo Office"
+
+/area/ruin/space/has_grav/powered/waystation/assaultpod
+	name = "Assault Pod"
+
+/area/ruin/space/has_grav/waystation/power
+	name = "Waystation Electrical"
+
+// Transit Booth
+/area/ruin/space/has_grav/transit_booth
+	name = "transit_booth"
+	icon = 'icons/area/areas_ruins.dmi'
+	icon_state = "ruins"
+	requires_power = FALSE
+	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')

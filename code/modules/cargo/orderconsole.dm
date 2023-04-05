@@ -302,16 +302,29 @@
 				say(blockade_warning)
 				return
 
-			//make an copy of the cart before its cleared by the shuttle
-			var/list/cart_list = list()
-			for(var/datum/supply_order/order in SSshuttle.shopping_list)
-				if(cart_list[order.pack.name])
-					cart_list[order.pack.name]["amount"]++
-					continue
-				cart_list[order.pack.name] = list(
-					"order" = order,
-					"amount" = 1
-				)
+			//create the paper from the SSshuttle.shopping_list
+			if(length(SSshuttle.shopping_list))
+				var/obj/item/paper/requisition_paper = new(get_turf(src))
+				requisition_paper.name = "requisition form"
+				var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
+				requisition_text += "<hr/>"
+				requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
+				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
+					requisition_text += "<b>[order.pack.name]</b></br>"
+					requisition_text += "- Order ID: [order.id]</br>"
+					var/restrictions = SSid_access.get_access_desc(order.pack.access)
+					if(restrictions)
+						requisition_text += "- Access Restrictions: [restrictions]</br>"
+					requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
+					var/paying_account = order.paying_account
+					if(paying_account)
+						requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
+					var/reason = order.reason
+					if(reason)
+						requisition_text += "- Reason Given: [reason]</br>"
+					requisition_text += "</br></br>"
+				requisition_paper.add_raw_text(requisition_text)
+				requisition_paper.update_appearance()
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.supply.export_categories = get_export_categories()
@@ -322,21 +335,6 @@
 				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
-			if(!length(cart_list))
-				return TRUE
-
-			//create the paper from the cart list
-			var/obj/item/paper/requisition_paper = new(get_turf(src))
-			requisition_paper.name = "requisition form"
-			var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
-			requisition_text += "<hr/>"
-			requisition_text += "Time of Order: [station_time_timestamp()]<br/>"
-			for(var/order_name in cart_list)
-				var/datum/supply_order/order = cart_list[order_name]["order"]
-				requisition_text += "[cart_list[order_name]["amount"]] [order.pack.name]("
-				requisition_text += "Access Restrictions: [SSid_access.get_access_desc(order.pack.access)])</br>"
-			requisition_paper.add_raw_text(requisition_text)
-			requisition_paper.update_appearance()
 
 			. = TRUE
 		if("loan")

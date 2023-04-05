@@ -1,4 +1,0 @@
-author: "Moth-lantern"
-delete-after: True
-changes:
-  - bugfix: "Moved the tank compressor and some tables and the anomaly refinery so that the tank compressor could actually be usable again on Tramstation."

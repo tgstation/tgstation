@@ -4,7 +4,6 @@ Calculations are done using the archived variables with the results merged into 
 This prevents race conditions that arise based on the order of tile processing.
 */
 
-#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 

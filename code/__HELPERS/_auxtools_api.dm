@@ -27,4 +27,13 @@ GLOBAL_LIST_EMPTY(auxtools_initialized)
 	if (GLOB.auxtools_initialized[LIB] && fexists(LIB)){\
 		LIBCALL(LIB,"auxtools_full_shutdown")();\
 		GLOB.auxtools_initialized[LIB] = FALSE;\
-	}\
+	}
+
+/proc/auxtools_stack_trace(msg)
+	CRASH(msg)
+
+/proc/auxtools_expr_stub()
+	CRASH("auxtools not loaded")
+
+/proc/enable_debugging(mode, port)
+	CRASH("auxtools not loaded")
