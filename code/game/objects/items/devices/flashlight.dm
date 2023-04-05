@@ -468,10 +468,11 @@
  * This will perform all the necessary checks to ensure that can happen, and display a message if it worked.
  *
  * Arguments:
- * * obj/item/fire_starter - the item being used to ignite
+ * * obj/item/fire_starter - the item being used to ignite the candle.
  * * mob/user - the user to display a message to
+ * * quiet - suppresses the balloon alerts
  */
-/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user)
+/obj/item/flashlight/flare/candle/proc/try_light_candle(obj/item/fire_starter, mob/user, quiet)
 	if(!istype(fire_starter))
 		return
 	if(!istype(user))
@@ -487,21 +488,29 @@
 		if(SUCCESS)
 			update_appearance(UPDATE_ICON | UPDATE_NAME)
 			user.visible_message(success_msg)
+			return SUCCESS
 		if(ALREADY_LIT)
-			balloon_alert(user, "already lit!")
+			if(quiet)
+				balloon_alert(user, "already lit!")
 		if(NO_FUEL)
-			balloon_alert(user, "out of fuel!")
+			if(quiet)
+				balloon_alert(user, "out of fuel!")
 
-/// if the attacking_item is another unlit candle then try to light it with (src)
-/// otherwise, try to light the (src) candle
+/// allows lighting a candle with something else
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	var/obj/item/flashlight/flare/candle/candle = attacking_item
-	
-	if(istype(candle) && !candle.on)
-		candle.try_light_candle(src, user)
-	else
-		try_light_candle(attacking_item, user)
+	if(try_light_candle(attacking_item, user) == SUCCESS)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	else 
+		return ..()
+
+// allows lighting something else with a candle
+/obj/item/flashlight/flare/candle/pre_attack(atom/target, mob/living/user, params)
+	if(ismob(target))
+		return ..()
+
+	try_light_candle(target, user, quiet = TRUE)
+
+	return ..()
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
 	if(on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles
