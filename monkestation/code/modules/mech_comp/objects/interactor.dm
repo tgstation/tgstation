@@ -18,6 +18,8 @@
 	var/stored_dir = NORTH
 	///the interaction range defaults to ontop of itself
 	var/range = FALSE
+	///the image of the held item with a low alpha and an cool blue
+	var/image/held_image
 
 /obj/item/mcobject/interactor/Initialize(mapload)
 	. = ..()
@@ -51,6 +53,7 @@
 	else
 		held_item.forceMove(get_turf(src))
 	held_item = null
+	update_appearance()
 	return TRUE
 
 /obj/item/mcobject/interactor/proc/replace_from_storage(datum/mcmessage/input)
@@ -70,6 +73,7 @@
 		held_item = null
 	held_item = listed_item
 	dummy_human.put_in_l_hand(listed_item)
+	update_appearance()
 	return TRUE
 
 /obj/item/mcobject/interactor/proc/change_dir_input(datum/mcmessage/input)
@@ -114,6 +118,11 @@
 		selected_turf = get_step(src, stored_dir)
 
 	for(var/atom/movable/listed_atom in selected_turf)
+		if(dummy_human == listed_atom || src == listed_atom)
+			continue
+		if(listed_atom in typesof(/obj/item/mcobject))
+			continue
+
 		if(!held_item)
 			if(!right_clicks)
 				listed_atom.attack_hand(dummy_human)
@@ -121,16 +130,28 @@
 				listed_atom.attack_hand_secondary(dummy_human)
 		else
 			if(!right_clicks)
-				listed_atom.attacked_by(held_item, dummy_human)
+				held_item.melee_attack_chain(dummy_human, listed_atom)
 			else
-				listed_atom.attackby_secondary(held_item, dummy_human)
+				held_item.melee_attack_chain(dummy_human, listed_atom, "button=right;right=1")
 
 	for(var/atom/movable/listed_atom in src)
 		if(listed_atom == dummy_human)
 			continue
 		listed_atom.forceMove(src.loc)
+	flash()
 
-/obj/item/mcobject/interactor/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/item/mcobject/interactor/update_overlays()
+	. = ..()
+	if(!held_image)
+		held_image = new(src.loc)
+	if(held_item)
+		held_image = held_item.appearance
+		held_image.alpha = 170
+		held_image.color = LIGHT_COLOR_FAINT_BLUE
+		var/mutable_appearance/new_icon = new(held_image)
+		. += new_icon
+
+/obj/item/mcobject/interactor/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(held_item)
 		if(connected_storage)
@@ -139,5 +160,6 @@
 			held_item.forceMove(get_turf(src))
 		held_item = null
 
-	held_item = attacking_item
-	dummy_human.put_in_l_hand(attacking_item)
+	held_item = weapon
+	dummy_human.put_in_l_hand(weapon)
+	update_appearance()

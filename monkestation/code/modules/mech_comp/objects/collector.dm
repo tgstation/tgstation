@@ -33,3 +33,4 @@
 			break
 		if(linked_storage.attempt_insert(contained_item, src))
 			count ++
+	flash()

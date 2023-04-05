@@ -5259,6 +5259,7 @@
 #include "monkestation\code\modules\mech_comp\objects\messages\storage_component.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\ticker.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\toggle.dm"
+#include "monkestation\code\modules\mech_comp\objects\messages\type_sensor.dm"
 #include "monkestation\code\modules\mech_comp\objects\messages\wifi_split.dm"
 #include "monkestation\code\modules\mob\mob.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories.dm"
