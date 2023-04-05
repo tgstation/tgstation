@@ -1,6 +1,6 @@
 /datum/job/maintenance_technician
 	title = JOB_MAINTENANCE_TECHNICIAN
-	description = "Fix everything you are told to fix, get yelled at by engineers after you fail,\
+	description = "Fix everything you are told to fix, \
 		 hope nobody notices when you accidentally break something."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION

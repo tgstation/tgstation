@@ -41,7 +41,7 @@
 	jobtype = /datum/job/test_subject
 
 	id_trim = /datum/id_trim/job/test_subject
-	uniform = /obj/item/clothing/under/color/lightpurple
+	uniform = /obj/item/clothing/under/rank/rnd/test_subject
 	belt = /obj/item/modular_computer/pda/science
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
