@@ -193,13 +193,13 @@
 	var/is_allowed = TRUE
 	if(!checkResource(machinery_data["cost"][blueprint], user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, span_notice("turf is blocked!"))
+			balloon_alert(user, "turf is blocked!")
 			return FALSE
 	if(!do_after(user, machinery_data["cost"][blueprint], target = destination)) //"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
 		return FALSE
 	if(!checkResource(machinery_data["cost"][blueprint], user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, span_notice("turf is blocked!"))
+			balloon_alert(user, "turf is blocked!")
 			return FALSE
 
 	if(!useResource(machinery_data["cost"][blueprint], user))
