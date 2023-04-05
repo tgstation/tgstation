@@ -156,14 +156,14 @@
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
 	if(check_holidays(PRIDE_WEEK))
-		color = pride_recolor(src)
+		color = coordinated_recolor(src)
 	else
 		color = "#EFB341"
 	return ..()
 
-/turf/open/floor/noslip/tram/proc/pride_recolor(atom/atom)
+/turf/open/floor/noslip/tram/proc/coordinated_recolor(atom/atom)
 	var/turf/turf = get_turf(atom)
-	return GLOB.rainbow_colors[(turf.x % GLOB.rainbow_colors.len) + 1]
+	return GLOB.coordinated_colors[(turf.x % GLOB.coordinated_colors.len) + 1]
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
