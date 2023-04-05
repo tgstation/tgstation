@@ -204,5 +204,4 @@
 		/obj/item/clothing/gloves/latex = 1,
 		/obj/item/stack/cable_coil = 2,
 	)
-	result = /obj/item/extendohand
 	category = CAT_EQUIPMENT

@@ -5,7 +5,7 @@
 /obj/item/latexballoon
 	name = "latex glove"
 	desc = "Sterile and airtight."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "greyscale_gloves"
 	lefthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
@@ -31,12 +31,12 @@
 
 	switch(state)
 		if(INFLATED)
-			icon_state = "latexballon_blow"
+			icon_state = "latexballoon_blow"
 			lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 			righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-			inhand_icon_state = "latexballon"
+			inhand_icon_state = "latexballoon"
 		if(POPPED)
-			icon_state = "latexballon_bursted"
+			icon_state = "latexballoon_bursted"
 			inhand_icon_state = initial(inhand_icon_state)
 			lefthand_file = initial(lefthand_file)
 			righthand_file = initial(righthand_file)
