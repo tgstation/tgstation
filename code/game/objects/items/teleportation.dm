@@ -396,6 +396,7 @@
 		balloon_alert(user, "malfunctioning!")
 		return
 
+	use_charge()
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
@@ -414,7 +415,6 @@
 	else
 		telefrag(destination, user)
 		do_teleport(user, destination, channel = TELEPORT_CHANNEL_FREE)
-		use_charge()
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -448,7 +448,6 @@
 	if(emergency_destination)
 		telefrag(emergency_destination, user)
 		do_teleport(user, emergency_destination, channel = TELEPORT_CHANNEL_FREE)
-		use_charge()
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
@@ -479,6 +478,8 @@
 ///Damage and stun all mobs in fragging_location turf, called after a teleport
 /obj/item/syndicate_teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.
 	for(var/mob/living/victim in fragging_location)//Hit everything in the turf
+		if(victim == user)
+			continue
 		victim.apply_damage(20, BRUTE)
 		victim.Knockdown(5 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
