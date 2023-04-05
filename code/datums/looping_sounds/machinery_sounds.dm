@@ -132,3 +132,16 @@
 	mid_sounds = list('sound/effects/bubbles2.ogg' = 1)
 	mid_length = 7 SECONDS
 	volume = 25
+
+/datum/looping_sound/typing
+	mid_sounds = list(
+		'sound/machines/terminal_button01.ogg' = 1,
+		'sound/machines/terminal_button02.ogg' = 1,
+		'sound/machines/terminal_button03.ogg' = 1,
+		'sound/machines/terminal_button04.ogg' = 1,
+		'sound/machines/terminal_button05.ogg' = 1,
+		'sound/machines/terminal_button06.ogg' = 1,
+		'sound/machines/terminal_button07.ogg' = 1,
+		'sound/machines/terminal_button08.ogg' = 1,
+	)
+	mid_length = 0.3 SECONDS

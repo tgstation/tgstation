@@ -202,7 +202,7 @@
 /obj/item/reagent_containers/spray/pepper
 	name = "pepperspray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pepperspray"
 	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -383,7 +383,7 @@
 /obj/item/reagent_containers/spray/chemsprayer/party/spray(atom/A, mob/user)
 	. = ..()
 	icon_state = "[icon_state]_used"
-	
+
 
 // Plant-B-Gone
 /obj/item/reagent_containers/spray/plantbgone // -- Skie

@@ -1,5 +1,7 @@
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "latexballon"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
@@ -111,7 +113,6 @@
 /obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
@@ -204,7 +205,6 @@
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
@@ -329,9 +329,7 @@
 /obj/item/hand_item/hand
 	name = "hand"
 	desc = "Sometimes, you just want to act gentlemanly."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-
 
 /obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
@@ -431,7 +429,6 @@
 /obj/item/hand_item/stealer
 	name = "steal"
 	desc = "Your filthy little fingers are ready to commit crimes."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")

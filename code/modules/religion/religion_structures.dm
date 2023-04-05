@@ -81,6 +81,7 @@
 /obj/item/ritual_totem
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
+	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
