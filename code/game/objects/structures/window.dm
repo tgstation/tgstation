@@ -446,6 +446,9 @@
 /obj/structure/window/spawner/north
 	dir = NORTH
 
+/obj/structure/window/spawner/south
+	dir = SOUTH
+
 /obj/structure/window/unanchored
 	anchored = FALSE
 
@@ -577,6 +580,9 @@
 /obj/structure/window/reinforced/spawner/north
 	dir = NORTH
 
+/obj/structure/window/reinforced/spawner/south
+	dir = SOUTH
+
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
@@ -614,6 +620,9 @@
 /obj/structure/window/plasma/spawner/north
 	dir = NORTH
 
+/obj/structure/window/plasma/spawner/south
+	dir = SOUTH
+
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
 
@@ -650,6 +659,8 @@
 /obj/structure/window/reinforced/plasma/spawner/north
 	dir = NORTH
 
+/obj/structure/window/reinforced/plasma/spawner/south
+	dir = SOUTH
 /obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME

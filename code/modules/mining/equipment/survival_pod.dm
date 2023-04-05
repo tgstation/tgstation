@@ -105,6 +105,9 @@
 /obj/structure/window/reinforced/survival_pod/spawner/west
 	dir = WEST
 
+/obj/structure/window/reinforced/survival_pod/spawner/south
+	dir = SOUTH
+
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "Airlock"

@@ -166,8 +166,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "ax" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1;
+/obj/structure/window/reinforced/survival_pod/spawner/north{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -175,8 +174,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "az" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1;
+/obj/structure/window/reinforced/survival_pod/spawner/north{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -186,8 +184,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "aA" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1;
+/obj/structure/window/reinforced/survival_pod/spawner/north{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -401,8 +398,7 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "bo" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4;
+/obj/structure/window/reinforced/survival_pod/spawner/east{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -476,7 +472,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "bA" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/south{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -488,7 +484,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "bB" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/south{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -712,8 +708,7 @@
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "cr" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8;
+/obj/structure/window/reinforced/survival_pod/spawner/west{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,
@@ -798,7 +793,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "cL" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/south{
 	opacity = 1
 	},
 /obj/effect/turf_decal/bot_red,

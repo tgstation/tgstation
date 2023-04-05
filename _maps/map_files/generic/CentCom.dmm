@@ -2186,18 +2186,14 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "kC" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "kD" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
@@ -2205,16 +2201,12 @@
 /area/centcom/central_command_areas/courtroom)
 "kE" = (
 /obj/structure/chair,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "kF" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron/grimy,
@@ -2227,18 +2219,14 @@
 /area/centcom/central_command_areas/courtroom)
 "kH" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/item/clipboard,
 /obj/item/folder/blue,
 /obj/item/stamp/law,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "kI" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
@@ -2321,12 +2309,10 @@
 /area/centcom/central_command_areas/courtroom)
 "lc" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/item/gavelblock,
 /obj/item/gavelhammer,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/south,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "ld" = (
@@ -2344,11 +2330,9 @@
 /area/centcom/central_command_areas/courtroom)
 "le" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/item/megaphone,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/south,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "lf" = (
@@ -3398,9 +3382,7 @@
 "pQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/item/paper_bin,
 /obj/item/pen/red,
 /obj/effect/turf_decal/bot,
@@ -3842,19 +3824,19 @@
 "rT" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/south,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "rU" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/south,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "rV" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/south,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "rY" = (
@@ -4610,9 +4592,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "vo" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/machinery/shower/directional/south,
 /obj/structure/curtain,
 /obj/machinery/door/window/brigdoor/left/directional/south{
@@ -6084,9 +6064,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
@@ -6367,9 +6345,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/storage/fancy/donut_box,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
@@ -9262,7 +9238,7 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "Tv" = (
 /obj/structure/table/wood,
-/obj/structure/window,
+/obj/structure/window/spawner/south,
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -10067,9 +10043,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/reagent_containers/cup/glass/mug/britcup,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
