@@ -443,7 +443,12 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 
-/obj/item/flashlight/flare/candle/proc/update_wax()
+/**
+ * Just checks the wax level of the candle for displaying the correct sprite.
+ *
+ * This gets called in process() every tick. If the wax level has changed, then we call our update.
+ */
+/obj/item/flashlight/flare/candle/proc/check_wax_level()
 	switch(fuel)
 		if(25 MINUTES to INFINITY)
 			current_wax_level = 1
@@ -524,7 +529,7 @@
 
 /obj/item/flashlight/flare/candle/process(delta_time)
 	. = ..()
-	update_wax()
+	check_wax_level()
 
 /obj/item/flashlight/flare/candle/infinite
 	name = "eternal candle"
