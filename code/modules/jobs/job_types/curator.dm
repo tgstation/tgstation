@@ -8,7 +8,6 @@
 	spawn_positions = 1
 	supervisors = SUPERVISOR_HOP
 	config_tag = "CURATOR"
-	difficulty = JOB_EASY
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator

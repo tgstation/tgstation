@@ -11,7 +11,6 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "VIROLOGIST"
-	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro

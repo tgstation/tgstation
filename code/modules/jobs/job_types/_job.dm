@@ -127,9 +127,6 @@
 	/// custom ringtone for this job
 	var/job_tone
 
-	/// How difficult is the job? Used in preferences and join menu to guide newbies on whats job is better to be played first
-	var/difficulty = null
-
 
 /datum/job/New()
 	. = ..()

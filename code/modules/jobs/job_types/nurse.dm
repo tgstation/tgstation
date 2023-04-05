@@ -9,7 +9,6 @@
 	supervisors = "the medical department and Chief Medical Officer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "NURSE"
-	difficulty = JOB_VERY_EASY
 
 	outfit = /datum/outfit/job/nurse
 	plasmaman_outfit = /datum/outfit/plasmaman/medical

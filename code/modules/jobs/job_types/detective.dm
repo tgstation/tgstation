@@ -14,7 +14,6 @@
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "DETECTIVE"
-	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/detective
 	plasmaman_outfit = /datum/outfit/plasmaman/detective

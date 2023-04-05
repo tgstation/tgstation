@@ -14,7 +14,6 @@
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SECURITY_OFFICER"
-	difficulty = JOB_HARD
 
 	outfit = /datum/outfit/job/security
 	plasmaman_outfit = /datum/outfit/plasmaman/security

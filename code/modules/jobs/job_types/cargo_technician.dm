@@ -10,7 +10,6 @@
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CARGO_TECHNICIAN"
-	difficulty = JOB_EASY
 
 	outfit = /datum/outfit/job/cargo_tech
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo

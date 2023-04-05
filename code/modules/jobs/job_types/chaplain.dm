@@ -9,7 +9,6 @@
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CHAPLAIN"
-	difficulty = JOB_EASY
 
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain

@@ -1,15 +1,14 @@
 /datum/job/maintenance_technician
 	title = JOB_MAINTENANCE_TECHNICIAN
-	description = "Fix everything you are told to fix, \
+	description = "Fix everything you are told to fix, get yelled at by engineers after you fail,\
 		 hope nobody notices when you accidentally break something."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the engineering department and Chief Engineer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MAINTENANCE_TECHNICIAN"
-	difficulty = JOB_VERY_EASY
 
 	outfit = /datum/outfit/job/maintenance_technician
 	plasmaman_outfit = /datum/outfit/plasmaman/engineering

@@ -13,7 +13,6 @@
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "QUARTERMASTER"
-	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo

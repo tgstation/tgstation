@@ -14,7 +14,6 @@ Assistant
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
 	paycheck = PAYCHECK_LOWER // Get a job. Job reassignment changes your paycheck now. Get over it.
-	difficulty = JOB_VERY_EASY
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT

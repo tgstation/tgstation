@@ -16,7 +16,6 @@
 	exp_required_type_department = EXP_TYPE_ENGINEERING
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CHIEF_ENGINEER"
-	difficulty = JOB_HARD
 
 	outfit = /datum/outfit/job/ce
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_engineer

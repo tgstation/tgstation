@@ -9,7 +9,6 @@
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SHAFT_MINER"
-	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
