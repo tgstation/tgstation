@@ -1,7 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - qol: "changed mech description to span_notices and just slightly comfier to use."
-  - qol: "added tooltips for mech's maintenance mode."
-  - balance: "added t4 parts for mauler and dark gygax. And t3 parts for dark honker."
-  - bugfix: "fixed that you can remove capacitor and scanmod from mech without proper maintenance steps. Now you can't"
