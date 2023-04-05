@@ -81,6 +81,10 @@
 
 /datum/computer_file/program/card_mod/kill_program(forced)
 	computer.crew_manifest_update = FALSE
+	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
+	if(inserted_auth_card)
+		GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
+
 	return ..()
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
