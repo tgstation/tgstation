@@ -172,6 +172,7 @@
 #define COLOR_THEME_GLASS "#75A4C4"
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 #define COLOR_THEME_TRASENKNOX "#3ce375"
+#define COLOR_THEME_DETECTIVE "#c7b08b"
 
 ///Colors for eigenstates
 #define COLOR_PERIWINKLEE "#9999FF"
