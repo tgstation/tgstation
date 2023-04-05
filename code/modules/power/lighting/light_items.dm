@@ -128,4 +128,4 @@
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)
-		update_appearance()
+		update_appearance(UPDATE_DESC | UPDATE_ICON)
