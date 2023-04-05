@@ -145,7 +145,6 @@
 	armor_type = /datum/armor/cloakhood_goliath
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
-	transparent_protection = HIDEMASK
 
 /datum/armor/cloakhood_goliath
 	melee = 35
