@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Operative" = 'icons/hud/screen_operative.dmi',
 	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
 	"Glass" = 'icons/hud/screen_glass.dmi',
-	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi'
+	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
+	"Detective" = 'icons/hud/screen_detective.dmi',
 ))
 
 /proc/ui_style2icon(ui_style)
