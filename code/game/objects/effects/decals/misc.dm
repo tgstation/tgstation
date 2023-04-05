@@ -1,6 +1,3 @@
-#define STRIPE_HORIZONTAL "y"
-#define STRIPE_VERTICAL "x"
-
 //Used by spraybottles.
 /obj/effect/decal/chempuff
 	name = "chemicals"
