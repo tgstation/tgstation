@@ -44,7 +44,7 @@
 	uniform = /obj/item/clothing/under/rank/rnd/test_subject
 	belt = /obj/item/modular_computer/pda/science
 	ears = /obj/item/radio/headset/headset_sci
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
