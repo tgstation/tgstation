@@ -498,7 +498,7 @@
 
 /// allows lighting a candle with something else
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
-	if(try_light_candle(attacking_item, user, quiet = istype(attacking_item, src.type)) == SUCCESS)
+	if(try_light_candle(attacking_item, user, quiet = istype(attacking_item, src.type)) == SUCCESS) // if we attack a candle with a candle, balloon alert only once
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else 
 		return ..()
