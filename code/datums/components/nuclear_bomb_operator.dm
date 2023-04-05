@@ -34,9 +34,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(owner_attacked_atom)) // This only works for players, but I am not sure this should have AI anyway
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(atom_exited_owner))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-	ADD_TRAIT(parent, TRAIT_DISK_VERIFIER, NUKE_OP_MINION_TRAIT) // Can identify the real disk
-	ADD_TRAIT(parent, TRAIT_CAN_STRIP, NUKE_OP_MINION_TRAIT) // Can take the disk off people
-	ADD_TRAIT(parent, TRAIT_CAN_USE_NUKE, NUKE_OP_MINION_TRAIT) // Can put the disk into the bomb
+	parent.add_traits(list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
 
 /datum/component/nuclear_bomb_operator/UnregisterFromParent()
 	. = ..()
@@ -48,9 +46,7 @@
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 	))
-	REMOVE_TRAIT(parent, TRAIT_DISK_VERIFIER, NUKE_OP_MINION_TRAIT)
-	REMOVE_TRAIT(parent, TRAIT_CAN_STRIP, NUKE_OP_MINION_TRAIT)
-	REMOVE_TRAIT(parent, TRAIT_CAN_USE_NUKE, NUKE_OP_MINION_TRAIT)
+	parent.remove_traits(list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
 
 /datum/component/nuclear_bomb_operator/Destroy(force, silent)
 	QDEL_NULL(disky)

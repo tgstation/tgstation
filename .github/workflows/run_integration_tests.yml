@@ -13,6 +13,9 @@ on:
       minor:
         required: false
         type: string
+      max_required_byond_client:
+        required: true
+        type: string
 jobs:
   run_integration_tests:
     runs-on: ubuntu-20.04
@@ -53,10 +56,11 @@ jobs:
           echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
         if: ${{ inputs.major }}
       - name: Compile Tests
+        id: compile_tests
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
@@ -68,3 +72,9 @@ jobs:
           name: test_artifacts_${{ inputs.map }}
           path: data/screenshots_new/
           retention-days: 1
+      - name: Check client Compatibility
+        if: always() && steps.compile_tests.outcome == 'success'
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{inputs.max_required_byond_client}}

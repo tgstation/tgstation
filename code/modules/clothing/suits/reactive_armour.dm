@@ -406,29 +406,7 @@
 	for(var/mob/living/carbon/nearby in range(range, get_turf(src)))
 		if(!can_hit_owner && nearby == owner)
 			continue
-		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
-			continue //We are protected
-		var/picked_zone = pick(zones)
-		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
-		var/obj/item/bodypart/picked_part
-		switch(picked_zone)
-			if(BODY_ZONE_HEAD)
-				picked_part = pick(heads)
-			if(BODY_ZONE_CHEST)
-				picked_part = pick(chests)
-			if(BODY_ZONE_L_ARM)
-				picked_part = pick(l_arms)
-			if(BODY_ZONE_R_ARM)
-				picked_part = pick(r_arms)
-			if(BODY_ZONE_L_LEG)
-				picked_part = pick(l_legs)
-			if(BODY_ZONE_R_LEG)
-				picked_part = pick(r_legs)
-		var/obj/item/bodypart/new_part = new picked_part()
-		new_part.replace_limb(nearby, TRUE)
-		qdel(picked_user_part)
-		nearby.update_body(TRUE)
-		balloon_alert(nearby, "something has changed about you")
+		nearby.bioscramble(name)
 
 // When the wearer gets hit, this armor will push people nearby and spawn some blocking objects.
 /obj/item/clothing/suit/armor/reactive/barricade

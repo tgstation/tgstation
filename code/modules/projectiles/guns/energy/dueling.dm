@@ -21,7 +21,7 @@
 	var/pairing_code = ""
 
 /datum/duel/New(new_gun_A, new_gun_B)
-	pairing_code = SSnetworks.assign_random_name()
+	pairing_code = assign_random_name()
 
 	gun_A = new_gun_A
 	gun_B = new_gun_B
@@ -386,3 +386,12 @@
 	var/obj/item/gun/energy/dueling/gun_A = new(src)
 	var/obj/item/gun/energy/dueling/gun_B = new(src)
 	new /datum/duel(gun_A, gun_B)
+
+#undef DUEL_IDLE
+#undef DUEL_PREPARATION
+#undef DUEL_READY
+#undef DUEL_COUNTDOWN
+#undef DUEL_FIRING
+#undef DUEL_SETTING_A
+#undef DUEL_SETTING_B
+#undef DUEL_SETTING_C
