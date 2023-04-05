@@ -160,7 +160,7 @@ const UplinkSection = (props, context) => {
       </Stack>
       <br />
       <Section textAlign="Center">
-        If you lose your uplink you can construct a Syndicate Uplink Beacon and
+        If you lose your uplink, you can craft a Syndicate Uplink Beacon and
         then speak{' '}
         <span style={goalstyle}>
           <b>{replacement_code}</b>
