@@ -43,7 +43,7 @@
 
 /**
  * Attempts to enter or exit the passed space or misc turf.
- * Returns TRUE if we successfully entered or exited said pool, FALSE otherwise
+ * Returns TRUE if we successfully entered or exited said turf, FALSE otherwise
  */
 /datum/action/cooldown/spell/jaunt/space_crawl/proc/do_spacecrawl(turf/our_turf, mob/living/jaunter)
 	if(is_jaunting(jaunter))

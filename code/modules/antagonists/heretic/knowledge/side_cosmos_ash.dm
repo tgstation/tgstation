@@ -22,7 +22,7 @@
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
 	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
-		You can only phase in and out of Space Phase when you are on a space or misc turf."
+		You can only phase in and out when you are on a space or misc turf."
 	gain_text = "You feel like your body can move through space as if you where dust."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/star_blast,
@@ -36,7 +36,7 @@
 	name = "Eldritch Coin"
 	desc = "Allows you to transmute a sheet of plasma and a diamond to create an Eldritch Coin. \
 		The coin will open or close nearby doors when landing on heads and bolt or unbolt nearby doors \
-		when landing on tails. If the coin gets inserted into an airlock it emags the door, destroying the coin."
+		when landing on tails. If the coin gets inserted into an airlock it emags the door destroying the coin."
 	gain_text = "It tossed the coin and won its bet, now it gains..."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_expansion,
