@@ -24,6 +24,7 @@
 #_maps/shuttles/emergency_imfedupwiththisworld.dmm
 #_maps/shuttles/emergency_luxury.dmm
 #_maps/shuttles/emergency_meteor.dmm
+#_maps/shuttles/emergency_microwave.dmm
 #_maps/shuttles/emergency_raven.dmm
 #_maps/shuttles/emergency_russiafightpit.dmm
 #_maps/shuttles/emergency_scrapheap.dmm
