@@ -528,12 +528,11 @@ SUBSYSTEM_DEF(spatial_grid)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
 
-		#else
+		#endif
+
 		if(!input_cell)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
-
-		#endif
 
 	GRID_CELL_REMOVE(input_cell, input_cell.client_contents, to_remove)
 	GRID_CELL_REMOVE(input_cell, input_cell.hearing_contents, to_remove)
