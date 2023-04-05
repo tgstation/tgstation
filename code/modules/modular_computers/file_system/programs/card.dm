@@ -121,19 +121,9 @@
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
-		// Eject the ID used to log on to the ID app.
-		if("PRG_ejectauthid")
+		if("PRG_eject_id")
 			if(inserted_auth_card)
-				return computer.RemoveID(usr)
-			else
-				var/obj/item/I = user.get_active_held_item()
-				if(isidcard(I))
-					return computer.InsertID(I, user)
-		// Eject the ID being modified.
-		if("PRG_ejectmodid")
-			if(inserted_auth_card)
-				GLOB.manifest.modify(inserted_auth_card.registered_name, inserted_auth_card.assignment, inserted_auth_card.get_trim_assignment())
-				return computer.RemoveID(usr)
+				return computer.RemoveID(usr, TRUE)
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(isidcard(I))

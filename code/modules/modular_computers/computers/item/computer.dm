@@ -273,10 +273,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
  * Args:
  * user - The mob trying to remove the ID, if there is one
+ * card_changed - Is the card changed? If so, the manifest will be updated to reflect the changes.
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/RemoveID(mob/user, card_changed = FALSE)
 	if(!computer_id_slot)
 		return ..()
+
+	if(card_changed)
+		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
 	if(user)
 		if(!issilicon(user) && in_range(src, user))
