@@ -493,7 +493,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 		#ifdef UNIT_TESTS
 
-		if(input_cell && (!(input_cell in to_remove.in_spatial_grid_cells) || length(to_remove.spatial_grid_cells) > 1))
+		if(input_cell && (!(input_cell in to_remove.in_spatial_grid_cells) || length(to_remove.in_spatial_grid_cells) > 1))
 			var/input_cell_coords = "([input_cell.cell_x], [input_cell.cell_y], [input_cell.cell_z])"
 
 			var/error_data = ""
