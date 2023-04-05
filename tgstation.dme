@@ -3702,6 +3702,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\forgottenship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hellfactory.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\hilbertshotel.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\interdyne.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\listeningstation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\meateor.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\oldstation.dm"
