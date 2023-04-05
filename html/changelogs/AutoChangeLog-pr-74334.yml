@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - rscadd: "Don't trip on the tram plate while crossing, you may be in for a shocking surprise!"
