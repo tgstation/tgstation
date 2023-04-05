@@ -76,42 +76,6 @@
 
 	return TRUE
 
-/datum/id_trim/job/adjutant
-	assignment = "Adjutant"
-	trim_state = "trim_adjutant"
-	department_color = COLOR_COMMAND_BLUE
-	subdepartment_color = COLOR_ASSISTANT_GRAY
-	sechud_icon_state = SECHUD_ADJUTANT
-	minimal_access = list(
-		ACCESS_COMMAND,
-		ACCESS_RC_ANNOUNCE,
-		ACCESS_EVA,
-		ACCESS_TELEPORTER,
-		ACCESS_GATEWAY,
-		ACCESS_KEYCARD_AUTH,
-		ACCESS_BRIG_ENTRANCE,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_CARGO,
-		ACCESS_CONSTRUCTION,
-		ACCESS_WEAPONS,
-		)
-	extra_access = list(
-		ACCESS_BRIG,
-		ACCESS_AI_UPLOAD,
-		ACCESS_ENGINEERING,
-		ACCESS_TCOMMS,
-		ACCESS_TECH_STORAGE,
-		ACCESS_MEDICAL,
-		ACCESS_SCIENCE,
-		ACCESS_SERVICE,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_HOP,
-		)
-	job = /datum/job/adjutant
-
 /datum/id_trim/job/assistant
 	assignment = "Assistant"
 	trim_state = "trim_assistant"

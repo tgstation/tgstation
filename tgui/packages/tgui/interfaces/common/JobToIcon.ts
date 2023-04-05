@@ -1,13 +1,11 @@
 /** Icon map of jobs to their fontawesome5 (free) counterpart. */
 export const JOB2ICON = {
-  'Adjutant': 'briefcase',
   'AI': 'eye',
   'Assistant': 'toolbox',
   'Atmospheric Technician': 'fan',
   'Bartender': 'cocktail',
   'Botanist': 'seedling',
   'Captain': 'crown',
-  'Cargo Clerk': 'paperclip',
   'Cargo Technician': 'box',
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
@@ -46,7 +44,6 @@ export const JOB2ICON = {
   'Security Officer (Medical)': 'shield-halved',
   'Security Officer (Science)': 'shield-halved',
   'Security Officer': 'shield-halved',
-  'Steward': 'mug-hot',
   'Shaft Miner': 'digging',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',

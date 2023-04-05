@@ -79,14 +79,12 @@
 #define SECHUD_CENTCOM "hudcentcom"
 #define SECHUD_SYNDICATE "hudsyndicate"
 
-#define SECHUD_ADJUTANT "hudadjutant"
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BOTANIST "hudbotanist"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
-#define SECHUD_CARGO_CLERK "hudcargoclerk"
 #define SECHUD_CHAPLAIN "hudchaplain"
 #define SECHUD_CHEMIST "hudchemist"
 #define SECHUD_CHIEF_ENGINEER "hudchiefengineer"
@@ -116,7 +114,6 @@
 #define SECHUD_TEST_SUBJECT "hudtestsubject"
 #define SECHUD_SHAFT_MINER "hudshaftminer"
 #define SECHUD_STATION_ENGINEER "hudstationengineer"
-#define SECHUD_STEWARD "hudsteward"
 #define SECHUD_VIROLOGIST "hudvirologist"
 #define SECHUD_WARDEN "hudwarden"
 
