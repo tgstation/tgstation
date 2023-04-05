@@ -111,7 +111,7 @@
 /obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "nothing"
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
@@ -204,7 +204,7 @@
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
@@ -329,7 +329,7 @@
 /obj/item/hand_item/hand
 	name = "hand"
 	desc = "Sometimes, you just want to act gentlemanly."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "nothing"
 
 
@@ -431,7 +431,7 @@
 /obj/item/hand_item/stealer
 	name = "steal"
 	desc = "Your filthy little fingers are ready to commit crimes."
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")

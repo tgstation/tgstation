@@ -50,7 +50,7 @@
 	if(isnull(air_contents))
 		return // no air in the tank
 
-	balloon_alert(user, span_notice("You blow up [src] with [tank].")) // get it? because it's a balloon
+	balloon_alert(user, span_notice("You blow up [src] with [tank].")) // because it's a balloon obviously
 
 	if(state == INFLATED)
 		blow() 	// too much air, pop it!
