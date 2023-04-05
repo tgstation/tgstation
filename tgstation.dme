@@ -161,6 +161,7 @@
 #include "code\__DEFINES\pai.dm"
 #include "code\__DEFINES\paintings.dm"
 #include "code\__DEFINES\paper.dm"
+#include "code\__DEFINES\particles.dm"
 #include "code\__DEFINES\path.dm"
 #include "code\__DEFINES\perf_test.dm"
 #include "code\__DEFINES\pinpointers.dm"
