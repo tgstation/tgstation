@@ -73,6 +73,16 @@
 
 	return FALSE
 
+/datum/computer_file/program/card_mod/on_start(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	computer.crew_manifest_update = TRUE
+
+/datum/computer_file/program/card_mod/kill_program(forced)
+	computer.crew_manifest_update = FALSE
+	return ..()
+
 /datum/computer_file/program/card_mod/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -123,7 +133,7 @@
 			return TRUE
 		if("PRG_eject_id")
 			if(inserted_auth_card)
-				return computer.RemoveID(usr, TRUE)
+				return computer.RemoveID(usr)
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(isidcard(I))
