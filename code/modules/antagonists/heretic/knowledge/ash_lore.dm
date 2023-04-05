@@ -15,7 +15,7 @@
  * Fire Blast
  * Mask of Madness
  * > Sidepaths:
- *   Curse of The Stars
+ *   Space Phase
  *   Curse of Paralysis
  *
  * Fiery Blade
@@ -130,7 +130,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/curse/cosmic_trail,
+		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(

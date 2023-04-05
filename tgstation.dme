@@ -2568,6 +2568,7 @@
 #include "code\modules\antagonists\heretic\magic\rust_construction.dm"
 #include "code\modules\antagonists\heretic\magic\rust_wave.dm"
 #include "code\modules\antagonists\heretic\magic\shadow_cloak.dm"
+#include "code\modules\antagonists\heretic\magic\space_crawl.dm"
 #include "code\modules\antagonists\heretic\magic\star_blast.dm"
 #include "code\modules\antagonists\heretic\magic\star_touch.dm"
 #include "code\modules\antagonists\heretic\magic\void_cold_cone.dm"

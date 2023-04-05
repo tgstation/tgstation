@@ -16,7 +16,7 @@
  * Star Blast
  * > Sidepaths:
  *   Curse of Corrosion
- *   Curse of The Stars
+ *   Space Phase
  *
  * Cosmic Blade
  * Cosmic Expansion
@@ -118,7 +118,7 @@
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
-		/datum/heretic_knowledge/curse/cosmic_trail,
+		/datum/heretic_knowledge/spell/space_phase,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
@@ -142,7 +142,7 @@
 	/// When this timer completes we reset our combo.
 	var/combo_timer
 	/// The duration of the combo.
-	var/combo_duration = 2.5 SECONDS
+	var/combo_duration = 3 SECONDS
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
 

@@ -20,6 +20,15 @@
 	pixel_x = -16
 	pixel_y = -16
 
+/obj/effect/temp_visual/space_explosion
+	name = "Space Explosion"
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "space_explosion"
+	anchored = TRUE
+	duration = 5
+	pixel_x = -16
+	pixel_y = -16
+
 /obj/effect/temp_visual/cosmic_domain
 	name = "Cosmic Domain"
 	icon = 'icons/effects/160x160.dmi'

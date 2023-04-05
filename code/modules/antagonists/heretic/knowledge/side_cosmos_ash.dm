@@ -19,46 +19,24 @@
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/curse/cosmic_trail
-	name = "Curse of The Stars"
-	desc = "Allows you to transmute a bluespace crystal, a pool of ash, and a liver to cast a Curse of The Stars on a crew member. \
-		The victim will recieve a star mark for 3 minutes, preventing them from entering cosmic fields. \
-		Additionally they will leave a trail of cosmic fields wherever they move."
-	gain_text = "Strange stars glare through the cosmos. The stars focus their solar radiation onto their target."
+/datum/heretic_knowledge/spell/space_phase
+	name = "Space Phase"
+	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
+		You can only phase in and out of Space Phase when you are on a space or misc turf."
+	gain_text = "You feel like your body can move through space as if you where dust."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/star_blast,
 		/datum/heretic_knowledge/mad_mask,
 	)
-	required_atoms = list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/organ/internal/liver = 1,
-	)
-	duration = 3 MINUTES
-	duration_modifier = 2
-	curse_color = "#dcaa5b"
+	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/curse/cosmic_trail/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	to_chat(chosen_mob, span_danger("A cosmic energy starts flowing through you."))
-	chosen_mob.apply_status_effect(/datum/status_effect/star_mark/extended)
-	chosen_mob.AddElement(/datum/element/effect_trail/cosmic_trail)
-	return ..()
-
-/datum/heretic_knowledge/curse/cosmic_trail/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	if(QDELETED(chosen_mob))
-		return
-
-	chosen_mob.RemoveElement(/datum/element/effect_trail/cosmic_trail)
-	to_chat(chosen_mob, span_green("The cosmic energy leaves your body."))
-	return ..()
-
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
-	desc = "Allows you to transmute a sheet of plasma, a diamond and eyes to create an Eldritch Coin. \
-		The coin will heal when landing on heads and harm when landing on tails. \
-		The coin's healing is increased when used by Heretics."
+	desc = "Allows you to transmute a sheet of plasma and a diamond to create an Eldritch Coin. \
+		The coin will open or close nearby doors when landing on heads and bolt or unbolt nearby doors \
+		when landing on tails. If the coin gets inserted into an airlock it emags the door, destroying the coin."
 	gain_text = "It tossed the coin and won its bet, now it gains..."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_expansion,
@@ -67,7 +45,6 @@
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/diamond = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
-		/obj/item/organ/internal/eyes = 1,
 	)
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
