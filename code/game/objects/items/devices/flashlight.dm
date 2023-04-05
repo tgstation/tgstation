@@ -490,15 +490,15 @@
 			user.visible_message(success_msg)
 			return SUCCESS
 		if(ALREADY_LIT)
-			if(quiet)
+			if(!quiet)
 				balloon_alert(user, "already lit!")
 		if(NO_FUEL)
-			if(quiet)
+			if(!quiet)
 				balloon_alert(user, "out of fuel!")
 
 /// allows lighting a candle with something else
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
-	if(try_light_candle(attacking_item, user) == SUCCESS)
+	if(try_light_candle(attacking_item, user, quiet = istype(attacking_item, src.type)) == SUCCESS)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else 
 		return ..()
@@ -508,7 +508,7 @@
 	if(ismob(target))
 		return ..()
 
-	try_light_candle(target, user, quiet = TRUE)
+	try_light_candle(target, user)
 
 	return ..()
 
