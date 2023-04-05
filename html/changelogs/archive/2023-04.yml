@@ -100,3 +100,61 @@
   vinylspiders:
   - bugfix: the 'natural wig' item will no longer show a broken icon when it mimics
       a hairstyle whose icon path something other than the default 'icons/mob/species/human/human_face.dmi'
+2023-04-04:
+  13spacemen:
+  - bugfix: Roundend Report properly lists cultist names if the cult failed and didn't
+      summon Narsie
+  DrDiasyl aka DrTuxedo#0931:
+  - bugfix: Floor lights no longer become invisible when the fire alarm is turned
+      on
+  Ebin-Halcyon:
+  - imageadd: The maid costume has gotten it's colors slightly tweaked, should look
+      nicer.
+  LemonInTheDark:
+  - bugfix: Directional frosted/tinted windows will no longer fuck up vision
+  MrStonedOne:
+  - bugfix: The notify restart verb in the ooc tab should now actually work.
+  Profakos:
+  - rscadd: adds the ruins of a restaurant robot portal hub
+  Rhials:
+  - code_imp: The xeno_spawn landmark is now the generic_maintenance_landmark landmark.
+  - bugfix: Certain midrounds will now check for atmos safety before spawning.
+  tralezab:
+  - rscadd: Chuunibyou wizards, and chunni granters in the library
+  - rscadd: Medical eyepatches
+2023-04-05:
+  Helg2:
+  - qol: changed mech description to span_notices and just slightly comfier to use.
+  - qol: added tooltips for mech's maintenance mode.
+  - balance: added t4 parts for mauler and dark gygax. And t3 parts for dark honker.
+  - bugfix: fixed that you can remove capacitor and scanmod from mech without proper
+      maintenance steps. Now you can't
+  - bugfix: West sided version of red alert fire alarm is now looks normally.
+  JohnFulpWillard:
+  - bugfix: QM's now get teleporter access on lowpop, like every other Command does.
+  LT3:
+  - rscadd: Don't trip on the tram plate while crossing, you may be in for a shocking
+      surprise!
+  LemonInTheDark:
+  - refactor: runechat should be a lot cheaper on the server. I've changed how it
+      functions, if it behaves weird yell at me please don't just ignore it
+  - bugfix: The coderbus passengers layer properly again
+  MMMiracles:
+  - balance: Little Timmy's lavaland pizza party has gotten an overhaul to be a bit
+      more interesting.
+  Profakos:
+  - bugfix: The prey pod ruin no longer has two corpses, only one.
+  RikuTheKiller:
+  - balance: Slash wounds no longer clot while dead.
+  SyncIt21:
+  - bugfix: thermo machines can be ctrl dragged again
+  - qol: alt click cycles between min, median & max temperature ranges
+  - refactor: removed useless init code
+  tralezab:
+  - bugfix: blink is now a translocation spell
+  vinylspiders:
+  - bugfix: marisa shoes will now build its worn icon using the greyscale config like
+      sneakers do
+  zxaber:
+  - balance: Malf AIs that hack Head of Staff and Vault APCs will now find a discount
+      issued on Doomsday.

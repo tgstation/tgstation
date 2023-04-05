@@ -229,5 +229,6 @@
 /obj/item/melee/touch_attack/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

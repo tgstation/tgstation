@@ -1,0 +1,5 @@
+author: "flowercuco"
+delete-after: True
+changes:
+  - rscadd: "Added new syndicate uplink beacon and associated systems that allow you to get a replacement traitor uplink"
+  - bugfix: "Debug & nukie uplinks no longer runtime and work properly again"
