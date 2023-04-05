@@ -334,7 +334,6 @@
 	// Stonewall was June 28th, this captures its week.
 	begin_day = 23
 	end_day = 29
-	always_celebrate = TRUE
 
 // JULY
 
@@ -728,9 +727,9 @@
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
 
-// HOLIDAY/FLAG DECAL COLORS
+// HOLIDAY DECAL COLORS
 
-GLOBAL_LIST_INIT(coordinated_colors, list(
+GLOBAL_LIST_INIT(holiday_colors, list(
 	COLOR_PRIDE_PURPLE,
 	COLOR_PRIDE_BLUE,
 	COLOR_PRIDE_GREEN,

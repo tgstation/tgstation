@@ -156,14 +156,21 @@
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
 	if(check_holidays(PRIDE_WEEK))
-		color = coordinated_recolor(src)
+		color = get_holiday_color(src, STRIPE_VERTICAL)
 	else
 		color = "#EFB341"
 	return ..()
 
-/turf/open/floor/noslip/tram/proc/coordinated_recolor(atom/atom)
-	var/turf/turf = get_turf(atom)
-	return GLOB.coordinated_colors[(turf.x % GLOB.coordinated_colors.len) + 1]
+/// Given an atom, will return what color it should be to match the event/holiday
+/turf/proc/get_holiday_color(atom/thing_to_color, axis = STRIPE_HORIZONTAL)
+	switch(axis)
+		if(STRIPE_HORIZONTAL)
+			return GLOB.holiday_colors[(thing_to_color.y % GLOB.holiday_colors.len) + 1]
+		if(STRIPE_VERTICAL)
+			return GLOB.holiday_colors[(thing_to_color.x % GLOB.holiday_colors.len) + 1]
+		else
+			stack_trace("Atom requested holiday color without correct argument.")
+			return COLOR_WHITE
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
