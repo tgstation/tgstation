@@ -210,14 +210,18 @@
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
 
-		if(mob.mob_biotypes & MOB_SPIRIT) // time to steal your soul
-			if(istype(mob, /mob/living/simple_animal/revenant)) // no hiding
-				var/mob/living/simple_animal/revenant/peek_a_boo = mob
-				peek_a_boo.reveal(2 SECONDS)
-				peek_a_boo.stun(2 SECONDS)
-			mob.visible_message(span_warning("[src] violently flinches!"), \
-				span_revendanger("You feel your essence draining away from having your picture taken!"))
-			mob.apply_damage(rand(10, 15))
+		var/mob/living/target = mob
+		if(!istype(target) || !(target.mob_biotypes & MOB_SPIRIT)) 
+			continue
+			
+		// time to steal your soul
+		if(istype(target, /mob/living/simple_animal/revenant)) // no hiding
+			var/mob/living/simple_animal/revenant/peek_a_boo = mob
+			peek_a_boo.reveal(2 SECONDS)
+			peek_a_boo.stun(2 SECONDS)
+		target.visible_message(span_warning("[src] violently flinches!"), \
+			span_revendanger("You feel your essence draining away from having your picture taken!"))
+		target.apply_damage(rand(10, 15))
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
