@@ -5,7 +5,7 @@
 		get feed to the slimes."
 	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
-	total_positions = 5
+	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the science department and Research Director"
 	exp_granted_type = EXP_TYPE_CREW
