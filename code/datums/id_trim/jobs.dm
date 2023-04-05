@@ -785,7 +785,9 @@
 		ACCESS_EVA,
 		ACCESS_BRIG_ENTRANCE,
 		)
-	extra_access = list()
+	extra_access = list(
+		ACCESS_TELEPORTER,
+		)
 	minimal_wildcard_access = list(
 		ACCESS_QM,
 	)

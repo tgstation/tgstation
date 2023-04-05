@@ -2,7 +2,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	desc_controls = "Left click to stun, right click to harm."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -287,6 +287,7 @@
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -357,7 +358,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -387,17 +388,15 @@
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
-
 	force = 10
 	wound_bonus = 0
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
-
 	armor_type = /datum/armor/baton_security
-
 	throwforce = 7
 	stamina_damage = 60
 	knockdown_time = 5 SECONDS
@@ -406,7 +405,6 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
-
 	context_living_rmb_active = "Harmful Stun"
 
 	var/throw_stun_chance = 35
@@ -641,6 +639,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -707,6 +706,7 @@
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5
