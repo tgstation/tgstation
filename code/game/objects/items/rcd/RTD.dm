@@ -1,3 +1,5 @@
+//RAPID TILING DEVICE
+
 /// time taken to create tile
 #define CONSTRUCTION_TIME 0.4 SECONDS
 /// time taken to destroy a tile
@@ -267,30 +269,35 @@
 		balloon_alert(user, "design not supported!")
 		return TRUE
 
-	if(!checkResource(selected_design.cost, user))
-		return TRUE
-
-	//All special effect stuff
-	user.Beam(floor, icon_state = "light_beam", time = CONSTRUCTION_TIME)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, CONSTRUCTION_TIME, RCD_FLOORWALL)
+
+	//resource sanity check before & after delay along with special effects
+	if(!checkResource(selected_design.cost, user))
+		qdel(rcd_effect)
+		return TRUE
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = CONSTRUCTION_TIME)
 	if(!do_after(user, CONSTRUCTION_TIME, target = floor))
-		rcd_effect.end_animation()
+		qdel(beam)
+		qdel(rcd_effect)
+		return TRUE
+	if(!checkResource(selected_design.cost, user))
+		qdel(rcd_effect)
 		return TRUE
 
-	//consume resource only if tile was placed successfully
+	if(!useResource(selected_design.cost, user))
+		qdel(rcd_effect)
+		return TRUE
+	//step 1 create tile
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
-		rcd_effect.end_animation()
+		qdel(rcd_effect)
 		balloon_alert(user, "tile got merged with the stack beneath you!")
 		return TRUE
-
+	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
-	if(new_turf)
-		//apply infered overlays
+	if(new_turf) //apply infered overlays
 		for(var/datum/overlay_info/info in design_overlays)
 			info.add_decal(new_turf)
-		//use material
-		useResource(selected_design.cost, user)
 	rcd_effect.end_animation()
 
 	return TRUE
@@ -321,11 +328,29 @@
 					cost = tile_design.cost
 					can_deconstruct = TRUE
 					break
-	if(!can_deconstruct || !checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
-		if(!can_deconstruct)
-			balloon_alert(user, "can't deconstruct this type!")
+	if(!can_deconstruct)
+		balloon_alert(user, "can't deconstruct this type!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
+
+	//resource sanity check before & after delay along with beam effects
+	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = DECONSTRUCTION_TIME)
+	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
+		qdel(beam)
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!checkResource(cost * 0.7, user))
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	//do the tiling
+	if(!useResource(cost * 0.7, user))
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	//find & collect all decals
 	var/list/all_decals = list()
 	for(var/obj/effect/decal in floor.contents)
@@ -334,21 +359,10 @@
 	for(var/obj/effect/decal in all_decals)
 		floor.contents -= decal
 		qdel(decal)
-
-	//All special effect stuff
-	user.Beam(floor, icon_state = "light_beam", time = DECONSTRUCTION_TIME)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
-	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
-		rcd_effect.end_animation()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/turf/new_turf = null
 	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
-		new_turf = floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else // for every other turf we scarp away exposing base turf underneath
-		new_turf = floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(new_turf)
-		useResource(cost * 0.7, user)
+		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
