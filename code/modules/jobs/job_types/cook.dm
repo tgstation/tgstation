@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
+	difficulty = JOB_EASY
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook

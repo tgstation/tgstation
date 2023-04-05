@@ -202,3 +202,10 @@
 #define SUPERVISOR_HOS "the Head of Security"
 #define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_RD "the Research Director"
+
+// Macros for job difficulty
+#define JOB_VERY_EASY "Very Easy"
+#define JOB_EASY "Easy"
+#define JOB_MEDIUM "Medium"
+#define JOB_HARD "Hard"
+#define JOB_VERY_HARD "Very Hard"

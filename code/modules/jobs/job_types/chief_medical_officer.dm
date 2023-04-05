@@ -16,6 +16,7 @@
 	exp_required_type_department = EXP_TYPE_MEDICAL
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CHIEF_MEDICAL_OFFICER"
+	difficulty = JOB_HARD
 
 	outfit = /datum/outfit/job/cmo
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer

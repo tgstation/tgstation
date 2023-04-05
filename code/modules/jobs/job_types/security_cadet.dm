@@ -1,6 +1,6 @@
 /datum/job/security_cadet
 	title = JOB_SECURITY_CADET
-	description = "Maintain order, detain space criminals with the Security Officers, \
+	description = "Help detain space criminals, \
 		help Warden with securing and proccesing prisoners, \
 		accidentaly pepperspray yourself."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
@@ -9,11 +9,11 @@
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the security department and Head of Security"
-	minimal_player_age = 7
 	exp_requirements = 60 //Play one round, we hope you at least know how to talk
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SECURITY_CADET"
+	difficulty = JOB_EASY
 
 	outfit = /datum/outfit/job/cadet
 	plasmaman_outfit = /datum/outfit/plasmaman/security

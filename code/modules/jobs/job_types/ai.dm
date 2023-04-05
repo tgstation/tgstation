@@ -22,7 +22,7 @@
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT
 	var/do_special_check = TRUE
 	config_tag = "AI"
-
+	difficulty = JOB_VERY_HARD
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

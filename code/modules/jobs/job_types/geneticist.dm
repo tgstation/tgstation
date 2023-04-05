@@ -11,6 +11,7 @@
 	exp_required_type_department = EXP_TYPE_SCIENCE
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "GENETICIST"
+	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/geneticist
 	plasmaman_outfit = /datum/outfit/plasmaman/genetics

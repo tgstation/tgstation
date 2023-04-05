@@ -225,30 +225,6 @@
 		)
 	job = /datum/job/cargo_technician
 
-/datum/id_trim/job/cargo_clerk
-	assignment = "Cargo Clerk"
-	trim_state = "trim_cargoclerk"
-	department_color = COLOR_CARGO_BROWN
-	subdepartment_color = COLOR_ASSISTANT_GRAY
-	sechud_icon_state = SECHUD_CARGO_CLERK
-	minimal_access = list(
-		ACCESS_CARGO,
-		ACCESS_MECH_MINING,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_SHIPPING,
-		)
-	extra_access = list(
-		ACCESS_MINING,
-		ACCESS_MINING_STATION,
-		ACCESS_MAINT_TUNNELS,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_QM,
-		)
-	job = /datum/job/cargo_clerk
-
 /datum/id_trim/job/chaplain
 	assignment = "Chaplain"
 	trim_state = "trim_chaplain"
@@ -1187,29 +1163,6 @@
 		ACCESS_CE,
 		)
 	job = /datum/job/station_engineer
-
-/datum/id_trim/job/steward
-	assignment = "Steward"
-	trim_state = "trim_tavernkeeper"
-	department_color = COLOR_SERVICE_LIME
-	subdepartment_color = COLOR_ASSISTANT_GRAY
-	sechud_icon_state = SECHUD_STEWARD
-	minimal_access = list(
-		ACCESS_BAR,
-		ACCESS_KITCHEN,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_SERVICE,
-		)
-	extra_access = list(
-		ACCESS_HYDROPONICS,
-		ACCESS_THEATRE,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_HOP,
-		)
-	job = /datum/job/steward
 /datum/id_trim/job/test_subject
 	assignment = "Test Subject"
 	trim_state = "trim_testsubject"

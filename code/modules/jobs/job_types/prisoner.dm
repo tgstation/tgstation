@@ -9,6 +9,7 @@
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
 	config_tag = "PRISONER"
+	difficulty = JOB_VERY_EASY
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner

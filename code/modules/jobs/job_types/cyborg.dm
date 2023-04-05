@@ -12,6 +12,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CYBORG"
+	difficulty = JOB_HARD
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 

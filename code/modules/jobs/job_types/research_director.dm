@@ -17,6 +17,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "RESEARCH_DIRECTOR"
+	difficulty = JOB_HARD
 
 	outfit = /datum/outfit/job/rd
 	plasmaman_outfit = /datum/outfit/plasmaman/research_director

@@ -11,6 +11,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CHEMIST"
+	difficulty = JOB_MEDIUM
 
 	outfit = /datum/outfit/job/chemist
 	plasmaman_outfit = /datum/outfit/plasmaman/chemist
