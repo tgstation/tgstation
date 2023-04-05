@@ -174,7 +174,7 @@
 			ContactContractDisease(D)
 
 	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
+		if((user.istate & ISTATE_HARM))
 			break
 		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
 			continue
@@ -201,7 +201,7 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		help_shake_act(user)
 		return FALSE
 

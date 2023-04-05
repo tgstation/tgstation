@@ -8,7 +8,7 @@
 	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	basic_mob_flags = DEL_ON_DEATH
 	maxHealth = 40
 	health = 40

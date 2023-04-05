@@ -200,9 +200,9 @@
 		return
 	var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
 	var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
-	if(!((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK)))
+	if(!((stomach?.drain_time < world.time) && (user.istate & ISTATE_SECONDARY)))
 		return
-	if(ethereal.combat_mode)
+	if((ethereal.istate & ISTATE_HARM))
 		if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "safeties prevent draining!"), alert_timer_duration)
 			return

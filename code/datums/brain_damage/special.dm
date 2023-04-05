@@ -3,7 +3,7 @@
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
 	clonable = FALSE
-	
+
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
 	desc = "Patient occasionally and uncontrollably channels an eldritch god when speaking."
@@ -18,7 +18,7 @@
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
 			speak("heal", TRUE)
-		else if(prob(30) && owner.combat_mode)
+		else if(prob(30) && (owner.istate & ISTATE_HARM))
 			speak("aggressive")
 		else
 			speak("neutral", prob(25))

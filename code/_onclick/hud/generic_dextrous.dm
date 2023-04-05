@@ -1,3 +1,6 @@
+/datum/hud/dextrous
+	has_interaction_ui = TRUE
+
 //Used for normal mobs that have hands.
 /datum/hud/dextrous/New(mob/living/owner)
 	..()
@@ -31,13 +34,6 @@
 	using.screen_loc = ui_swaphand_position(owner,2)
 	using.hud = src
 	static_inventory += using
-
-	action_intent = new /atom/movable/screen/combattoggle/flashy()
-	action_intent.hud = src
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
-	static_inventory += action_intent
-
 
 	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style

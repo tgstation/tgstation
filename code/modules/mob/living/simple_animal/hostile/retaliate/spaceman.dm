@@ -13,7 +13,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	maxHealth = 100
 	health = 100
 	speed = 0

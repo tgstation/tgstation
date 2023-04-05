@@ -52,7 +52,7 @@
 		return
 
 	//Harm intent will bypass inserting for injecting food with syringes and such
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 
 	if(inserted_item.w_class > minimum_weight_class)

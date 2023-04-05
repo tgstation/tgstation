@@ -325,6 +325,6 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/user, list/modifiers)
 	..()
-	if(user.combat_mode && user.reagents && !stat)
+	if((user.istate & ISTATE_HARM) && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

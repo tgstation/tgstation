@@ -388,10 +388,10 @@
 		if(!L.anchored && !L.throwing)//avoid double hits
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				var/firer_combat_mode = TRUE
+				var/firer_istate = TRUE
 				var/mob/living/living_shooter = firer
 				if(istype(living_shooter))
-					firer_combat_mode = living_shooter.combat_mode
+					firer_istate = (living_shooter.istate & ISTATE_HARM)
 				if(fire_modifiers && fire_modifiers["right"])
 					var/obj/item/I = C.get_active_held_item()
 					if(I)
@@ -405,7 +405,7 @@
 					else
 						to_chat(firer, span_danger("[C] has nothing in hand to disarm!"))
 						return BULLET_ACT_HIT
-				if(firer_combat_mode)
+				if(firer_istate)
 					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
 					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
 					return BULLET_ACT_HIT

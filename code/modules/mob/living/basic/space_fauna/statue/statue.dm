@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	mob_biotypes = MOB_HUMANOID
 	gold_core_spawnable = NO_SPAWN
 

@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	tgui_say = new(src, "tgui_say")
 
-	set_right_click_menu_mode(TRUE)
+	set_right_click_menu_mode()
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
@@ -1195,15 +1195,27 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.particle_test = new /datum/particle_editor(in_atom)
 		holder.particle_test.ui_interact(mob)
 
-/client/proc/set_right_click_menu_mode(shift_only)
-	if(shift_only)
-		winset(src, "mapwindow.map", "right-click=true")
-		winset(src, "ShiftUp", "is-disabled=false")
-		winset(src, "Shift", "is-disabled=false")
+///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
+/client/proc/set_right_click_menu_mode()
+	var/rclick_type
+	if(mob?.rclick_always_context_menu)
+		rclick_type = RIGHTCLICK_BOTH
 	else
-		winset(src, "mapwindow.map", "right-click=false")
-		winset(src, "default.Shift", "is-disabled=true")
-		winset(src, "default.ShiftUp", "is-disabled=true")
+		rclick_type = context_menu_requires_shift
+
+	switch(rclick_type)
+		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
+			winset(src, "mapwindow.map", "right-click=false")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=true\"")
+		if(RIGHTCLICK_SHIFT) //Shift right click opens context menu
+			winset(src, "mapwindow.map", "right-click=true")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=true\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
+		if(RIGHTCLICK_BOTH) //Both open context menu
+			winset(src, "mapwindow.map", "right-click=false")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
 
 /client/proc/update_ambience_pref()
 	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))

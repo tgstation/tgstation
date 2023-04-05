@@ -8,7 +8,7 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
@@ -211,7 +211,7 @@
 	user.do_attack_animation(target_mob)
 	target_mob.attacked_by(src, user)
 
-	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target_mob, "attacked", src.name, "(ISTATE: [user.log_istate()]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking

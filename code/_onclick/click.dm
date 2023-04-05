@@ -74,33 +74,37 @@
 
 	var/list/modifiers = params2list(params)
 
+	if(client)
+		client.imode.update_istate(src, modifiers)
+
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(!(istate & ISTATE_SECONDARY))
+		if(LAZYACCESS(modifiers, SHIFT_CLICK))
+			if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+				ShiftMiddleClickOn(A)
+				return
+			if(LAZYACCESS(modifiers, CTRL_CLICK))
+				CtrlShiftClickOn(A)
+				return
+			ShiftClickOn(A)
+			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			ShiftMiddleClickOn(A)
+			if(LAZYACCESS(modifiers, CTRL_CLICK))
+				CtrlMiddleClickOn(A)
+			else
+				MiddleClickOn(A, params)
+			return
+		if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
+			if((istate & ISTATE_SECONDARY))
+				alt_click_on_secondary(A)
+			else
+				AltClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlShiftClickOn(A)
+			CtrlClickOn(A)
 			return
-		ShiftClickOn(A)
-		return
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlMiddleClickOn(A)
-		else
-			MiddleClickOn(A, params)
-		return
-	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			alt_click_on_secondary(A)
-		else
-			AltClickOn(A)
-		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
-		CtrlClickOn(A)
-		return
 
 	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
@@ -126,7 +130,7 @@
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if((istate & ISTATE_SECONDARY))
 			W.attack_self_secondary(src, modifiers)
 			update_held_items()
 			return
@@ -167,7 +171,7 @@
 			UnarmedAttack(A,1,modifiers)
 	else
 		if(W)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			if((istate & ISTATE_SECONDARY))
 				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
 
 				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
@@ -175,7 +179,7 @@
 			else
 				W.afterattack(A,src,0,params)
 		else
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			if((istate & ISTATE_SECONDARY))
 				ranged_secondary_attack(A, modifiers)
 			else
 				RangedAttack(A,modifiers)
@@ -368,7 +372,7 @@
 		return FALSE
 
 	var/mob/living/user_living = user
-	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
+	if(user_living.apply_martial_art(src, null) == MARTIAL_ATTACK_SUCCESS)
 		user_living.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 

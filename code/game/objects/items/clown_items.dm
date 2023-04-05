@@ -151,7 +151,7 @@
 	return ..() | .
 
 /obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !user?.combat_mode  // only cleans a storage item if on combat
+	return !(user?.istate & ISTATE_HARM)  // only cleans a storage item if on combat
 
 /*
  * Bike Horns

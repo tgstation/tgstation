@@ -313,7 +313,7 @@ effective or pretty fucking useless.
 	if(!istype(attacking_item, /obj/item/wrench/combat))
 		return ..()
 
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return
 
 	if(!attacking_item.toolspeed)
@@ -380,7 +380,7 @@ effective or pretty fucking useless.
 	if(!attacking_item.toolspeed)
 		return
 
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		balloon_alert(user, "deconstructing...")
 		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
 			return

@@ -5,6 +5,7 @@
 	stat = DEAD
 	hud_type = /datum/hud/new_player
 	hud_possible = list()
+	rclick_always_context_menu = TRUE
 
 	var/ready = FALSE
 	/// Referenced when you want to delete the new_player later on in the code.

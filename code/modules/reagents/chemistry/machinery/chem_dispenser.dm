@@ -381,7 +381,7 @@
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
 		ui_interact(user)
-	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
+	else if(!(user.istate & ISTATE_HARM) && !istype(I, /obj/item/card/emag))
 		to_chat(user, span_warning("You can't load [I] into [src]!"))
 		return ..()
 	else

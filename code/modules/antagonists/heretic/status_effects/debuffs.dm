@@ -49,7 +49,7 @@
 	return TRUE
 
 /datum/status_effect/amok/tick()
-	var/prev_combat_mode = owner.combat_mode
+	var/prev_combat_mode = (owner.istate & ISTATE_HARM)
 	owner.set_combat_mode(TRUE)
 
 	// If we're holding a gun, expand the range a bit.

@@ -47,7 +47,7 @@
 #define MECH_LAUNCH_TIME (5 SECONDS)
 
 /obj/machinery/computer/mechpad/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(user.combat_mode || machine_stat & (NOPOWER|BROKEN) || DOING_INTERACTION_WITH_TARGET(user, src))
+	if((user.istate & ISTATE_HARM) || machine_stat & (NOPOWER|BROKEN) || DOING_INTERACTION_WITH_TARGET(user, src))
 		return ..()
 	var/mech_dir = mecha_attacker.dir
 	balloon_alert(user, "carefully starting launch process...")

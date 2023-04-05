@@ -683,7 +683,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return attack_hand(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)

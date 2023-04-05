@@ -63,7 +63,7 @@
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((istate & ISTATE_SECONDARY))
 		var/secondary_result = A.attack_ai_secondary(src, modifiers)
 		if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return

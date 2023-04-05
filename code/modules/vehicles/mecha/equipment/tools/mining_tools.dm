@@ -115,7 +115,7 @@
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
 						span_userdanger("[chassis] is drilling you with [src]!"))
-	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target, "drilled", "[name]", "Combat mode: [(user.istate & ISTATE_HARM) ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))

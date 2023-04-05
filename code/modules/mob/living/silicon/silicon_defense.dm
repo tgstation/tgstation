@@ -46,7 +46,7 @@
 	return attack_hand(user, modifiers)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
-	if(!L.combat_mode)
+	if(!(L.istate & ISTATE_HARM))
 		visible_message(span_notice("[L.name] rubs its head against [src]."))
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
@@ -64,10 +64,10 @@
 	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
-	if(has_buckled_mobs() && !user.combat_mode)
+	if(has_buckled_mobs() && !(user.istate & ISTATE_HARM))
 		user_unbuckle_mob(buckled_mobs[1], user)
 	else
-		if(user.combat_mode)
+		if((user.istate & ISTATE_HARM))
 			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
 			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
@@ -81,12 +81,12 @@
 
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+	if((M.istate & ISTATE_HARM))
 		return
 	return ..()
 
 /mob/living/silicon/attack_drone_secondary(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+	if((M.istate & ISTATE_HARM))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

@@ -12,7 +12,7 @@
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	status_flags = 0
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
 	// Pale purple, should be red enough to see stuff on lavaland

@@ -106,13 +106,13 @@
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
 		return FALSE
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 	if(step_in_progress)
 		return TRUE
 
 	var/try_to_fail = FALSE
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/step = get_surgery_step()
@@ -124,7 +124,7 @@
 	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
-		
+
 	return FALSE
 
 /datum/surgery/proc/get_surgery_step()

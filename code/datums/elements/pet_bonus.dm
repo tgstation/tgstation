@@ -29,7 +29,7 @@
 /datum/element/pet_bonus/proc/on_attack_hand(mob/living/pet, mob/living/petter, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(pet.stat != CONSCIOUS || petter.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(pet.stat != CONSCIOUS || (petter.istate & ISTATE_HARM) || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 
 	new /obj/effect/temp_visual/heart(pet.loc)

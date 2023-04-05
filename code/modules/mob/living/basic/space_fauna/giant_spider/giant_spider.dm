@@ -30,7 +30,7 @@
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	faction = list(FACTION_SPIDER)
 	pass_flags = PASSTABLE
 	attack_verb_continuous = "bites"

@@ -138,7 +138,7 @@
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
-	if(!user.combat_mode && !safety) //If we're on help intent and going to spray people, don't bash them.
+	if(!(user.istate & ISTATE_HARM) && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()

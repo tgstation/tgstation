@@ -108,7 +108,7 @@
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
 /obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
-	if (user.combat_mode)
+	if ((user.istate & ISTATE_HARM))
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
@@ -362,7 +362,7 @@
 
 /obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if (!proximity || target == user || !user.combat_mode)
+	if (!proximity || target == user || !(user.istate & ISTATE_HARM))
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)

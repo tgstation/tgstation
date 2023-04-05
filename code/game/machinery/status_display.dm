@@ -60,7 +60,7 @@
 		return TRUE
 
 /obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it doesn't need repairs!")

@@ -198,9 +198,6 @@
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
-	///If combat mode is on or not
-	var/combat_mode = FALSE
-
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 

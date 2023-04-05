@@ -46,7 +46,7 @@
 		to_chat(target, span_userdanger("Everything feels really heavy!"))
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && !gravity_targets[target])
+	if((istate & ISTATE_SECONDARY) && proximity_flag && !gravity_targets[target])
 		slam_turf(attack_target)
 		return
 	return ..()

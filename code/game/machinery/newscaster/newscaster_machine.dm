@@ -483,7 +483,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	return (machine_stat & BROKEN)
 
 /obj/machinery/newscaster/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	. = TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!(machine_stat & BROKEN))
@@ -541,7 +541,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 
 /obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		to_chat(user, span_warning("The newscaster controls are far too complicated for your tiny brain!"))
 	else
 		take_damage(5, BRUTE, MELEE)

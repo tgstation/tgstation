@@ -72,6 +72,10 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
+	/// Player interaction mode, set by preferences.
+	var/datum/interaction_mode/imode
+	///Cache for the prefence value of [/datum/preference/toggle/context_menu_requires_shift]
+	var/context_menu_requires_shift = FALSE
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source

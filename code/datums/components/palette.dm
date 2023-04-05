@@ -102,7 +102,7 @@
 	if(!choice || IS_DEAD_OR_INCAP(user)) // center button or incapacitated but still holding on the item.
 		close_radial_menu()
 		return
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 	var/index = text2num(choice)
 	if(is_right_clicking)
 		var/chosen_color = input(user, "Pick new color", "[parent]", colors[index]) as color|null

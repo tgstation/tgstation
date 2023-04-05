@@ -33,7 +33,7 @@
 
 	if (!istype(user))
 		return
-	if (user.combat_mode)
+	if ((user.istate & ISTATE_HARM))
 		return // We'll deal with this later
 	if (owner.stat == DEAD)
 		var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) || HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "It looks like [owner.p_theyre()] sleeping." : "[owner.p_they(capitalized = TRUE)] seem[owner.p_s()] to be dead."

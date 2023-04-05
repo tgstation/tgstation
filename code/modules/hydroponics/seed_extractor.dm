@@ -94,7 +94,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!isliving(user) || user.combat_mode)
+	if(!isliving(user) || (user.istate & ISTATE_HARM))
 		return ..()
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", attacking_item))
@@ -125,7 +125,7 @@
 
 	var/list/generated_seeds = seedify(attacking_item, -1, src, user)
 	if(!isnull(generated_seeds))
-		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if((user.istate & ISTATE_SECONDARY))
 			//find all seeds lying on the turf and add them to the machine
 			for(var/obj/item/seeds/seed as anything in generated_seeds)
 				//machine is full

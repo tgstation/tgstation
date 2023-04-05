@@ -20,7 +20,7 @@
 	maxHealth = 50
 	speed = 3
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	combat_mode = TRUE //No swapping
+	istate = ISTATE_HARM|ISTATE_BLOCKING //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
@@ -147,7 +147,7 @@
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
-	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+	if(!(bot_cover_flags & BOT_COVER_OPEN) || (user.istate & ISTATE_HARM))
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))

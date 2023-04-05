@@ -325,7 +325,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 	else
 		return ..()
@@ -376,7 +376,7 @@
 
 /mob/living/simple_animal/bot/welder_act(mob/living/user, obj/item/tool)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 
 	if(health >= maxHealth)

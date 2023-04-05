@@ -54,13 +54,13 @@
 /datum/surgery/organ_manipulation/mechanic/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
 		return FALSE
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 	if(step_in_progress)
 		return TRUE
 
 	var/try_to_fail = FALSE
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/step = get_surgery_step()
@@ -246,7 +246,7 @@
 				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
 			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
-			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
 		else

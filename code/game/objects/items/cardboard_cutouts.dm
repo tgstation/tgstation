@@ -35,7 +35,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
-	if(!user.combat_mode || pushed_over)
+	if(!(user.istate & ISTATE_HARM) || pushed_over)
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

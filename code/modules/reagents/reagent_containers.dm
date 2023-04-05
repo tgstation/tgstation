@@ -50,7 +50,7 @@
 		return FALSE
 	if(!user.Adjacent(T))
 		return FALSE
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return FALSE
 	if(liquids.fire_state) //Use an extinguisher first
 		to_chat(user, "<span class='warning'>You can't scoop up anything while it's on fire!</span>")
@@ -85,7 +85,7 @@
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
-	if (!user.combat_mode)
+	if (!(user.istate & ISTATE_HARM))
 		return
 	return ..()
 
@@ -125,7 +125,7 @@
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

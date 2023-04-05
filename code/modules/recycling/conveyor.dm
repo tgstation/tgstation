@@ -276,7 +276,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		update_move_direction()
 		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
 
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		user.transferItemToLoc(attacking_item, drop_location())
 	else
 		return ..()
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		update_move_direction()
 		to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
 
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		user.transferItemToLoc(attacking_item, drop_location())
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

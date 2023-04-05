@@ -20,7 +20,7 @@
 	attack_verb_simple = "slash"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -146,7 +146,7 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	combat_mode = FALSE
+	istate = NONE
 	friendly_verb_continuous = "caresses"
 	friendly_verb_simple = "caress"
 	obj_damage = 0

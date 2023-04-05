@@ -18,7 +18,7 @@
 
 /datum/element/attack_equip/proc/on_item_attack(obj/item/attire, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(user.combat_mode || !ishuman(target) || target == user)
+	if((user.istate & ISTATE_HARM) || !ishuman(target) || target == user)
 		return
 
 	var/mob/living/carbon/human/sharp_dresser = target

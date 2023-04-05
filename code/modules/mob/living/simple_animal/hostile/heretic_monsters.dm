@@ -15,7 +15,7 @@
 	speak_emote = list("screams")
 	speak_chance = 1
 	speed = 0
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
 	// Sort of greenish brown, to match the vibeTM

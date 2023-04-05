@@ -26,7 +26,7 @@
 	response_harm_simple = "squish"
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	combat_mode = FALSE
+	istate = NONE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = HARD_CRIT
 	gender = NEUTER

@@ -19,7 +19,7 @@
 	attack_verb_continuous = "slashes at"
 	attack_verb_simple = "slash at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	loot = list(/obj/effect/mob_spawn/corpse/human/cat_butcher, /obj/item/circular_saw)

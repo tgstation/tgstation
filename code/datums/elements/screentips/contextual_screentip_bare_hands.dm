@@ -70,9 +70,9 @@
 	var/mob/living/living_user = user
 
 	if (!isnull(lmb_text))
-		context[SCREENTIP_CONTEXT_LMB] = living_user.combat_mode ? lmb_text_combat_mode : lmb_text
+		context[SCREENTIP_CONTEXT_LMB] = (living_user.istate & ISTATE_HARM) ? lmb_text_combat_mode : lmb_text
 
 	if (!isnull(rmb_text))
-		context[SCREENTIP_CONTEXT_RMB] = living_user.combat_mode ? rmb_text_combat_mode : rmb_text
+		context[SCREENTIP_CONTEXT_RMB] = (living_user.istate & ISTATE_HARM) ? rmb_text_combat_mode : rmb_text
 
 	return CONTEXTUAL_SCREENTIP_SET

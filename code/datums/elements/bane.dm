@@ -63,7 +63,7 @@
 	activate(source, target, user)
 
 /datum/element/bane/proc/activate(obj/item/source, mob/living/target, mob/living/attacker)
-	if(requires_combat_mode && !attacker.combat_mode)
+	if(requires_combat_mode && !(attacker.istate & ISTATE_HARM))
 		return
 
 	var/extra_damage = max(0, (source.force * damage_multiplier) + added_damage)

@@ -66,7 +66,7 @@
 		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
-	if(attacker.combat_mode)
+	if((attacker.istate & ISTATE_HARM))
 		return ..()
 	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))
 		to_chat(attacker, span_notice("[victim]'s mouth is covered."))

@@ -9,7 +9,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	unique_name = 1
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	// ... Blob colored lighting
 	lighting_cutoff_red = 20
 	lighting_cutoff_green = 40

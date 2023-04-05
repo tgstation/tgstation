@@ -27,7 +27,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return temp_list
 
 /obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/living/user)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		. = 1
 		if(!is_insertion_ready(user))
 			return

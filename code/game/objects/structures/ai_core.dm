@@ -172,7 +172,7 @@
 				deconstruct(TRUE)
 			return
 		else
-			if(!user.combat_mode)
+			if(!(user.istate & ISTATE_HARM))
 				balloon_alert(user, "bolt it down first!")
 				return
 			else

@@ -38,7 +38,7 @@
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
-	if(attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((attacker.istate & ISTATE_HARM) || (attacker.istate & ISTATE_SECONDARY))
 		relay_attacker(target, attacker)
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)

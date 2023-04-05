@@ -62,7 +62,7 @@
 	), SHELL_CAPACITY_LARGE)
 
 /obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return ..()
 	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
 		return ..()

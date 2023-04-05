@@ -85,8 +85,7 @@
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
-		var/list/modifiers = params2list(params)
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(istype(held_item, /obj/item/reagent_containers/syringe) && (user.istate & ISTATE_SECONDARY))
 			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
 		else
 			held_item.afterattack(beaker, user, Adjacent(user), params)

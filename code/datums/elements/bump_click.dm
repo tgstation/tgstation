@@ -51,7 +51,7 @@
 	if(!isliving(bumper))
 		return
 	var/mob/living/bumping = bumper
-	if(bumping.combat_mode && !allow_combat)
+	if((bumping.istate & ISTATE_HARM) && !allow_combat)
 		return
 	var/obj/item/held_item = bumping.get_active_held_item()
 	if(!held_item) //Not holding anything in active hand, so no tool to check

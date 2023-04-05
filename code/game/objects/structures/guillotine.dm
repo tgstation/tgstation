@@ -108,7 +108,7 @@
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
-				if (user.combat_mode)
+				if ((user.istate & ISTATE_HARM))
 					user.visible_message(span_warning("[user] begins to pull the lever!"),
 						                 span_warning("You begin to the pull the lever."))
 					current_action = GUILLOTINE_ACTION_INUSE

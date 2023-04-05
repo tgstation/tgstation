@@ -106,7 +106,7 @@
 
 /datum/ai_controller/chicken/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(user.combat_mode && prob(CHICKEN_RETALIATE_PROB))
+	if((user.istate & ISTATE_HARM) && prob(CHICKEN_RETALIATE_PROB))
 		retaliate(user)
 
 /datum/ai_controller/chicken/proc/on_attack_paw(datum/source, mob/living/user)

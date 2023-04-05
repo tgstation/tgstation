@@ -135,7 +135,7 @@
 			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
 			if(do_after(user, 50, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
-				if(!user.combat_mode)
+				if(!(user.istate & ISTATE_HARM))
 					spawned_mob.faction |= FACTION_NEUTRAL
 				else
 					spawned_mob.faction |= FACTION_SLIME

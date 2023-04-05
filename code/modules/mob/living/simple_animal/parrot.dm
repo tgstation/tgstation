@@ -57,7 +57,7 @@
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
 	stop_automated_movement = 1
-	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
+	istate = ISTATE_HARM|ISTATE_BLOCKING //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_vis_effect = ATTACK_EFFECT_BITE
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..()
 	if(client)
 		return
-	if(!stat && user.combat_mode)
+	if(!stat && (user.istate & ISTATE_HARM))
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			parrot_state |= PARROT_FLEE //Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && !user.combat_mode)
+	if(stat != DEAD && !(user.istate & ISTATE_HARM))
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -878,13 +878,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(stat || !client)
 		return
 
-	if(combat_mode)
+	if((istate & ISTATE_HARM))
 		melee_damage_upper = 0
 		set_combat_mode(FALSE)
 	else
 		melee_damage_upper = parrot_damage_upper
 		set_combat_mode(TRUE)
-	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
+	to_chat(src, span_notice("You will now [(istate & ISTATE_HARM) ? "Harm" : "Help"] others."))
 	return
 
 /mob/living/simple_animal/parrot/natural

@@ -71,7 +71,7 @@
 	. = ..()
 	. |= AFTERATTACK_PROCESSED_ITEM
 
-	if (user.combat_mode)
+	if ((user.istate & ISTATE_HARM))
 		return
 
 	if (!CAN_IRRADIATE(target))

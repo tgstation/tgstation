@@ -240,10 +240,10 @@
 	..()
 	if(stat == DEAD)
 		return
-	if(!user.combat_mode && likes_pets && max_happiness_per_generation >= 3)
+	if(!(user.istate & ISTATE_HARM) && likes_pets && max_happiness_per_generation >= 3)
 		adjust_happiness(1, user)
 		max_happiness_per_generation -= 2 ///petting is not efficent
-	else if(!user.combat_mode && !likes_pets)
+	else if(!(user.istate & ISTATE_HARM) && !likes_pets)
 		adjust_happiness(-1, user)
 
 /mob/living/simple_animal/chicken/attackby(obj/item/given_item, mob/user, params)

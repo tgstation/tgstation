@@ -385,7 +385,7 @@
 
 	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)) || !proximity)
 		return
-	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!(source.istate & ISTATE_HARM) || (source.istate & ISTATE_SECONDARY))
 		return
 	if(!isliving(target))
 		return
