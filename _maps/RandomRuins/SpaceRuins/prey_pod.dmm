@@ -53,10 +53,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav)
 "Q" = (
-/obj/effect/mob_spawn/corpse/human{
-	husk = 1;
-	outfit = /obj/item/clothing/under/rank/rnd/roboticist
-	},
+/obj/effect/mob_spawn/corpse/human/prey_pod,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "S" = (

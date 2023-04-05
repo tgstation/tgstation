@@ -210,7 +210,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
@@ -227,7 +227,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "aY" = (
@@ -348,18 +350,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/dice/d6,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/tank/internals/emergency_oxygen,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bw" = (
@@ -990,7 +988,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/roller,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "dF" = (
@@ -1181,16 +1181,14 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "ek" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "el" = (
@@ -1208,7 +1206,9 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "en" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "eo" = (
@@ -1245,7 +1245,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -1264,7 +1264,7 @@
 "ew" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -1333,7 +1333,9 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "eH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "eI" = (
@@ -1346,7 +1348,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
@@ -1368,13 +1370,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/light_switch/directional/east,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "eO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -1416,7 +1420,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -1424,7 +1428,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/assembly/flash/handheld,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "eW" = (
@@ -1551,7 +1557,9 @@
 /obj/machinery/light/small/directional/east,
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/maintenance,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "ft" = (
@@ -1683,7 +1691,9 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "fO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "fP" = (
@@ -1776,9 +1786,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "gi" = (
@@ -2115,7 +2123,7 @@
 "hz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -2130,7 +2138,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "hC" = (
@@ -2189,7 +2199,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
@@ -2209,7 +2219,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "hS" = (
@@ -2226,14 +2238,16 @@
 "hV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "hW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -2241,7 +2255,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/snack,
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "hY" = (
@@ -2375,9 +2391,7 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "il" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "im" = (
@@ -2427,7 +2441,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "iv" = (
@@ -2473,9 +2489,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "iB" = (
@@ -2614,7 +2628,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "ji" = (
@@ -2864,7 +2880,9 @@
 /obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "kb" = (
@@ -2942,7 +2960,7 @@
 	name = "O2 Input"
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3092,7 +3110,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3174,7 +3192,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3238,9 +3256,7 @@
 	dir = 4;
 	name = "N2 Input"
 	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "li" = (
@@ -3250,7 +3266,7 @@
 "lk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3397,7 +3413,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -3576,7 +3592,7 @@
 	pixel_x = -23
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3615,7 +3631,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3657,7 +3673,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3697,7 +3713,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/suit_storage_unit/void_old/jetpack,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -3733,17 +3749,13 @@
 /obj/machinery/power/apc/auto_name/directional/south{
 	start_charge = 0
 	},
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mS" = (
@@ -3760,9 +3772,7 @@
 "mT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mU" = (
@@ -3771,9 +3781,7 @@
 	id = "beta"
 	},
 /obj/structure/plasticflaps,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "mV" = (
@@ -3925,7 +3933,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3949,7 +3957,7 @@
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3985,7 +3993,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -3994,7 +4002,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -4009,7 +4017,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -4069,7 +4077,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -4341,7 +4349,7 @@
 "oE" = (
 /obj/item/stack/rods,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
@@ -4502,9 +4510,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "ph" = (
@@ -4571,9 +4577,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "pv" = (
@@ -4650,7 +4654,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
@@ -4847,9 +4851,7 @@
 	layer = 2.9;
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "sg" = (
@@ -5232,7 +5234,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "vM" = (
@@ -5869,7 +5873,7 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
@@ -5990,7 +5994,9 @@
 "Cc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "Ci" = (
@@ -6142,7 +6148,7 @@
 	},
 /obj/item/defibrillator,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
@@ -6361,9 +6367,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer2{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "FK" = (
@@ -6593,9 +6597,7 @@
 /area/ruin/space/ancientstation/beta/gravity)
 "HA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "HI" = (
@@ -6978,7 +6980,7 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
@@ -7117,7 +7119,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -7205,7 +7207,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -7227,7 +7229,9 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Md" = (
@@ -7286,7 +7290,9 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "MS" = (
@@ -7531,7 +7537,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -8440,7 +8446,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old,
 /obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -8549,7 +8555,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)

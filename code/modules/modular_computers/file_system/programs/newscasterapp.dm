@@ -1,7 +1,7 @@
 /datum/computer_file/program/newscaster
 	filename = "newscasterapp"
 	filedesc = "Newscaster"
-	required_access = list(ACCESS_LIBRARY)
+	transfer_access = list(ACCESS_LIBRARY)
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "bountyboard"
 	extended_desc = "This program allows any user to access the Newscaster network from anywhere."

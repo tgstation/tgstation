@@ -1,30 +1,30 @@
 /datum/component/spawner
 	/// Time to wait between spawns
 	var/spawn_time
-	/// Maximum number of mobs we can have active at one time
-	var/max_mobs
-	/// Visible message to show when a mob spawns
+	/// Maximum number of atoms we can have active at one time
+	var/max_spawned
+	/// Visible message to show when something spawns
 	var/spawn_text
-	/// List of mob types to spawn, picked randomly
-	var/list/mob_types
-	/// Faction to grant to mobs
+	/// List of atom types to spawn, picked randomly
+	var/list/spawn_types
+	/// Faction to grant to mobs (only applies to mobs)
 	var/list/faction
-	/// List of weak references to mobs we have already created
-	var/list/spawned_mobs = list()
+	/// List of weak references to things we have already created
+	var/list/spawned_things = list()
 	/// Time until we next spawn
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(mob_types = list(), spawn_time = 30 SECONDS, max_mobs = 5, faction = list(FACTION_MINING), spawn_text = "emerges from")
-	if (!islist(mob_types))
-		CRASH("invalid mob_types to spawn specified for spawner component!")
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, faction = list(FACTION_MINING), spawn_text = null)
+	if (!islist(spawn_types))
+		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
-	src.mob_types = mob_types
+	src.spawn_types = spawn_types
 	src.faction = faction
 	src.spawn_text = spawn_text
-	src.max_mobs = max_mobs
+	src.max_spawned = max_spawned
 
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(stop_spawning))
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
 	try_spawn_mob()
@@ -34,44 +34,54 @@
 	SIGNAL_HANDLER
 
 	STOP_PROCESSING(SSprocessing, src)
-	spawned_mobs = list()
+	spawned_things = list()
 
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 	validate_references()
-	if(length(spawned_mobs) >= max_mobs)
+	if(length(spawned_things) >= max_spawned)
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
 
-	var/chosen_mob_type = pick(mob_types)
-	var/mob/living/created = new chosen_mob_type(spawner.loc)
+	var/chosen_mob_type = pick(spawn_types)
+	var/atom/created = new chosen_mob_type(spawner.loc)
 	created.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
-	spawned_mobs += WEAKREF(created)
-	created.faction = src.faction
-	spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
+	spawned_things += WEAKREF(created)
+	if (isliving(created))
+		var/mob/living/created_mob = created
+		created_mob.faction = src.faction
+		RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
 
-	RegisterSignal(created, COMSIG_PARENT_QDELETING, PROC_REF(mob_deleted))
-	RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
+	if (spawn_text)
+		spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
 
-/// Remove weakrefs to mobs which have been killed or deleted without us picking it up somehow
+	RegisterSignal(created, COMSIG_PARENT_QDELETING, PROC_REF(on_deleted))
+
+/// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
-	for (var/datum/weakref/weak_mob as anything in spawned_mobs)
-		var/mob/living/previously_spawned = weak_mob.resolve()
-		if (previously_spawned && previously_spawned.stat != DEAD)
+	for (var/datum/weakref/weak_thing as anything in spawned_things)
+		var/atom/previously_spawned = weak_thing.resolve()
+		if (!previously_spawned)
+			spawned_things -= weak_thing
 			continue
-		spawned_mobs -= weak_mob
+		if (!isliving(previously_spawned))
+			continue
+		var/mob/living/spawned_mob = previously_spawned
+		if (spawned_mob.stat != DEAD)
+			continue
+		spawned_things -= weak_thing
 
-/// Called when a mob we spawned is deleted, remove it from the list
-/datum/component/spawner/proc/mob_deleted(mob/living/source)
+/// Called when an atom we spawned is deleted, remove it from the list
+/datum/component/spawner/proc/on_deleted(atom/source)
 	SIGNAL_HANDLER
-	spawned_mobs -= WEAKREF(source)
+	spawned_things -= WEAKREF(source)
 
 /// Called when a mob we spawned dies, remove it from the list and unregister signals
 /datum/component/spawner/proc/mob_stat_changed(mob/living/source)
 	if (source.stat != DEAD)
 		return
-	spawned_mobs -= WEAKREF(source)
+	spawned_things -= WEAKREF(source)
 	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_STATCHANGE))

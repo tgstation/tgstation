@@ -1,11 +1,3 @@
-
-/mob/living/simple_animal/slime
-	var/AIproc = 0 // determines if the AI loop is activated
-	var/Atkcool = 0 // attack cooldown
-	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/SStun = 0 // stun variable
-
-
 /mob/living/simple_animal/slime/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
@@ -399,12 +391,12 @@
 		else if (DT_PROB(0.5, delta_time))
 			newmood = pick("sad", ":3", "pout")
 
-	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
+	if ((current_mood == "sad" || current_mood == ":3" || current_mood == "pout") && !newmood)
 		if(DT_PROB(50, delta_time))
-			newmood = mood
+			newmood = current_mood
 
-	if (newmood != mood) // This is so we don't redraw them every time
-		mood = newmood
+	if (newmood != current_mood) // This is so we don't redraw them every time
+		current_mood = newmood
 		regenerate_icons()
 
 /mob/living/simple_animal/slime/proc/handle_speech(delta_time, times_fired)
@@ -541,7 +533,7 @@
 				phrases += "Hrr..."
 				phrases += "Nhuu..."
 				phrases += "Unn..."
-			if (mood == ":3")
+			if (current_mood == ":3")
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
@@ -562,7 +554,7 @@
 				phrases += "Zap..."
 			if (powerlevel > 8)
 				phrases += "Zap... Bzz..."
-			if (mood == "sad")
+			if (current_mood == "sad")
 				phrases += "Bored..."
 			if (slimes_near)
 				phrases += "Slime friend..."

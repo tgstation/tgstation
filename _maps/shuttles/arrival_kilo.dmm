@@ -234,8 +234,8 @@
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "aA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,
@@ -370,21 +370,16 @@
 /area/shuttle/arrival)
 "aP" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "aQ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
@@ -399,11 +394,59 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "aS" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "aT" = (
+/obj/machinery/requests_console/directional/east{
+	department = "Arrivals shuttle"
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"aZ" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/item/radio{
@@ -418,61 +461,18 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
-"aU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"aV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"aW" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"aX" = (
-/obj/machinery/vending/wallmed/directional/west{
-	use_power = 0
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"aY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"aZ" = (
-/obj/machinery/requests_console/directional/east{
-	department = "Arrivals shuttle"
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"bH" = (
+"rV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
-"oY" = (
+"Lk" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -504,72 +504,72 @@ ab
 ac
 ai
 ap
-aT
+aZ
 aH
 ai
 ac
 "}
 (4,1,1) = {"
 ad
-aP
 aY
-aU
-aV
-aP
+aX
+aW
+aQ
+aY
 af
 "}
 (5,1,1) = {"
 ae
 aj
-bH
-aZ
-aS
+rV
+aT
+aV
 ax
 ae
 "}
 (6,1,1) = {"
 af
 ak
-bH
+rV
 ay
-aS
+aV
 aN
 af
 "}
 (7,1,1) = {"
 af
 ak
-bH
+rV
 az
-aS
+aV
 aN
 af
 "}
 (8,1,1) = {"
 af
 ak
-bH
+rV
 ab
-aS
+aV
 aN
 af
 "}
 (9,1,1) = {"
 ac
 al
-bH
-aX
-aS
+rV
+aA
+aV
 aB
 ac
 "}
 (10,1,1) = {"
 ad
+aW
+Lk
+aP
 aU
-oY
-aA
-aQ
-aU
+aW
 af
 "}
 (11,1,1) = {"
@@ -585,7 +585,7 @@ ab
 ac
 ae
 at
-aU
+aW
 aM
 ae
 ac
@@ -594,7 +594,7 @@ ac
 ag
 ac
 ak
-aW
+aS
 aN
 ac
 ag

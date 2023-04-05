@@ -512,7 +512,7 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
-	for(var/X in GLOB.xeno_spawn)
+	for(var/X in GLOB.generic_maintenance_landmarks)
 		var/turf/T = X
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
@@ -576,9 +576,6 @@
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S
 
-/// Midround Abductors Ruleset (From Ghosts)
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
@@ -610,8 +607,6 @@
 	else // Our second guy is the agent, team is already created, don't need to make another one.
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
-
-#undef ABDUCTOR_MAX_TEAMS
 
 /// Midround Space Ninja Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
@@ -736,23 +731,45 @@
 /// Midround Space Pirates Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/pirates
 	name = "Space Pirates"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_flag = "Space Pirates"
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 8
+	minimum_players = 20
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
+	if (SSmapping.is_planetary() || GLOB.light_pirate_gangs.len == 0)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/pirates/execute()
+	send_pirate_threat(GLOB.light_pirate_gangs)
+	return ..()
+
+/// Dangerous Space Pirates ruleset
+/datum/dynamic_ruleset/midround/dangerous_pirates
+	name = "Dangerous Space Pirates"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
-	weight = 4
+	weight = 3
 	cost = 8
-	minimum_players = 27
+	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
-	if (SSmapping.is_planetary())
+/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat=0)
+	if (SSmapping.is_planetary() || GLOB.heavy_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat()
+/datum/dynamic_ruleset/midround/dangerous_pirates/execute()
+	send_pirate_threat(GLOB.heavy_pirate_gangs)
 	return ..()
 
 /// Midround Obsessed Ruleset (From Living)
@@ -777,7 +794,7 @@
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
 		if( \
-			!candidate.getorgan(/obj/item/organ/internal/brain) \
+			!candidate.get_organ_by_type(/obj/item/organ/internal/brain) \
 			|| candidate.mind.has_antag_datum(/datum/antagonist/obsessed) \
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
@@ -833,8 +850,8 @@
 	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	for(var/turf/warp_point in GLOB.xeno_spawn)
-		if(istype(warp_point.loc, /area/station/maintenance))
+	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
+		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
 			possible_spawns += warp_point
 	if(!possible_spawns.len)
 		message_admins("No valid spawn locations found for Paradox Clone event, aborting...")
@@ -880,3 +897,6 @@
 	if(possible_targets.len)
 		return pick(possible_targets)
 	return FALSE
+
+#undef MALF_ION_PROB
+#undef REPLACE_LAW_WITH_ION_PROB

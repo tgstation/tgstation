@@ -200,7 +200,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/random/maintenance/four,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "Cg" = (

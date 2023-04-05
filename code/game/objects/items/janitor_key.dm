@@ -25,7 +25,6 @@
 	GLOB.janitor_devices += src
 
 /obj/item/access_key/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_ON_DEPARTMENT_ACCESS)
 	GLOB.janitor_devices -= src
 	return ..()
 

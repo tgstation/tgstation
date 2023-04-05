@@ -394,7 +394,7 @@
 /obj/item/uplink/nuclear/debug,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -435,7 +435,9 @@
 /obj/structure/table,
 /obj/item/construction/rld,
 /obj/item/construction/rcd/arcd,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bN" = (
@@ -541,7 +543,7 @@
 "ce" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -551,7 +553,9 @@
 /area/station/command/bridge)
 "cg" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ch" = (
@@ -603,9 +607,7 @@
 /area/station/command/bridge)
 "cq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cr" = (
@@ -669,7 +671,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -678,7 +680,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -1047,7 +1049,7 @@
 	},
 /obj/machinery/camera/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -2105,7 +2107,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -2172,9 +2174,7 @@
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "BG" = (
@@ -2242,9 +2242,7 @@
 /obj/structure/closet/secure_closet/captains{
 	locked = 0
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ES" = (
@@ -2277,9 +2275,7 @@
 /obj/structure/closet/secure_closet/research_director{
 	locked = 0
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "II" = (
@@ -2404,9 +2400,7 @@
 /obj/structure/closet/secure_closet/hop{
 	locked = 0
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Sj" = (
@@ -2482,7 +2476,7 @@
 "Wq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)

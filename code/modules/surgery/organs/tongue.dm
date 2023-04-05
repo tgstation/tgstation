@@ -234,7 +234,7 @@
 	if(!istype(tongue_holder))
 		return
 
-	var/obj/item/organ/internal/tongue/abductor/tongue = tongue_holder.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/abductor/tongue = tongue_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!istype(tongue))
 		return
 
@@ -262,7 +262,7 @@
 	var/rendered = span_abductor("<b>[user.real_name]:</b> [message]")
 	user.log_talk(message, LOG_SAY, tag=SPECIES_ABDUCTOR)
 	for(var/mob/living/carbon/human/living_mob in GLOB.alive_mob_list)
-		var/obj/item/organ/internal/tongue/abductor/tongue = living_mob.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/abductor/tongue = living_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
@@ -456,11 +456,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "bananium tongue"
 	desc = "A bananium geode mostly used for honking."
 	say_mod = "honks"
-
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/horn.dmi'
+	icon_state = "gold_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	icon_state = "gold_horn"
 
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"

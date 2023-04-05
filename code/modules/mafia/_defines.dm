@@ -79,3 +79,5 @@ GLOBAL_LIST_EMPTY(mafia_signup)
 GLOBAL_LIST_EMPTY(mafia_bad_signup)
 /// the current global mafia game running.
 GLOBAL_VAR(mafia_game)
+/// list of ghosts in mafia_signup who have voted to start early
+GLOBAL_LIST_EMPTY(mafia_early_votes)
