@@ -124,9 +124,9 @@
 	else
 		switch(mode)
 			if(TRAMCTRL_FAST)
-				tram_part.tram_travel(destination_platform, TRAMCTRL_FAST)
+				tram_part.tram_travel(destination_platform, rapid = TRUE)
 			if(TRAMCTRL_SAFE)
-				tram_part.tram_travel(destination_platform, TRAMCTRL_SAFE)
+				tram_part.tram_travel(destination_platform, rapid = FALSE)
 		balloon_alert(user, "tram dispatched")
 		return TRUE
 

@@ -121,7 +121,6 @@
 	set_controls(LIFT_PLATFORM_LOCKED)
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_tram(destination_platform)
-		return
 	else
 		update_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
