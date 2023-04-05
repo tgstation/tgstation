@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "The tram now has a remote control for funny and/or nefarious purposes"
