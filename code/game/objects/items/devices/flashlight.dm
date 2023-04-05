@@ -494,11 +494,11 @@
 		if(ALREADY_LIT)
 			if(!silent)
 				balloon_alert(user, "already lit!")
-				return ALREADY_LIT
+			return ALREADY_LIT
 		if(NO_FUEL)
 			if(!silent)
 				balloon_alert(user, "out of fuel!")
-				return NO_FUEL
+			return NO_FUEL
 
 /// allows lighting an unlit candle from some fire source by left clicking the candle with the source
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
