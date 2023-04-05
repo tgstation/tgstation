@@ -30,9 +30,7 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "fz" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2/equalized_with_regular_air,
 /area/ruin/space/has_grav/atmosasteroid)
 "fV" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
@@ -446,9 +444,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2/equalized_with_regular_air,
 /area/ruin/space/has_grav/atmosasteroid)
 "HF" = (
 /obj/effect/turf_decal/tile/yellow/half{
@@ -631,9 +627,7 @@
 /turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav/atmosasteroid)
 "TU" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=22;n2=82;co2=500;TEMP=293.15"
-	},
+/turf/open/floor/engine/co2/equalized_with_regular_air,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ub" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
