@@ -4823,7 +4823,6 @@
 /area/station/commons/dorms)
 "bhm" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/plating,
 /area/station/commons/toilet/locker)
 "bhn" = (
@@ -27602,6 +27601,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "gMR" = (
@@ -64758,7 +64758,6 @@
 "qfe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
