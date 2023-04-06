@@ -30,7 +30,7 @@
 /datum/action/item_action/camouflage/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	if(cloaking)
 		remove_cloaking()
