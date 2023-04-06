@@ -4,7 +4,6 @@
 
 
 #define STATION_TRAIT_ABSTRACT (1<<0)
-#define STATION_TRAIT_NORANDOM (1<<1)
 
 /// The data file that future station traits forced by an admin are stored in
 #define FUTURE_STATION_TRAITS_FILE "data/future_station_traits.json"

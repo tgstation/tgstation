@@ -34,8 +34,5 @@
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}
-	],
-	"innate_station_traits": [
-		"/datum/station_trait/trek"
 	]
 }

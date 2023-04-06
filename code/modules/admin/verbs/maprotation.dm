@@ -91,7 +91,6 @@
 				"traits" = virtual_map.traits,
 				"job_changes" = virtual_map.job_changes,
 				"library_areas" = virtual_map.library_areas,
-				"innate_station_traits" = virtual_map.innate_station_traits,
 			)
 		else
 			virtual_map = load_map_config()

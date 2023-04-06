@@ -40,8 +40,6 @@
 	var/job_changes = list()
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
-	/// List of station traits to be loaded with a map
-	var/innate_station_traits = list()
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -200,17 +198,6 @@
 				stack_trace("Invalid path in mapping config for additional library areas: \[[path_as_text]\]")
 				continue
 			library_areas += path
-
-	if("innate_station_traits" in json)
-		if(!islist(json["innate_station_traits"]))
-			log_world("map_config \"innate_station_traits\" field is missing or invalid!")
-			return
-		for(var/path_as_text in json["innate_station_traits"])
-			var/path = text2path(path_as_text)
-			if(!ispath(path, /datum/station_trait))
-				stack_trace("Invalid path in mapping config for innate station traits: \[[path_as_text]\]")
-				continue
-			innate_station_traits += path
 
 	defaulted = FALSE
 	return TRUE
