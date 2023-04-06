@@ -10,7 +10,7 @@
 
 		// time to steal your soul
 		if(istype(target, /mob/living/simple_animal/revenant)) // no hiding
-			var/mob/living/simple_animal/revenant/peek_a_boo = mob
+			var/mob/living/simple_animal/revenant/peek_a_boo = target
 			peek_a_boo.reveal(2 SECONDS)
 			peek_a_boo.stun(2 SECONDS)
 		target.visible_message(span_warning("[src] violently flinches!"), \
