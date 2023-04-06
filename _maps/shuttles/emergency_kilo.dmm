@@ -161,6 +161,9 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bb" = (
@@ -189,6 +192,9 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/camera/autoname{
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -337,6 +343,16 @@
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"cc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "cf" = (
 /obj/machinery/door/airlock/shuttle{
@@ -692,6 +708,12 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen{
+	dir = 8;
+	name = "Shuttle Camera Monitor";
+	network = list("ss13");
+	pixel_x = 26
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "kB" = (
@@ -751,15 +773,18 @@
 "nv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "nR" = (
 /obj/structure/table/reinforced,
+/obj/item/folder/blue,
 /obj/item/folder/red{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/folder/blue,
 /obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -793,6 +818,12 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"pa" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/camera/autoname,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pj" = (
@@ -875,6 +906,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "sy" = (
@@ -944,6 +978,9 @@
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "BB" = (
@@ -1326,6 +1363,14 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
+"ZA" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -1501,7 +1546,7 @@ bg
 bn
 JN
 kc
-bK
+ZA
 as
 bu
 Od
@@ -1537,7 +1582,7 @@ TT
 ac
 RT
 XM
-Iq
+pa
 cY
 ab
 cS
@@ -1697,7 +1742,7 @@ bH
 pp
 ac
 dX
-qO
+cc
 aR
 cK
 cT
