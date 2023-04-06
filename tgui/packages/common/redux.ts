@@ -4,12 +4,12 @@
  * @license MIT
  */
 
-type Reducer<State = any, ActionType extends Action = AnyAction> = (
+export type Reducer<State = any, ActionType extends Action = AnyAction> = (
   state: State | undefined,
   action: ActionType
 ) => State;
 
-type Store<State = any, ActionType extends Action = AnyAction> = {
+export type Store<State = any, ActionType extends Action = AnyAction> = {
   dispatch: Dispatch<ActionType>;
   subscribe: (listener: () => void) => void;
   getState: () => State;
@@ -20,19 +20,19 @@ type MiddlewareAPI<State = any, ActionType extends Action = AnyAction> = {
   dispatch: Dispatch<ActionType>;
 };
 
-type Middleware = <State = any, ActionType extends Action = AnyAction>(
+export type Middleware = <State = any, ActionType extends Action = AnyAction>(
   storeApi: MiddlewareAPI<State, ActionType>
 ) => (next: Dispatch<ActionType>) => Dispatch<ActionType>;
 
-type Action<TType = any> = {
+export type Action<TType = any> = {
   type: TType;
 };
 
-type AnyAction = Action & {
+export type AnyAction = Action & {
   [extraProps: string]: any;
 };
 
-type Dispatch<ActionType extends Action = AnyAction> = (
+export type Dispatch<ActionType extends Action = AnyAction> = (
   action: ActionType
 ) => void;
 
