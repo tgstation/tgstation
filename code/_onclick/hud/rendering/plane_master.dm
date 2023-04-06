@@ -504,8 +504,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = O_LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_ADD
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/above_lighting
