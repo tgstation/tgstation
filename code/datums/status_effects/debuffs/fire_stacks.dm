@@ -298,8 +298,6 @@
 	adjust_stacks(-0.5 * delta_time)
 	if(stacks <= 0)
 		qdel(src)
-		return
-	update_particles()
 
 /datum/status_effect/fire_handler/wet_stacks/update_particles()
 	if(particle_effect)
