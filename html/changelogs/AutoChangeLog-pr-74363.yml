@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - imageadd: "Split all icons in weapons_and_items.dmi to their own categories"
-  - imagedel: "Removed some unused icons"

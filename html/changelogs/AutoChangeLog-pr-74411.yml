@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Removes Rev code from core flash code"
-  - bugfix: "Getting converted on April Fools now triggers the meme force say as always intended"
-  - rscdel: "The meme force say can no longer trigger on any day (it didn't work before anyways)"
