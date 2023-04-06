@@ -1,4 +1,0 @@
-author: "Mey-Ha-Zah"
-delete-after: True
-changes:
-  - imageadd: "added new lavaland sprites, moved some sprites to a new location, adjusted pixel shift for the updated sprites, adjusted the name of some sprites."
