@@ -3,7 +3,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /// Anything you can pick up and hold.
 /obj/item
 	name = "item"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	pass_flags_self = PASSITEM
 
@@ -792,7 +792,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		var/mob/living/L = hit_atom
 		L.ignite_mob()
 	var/itempush = 1
-	if(w_class < 4)
+	if(w_class < WEIGHT_CLASS_BULKY)
 		itempush = 0 //too light to push anything
 	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()

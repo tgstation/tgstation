@@ -20,6 +20,11 @@
 /// runs stoplag if tick_usage is above the limit
 #define CHECK_TICK ( TICK_CHECK ? stoplag() : 0 )
 
+/// Checks if a sleeping proc is running before or after the master controller
+#define RUNNING_BEFORE_MASTER ( Master.last_run != null && Master.last_run != world.time )
+/// Returns true if a verb ought to yield to the MC (IE: queue up to be processed by a subsystem)
+#define VERB_SHOULD_YIELD ( TICK_CHECK || RUNNING_BEFORE_MASTER )
+
 /// Returns true if tick usage is above 95, for high priority usage
 #define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )
 /// runs stoplag if tick_usage is above 95, for high priority usage

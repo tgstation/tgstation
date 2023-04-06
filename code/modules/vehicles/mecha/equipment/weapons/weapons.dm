@@ -485,6 +485,7 @@
 	name = "punching glove"
 	desc = "INCOMING HONKS"
 	throwforce = 35
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "punching_glove"
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

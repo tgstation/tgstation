@@ -17,12 +17,6 @@
 "cK" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
-"cO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "da" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
@@ -272,6 +266,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"zy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "An" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -304,6 +304,23 @@
 "Ds" = (
 /turf/open/openspace,
 /area/station/asteroid)
+"DG" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Hydroponics";
+	name = "navigation beacon (Hydroponics Delivery)"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "hydrodropoff"
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "DS" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/steam_vent,
@@ -377,23 +394,6 @@
 	key = "barcargoupper_cave"
 	},
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/cargo)
-"Sy" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	location = "Hydroponics";
-	name = "navigation beacon (Hydroponics Delivery)"
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "hydrodropoff"
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "SA" = (
 /obj/effect/turf_decal/sand/plating,
@@ -612,7 +612,7 @@ Hu
 "}
 (4,1,1) = {"
 FC
-Sy
+DG
 FC
 FC
 tg
@@ -1817,7 +1817,7 @@ cK
 SU
 SU
 tV
-cO
+zy
 SU
 lM
 lx

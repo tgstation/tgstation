@@ -1,4 +1,5 @@
 /obj/item/picket_sign
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "picket"
 	inhand_icon_state = "picket"
 	name = "blank picket sign"

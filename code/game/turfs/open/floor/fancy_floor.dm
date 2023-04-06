@@ -155,6 +155,16 @@
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
 
+/turf/open/floor/grass/lavaland
+	name = "dead grass patch"
+	desc = "It turns out grass doesn't grow very well in hell."
+	icon_state = "sand"
+	broken = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/grass/lavaland/spawniconchange()
+	return
+
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
 	desc = "Something about this grass makes you want to frolic. Or get high."
@@ -774,6 +784,9 @@
 
 /turf/open/floor/carpet/neon/simple/pink/nodots/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/blue/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."

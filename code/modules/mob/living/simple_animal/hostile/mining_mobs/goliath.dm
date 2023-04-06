@@ -2,12 +2,14 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "Goliath"
-	icon_living = "Goliath"
-	icon_aggro = "Goliath_alert"
-	icon_dead = "Goliath_dead"
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "ancient_goliath"
+	icon_living = "ancient_goliath"
+	icon_aggro = "ancient_goliath_alert"
+	icon_dead = "ancient_goliath_dead"
 	icon_gib = "syndicate_gib"
+	pixel_x = -12
+	base_pixel_x = -12
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 40
@@ -34,7 +36,7 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 	gender = MALE//lavaland elite goliath says that i'''' 't s female and i ''t s stronger because of sexual dimorphism, so normal goliaths should be male
 	var/pre_attack = 0
-	var/pre_attack_icon = "Goliath_preattack"
+	var/pre_attack_icon = "ancient_goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -91,13 +93,13 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
 	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
 	icon_aggro = "goliath"
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
-	pre_attack_icon = "goliath2"
+	pre_attack_icon = "goliath_preattack"
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
@@ -139,14 +141,14 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient
 	name = "ancient goliath"
 	desc = "Goliaths are biologically immortal, and rare specimens have survived for centuries. This one is clearly ancient, and its tentacles constantly churn the earth around it."
-	icon_state = "Goliath"
-	icon_living = "Goliath"
-	icon_aggro = "Goliath_alert"
-	icon_dead = "Goliath_dead"
+	icon_state = "ancient_goliath"
+	icon_living = "ancient_goliath"
+	icon_aggro = "ancient_goliath_alert"
+	icon_dead = "ancient_goliath_dead"
 	maxHealth = 400
 	health = 400
 	speed = 4
-	pre_attack_icon = "Goliath_preattack"
+	pre_attack_icon = "ancient_goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
@@ -182,7 +184,7 @@
 /obj/effect/temp_visual/goliath_tentacle
 	name = "goliath tentacle"
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "Goliath_tentacle_spawn"
+	icon_state = "goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
 	var/mob/living/spawner
