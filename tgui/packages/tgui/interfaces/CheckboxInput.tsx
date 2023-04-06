@@ -5,11 +5,13 @@ import { Window } from '../layouts';
 
 type Data = {
   items: string[];
+  message: string;
+  title: string;
 };
 
-export const MultiSelectInput = (props, context) => {
+export const CheckboxInput = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { items = [] } = data;
+  const { items = [], message, title } = data;
 
   const [selections, setSelections] = useLocalState<string[]>(
     context,
@@ -18,21 +20,18 @@ export const MultiSelectInput = (props, context) => {
   );
 
   const selectItem = (name: string) => {
-    let newSelections: string[] = [];
-
-    if (selections.includes(name)) {
-      newSelections = selections.filter((item) => item !== name);
-    } else {
-      newSelections = [...selections, name];
-    }
+    const newSelections = selections.includes(name)
+      ? selections.filter((item) => item !== name)
+      : [...selections, name];
 
     setSelections(newSelections);
   };
 
   return (
-    <Window width={425} height={176}>
+    <Window title={title} width={425} height={176}>
       <Window.Content>
         <Section fill>
+          {message}
           <Stack vertical>
             {items.map((item, index) => (
               <Stack.Item key={index}>
