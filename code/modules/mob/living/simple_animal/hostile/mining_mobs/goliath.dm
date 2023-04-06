@@ -212,7 +212,7 @@
 			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
-	icon_state = "Goliath_tentacle_wiggle"
+	icon_state = "goliath_tentacle_wiggle"
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, PROC_REF(trip)), 3, TIMER_STOPPABLE)
 
@@ -232,7 +232,7 @@
 		timerid = addtimer(CALLBACK(src, PROC_REF(retract)), 10, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
-	icon_state = "Goliath_tentacle_retract"
+	icon_state = "goliath_tentacle_retract"
 	deltimer(timerid)
 	timerid = QDEL_IN(src, 7)
 
