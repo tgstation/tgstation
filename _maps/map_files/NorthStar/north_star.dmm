@@ -54,6 +54,7 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/barricade/wooden,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "aaM" = (
@@ -3192,8 +3193,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "aOB" = (
-/obj/effect/mine/explosive,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/engine{
 	icon_state = "podfloor_light"
 	},
@@ -14329,6 +14330,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/engine,
 /area/station/maintenance/floor4/starboard/aft)
 "dKk" = (
@@ -22728,7 +22730,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mine/shrapnel,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "gdZ" = (
@@ -32683,6 +32685,10 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/engineering/gravity_generator)
+"iWF" = (
+/obj/effect/spawner/random/contraband/landmine,
+/turf/open/floor/engine,
+/area/station/maintenance/floor1/port/aft)
 "iWG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/landmark/start/hangover,
@@ -32916,6 +32922,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/item/weaponcrafting/receiver,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port)
 "iZG" = (
@@ -40001,6 +40008,7 @@
 /area/station/maintenance/floor1/starboard)
 "kSr" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/starboard/aft)
 "kSA" = (
@@ -40403,6 +40411,11 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/wood/large,
 /area/station/service/kitchen/kitchen_backroom)
+"kXW" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/contraband/landmine,
+/turf/open/floor/engine,
+/area/station/maintenance/floor1/starboard/fore)
 "kXZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42172,6 +42185,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
+"luZ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/contraband/landmine,
+/turf/open/floor/engine,
+/area/station/maintenance/floor4/starboard/aft)
 "lvm" = (
 /obj/structure/table,
 /obj/item/assembly/igniter{
@@ -58611,7 +58630,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "pJZ" = (
-/obj/effect/mine/shrapnel,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/engine{
 	icon_state = "textured_dark"
 	},
@@ -64535,7 +64554,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mine/shrapnel,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/iron,
 /area/station/maintenance/floor3/starboard/aft)
 "rmu" = (
@@ -70801,7 +70820,7 @@
 /area/station/commons/toilet)
 "tef" = (
 /obj/structure/window/reinforced/plasma/spawner/east,
-/obj/effect/mine/shrapnel,
+/obj/effect/spawner/random/contraband/landmine,
 /turf/open/floor/pod/dark,
 /area/station/service/kitchen/abandoned)
 "teq" = (
@@ -109179,7 +109198,7 @@ hYm
 oic
 ygd
 skW
-bxf
+kXW
 eey
 oic
 oic
@@ -133379,7 +133398,7 @@ nJt
 bJW
 mrs
 riT
-cll
+iWF
 vcr
 vcr
 owI
@@ -318375,7 +318394,7 @@ wir
 nSC
 nSC
 nSC
-sLe
+luZ
 bRt
 qGf
 dzB
