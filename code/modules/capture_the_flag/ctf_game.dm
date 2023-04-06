@@ -509,13 +509,13 @@
 
 ///Proc that identifies if something is a valid target for CTF related checks, checks if an object is a ctf barrier or has ctf component if they are a player.
 /proc/is_ctf_target(atom/target)
-	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
-		. = TRUE
+		return TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human = target
 		if(human.mind?.GetComponent(/datum/component/ctf_player))
-			. = TRUE
+			return TRUE
+	return FALSE
 
 #undef WHITE_TEAM
 #undef RED_TEAM
