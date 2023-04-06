@@ -248,7 +248,7 @@
 		/obj/item/gun/ballistic/automatic/pistol = 1,
 		/obj/item/stack/sheet/mineral/gold = 25,
 		/obj/item/stack/sheet/mineral/silver = 25,
-		/obj/item/food/donkpocket = 7,
+		/obj/item/food/donkpocket = 1,
 		/obj/item/stack/telecrystal = 3,
 		/obj/item/clothing/head/costume/crown/fancy = 1, //the captain's crown
 		/obj/item/storage/toolbox/syndicate = 1,
@@ -277,7 +277,8 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	tool_paths = list(
 		/obj/item/clothing/under/syndicate,
-		/obj/item/clothing/mask/gas/syndicate
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/card/emag
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED

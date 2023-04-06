@@ -54,7 +54,7 @@
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		This one is still in surprisingly good condition. Often found in the hands \
 		of underpaid Nanotrasen interns without a care for company property, Russian military LARPers, \
-		actual drunk Space Russians, Tiger Co-op assassins and cargo technicians. Still feels slightly moist."
+		actual drunk Space Russians, Tiger Co-op assassins and cargo technicians. <I>Still</I> feels slightly moist."
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
