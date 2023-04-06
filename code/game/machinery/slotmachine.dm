@@ -354,11 +354,12 @@
 
 	return amount
 
-#undef SEVEN
-#undef SPIN_TIME
-#undef JACKPOT
 #undef BIG_PRIZE
+#undef COIN
+#undef HOLOCHIP
+#undef JACKPOT
+#undef REEL_DEACTIVATE_DELAY
+#undef SEVEN
 #undef SMALL_PRIZE
 #undef SPIN_PRICE
-#undef HOLOCHIP
-#undef COIN
+#undef SPIN_TIME

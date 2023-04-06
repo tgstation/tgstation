@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "Solo benches are no longer invisible when facing east/west"

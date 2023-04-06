@@ -75,9 +75,6 @@
 	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag)
 		return // too close
-	if(ishuman(user))
-		if(!can_trigger_gun(user))
-			return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
 		return

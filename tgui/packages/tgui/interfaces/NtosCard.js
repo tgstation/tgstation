@@ -129,7 +129,7 @@ const IdCardPage = (props, context) => {
             ellipsis
             icon="eject"
             content={authIDName}
-            onClick={() => act('PRG_ejectauthid')}
+            onClick={() => act('PRG_eject_id')}
           />
         </Stack.Item>
         <Stack.Item width="100%" mt={1} ml={0}>
