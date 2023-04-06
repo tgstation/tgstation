@@ -496,6 +496,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	critical = PLANE_CRITICAL_DISPLAY
 
 ///Contains all overlay (movable) lighting
+/// This still will not work through multiz, because of a byond bug with BLEND_MULTIPLY
+/// Bug report is up, waiting on a fix
 /atom/movable/screen/plane_master/o_lighting
 	name = "Overlight Lighting"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
