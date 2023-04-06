@@ -38,7 +38,7 @@
 	desc = "A suitcase containing the necessary gun parts to turn a laser gun into a x-ray laser gun. Do not point most parts directly towards face."
 
 /obj/item/weaponcrafting/gunkit/ion
-	name = "ion carbine parts kit (Nonlethal/Highly Destructive)"
+	name = "ion carbine parts kit (Nonlethal/Highly Destructive/Very Lethal (Silicons))"
 	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a ion carbine. Perfect against lockers you don't have access to."
 
 /obj/item/weaponcrafting/gunkit/temperature
