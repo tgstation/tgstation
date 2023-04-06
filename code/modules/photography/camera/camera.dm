@@ -204,24 +204,14 @@
 			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
 
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
+
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
-
-		var/mob/living/target = mob
-		if(!istype(target) || !(target.mob_biotypes & MOB_SPIRIT)) 
-			continue
-			
-		// time to steal your soul
-		if(istype(target, /mob/living/simple_animal/revenant)) // no hiding
-			var/mob/living/simple_animal/revenant/peek_a_boo = mob
-			peek_a_boo.reveal(2 SECONDS)
-			peek_a_boo.stun(2 SECONDS)
-		target.visible_message(span_warning("[src] violently flinches!"), \
-			span_revendanger("You feel your essence draining away from having your picture taken!"))
-		target.apply_damage(rand(10, 15))
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
@@ -230,7 +220,7 @@
 	get_icon.Blend("#000", ICON_UNDERLAY)
 
 	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
-	after_picture(user, picture)
+	after_picture(user, picture, mobs_spotted)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
 	blending = FALSE
 	return picture
@@ -238,6 +228,8 @@
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)
