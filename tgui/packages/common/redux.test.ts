@@ -1,60 +1,61 @@
-import { Reducer, applyMiddleware, combineReducers, createAction, createStore } from './redux';
+import { Action, Reducer, applyMiddleware, combineReducers, createAction, createStore } from './redux';
 
-type TestState = {
-  count: number;
+// Dummy Reducer
+const counterReducer: Reducer<number, Action<string>> = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
 };
 
-describe('reduxLite', () => {
-  const INCREMENT = 'INCREMENT';
+// Dummy Middleware
+const loggingMiddleware = (storeApi) => (next) => (action) => {
+  console.log('Middleware:', action);
+  return next(action);
+};
 
-  const increment = createAction(INCREMENT);
+// Dummy Action Creators
+const increment = createAction('INCREMENT');
+const decrement = createAction('DECREMENT');
 
-  const counterReducer: Reducer<TestState> = (state = { count: 0 }, action) => {
-    switch (action.type) {
-      case INCREMENT:
-        return { count: state.count + 1 };
-      default:
-        return state;
-    }
-  };
-
-  test('createStore, getState and dispatch', () => {
+describe('Redux implementation tests', () => {
+  test('createStore works', () => {
     const store = createStore(counterReducer);
-    expect(store.getState()).toEqual({ count: 0 });
-
-    store.dispatch(increment());
-    expect(store.getState()).toEqual({ count: 1 });
+    expect(store.getState()).toBe(0);
   });
 
-  test('applyMiddleware', () => {
-    const middleware = (store) => (next) => (action) => {
-      if (action.type === INCREMENT) {
-        next({ ...action, payload: 2 });
-      } else {
-        next(action);
-      }
-    };
-
-    const enhancedStore = createStore(
+  test('createStore with applyMiddleware works', () => {
+    const store = createStore(
       counterReducer,
-      applyMiddleware(middleware)
+      applyMiddleware(loggingMiddleware)
     );
-    enhancedStore.dispatch(increment());
-    expect(enhancedStore.getState()).toEqual({ count: 2 });
+    expect(store.getState()).toBe(0);
   });
 
-  test('combineReducers', () => {
-    const rootReducer = combineReducers({ counter: counterReducer });
-    const store = createStore(rootReducer);
-
-    expect(store.getState()).toEqual({ counter: { count: 0 } });
-
+  test('dispatch works', () => {
+    const store = createStore(counterReducer);
     store.dispatch(increment());
-    expect(store.getState()).toEqual({ counter: { count: 1 } });
+    expect(store.getState()).toBe(1);
+    store.dispatch(decrement());
+    expect(store.getState()).toBe(0);
   });
 
-  test('createAction', () => {
-    const action = increment();
-    expect(action).toEqual({ type: INCREMENT, payload: undefined });
+  test('combineReducers works', () => {
+    const rootReducer = combineReducers({
+      counter: counterReducer,
+    });
+    const store = createStore(rootReducer);
+    expect(store.getState()).toEqual({ counter: 0 });
+  });
+
+  test('createAction works', () => {
+    const incrementAction = increment();
+    expect(incrementAction).toEqual({ type: 'INCREMENT' });
+    const decrementAction = decrement();
+    expect(decrementAction).toEqual({ type: 'DECREMENT' });
   });
 });

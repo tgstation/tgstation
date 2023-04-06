@@ -43,12 +43,6 @@ type PreparedAction = {
   meta?: any;
 };
 
-type CreatedAction<TAction> = {
-  toString(): TAction;
-  type: TAction;
-  match(action: Action): boolean;
-};
-
 /**
  * Creates a Redux store.
  */
@@ -177,29 +171,28 @@ export const combineReducers = (
 export const createAction = <TAction extends string>(
   type: TAction,
   prepare?: (...args: any[]) => PreparedAction
-): ((...args: any[]) => Action<TAction> & PreparedAction) &
-  CreatedAction<TAction> => {
-  const actionCreator = (...args: any[]): Action<TAction> & PreparedAction => {
-    if (!prepare) {
-      return { type, payload: args[0] };
+) => {
+  const actionCreator = (...args: any[]) => {
+    let action: Action<TAction> & PreparedAction = { type };
+
+    if (prepare) {
+      const prepared = prepare(...args);
+      if (!prepared) {
+        throw new Error('prepare function did not return an object');
+      }
+      action = { ...action, ...prepared };
+    } else {
+      action.payload = args[0];
     }
-    const prepared = prepare(...args);
-    if (!prepared) {
-      throw new Error('prepare function did not return an object');
-    }
-    const action: Action<TAction> & PreparedAction = { type };
-    if ('payload' in prepared) {
-      action.payload = prepared.payload;
-    }
-    if ('meta' in prepared) {
-      action.meta = prepared.meta;
-    }
+
     return action;
   };
-  actionCreator.toString = () => '' + type;
+
+  actionCreator.toString = () => type;
   actionCreator.type = type;
   actionCreator.match = (action) => action.type === type;
-  return actionCreator as typeof actionCreator & CreatedAction<TAction>;
+
+  return actionCreator;
 };
 
 // Implementation specific
