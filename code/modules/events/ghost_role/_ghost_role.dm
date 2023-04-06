@@ -20,15 +20,13 @@
 	try_spawning()
 
 /**
+ * Attempts to spawn the role, and cancels the event if it fails.
  *
- *
- *
- *
- * * sanity -
- * * retry -
+ * Pauses the event right as it begins, and waits for setup/polling to end.
+ * If successful, continues running the rest of the event and notifies ghosts.
  */
 
-/datum/round_event/ghost_role/proc/try_spawning(sanity = 0, retry = 0)
+/datum/round_event/ghost_role/proc/try_spawning()
 	// The event does not run until the spawning has been attempted
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
@@ -38,15 +36,16 @@
 		cached_announcement_chance = announce_chance //only announce once we've finished the spawning loop.
 	announce_chance = (status == SUCCESSFUL_SPAWN ? cached_announcement_chance : 0)
 	if((status == WAITING_FOR_SOMETHING))
-		if(retry >= MAX_SPAWN_ATTEMPT)
+		var/retry_count = 0
+		if(retry_count >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
 			if(control && control.occurrences > 0) //Don't refund if it hasn't
 				control.occurrences--
 			return
-		var/waittime = 300 * (2**retry)
+		var/waittime = 300 * (2**retry_count)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
-		addtimer(CALLBACK(src, PROC_REF(try_spawning), 0, ++retry), waittime)
+		addtimer(CALLBACK(src, PROC_REF(try_spawning), 0, ++retry_count), waittime)
 		return
 
 	if(!status)
@@ -75,7 +74,7 @@
 	processing = TRUE
 
 /**
- * Performs the spawning of our role.
+ * Performs the spawning of our role. Entirely specific to the event itself.
  *
  * Should return SUCCESSFUL_SPAWN if role was successfully spawned,
  * return NOT_ENOUGH_PLAYERS if less than mimimum_required was found,
@@ -92,8 +91,8 @@
  * `priority_candidates` first, and ghost roles randomly shuffled and
  * appended after.
  *
- * jobban -
- * be_special -
+ * jobban - The jobban flag to exclude players from the polling pool with.
+ * be_special - The "special role" flag for the ghost candidacy poll.
  */
 
 /datum/round_event/ghost_role/proc/get_candidates(jobban, be_special)
