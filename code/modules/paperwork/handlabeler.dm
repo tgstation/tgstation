@@ -79,11 +79,6 @@
 		if(!str)
 			to_chat(user, span_warning("Invalid text!"))
 			return
-
-		var/list = tgui_input_checkboxes(user, "Label text", "Set Label", list("Label"))
-		if(!list)
-			to_chat(user, span_warning("Invalid text!"))
-			return
 		label = str
 		to_chat(user, span_notice("You set the text to '[str]'."))
 	else
