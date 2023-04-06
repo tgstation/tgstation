@@ -83,13 +83,15 @@
 	. = ..()
 
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
+	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_PLANE, movable_parent)
+	visible_mask.layer = O_LIGHTING_MASK_LAYER
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	visible_mask.alpha = 0
 	if(is_directional)
 		directional = TRUE
 		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
+		SET_PLANE_EXPLICIT(cone, O_LIGHTING_PLANE, movable_parent)
+		cone.layer = O_LIGHTING_CONE_LAYER
 		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		cone.alpha = 110
 		cone.transform = cone.transform.Translate(-32, -32)
@@ -310,9 +312,9 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 		current_holder.underlays -= cone
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, source)
+	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_PLANE, source)
 	if(cone)
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, source)
+		SET_PLANE_EXPLICIT(cone, O_LIGHTING_PLANE, source)
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 		current_holder.underlays += cone

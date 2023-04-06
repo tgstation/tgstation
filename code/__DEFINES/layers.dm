@@ -45,9 +45,8 @@
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
 
-///Lighting objects that are "free floating"
-#define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+///Overlay lighting objects
+#define O_LIGHTING_PLANE 11
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
@@ -232,6 +231,11 @@
 /// Stuff that needs to draw above everything else on this plane
 #define LIGHTING_ABOVE_ALL 20
 
+// O_LIGHTING_PLANE layers
+/// Base layer
+#define O_LIGHTING_MASK_LAYER 25
+/// Cone layer
+#define O_LIGHTING_CONE_LAYER 30
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.

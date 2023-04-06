@@ -495,18 +495,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
 
-/// This will not work through multiz, because of a byond bug with BLEND_MULTIPLY
-/// Bug report is up, waiting on a fix
-/atom/movable/screen/plane_master/o_light_visual
+///Contains all overlay (movable) lighting
+/atom/movable/screen/plane_master/o_light
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
 		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
-	plane = O_LIGHTING_VISUAL_PLANE
+		<br>Draws directly onto the lighting plate, on top of the turf lighting plane."
+	plane = O_LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_ADD
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/above_lighting
