@@ -91,7 +91,7 @@
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
 	for(var/mob/living/carbon/nearby_carbon in targets)
-		flash_carbon(nearby_carbon, user, confusion_duration, generic_message = TRUE)
+		flash_carbon(nearby_carbon, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
