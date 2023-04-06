@@ -22,6 +22,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
 	///A pAI currently loaded into the modular computer.
 	var/obj/item/pai_card/inserted_pai
+	///Does the console update the crew manifest when the ID is removed?
+	var/crew_manifest_update = FALSE
 
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
@@ -277,6 +279,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/RemoveID(mob/user)
 	if(!computer_id_slot)
 		return ..()
+
+	if(crew_manifest_update)
+		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
 	if(user)
 		if(!issilicon(user) && in_range(src, user))

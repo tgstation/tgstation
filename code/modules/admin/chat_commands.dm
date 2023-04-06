@@ -16,8 +16,9 @@
 
 /// subtype tgs chat command with validated admin ranks. Only supports discord.
 /datum/tgs_chat_command/validated
-	var/required_rights = 0 //! validate discord userid is linked to a game admin with these flags.
+	ignore_type = /datum/tgs_chat_command/validated
 	admin_only = TRUE
+	var/required_rights = 0 //! validate discord userid is linked to a game admin with these flags.
 
 
 /// called by tgs
