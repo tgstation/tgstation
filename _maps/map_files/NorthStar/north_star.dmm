@@ -3731,11 +3731,6 @@
 "aVs" = (
 /turf/open/openspace,
 /area/station/maintenance/floor3/starboard)
-"aVA" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
-/turf/open/floor/plating,
-/area/station/engineering/storage/tcomms)
 "aVD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -4845,10 +4840,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"biL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
 "biM" = (
 /obj/structure/railing{
 	dir = 1
@@ -8644,6 +8635,10 @@
 	id = "armory";
 	name = "Armoury Shutter"
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "cfH" = (
@@ -9444,7 +9439,6 @@
 /area/station/cargo/sorting)
 "cpD" = (
 /obj/structure/falsewall,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "cpE" = (
@@ -19116,6 +19110,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"feR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit/departure_lounge)
 "feX" = (
 /turf/open/openspace,
 /area/station/hallway/floor2/fore)
@@ -21524,6 +21524,9 @@
 /obj/effect/turf_decal/stripes,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "fNA" = (
@@ -23230,6 +23233,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "glY" = (
@@ -27201,6 +27208,7 @@
 /obj/effect/spawner/structure/window/hollow/plasma/middle,
 /obj/structure/girder/reinforced,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
 /area/station/maintenance/floor4/starboard)
 "hsU" = (
@@ -27783,6 +27791,10 @@
 	req_access = list("armory")
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/security/brig)
 "hAR" = (
@@ -32696,6 +32708,8 @@
 /obj/structure/girder/reinforced,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard)
 "iXa" = (
@@ -41438,6 +41452,14 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/starboard)
+"lme" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/public/glass{
+	name = "Departures"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/exit/departure_lounge)
 "lmg" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -42751,6 +42773,15 @@
 "lEo" = (
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
+"lEs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/floor4/starboard)
 "lEz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -48352,9 +48383,6 @@
 /area/station/maintenance/floor1/starboard/fore)
 "mZm" = (
 /obj/machinery/light/directional/north,
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor2/fore)
 "mZq" = (
@@ -52249,6 +52277,12 @@
 "nVq" = (
 /turf/open/openspace,
 /area/station/maintenance/floor3/starboard/fore)
+"nVw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/station/hallway/floor1/fore)
 "nVy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53535,9 +53569,6 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "onk" = (
@@ -54605,8 +54636,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/port/aft)
 "oDd" = (
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/red/half,
+/obj/machinery/button/door/directional/south{
+	id = "armblast";
+	name = "Emergency Armory Lockdown";
+	req_access = list("armory")
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "oDe" = (
@@ -62690,6 +62725,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qOs" = (
@@ -65440,10 +65476,6 @@
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/carpet/royalblack,
 /area/station/service/kitchen/diner)
-"rBD" = (
-/obj/structure/lattice,
-/turf/open/space/openspace,
-/area/space)
 "rBI" = (
 /obj/machinery/door/airlock/science/glass{
 	name = "Laboratory B"
@@ -65667,6 +65699,14 @@
 	dir = 8
 	},
 /area/station/hallway/floor3/aft)
+"rDZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/security/brig)
 "rEg" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -65719,6 +65759,7 @@
 	c_tag = "Security- Central"
 	},
 /obj/effect/turf_decal/tile/red/half,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "rGe" = (
@@ -66097,6 +66138,9 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
@@ -73687,8 +73731,8 @@
 /obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 4
 	},
-/turf/open/space/openspace,
-/area/space)
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
 "tXJ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -77166,6 +77210,10 @@
 "uXo" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/ai_monitored/security/armory)
 "uXw" = (
@@ -77367,11 +77415,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
-"uZA" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy,
-/turf/open/space/openspace,
-/area/space)
 "uZF" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/floor2/starboard/aft)
@@ -87567,6 +87610,10 @@
 	req_access = list("armory")
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/security/brig)
 "xIX" = (
@@ -87734,7 +87781,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -88499,6 +88548,10 @@
 /obj/machinery/door/poddoor/shutters/window{
 	id = "armory";
 	name = "Armoury Shutters"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -89369,11 +89422,6 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
-"ykO" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "ykP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -106298,7 +106346,7 @@ xFm
 bJo
 wbg
 mxT
-dby
+feR
 dby
 xFm
 eYa
@@ -106555,7 +106603,7 @@ xYo
 xcg
 elI
 qNx
-qOF
+lme
 qOF
 xYo
 xYo
@@ -106812,7 +106860,7 @@ axe
 qxz
 fvr
 sZI
-vZC
+nVw
 vZC
 tKe
 voj
@@ -114515,9 +114563,9 @@ cUL
 ovG
 sNr
 oqW
-ejg
-ejg
-biL
+rPi
+rPi
+fgN
 rPi
 rPi
 vRp
@@ -138929,7 +138977,7 @@ iEs
 spE
 oPJ
 gxT
-aVA
+fmg
 owI
 jkM
 bOk
@@ -256620,7 +256668,7 @@ pRs
 qrd
 qrd
 qrd
-kgT
+xRM
 hVI
 eir
 dfA
@@ -311628,7 +311676,7 @@ eTV
 auO
 fNt
 hsT
-pDq
+lEs
 dIl
 nPE
 nPE
@@ -312597,13 +312645,13 @@ ucA
 ucA
 ucA
 ucA
-ucA
+oyh
 gQV
 gQV
 bTQ
 gQV
 gQV
-ucA
+oyh
 ucA
 ucA
 ucA
@@ -312853,7 +312901,7 @@ ucA
 ucA
 ucA
 ucA
-ucA
+oyh
 gQV
 gQV
 lAJ
@@ -312861,7 +312909,7 @@ cxR
 gXO
 gQV
 gQV
-ucA
+oyh
 ucA
 ucA
 ucA
@@ -313119,12 +313167,12 @@ jOp
 qxd
 gQV
 mQO
-rBD
-rBD
-rBD
-rBD
-rBD
-uZA
+xuh
+xuh
+xuh
+xuh
+xuh
+sWs
 ucA
 ucA
 ucA
@@ -313458,7 +313506,7 @@ aDE
 saB
 iqR
 apg
-ykO
+sWm
 rHf
 cdf
 ooN
@@ -313633,12 +313681,12 @@ uyQ
 mBm
 gQV
 mQO
-rBD
-rBD
-rBD
-rBD
-rBD
-uZA
+xuh
+xuh
+xuh
+xuh
+xuh
+sWs
 ucA
 ucA
 ucA
@@ -313881,7 +313929,7 @@ ucA
 ucA
 ucA
 ucA
-ucA
+oyh
 gQV
 gQV
 mhZ
@@ -313889,7 +313937,7 @@ ddM
 nHr
 gQV
 gQV
-ucA
+oyh
 ucA
 ucA
 ucA
@@ -314139,13 +314187,13 @@ ucA
 ucA
 ucA
 ucA
-ucA
+oyh
 gQV
 hDr
 hDr
 hDr
 gQV
-ucA
+oyh
 ucA
 ucA
 ucA
@@ -317823,7 +317871,7 @@ mZH
 jIV
 vBa
 jak
-cAt
+rDZ
 cbw
 lOp
 kvk
