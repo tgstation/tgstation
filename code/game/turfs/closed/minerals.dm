@@ -632,14 +632,12 @@
 
 /turf/closed/mineral/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon_state = "redrock"
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 
 /turf/closed/mineral/random/stationside/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 
