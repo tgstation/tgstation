@@ -418,7 +418,7 @@
 		body_parts_covered &= ~ARMS
 
 /obj/item/clothing/under/can_use(mob/user)
-	if(ismob(user) && !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user), floor_okay = TRUE))
+	if(ismob(user) && !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return FALSE
 	return ..()
 

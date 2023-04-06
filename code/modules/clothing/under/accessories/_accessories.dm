@@ -86,10 +86,6 @@
 	if(detach_from.atom_storage && IS_WEAKREF_OF(src, detach_from.atom_storage.real_location))
 		QDEL_NULL(detach_from.atom_storage)
 
-	/*
-	U.armor = U.armor.detachArmor(armor)
-	*/
-
 	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_UNDER_ADJUSTED))
 	var/mob/dropped_from = detach_from.loc
 	if(istype(dropped_from))
@@ -138,7 +134,7 @@
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return

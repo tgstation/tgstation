@@ -69,7 +69,7 @@
 
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/pockets/pocketprotector)
+	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
 
 /obj/item/clothing/accessory/pocketprotector/detach(obj/item/clothing/under/detach_from)
 	. = ..()
