@@ -199,6 +199,9 @@
 /datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
+	// We can only flash people if we're next to them and click on them, anyway else this is invoked is invalid
+	ASSERT(source.Adjacent(flashed))
+
 	// Always partial flash at the very least
 	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
 

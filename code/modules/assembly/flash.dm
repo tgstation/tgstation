@@ -83,7 +83,7 @@
 	return TRUE
 
 //BYPASS CHECKS ALSO PREVENTS BURNOUT!
-/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, targeted = FALSE, mob/user)
+/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
@@ -91,7 +91,7 @@
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
 	for(var/mob/living/carbon/nearby_carbon in targets)
-		flash_carbon(nearby_carbon, user, confusion_duration = confusion_duration, targeted = targeted, generic_message = TRUE)
+		flash_carbon(nearby_carbon, user, confusion_duration, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -148,7 +148,8 @@
 
 	var/deviation = calculate_deviation(flashed, user || src)
 
-	if(user)
+	// Only send a signal if this is a proper user targeted 1 on 1 flash, for simplicity
+	if(user && targeted)
 		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_FLASHED_CARBON, flashed, src, deviation)
 		if(sigreturn & STOP_FLASH)
 			return
