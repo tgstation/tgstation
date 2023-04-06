@@ -174,6 +174,9 @@
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
+/obj/item/storage/fancy/candle_box/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/flashlight/flare/candle))
 
 ////////////
 //CIG PACK//
