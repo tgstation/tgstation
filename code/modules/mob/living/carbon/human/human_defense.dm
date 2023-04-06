@@ -485,13 +485,15 @@
 	//Don't go further if the shock was blocked/too weak.
 	if(!.)
 		return
-	//Note we both check that the user is in cardiac arrest and can actually heartattack
-	//If they can't, they're missing their heart and this would runtime
-	if(undergoing_cardiac_arrest() && can_heartattack() && !(flags & SHOCK_ILLUSION))
-		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-			if(heart.Restart() && stat == CONSCIOUS)
-				to_chat(src, span_notice("You feel your heart beating again!"))
+	if(!(flags & SHOCK_ILLUSION))
+		force_say()
+		//Note we both check that the user is in cardiac arrest and can actually heartattack
+		//If they can't, they're missing their heart and this would runtime
+		if(undergoing_cardiac_arrest() && can_heartattack())
+			if(shock_damage * siemens_coeff >= 1 && prob(25))
+				var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+				if(heart.Restart() && stat == CONSCIOUS)
+					to_chat(src, span_notice("You feel your heart beating again!"))
 	electrocution_animation(40)
 
 /mob/living/carbon/human/emp_act(severity)
