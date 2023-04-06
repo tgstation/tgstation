@@ -431,7 +431,7 @@
 	name = "Transit Booth"
 	description = "Make sure to check out the duty-free store!"
 
-/datum/map_template/ruin/space/Space_phonebooth
+/datum/map_template/ruin/space/space_phonebooth
 	id = "Space_phonebooth"
 	suffix = "phonebooth.dmm"
 	name = "Space Phonebooth"
