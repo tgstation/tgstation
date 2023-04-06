@@ -930,6 +930,7 @@
 #include "code\datums\components\label.dm"
 #include "code\datums\components\light_eater.dm"
 #include "code\datums\components\lock_on_cursor.dm"
+#include "code\datums\components\loomable.dm"
 #include "code\datums\components\manual_blinking.dm"
 #include "code\datums\components\manual_breathing.dm"
 #include "code\datums\components\material_container.dm"
