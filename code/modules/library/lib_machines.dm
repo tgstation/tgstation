@@ -817,3 +817,20 @@
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
 	qdel(draw_from)
+
+#undef BOOKS_PER_PAGE
+#undef CHECKOUTS_PER_PAGE
+#undef DEFAULT_SEARCH_CATAGORY
+#undef DEFAULT_UPLOAD_CATAGORY
+#undef INVENTORY_PER_PAGE
+#undef LIBRARY_ARCHIVE
+#undef LIBRARY_CHECKOUT
+#undef LIBRARY_INVENTORY
+#undef LIBRARY_NEWSFEED
+#undef LIBRARY_PRINT
+#undef LIBRARY_TOP_SNEAKY
+#undef LIBRARY_UPLOAD
+#undef MAX_LIBRARY
+#undef MIN_LIBRARY
+#undef NEWSCASTER_COOLDOWN
+#undef PRINTER_COOLDOWN

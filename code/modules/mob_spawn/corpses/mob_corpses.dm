@@ -86,6 +86,19 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/tigercultist
+	name = "Tiger Cooperative Cultist"
+	outfit = /datum/outfit/tigercultcorpse
+
+/datum/outfit/tigercultcorpse
+	name = "Tiger Cooperative Corpse"
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	shoes = /obj/item/clothing/shoes/laceup
+	neck = /obj/item/clothing/neck/fake_heretic_amulet
+	head = /obj/item/clothing/head/hooded/chaplain_hood
+	back = /obj/item/storage/backpack/cultpack
+
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
@@ -317,3 +330,11 @@
 	facial_hairstyle = "Shaved"
 	skin_tone = "caucasian1"
 	outfit = /datum/outfit/job/assistant/consistent
+
+/obj/effect/mob_spawn/corpse/human/prey_pod
+	husk = TRUE
+	outfit = /datum/outfit/prey_pod_victim
+
+/datum/outfit/prey_pod_victim
+	name = "Prey Pod Victim"
+	uniform = /obj/item/clothing/under/rank/rnd/roboticist

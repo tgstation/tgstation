@@ -77,7 +77,7 @@
 	for(var/machinery_path in R.machinery)
 		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
 			return FALSE
-	
+
 	for(var/required_structure_path in R.structures)
 		// Check for the presence of the required structure. Allow for subtypes to be used if not blacklisted
 		var/needed_amount = R.structures[required_structure_path]
@@ -89,7 +89,7 @@
 				requirements_list[required_structure_path] = structures[structure_path] // Store an instance of what we are using for check_requirements
 				if(needed_amount <= 0)
 					break
-		
+
 		// We didn't find the required item
 		if(needed_amount > 0)
 			return FALSE
@@ -204,7 +204,7 @@
 				I = new R.result (get_turf(a.loc), R.result_amount || 1)
 			else
 				I = new R.result (get_turf(a.loc))
-				if(I.atom_storage)
+				if(I.atom_storage && R.delete_contents)
 					for(var/obj/item/thing in I)
 						qdel(thing)
 			I.CheckParts(parts, R)
@@ -360,8 +360,6 @@
 
 /datum/component/personal_crafting/proc/is_recipe_available(datum/crafting_recipe/recipe, mob/user)
 	if(!recipe.always_available && !(recipe.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
-		return FALSE
-	if (ispath(recipe.type, /datum/crafting_recipe/food/) != mode) // Skip if food and mode is crafting / Skip if not food and mode is cooking
 		return FALSE
 	if (recipe.category == CAT_CULT && !IS_CULTIST(user)) // Skip blood cult recipes if not cultist
 		return FALSE
@@ -563,7 +561,7 @@
 		data["machinery"] = list()
 		for(var/req_atom as anything in recipe.machinery)
 			data["machinery"] += atoms.Find(req_atom)
-			
+
 	// Structures
 	if(recipe.structures)
 		data["structures"] = list()
@@ -607,10 +605,15 @@
 
 //Mind helpers
 
-/datum/mind/proc/teach_crafting_recipe(R)
+/// proc that teaches user a non-standard crafting recipe
+/datum/mind/proc/teach_crafting_recipe(recipe)
 	if(!learned_recipes)
 		learned_recipes = list()
-	learned_recipes |= R
+	learned_recipes |= recipe
+
+/// proc that makes user forget a specific crafting recipe
+/datum/mind/proc/forget_crafting_recipe(recipe)
+	learned_recipes -= recipe
 
 /datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
 	if(!learned_recipes)

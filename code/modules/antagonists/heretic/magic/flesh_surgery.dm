@@ -92,7 +92,7 @@
 
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
 	if(to_heal.damage < organ_hp_to_heal)
-		to_heal.setOrganDamage(organ_hp_to_heal)
+		to_heal.set_organ_damage(organ_hp_to_heal)
 		to_heal.balloon_alert(caster, "organ healed")
 		playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
@@ -128,7 +128,7 @@
 /// If cast on a carbon, we'll try to steal one of their organs directly from their person.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/steal_organ_from_mob(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	var/mob/living/carbon/carbon_victim = victim
-	if(!istype(carbon_victim) || !length(carbon_victim.internal_organs))
+	if(!istype(carbon_victim) || !length(carbon_victim.organs))
 		victim.balloon_alert(caster, "no organs!")
 		return FALSE
 
@@ -137,7 +137,7 @@
 	var/parsed_zone = parse_zone(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
-	for(var/obj/item/organ/organ as anything in carbon_victim.internal_organs)
+	for(var/obj/item/organ/organ as anything in carbon_victim.organs)
 		// Only show organs which are in our generic zone
 		if(deprecise_zone(organ.zone) != zone_to_check)
 			continue
@@ -229,5 +229,6 @@
 /obj/item/melee/touch_attack/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

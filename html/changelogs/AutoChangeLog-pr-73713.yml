@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Jobs get \"You are the\" and policy text again on spawn"

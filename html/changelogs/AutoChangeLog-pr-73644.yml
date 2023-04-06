@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "RPED to infer icons of parts to use in `icon2html()` when displaying part information"

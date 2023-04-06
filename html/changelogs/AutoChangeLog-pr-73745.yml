@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed AIs being able to recognize a spessman's identity over a holopad call even if it was completely concealed, e.g. cloak of shadow, infiltrator suit"
