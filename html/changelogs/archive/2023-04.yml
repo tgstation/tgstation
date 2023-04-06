@@ -158,3 +158,36 @@
   zxaber:
   - balance: Malf AIs that hack Head of Staff and Vault APCs will now find a discount
       issued on Doomsday.
+2023-04-06:
+  DaydreamIQ:
+  - rscadd: Added the Abandoned Interdyne facility, explore at your own peril
+  Ghilker:
+  - rscadd: Timestop blocks the SM from processing (can't be healed, doesn't output
+      gases but can still take damage)
+  JohnFulpWillard:
+  - balance: Flamethrowers no longer have a trigger guard, and can be used by anyone
+      (including if you're wearing Atmos gloves).
+  - bugfix: Slimes' mischievous emote now works.
+  LT3:
+  - rscadd: The tram now has a remote control for funny and/or nefarious purposes
+  LemonInTheDark:
+  - admin: All centcom ferries are now loadable. Yes this WASbroken
+  Melbert:
+  - refactor: Removes Rev code from core flash code
+  - bugfix: Getting converted on April Fools now triggers the meme force say as always
+      intended
+  - rscdel: The meme force say can no longer trigger on any day (it didn't work before
+      anyways)
+  Mey-Ha-Zah:
+  - imageadd: added new lavaland sprites, moved some sprites to a new location, adjusted
+      pixel shift for the updated sprites, adjusted the name of some sprites.
+  flowercuco:
+  - rscadd: Added new syndicate uplink beacon and associated systems that allow you
+      to get a replacement traitor uplink
+  - bugfix: Debug & nukie uplinks no longer runtime and work properly again
+  kinneb:
+  - rscadd: A new HUD, The 'Detective' UI
+  - imageadd: All the spritework for said HUD.
+  timothymtorres:
+  - imageadd: Split all icons in weapons_and_items.dmi to their own categories
+  - imagedel: Removed some unused icons

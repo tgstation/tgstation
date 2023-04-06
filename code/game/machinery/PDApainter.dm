@@ -238,6 +238,7 @@
  */
 /obj/machinery/pdapainter/proc/eject_id_card(mob/living/user)
 	if(stored_id_card)
+		GLOB.manifest.modify(stored_id_card.registered_name, stored_id_card.assignment, stored_id_card.get_trim_assignment())
 		if(user && !issilicon(user) && in_range(src, user))
 			user.put_in_hands(stored_id_card)
 		else
