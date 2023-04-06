@@ -17,11 +17,11 @@
 	src.team = team
 	src.ctf_game = ctf_game
 	src.death_drop = death_drop
+	if(!istype(parent, /datum/mind))
+		return COMPONENT_INCOMPATIBLE
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
 	ckey_reference = player_mob.ckey
-	if(!istype(parent, /datum/mind))
-		return COMPONENT_INCOMPATIBLE
 	setup_dusting()
 	
 /datum/component/ctf_player/PostTransfer()
