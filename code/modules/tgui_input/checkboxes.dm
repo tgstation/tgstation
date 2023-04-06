@@ -80,6 +80,14 @@
 /datum/tgui_checkbox_input/ui_state(mob/user)
 	return GLOB.always_state
 
+/datum/tgui_checkbox/input/ui_data(mob/user)
+	var/list/data = list()
+
+	if(timeout)
+		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+
+	return data
+
 /datum/tgui_checkbox_input/ui_static_data(mob/user)
 	var/list/data = list()
 

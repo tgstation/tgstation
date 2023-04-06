@@ -3,18 +3,21 @@ import { TableCell, TableRow } from '../components/Table';
 import { useBackend, useLocalState } from '../backend';
 
 import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 import { Window } from '../layouts';
+import { decodeHtmlEntities } from 'common/string';
 
 type Data = {
   items: string[];
   message: string;
   title: string;
+  timeout: number;
 };
 
 /** Renders a list of checkboxes per items for input. */
 export const CheckboxInput = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { items = [], message, title } = data;
+  const { items = [], message, timeout, title } = data;
 
   const [selections, setSelections] = useLocalState<string[]>(
     context,
@@ -32,11 +35,12 @@ export const CheckboxInput = (props, context) => {
 
   return (
     <Window title={title} width={425} height={300}>
+      {!!timeout && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <Section color="label" fill textAlign="center">
-              {message}
+              {decodeHtmlEntities(message)}
             </Section>
           </Stack.Item>
           <Stack.Item grow>
