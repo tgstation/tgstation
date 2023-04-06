@@ -207,6 +207,11 @@
 /area/ruin/space/has_grav/dangerous_research/maint
 	name = "\improper ASRC Maintenance"
 
+//Interdyne Ruin
+
+/area/ruin/space/has_grav/interdyne
+	name = "\improper Interdyne Research Base"
+
 //Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/ancientstation
@@ -561,7 +566,6 @@
 
 /area/ruin/space/has_grav/spinwardsmoothies
 	name = "Spinward Smoothies"
-
 
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet

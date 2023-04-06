@@ -9,6 +9,7 @@
 /obj/item/chasm_detritus
 	name = "chasm detritus"
 	desc = "Abstract concept of an object which once fell into a deep hole."
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "skub"
 	/// The chance (out of 100) to fish out something from `default_contents`
 	/// even if there's something in GLOB.chasm_storage.
