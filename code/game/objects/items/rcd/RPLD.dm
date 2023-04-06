@@ -252,7 +252,7 @@
 	if(istype(target, /obj/machinery/plumbing))
 		var/obj/machinery/machine_target = target
 		if(machine_target.anchored)
-			to_chat(user, span_warning("The [target.name] needs to be unanchored!"))
+			balloon_alert(user, "anchor first!")
 			return
 		if(do_after(user, 20, target = target))
 			machine_target.deconstruct() //Let's not substract matter
