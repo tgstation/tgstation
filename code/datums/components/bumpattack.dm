@@ -27,8 +27,8 @@
 	return ..()
 
 /datum/component/bumpattack/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/check_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/check_drop)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(check_equip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(check_drop))
 
 /datum/component/bumpattack/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
@@ -51,7 +51,7 @@
 		return
 	active = TRUE
 	wearer = user
-	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, .proc/check_bump)
+	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(check_bump))
 
 /datum/component/bumpattack/proc/deactivate()
 	active = FALSE
@@ -66,7 +66,7 @@
 		CRASH("[our_weapon] somehow failed istype")
 	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
 		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
-		INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), our_weapon, bumper)
 		bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 #undef COOLDOWN_BUMP_ATTACK

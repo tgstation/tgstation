@@ -16,6 +16,10 @@
 	var/valve_open = FALSE
 	var/toggle = TRUE
 
+/obj/item/transfer_valve/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
+
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
@@ -99,7 +103,7 @@
 	if(toggle)
 		toggle = FALSE
 		toggle_valve()
-		addtimer(CALLBACK(src, .proc/toggle_off), 5) //To stop a signal being spammed from a proxy sensor constantly going off or whatever
+		addtimer(CALLBACK(src, PROC_REF(toggle_off)), 5) //To stop a signal being spammed from a proxy sensor constantly going off or whatever
 
 /obj/item/transfer_valve/proc/toggle_off()
 	toggle = TRUE
@@ -212,7 +216,7 @@
 			stack_trace("TTV gas merging failed.")
 
 		for(var/i in 1 to 6)
-			addtimer(CALLBACK(src, /atom/.proc/update_appearance), 20 + (i - 1) * 10)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 20 + (i - 1) * 10)
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
@@ -224,6 +228,12 @@
 */
 /obj/item/transfer_valve/proc/c_state()
 	return
+
+///Signal when deep fried, so it can have an explosive reaction!
+/obj/item/transfer_valve/proc/on_fried(datum/source, fry_time)
+	SIGNAL_HANDLER
+	log_bomber(null, "TTV valve opened via deepfrying", src, "last fingerprints = [fingerprintslast]")
+	toggle_valve()
 
 /obj/item/transfer_valve/ui_state(mob/user)
 	return GLOB.hands_state

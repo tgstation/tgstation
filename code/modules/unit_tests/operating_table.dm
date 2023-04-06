@@ -5,9 +5,9 @@
 
 /datum/unit_test/operating_table/Run()
 	var/obj/structure/table/optable/table = allocate(/obj/structure/table/optable)
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human, get_step(table, NORTH))
-	var/mob/living/carbon/human/replacement_human = allocate(/mob/living/carbon/human, get_step(table, NORTH))
-	
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent, get_step(table, NORTH))
+	var/mob/living/carbon/human/replacement_human = allocate(/mob/living/carbon/human/consistent, get_step(table, NORTH))
+
 	// Resting is a bit more high level than bodypos, gets us nicer coverage.
 	human.set_resting(new_resting = FALSE, instant = TRUE)
 	replacement_human.set_resting(new_resting = FALSE, instant = TRUE)

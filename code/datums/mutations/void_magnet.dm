@@ -50,7 +50,7 @@
 	if(!owner)
 		return
 
-	RegisterSignal(grant_to, COMSIG_LIVING_LIFE, .proc/on_life)
+	RegisterSignal(grant_to, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/action/cooldown/spell/void/cursed/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_LIVING_LIFE)

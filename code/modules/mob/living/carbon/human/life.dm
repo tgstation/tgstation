@@ -70,21 +70,12 @@
 		return (occupied_space.contents_pressure_protection * ONE_ATMOSPHERE + (1 - occupied_space.contents_pressure_protection) * pressure)
 	return pressure
 
-
-/mob/living/carbon/human/handle_traits(delta_time, times_fired)
-	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
-		add_mood_event("brain_damage", /datum/mood_event/brain_damage)
-	else
-		clear_mood_event("brain_damage")
-	return ..()
-
 /mob/living/carbon/human/breathe()
 	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-
-	var/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/L = get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
 		if(health >= crit_threshold)

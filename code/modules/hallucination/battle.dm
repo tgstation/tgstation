@@ -36,19 +36,20 @@
 	// Shortly after shooting our shot, it plays a hit (or miss) sound.
 	var/next_hit_sound = rand(0.5 SECONDS, 1 SECONDS)
 	if(prob(50))
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, hit_person_sound, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_person_sound, 25, TRUE), next_hit_sound)
 		hits++
 	else
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, hit_wall_sound, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_wall_sound, 25, TRUE), next_hit_sound)
 
 	// If we scored enough hits, we have a chance to knock them down and stop the hallucination early.
 	if(hits >= number_of_hits_to_end && prob(chance_to_fall))
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
 		qdel(src)
 
 	// Or, if we do have shots left, keep it going.
-	else if(--shots_left > 0)
-		addtimer(CALLBACK(src, .proc/fire_loop, source, shots_left, hits), rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
+	else if(shots_left >= 0)
+		shots_left--
+		addtimer(CALLBACK(src, PROC_REF(fire_loop), source, shots_left, hits), rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 
 	// Otherwise, if we have no shots left, stop the hallucination.
 	else
@@ -83,7 +84,7 @@
 
 	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
-	addtimer(CALLBACK(src, .proc/fake_cuff, source), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fake_cuff), source), 2 SECONDS)
 	return TRUE
 
 /// Plays a fake cable-cuff sound and deletes the hallucination.
@@ -103,7 +104,7 @@
 	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
-	addtimer(CALLBACK(src, .proc/harmbaton_loop, source, rand(5, 12)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(harmbaton_loop), source, rand(5, 12)), 2 SECONDS)
 	return TRUE
 
 /// The main sound loop for harmbatonning.
@@ -112,11 +113,12 @@
 		return
 
 	hallucinator.playsound_local(source, SFX_SWING_HIT, 50, TRUE)
-	if(--hits_remaing <= 0)
+	hits_remaing--
+	if(hits_remaing <= 0)
 		qdel(src)
 
 	else
-		addtimer(CALLBACK(src, .proc/harmbaton_loop, source, hits_remaing), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
+		addtimer(CALLBACK(src, PROC_REF(harmbaton_loop), source, hits_remaing), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
 
 /// A hallucination of someone unsheathing an energy sword, going to town, and sheathing it again.
 /datum/hallucination/battle/e_sword
@@ -125,7 +127,7 @@
 	var/turf/source = random_far_turf()
 
 	hallucinator.playsound_local(source, 'sound/weapons/saberon.ogg', 15, 1)
-	addtimer(CALLBACK(src, .proc/stab_loop, source, rand(4, 8)), CLICK_CD_MELEE)
+	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, rand(4, 8)), CLICK_CD_MELEE)
 	return TRUE
 
 /// The main sound loop of someone being esworded.
@@ -144,13 +146,13 @@
 	if(stabs_remaining == 4)
 		hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
-	addtimer(CALLBACK(src, .proc/stab_loop, source, stabs_remaining - 1), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
+	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, stabs_remaining - 1), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 
 /// A hallucination of a syndicate bomb ticking down.
 /datum/hallucination/battle/bomb
 
 /datum/hallucination/battle/bomb/start()
-	addtimer(CALLBACK(src, .proc/fake_tick, random_far_turf(), rand(3, 11)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fake_tick), random_far_turf(), rand(3, 11)), 1.5 SECONDS)
 	return TRUE
 
 /// The loop of the (fake) bomb ticking down.
@@ -159,8 +161,9 @@
 		return
 
 	hallucinator.playsound_local(source, 'sound/items/timer.ogg', 25, FALSE)
-	if(--ticks_remaining <= 0)
+	ticks_remaining--
+	if(ticks_remaining <= 0)
 		qdel(src)
 
 	else
-		addtimer(CALLBACK(src, .proc/fake_tick, source, ticks_remaining), 1.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(fake_tick), source, ticks_remaining), 1.5 SECONDS)

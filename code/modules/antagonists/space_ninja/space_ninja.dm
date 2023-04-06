@@ -1,6 +1,6 @@
 /datum/antagonist/ninja
 	name = "\improper Space Ninja"
-	antagpanel_category = "Space Ninja"
+	antagpanel_category = ANTAG_GROUP_NINJAS
 	job_rank = ROLE_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
@@ -76,7 +76,7 @@
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
 	for(var/sanity in 1 to 100) // 100 checks at most.
-		var/area/selected_area = pick(GLOB.sortedAreas)
+		var/area/selected_area = pick(GLOB.areas)
 		if(!is_station_level(selected_area.z) || !(selected_area.area_flags & VALID_TERRITORY))
 			continue
 		bombobjective.detonation_location = selected_area

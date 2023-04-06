@@ -19,8 +19,8 @@
 		end_drone_control()
 		controlled_drone = drone
 		controlled_drone.controlled = TRUE
-		RegisterSignal(controlled_drone,COMSIG_PARENT_QDELETING,.proc/drone_destroyed)
-		RegisterSignal(controlled_drone,COMSIG_EXODRONE_STATUS_CHANGED,.proc/on_exodrone_status_changed)
+		RegisterSignal(controlled_drone,COMSIG_PARENT_QDELETING, PROC_REF(drone_destroyed))
+		RegisterSignal(controlled_drone,COMSIG_EXODRONE_STATUS_CHANGED, PROC_REF(on_exodrone_status_changed))
 		update_icon()
 
 /obj/machinery/computer/exodrone_control_console/proc/on_exodrone_status_changed()

@@ -4,8 +4,8 @@
  * Used for all the mining mobs!
  */
 /datum/element/mob_killed_tally
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	/// Which tally needs to be ticked up in the blackbox
 	var/tally_string
 
@@ -15,7 +15,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 	src.tally_string = tally_string
 

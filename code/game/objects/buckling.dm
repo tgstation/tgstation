@@ -112,7 +112,7 @@
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
+		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	M.set_buckled(src)
 	buckled_mobs |= M
 	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
@@ -120,6 +120,10 @@
 
 	M.Move(loc)
 	M.setDir(dir)
+
+	//Something has unbuckled us in reaction to the above movement
+	if(!M.buckled)
+		return FALSE
 
 	post_buckle_mob(M)
 
@@ -152,7 +156,7 @@
 	buckled_mob.set_buckled(null)
 	buckled_mob.set_anchored(initial(buckled_mob.anchored))
 	buckled_mob.clear_alert(ALERT_BUCKLED)
-	buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.total_multiplicative_slowdown()))
+	buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.cached_multiplicative_slowdown))
 	buckled_mobs -= buckled_mob
 	if(anchored)
 		REMOVE_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)

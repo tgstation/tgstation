@@ -128,6 +128,7 @@
 	name = "pack of harebell seeds"
 	desc = "These seeds grow into pretty little flowers."
 	icon_state = "seed-harebell"
+	plant_icon_offset = 1
 	species = "harebell"
 	plantname = "Harebells"
 	product = /obj/item/food/grown/harebell

@@ -17,6 +17,18 @@ GLOBAL_VAR(test_log)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
+/// A list of every test that is currently focused.
+/// Use the PERFORM_ALL_TESTS macro instead.
+GLOBAL_VAR_INIT(focused_tests, focused_tests())
+
+/proc/focused_tests()
+	var/list/focused_tests = list()
+	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
+		if (initial(unit_test.focus))
+			focused_tests += unit_test
+
+	return focused_tests.len > 0 ? focused_tests : null
+
 /datum/unit_test
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
@@ -33,6 +45,9 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
+
+	/// Do not instantiate if type matches this
+	var/abstract_type = /datum/unit_test
 
 	var/static/datum/space_level/reservation
 
@@ -54,7 +69,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
 	// clear the test area
-	for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
+	for (var/turf/turf in Z_TURFS(run_loc_floor_bottom_left.z))
 		for (var/content in turf.contents)
 			if (istype(content, /obj/effect/landmark))
 				continue
@@ -62,7 +77,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	return ..()
 
 /datum/unit_test/proc/Run()
-	TEST_FAIL("Run() called parent or not implemented")
+	TEST_FAIL("[type]/Run() called parent or not implemented")
 
 /datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
@@ -114,6 +129,16 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
 
+/// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
+/datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
+	var/icon/output = icon('icons/effects/effects.dmi', "nothing")
+
+	for (var/direction in GLOB.cardinals)
+		var/icon/partial = getFlatIcon(thing, defdir = direction, no_anim = no_anim)
+		output.Insert(partial, dir = direction)
+
+	return output
+
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
 	var/map_name = SSmapping.config.map_name
@@ -124,7 +149,13 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
-/proc/RunUnitTest(test_path, list/test_results)
+/proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
+	if(ispath(test_path, /datum/unit_test/focus_only))
+		return
+
+	if(initial(test_path.abstract_type) == test_path)
+		return
+
 	var/datum/unit_test/test = new test_path
 
 	GLOB.current_test = test
@@ -178,7 +209,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
+	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 

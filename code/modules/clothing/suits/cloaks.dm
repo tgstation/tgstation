@@ -14,9 +14,9 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-/obj/item/clothing/neck/cloak/suicide_act(mob/user)
+/obj/item/clothing/neck/cloak/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/clothing/neck/cloak/hos
 	name = "head of security's cloak"

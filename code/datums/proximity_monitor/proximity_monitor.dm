@@ -9,9 +9,9 @@
 	var/ignore_if_not_on_turf
 	///The signals of the connect range component, needed to monitor the turfs in range.
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-		COMSIG_ATOM_EXITED = .proc/on_uncrossed,
-		COMSIG_ATOM_INITIALIZED_ON = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_uncrossed),
+		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(on_entered),
 	)
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -29,15 +29,15 @@
 	if(new_receiver)
 		hasprox_receiver = new_receiver
 		if(new_receiver != new_host)
-			RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
+			RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
 	else if(hasprox_receiver == host) //Default case
 		hasprox_receiver = new_host
 	host = new_host
-	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
-	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved, COMSIG_MOVABLE_Z_CHANGED = .proc/on_z_change)
+	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, PROC_REF(on_host_or_receiver_del))
+	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(on_moved), COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change))
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
-	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(host, COMSIG_MOVABLE_Z_CHANGED, .proc/on_z_change)
+	RegisterSignal(host, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(host, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 	set_range(current_range, TRUE)
 
 /datum/proximity_monitor/proc/on_host_or_receiver_del(datum/source)

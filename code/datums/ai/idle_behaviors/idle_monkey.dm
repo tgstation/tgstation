@@ -19,9 +19,9 @@
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 	else if(DT_PROB(5, delta_time))
-		INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick(common_emotes))
+		INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(common_emotes))
 	else if(DT_PROB(1, delta_time))
-		INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick(rare_emotes))
+		INVOKE_ASYNC(living_pawn, TYPE_PROC_REF(/mob, emote), pick(rare_emotes))
 
 /datum/idle_behavior/idle_monkey/pun_pun
 	common_emotes = list(

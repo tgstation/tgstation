@@ -171,6 +171,10 @@
 	icon_state = "danger"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
+/// Same thing as parent, but uses a different map generator for the icemoon ruin that needs it.
+/area/lavaland/surface/outdoors/unexplored/danger/no_ruins
+	map_generator = /datum/map_generator/cave_generator/lavaland/ruin_version
+
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
@@ -247,6 +251,11 @@
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
 	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+
+/area/icemoon/underground/unexplored/no_rivers
+	icon_state = "norivers"
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED // same rules as "shoreline" turfs since we might need this to pull double-duty
+	map_generator = /datum/map_generator/cave_generator/icemoon
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"

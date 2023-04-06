@@ -45,7 +45,7 @@
 	)
 
 /datum/computer_file/program/radar/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["selected"] = selected
 	data["objects"] = list()
 	data["scanning"] = (world.time < next_scan)
@@ -66,7 +66,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("selecttarget")
 			selected = params["ref"]
@@ -277,8 +276,8 @@
 			var/obj/item/mop/wet_mop = custodial_tools
 			tool_name = "[wet_mop.reagents.total_volume ? "Wet" : "Dry"] [wet_mop.name]"
 
-		if(istype(custodial_tools, /obj/structure/janitorialcart))
-			var/obj/structure/janitorialcart/janicart = custodial_tools
+		if(istype(custodial_tools, /obj/structure/mop_bucket/janitorialcart))
+			var/obj/structure/mop_bucket/janitorialcart/janicart = custodial_tools
 			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
 		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
@@ -315,7 +314,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
 /datum/computer_file/program/radar/fission360/kill_program(forced)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)

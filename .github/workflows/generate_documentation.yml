@@ -1,11 +1,10 @@
 name: Generate documentation
 on:
-  push:
-    branches:
-    - master
+  schedule:
+  - cron: "44 */6 * * *"
+  workflow_dispatch:
 permissions:
   contents: read
-
 jobs:
   generate_documentation:
     permissions:

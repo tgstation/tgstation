@@ -21,8 +21,8 @@
 	custom_reconcilation = TRUE
 
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
-	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)
-	canSmoothWith = list(SMOOTH_GROUP_GAS_TANK)
+	smoothing_groups = SMOOTH_GROUP_GAS_TANK
+	canSmoothWith = SMOOTH_GROUP_GAS_TANK
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
@@ -81,9 +81,9 @@
 	AddElement(/datum/element/volatile_gas_storage)
 	AddElement(/datum/element/crackable, 'icons/obj/atmospherics/stationary_canisters.dmi', crack_states)
 
-	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
-	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, .proc/smoothed)
+	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
+	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
 
 	air_contents = new
 	air_contents.temperature = T20C
@@ -203,7 +203,7 @@
 	SIGNAL_HANDLER
 	if(new_merger.id != merger_id)
 		return
-	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/merger_refresh_complete)
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, PROC_REF(merger_refresh_complete))
 
 /obj/machinery/atmospherics/components/tank/proc/merger_removing(obj/machinery/atmospherics/components/tank/us, datum/merger/old_merger)
 	SIGNAL_HANDLER
@@ -563,7 +563,7 @@
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
 	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * MINERAL_MATERIAL_AMOUNT)
 	new_tank.set_custom_materials(new_custom_materials)
-	new_tank.on_construction(new_tank.pipe_color, new_tank.piping_layer)
+	new_tank.on_construction(user, new_tank.pipe_color, new_tank.piping_layer)
 	to_chat(user, span_notice("[new_tank] has been sealed and is ready to accept gases."))
 	qdel(src)
 

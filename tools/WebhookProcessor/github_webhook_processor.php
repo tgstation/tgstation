@@ -242,6 +242,8 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload);
 
+		if(strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
+			$tags[] = 'Logging';
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		if(strpos(strtolower($title), 'revert') !== FALSE)
@@ -271,6 +273,7 @@ function tag_pr($payload, $opened) {
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
 	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
+	check_tag_and_replace($payload, '[april fools]', 'April Fools', $tags);
 
 	return array($tags, $remove);
 }

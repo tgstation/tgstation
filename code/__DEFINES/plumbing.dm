@@ -28,8 +28,3 @@ GLOBAL_LIST_INIT(plumbing_layer_names, list(
 
 /// Name of omni color
 #define DUCT_COLOR_OMNI "omni"
-
-/// Cached radial menu options for plumbing RCD color picker
-GLOBAL_LIST_EMPTY(plumbing_color_menu_options)
-/// Cached radial menu options for plumbing RCD layer picker
-GLOBAL_LIST_EMPTY(plumbing_layer_menu_options)

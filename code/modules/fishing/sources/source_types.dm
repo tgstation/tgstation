@@ -32,6 +32,16 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
+
+/datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
+	var/rolled_reward = ..()
+
+	if(!rod.hook || !ispath(rolled_reward, /obj/item/chasm_detritus))
+		return rolled_reward
+
+	return rod.hook.chasm_detritus_type
+
+
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "fishing_background_lavaland"
@@ -47,7 +57,7 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
-/datum/fish_source/lavaland/can_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))

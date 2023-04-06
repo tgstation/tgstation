@@ -82,7 +82,7 @@
 			item_image.copy_overlays(thing)
 		items += list("[thing.name] ([i])" = item_image)
 
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	if(!pick)
 		return
 

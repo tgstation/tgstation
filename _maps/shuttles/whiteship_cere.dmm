@@ -12,13 +12,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 8;
-	height = 16;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
-	port_direction = 8;
-	width = 16
+	port_direction = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)

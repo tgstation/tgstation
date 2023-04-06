@@ -11,8 +11,6 @@
 #define STATION_EVACUATED 5
 /// The blob has reached critical mass and overtaken the station
 #define BLOB_WIN 8
-/// The station's nuke was detonated destroying the blob
-#define BLOB_NUKE 9
 /// The blob was destroyed by the crew
 #define BLOB_DESTROYED 10
 /// The cult managed to escape alive on the shuttle

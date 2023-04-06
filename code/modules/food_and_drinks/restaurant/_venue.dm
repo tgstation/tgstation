@@ -1,6 +1,3 @@
-#define VENUE_RESTAURANT "Restaurant Venue"
-#define VENUE_BAR "Bar Venue"
-
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in

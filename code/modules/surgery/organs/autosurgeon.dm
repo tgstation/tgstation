@@ -119,10 +119,15 @@
 		var/atom/drop_loc = user.drop_location()
 		for(var/atom/movable/stored_implant as anything in src)
 			stored_implant.forceMove(drop_loc)
+			to_chat(user, span_notice("You remove the [stored_organ] from [src]."))
 			stored_organ = null
 
-		to_chat(user, span_notice("You remove the [stored_organ] from [src]."))
 		screwtool.play_tool_sound(src)
+		if (uses)
+			uses--
+		if(!uses)
+			desc = "[initial(desc)] Looks like it's been used up."
+		update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/item/autosurgeon/medical_hud
@@ -160,7 +165,9 @@
 	modified this one to only insert... tongues. Horrifying."
 	starting_organ = /obj/item/organ/internal/tongue
 
-
 /obj/item/autosurgeon/syndicate/commsagent/Initialize(mapload)
 	. = ..()
 	organ_whitelist += /obj/item/organ/internal/tongue
+
+/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged

@@ -19,7 +19,7 @@
 		return
 	to_chat(malf, span_notice("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
+	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 600, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/hacking_apc
 	hacking_apc = malf.throw_alert(ALERT_HACKING_APC, /atom/movable/screen/alert/hackingapc)
@@ -68,7 +68,7 @@
 	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
 	if(forced)
 		occupier.forceMove(drop_location())
-		INVOKE_ASYNC(occupier, /mob/living/proc/death)
+		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
 		occupier.gib()
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.

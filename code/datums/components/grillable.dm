@@ -10,7 +10,7 @@
 	var/current_cook_time = 0
 	///Do we use the large steam sprite?
 	var/use_large_steam_sprite = FALSE
-	/// REF() to the mob which placed us on the griddle
+	/// REF() to the mind which placed us on the griddle
 	var/who_placed_us
 
 /datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
@@ -24,9 +24,9 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 
 /datum/component/grillable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, .proc/on_grill_start)
-	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, .proc/on_grill)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, PROC_REF(on_grill_start))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(on_grill))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/grillable/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_PARENT_EXAMINE))
@@ -48,11 +48,11 @@
 /datum/component/grillable/proc/on_grill_start(datum/source, mob/griller)
 	SIGNAL_HANDLER
 
-	if(griller)
-		who_placed_us = REF(griller)
+	if(griller && griller.mind)
+		who_placed_us = REF(griller.mind)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/add_grilled_item_overlay)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_grilled_item_overlay))
 
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance()
@@ -69,7 +69,6 @@
 
 ///Ran when an object finished grilling
 /datum/component/grillable/proc/finish_grilling(atom/grill_source)
-
 	var/atom/original_object = parent
 	var/atom/grilled_result
 
@@ -81,6 +80,9 @@
 		grilled_result = new cook_result(original_object.loc)
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
+
+	if(IS_EDIBLE(grilled_result))
+		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)
@@ -97,7 +99,10 @@
 
 	if(!current_cook_time) //Not grilled yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>grilled</b> into \a [initial(cook_result.name)].")
+			if(initial(cook_result.name) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("grilled")] into some [initial(cook_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("grilled")] into \a [initial(cook_result.name)].")
 		return
 
 	if(positive_result)

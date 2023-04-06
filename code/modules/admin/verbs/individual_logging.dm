@@ -60,7 +60,7 @@
 			for(var/entry in all_the_entrys)
 				concatenated_logs += "<b>[entry]</b><br>[all_the_entrys[entry]]"
 	if(length(concatenated_logs))
-		sortTim(concatenated_logs, cmp = /proc/cmp_text_dsc) //Sort by timestamp.
+		sortTim(concatenated_logs, cmp = GLOBAL_PROC_REF(cmp_text_dsc)) //Sort by timestamp.
 		dat += "<font size=2px>"
 		dat += concatenated_logs.Join("<br>")
 		dat += "</font>"

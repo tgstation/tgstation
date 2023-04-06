@@ -157,9 +157,16 @@
 /atom/proc/attack_animal_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-///Apparently this is only used by AI datums for basic mobs. A player controlling a basic mob will call attack_animal() when clicking another atom.
+///When a basic mob attacks something, either by AI or user.
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
+	return handle_basic_attack(user, modifiers) //return value of attack animal, this is how much damage was dealt to the attacked thing
+
+///This exists so stuff can override the default call of attack_animal for attack_basic_mob
+///Remove this when simple animals are removed and everything can be handled on attack basic mob.
+/atom/proc/handle_basic_attack(user, modifiers)
+	return attack_animal(user, modifiers)
 
 ///Attacked by monkey. It doesn't need its own *_secondary proc as it just uses attack_hand_secondary instead.
 /atom/proc/attack_paw(mob/user, list/modifiers)
@@ -179,7 +186,7 @@
 	return target.attack_alien_secondary(src, modifiers)
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	attack_paw(user, modifiers)
+	return attack_paw(user, modifiers)
 
 /**
  * Called when an alien right clicks an atom.
@@ -264,9 +271,21 @@
 	pAI
 */
 
-/mob/living/silicon/pai/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	attack_target.attack_pai(src, modifiers)
+
+/mob/living/silicon/pai/resolve_right_click_attack(atom/target, list/modifiers)
+	return target.attack_pai_secondary(src, modifiers)
+
+/atom/proc/attack_pai(mob/user, list/modifiers)
 	return
 
+/**
+ * Called when a pAI right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
+/atom/proc/attack_pai_secondary(mob/user, list/modifiers)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /*
 	Simple animals

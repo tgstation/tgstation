@@ -130,7 +130,7 @@
 	icon_state = "clockwork_helmet_old"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/costume_bronze
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
@@ -161,6 +161,14 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	var/has_fov = TRUE
 
+/datum/armor/costume_bronze
+	melee = 5
+	laser = -5
+	energy = -15
+	bomb = 10
+	fire = 20
+	acid = 20
+
 /obj/item/clothing/head/costume/tv_head/Initialize(mapload)
 	. = ..()
 	if(has_fov)
@@ -172,21 +180,25 @@
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
+	desc = "Even in space, you can't avoid the tax collectors."
 	icon_state = "irs_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/tmc
 	name = "Lost M.C. bandana"
+	desc = "A small, red bandana tied thin."
 	icon_state = "tmc_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/deckers
 	name = "Decker headphones"
+	desc = "A neon-blue pair of headphones. They look neo-futuristic."
 	icon_state = "decker_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/yuri
 	name = "yuri initiate helmet"
+	desc = "A strange, whitish helmet with 3 eyeholes."
 	icon_state = "yuri_helmet"
 	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
@@ -194,5 +206,7 @@
 
 /obj/item/clothing/head/costume/allies
 	name = "allies helmet"
+	desc = "An ancient military helmet worn by the bravest of warriors. \
+	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null

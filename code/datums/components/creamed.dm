@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/simple_animal/pet/dog/corgi,
+	/mob/living/basic/pet/dog/corgi,
 	/mob/living/silicon/ai)))
 
 /**
@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
 
-	add_memory_in_range(parent, 7, MEMORY_CREAMPIED, list(DETAIL_PROTAGONIST = parent), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = NONE)
+	add_memory_in_range(parent, 7, /datum/memory/witnessed_creampie, protagonist = parent)
 
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
@@ -50,10 +50,11 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
-		.proc/clean_up)
+		PROC_REF(clean_up)
+	)
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(

@@ -20,4 +20,10 @@
 	icon_state = "xenobio-guide"
 	is_editable = TRUE
 
+/obj/structure/sign/chalkboard_menu
+	name = "\improper Chalkboard coffee menu"
+	icon_state = "chalkboard_menu"
+	icon = 'icons/obj/barsigns.dmi'
+	desc = "85cr for a iced lactose-free caramel frappe?! Who buys that?!"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)

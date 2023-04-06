@@ -67,4 +67,4 @@
 					affected_mob.set_haircolor("#1d2953", override = TRUE)
 				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
-				addtimer(CALLBACK(src, .proc/cure), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(cure)), 10 SECONDS)

@@ -34,9 +34,9 @@
 	if(!activation_signal) // Can't activate? go away
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, activation_signal, .proc/activate)
+	RegisterSignal(parent, activation_signal, PROC_REF(activate))
 	if(deactivation_signal)
-		RegisterSignal(parent, deactivation_signal, .proc/deactivate)
+		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
 
 	src.check_on_move = check_on_move
 	src.get_mover = get_mover
@@ -50,9 +50,9 @@
 	UnregisterSignal(parent, src.activation_signal)
 	if(src.deactivation_signal)
 		UnregisterSignal(parent, src.deactivation_signal)
-	RegisterSignal(parent, activation_signal, .proc/activate)
+	RegisterSignal(parent, activation_signal, PROC_REF(activate))
 	if(deactivation_signal)
-		RegisterSignal(parent, deactivation_signal, .proc/deactivate)
+		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
 
 	src.check_on_move = check_on_move
 	src.get_mover = get_mover
@@ -84,11 +84,11 @@
 	if(!thrust(moving))
 		return return_flag
 	trail.start()
-	RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(moving, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(moving, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
-	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, .proc/block_starting_visuals)
-	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, .proc/ignore_ending_block)
+	RegisterSignal(moving, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
+	RegisterSignal(moving, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
+	RegisterSignal(moving, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
+	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
+	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
 
 /datum/component/jetpack/proc/deactivate(datum/source)
 	SIGNAL_HANDLER

@@ -91,7 +91,7 @@
 	if(wanted_flavors.len > 1 && length(unique_list) == 1)
 		icecream_name = "[make_tuple(wanted_flavors.len)] [wanted_flavors[1]] ice cream ([initial(cone_type.name)])"
 	else
-		sortTim(wanted_flavors, cmp = /proc/cmp_text_asc)
+		sortTim(wanted_flavors, cmp = GLOBAL_PROC_REF(cmp_text_asc))
 		icecream_name = "[english_list(wanted_flavors)] ice cream ([initial(cone_type.name)])"
 
 /datum/custom_order/icecream/get_order_line(datum/venue/our_venue)

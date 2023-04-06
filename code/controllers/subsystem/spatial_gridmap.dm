@@ -125,13 +125,13 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	pregenerate_more_oranges_ears(NUMBER_OF_PREGENERATED_ORANGES_EARS)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/propogate_spatial_grid_to_new_z)
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, .proc/after_world_bounds_expanded)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(propogate_spatial_grid_to_new_z))
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, PROC_REF(after_world_bounds_expanded))
 	return SS_INIT_SUCCESS
 
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
-	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, .proc/queued_item_deleted, override = TRUE)
+	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, PROC_REF(queued_item_deleted), override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
@@ -634,7 +634,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			turfs = GLOB.station_turfs
 
 		else
-			turfs = block(locate(1,1,z), locate(world.maxx, world.maxy, z))
+			turfs = Z_TURFS(z)
 
 		for(var/client_to_insert in 0 to insert_clients)
 			var/turf/random_turf = pick(turfs)
@@ -756,6 +756,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
 
+#undef BOUNDING_BOX_MAX
+#undef BOUNDING_BOX_MIN
 #undef GRID_CELL_ADD
 #undef GRID_CELL_REMOVE
 #undef GRID_CELL_SET
+#undef NUMBER_OF_PREGENERATED_ORANGES_EARS

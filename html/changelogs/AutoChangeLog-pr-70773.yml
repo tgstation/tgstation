@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - code_imp: "Riot helmets and justice helmets are now in a /toggeable subtype."

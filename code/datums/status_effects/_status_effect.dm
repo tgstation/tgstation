@@ -24,6 +24,10 @@
 	var/atom/movable/screen/alert/status_effect/linked_alert
 	/// Used to define if the status effect should be using SSfastprocess or SSprocessing
 	var/processing_speed = STATUS_EFFECT_FAST_PROCESS
+	/// Do we self-terminate when a fullheal is called?
+	var/remove_on_fullheal = FALSE
+	/// If remove_on_fullheal is TRUE, what flag do we need to be removed?
+	var/heal_flag_necessary = HEAL_STATUS
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -39,6 +43,7 @@
 		return
 	if(owner)
 		LAZYADD(owner.status_effects, src)
+		RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_effect_on_heal))
 
 	if(duration != -1)
 		duration = world.time + duration
@@ -53,7 +58,7 @@
 		switch(processing_speed)
 			if(STATUS_EFFECT_FAST_PROCESS)
 				START_PROCESSING(SSfastprocess, src)
-			if (STATUS_EFFECT_NORMAL_PROCESS)
+			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
 
 	return TRUE
@@ -62,20 +67,22 @@
 	switch(processing_speed)
 		if(STATUS_EFFECT_FAST_PROCESS)
 			STOP_PROCESSING(SSfastprocess, src)
-		if (STATUS_EFFECT_NORMAL_PROCESS)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
+		UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 		owner = null
 	return ..()
 
-// Status effect process. Handles adjusting it's duration and ticks.
+// Status effect process. Handles adjusting its duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
-// instead of extending / overriding ththe process() proc.
+// instead of extending / overriding the process() proc.
 /datum/status_effect/process(delta_time, times_fired)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(QDELETED(owner))
 		qdel(src)
 		return
@@ -136,6 +143,28 @@
 /// Adds nextmove adjustment additiviely to the owner while applied
 /datum/status_effect/proc/nextmove_adjust()
 	return 0
+
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL] to remove us on fullheal
+/datum/status_effect/proc/remove_effect_on_heal(datum/source, heal_flags)
+	SIGNAL_HANDLER
+
+	if(!remove_on_fullheal)
+		return
+
+	if(!heal_flag_necessary || (heal_flags & heal_flag_necessary))
+		qdel(src)
+
+/// Remove [seconds] of duration from the status effect, qdeling / ending if we eclipse the current world time.
+/datum/status_effect/proc/remove_duration(seconds)
+	if(duration == -1) // Infinite duration
+		return FALSE
+
+	duration -= seconds
+	if(duration <= world.time)
+		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

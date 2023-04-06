@@ -22,7 +22,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	projectiletype = /obj/projectile/hivebotbullet
-	faction = list("hivebot")
+	faction = list(FACTION_HIVEBOT)
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -132,7 +132,7 @@
 			return
 		to_chat(src, span_warning("You begin repairs..."))
 		if(do_after(src, 50, target = fixable))
-			fixable.revive(full_heal = TRUE, admin_revive = TRUE)
+			fixable.revive(HEAL_ALL)
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, span_warning("Repairs complete."))
 		return
@@ -140,6 +140,7 @@
 
 /datum/action/innate/hivebot
 	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/hivebot/foamwall
 	name = "Foam Wall"

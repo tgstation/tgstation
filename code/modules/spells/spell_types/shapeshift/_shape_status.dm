@@ -35,10 +35,10 @@
 	caster_mob.notransform = TRUE
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
-	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, .proc/on_wabbajacked)
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_shape_death)
-	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, .proc/on_caster_death)
-	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, .proc/on_caster_deleted)
+	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, PROC_REF(on_wabbajacked))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_shape_death))
+	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, PROC_REF(on_caster_death))
+	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, PROC_REF(on_caster_deleted))
 
 	SEND_SIGNAL(caster_mob, COMSIG_LIVING_SHAPESHIFTED, owner)
 	return TRUE
@@ -187,7 +187,7 @@
 		return
 
 	if(caster_mob.stat != DEAD)
-		caster_mob.revive(full_heal = TRUE, admin_revive = FALSE)
+		caster_mob.revive(HEAL_DAMAGE)
 
 		var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
 		caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)

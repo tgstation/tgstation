@@ -2,6 +2,7 @@
 	name = "pack of nettle seeds"
 	desc = "These seeds grow into nettles."
 	icon_state = "seed-nettle"
+	plant_icon_offset = 0
 	species = "nettle"
 	plantname = "Nettles"
 	product = /obj/item/food/grown/nettle
@@ -35,7 +36,6 @@
 	seed = /obj/item/seeds/nettle
 	name = "\improper nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "nettle"
 	inhand_icon_state = "nettle"
 	bite_consumption_mod = 2
@@ -51,7 +51,7 @@
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 
-/obj/item/food/grown/nettle/suicide_act(mob/user)
+/obj/item/food/grown/nettle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|TOXLOSS)
 

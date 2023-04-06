@@ -104,11 +104,7 @@
 /obj/docking_port/mobile/emergency{
 	name = "Disco Inferno"
 	},
-/obj/machinery/door/airlock/gold{
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 0, "fire" = 100, "acid" = 100);
-	heat_proof = 1;
-	resistance_flags = 2
-	},
+/obj/machinery/door/airlock/gold/discoinferno,
 /turf/open/floor/mineral/plasma/disco,
 /area/shuttle/escape)
 "v" = (

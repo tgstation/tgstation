@@ -1,12 +1,12 @@
-#define ENGINE_COOLDOWN 5 SECONDS
-#define DASH_COOLDOWN 2.5 SECONDS
+#define ENGINE_COOLDOWN (5 SECONDS)
+#define DASH_COOLDOWN (2.5 SECONDS)
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
 
 /obj/item/v8_engine
 	name = "ancient engine"
 	desc = "An extremely well perserved, massive V8 engine from the early 2000s. It seems to be missing the rest of the vehicle. There's a tiny label on the side."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "v8_engine"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
@@ -24,30 +24,28 @@
 	if (!COOLDOWN_FINISHED(src, engine_sound_cooldown))
 		return
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 75, vary = FALSE, extrarange = 3)
-	Shake(7, 7, ENGINE_COOLDOWN)
+	Shake(duration = ENGINE_COOLDOWN)
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 
 /obj/item/v8_engine/examine_more(mob/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/start_learning_recipe, user)
+	INVOKE_ASYNC(src, PROC_REF(start_learning_recipe), user)
 
 /obj/item/v8_engine/proc/start_learning_recipe(mob/user)
-	var/datum/crafting_recipe/house_edge/edge
 	if(!user.mind)
 		return
-	if(user.mind.has_crafting_recipe(user = user, potential_recipe = edge))
+	if(user.mind.has_crafting_recipe(user = user, potential_recipe = /datum/crafting_recipe/house_edge))
 		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))
-		user.mind.teach_crafting_recipe(edge)
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/house_edge)
 		to_chat(user, span_notice("You learned how to make the House Edge."))
-
 
 /obj/item/house_edge
 	name = "House Edge"
 	desc = "Dangerous. Loud. Sleek. It has a built in roulette wheel. This thing could easily rip your arm off if you're not careful."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "house_edge0"
 	inhand_icon_state = "house_edge0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -70,7 +68,7 @@
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
-	RegisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), .proc/reset_charges)
+	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

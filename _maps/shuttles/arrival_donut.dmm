@@ -65,7 +65,6 @@
 	},
 /obj/docking_port/mobile/arrivals{
 	dir = 2;
-	height = 13;
 	name = "donut arrivals shuttle"
 	},
 /turf/open/floor/plating/airless,

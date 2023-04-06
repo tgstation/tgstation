@@ -22,7 +22,7 @@
 /datum/action/cooldown/spell/summonitem/proc/mark_item(obj/to_mark)
 	name = "Recall [to_mark]"
 	marked_item = to_mark
-	RegisterSignal(marked_item, COMSIG_PARENT_QDELETING, .proc/on_marked_item_deleted)
+	RegisterSignal(marked_item, COMSIG_PARENT_QDELETING, PROC_REF(on_marked_item_deleted))
 
 /// Unset our current marked item
 /datum/action/cooldown/spell/summonitem/proc/unmark_item()
@@ -114,13 +114,14 @@
 					item_to_retrieve = null
 					break
 
+				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 				holding_mark.dropItemToGround(item_to_retrieve)
 
 			else if(isobj(item_to_retrieve.loc))
 				var/obj/retrieved_item = item_to_retrieve.loc
 				// Can't bring anchored things
 				if(retrieved_item.anchored)
-					return
+					break
 				// Edge cases for moving certain machinery...
 				if(istype(retrieved_item, /obj/machinery/portable_atmospherics))
 					var/obj/machinery/portable_atmospherics/atmos_item = retrieved_item

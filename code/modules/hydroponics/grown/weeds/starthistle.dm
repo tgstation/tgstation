@@ -3,6 +3,7 @@
 	name = "pack of starthistle seeds"
 	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots."
 	icon_state = "seed-starthistle"
+	plant_icon_offset = 3
 	species = "starthistle"
 	plantname = "Starthistle"
 	lifespan = 70

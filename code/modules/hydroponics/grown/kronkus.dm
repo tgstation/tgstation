@@ -2,6 +2,7 @@
 	name = "pack of kronkus seeds"
 	desc = "A pack of highly illegal kronkus seeds.\nPossession of these seeds carries the death penalty in 7 sectors."
 	icon_state = "seed-kronkus"
+	plant_icon_offset = 6
 	species = "kronkus"
 	plantname = "Kronkus Vine"
 	product = /obj/item/food/grown/kronkus

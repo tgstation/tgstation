@@ -44,6 +44,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
 	if(!drawn)
@@ -79,7 +80,7 @@
 
 /obj/item/ammo_casing/caseless/arrow/despawning/dropped()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(floor_vanish)), 5 SECONDS)
 
 /obj/item/ammo_casing/caseless/arrow/despawning/proc/floor_vanish()
 	if(isturf(loc))

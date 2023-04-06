@@ -25,7 +25,7 @@
 /obj/item/mod/module/circuit/on_install()
 	if(!shell?.attached_circuit)
 		return
-	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
+	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
 
 /obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
 	if(!shell?.attached_circuit)
@@ -137,7 +137,7 @@
 	. = ..()
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
-		RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+		RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	if(attached_module)
@@ -153,23 +153,23 @@
 		if(potential_module.name == module_to_select.value)
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
-		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, toggle_activate), attached_module.mod.wearer)
 	if(COMPONENT_TRIGGERED_BY(toggle_deploy, port))
-		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/quick_deploy, attached_module.mod.wearer)
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, quick_deploy), attached_module.mod.wearer)
 	if(attached_module.mod.active && module && COMPONENT_TRIGGERED_BY(select_module, port))
-		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
+		INVOKE_ASYNC(module, TYPE_PROC_REF(/obj/item/mod/module, on_select))
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
 		var/obj/item/mod/control/mod = source.loc
-		RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
-		RegisterSignal(mod, COMSIG_MOD_DEPLOYED, .proc/on_mod_part_toggled)
-		RegisterSignal(mod, COMSIG_MOD_RETRACTED, .proc/on_mod_part_toggled)
-		RegisterSignal(mod, COMSIG_MOD_TOGGLED, .proc/on_mod_toggled)
-		RegisterSignal(mod, COMSIG_MOD_MODULE_ADDED, .proc/on_module_changed)
-		RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVED, .proc/on_module_changed)
-		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
+		RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, PROC_REF(on_module_select))
+		RegisterSignal(mod, COMSIG_MOD_DEPLOYED, PROC_REF(on_mod_part_toggled))
+		RegisterSignal(mod, COMSIG_MOD_RETRACTED, PROC_REF(on_mod_part_toggled))
+		RegisterSignal(mod, COMSIG_MOD_TOGGLED, PROC_REF(on_mod_toggled))
+		RegisterSignal(mod, COMSIG_MOD_MODULE_ADDED, PROC_REF(on_module_changed))
+		RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVED, PROC_REF(on_module_changed))
+		RegisterSignal(mod, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_check))
 		wearer.set_output(mod.wearer)
 		var/modules_list = list()
 		for(var/obj/item/mod/module/module in mod.modules)

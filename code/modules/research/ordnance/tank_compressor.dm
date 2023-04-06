@@ -28,7 +28,7 @@
 	leaked_gas_buffer = new(200)
 	compressor_record = list()
 
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/explosion_handle)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(explosion_handle))
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
@@ -51,14 +51,14 @@
 		var/obj/item/tank/tank_item = item
 		if(inserted_tank)
 			if(!eject_tank(user))
-				balloon_alert(user, span_warning("[inserted_tank] is stuck inside."))
+				balloon_alert(user, "it's stuck inside!")
 				return ..()
 		if(!user.transferItemToLoc(tank_item, src))
-			balloon_alert(user, span_warning("[tank_item] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 			return ..()
 		inserted_tank = tank_item
 		last_recorded_pressure = 0
-		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
+		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, PROC_REF(tank_destruction))
 		update_appearance()
 		return
 	if(istype(item, /obj/item/computer_disk))
@@ -67,7 +67,7 @@
 		if(user.transferItemToLoc(attacking_disk, src))
 			inserted_disk = attacking_disk
 		else
-			balloon_alert(user, span_warning("[attacking_disk] is stuck to your hand."))
+			balloon_alert(user, "it's stuck to your hand!")
 		return
 	return ..()
 
@@ -297,8 +297,8 @@
 				return
 			compressor_record -= record
 			return TRUE
-		if("print_record")
-			var/datum/data/compressor_record/record  = locate(params["ref"]) in compressor_record
+		if("save_record")
+			var/datum/data/compressor_record/record = locate(params["ref"]) in compressor_record
 			if(!compressor_record || !(record in compressor_record))
 				return
 			print(usr, record)
@@ -344,3 +344,7 @@
 			single_record_data["gases"] += list(initial(gas_path.name) = record.gas_data[gas_path])
 		data["records"] += list(single_record_data)
 	return data
+
+#undef TANK_COMPRESSOR_PRESSURE_LIMIT
+#undef TANK_COMPRESSOR_MAX_TRANSFER_RATE
+#undef SIGNIFICANT_AMOUNT_OF_MOLES

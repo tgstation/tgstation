@@ -104,7 +104,7 @@
 /datum/hallucination/station_message/clock_cult_ark/start()
 	hallucinator.playsound_local(hallucinator, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)
 	hallucinator.playsound_local(hallucinator, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
-	addtimer(CALLBACK(src, .proc/play_distant_explosion_sound), 2.7 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(play_distant_explosion_sound)), 2.7 SECONDS)
 	return TRUE // does not call parent to finish up the sound in a few seconds
 
 /datum/hallucination/station_message/clock_cult_ark/proc/play_distant_explosion_sound()

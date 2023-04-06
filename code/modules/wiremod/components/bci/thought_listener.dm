@@ -52,7 +52,7 @@
 		failure.set_output(COMPONENT_SIGNAL)
 		return
 
-	INVOKE_ASYNC(src, .proc/thought_listen, owner)
+	INVOKE_ASYNC(src, PROC_REF(thought_listen), owner)
 	ready = FALSE
 
 /obj/item/circuit_component/thought_listener/proc/thought_listen(mob/living/owner)

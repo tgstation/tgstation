@@ -31,7 +31,8 @@
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	var/examine_laws = display_laws()
-	. += "\n" + examine_laws
+	if(examine_laws)
+		. += "\n" + examine_laws
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()

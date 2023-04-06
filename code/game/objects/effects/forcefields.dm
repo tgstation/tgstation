@@ -66,3 +66,13 @@
 	name = "invisible blockade"
 	desc = "You're gonna be here awhile."
 	initial_duration = 1 MINUTES
+
+/// Psyker forcefield
+/obj/effect/forcefield/psychic
+	name = "psychic forcefield"
+	desc = "A wall of psychic energy powerful enough stop the motion of objects. Projectiles ricochet."
+	icon_state = "psychic"
+	can_atmos_pass = ATMOS_PASS_YES
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY //we do ricochet a lot!
+	initial_duration = 10 SECONDS

@@ -16,7 +16,7 @@
 /atom/movable/screen/movable/pic_in_pic/Initialize(mapload)
 	. = ..()
 	make_backgrounds()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/multiz_offset_increase)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))
 	multiz_offset_increase(SSmapping)
 
 /atom/movable/screen/movable/pic_in_pic/proc/multiz_offset_increase(datum/source)

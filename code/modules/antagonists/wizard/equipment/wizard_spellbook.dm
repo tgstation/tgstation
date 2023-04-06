@@ -24,7 +24,7 @@
 /obj/item/spellbook/Initialize(mapload)
 	. = ..()
 	prepare_spells()
-	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
 /obj/item/spellbook/Destroy(force)
 	owner = null

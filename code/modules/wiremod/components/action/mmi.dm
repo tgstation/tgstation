@@ -78,7 +78,7 @@
 
 /obj/item/circuit_component/mmi/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_attack_by)
+	RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_attack_by))
 
 /obj/item/circuit_component/mmi/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, COMSIG_PARENT_ATTACKBY)
@@ -101,8 +101,8 @@
 	if(to_add.brainmob)
 		update_mmi_mob(to_add, null, to_add.brainmob)
 	brain = to_add
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, .proc/remove_current_brain)
-	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/mmi_moved)
+	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, PROC_REF(remove_current_brain))
+	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(mmi_moved))
 
 /obj/item/circuit_component/mmi/proc/mmi_moved(atom/movable/mmi)
 	SIGNAL_HANDLER
@@ -132,7 +132,7 @@
 		UnregisterSignal(old_mmi, COMSIG_MOB_CLICKON)
 	if(new_mmi)
 		new_mmi.remote_control = src
-		RegisterSignal(new_mmi, COMSIG_MOB_CLICKON, .proc/handle_mmi_attack)
+		RegisterSignal(new_mmi, COMSIG_MOB_CLICKON, PROC_REF(handle_mmi_attack))
 
 /obj/item/circuit_component/mmi/relaymove(mob/living/user, direct)
 	if(user != brain.brainmob)

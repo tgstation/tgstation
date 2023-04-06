@@ -2,15 +2,16 @@
 /datum/action/innate/expand_sight
 	name = "Expand Sight"
 	desc = "Boosts your sight range considerably, allowing you to see enemies from much further away."
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "eye"
-	background_icon_state = "bg_ecult"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
 	/// How far we expand the range to.
 	var/boost_to = 5
 	/// A cooldown for the last time we toggled it, to prevent spam.
 	COOLDOWN_DECLARE(last_toggle)
 
-/datum/action/innate/expand_sight/IsAvailable()
+/datum/action/innate/expand_sight/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, last_toggle)
 
 /datum/action/innate/expand_sight/Activate()

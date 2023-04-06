@@ -77,7 +77,7 @@
 /obj/item/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
 			if(camera.machine_stat || !camera.can_use())
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "ordnance", "minisat") & camera.network))
@@ -255,7 +255,7 @@
 				to_chat(usr, span_warning("Something's wrong with that camera! You can't get a feed."))
 				return
 			current = camera
-			addtimer(CALLBACK(src, .proc/view_camera, usr, camera), 0.6 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(view_camera), usr, camera), 0.6 SECONDS)
 			return
 		else
 			usr.unset_machine()

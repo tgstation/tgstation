@@ -16,7 +16,7 @@
 	feedback_details += "Vent Coords: ([xeno_attack_source.x], [xeno_attack_source.y], [xeno_attack_source.z])"
 
 	var/obj/effect/client_image_holder/hallucination/xeno/fake_xeno = new(xeno_attack_source, hallucinator, src)
-	addtimer(CALLBACK(src, .proc/leap_at_target, fake_xeno, xeno_attack_source), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(leap_at_target), fake_xeno, xeno_attack_source), 1 SECONDS)
 	return TRUE
 
 /// Leaps from the vent to the hallucinator.
@@ -29,7 +29,7 @@
 
 	fake_xeno.set_leaping()
 	fake_xeno.throw_at(hallucinator, 7, 1, spin = FALSE, diagonals_first = TRUE)
-	addtimer(CALLBACK(src, .proc/leap_back_to_pump, fake_xeno), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(leap_back_to_pump), fake_xeno), 1 SECONDS)
 
 /// Leaps from the hallucinator back to the vent.
 /datum/hallucination/xeno_attack/proc/leap_back_to_pump(obj/effect/client_image_holder/hallucination/xeno/fake_xeno, turf/attack_source)
@@ -41,7 +41,7 @@
 
 	fake_xeno.set_leaping()
 	fake_xeno.throw_at(attack_source, 7, 1, spin = FALSE, diagonals_first = TRUE)
-	addtimer(CALLBACK(src, .proc/begin_crawling, fake_xeno), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(begin_crawling), fake_xeno), 1 SECONDS)
 
 /// Mimics ventcrawling into the vent.
 /datum/hallucination/xeno_attack/proc/begin_crawling(obj/effect/client_image_holder/hallucination/xeno/fake_xeno)
@@ -52,7 +52,7 @@
 		return
 
 	to_chat(hallucinator, span_notice("[fake_xeno.name] begins climbing into the ventilation system..."))
-	addtimer(CALLBACK(src, .proc/disappear, fake_xeno), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(disappear), fake_xeno), 3 SECONDS)
 
 /// Disappears into the vent, ending the hallucination.
 /datum/hallucination/xeno_attack/proc/disappear(obj/effect/client_image_holder/hallucination/xeno/fake_xeno)

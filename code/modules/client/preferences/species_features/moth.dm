@@ -13,6 +13,8 @@
 
 	for (var/antennae_name in GLOB.moth_antennae_list)
 		var/datum/sprite_accessory/antennae = GLOB.moth_antennae_list[antennae_name]
+		if(antennae.locked)
+			continue
 
 		var/icon/icon_with_antennae = new(moth_head)
 		icon_with_antennae.Blend(icon(antennae.icon, "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
@@ -56,6 +58,8 @@
 
 	for (var/markings_name in GLOB.moth_markings_list)
 		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[markings_name]
+		if(markings.locked)
+			continue
 		var/icon/icon_with_markings = new(moth_body)
 
 		if (markings_name != "None")
@@ -86,17 +90,11 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/moth_wings/init_possible_values()
-	var/list/icon/values = possible_values_for_sprite_accessory_list_for_body_part(
+	return possible_values_for_sprite_accessory_list_for_body_part(
 		GLOB.moth_wings_list,
 		"moth_wings",
 		list("BEHIND", "FRONT"),
 	)
-
-	// Moth wings are in a stupid dimension
-	for (var/name in values)
-		values[name].Crop(1, 1, 32, 32)
-
-	return values
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value

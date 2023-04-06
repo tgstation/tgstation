@@ -23,6 +23,9 @@
 	desc = "A 5.56mm phasic bullet casing."
 	projectile_type = /obj/projectile/bullet/a556/phasic
 
+/obj/item/ammo_casing/a556/weak
+	projectile_type = /obj/projectile/bullet/a556/weak
+
 // 40mm (Grenade Launcher)
 
 /obj/item/ammo_casing/a40mm

@@ -138,7 +138,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	if (. == 1) //We were able to create a new master
 		master_iteration = 0
 		SSticker.Recover(); //Recover the ticket system so the Masters runlevel gets set
-		Master.Initialize(10, FALSE, TRUE) //Need to manually start the MC, normally world.new would do this
+		Master.Initialize(10, FALSE, FALSE) //Need to manually start the MC, normally world.new would do this
 		to_chat(GLOB.admins, span_adminnotice("Failsafe recovered MC while in emergency state [defcon_pretty()]"))
 	else
 		log_game("FailSafe: Failsafe in emergency state and was unable to recreate MC while in defcon state [defcon_pretty()].")
@@ -148,13 +148,13 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 /proc/recover_all_SS_and_recreate_master()
 	del(Master)
 	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-	sortTim(subsytem_types, /proc/cmp_subsystem_init)
+	sortTim(subsytem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
 	for(var/I in subsytem_types)
 		new I
 	. = Recreate_MC()
 	if (. == 1) //We were able to create a new master
 		SSticker.Recover(); //Recover the ticket system so the Masters runlevel gets set
-		Master.Initialize(10, FALSE, TRUE) //Need to manually start the MC, normally world.new would do this
+		Master.Initialize(10, FALSE, FALSE) //Need to manually start the MC, normally world.new would do this
 		to_chat(GLOB.admins, span_adminnotice("MC successfully recreated after recovering all subsystems!"))
 	else
 		message_admins(span_boldannounce("Failed to create new MC!"))
@@ -168,7 +168,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	. = Recreate_MC()
 	if (. == 1) //We were able to create a new master
 		SSticker.Recover(); //Recover the ticket system so the Masters runlevel gets set
-		Master.Initialize(10, FALSE, TRUE) //Need to manually start the MC, normally world.new would do this
+		Master.Initialize(10, FALSE, FALSE) //Need to manually start the MC, normally world.new would do this
 		to_chat(GLOB.admins, span_adminnotice("MC successfully recreated after deleting and recreating all subsystems!"))
 	else
 		message_admins(span_boldannounce("Failed to create new MC!"))

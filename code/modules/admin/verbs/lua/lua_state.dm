@@ -63,7 +63,7 @@ GLOBAL_PROTECT(lua_usr)
 			result["param"] = weakrefify_list(encode_text_and_nulls(result["param"]))
 		log += list(result)
 		index_of_log = log.len
-	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/lua_state, update_editors))
 	return index_of_log
 
 /datum/lua_state/proc/load_script(script)

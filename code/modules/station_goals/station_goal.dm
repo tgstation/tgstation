@@ -26,13 +26,13 @@ GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
 
 /datum/station_goal/proc/get_result()
 	if(check_completion())
-		return "<li>[name] :  [span_greentext("Completed!")]</li>"
+		return "<li>[name] : [span_greentext("Completed!")]</li>"
 	else
 		return "<li>[name] : [span_redtext("Failed!")]</li>"
 
 /datum/station_goal/Destroy()
 	GLOB.station_goals -= src
-	. = ..()
+	return ..()
 
 /datum/station_goal/Topic(href, href_list)
 	..()

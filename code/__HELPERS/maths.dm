@@ -116,7 +116,7 @@
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)
-	return (rand(1,value)==value)
+	return (rand(1,value) == value)
 
 ///counts the number of bits in Byond's 16-bit width field, in constant time and memory!
 /proc/bit_count(bit_field)

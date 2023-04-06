@@ -11,6 +11,7 @@
 	cures = list(/datum/reagent/medicine/rezadone)
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spread_text = "Organic meltdown"
 	process_dead = TRUE
 
 /datum/disease/decloning/stage_act(delta_time, times_fired)

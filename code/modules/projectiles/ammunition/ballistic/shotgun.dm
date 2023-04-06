@@ -58,7 +58,7 @@
 	name = "meteorslug shell"
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
-	projectile_type = /obj/projectile/bullet/shotgun_meteorslug
+	projectile_type = /obj/projectile/bullet/cannonball/meteorslug
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"

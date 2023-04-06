@@ -287,6 +287,7 @@
 	rest_icon.icon = ui_style
 	rest_icon.screen_loc = ui_above_movement
 	rest_icon.hud = src
+	rest_icon.update_appearance()
 	static_inventory += rest_icon
 
 	spacesuit = new /atom/movable/screen/spacesuit
@@ -307,9 +308,9 @@
 
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_intent
 	pull_icon.hud = src
+	pull_icon.update_appearance()
 	static_inventory += pull_icon
 
 	zone_select = new /atom/movable/screen/zone_sel()
@@ -338,7 +339,7 @@
 	var/datum/species/S = H.dna.species
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
-			if(inv.slot_id in S.no_equip)
+			if(S.no_equip_flags & inv.slot_id)
 				inv.alpha = 128
 			else
 				inv.alpha = initial(inv.alpha)

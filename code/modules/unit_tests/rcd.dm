@@ -11,7 +11,7 @@
 /datum/unit_test/frame_stacking/Run()
 	// First test - RCDs stacking frames.
 	var/obj/item/construction/rcd/rcd = allocate(/obj/item/construction/rcd/combat/admin)
-	var/mob/living/carbon/human/engineer = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/engineer = allocate(/mob/living/carbon/human/consistent)
 
 	engineer.put_in_hands(rcd, forced = TRUE)
 

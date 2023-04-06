@@ -35,7 +35,7 @@
 	///Base chance of spawning flora
 	var/flora_spawn_chance = 2
 	///Base chance of spawning features
-	var/feature_spawn_chance = 0.1
+	var/feature_spawn_chance = 0.15
 	///Unique ID for this spawner
 	var/string_gen
 
@@ -92,7 +92,7 @@
 		new_turf = new new_turf(gen_turf)
 
 		if(gen_turf.turf_flags & NO_RUINS)
-			new_turf.flags_1 |= NO_RUINS
+			new_turf.turf_flags |= NO_RUINS
 
 		if(closed)//Open turfs have some special behavior related to spawning flora and mobs.
 			CHECK_TICK

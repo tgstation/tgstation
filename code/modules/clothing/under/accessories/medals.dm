@@ -46,19 +46,7 @@
 	desc += "<br>The inscription reads: [input] - [attacher.real_name]"
 	distinguished.log_message("was given the following commendation by <b>[key_name(attacher)]</b>: [input]", LOG_GAME, color = "green")
 	message_admins("<b>[key_name_admin(distinguished)]</b> was given the following commendation by <b>[key_name_admin(attacher)]</b>: [input]")
-
-	add_memory_in_range(
-		source = distinguished,
-		range = 7,
-		memory_type = MEMORY_RECEIVED_MEDAL,
-		extra_info = list(
-			DETAIL_PROTAGONIST = distinguished,
-			DETAIL_MEDAL_TYPE = src,
-			DETAIL_DEUTERAGONIST = attacher,
-			DETAIL_MEDAL_REASON = input
-		),
-		story_value = STORY_VALUE_AMAZING,
-	)
+	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = input)
 	return ..()
 
 //Pinning medals on people

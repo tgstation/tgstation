@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 5)
+	armor_type = /datum/armor/clothing_under
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -41,9 +41,10 @@
 	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
 	/// This is the overlay on the MOB, not the item itself.
 	var/mutable_appearance/accessory_overlay
-	/// This tracks whether we've added update_icon_updates_onmob for accessories,
-	/// just so we can lazily only added it when it's needed rather than in init
-	var/updates_onmob = FALSE
+
+/datum/armor/clothing_under
+	bio = 10
+	wound = 5
 
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()
@@ -162,7 +163,6 @@
 		freshly_laundered = FALSE
 		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
-// Suit sensor handling, snuck right into the middle of undersuit code
 /mob/living/carbon/human/update_suit_sensors()
 	. = ..()
 	update_sensor_list()
@@ -260,8 +260,6 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(freshly_laundered)
-		. += "It looks fresh and clean."
 	if(can_adjust)
 		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
 	if(has_sensor == BROKEN_SENSORS)
@@ -360,7 +358,7 @@
 	if(!LAZYLEN(attached_accessories))
 		balloon_alert(user, "no accessories to remove!")
 		return
-	if(!can_use(user))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
 	pop_accessory(user)

@@ -45,11 +45,9 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency/shuttle_build{
-	height = 15;
 	name = "Shuttle Under Construction";
 	port_direction = 4;
-	preferred_direction = 2;
-	width = 26
+	preferred_direction = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

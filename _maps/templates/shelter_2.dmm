@@ -74,9 +74,7 @@
 "o" = (
 /obj/structure/chair/comfy/black,
 /obj/item/cardboard_cutout{
-	desc = "A cardboard cutout of a xenomorph maid.";
-	icon_state = "cutout_lusty";
-	name = "lusty xenomorph maid"
+	starting_cutout = "Xenomorph Maid"
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1

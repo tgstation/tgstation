@@ -2,7 +2,7 @@
 /// they have.
 /datum/preference_middleware/names
 	action_delegations = list(
-		"randomize_name" = .proc/randomize_name,
+		"randomize_name" = PROC_REF(randomize_name),
 	)
 
 /datum/preference_middleware/names/get_constant_data()
