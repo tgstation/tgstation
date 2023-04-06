@@ -1,16 +1,26 @@
 /datum/component/combo_attacks
+	/// Length of combo we allow before resetting.
 	var/max_combo_length
+	/// Can we do combos on corpses?
 	var/work_on_corpses
+	/// Can we do do combos on ourselves?
 	var/work_on_self
+	/// Message when the item is examined.
 	var/examine_message
+	/// Balloon alert message when the combo is reset.
 	var/reset_message
-	var/needed_stat
+	/// ID for the reset combo timer.
 	var/timerid
+	/// How much time before the combo resets.
+	var/leniency_time
+	/// List of inputs done by user.
 	var/list/input_list = list()
-	var/list/combo_strings = list()
+	/// Associative list of all the combo moves. Name of Attack = list(COMBO_STEPS = list(Steps made of LEFT_ATTACK and RIGHT_ATTACK), COMBO_PROC = PROC_REF(Proc Name))
 	var/list/combo_list = list()
+	/// A list of strings containing the ways to do combos, for examines.
+	var/list/combo_strings = list()
 
-/datum/component/combo_attacks/Initialize(combos, examine_message, reset_message, max_combo_length, work_on_corpses = FALSE, work_on_self = FALSE)
+/datum/component/combo_attacks/Initialize(combos, examine_message, reset_message, max_combo_length, work_on_corpses = FALSE, work_on_self = FALSE, leniency_time = 5 SECONDS)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	combo_list = combos
@@ -23,7 +33,7 @@
 	src.max_combo_length = max_combo_length
 	src.work_on_corpses = work_on_corpses
 	src.work_on_self = work_on_self
-	return ..()
+	src.leniency_time = leniency_time
 
 /datum/component/combo_attacks/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -88,5 +98,6 @@
 	if(check_input(target, user))
 		reset_inputs(user = null, deltimer = TRUE)
 		return COMPONENT_SKIP_ATTACK
-	timerid = addtimer(CALLBACK(src, PROC_REF(reset_inputs), user, FALSE), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	if(leniency_time)
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_inputs), user, FALSE), leniency_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	return NONE
