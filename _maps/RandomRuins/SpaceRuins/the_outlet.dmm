@@ -22,7 +22,7 @@
 "aB" = (
 /obj/structure/cable,
 /obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "aN" = (
 /obj/item/clothing/suit/hooded/cultrobes/alt,
@@ -128,13 +128,13 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib2-old"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "da" = (
 /obj/structure/table/reinforced,
 /obj/machinery/gibber,
 /obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "df" = (
 /obj/machinery/door/firedoor,
@@ -198,7 +198,7 @@
 "fk" = (
 /obj/structure/cable,
 /obj/structure/sink/directional/west,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "fn" = (
 /obj/effect/spawner/random/food_or_drink/snack,
@@ -219,7 +219,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-1"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "fX" = (
 /obj/structure/table/reinforced,
@@ -228,7 +228,7 @@
 /obj/item/stack/sheet/animalhide/lizard,
 /obj/item/stack/sheet/animalhide/lizard,
 /obj/item/stack/sheet/animalhide/lizard,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gc" = (
 /obj/effect/decal/cleanable/dirt{
@@ -263,7 +263,7 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/syringe,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gU" = (
 /obj/structure/closet/secure_closet/freezer/empty,
@@ -275,7 +275,7 @@
 /obj/item/organ/internal/liver,
 /obj/item/organ/internal/lungs,
 /obj/item/organ/internal/stomach,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gX" = (
 /turf/open/floor/iron,
@@ -307,7 +307,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "il" = (
 /obj/effect/decal/cleanable/ants,
@@ -448,7 +448,7 @@
 "kX" = (
 /obj/machinery/chem_master,
 /obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "kY" = (
 /obj/effect/decal/cleanable/dirt{
@@ -467,7 +467,7 @@
 "le" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "lK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -477,7 +477,8 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-9"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "ma" = (
 /obj/effect/decal/cleanable/ants,
@@ -563,14 +564,14 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "oG" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle/breath,
 /obj/item/clothing/suit/jacket/straight_jacket,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "oI" = (
 /obj/structure/rack,
@@ -640,7 +641,7 @@
 	},
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "qa" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -657,11 +658,11 @@
 "qe" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "qo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "qp" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -715,19 +716,19 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "rz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "rF" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/reagent_containers/syringe/lethal/execution,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "rH" = (
 /obj/effect/decal/cleanable/blood{
@@ -960,7 +961,7 @@
 /obj/item/stack/sheet/animalhide/human,
 /obj/item/stack/sheet/animalhide/human,
 /obj/item/knife/butcher,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "wW" = (
 /obj/structure/cable,
@@ -1094,7 +1095,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "zF" = (
 /obj/effect/spawner/random/food_or_drink/booze,
@@ -1153,7 +1154,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/ash/large,
 /obj/effect/decal/remains/human/smokey,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "AV" = (
 /obj/structure/sign/departments/restroom,
@@ -1263,7 +1264,7 @@
 "DC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/fluff/ruins/the_outlet/tanners_steps,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "DQ" = (
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
@@ -1286,7 +1287,7 @@
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "Ef" = (
 /obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Eg" = (
 /obj/machinery/vending/cigarette,
@@ -1326,7 +1327,7 @@
 "Fl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Fm" = (
 /turf/closed/wall/r_wall,
@@ -1404,7 +1405,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-1"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "He" = (
 /obj/effect/turf_decal/tile/bar/anticorner/contrasted{
@@ -1459,7 +1460,7 @@
 "HZ" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/hooded/bloated_human,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Ie" = (
 /obj/effect/decal/cleanable/ants,
@@ -1601,12 +1602,12 @@
 	icon_state = "rune2"
 	},
 /obj/effect/gibspawner/human,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "LR" = (
 /obj/machinery/chem_dispenser,
 /obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "LV" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1687,7 +1688,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Nb" = (
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Nj" = (
 /obj/item/kirbyplants/random,
@@ -1785,7 +1786,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-137"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "PV" = (
 /obj/effect/decal/cleanable/blood{
@@ -1806,7 +1807,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 10
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "QI" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1824,7 +1825,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-14"
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Rj" = (
 /obj/structure/fluff/broken_flooring{
@@ -1880,7 +1881,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Sv" = (
 /obj/item/kirbyplants,
@@ -2001,7 +2002,7 @@
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/stack/sheet/meat/five,
 /obj/item/stack/sheet/meat/five,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Vz" = (
 /obj/effect/decal/cleanable/dirt{
