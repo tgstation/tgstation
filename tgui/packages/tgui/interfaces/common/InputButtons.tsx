@@ -1,5 +1,6 @@
-import { useBackend } from '../../backend';
 import { Box, Button, Flex } from '../../components';
+
+import { useBackend } from '../../backend';
 
 type InputButtonsData = {
   large_buttons: boolean;
@@ -7,7 +8,7 @@ type InputButtonsData = {
 };
 
 type InputButtonsProps = {
-  input: string | number;
+  input: string | number | string[];
   message?: string;
 };
 

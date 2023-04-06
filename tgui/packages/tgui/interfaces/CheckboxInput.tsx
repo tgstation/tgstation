@@ -1,6 +1,8 @@
-import { Button, Section, Stack } from '../components';
+import { Button, Section, Stack, Table } from '../components';
+import { TableCell, TableRow } from '../components/Table';
 import { useBackend, useLocalState } from '../backend';
 
+import { InputButtons } from './common/InputButtons';
 import { Window } from '../layouts';
 
 type Data = {
@@ -9,8 +11,9 @@ type Data = {
   title: string;
 };
 
+/** Renders a list of checkboxes per items for input. */
 export const CheckboxInput = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { data } = useBackend<Data>(context);
   const { items = [], message, title } = data;
 
   const [selections, setSelections] = useLocalState<string[]>(
@@ -28,22 +31,37 @@ export const CheckboxInput = (props, context) => {
   };
 
   return (
-    <Window title={title} width={425} height={176}>
+    <Window title={title} width={425} height={300}>
       <Window.Content>
-        <Section fill>
-          {message}
-          <Stack vertical>
-            {items.map((item, index) => (
-              <Stack.Item key={index}>
-                <Button.Checkbox
-                  checked={selections.includes(item)}
-                  onClick={selectItem(item)}>
-                  {item}
-                </Button.Checkbox>
-              </Stack.Item>
-            ))}
-          </Stack>
-        </Section>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Section color="label" fill textAlign="center">
+              {message}
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill scrollable>
+              <Table>
+                {items.map((item, index) => (
+                  <TableRow className="candystripe" key={index}>
+                    <TableCell>
+                      <Button.Checkbox
+                        checked={selections.includes(item)}
+                        onClick={() => selectItem(item)}>
+                        {item}
+                      </Button.Checkbox>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </Table>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              <InputButtons input={selections} />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

@@ -1,4 +1,13 @@
-/// Opens a window with a list of checkboxes and returns a list of selected choices.
+/**
+ * ### tgui_input_checkbox
+ * Opens a window with a list of checkboxes and returns a list of selected choices.
+ *
+ * user - The mob to display the window to
+ * message - The message inside the window
+ * title - The title of the window
+ * list/items - The list of items to display
+ * timeout - The timeout for the input (optional)
+ */
 /proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, timeout = 0)
 	if (!user)
 		user = usr
@@ -19,10 +28,7 @@
 		. = input.choices
 		qdel(input)
 
-/**
- * ### tgui_input_checkbox
- * Opens a window with a list of checkboxes and returns a list of selected items.
- */
+/// Window for tgui_input_checkboxes
 /datum/tgui_checkbox_input
 	/// Title of the window
 	var/title
@@ -44,17 +50,8 @@
 /datum/tgui_checkbox_input/New(mob/user, message, title, list/items, timeout)
 	src.title = title
 	src.message = message
-	src.items = list()
-	// src.items_map = list()
-	// var/list/repeat_items = list()
-	// var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
-	// for(var/i in items)
-	// 	if(!i)
-	// 		continue
-	// 	var/string_key = whitelistedWords.Replace("[i]", "")
-	// 	string_key = avoid_assoc_duplicate_keys(string_key, repeat_items)
-	// 	src.items += string_key
-	// 	src.items_map[string_key] = i
+	src.items = items.Copy()
+
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -67,7 +64,7 @@
 	return ..()
 
 /datum/tgui_checkbox_input/proc/wait()
-	while (!closed)
+	while (!closed && !QDELETED(src))
 		stoplag(1)
 
 /datum/tgui_checkbox_input/ui_interact(mob/user, datum/tgui/ui)
@@ -75,6 +72,13 @@
 	if(!ui)
 		ui = new(user, src, "CheckboxInput")
 		ui.open()
+
+/datum/tgui_checkbox_input/ui_close(mob/user)
+	. = ..()
+	closed = TRUE
+
+/datum/tgui_checkbox_input/ui_state(mob/user)
+	return GLOB.always_state
 
 /datum/tgui_checkbox_input/ui_static_data(mob/user)
 	var/list/data = list()
@@ -94,9 +98,9 @@
 
 	switch(action)
 		if("submit")
-			if (!length(params["entries"]))
-				return FALSE
-			set_choices(params["entries"])
+			var/list/selections = params["entry"]
+			if(length(selections) > 0)
+				set_choices(selections)
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
@@ -108,6 +112,5 @@
 
 	return FALSE
 
-/datum/tgui_checkbox_input/proc/set_choices(list/selected_entries)
-	src.choices = selected_entries
-	src.closed = TRUE
+/datum/tgui_checkbox_input/proc/set_choices(list/selections)
+	src.choices = selections.Copy()
