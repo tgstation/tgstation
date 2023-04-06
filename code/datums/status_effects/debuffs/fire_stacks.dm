@@ -77,6 +77,8 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
+	update_particles()
+
 /datum/status_effect/fire_handler/on_remove()
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
@@ -148,14 +150,6 @@
 	var/firelight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 	/// Stores current fire overlay icon state, for optimisation purposes
 	var/last_icon_state
-
-/datum/status_effect/fire_handler/fire_stacks/on_apply()
-	. = ..()
-	update_particles()
-
-/datum/status_effect/fire_handler/fire_stacks/on_remove()
-	QDEL_NULL(particle_effect)
-	return ..()
 
 /datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
 	if(stacks <= 0)
