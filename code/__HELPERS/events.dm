@@ -1,3 +1,5 @@
+#define UNLIT_AREA_BRIGHTNESS 0.2
+
 /**
  * Finds us a generic maintenance spawn location.
  *
@@ -5,12 +7,15 @@
  * a valid turf. Returns MAP_ERROR if no valid locations are present.
  */
 
-/proc/find_maintenance_spawn(atmos_sensitive = FALSE)
+/proc/find_maintenance_spawn(atmos_sensitive = FALSE, require_darkness = FALSE)
 	var/list/possible_spawns = list()
 	for(var/spawn_location in GLOB.generic_maintenance_landmarks)
 		var/turf/spawn_turf = get_turf(spawn_location)
 
 		if(atmos_sensitive && !is_safe_turf(spawn_turf))
+			continue
+
+		if(require_darkness && spawn_turf.get_lumcount() > UNLIT_AREA_BRIGHTNESS)
 			continue
 
 		possible_spawns += spawn_turf
@@ -41,3 +46,5 @@
 		return
 
 	return pick(possible_spawns)
+
+#undef UNLIT_AREA_BRIGHTNESS
