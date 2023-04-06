@@ -201,13 +201,9 @@
 	///How many points this flag is worth when captured.
 	var/flag_value = 1
 
-/obj/item/ctf_flag/Destroy()
-	QDEL_NULL(reset)
-	return ..()
-
 /obj/item/ctf_flag/Initialize(mapload)
 	. = ..()
-	if(!reset)
+	if(isnull(reset))
 		reset = new(get_turf(src))
 		reset.flag = src
 		reset.icon_state = icon_state
@@ -218,7 +214,10 @@
 /obj/item/ctf_flag/LateInitialize()
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
-	
+
+/obj/item/ctf_flag/Destroy()
+	QDEL_NULL(reset)
+	return ..()
 
 /obj/item/ctf_flag/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
