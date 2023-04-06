@@ -21,7 +21,7 @@
 	var/empty = FALSE
 	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 
-/obj/item/storage/medkit/surgery/Initialize(mapload)
+/obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
