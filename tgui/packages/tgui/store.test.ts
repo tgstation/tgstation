@@ -1,6 +1,9 @@
 import { configureStore } from './store';
 import { createStore } from 'common/redux';
 
+// Mock the global window object
+global.window = Object.create(window);
+
 // Simple reducer function for testing
 const testReducer = (state: { message?: string }, action) => {
   switch (action.type) {
@@ -19,6 +22,8 @@ describe('configureStore', () => {
     expect(store).toEqual(expect.any(Object));
     expect(store.dispatch).toBeDefined();
     expect(store.getState).toBeDefined();
+    expect(global.window.__store__).toEqual(store);
+    expect(global.window.__augmentStack__).toEqual(expect.any(Function));
   });
 
   it('creates a store with custom middleware', () => {
