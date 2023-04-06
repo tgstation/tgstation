@@ -15,6 +15,8 @@
 	var/status
 	/// A stored value of the event's announcement chance. Cached and not immediately used to prevent announcements for a failed event roll.
 	var/cached_announcement_chance
+	/// Is our ghost role sensitive to atmospherics? Used when finding spawns. Currently a var, will be changed to a better system later hopefully
+	var/atmos_sensitive = FALSE
 
 /datum/round_event/ghost_role/start()
 	try_spawning()
@@ -108,5 +110,49 @@
 	var/list/candidates = priority_candidates + regular_candidates
 
 	return candidates
+
+/**
+ * Finds us a generic maintenance spawn location.
+ *
+ * Goes through the list of the generic mainteance landmark locations, checking for atmos safety if required, and returns
+ * a valid turf. Returns MAP_ERROR if no valid locations are present.
+ */
+
+/datum/round_event/ghost_role/proc/find_maintenance_spawn()
+	var/list/possible_spawns = list()
+	for(var/spawn_location in GLOB.generic_maintenance_landmarks)
+		var/turf/spawn_turf = get_turf(spawn_location)
+
+		if(atmos_sensitive && !is_safe_turf(spawn_turf))
+			continue
+
+		possible_spawns += spawn_turf
+
+	if(!length(possible_spawns))
+		message_admins("No valid generic_maintenance_landmark landmarks found, aborting...")
+		return MAP_ERROR
+
+	return pick(possible_spawns)
+
+/**
+ * Finds us a generic spawn location in space.
+ *
+ * Goes through the list of the space carp spawn locations, picks from the list, and
+ * returns that turf. Returns MAP_ERROR if no landmarks are found.
+ */
+
+/datum/round_event/ghost_role/proc/find_space_spawn()
+	var/list/possible_spawns = list()
+	for(var/obj/effect/landmark/carpspawn/spawn_location in GLOB.landmarks_list)
+		if(!isturf(spawn_location.loc))
+			stack_trace("Carp spawn found not on a turf: [spawn_location.type] on [isnull(spawn_location.loc) ? "null" : spawn_location.loc.type]")
+			continue
+		possible_spawns += get_turf(spawn_location)
+
+	if(!length(possible_spawns))
+		message_admins("No valid carpspawn landmarks found, aborting...")
+		return MAP_ERROR
+
+	return pick(possible_spawns)
 
 #undef MAX_SPAWN_ATTEMPT
