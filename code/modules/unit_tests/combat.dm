@@ -85,7 +85,9 @@
 
 	// First disarm, world should now look like:
 	// Attacker --> Empty space --> Victim --> Wall
+	attacker.istate |= ISTATE_SECONDARY
 	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
+	attacker.istate &= ~ISTATE_SECONDARY
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim wasn't moved back after being pushed")
 	TEST_ASSERT(!victim.has_status_effect(/datum/status_effect/incapacitating/knockdown), "Victim was knocked down despite not being against a wall")
@@ -94,7 +96,9 @@
 	attacker.forceMove(get_step(attacker, EAST))
 
 	// Second disarm, victim was against wall and should be down
+	attacker.istate |= ISTATE_SECONDARY
 	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
+	attacker.istate &= ~ISTATE_SECONDARY
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
 	TEST_ASSERT(victim.has_status_effect(/datum/status_effect/incapacitating/knockdown), "Victim was not knocked down after being pushed against a wall")
