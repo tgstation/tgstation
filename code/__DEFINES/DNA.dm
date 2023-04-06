@@ -77,6 +77,7 @@
 #define NO_DNA_COPY 10
 #define DRINKSBLOOD 11
 #define SKINTONES 12
+#define ANIME 13
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 12
@@ -132,6 +133,8 @@
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
 #define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
+#define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"

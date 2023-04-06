@@ -97,6 +97,13 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_chassis, GLOB.ipc_chassis_list)
 	if(!GLOB.tails_list_monkey.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
+	if(!GLOB.anime_top_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list)
+	if(!GLOB.anime_middle_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
+	if(!GLOB.anime_top_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
+
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
 		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
@@ -120,6 +127,10 @@
 		"ipc_chassis" = pick(GLOB.ipc_chassis_list),
 		"tail_monkey" = "Chimp",
 		"pod_hair" = pick(GLOB.pod_hair_list),
+		"anime_top" = pick(GLOB.anime_top_list),
+		"anime_middle" = pick(GLOB.anime_middle_list),
+		"anime_bottom" = pick(GLOB.anime_bottom_list),
+		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 	))
 
 /proc/random_hairstyle(gender)

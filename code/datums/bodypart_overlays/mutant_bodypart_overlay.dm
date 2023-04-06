@@ -111,6 +111,11 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
+		if(ORGAN_COLOR_ANIME)
+			if(!ishuman(ownerlimb.owner))
+				return
+			var/mob/living/carbon/human/human_owner = ownerlimb.owner
+			draw_color = human_owner.dna.features["animecolor"]
 
 	return TRUE
 

@@ -9,3 +9,6 @@
 
 	///the amount of metacoins currently possessed
 	var/metacoins
+
+	///the stored patreon rank of this user
+	var/patreon_rank = NO_RANK

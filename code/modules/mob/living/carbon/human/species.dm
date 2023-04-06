@@ -492,6 +492,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
 	if(C.hud_used)
@@ -852,6 +853,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
 							accessory_overlay.color = source.eye_color_left
+						if(ANIME)
+							accessory_overlay.color = source.dna.features["animecolor"]
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
