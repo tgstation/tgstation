@@ -43,6 +43,11 @@
 
 	return TRUE
 
+/obj/item/clothing/accessory/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(istype(old_loc, /obj/item/clothing/under))
+		detach(old_loc)
+
 /**
  * Actually attach this accessory to the passed clothing article.
  *
@@ -67,19 +72,9 @@
 	LAZYADD(attach_to.attached_accessories, src)
 	forceMove(attach_to)
 
-	/*
-	if (islist(U.armor) || isnull(U.armor)) // This proc can run before /obj/Initialize has run for U and src,
-		U.armor = getArmor(arglist(U.armor)) // we have to check that the armor list has been transformed into a datum before we try to call a proc on it
-																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor) || isnull(armor))
-		armor = getArmor(arglist(armor))
-
-	U.armor = U.armor.attachArmor(armor)
-	*/
-
-	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, .proc/on_uniform_equipped)
-	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, .proc/on_uniform_dropped)
-	RegisterSignal(attach_to, COMSIG_CLOTHING_UNDER_ADJUSTED, .proc/on_uniform_adjusted)
+	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
+	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
+	RegisterSignal(attach_to, COMSIG_CLOTHING_UNDER_ADJUSTED, PROC_REF(on_uniform_adjusted))
 
 	var/mob/equipped_to = attach_to.loc
 	if(istype(equipped_to))
