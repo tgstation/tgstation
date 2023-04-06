@@ -4017,11 +4017,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
+	dir = 8;
 	id = "mechbay";
 	name = "Mech Bay Shutters"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -6403,6 +6404,7 @@
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "lockers";
 	name = "Locker Room Shutters"
 	},
@@ -6727,6 +6729,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "lockers";
 	name = "Locker Room Shutters"
 	},
@@ -7181,6 +7184,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "lockers";
 	name = "Locker Room Shutters"
 	},
@@ -7238,6 +7242,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "chem-lockdown";
 	name = "Chemistry Shutters"
 	},
@@ -8631,13 +8636,14 @@
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/port)
 "cfD" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "Armoury Shutter"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "armblast";
 	name = "Armory Blast Door"
+	},
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	id = "armory";
+	name = "Armoury Shutter"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -27967,6 +27973,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "chem-lockdown";
 	name = "Chemistry Shutters"
 	},
@@ -28359,6 +28366,7 @@
 	dir = 4
 	},
 /obj/machinery/keycard_auth/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
 "hJP" = (
@@ -28792,6 +28800,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "chem-lockdown";
 	name = "Chemistry Shutters"
 	},
@@ -41243,6 +41252,18 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/office)
+"ljH" = (
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	id = "armory";
+	name = "Armoury Shutter"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "armblast";
+	name = "Armory Blast Door"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/office)
 "ljL" = (
 /obj/structure/sign/poster/contraband/moffuchis_pizza,
 /turf/closed/wall,
@@ -50094,6 +50115,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "chem-lockdown";
 	name = "Chemistry Shutters"
 	},
@@ -61362,6 +61384,7 @@
 	name = "AI Chamber"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "AI Chamber entrance shutters";
 	name = "AI Chamber Entrance Shutters"
 	},
@@ -88546,6 +88569,7 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "xYz" = (
 /obj/machinery/door/poddoor/shutters/window{
+	dir = 8;
 	id = "armory";
 	name = "Armoury Shutters"
 	},
@@ -317102,7 +317126,7 @@ urn
 gnW
 vWw
 vWw
-cfD
+ljH
 xYz
 cfD
 vWw
