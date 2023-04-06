@@ -42,7 +42,7 @@
 	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a ion carbine. Perfect against lockers you don't have access to."
 
 /obj/item/weaponcrafting/gunkit/temperature
-	name = "temperature gun parts kit (Less Lethal)"
+	name = "temperature gun parts kit (Less Lethal/Very Lethal (Lizardpeople))"
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle

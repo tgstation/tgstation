@@ -23,7 +23,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38
-	name = "Speed Loader (.38)"
+	name = "Speed Loader (.38) (Lethal)"
 	id = "c38"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20000)
@@ -59,7 +59,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/foam_dart
-	name = "Box of Foam Darts"
+	name = "Box of Foam Darts (Harmless)"
 	id = "foam_dart"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500)
@@ -71,7 +71,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/flamethrower
-	name = "Flamethrower"
+	name = "Flamethrower (Lethal/Highly Destructive)"
 	id = "flamethrower"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 500)
