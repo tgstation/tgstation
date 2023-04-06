@@ -36,12 +36,12 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /datum/map_template/basketball
+	should_place_on_top = FALSE
 	var/description = ""
 	/// The name of the basketball team
 	var/team_name
 	/// The basketball teams home stadium uniform
 	var/home_team_uniform
-	should_place_on_top = FALSE
 
 /datum/map_template/basketball/stadium
 	name = "Stadium"
