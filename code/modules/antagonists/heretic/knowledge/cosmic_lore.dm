@@ -194,7 +194,7 @@
 
 /// Increases the combo duration.
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/increase_combo_duration()
-	if(combo_duration < 10)
+	if(combo_duration < 10 SECONDS)
 		combo_duration += 0.5 SECONDS
 
 /datum/heretic_knowledge/spell/cosmic_expansion
