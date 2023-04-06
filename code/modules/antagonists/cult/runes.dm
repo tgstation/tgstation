@@ -262,30 +262,45 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
 		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
 		return FALSE
+
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
 		convertee.adjustBruteLoss(-(brutedamage * 0.75))
 		convertee.adjustFireLoss(-(burndamage * 0.75))
-	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
-	span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"))
-	convertee.mind?.add_antag_datum(/datum/antagonist/cult)
-	convertee.Unconscious(100)
+
+	convertee.visible_message(
+		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
+			? "even as [convertee.p_their()] wounds heal and close" \
+			: "as the markings below [convertee.p_them()] glow a bloody red"]!"),
+		span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"),
+	)
+
+	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
+	var/mob/living/carbon/human/human_convertee = convertee
+
+	if(check_holidays(APRIL_FOOLS) && prob(10))
+		convertee.Paralyze(10 SECONDS)
+		if(istype(human_convertee))
+			human_convertee.force_say()
+		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+
+	else
+		convertee.Unconscious(10 SECONDS)
+
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
-	</b></span>")
-	if(ishuman(convertee))
-		var/mob/living/carbon/human/H = convertee
-		H.uncuff()
-		H.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		H.remove_status_effect(/datum/status_effect/speech/stutter)
 
-		if(prob(1) || check_holidays(APRIL_FOOLS))
-			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+	to_chat(convertee, span_cultitalic("<b>Your blood pulses. Your head throbs. The world goes red. \
+		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+		and something evil takes root.</b>"))
+	to_chat(convertee, span_cultitalic("<b>Assist your new compatriots in their dark dealings. \
+		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
+
+	if(istype(human_convertee))
+		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name
