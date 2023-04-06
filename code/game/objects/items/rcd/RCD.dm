@@ -565,12 +565,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
 	qdel(src)
 
-/obj/item/construction/rcd/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
 /obj/item/construction/rcd/borg
-	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	var/energyfactor = 72
@@ -590,11 +585,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			to_chat(user, no_ammo_message)
+			balloon_alert(user, "no cell found!")
 		return 0
 	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
-		to_chat(user, no_ammo_message)
+		balloon_alert(user, "insufficient charge!")
 	return .
 
 /obj/item/construction/rcd/borg/checkResource(amount, mob/user)
@@ -603,11 +598,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			to_chat(user, no_ammo_message)
+			balloon_alert(user, "no cell found!")
 		return 0
 	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!. && user)
-		to_chat(user, no_ammo_message)
+		balloon_alert(user, "insufficient charge!")
 	return .
 
 /obj/item/construction/rcd/borg/syndicate

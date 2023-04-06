@@ -1,9 +1,9 @@
 //RAPID TILING DEVICE
 
 /// time taken to create tile
-#define CONSTRUCTION_TIME 0.4 SECONDS
+#define CONSTRUCTION_TIME(cost)((cost * 0.15) SECONDS)
 /// time taken to destroy a tile
-#define DECONSTRUCTION_TIME 0.2 SECONDS
+#define DECONSTRUCTION_TIME(cost)((cost * 0.25) SECONDS)
 
 /**
  * An tool used to create, destroy, and copy & clear decals of floor tiles
@@ -141,9 +141,7 @@
 	. = ..()
 	selected_design = new
 	tile_design = new
-
 	selected_design.set_info(GLOB.floor_designs[root_category][design_category][1])
-	update_appearance()
 
 /obj/item/construction/rtd/Destroy()
 	QDEL_NULL(selected_design)
@@ -227,17 +225,13 @@
 
 	return TRUE
 
-/// RTD can lay floor tiles only on these 2 types of platings. this procs checks for that
-/obj/item/construction/rtd/proc/is_valid_plating(turf/open/floor)
-	return floor.type == /turf/open/floor/plating ||  floor.type == /turf/open/floor/plating/reinforced
-
 /obj/item/construction/rtd/afterattack(turf/open/floor/floor, mob/user)
 	. = ..()
 	if(!istype(floor) || !range_check(floor,user))
 		return TRUE
 
 	var/floor_designs = GLOB.floor_designs
-	if(!is_valid_plating(floor)) //we infer what floor type it is if its not the usual plating
+	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
 		user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
@@ -269,14 +263,15 @@
 		balloon_alert(user, "design not supported!")
 		return TRUE
 
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, CONSTRUCTION_TIME, RCD_FLOORWALL)
+	var/delay = CONSTRUCTION_TIME(selected_design.cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
 
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return TRUE
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = CONSTRUCTION_TIME)
-	if(!do_after(user, CONSTRUCTION_TIME, target = floor))
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
 		return TRUE
@@ -307,39 +302,38 @@
 	if(!istype(floor) || !range_check(floor,user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_valid_plating(floor)) //cant deconstruct normal plating thats the RCD's job
+	if(istype(floor, /turf/open/floor/plating)) //cant deconstruct normal plating thats the RCD's job
 		balloon_alert(user, "nothing to deconstruct!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/floor_designs = GLOB.floor_designs
 
 	//we only deconstruct floors which are supported by the RTD
-	var/can_deconstruct = FALSE
-	var/cost
+	var/cost = 0
 	for(var/main_root in floor_designs)
-		if(can_deconstruct)
+		if(cost)
 			break
 		for(var/sub_category in floor_designs[main_root])
-			if(can_deconstruct)
+			if(cost)
 				break
 			for(var/list/design_info in floor_designs[main_root][sub_category])
 				var/obj/item/stack/tile/tile_type = design_info["type"]
 				if(initial(tile_type.turf_type) == floor.type)
-					cost = tile_design.cost
-					can_deconstruct = TRUE
+					cost = design_info["tile_cost"]
 					break
-	if(!can_deconstruct)
+	if(!cost)
 		balloon_alert(user, "can't deconstruct this type!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
+	var/delay = DECONSTRUCTION_TIME(cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
 
 	//resource sanity check before & after delay along with beam effects
 	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
 		qdel(rcd_effect)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = DECONSTRUCTION_TIME)
-	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

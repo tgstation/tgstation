@@ -5,20 +5,21 @@
 #define REMOVE_MODE 1
 
 /obj/item/construction/rld
-	name = "Rapid Lighting Device (RLD)"
+	name = "Rapid Lighting Device"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rld-5"
+	icon_state = "rld"
 	worn_icon_state = "RPD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 200
 	max_matter = 200
 	slot_flags = ITEM_SLOT_BELT
+	has_ammobar = TRUE
+	ammo_sections = 6
 	///it does not make sense why any of these should be installed
 	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
-	var/matter_divisor = 35
 	var/mode = LIGHT_MODE
 	var/wallcost = 10
 	var/floorcost = 15
@@ -43,10 +44,6 @@
 	. = ..()
 	for(var/option in original_options)
 		display_options[option] = icon(original_options[option])
-
-/obj/item/construction/rld/update_icon_state()
-	icon_state = "rld-[round(matter/matter_divisor)]"
-	return ..()
 
 /obj/item/construction/rld/attack_self(mob/user)
 	. = ..()
@@ -85,7 +82,7 @@
 			mode = REMOVE_MODE
 			to_chat(user, span_notice("You change RLD's mode to 'Deconstruct'."))
 		else
-			toggle_silo()
+			toggle_silo(user)
 
 /obj/item/construction/rld/afterattack(atom/A, mob/user)
 	. = ..()
@@ -195,13 +192,12 @@
 			return TRUE
 
 /obj/item/construction/rld/mini
-	name = "mini-rapid-light-device (MRLD)"
+	name = "mini-rapid-light-device"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rld-5"
+	icon_state = "rld"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter_divisor = 20
 	matter = 100
 	max_matter = 100
 

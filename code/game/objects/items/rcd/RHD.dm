@@ -20,7 +20,6 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 100
-	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
@@ -41,6 +40,7 @@
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
+	update_appearance()
 
 ///used for examining the RCD and for its UI
 /obj/item/construction/proc/get_silo_iron()
@@ -85,10 +85,10 @@
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/rcd_up, mob/user)
 	if(rcd_up.upgrade & upgrade)
-		to_chat(user, span_warning("[src] has already installed this upgrade!"))
+		balloon_alert(user, "already installed!")
 		return
 	if(rcd_up.upgrade & banned_upgrades)
-		to_chat(user, span_warning("[src] can't install this upgrade!"))
+		balloon_alert(user, "cannot install upgrade!")
 		return
 	upgrade |= rcd_up.upgrade
 	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
@@ -106,7 +106,7 @@
 		var/obj/item/rcd_ammo/R = O
 		var/load = min(R.ammoamt, max_matter - matter)
 		if(load <= 0)
-			to_chat(user, span_warning("[src] can't hold any more matter-units!"))
+			balloon_alert(user, "storage full!")
 			return FALSE
 		R.ammoamt -= load
 		if(R.ammoamt <= 0)
@@ -117,14 +117,13 @@
 	else if(isstack(O))
 		loaded = loadwithsheets(O, user)
 	if(loaded)
-		to_chat(user, span_notice("[src] now holds [matter]/[max_matter] matter-units."))
 		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
 	var/value = S.matter_amount
 	if(value <= 0)
-		to_chat(user, span_notice("You can't insert [S.name] into [src]!"))
+		balloon_alert(user, "invalid sheets!")
 		return FALSE
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
 	if(maxsheets > 0)
@@ -132,9 +131,8 @@
 		S.use(amount_to_use)
 		matter += value*amount_to_use
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-		to_chat(user, span_notice("You insert [amount_to_use] [S.name] sheets into [src]. "))
 		return TRUE
-	to_chat(user, span_warning("You can't insert any more [S.name] sheets into [src]!"))
+	balloon_alert(user, "storage full!")
 	return FALSE
 
 /obj/item/construction/proc/activate()
@@ -156,7 +154,7 @@
 	if(!silo_mats || !silo_link)
 		if(matter < amount)
 			if(user)
-				to_chat(user, no_ammo_message)
+				balloon_alert(user, "not enough matter!")
 			return FALSE
 		matter -= amount
 		update_appearance()
@@ -164,14 +162,14 @@
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, span_alert("Mineral access is on hold, please contact the quartermaster."))
+				balloon_alert(user, "silo on hold!")
 			return FALSE
 		if(!silo_mats.mat_container)
-			to_chat(user, span_alert("No silo link detected. Connect to silo via multitool."))
+			balloon_alert(user, "no silo detected!")
 			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
-				to_chat(user, no_ammo_message)
+				balloon_alert(user, "not enough silo material!")
 			return FALSE
 
 		var/list/materials = list()
@@ -196,16 +194,16 @@
 
 	return data
 
-/obj/item/construction/proc/toggle_silo()
+/obj/item/construction/proc/toggle_silo(mob/user)
 	if(!silo_mats)
-		to_chat(usr, span_warning("[src] doesn't have remote storage connection."))
+		to_chat(user, span_warning("no remote storage connection."))
 		return FALSE
 	if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link.
-		to_chat(usr, span_alert("No silo link detected. Connect to silo via multitool."))
+		to_chat(user, span_warning("no silo link detected."))
 		return FALSE
 
 	silo_link = !silo_link
-	to_chat(usr, span_notice("You change [src]'s storage link state: [silo_link ? "ON" : "OFF"]."))
+	to_chat(user, span_notice("silo link state: [silo_link ? "on" : "off"]"))
 
 	return TRUE
 
@@ -216,23 +214,23 @@
 		return
 
 	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
-		return toggle_silo()
+		return toggle_silo(usr)
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)
-			to_chat(user, span_alert("Connected silo link is invalid. Reconnect to silo via multitool."))
+			balloon_alert(user, "silo link invalid!")
 			return FALSE
 		else
 			. = matter >= amount
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, span_alert("Mineral access is on hold, please contact the quartermaster."))
+				balloon_alert(user, "silo on hold!")
 			return FALSE
 		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
 	if(!. && user)
-		to_chat(user, no_ammo_message)
+		balloon_alert(user, "low ammo!")
 		if(has_ammobar)
 			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
@@ -241,7 +239,8 @@
 	if(A.z != user.z)
 		return
 	if(!(A in dview(7, get_turf(user))))
-		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
+		balloon_alert(user, "out of range!")
+		flick("[icon_state]_empty", src)
 		return FALSE
 	else
 		return TRUE
