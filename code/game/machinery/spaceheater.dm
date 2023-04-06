@@ -76,6 +76,7 @@
 
 /obj/machinery/space_heater/on_construction()
 	set_panel_open(TRUE)
+	cell = null
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
