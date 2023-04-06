@@ -496,7 +496,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	critical = PLANE_CRITICAL_DISPLAY
 
 ///Contains all overlay (movable) lighting
-/atom/movable/screen/plane_master/o_light
+/atom/movable/screen/plane_master/o_lighting
 	name = "Overlight Lighting"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
 		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
