@@ -1,10 +1,6 @@
 /datum/component/combo_attacks
 	/// Length of combo we allow before resetting.
 	var/max_combo_length
-	/// Can we do combos on corpses?
-	var/work_on_corpses
-	/// Can we do do combos on ourselves?
-	var/work_on_self
 	/// Message when the item is examined.
 	var/examine_message
 	/// Balloon alert message when the combo is reset.
@@ -19,8 +15,10 @@
 	var/list/combo_list = list()
 	/// A list of strings containing the ways to do combos, for examines.
 	var/list/combo_strings = list()
+	/// A callback to the proc that checks whether or not we can do combo attacks.
+	var/datum/callback/can_attack_callback
 
-/datum/component/combo_attacks/Initialize(combos, examine_message, reset_message, max_combo_length, work_on_corpses = FALSE, work_on_self = FALSE, leniency_time = 5 SECONDS)
+/datum/component/combo_attacks/Initialize(combos, examine_message, reset_message, max_combo_length, leniency_time = 5 SECONDS, can_attack_callback)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	combo_list = combos
@@ -31,9 +29,8 @@
 	src.examine_message = examine_message
 	src.reset_message = reset_message
 	src.max_combo_length = max_combo_length
-	src.work_on_corpses = work_on_corpses
-	src.work_on_self = work_on_self
 	src.leniency_time = leniency_time
+	src.can_attack_callback = can_attack_callback
 
 /datum/component/combo_attacks/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -86,7 +83,9 @@
 /datum/component/combo_attacks/proc/on_attack(datum/source, mob/living/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 
-	if((target.stat == DEAD  && !work_on_corpses) || (target == user && !work_on_self) || HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(!can_attack_callback?.Invoke(user, target))
+		return NONE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return NONE
 	var/list/modifiers = params2list(click_parameters)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

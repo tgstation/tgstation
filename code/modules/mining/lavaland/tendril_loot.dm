@@ -969,6 +969,7 @@
 		max_combo_length = 4, \
 		examine_message = span_notice("<i>There seem to be inscriptions on it... you could examine them closer?</i>"), \
 		reset_message = "you return to neutral stance", \
+		can_attack_callback = CALLBACK(src, PROC_REF(can_combo_attack)) \
 	)
 
 /obj/item/cursed_katana/examine(mob/user)
@@ -991,6 +992,9 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
+
+/obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)
+	return target.stat != DEAD && target != user
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
@@ -1055,6 +1059,7 @@
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
