@@ -5,7 +5,7 @@
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
 	for(var/obj/item/organ/internal/organ in dummy.organs)
-		organ.applyOrganDamage(50)
+		organ.apply_organ_damage(50)
 
 	dummy.fully_heal(HEAL_ORGANS)
 
@@ -33,7 +33,7 @@
 	dummy.fully_heal(HEAL_REFRESH_ORGANS)
 
 	for(var/obj/item/organ/organ_type as anything in we_started_with)
-		if(dummy.getorgan(organ_type))
+		if(dummy.get_organ_by_type(organ_type))
 			continue
 		TEST_FAIL("Organ [initial(organ_type.name)] didn't regenerate in the dummy after fullyheal flag HEAL_REFRESH_ORGANS.")
 

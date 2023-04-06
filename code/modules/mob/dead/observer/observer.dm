@@ -101,7 +101,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		mind = body.mind //we don't transfer the mind but we keep a reference to it.
 
-		set_suicide(body.suiciding) // Transfer whether they committed suicide.
+		if(HAS_TRAIT_FROM_ONLY(body, TRAIT_SUICIDED, REF(body))) // transfer if the body was killed due to suicide
+			ADD_TRAIT(src, TRAIT_SUICIDED, REF(body))
 
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
@@ -289,7 +290,7 @@ Works together with spawning an observer, noted above.
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
 			var/mob/living/carbon/human/crystal_fella = usr
-			var/our_heart = crystal_fella.getorganslot(ORGAN_SLOT_HEART)
+			var/our_heart = crystal_fella.get_organ_slot(ORGAN_SLOT_HEART)
 			if(istype(our_heart, /obj/item/organ/internal/heart/ethereal)) //so you got the heart?
 				var/obj/item/organ/internal/heart/ethereal/ethereal_heart = our_heart
 				ethereal_heart.stop_crystalization_process(crystal_fella) //stops the crystallization process

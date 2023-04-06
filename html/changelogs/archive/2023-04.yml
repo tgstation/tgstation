@@ -1,0 +1,193 @@
+2023-04-01:
+  Cheshify:
+  - bugfix: The Lance goes deeper into the station when it docks.
+  Deranging:
+  - bugfix: The graph in Power Monitor consoles is no longer under half its normal
+      size.
+  Helg2:
+  - rscadd: the victims of kneecapping will now scream.
+  - qol: you will no longer gain useless message, when you're harming someone in agro-grab
+      in the head with their neck already slicen, instead of continuing killing them.
+  - qol: you will no longer gain irritating messages, when trying to stab someone
+      in the eye, instead of just stabbing them with screwdriver.
+  LT3:
+  - balance: 'Random Disease: Fluids transmission frequency reduced'
+  - balance: 'Random Disease: Respiration transmission frequency increased'
+  - balance: 'Random Disease: Low severity frequency increased'
+  - balance: 'Random Disease: Cures list removes dispenser reagents and food products'
+  - balance: 'Random Disease: Minimum pop and minimum round timer added to event check'
+  LemonInTheDark:
+  - bugfix: Lava and plasma rivers (openspace on icebox too) will generate now. This
+      was broken for 2 years wtf man
+  Rhials:
+  - balance: Fugitive team backstories will now be selected with consideration to
+      the number of people who sign up.
+  - qol: Fugitives can no longer spawn in atmos-unsafe areas.
+  SmoSmoSmoSmok:
+  - bugfix: pais can upload photos to newscasters again
+2023-04-02:
+  13spacemen:
+  - bugfix: Volume pump overclocking animation is much slower, no more headaches
+  - qol: 'Added screentips to the RPD; screentips and balloon alerts to many atmos
+      machines and devices
+
+      :cl:'
+  DrDiasyl aka DrTuxedo#0931:
+  - rscadd: Added 'biscuit' cards! They can contain documents and can only be accessed
+      by cracking them open, you can't close them back. Nanotrasen now stores spare
+      ID safe codes in them.
+  - rscadd: Placed paper cutters around the station. They're in Bridge, HoP office,
+      Warden office, and Cargo.
+  - rscadd: Now you can order paper cutters at cargo.
+  - bugfix: Now the paper slip is actually paper.
+  - imageadd: The paper slips sprite was slightly tweaked to have text lay more logically,
+      added the corporate paper slip.
+  EOBGames:
+  - qol: Bluespace tags are gone. The information contained within is still available
+      in the same way, just in a more out-of-character format.
+  Hatterhat:
+  - rscadd: Reagent containers that splash on people when thrown (e.g. molotovs) now
+      spill their contents on both target and turf. (This means that throwing molotovs
+      with enough fuel spills fuel puddles, throwing beakers with acid spills acid
+      on the floor, etc. etc.) Unfortunately, molotovs still lack the ability to ignite
+      their own spilled fuel, but we'll get there one day.
+  Helg2:
+  - rscadd: Sleeping with a pillow restores more health.
+  Jacquerel:
+  - rscadd: A new meat-themed space ruin.
+  - bugfix: Organ box now actually requires coolant in order to work.
+  JohnFulpWillard:
+  - balance: Sentient Diseases (and diseases in general) can no longer roll Anacea,
+      Haloperidol & Spaceacillin as their cure, however they've been replaced with
+      chemicals that are either harder to make, or have larger drawbacks (such as
+      putting you to sleep).
+  LT3:
+  - bugfix: The missing table reinforcement for MetaStation's cargo office has been
+      found
+  Melbert:
+  - bugfix: Plates are no longer ephemeral when throwing at people.
+  NamelessFairy:
+  - admin: Exiting the highlander delay window without selecting an option will no
+      longer start highlander mode.
+  Xander3359:
+  - bugfix: Maid in the mirror no longer drops a sprite-less suit.
+  san7890:
+  - bugfix: The prison on IceBox should no longer leak air as often.
+  tralezab:
+  - rscdel: Votes out some sussy emergency meeting code
+  vinylspiders:
+  - bugfix: fixes emissives blocker layering issue that was causing emissives on clothing
+      to not display at all
+  - bugfix: admins may now send headset messages to silicon mobs as long as they have
+      a radio
+  - bugfix: fixes floating point inaccuracies in numeric prefs
+2023-04-03:
+  Ical92:
+  - rscadd: Added security cameras to the five "default" shuttles
+  - rscadd: Added camera telescreen to KiloStation Emergency Shuttle
+  - bugfix: fixes telescreens showing static when reopening a camera
+  Jacquerel:
+  - bugfix: Traitors should be able to summon their satellite hacking supply kit.
+  - bugfix: Dark Matteor shouldn't crash on spawn and fail to arrive.
+  SomeRandomOwl:
+  - bugfix: Play Internet Sound will no longer show an admins Character name and returns
+      back to showing CKEY as previously
+  Time-Green:
+  - rscadd: Researcher Anna Nomally has disappeared into space, carrying 20 anomaly
+      cores. What could she be up to?
+  iwishforducks:
+  - bugfix: Removes errant newscaster in the dorm maints of Tramstation.
+  vinylspiders:
+  - bugfix: the 'natural wig' item will no longer show a broken icon when it mimics
+      a hairstyle whose icon path something other than the default 'icons/mob/species/human/human_face.dmi'
+2023-04-04:
+  13spacemen:
+  - bugfix: Roundend Report properly lists cultist names if the cult failed and didn't
+      summon Narsie
+  DrDiasyl aka DrTuxedo#0931:
+  - bugfix: Floor lights no longer become invisible when the fire alarm is turned
+      on
+  Ebin-Halcyon:
+  - imageadd: The maid costume has gotten it's colors slightly tweaked, should look
+      nicer.
+  LemonInTheDark:
+  - bugfix: Directional frosted/tinted windows will no longer fuck up vision
+  MrStonedOne:
+  - bugfix: The notify restart verb in the ooc tab should now actually work.
+  Profakos:
+  - rscadd: adds the ruins of a restaurant robot portal hub
+  Rhials:
+  - code_imp: The xeno_spawn landmark is now the generic_maintenance_landmark landmark.
+  - bugfix: Certain midrounds will now check for atmos safety before spawning.
+  tralezab:
+  - rscadd: Chuunibyou wizards, and chunni granters in the library
+  - rscadd: Medical eyepatches
+2023-04-05:
+  Helg2:
+  - qol: changed mech description to span_notices and just slightly comfier to use.
+  - qol: added tooltips for mech's maintenance mode.
+  - balance: added t4 parts for mauler and dark gygax. And t3 parts for dark honker.
+  - bugfix: fixed that you can remove capacitor and scanmod from mech without proper
+      maintenance steps. Now you can't
+  - bugfix: West sided version of red alert fire alarm is now looks normally.
+  JohnFulpWillard:
+  - bugfix: QM's now get teleporter access on lowpop, like every other Command does.
+  LT3:
+  - rscadd: Don't trip on the tram plate while crossing, you may be in for a shocking
+      surprise!
+  LemonInTheDark:
+  - refactor: runechat should be a lot cheaper on the server. I've changed how it
+      functions, if it behaves weird yell at me please don't just ignore it
+  - bugfix: The coderbus passengers layer properly again
+  MMMiracles:
+  - balance: Little Timmy's lavaland pizza party has gotten an overhaul to be a bit
+      more interesting.
+  Profakos:
+  - bugfix: The prey pod ruin no longer has two corpses, only one.
+  RikuTheKiller:
+  - balance: Slash wounds no longer clot while dead.
+  SyncIt21:
+  - bugfix: thermo machines can be ctrl dragged again
+  - qol: alt click cycles between min, median & max temperature ranges
+  - refactor: removed useless init code
+  tralezab:
+  - bugfix: blink is now a translocation spell
+  vinylspiders:
+  - bugfix: marisa shoes will now build its worn icon using the greyscale config like
+      sneakers do
+  zxaber:
+  - balance: Malf AIs that hack Head of Staff and Vault APCs will now find a discount
+      issued on Doomsday.
+2023-04-06:
+  DaydreamIQ:
+  - rscadd: Added the Abandoned Interdyne facility, explore at your own peril
+  Ghilker:
+  - rscadd: Timestop blocks the SM from processing (can't be healed, doesn't output
+      gases but can still take damage)
+  JohnFulpWillard:
+  - balance: Flamethrowers no longer have a trigger guard, and can be used by anyone
+      (including if you're wearing Atmos gloves).
+  - bugfix: Slimes' mischievous emote now works.
+  LT3:
+  - rscadd: The tram now has a remote control for funny and/or nefarious purposes
+  LemonInTheDark:
+  - admin: All centcom ferries are now loadable. Yes this WASbroken
+  Melbert:
+  - refactor: Removes Rev code from core flash code
+  - bugfix: Getting converted on April Fools now triggers the meme force say as always
+      intended
+  - rscdel: The meme force say can no longer trigger on any day (it didn't work before
+      anyways)
+  Mey-Ha-Zah:
+  - imageadd: added new lavaland sprites, moved some sprites to a new location, adjusted
+      pixel shift for the updated sprites, adjusted the name of some sprites.
+  flowercuco:
+  - rscadd: Added new syndicate uplink beacon and associated systems that allow you
+      to get a replacement traitor uplink
+  - bugfix: Debug & nukie uplinks no longer runtime and work properly again
+  kinneb:
+  - rscadd: A new HUD, The 'Detective' UI
+  - imageadd: All the spritework for said HUD.
+  timothymtorres:
+  - imageadd: Split all icons in weapons_and_items.dmi to their own categories
+  - imagedel: Removed some unused icons

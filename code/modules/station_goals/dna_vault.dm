@@ -223,3 +223,11 @@
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)
+
+#undef VAULT_TOXIN
+#undef VAULT_NOBREATH
+#undef VAULT_FIREPROOF
+#undef VAULT_STUNTIME
+#undef VAULT_ARMOUR
+#undef VAULT_SPEED
+#undef VAULT_QUICK

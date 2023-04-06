@@ -260,7 +260,7 @@
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3 SECONDS))
 	return MANUAL_SUICIDE
 
 /**
@@ -294,6 +294,18 @@
 	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
+
+/*
+ * Fake dark matter singularity!
+ */
+/obj/item/toy/spinningtoy/dark_matter
+	name = "dark matter singularity"
+	desc = "<i>\"Surviving the encounter with the \
+		horrible thing, I realized immediately what I \
+		had to do: sell marketable toys of it. \
+		\"</i><br>- Chief Engineer Ship Chafer"
+	icon = 'icons/obj/engine/singularity.dmi'
+	icon_state = "dark_matter_s1"
 
 /*
  * Toy gun: Why isn't this an /obj/item/gun?
@@ -594,7 +606,7 @@
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
@@ -778,7 +790,7 @@
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (obj_flags & EMAGGED && cooldown < world.time)
 		cooldown = world.time + 600
-		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
+		user.audible_message(span_hear("You hear the click of a button."), self_message = span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(14 SECONDS)
@@ -901,7 +913,7 @@
 /obj/item/toy/beach_ball/baseball
 	name = "baseball"
 	desc = "Enter the world of concussions and become who you were destined to be."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/toys/balls.dmi'
 	icon_state = "baseball"
 	inhand_icon_state = "baseball"
 	throw_range = 9

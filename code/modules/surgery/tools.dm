@@ -248,7 +248,6 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
@@ -256,6 +255,10 @@
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
 	var/list/loaded_surgeries = list()
+
+/obj/item/surgical_processor/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
 
 /obj/item/surgical_processor/examine(mob/user)
 	. = ..()
@@ -437,7 +440,7 @@
 	var/obj/item/bodypart/limb_snip_candidate
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
-		tail_snip_candidate = patient.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+		tail_snip_candidate = patient.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(!tail_snip_candidate)
 			to_chat(user, span_warning("[patient] does not have a tail."))
 			return

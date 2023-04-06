@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "Light office chairs and Dark office chair colors are, now actually reflective of the name."
-  - bugfix: "Left/Right office chairs should be symmetrical and no longer be one pixel off when flipped."

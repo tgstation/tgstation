@@ -300,6 +300,23 @@
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_BIGGER_PODS))
 		roundstart_template = /datum/map_template/shuttle/escape_pod/luxury
 
+// should fit the syndicate infiltrator, and smaller ships like the battlecruiser corvettes and fighters
+/obj/docking_port/stationary/syndicate
+	name = "near the station"
+	dheight = 1
+	dwidth = 12
+	height = 17
+	width = 23
+	shuttle_id = "syndicate_nearby"
+
+/obj/docking_port/stationary/syndicate/northwest
+	name = "northwest of station"
+	shuttle_id = "syndicate_nw"
+
+/obj/docking_port/stationary/syndicate/northeast
+	name = "northeast of station"
+	shuttle_id = "syndicate_ne"
+
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	override_can_dock_checks = TRUE
@@ -765,7 +782,7 @@
 	for(var/turf/turfs as anything in return_turfs())
 		for(var/mob/living/sunset_mobs in turfs.get_all_contents())
 			// If they have a mind and they're not in the brig, they escaped
-			if(sunset_mobs.mind && !istype(turfs, /turf/open/floor/mineral/plastitanium/red/brig))
+			if(sunset_mobs.mind && !istype(get_area(sunset_mobs), /area/shuttle/escape/brig))
 				sunset_mobs.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
 			sunset_mobs.notransform = TRUE
@@ -1143,3 +1160,7 @@
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
+
+#ifdef TESTING
+#undef DOCKING_PORT_HIGHLIGHT
+#endif

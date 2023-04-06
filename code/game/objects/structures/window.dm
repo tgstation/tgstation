@@ -657,7 +657,6 @@
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon_state = "twindow"
-	opacity = TRUE
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
@@ -738,6 +737,8 @@
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	// Not on the parent because directional opacity does NOT WORK
+	opacity = TRUE
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
@@ -786,6 +787,14 @@
 /obj/structure/window/reinforced/shuttle/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
+
+/obj/structure/window/reinforced/shuttle/indestructible
+	name = "hardened shuttle window"
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"

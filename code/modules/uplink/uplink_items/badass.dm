@@ -12,6 +12,7 @@
 			Can blow the deepest of covers."
 	item = /obj/item/toy/balloon/syndicate
 	cost = 20
+	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	illegal_tech = FALSE
 
@@ -32,20 +33,17 @@
 	cost = 2
 	illegal_tech = FALSE
 
-// Low progression
-
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
-	cost = 5
+	cost = 3
 	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
 
-// Ultra high progression
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."

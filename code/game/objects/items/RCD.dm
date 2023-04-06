@@ -969,6 +969,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	icon_state = "arcd"
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 // RAPID LIGHTING DEVICE
 /obj/item/construction/rld

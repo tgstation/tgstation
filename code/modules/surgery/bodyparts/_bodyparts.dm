@@ -652,8 +652,10 @@
 	return old_owner
 
 /obj/item/bodypart/proc/on_removal()
-	for(var/trait in bodypart_traits)
-		REMOVE_TRAIT(owner, trait, bodypart_trait_source)
+	if(!length(bodypart_traits))
+		return
+
+	owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_can_be_disabled(new_can_be_disabled)
@@ -867,12 +869,12 @@
 		// to be able to mask it proper in case this limb is a leg.
 		if(blocks_emissive)
 			var/atom/location = loc || owner || src
-			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, alpha = limb.alpha)
+			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			. += limb_em_block
 
 			if(aux_zone)
-				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, alpha = aux.alpha)
+				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
 				. += aux_em_block
 		//EMISSIVE CODE END

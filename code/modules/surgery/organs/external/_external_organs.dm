@@ -158,7 +158,7 @@
 	//Build the mob sprite and use it as our overlay
 	for(var/external_layer in bodypart_overlay.all_layers)
 		if(bodypart_overlay.layers & external_layer)
-			. += bodypart_overlay.get_overlay(external_layer, limb = null)
+			. += bodypart_overlay.get_overlay(external_layer, ownerlimb)
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -266,13 +266,13 @@
 
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-
+	if(!.)
+		return
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
-
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 ///check if our antennae can burn off ;_;
@@ -356,8 +356,11 @@
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
-	var/list/rgb_list = rgb2num(draw_color)
-	overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
+	if(draw_color) // can someone explain to me why draw_color is allowed to EVER BE AN EMPTY STRING
+		var/list/rgb_list = rgb2num(draw_color)
+		overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
+	else
+		overlay.color = null
 
 /datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
