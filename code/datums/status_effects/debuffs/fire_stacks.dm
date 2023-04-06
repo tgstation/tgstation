@@ -149,6 +149,14 @@
 	/// Stores current fire overlay icon state, for optimisation purposes
 	var/last_icon_state
 
+/datum/status_effect/fire_handler/fire_stacks/on_apply()
+	. = ..()
+	update_particles()
+
+/datum/status_effect/fire_handler/fire_stacks/on_remove()
+	QDEL_NULL(particle_effect)
+	return ..()
+
 /datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
 	if(stacks <= 0)
 		qdel(src)
@@ -290,3 +298,9 @@
 	adjust_stacks(-0.5 * delta_time)
 	if(stacks <= 0)
 		qdel(src)
+	update_particles()
+
+/datum/status_effect/fire_handler/wet_stacks/update_particles()
+	if(particle_effect)
+		return
+	particle_effect = new(owner, /particles/droplets)
