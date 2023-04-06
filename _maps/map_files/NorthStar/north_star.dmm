@@ -16479,6 +16479,14 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
+"emZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/engine,
+/area/station/maintenance/floor4/starboard/aft)
 "ena" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Pen 2";
@@ -18257,9 +18265,6 @@
 	},
 /area/station/security/prison/garden)
 "ePV" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
@@ -21392,6 +21397,7 @@
 	dir = 5
 	},
 /obj/structure/closet/emcloset,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron,
 /area/station/hallway/floor4/fore)
 "fLf" = (
@@ -26055,12 +26061,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hbW" = (
-/obj/structure/railing,
+/obj/structure/railing{
+	layer = 3.1
+	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
 /obj/structure/closet/firecloset,
-/obj/effect/landmark/start/hangover/closet,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/floor4/fore)
@@ -40813,6 +40820,9 @@
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/warning/docking/directional/south,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -78072,6 +78082,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/wood/large,
 /area/station/maintenance/floor4/starboard/aft)
 "vjv" = (
@@ -317106,7 +317117,7 @@ ucA
 otM
 sOB
 bjg
-kFF
+emZ
 rKG
 kFF
 xrq
