@@ -194,10 +194,7 @@ type ByondType = {
  * Object that provides access to Byond Skin API and is available in
  * any tgui application.
  */
-const Byond: ByondType = {
-  windowId: 'test',
-  IS_LTE_IE8: false,
-};
+const Byond: ByondType;
 
 interface Window {
   Byond: ByondType;
