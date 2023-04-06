@@ -2022,10 +2022,6 @@
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"to" = (
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/plating,
-/area/station/maintenance/department/bridge)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -2550,10 +2546,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"Yb" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "Ym" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
@@ -2579,10 +2571,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"ZB" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
@@ -6873,7 +6861,7 @@ aa
 aa
 aa
 aa
-ZB
+aa
 aa
 aa
 aa
@@ -7690,7 +7678,7 @@ dI
 dJ
 XZ
 dJ
-Yb
+dJ
 dJ
 ea
 cS
@@ -7849,7 +7837,7 @@ aa
 aa
 aa
 ad
-to
+af
 ak
 av
 av
