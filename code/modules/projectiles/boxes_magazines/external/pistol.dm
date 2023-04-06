@@ -116,5 +116,5 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/magazine/r10mm/empty
-	icon_state = "r10mm-empty"
+	icon_state = "r10mm-0"
 	start_empty = TRUE
