@@ -36,8 +36,6 @@
 	var/message
 	/// List of items to display
 	var/list/items
-	/// Map of items to display
-	var/list/items_map
 	/// List of selected items
 	var/list/choices
 	/// Time when the input was created
