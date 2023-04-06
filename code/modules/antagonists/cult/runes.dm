@@ -241,7 +241,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
 		if(is_convertable)
-			do_convert(L, invokers)
+			do_convert(L, invokers, Cult_team)
 	else
 		invocation = "Barhah hra zar'garis!"
 		..()
@@ -251,12 +251,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
 
-/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
+/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers, datum/team/cult/cult_team)
+	ASSERT(convertee.mind)
+
 	if(length(invokers) < 2)
 		for(var/M in invokers)
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
 		log_game("Offer rune with [convertee] on it failed - tried conversion with one invoker.")
 		return FALSE
+
 	if(convertee.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
@@ -290,6 +293,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
+	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
 	to_chat(convertee, span_cultitalic("<b>Your blood pulses. Your head throbs. The world goes red. \
 		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
