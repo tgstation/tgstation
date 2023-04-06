@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Basketball and Thunderdome maps should not load with broken turfs are several resets of their maps."

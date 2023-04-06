@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "SM now dusts you if you fall on top of it from another Z level"
