@@ -343,6 +343,13 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
+"eE" = (
+/mob/living/simple_animal/hostile/alien{
+	faction = list("syndicate","xenomorph")
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
 "eX" = (
 /obj/structure/table/glass,
 /obj/item/pen{
@@ -357,7 +364,6 @@
 	name = "STERILIZATION ORDERS";
 	desc = "These are particularly boring for what they entail."
 	},
-/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "eZ" = (
@@ -627,7 +633,6 @@
 /obj/effect/decal/cleanable/glass{
 	layer = 3.1
 	},
-/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "jA" = (
@@ -644,6 +649,7 @@
 	icon_state = "warningline_white"
 	},
 /obj/structure/barricade/security,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "ka" = (
@@ -1120,6 +1126,7 @@
 /obj/structure/cable,
 /obj/item/ammo_casing/spent,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "sA" = (
@@ -1472,6 +1479,7 @@
 /mob/living/simple_animal/hostile/alien{
 	faction = list("syndicate","xenomorph")
 	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "xp" = (
@@ -1633,9 +1641,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yZ" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
+	layer = 2.9
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "zE" = (
@@ -2235,7 +2243,6 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
-/obj/structure/cable,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
@@ -2711,6 +2718,7 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Qg" = (
@@ -3040,6 +3048,7 @@
 	name = "SYN-C Brutus Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Wk" = (
@@ -4168,7 +4177,7 @@ Cm
 qq
 st
 jA
-Jx
+eE
 AM
 vj
 fl
