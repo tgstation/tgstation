@@ -46,15 +46,16 @@
 		return
 
 	air_contents = tank.remove_air_volume(3)
-	
-	if(isnull(air_contents))
-		return // no air in the tank
 
-	balloon_alert(user, span_notice("You blow up [src] with [tank].")) // because it's a balloon obviously
+	if(isnull(air_contents))
+		balloon_alert(user, "tank is empty!")
+		return
 
 	if(state == INFLATED)
-		blow() 	// too much air, pop it!
+		burst() // too much air, pop it!
 		return
+
+	balloon_alert(user, "you blow up the balloon!") // because it's a balloon obviously
 
 	set_state(INFLATED)
 
