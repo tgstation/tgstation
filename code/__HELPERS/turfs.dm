@@ -379,7 +379,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return FALSE
 	for(var/obj/turf_content in dest_turf)
 		if(turf_content.obj_flags & NO_BUILD_ON_DIRECTION)
-			if((turf_content.dir == test_dir))
+			if(turf_content.dir == test_dir)
 				return FALSE
 	return TRUE
 

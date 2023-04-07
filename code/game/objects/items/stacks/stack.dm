@@ -450,8 +450,8 @@
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
-	if(recipe.one_per_direction)
-		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = FALSE))
+	if(recipe.check_direction)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
 			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
@@ -469,9 +469,9 @@
 			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
-	if(!recipe.ignores_density)
+	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
-			if((object.density && !(object.obj_flags & BUILD_ON_IGNORES_DENSITY)) || object.obj_flags & NO_BUILD_ON)
+			if(object.density && !(object.obj_flags & BUILD_ON_IGNORES_DENSITY) || object.obj_flags & NO_BUILD_ON)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 
