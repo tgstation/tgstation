@@ -112,7 +112,7 @@
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
-		elevator_door.open(BYPASS_DOOR_CHECKS)
+		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -144,6 +144,7 @@
 				continue
 
 			elevator_door.obj_flags &= ~EMAGGED
+			INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 
 		obj_flags &= ~EMAGGED
 

@@ -61,7 +61,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		if(elevator_door.elevator_linked_id != lift.lift_id)
 			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
-		elevator_door.open(BYPASS_DOOR_CHECKS)
+		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
 
 	// Note that we can either be emagged by having the button we are inside swiped,
@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 			continue
 
 		elevator_door.obj_flags &= ~EMAGGED
-		elevator_door.close()
+		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 
 	// We can only be multitooled directly so just throw up the balloon alert
 	balloon_alert(user, "safeties reset")
