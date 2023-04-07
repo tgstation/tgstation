@@ -33,6 +33,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
 
+	/// If there are any failed tests prior to this test, do not run it
+	var/only_run_if_no_failures = FALSE
+
 	/// The bottom left floor turf of the testing zone
 	var/turf/run_loc_floor_bottom_left
 
@@ -160,6 +163,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
+
+	if(test.only_run_if_no_failures && GLOB.failed_any_test)
+		log_test("[test.type] was skipped because another test failed.")
+		return
 
 	log_world("::group::[test_path]")
 	test.Run()

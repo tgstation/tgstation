@@ -2,6 +2,7 @@
 /datum/unit_test/create_and_destroy
 	//You absolutely must run last
 	priority = TEST_CREATE_AND_DESTROY
+	only_run_if_no_failures = TRUE
 
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
