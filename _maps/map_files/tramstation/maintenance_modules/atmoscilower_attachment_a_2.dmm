@@ -36,9 +36,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "o" = (
-/obj/structure/girder,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/starboard/lesser)
 "q" = (
 /obj/structure/rack,
@@ -79,13 +78,18 @@
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"B" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/starboard/lesser)
 "C" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
 "D" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/starboard/lesser)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
@@ -257,7 +261,7 @@ C
 C
 C
 C
-W
+B
 "}
 (7,1,1) = {"
 W

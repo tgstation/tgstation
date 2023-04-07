@@ -29,7 +29,7 @@
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
 	owner.adjust_disgust(33 * delta_time)
-	applyOrganDamage(5 * delta_time, 199)
+	apply_organ_damage(5 * delta_time, 199)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -84,8 +84,8 @@
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
 /mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
-	var/obj/item/organ/internal/brain/old_brain = getorganslot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/internal/old_eyes = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()

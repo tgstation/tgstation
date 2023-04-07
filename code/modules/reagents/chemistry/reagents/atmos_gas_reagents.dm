@@ -127,7 +127,7 @@
 		return ..()
 
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
-		organ_being_healed.applyOrganDamage(-0.5 * REM * delta_time)
+		organ_being_healed.apply_organ_damage(-0.5 * REM * delta_time)
 
 	return ..()
 

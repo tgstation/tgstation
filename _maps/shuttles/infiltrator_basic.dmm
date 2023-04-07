@@ -821,7 +821,7 @@
 	},
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/hos/cap/syndicate,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},

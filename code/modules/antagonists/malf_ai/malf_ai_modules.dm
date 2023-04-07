@@ -140,11 +140,19 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/destructive/nuke_station
 	name = "Doomsday Device"
 	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. \
-		Can only be used while on the station, will fail if your core is moved off station or destroyed."
+		Can only be used while on the station, will fail if your core is moved off station or destroyed. \
+		Obtaining control of the weapon will be easier if Head of Staff office APCs are already under your control."
 	cost = 130
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = span_notice("You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.")
+	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
+	var/list/discount_areas = list(
+		/area/station/command/heads_quarters,
+		/area/station/ai_monitored/command/nuke_storage
+	)
+	///List of hacked head of staff office areas. Includes the vault too. Provides a 20 PT discount per (Min 50 PT cost)
+	var/list/hacked_command_areas = list()
 
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"

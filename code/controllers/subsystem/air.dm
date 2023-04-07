@@ -603,9 +603,75 @@ SUBSYSTEM_DEF(air)
 			EG.dismantle()
 			CHECK_TICK
 
+		log_active_turfs() // invoke this here so we can count the time it takes to run this proc as "wasted time", quite simple honestly.
+
 		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer, 0.00001)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
 		to_chat(world, span_boldannounce("[msg]"))
 		warning(msg)
+
+/// Logs all active turfs at roundstart to the mapping log so it can be readily accessed.
+/datum/controller/subsystem/air/proc/log_active_turfs()
+// sadly this has to be here because we can't realistically expect that all active turfs will be resolved in every possible situation when running through CI.
+// In an ideal world, we would have absolutely zero active turfs 99.99% of the time, but that's not the case. `log_mapping()` during world initialize triggers a CI fail.
+#ifdef UNIT_TESTS
+	return
+#endif
+	// Associated lists, left-hand-side is the z-level or z-trait, right-hand-side is the number of active turfs associated with that.
+	var/list/tally_by_level = list()
+	// Discriminate for certain z-traits, stuff like "Linkage" is not helpful.
+	var/list/tally_by_level_trait = list(
+		ZTRAIT_AWAY = 0,
+		ZTRAIT_CENTCOM = 0,
+		ZTRAIT_ICE_RUINS = 0,
+		ZTRAIT_ICE_RUINS_UNDERGROUND  = 0,
+		ZTRAIT_ISOLATED_RUINS = 0,
+		ZTRAIT_LAVA_RUINS = 0,
+		ZTRAIT_MINING = 0,
+		ZTRAIT_RESERVED = 0,
+		ZTRAIT_SPACE_RUINS = 0,
+		ZTRAIT_STATION = 0,
+	)
+
+	var/list/message_to_log = list()
+
+	message_to_log += "\nAll that follows is a turf with an active air difference at roundstart. To clear this, make sure that all of the turfs listed below are connected to a turf with the same air contents.\n\
+		In an ideal world, this list should have enough information to help you locate the active turf(s) in question. Unfortunately, this might not be an ideal world.\n\
+		If the round is still ongoing, you can use the \"Mapping -> Show roundstart AT list\" verb to see exactly what active turfs were detected. Otherwise, good luck."
+
+	for(var/turf/active_turf as anything in GLOB.active_turfs_startlist)
+		var/turf_z = active_turf.z
+		var/datum/space_level/level = SSmapping.z_list[turf_z]
+		var/list/level_traits = list()
+		for(var/trait in level.traits)
+			if(!isnull(tally_by_level_trait[trait]))
+				level_traits += trait
+				tally_by_level_trait[trait]++
+
+		// so we can pass along the area type for the log, making it much easier to locate the active turf for a mapper assuming all area types are unique. This is only really a problem for stuff like ruin areas.
+		var/area/turf_area = get_area(active_turf)
+		message_to_log += "Active turf: [AREACOORD(active_turf)] ([turf_area.type]). Turf type: [active_turf.type]. Relevant Z-Trait(s): [english_list(level_traits)]."
+
+		tally_by_level["[turf_z]"]++
+
+	// Following is so we can detect which rounds were "problematic" as far as active turfs go.
+	SSblackbox.record_feedback("amount", "overall_roundstart_active_turfs", length(GLOB.active_turfs_startlist))
+
+	for(var/z_level in tally_by_level)
+		var/level_turf_count = tally_by_level[z_level]
+		if(level_turf_count == 0) // no point logging it
+			continue
+		message_to_log += "Z-Level [z_level] has [level_turf_count] active turf(s)."
+		SSblackbox.record_feedback("tally", "roundstart_active_turfs_per_z", level_turf_count, z_level)
+
+	for(var/z_trait in tally_by_level_trait)
+		var/trait_turf_count = tally_by_level_trait[z_trait]
+		if(trait_turf_count == 0)
+			continue
+		message_to_log += "Z-Level trait [z_trait] has [trait_turf_count] active turf(s)."
+		SSblackbox.record_feedback("amount", "roundstart_active_turfs_for_trait_[z_trait]", trait_turf_count)
+
+	message_to_log += "End of active turf list."
+	log_mapping(message_to_log.Join("\n"))
 
 /turf/open/proc/resolve_active_graph()
 	. = list()

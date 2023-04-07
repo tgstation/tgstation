@@ -161,12 +161,13 @@
 
 /obj/item/gun/energy/laser/thermal //the common parent of these guns, it just shoots hard bullets, somoene might like that?
 	name = "nanite pistol"
-	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
 	icon_state = "infernopistol"
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
 	shaded_charge = TRUE
 	ammo_x_offset = 1
+	obj_flags = UNIQUE_RENAME
 	can_bayonet = TRUE
 	knife_x_offset = 19
 	knife_y_offset = 13
@@ -186,13 +187,15 @@
 
 /obj/item/gun/energy/laser/thermal/inferno //the magma gun
 	name = "inferno pistol"
-	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an violent eruption in anyone who is severely cold."
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold."
 	icon_state = "infernopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
 
 /obj/item/gun/energy/laser/thermal/cryo //the ice gun
 	name = "cryo pistol"
-	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an internal explosion in anyone who is severely hot."
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 

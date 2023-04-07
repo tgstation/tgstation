@@ -26,6 +26,8 @@
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
 	var/list/last_partial_pressures = list()
+	/// List of gas to treat as other gas, in the form list(inital_gas, treat_as, multiplier)
+	var/list/treat_as = list()
 	/// Assoc list of procs to run while a gas is present, in the form gas id -> proc_path
 	var/list/breath_present = list()
 	/// Assoc list of procs to run when a gas is immediately removed from the breath, in the form gas id -> proc_path
@@ -128,6 +130,8 @@
 	if(safe_oxygen_max)
 		add_gas_reaction(/datum/gas/oxygen, while_present = PROC_REF(too_much_oxygen), on_loss = PROC_REF(safe_oxygen))
 	add_gas_reaction(/datum/gas/pluoxium, while_present = PROC_REF(consume_pluoxium))
+	// We treat a mole of ploux as 8 moles of oxygen
+	add_gas_relationship(/datum/gas/pluoxium, /datum/gas/oxygen, 8)
 	if(safe_nitro_min)
 		add_gas_reaction(/datum/gas/nitrogen, always = PROC_REF(breathe_nitro))
 	if(safe_co2_max)
@@ -196,6 +200,39 @@
 		breath_present[gas_type] = while_present
 	if(on_loss)
 		breath_lost[gas_type] = on_loss
+
+#define BREATH_RELATIONSHIP_INITIAL_GAS 1
+#define BREATH_RELATIONSHIP_CONVERT 2
+#define BREATH_RELATIONSHIP_MULTIPLIER 3
+/**
+ * Tells the lungs to treat the passed in gas type as another passed in gas type
+ * Takes the gas to check for as an argument, alongside the gas to convert and the multiplier to use
+ * These act in the order of insertion, use that how you will
+ */
+/obj/item/organ/internal/lungs/proc/add_gas_relationship(gas_type, convert_to, multiplier)
+	if(isnull(gas_type) || isnull(convert_to) || multiplier == 0)
+		return
+
+	var/list/add = new /list(BREATH_RELATIONSHIP_MULTIPLIER)
+	add[BREATH_RELATIONSHIP_INITIAL_GAS] = gas_type
+	add[BREATH_RELATIONSHIP_CONVERT] = convert_to
+	add[BREATH_RELATIONSHIP_MULTIPLIER] = multiplier
+	treat_as += list(add)
+
+/// Clears away a gas relationship. Takes the same args as the initial addition
+/obj/item/organ/internal/lungs/proc/remove_gas_relationship(gas_type, convert_to, multiplier)
+	if(isnull(gas_type) || isnull(convert_to) || multiplier == 0)
+		return
+
+	for(var/packet in treat_as)
+		if(packet[BREATH_RELATIONSHIP_INITIAL_GAS] != gas_type)
+			continue
+		if(packet[BREATH_RELATIONSHIP_CONVERT] != convert_to)
+			continue
+		if(packet[BREATH_RELATIONSHIP_MULTIPLIER] != multiplier)
+			continue
+		treat_as -= packet
+		return
 
 /// Handles oxygen breathing. Always called by things that need o2, no matter what
 /obj/item/organ/internal/lungs/proc/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
@@ -600,6 +637,16 @@
 	for(var/gas_id in breath_gases)
 		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES])
 
+	// Treat gas as other types of gas
+	for(var/list/conversion_packet in treat_as)
+		var/read_from = conversion_packet[BREATH_RELATIONSHIP_INITIAL_GAS]
+		if(!partial_pressures[read_from])
+			continue
+		var/convert_into = conversion_packet[BREATH_RELATIONSHIP_CONVERT]
+		partial_pressures[convert_into] += partial_pressures[read_from] * conversion_packet[BREATH_RELATIONSHIP_MULTIPLIER]
+		if(partial_pressures[convert_into] <= 0)
+			partial_pressures -= convert_into // No negative values jeremy
+
 	// First, we breathe the stuff that always wants to be processed
 	// This is typically things like o2, stuff the mob needs to live
 	for(var/breath_id in breathe_always)
@@ -821,7 +868,7 @@
 /obj/item/organ/internal/lungs/lavaland/Initialize(mapload)
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 
-	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using #define LOWMEMORYMODE
+	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using the LOWMEMORYMODE define
 		return ..()
 
 	// Take a "breath" of the air
@@ -888,3 +935,8 @@
 	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
+
+
+#undef BREATH_RELATIONSHIP_INITIAL_GAS
+#undef BREATH_RELATIONSHIP_CONVERT
+#undef BREATH_RELATIONSHIP_MULTIPLIER

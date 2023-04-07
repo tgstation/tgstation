@@ -53,7 +53,7 @@
 		owner.adjustToxLoss(0.5 * delta_time)
 		if (DT_PROB(5, delta_time))
 			to_chat(owner, span_danger("You feel sick..."))
-	if(timer_id || HAS_TRAIT(owner, TRAIT_SUICIDED) || !owner.getorgan(/obj/item/organ/internal/brain))
+	if(timer_id || HAS_TRAIT(owner, TRAIT_SUICIDED) || !owner.get_organ_by_type(/obj/item/organ/internal/brain))
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return

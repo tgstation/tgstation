@@ -1000,7 +1000,7 @@
 /area/ruin/plasma_facility/commons)
 "pt" = (
 /obj/structure/table,
-/obj/item/paperslip{
+/obj/item/paper/paperslip{
 	pixel_x = 15;
 	pixel_y = -16
 	},
@@ -2127,7 +2127,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/paperslip,
+/obj/item/paper/paperslip,
 /obj/item/paper{
 	pixel_x = 7
 	},
@@ -2891,7 +2891,7 @@
 	pixel_x = -3;
 	pixel_y = 17
 	},
-/obj/item/paperslip{
+/obj/item/paper/paperslip{
 	pixel_x = -5;
 	pixel_y = 15
 	},

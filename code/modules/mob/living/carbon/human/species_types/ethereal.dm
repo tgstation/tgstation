@@ -77,7 +77,7 @@
 	new_ethereal.set_safe_hunger_level()
 	update_mail_goodies(ethereal)
 
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
 	for(var/obj/item/bodypart/limb as anything in new_ethereal.bodyparts)

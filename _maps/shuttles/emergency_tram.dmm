@@ -63,6 +63,9 @@
 /area/shuttle/escape)
 "ao" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "ap" = (
@@ -138,11 +141,11 @@
 "aB" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aC" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aD" = (
 /obj/machinery/flasher/directional/west{
@@ -161,6 +164,9 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
@@ -173,17 +179,17 @@
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aI" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aJ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aK" = (
 /obj/structure/chair/comfy/shuttle{
@@ -208,13 +214,13 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aO" = (
 /turf/closed/wall/mineral/titanium/interior,
@@ -254,6 +260,9 @@
 "aV" = (
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aW" = (
@@ -384,6 +393,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
+"eV" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "uu" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -508,7 +521,7 @@ ax
 ak
 aY
 aZ
-aZ
+eV
 ak
 bj
 "}

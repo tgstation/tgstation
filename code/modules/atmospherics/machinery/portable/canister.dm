@@ -809,3 +809,5 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(shielding_powered)
 		return FALSE
 	return ..()
+
+#undef CAN_DEFAULT_RELEASE_PRESSURE

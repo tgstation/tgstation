@@ -172,7 +172,7 @@
 "iq" = (
 /obj/machinery/light/directional/north,
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "iD" = (
 /turf/open/floor/mineral/titanium/yellow,
@@ -187,7 +187,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "jn" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -237,7 +237,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "lB" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "lE" = (
 /obj/machinery/computer/station_alert{
@@ -425,11 +425,11 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "vB" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "vX" = (
 /turf/open/floor/iron/herringbone,
@@ -495,7 +495,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "zF" = (
 /obj/structure/chair/office{
@@ -508,7 +508,7 @@
 /area/shuttle/escape)
 "Ao" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "AC" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -610,7 +610,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Gq" = (
 /obj/machinery/shower/directional/south,
@@ -680,7 +680,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "LE" = (
 /turf/closed/wall/mineral/titanium,
@@ -744,14 +744,14 @@
 "NR" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Oa" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "OS" = (
 /obj/item/radio/intercom/directional/north,
@@ -823,7 +823,7 @@
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/radio/intercom/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "TS" = (
 /obj/structure/window/reinforced,

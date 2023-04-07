@@ -209,3 +209,5 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	return
+
+#undef CREDIT_TYPE_CREDIT

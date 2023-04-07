@@ -439,3 +439,7 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+#undef MINIMUM_FOAM_DILUTION_RANGE
+#undef MINIMUM_FOAM_DILUTION
+#undef FOAM_REAGENT_SCALE

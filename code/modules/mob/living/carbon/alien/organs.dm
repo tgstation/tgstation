@@ -281,7 +281,7 @@
 	if(!impact)
 		return
 
-	applyOrganDamage(impact)
+	apply_organ_damage(impact)
 
 	var/damage_ratio = damage / max(maxHealth, 1)
 	if(owner)

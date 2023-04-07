@@ -1,4 +1,4 @@
-
+#define MINIMUM_MAFIA_PLAYERS 3
 
 /**
  * The mafia controller handles the mafia minigame in progress.
@@ -64,6 +64,9 @@
 
 	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
 	var/debug = FALSE
+
+	///was our game forced to start early?
+	var/early_start = FALSE
 
 /datum/mafia_controller/New()
 	. = ..()
@@ -335,14 +338,16 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		for(var/datum/mafia_role/townie in total_town)
-			award_role(townie.winner_award, townie)
+		if(!early_start && !length(custom_setup))
+			for(var/datum/mafia_role/townie in total_town)
+				award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
-		for(var/datum/mafia_role/changeling in total_mafia)
-			award_role(changeling.winner_award, changeling)
+		if(!early_start && !length(custom_setup))
+			for(var/datum/mafia_role/changeling in total_mafia)
+				award_role(changeling.winner_award, changeling)
 		return TRUE
 
 /**
@@ -353,8 +358,6 @@
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	if(custom_setup.len)
-		return
 	var/client/role_client = GLOB.directory[rewarded.player_key]
 	role_client?.give_award(award, rewarded.body)
 
@@ -398,6 +401,8 @@
 	QDEL_LIST(landmarks)
 	QDEL_NULL(town_center_landmark)
 	phase = MAFIA_PHASE_SETUP
+
+	early_start = initial(early_start)
 
 /**
  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
@@ -714,6 +719,9 @@
 				try_autostart()//don't worry, this fails if there's a game in progress
 			if("cancel_setup")
 				custom_setup = list()
+			if("start_now")
+				forced_setup()
+
 	switch(action) //both living and dead
 		if("mf_lookup")
 			var/role_lookup = params["atype"]
@@ -732,6 +740,7 @@
 					return
 				if(GLOB.mafia_signup[C.ckey])
 					GLOB.mafia_signup -= C.ckey
+					GLOB.mafia_early_votes -= C.ckey //Remove their early start vote as well
 					to_chat(usr, span_notice("You unregister from Mafia."))
 					return TRUE
 				else
@@ -749,6 +758,23 @@
 					to_chat(usr, span_notice("You will now get messages from the game."))
 					spectators += C.ckey
 				return TRUE
+			if("vote_to_start")
+				if(phase != MAFIA_PHASE_SETUP)
+					to_chat(usr, span_notice("You cannot vote to start while a game is underway!"))
+					return
+				if(!GLOB.mafia_signup[C.ckey])
+					to_chat(usr, span_notice("You must be signed up for this game to vote!"))
+					return
+				if(GLOB.mafia_early_votes[C.ckey])
+					GLOB.mafia_early_votes -= C.ckey
+					to_chat(usr, span_notice("You are no longer voting to start the game early."))
+				else
+					GLOB.mafia_early_votes[C.ckey] = C
+					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [FLOOR(round(length(GLOB.mafia_signup) / 2), MINIMUM_MAFIA_PLAYERS)])."))
+					if(check_start_votes()) //See if we have enough votes to start
+						forced_setup()
+				return TRUE
+
 	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)
@@ -819,11 +845,11 @@
 		. += L[key]
 
 /**
- * Returns a semirandom setup with 12 roles. balance not guaranteed!
+ * Returns a standard setup, with certain important/unique roles guaranteed. More balanced of an experience than generate_forced_setup()
  *
  * please check the variables at the top of the proc to see how much of each role types it picks
  */
-/datum/mafia_controller/proc/generate_random_setup()
+/datum/mafia_controller/proc/generate_standard_setup()
 	var/invests_left = 2
 	var/protects_left = 2
 	var/killings_left = 1
@@ -865,6 +891,33 @@
 	return random_setup
 
 /**
+ * Returns a more volatile-ly generated role list, balance absolutely not expected. Does not assure any role types, only role alignments.
+ *
+ * Generates a setup based on a ratio of random pools of good/neutral/badguy roles.
+ * Specific roles are not chosen (You could get an entire town of lawyers and double nightmares), outcomes may be unbalanced as a result.
+ * This is used when a game start is forced and we don't have the players to make a properly balanced game.
+ * Game will auto-resolve if less than 3 roles are generated (Town Victory), which should only be able to happen if an admin forces it.
+ *
+ * roles_to_generate - The number of roles we will return.
+ */
+/datum/mafia_controller/proc/generate_forced_setup(roles_to_generate)
+	var/list/role_setup = list()
+	var/list/unique_roles_added = list()
+	for(var/i in 1 to roles_to_generate)
+		if(i == 6)
+			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_KILL || NEUTRAL_DISRUPT))
+			continue
+		if(i == 5)
+			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_DISRUPT))
+			continue
+		if(ISMULTIPLE(i, MINIMUM_MAFIA_PLAYERS))
+			add_setup_role(role_setup, unique_roles_added, pick(MAFIA_REGULAR, MAFIA_SPECIAL))
+			continue
+		add_setup_role(role_setup, unique_roles_added, pick(TOWN_INVEST, TOWN_PROTECT, TOWN_KILLING, TOWN_SUPPORT))
+
+	return role_setup
+
+/**
  * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.
  */
 /datum/mafia_controller/proc/add_setup_role(setup_list, banned_roles, wanted_role_type)
@@ -904,6 +957,64 @@
 	else
 		req_players = assoc_value_sum(setup)
 
+	var/list/filtered_keys = filter_players(req_players)
+
+	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
+		setup = generate_standard_setup()
+	prepare_game(setup,filtered_keys)
+	start_game()
+
+/**
+ * Generates a forced role list and runs the game with the current number of signed-up players.
+ *
+ * Generates a randomized setup, and begins the game with everyone currently signed up.
+ */
+
+/datum/mafia_controller/proc/forced_setup()
+	check_signups() //Refresh the signup list, so our numbers are accurate and we only take active players into consideration.
+	var/list/filtered_keys = filter_players(length(GLOB.mafia_signup))
+	var/req_players = length(filtered_keys)
+
+	if(!req_players) //If we have nobody signed up, we give up on starting
+		log_admin("Attempted to force a mafia game to start with nobody signed up!")
+		return
+
+	var/list/setup = generate_forced_setup(req_players)
+
+	prepare_game(setup, filtered_keys)
+	early_start = TRUE
+	start_game()
+
+/**
+ * Checks if we have enough early start votes to begin the game early.
+ *
+ * Checks if we have the bare minimum of three signups, then checks if the number of early voters is at least half of the total
+ * number of active signups.
+ */
+
+/datum/mafia_controller/proc/check_start_votes()
+	check_signups() //Same as before. What a useful proc.
+
+	if(length(GLOB.mafia_early_votes) < MINIMUM_MAFIA_PLAYERS)
+		return FALSE //Bare minimum is 3, otherwise the game instantly ends. Also prevents people from randomly starting games for no reason.
+
+	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup) / 2))
+		return FALSE
+
+	return TRUE
+
+/**
+ * Handles the filtering of disconected signups when picking who gets to be in the round.
+ *
+ * Filters out the player list, from a given max_players count. If more players are found
+ * in the signup list than max_players, those players will be notified that they will not be put into the game.
+ *
+ * This should only be run as we are in the process of starting a game.
+ *
+ * max_players - The maximum number of keys to put in our return list before we start telling people they're not getting in.
+ * filtered_keys - A list of player ckeys, to be included in the game.
+ */
+/datum/mafia_controller/proc/filter_players(max_players)
 	//final list for all the players who will be in this game
 	var/list/filtered_keys = list()
 	//cuts invalid players from signups (disconnected/not a ghost)
@@ -916,13 +1027,13 @@
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
-	//if there were not enough players, don't start. we already trimmed the list to now hold only valid signups
-	if(length(possible_keys) < req_players)
-		return
+	//If we're not over capacity and don't need to notify anyone of their exclusion, return early.
+	if(length(possible_keys) < max_players)
+		return filtered_keys
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
-	for(var/i in 1 to req_players)
+	for(var/i in 1 to max_players)
 		var/chosen_key = pick_n_take(possible_keys)
 		filtered_keys += chosen_key
 		GLOB.mafia_signup -= chosen_key
@@ -932,10 +1043,7 @@
 		to_chat(unpicked_client, span_danger("Sorry, the starting mafia game has too many players and you were not picked."))
 		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
-	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_random_setup()
-	prepare_game(setup,filtered_keys)
-	start_game()
+	return filtered_keys
 
 /**
  * Called when someone signs up, and sees if there are enough people in the signup list to begin.
@@ -990,3 +1098,5 @@
 		QDEL_NULL(GLOB.mafia_game)
 	var/datum/mafia_controller/MF = new()
 	return MF
+
+#undef MINIMUM_MAFIA_PLAYERS

@@ -61,7 +61,7 @@
 	if(target.is_blind())
 		return
 
-	if(!target.getorganslot(ORGAN_SLOT_EYES))
+	if(!target.get_organ_slot(ORGAN_SLOT_EYES))
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))

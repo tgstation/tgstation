@@ -15,7 +15,7 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
-	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+	if(surgery.organ_to_manipulate && !target.get_organ_slot(surgery.organ_to_manipulate))
 		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 		return FALSE
 
@@ -241,3 +241,5 @@
 		to_chat(target, span_userdanger(pain_message))
 		if(prob(30) && !mechanical_surgery)
 			target.emote("scream")
+
+#undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

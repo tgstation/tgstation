@@ -108,9 +108,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"lt" = (
-/turf/closed/indestructible/riveted,
-/area/template_noop)
 "lZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -3152,7 +3149,7 @@ df
 df
 df
 cJ
-lt
+cJ
 "}
 (35,1,1) = {"
 cJ
@@ -3225,13 +3222,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (36,1,1) = {"
 cJ
@@ -3304,13 +3301,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (37,1,1) = {"
 cJ
@@ -3383,13 +3380,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (38,1,1) = {"
 cJ
@@ -3462,13 +3459,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 ab
 df
 df
-lt
+cJ
 "}
 (39,1,1) = {"
 cJ
@@ -3541,13 +3538,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 ab
 FW
 ab
 df
-lt
+cJ
 "}
 (40,1,1) = {"
 cJ
@@ -3620,13 +3617,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 ab
 df
 df
-lt
+cJ
 "}
 (41,1,1) = {"
 cJ
@@ -3699,13 +3696,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (42,1,1) = {"
 cJ
@@ -3778,13 +3775,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (43,1,1) = {"
 cJ
@@ -3857,13 +3854,13 @@ DJ
 DJ
 DJ
 DJ
-lt
+cJ
 df
 df
 df
 df
 df
-lt
+cJ
 "}
 (44,1,1) = {"
 cJ
@@ -3942,7 +3939,7 @@ df
 df
 df
 cJ
-lt
+cJ
 "}
 (45,1,1) = {"
 DJ

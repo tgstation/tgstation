@@ -43,7 +43,7 @@
 /obj/item/organ/internal/on_death(delta_time, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	applyOrganDamage(decay_factor * maxHealth * delta_time)
+	apply_organ_damage(decay_factor * maxHealth * delta_time)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here
@@ -58,7 +58,7 @@
 		failure_time--
 
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
-		applyOrganDamage(decay_factor * maxHealth * delta_time)
+		apply_organ_damage(decay_factor * maxHealth * delta_time)
 		return
 
 	if(!damage) // No sense healing if you're not even hurt bro
@@ -68,7 +68,7 @@
 	var/healing_amount = healing_factor
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount += (owner.satiety > 0) ? (4 * healing_factor * owner.satiety / MAX_SATIETY) : 0
-	applyOrganDamage(-healing_amount * maxHealth * delta_time, damage) // pass curent damage incase we are over cap
+	apply_organ_damage(-healing_amount * maxHealth * delta_time, damage) // pass curent damage incase we are over cap
 
 ///Used as callbacks by object pooling
 /obj/item/organ/internal/exit_wardrobe()

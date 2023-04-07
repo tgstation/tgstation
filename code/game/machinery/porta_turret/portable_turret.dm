@@ -445,7 +445,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(issilicon(A))
 			if(!(turret_flags & TURRET_FLAG_SHOOT_BORGS))
 				continue
-		
+
 			var/mob/living/silicon/sillycone = A
 
 			if(ispAI(A))
@@ -1179,3 +1179,16 @@ DEFINE_BITFIELD(turret_flags, list(
 			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
 				toggle_on(FALSE)
 				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
+
+#undef TURRET_STUN
+#undef TURRET_LETHAL
+#undef POPUP_ANIM_TIME
+#undef POPDOWN_ANIM_TIME
+#undef TURRET_FLAG_SHOOT_ALL_REACT
+#undef TURRET_FLAG_AUTH_WEAPONS
+#undef TURRET_FLAG_SHOOT_CRIMINALS
+#undef TURRET_FLAG_SHOOT_ALL
+#undef TURRET_FLAG_SHOOT_ANOMALOUS
+#undef TURRET_FLAG_SHOOT_UNSHIELDED
+#undef TURRET_FLAG_SHOOT_BORGS
+#undef TURRET_FLAG_SHOOT_HEADS
