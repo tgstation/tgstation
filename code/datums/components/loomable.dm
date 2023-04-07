@@ -36,6 +36,7 @@
 /datum/component/loomable/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_OBJ, COMSIG_PARENT_EXAMINE))
 
+/// Checks if the thing we clicked on can be used as a loom, and if we can actually loom the parent at present (an example being does the stack have enough in it (if its a stack))
 /datum/component/loomable/proc/try_and_loom_me(datum/source, obj/target, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -55,6 +56,7 @@
 	INVOKE_ASYNC(src, PROC_REF(loom_me), user, target)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
+/// If a do_after of the specified loom_time passes, will create a new one of resulting_item and either delete the parent, or .use the required amount if its a stack
 /datum/component/loomable/proc/loom_me(mob/living/user, obj/structure/loom/target)
 	if(!do_after(user, loom_time, target))
 		return
@@ -67,6 +69,7 @@
 	else
 		qdel(parent)
 
+/// Adds an examine blurb to the description of any item that can be loomed
 /datum/component/loomable/proc/on_examine(mob/living/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
