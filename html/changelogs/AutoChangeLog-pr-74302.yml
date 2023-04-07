@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes:
+  - rscadd: "Timestop blocks the SM from processing (can't be healed, doesn't output gases but can still take damage)"

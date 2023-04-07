@@ -1,0 +1,5 @@
+author: "kinneb"
+delete-after: True
+changes:
+  - rscadd: "A new HUD, The 'Detective' UI"
+  - imageadd: "All the spritework for said HUD."

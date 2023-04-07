@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Flamethrowers no longer have a trigger guard, and can be used by anyone (including if you're wearing Atmos gloves)."

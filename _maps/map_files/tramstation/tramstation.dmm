@@ -2418,7 +2418,7 @@
 /obj/structure/window/spawner/north,
 /obj/item/paper{
 	default_raw_text = "A crude mapping of the station layout based on leaked internal documents and orbital snapshots taken during construction. I'm not sure how up-to-date this is anymore..";
-	icon = 'icons/obj/weapons/items_and_weapons.dmi';
+	icon = 'icons/obj/objects.dmi';
 	icon_state = "blueprints";
 	inhand_icon_state = "blueprints";
 	name = "station layout"

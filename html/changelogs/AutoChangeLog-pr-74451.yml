@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "marisa shoes will now build its worn icon using the greyscale config like sneakers do"
