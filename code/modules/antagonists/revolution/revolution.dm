@@ -184,6 +184,51 @@
 			S.Remove(C)
 	return ..()
 
+/datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/real_mob = mob_override || owner.current
+	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, PROC_REF(on_flash))
+
+/datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/real_mob = mob_override || owner.current
+	UnregisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON)
+
+/// Signal proc for [COMSIG_MOB_FLASHED_CARBON].
+/// The bread and butter of head revolutionary conversions.
+/datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+	SIGNAL_HANDLER
+
+	// Always partial flash at the very least
+	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
+	if(flashed.stat == DEAD)
+		return .
+	if(flashed.stat != CONSCIOUS)
+		to_chat(source, span_warning("[flashed.p_they(capitalized = TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
+		return .
+
+	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
+		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
+		return .
+
+	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
+	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
+		if(holiday_meme_chance)
+			INVOKE_ASYNC(src, PROC_REF(_async_holiday_meme_say), flashed)
+		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
+	else
+		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
+
+	return .
+
+/// Used / called async from [proc/on_flash] to deliver a funny meme line
+/datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)
+	if(ishuman(flashed))
+		var/mob/living/carbon/human/human_flashed = flashed
+		human_flashed.force_say()
+	flashed.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
 
@@ -228,11 +273,20 @@
 		return FALSE
 	return TRUE
 
-/datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind,stun = TRUE)
+/**
+ * Adds a new mind to our revoltuion
+ *
+ * * rev_mind - the mind we're adding
+ * * stun - If TRUE, we will flash act and apply a long stun when we're applied
+ * * mute - If TRUE, we will apply a mute when we're applied
+ */
+/datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind, stun = TRUE, mute = TRUE)
 	if(!can_be_converted(rev_mind.current))
 		return FALSE
-	if(stun)
+
+	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
+	if(stun)
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
 

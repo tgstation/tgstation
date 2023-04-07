@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "Roundend Report properly lists cultist names if the cult failed and didn't summon Narsie"

@@ -605,10 +605,15 @@
 
 //Mind helpers
 
-/datum/mind/proc/teach_crafting_recipe(R)
+/// proc that teaches user a non-standard crafting recipe
+/datum/mind/proc/teach_crafting_recipe(recipe)
 	if(!learned_recipes)
 		learned_recipes = list()
-	learned_recipes |= R
+	learned_recipes |= recipe
+
+/// proc that makes user forget a specific crafting recipe
+/datum/mind/proc/forget_crafting_recipe(recipe)
+	learned_recipes -= recipe
 
 /datum/mind/proc/has_crafting_recipe(mob/user, potential_recipe)
 	if(!learned_recipes)
