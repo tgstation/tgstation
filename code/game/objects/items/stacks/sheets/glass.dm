@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	fire = 80
 	acid = 100
 
-/obj/item/stack/sheet/sheet_plasmarglass/fifty
+/obj/item/stack/sheet/plasmarglass/fifty
 	amount = 50
 
 /obj/item/stack/sheet/plasmarglass/get_main_recipes()
