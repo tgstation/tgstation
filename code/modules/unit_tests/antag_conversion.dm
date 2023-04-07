@@ -14,11 +14,20 @@
 	var/datum/team/revolution/revolution = lead_datum.get_team()
 
 	var/obj/item/assembly/flash/handheld/converter = allocate(/obj/item/assembly/flash/handheld)
+	converter.burnout_resistance = INFINITY
+	converter.cooldown = 0 SECONDS
 	leader.put_in_active_hand(converter, forced = TRUE)
 
 	// Fail state
 	converter.attack_self(leader)
 	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum from being AOE flashed, which is not intended.")
+
+	// Fail state again
+	var/obj/item/clothing/glasses = allocate(/obj/item/clothing/glasses/sunglasses)
+	peasant.equip_to_appropriate_slot(glasses)
+	leader.ClickOn(peasant)
+	TEST_ASSERT(!IS_REVOLUTIONARY(peasant), "Peasant gained revolution antag datum despite being flashproof.")
+	qdel(glasses)
 
 	// Success state
 	leader.ClickOn(peasant)
