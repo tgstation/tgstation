@@ -43,7 +43,7 @@
 	name = "Heat"
 	needed_stimulus = STIMULUS_HEAT
 	hint_range = 20
-	max_amount = 10000
+	max_amount = 15000
 
 /datum/artifact_trigger/heat/New()
 		..()

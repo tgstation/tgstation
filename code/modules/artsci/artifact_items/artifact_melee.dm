@@ -73,13 +73,14 @@
 	if(prob(30))
 		active_woundbonus = rand(3,20)
 	if(prob(30))
-		weapon.armour_penetration = rand(5,20)//this barely does anything inactive so its fine to have it always
+		weapon.armour_penetration = rand(5,15)//this barely does anything inactive so its fine to have it always
 	if(prob(50))
-		weapon.damtype = pick(BRUTE, BURN, TOX, OXY, CLONE, STAMINA)
+		weapon.damtype = pick(BRUTE, BURN, TOX, STAMINA)
 	if(prob(10))
 		active_reach = rand(1,3) // this CANT possibly backfire
 		potency += 20
 	if(prob(30))
+		potency += 15
 		weapon.special = pick(SPECIAL_LAUNCH, SPECIAL_IGNITE, SPECIAL_TELEPORT)
 
 /datum/component/artifact/melee/effect_activate()

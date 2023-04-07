@@ -45,6 +45,7 @@
 		return COMPONENT_INCOMPATIBLE
 	holder = parent
 	SSartifacts.artifacts += holder
+
 	if(forced_origin)
 		valid_origins = list(forced_origin)
 	artifact_origin = SSartifacts.artifact_origins_by_typename[pick(valid_origins)]
@@ -57,6 +58,7 @@
 			names[og.type_name] = "[pick(og.adjectives)] [pick(isitem(holder) ? og.nouns_small : og.nouns_large)]"
 	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
+
 	var/dat_icon
 	var/origin_name = artifact_origin.type_name
 	switch(artifact_size)
@@ -67,16 +69,19 @@
 		if(ARTIFACT_SIZE_TINY)
 			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
 	holder.icon_state = dat_icon
+
 	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", LIGHTING_PLANE + 0.5)
 	activation_sound = pick(artifact_origin.activation_sounds)
 	if(LAZYLEN(artifact_origin.deactivation_sounds))
 		deactivation_sound = pick(artifact_origin.deactivation_sounds)
+
 	var/trigger_amount = rand(1,max_triggers)
 	while(trigger_amount>0)
 		var/selection = pick(valid_triggers)
 		valid_triggers -= selection
 		triggers += new selection()
 		trigger_amount--
+
 	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
 	setup()
 //Seperate from initialize, for artifact inheritance funnies
