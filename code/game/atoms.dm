@@ -847,7 +847,7 @@
  * Arguments:
  * * mob/target - The mob to update the icons of. Optional argument, use if the atom's loc is not the mob you want to update.
  */
-/atom/proc/update_inhand_icon(var/mob/target = loc)
+/atom/proc/update_inhand_icon(mob/target = loc)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(target))
 		return
