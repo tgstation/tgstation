@@ -1,0 +1,4 @@
+author: "thgvr"
+delete-after: True
+changes:
+  - imageadd: "Lizards have been resprited, as well as Digitigrade sprites. Please remember to update your colors to account for this."

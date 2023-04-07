@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "fixes medkits (and wallets, candle boxes) being able to store normal sized items"

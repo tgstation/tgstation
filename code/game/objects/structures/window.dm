@@ -96,7 +96,6 @@
 /obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the window."))
 			qdel(src)
 			return TRUE
 	return FALSE
@@ -470,6 +469,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 	fire = 80
 	acid = 100
 
+/obj/structure/window/reinforced/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 30, "cost" = 15)
+	return FALSE
+
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -647,6 +652,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
 
+/obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 25, "cost" = 10)
+	return FALSE
+
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
 
@@ -694,6 +705,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+
+/obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 20)
+	return FALSE
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
