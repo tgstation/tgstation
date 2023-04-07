@@ -6937,6 +6937,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "bHL" = (
@@ -60433,6 +60434,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gravity Generator"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/floor1/port/aft)
 "qjn" = (
