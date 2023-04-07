@@ -745,6 +745,7 @@
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "CP" = (
@@ -1058,6 +1059,7 @@
 	input_available = 100000;
 	output_level = 40000
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Pj" = (
