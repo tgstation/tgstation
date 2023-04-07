@@ -300,9 +300,11 @@
 
 /datum/supply_pack/misc/papercutter
 	name = "Paper Cutters Crate"
-	desc = "Contains 3 office duty paper cutters.\
-		Those are equipped with sharp blades that can cut any paper into two slick paper slips.\
-		Blade can be removed from the cutter using screwdriver for cleaning and sharpening of course."
-	cost = CARGO_CRATE_VALUE * 3.2
-	contains = list(/obj/item/papercutter = 3)
+	desc = "Contains 3 office-grade paper cutters, equipped with sharp blades that can cut any paper into two thin slips.\
+		Comes with one replacement blade."
+	cost = CARGO_CRATE_VALUE * 3.5
+	contains = list(
+		/obj/item/papercutter = 3,
+		/obj/item/hatchet/cutterblade = 1,
+	)
 	crate_name = "paper cutters crate"
