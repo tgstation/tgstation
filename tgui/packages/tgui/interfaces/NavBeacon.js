@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, LabeledList, Section } from '../components';
+import { Box, Button, Dropdown, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
@@ -8,15 +8,17 @@ export const NavBeacon = (props, context) => {
   const {
     location,
     locked,
-    silicon_user,
+    siliconUser,
     patrol_enabled,
     patrol_next,
     delivery_enabled,
     delivery_direction,
     direction_options,
+    has_codes,
+    cover_locked,
   } = data;
   return (
-    <Window title="Nagivational Beacon" width={400} height={300}>
+    <Window title="Nagivational Beacon" width={400} height={350}>
       <Window.Content>
         <InterfaceLockNoticeBox />
         <Section title="Controls">
@@ -25,7 +27,7 @@ export const NavBeacon = (props, context) => {
               <Button
                 content={location ?? 'None set'}
                 icon="pencil-alt"
-                disabled={locked && !silicon_user}
+                disabled={locked && !siliconUser}
                 onClick={() => act('set_location')}
               />
             </LabeledList.Item>
@@ -34,7 +36,7 @@ export const NavBeacon = (props, context) => {
                 fluid
                 checked={patrol_enabled}
                 content={patrol_enabled ? 'Enabled' : 'Disabled'}
-                disabled={locked && !silicon_user}
+                disabled={locked && !siliconUser}
                 onClick={() => act('toggle_patrol')}
               />
             </LabeledList.Item>
@@ -42,7 +44,7 @@ export const NavBeacon = (props, context) => {
               <Button
                 content={patrol_next ?? 'No next patrol location'}
                 icon="pencil-alt"
-                disabled={locked && !silicon_user}
+                disabled={locked && !siliconUser}
                 onClick={() => act('set_patrol_next')}
               />
             </LabeledList.Item>
@@ -51,13 +53,13 @@ export const NavBeacon = (props, context) => {
                 fluid
                 checked={delivery_enabled}
                 content={delivery_enabled ? 'Enabled' : 'Disabled'}
-                disabled={locked && !silicon_user}
+                disabled={locked && !siliconUser}
                 onClick={() => act('toggle_delivery')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Delivery Direction">
               <Dropdown
-                disabled={locked && !silicon_user}
+                disabled={locked && !siliconUser}
                 options={direction_options}
                 displayText={delivery_direction || 'none'}
                 onSelected={(value) =>
@@ -65,6 +67,30 @@ export const NavBeacon = (props, context) => {
                     direction: value,
                   })
                 }
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section title="Maintenance">
+          <LabeledList>
+            <LabeledList.Item label="Reset codes">
+              {!!has_codes && (
+                <Button
+                  content={'Reset'}
+                  icon="power-off"
+                  disabled={locked && !siliconUser}
+                  onClick={() => act('reset_codes')}
+                />
+              )}
+              {!has_codes && <Box>No backup codes found</Box>}
+            </LabeledList.Item>
+            <LabeledList.Item label="Maintenance hatch cover">
+              <Button.Checkbox
+                fluid
+                checked={cover_locked}
+                content={cover_locked ? 'Locked' : 'Unlocked'}
+                disabled={locked && !siliconUser}
+                onClick={() => act('toggle_cover')}
               />
             </LabeledList.Item>
           </LabeledList>

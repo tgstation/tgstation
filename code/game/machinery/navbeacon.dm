@@ -13,9 +13,13 @@
 	circuit = /obj/item/circuitboard/machine/navbeacon
 
 	/// true if controls are locked
-	var/locked = TRUE
+	var/controls_locked = TRUE
+	/// true if cover is locked
+	var/cover_locked = TRUE
 	/// location response text
 	var/location = ""
+	/// original location name, to allow resets
+	var/original_location = ""
 	/// associative list of transponder codes
 	var/list/codes
 	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
@@ -33,6 +37,8 @@
 
 /obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
+
+	original_location = location
 
 	set_codes()
 
@@ -59,7 +65,7 @@
 	floor.remove_tile(null, silent = TRUE, make_tile = TRUE, force_plating = TRUE)
 
 
-///Set the transponder codes assoc list from codes_txt during initialization
+///Set the transponder codes assoc list from codes_txt during initialization, or during reset
 /obj/machinery/navbeacon/proc/set_codes()
 
 	codes = list()
@@ -104,6 +110,9 @@
 		return TRUE
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!panel_open && cover_locked)
+		balloon_alert(user, "hatch locked!")
+		return TRUE
 	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
 /obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, params)
@@ -114,8 +123,8 @@
 	if (attacking_item.GetID())
 		if(!panel_open)
 			if (allowed(user))
-				locked = !locked
-				balloon_alert(user, "controls [locked ? "locked" : "unlocked"]")
+				controls_locked = !controls_locked
+				balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
 				SStgui.update_uis(src)
 			else
 				balloon_alert(user, "access denied")
@@ -147,18 +156,20 @@
 /obj/machinery/navbeacon/ui_data(mob/user)
 	var/list/data = list()
 	data["location"] = location
-	data["locked"] = locked
-	data["silicon_user"] = issilicon(user)
+	data["locked"] = controls_locked
+	data["siliconUser"] = issilicon(user)
 	data["patrol_enabled"] = codes[NAVBEACON_PATROL_MODE] ? TRUE : FALSE
 	data["patrol_next"] = codes[NAVBEACON_PATROL_NEXT]
 	data["delivery_enabled"] = codes[NAVBEACON_DELIVERY_MODE] ? TRUE : FALSE
 	data["delivery_direction"] = dir2text(text2num(codes[NAVBEACON_DELIVERY_DIRECTION]))
+	data["cover_locked"] = cover_locked
 	return data
 
 /obj/machinery/navbeacon/ui_static_data(mob/user)
 	var/list/data = list()
 	var/static/list/direction_options = list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST))
 	data["direction_options"] = direction_options
+	data["has_codes"] = codes_txt
 	return data
 
 /obj/machinery/navbeacon/ui_act(action, params)
@@ -167,13 +178,20 @@
 		return
 
 	if(action == "lock" && allowed(usr))
-		locked = !locked
-		return
+		controls_locked = !controls_locked
+		return TRUE
 
-	if(locked && !issilicon(usr))
+	if(controls_locked && !issilicon(usr))
 		return
 
 	switch(action)
+		if("reset_codes")
+			set_codes()
+			location = original_location
+			return TRUE
+		if("toggle_cover")
+			cover_locked = !cover_locked
+			return TRUE
 		if("toggle_patrol")
 			toggle_code(NAVBEACON_PATROL_MODE)
 			return TRUE
