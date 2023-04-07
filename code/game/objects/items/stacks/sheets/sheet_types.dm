@@ -641,8 +641,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	null,
-	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_solid_ground = TRUE, one_per_direction = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, category = CAT_WINDOWS), \
 	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20, category = CAT_TILES), \

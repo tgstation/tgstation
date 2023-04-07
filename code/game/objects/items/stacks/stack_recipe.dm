@@ -44,6 +44,7 @@
 	max_res_amount = 1,
 	time = 0,
 	one_per_turf = FALSE,
+	one_per_direction = FALSE,
 	on_solid_ground = FALSE,
 	on_tram = FALSE,
 	ignores_density = FALSE,
