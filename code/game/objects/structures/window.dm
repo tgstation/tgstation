@@ -437,17 +437,7 @@
 
 	return TRUE
 
-/obj/structure/window/spawner/east
-	dir = EAST
-
-/obj/structure/window/spawner/west
-	dir = WEST
-
-/obj/structure/window/spawner/north
-	dir = NORTH
-
-/obj/structure/window/spawner/south
-	dir = SOUTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 
 /obj/structure/window/unanchored
 	anchored = FALSE
@@ -571,17 +561,7 @@
 		if(RWINDOW_BARS_CUT)
 			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
 
-/obj/structure/window/reinforced/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/spawner/south
-	dir = SOUTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
@@ -611,17 +591,7 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
-/obj/structure/window/plasma/spawner/east
-	dir = EAST
-
-/obj/structure/window/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/plasma/spawner/north
-	dir = NORTH
-
-/obj/structure/window/plasma/spawner/south
-	dir = SOUTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
@@ -650,17 +620,8 @@
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
-/obj/structure/window/reinforced/plasma/spawner/east
-	dir = EAST
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 
-/obj/structure/window/reinforced/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/plasma/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/plasma/spawner/south
-	dir = SOUTH
 /obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
