@@ -10,8 +10,8 @@
 	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
 	var/pixel_shift //The amount of pixels
 
-/obj/item/wallframe/proc/try_build(turf/on_wall, mob/user, distance_check = TRUE)
-	if(distance_check && get_dist(on_wall,user)>1)
+/obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
+	if(get_dist(on_wall,user)>1)
 		balloon_alert(user, "you are too far!")
 		return
 	var/floor_to_wall = get_dir(user, on_wall)
