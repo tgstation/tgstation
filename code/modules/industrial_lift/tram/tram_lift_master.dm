@@ -6,6 +6,8 @@
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
 	var/travel_distance = 0
+	///how far in total we'll be travelling
+	var/travel_trip_length = 0
 
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
@@ -116,6 +118,7 @@
 
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_distance = get_dist(idle_platform, destination_platform)
+	travel_trip_length = travel_distance
 	idle_platform = destination_platform
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
@@ -127,7 +130,6 @@
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
-	update_tram_doors(UNLOCK_DOORS)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		if(tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
@@ -142,7 +144,6 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
-		update_tram_doors(LOCK_DOORS)
 		update_tram_doors(OPEN_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
@@ -210,12 +211,6 @@
 
 /datum/lift_master/tram/proc/set_door_state(tram_door, action)
 	switch(action)
-		if(LOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, lock))
-
-		if(UNLOCK_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, unlock))
-
 		if(OPEN_DOORS)
 			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
 
