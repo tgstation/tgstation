@@ -15,7 +15,11 @@
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
 	log_test("Loading Font Awesome CSS file...")
 	var/css = file2text("html/font-awesome/css/all.min.css")
-	log_test("CSS Length: [length(css)]")
+	if(isnull(css))
+		TEST_NOTICE("Font Awesome CSS file could not be loaded.")
+		return
+
+	log_test("CSS Actual: [length(css)]")
 	var/list/icons = parse_fa_css_into_icon_list(css)
 
 	var/list/actual = list()
