@@ -21,9 +21,18 @@
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
-	if(!GLOB.xeno_spawn)
+
+	var/list/spawn_locs = list()
+	for(var/spawn_area in GLOB.generic_maintenance_landmarks)
+		var/turf/spawn_turf = get_turf(spawn_area)
+		if(is_safe_turf(spawn_turf))
+			spawn_locs += spawn_turf
+
+	if(!length(spawn_locs))
+		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
+
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(spawn_locs))
 	player_mind.transfer_to(S)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
 	player_mind.special_role = ROLE_MORPH

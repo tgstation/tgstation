@@ -108,18 +108,22 @@
  * Tells the individual tram parts where to actually go and has an extra safety checks
  * incase multiple inputs get through, preventing conflicting directions and the tram
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
+ * Arguments: destination platform, rapid (bypass some safety checks)
  */
-/datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform)
+/datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform, rapid = FALSE)
 	if(destination_platform == idle_platform)
 		return
 
-	update_tram_doors(CLOSE_DOORS)
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_distance = get_dist(idle_platform, destination_platform)
 	idle_platform = destination_platform
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
-	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
+	if(rapid) // bypass for unsafe, rapid departure
+		dispatch_tram(destination_platform)
+	else
+		update_tram_doors(CLOSE_DOORS)
+		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)

@@ -82,5 +82,6 @@
 /obj/item/melee/touch_attack/shock
 	name = "\improper shock touch"
 	desc = "This is kind of like when you rub your feet on a shag rug so you can zap your friends, only a lot less safe."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"

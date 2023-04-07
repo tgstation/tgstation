@@ -1,13 +1,5 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
-
-/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
-#define DEVIATION_NONE 0
-/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
-#define DEVIATION_PARTIAL 1
-/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
-#define DEVIATION_FULL 2
-
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -156,25 +148,26 @@
 
 	var/deviation = calculate_deviation(flashed, user || src)
 
-	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
+	if(user)
+		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_FLASHED_CARBON, flashed, src, deviation)
+		if(sigreturn & STOP_FLASH)
+			return
+
+		if(sigreturn & DEVIATION_OVERRIDE_FULL)
+			deviation = DEVIATION_FULL
+		else if(sigreturn & DEVIATION_OVERRIDE_PARTIAL)
+			deviation = DEVIATION_PARTIAL
+		else if(sigreturn & DEVIATION_OVERRIDE_NONE)
+			deviation = DEVIATION_NONE
 
 	//If you face away from someone they shouldnt notice any effects.
-	if(deviation == DEVIATION_FULL && !converter)
+	if(deviation == DEVIATION_FULL)
 		return
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
-			// Special check for if we're a revhead. Special cases to attempt conversion.
-			if(converter)
-				// Did we try to flash them from behind?
-				if(deviation == DEVIATION_FULL)
-					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
-					to_chat(user, span_notice("You use the tacticool tier, lean over the shoulder technique to blind [flashed] with a flash!"))
-					deviation = DEVIATION_PARTIAL
-				// Convert them. Terribly.
-				terrible_conversion_proc(flashed, user)
-				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
+			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
@@ -276,34 +269,6 @@
 	if(!..())
 		return
 	AOE_flash()
-
-/**
- * Converts the victim to revs
- *
- * Arguments:
- * * victim - Victim
- * * aggressor - Attacker
- */
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
-	if(!istype(victim) || victim.stat == DEAD)
-		return
-	if(!aggressor.mind)
-		return
-	if(!victim.client)
-		to_chat(aggressor, span_warning("This mind is so vacant that it is not susceptible to influence!"))
-		return
-	if(victim.stat != CONSCIOUS)
-		to_chat(aggressor, span_warning("They must be conscious before you can convert [victim.p_them()]!"))
-		return
-	//If this proc fires the mob must be a revhead
-	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
-	if(converter.add_revolutionary(victim.mind))
-		if(prob(1) || check_holidays(APRIL_FOOLS))
-			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-	else
-		to_chat(aggressor, span_warning("This mind seems resistant to the flash!"))
-
 
 /obj/item/assembly/flash/cyborg
 
@@ -415,6 +380,3 @@
 		M.adjust_pacifism(4 SECONDS)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
-#undef DEVIATION_NONE
-#undef DEVIATION_PARTIAL
-#undef DEVIATION_FULL

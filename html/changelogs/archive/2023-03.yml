@@ -1129,3 +1129,45 @@
   - qol: added a lot of feedback to interacting with meteor shields
   - balance: emagging a lot of meteor shields warns the station, but emagging enough
       of them summons a Dark Matt-eor.
+2023-03-31:
+  Capsandi:
+  - rscadd: Added a new space ruin
+  JohnFulpWillard:
+  - bugfix: NtNet receive/send circuits should work now.
+  MMMiracles:
+  - bugfix: The Bridge and Arrivals on Tramstation should now be firmly connected
+      to the main distro loop once again.
+  Melbert:
+  - qol: Some sound related messages from Iv drips, turrets, and the nuke toy are
+      now audible to the blind / hidden from the deaf
+  RikuTheKiller:
+  - bugfix: Suffocation-handling reagents work on all species once more.
+  - spellcheck: Added a previous tip for handling plasmaman suffocation back into
+      the game.
+  SishTis:
+  - qol: Peacekeepers cyborgs don't get message about being confused while using harm
+      alarm
+  SomeRandomOwl:
+  - rscadd: New VERB, Request Internet Sound, It is in the OOC tab and allows you
+      to request music from admins to play, by default only allows bandcamp, youtube,
+      and soundcloud links
+  - bugfix: Fixes the Admin Midi Widget UI to only present info that is available
+      to players to be seen
+  - admin: Play Internet Sound URL input is now TGUI
+  - admin: Play Internet Sound warns you if a song length is >10 Minutes
+  - admin: Added new mute type to mute internet sound requests from a player
+  - config: Added thee new config options, LOG_INTERNET_REQUEST, REQUEST_INTERNET_SOUND,
+      REQUEST_INTERNET_ALLOWED
+  ZAMODA:
+  - rscadd: Added a new space ruin, the Atmos Asteroid!
+  necromanceranne:
+  - qol: You can rename and change the description of nanite/thermal pistols.
+  san7890:
+  - rscadd: "Ask your local bartender for the hottest drink of the year, the \"Pi\xF1\
+      a Olivada\"!"
+  timothymtorres:
+  - bugfix: Fix Greytide Worldwide basketball stadium being able to explode from a
+      fuel tank
+  vinylspiders:
+  - bugfix: cycler shotguns' inhand sprites will no longer float ominously by their
+      wielder's side

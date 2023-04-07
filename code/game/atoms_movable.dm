@@ -73,8 +73,8 @@
 	///is the mob currently ascending or descending through z levels?
 	var/currently_z_moving
 
-	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
-	var/blocks_emissive = FALSE
+	/// Either [EMISSIVE_BLOCK_NONE], [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = EMISSIVE_BLOCK_NONE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/render_step/emissive_blocker/em_block
 
@@ -114,28 +114,19 @@
 		stack_trace("[type] blocks explosives, but does not have the managing element applied")
 #endif
 
-	switch(blocks_emissive)
-		if(EMISSIVE_BLOCK_GENERIC)
-			var/static/mutable_appearance/emissive_blocker/blocker = new()
-			blocker.icon = icon
-			blocker.icon_state = icon_state
-			blocker.dir = dir
-			blocker.appearance_flags |= appearance_flags
-			blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
-			// Ok so this is really cursed, but I want to set with this blocker cheaply while
-			// Still allowing it to be removed from the overlays list later
-			// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
-			// I'm sorry
-			var/mutable_appearance/flat = blocker.appearance
-			overlays += flat
-			if(managed_overlays)
-				if(islist(managed_overlays))
-					managed_overlays += flat
-				else
-					managed_overlays = list(managed_overlays, flat)
-			else
-				managed_overlays = flat
-		if(EMISSIVE_BLOCK_UNIQUE)
+#if EMISSIVE_BLOCK_GENERIC != 0
+	#error EMISSIVE_BLOCK_GENERIC is expected to be 0 to faciliate a weird optimization hack where we rely on it being the most common.
+	#error Read the comment in code/game/atoms_movable.dm for details.
+#endif
+
+	// This one is incredible.
+	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
+	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
+	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
+	// This saves several hundred milliseconds of init time.
+	if (blocks_emissive)
+		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			overlays += em_block
@@ -146,6 +137,27 @@
 					managed_overlays = list(managed_overlays, em_block)
 			else
 				managed_overlays = em_block
+	else
+		var/static/mutable_appearance/emissive_blocker/blocker = new()
+		blocker.icon = icon
+		blocker.icon_state = icon_state
+		blocker.dir = dir
+		blocker.appearance_flags |= appearance_flags
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
+		// Ok so this is really cursed, but I want to set with this blocker cheaply while
+		// Still allowing it to be removed from the overlays list later
+		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
+		// I'm sorry
+		var/mutable_appearance/flat = blocker.appearance
+		overlays += flat
+		if(managed_overlays)
+			if(islist(managed_overlays))
+				managed_overlays += flat
+			else
+				managed_overlays = list(managed_overlays, flat)
+		else
+			managed_overlays = flat
+
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)

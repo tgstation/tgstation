@@ -1,9 +1,0 @@
-author: "SomeRandomOwl"
-delete-after: True
-changes:
-  - rscadd: "New VERB, Request Internet Sound, It is in the OOC tab and allows you to request music from admins to play, by default only allows bandcamp, youtube, and soundcloud links"
-  - bugfix: "Fixes the Admin Midi Widget UI to only present info that is available to players to be seen"
-  - admin: "Play Internet Sound URL input is now TGUI"
-  - admin: "Play Internet Sound warns you if a song length is >10 Minutes"
-  - admin: "Added new mute type to mute internet sound requests from a player"
-  - config: "Added thee new config options, LOG_INTERNET_REQUEST, REQUEST_INTERNET_SOUND, REQUEST_INTERNET_ALLOWED"

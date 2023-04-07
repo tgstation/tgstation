@@ -13,14 +13,14 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "af" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
@@ -28,15 +28,15 @@
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "al" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ar" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aw" = (
 /obj/machinery/status_display/ai,
@@ -503,7 +503,7 @@
 	},
 /obj/machinery/newscaster/directional/north,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "eA" = (
 /obj/structure/chair/comfy/shuttle{
@@ -663,7 +663,7 @@
 	name = "Holding Area"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "UY" = (
 /obj/item/storage/medkit/fire,
