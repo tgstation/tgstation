@@ -19,8 +19,8 @@
  * If there are any differences, note them.
  */
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
-	log_test("CSS Actual: [length(css)]")
-	var/list/icons = parse_fa_css_into_icon_list(css)
+	log_test("CSS Actual: [length(font_awesome_css)]")
+	var/list/icons = parse_fa_css_into_icon_list(font_awesome_css)
 
 	var/list/actual = list()
 	for(var/datum/font_awesome_icon/icon as anything in subtypesof(/datum/font_awesome_icon))
