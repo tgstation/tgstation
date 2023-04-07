@@ -17,10 +17,14 @@
 	var/time = 0
 	/// If only one of the resulting atom is allowed per turf
 	var/one_per_turf = FALSE
+	/// If only one of the resulting atom is allowed per direction (in the same turf)
+	var/one_per_direction = FALSE
 	/// If the atom requires a floor below
 	var/on_solid_ground = FALSE
 	/// If the atom requires a tram floor below
 	var/on_tram = FALSE
+	/// If the atom ignores objects with density when being built
+	var/ignores_density = FALSE
 	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT)
 	var/placement_checks = NONE
 	/// If TRUE, the created atom will gain custom mat datums
@@ -42,7 +46,7 @@
 	one_per_turf = FALSE,
 	on_solid_ground = FALSE,
 	on_tram = FALSE,
-	window_checks = FALSE,
+	ignores_density = FALSE,
 	placement_checks = NONE,
 	applies_mats = FALSE,
 	trait_booster,
@@ -57,8 +61,10 @@
 	src.max_res_amount = max_res_amount
 	src.time = time
 	src.one_per_turf = one_per_turf
+	src.one_per_direction = one_per_direction
 	src.on_solid_ground = on_solid_ground
 	src.on_tram = on_tram
+	src.ignores_density = ignores_density
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	flags_1 = ON_BORDER_1
+	obj_flags = CAN_BE_HIT | NO_BUILD_ON_DIRECTION
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE

@@ -11,6 +11,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
+	obj_flags = CAN_BE_HIT | BUILD_ON_IGNORES_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
@@ -94,7 +95,7 @@
 			if(!ispath(the_rcd.window_type, /obj/structure/window))
 				CRASH("Invalid window path type in RCD: [the_rcd.window_type]")
 			var/obj/structure/window/window_path = the_rcd.window_type
-			if(!valid_window_location(T, user.dir, is_fulltile = initial(window_path.fulltile)))
+			if(!valid_build_direction(T, user.dir, is_fulltile = initial(window_path.fulltile)))
 				to_chat(user, span_notice("Already a window in this direction!"))
 				return FALSE
 			to_chat(user, span_notice("You construct the window."))
