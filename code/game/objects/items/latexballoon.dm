@@ -25,7 +25,7 @@
 
 /obj/item/latexballoon/proc/set_state(state_to_set)
 	state = state_to_set
-	update_appearance()
+	update_appearance(UPDATE_ICON | UPDATE_DESC)
 
 /obj/item/latexballoon/update_icon_state()
 	. = ..()
@@ -41,6 +41,14 @@
 			inhand_icon_state = initial(inhand_icon_state)
 			lefthand_file = initial(lefthand_file)
 			righthand_file = initial(righthand_file)
+
+/obj/item/latexballoon/update_desc()
+	. = ..()
+	switch(state)
+		if(INFLATED)
+			desc = "It's a blown up latex glove on a string."
+		if(POPPED)
+			desc = "The remains of a latex glove."
 
 /obj/item/latexballoon/proc/blow(obj/item/tank/tank, mob/user)
 	if(state == POPPED)
@@ -71,7 +79,7 @@
 		return
 
 	set_state(POPPED)
-	playsound(src, 'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/snap.ogg', 100, TRUE)
 	loc.assume_air(air_contents)
 
 /obj/item/latexballoon/ex_act(severity, target)

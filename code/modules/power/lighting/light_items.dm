@@ -73,6 +73,7 @@
 // update the icon state and description of the light
 
 /obj/item/light/update_icon_state()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
 			icon_state = base_state
@@ -82,6 +83,7 @@
 			icon_state = "[base_state]-broken"
 
 /obj/item/light/update_desc()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
 			desc = "A replacement [name]."
