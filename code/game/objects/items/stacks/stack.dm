@@ -471,6 +471,9 @@
 
 	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
+			if(recipe.is_fulltile)
+				if(istype(object, /obj/structure/window)) // Windows just need to be special don't they. This is for making it so fulltiles can't be built over directionals.
+					return FALSE
 			if(object.density && !(object.obj_flags & BUILD_ON_IGNORES_DENSITY) || object.obj_flags & NO_BUILD_ON)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
