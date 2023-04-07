@@ -171,7 +171,7 @@
 "om" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
@@ -399,7 +399,7 @@
 /area/station/maintenance/department/science)
 "IC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
