@@ -471,7 +471,7 @@
 
 	if(!recipe.ignores_density)
 		for(var/obj/object in dest_turf)
-			if((object.density && !(object.obj_flags & BUILD_ON_IGNORES_DENSITY)) || object.obj_flags & NO_BUILD)
+			if((object.density && !(object.obj_flags & BUILD_ON_IGNORES_DENSITY)) || object.obj_flags & NO_BUILD_ON)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 
