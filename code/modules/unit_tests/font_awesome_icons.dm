@@ -13,7 +13,9 @@
  * If there are any differences, note them.
  */
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
+	log_test("Loading Font Awesome CSS file...")
 	var/css = file2text("html/font-awesome/css/all.min.css")
+	log_test("CSS Length: [length(css)]")
 	var/list/icons = parse_fa_css_into_icon_list(css)
 
 	var/list/actual = list()
