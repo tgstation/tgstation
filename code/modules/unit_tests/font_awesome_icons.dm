@@ -8,7 +8,7 @@
 /datum/unit_test/font_awesome_icons/Run()
 	font_awesome_css = file2text("html/font-awesome/css/all.min.css")
 	if(isnull(font_awesome_css))
-		TEST_NOTICE("Font Awesome CSS file could not be loaded.")
+		TEST_NOTICE(src, "Font Awesome CSS file could not be loaded.")
 		return
 
 	load_parse_verify()
