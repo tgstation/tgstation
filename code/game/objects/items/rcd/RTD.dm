@@ -282,6 +282,7 @@
 	if(!useResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return TRUE
+	activate()
 	//step 1 create tile
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
@@ -345,6 +346,7 @@
 	if(!useResource(cost * 0.7, user))
 		qdel(rcd_effect)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	activate()
 	//find & collect all decals
 	var/list/all_decals = list()
 	for(var/obj/effect/decal in floor.contents)
