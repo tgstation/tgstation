@@ -100,6 +100,8 @@
 		winning_account.account_balance += lottery_pool
 		priority_announce("[winning_account.account_holder] has just won the station lottery winning a total of [lottery_pool] credits! The next lottery will begin in 20 minutes!", "Nanotrasen Gambling Society")
 		lottery_pool = 0
+	else
+		priority_announce("No one has won the lottery with a prize pool of [lottery_pool] credits, the next lottery will happen in 20 minutes.", "Nanotrasen Gambling Society")
 	lottery_pool += 500
 	ticket_owners = list()
 	lottery_running = FALSE
