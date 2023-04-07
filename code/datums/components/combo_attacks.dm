@@ -83,7 +83,7 @@
 /datum/component/combo_attacks/proc/on_attack(datum/source, mob/living/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 
-	if(can_attack && !can_attack_callback.Invoke(user, target))
+	if(can_attack_callback && !can_attack_callback.Invoke(user, target))
 		return NONE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return NONE
