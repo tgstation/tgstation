@@ -96,7 +96,7 @@
 			var/turf/T = loc
 
 			if(repair_grille())
-				balloon_alert(user, "grille rebilt")
+				balloon_alert(user, "grille rebuilt")
 
 			if(!clear_tile(user))
 				return FALSE
