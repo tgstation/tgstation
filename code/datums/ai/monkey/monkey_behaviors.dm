@@ -235,6 +235,7 @@
 	if(controller.blackboard[BB_MONKEY_ENEMIES][target_ref] <= 0 || (HAS_TRAIT(target, TRAIT_MONKEYFRIEND)))
 		var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 		enemies.Remove(target_ref)
+		living_pawn.set_combat_mode(FALSE)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == WEAKREF(target))
 			finish_action(controller, TRUE)
 

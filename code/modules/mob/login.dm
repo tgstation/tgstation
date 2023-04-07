@@ -45,6 +45,10 @@
 			return FALSE
 
 	if(hud_used)
+		if (forced_interaction_mode)
+			client.imode.replace(forced_interaction_mode)
+		else
+			client.imode.reload_hud(src)
 		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
 		if(!client)
 			return FALSE
