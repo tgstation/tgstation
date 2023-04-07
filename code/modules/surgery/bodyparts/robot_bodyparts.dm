@@ -100,6 +100,18 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
+/obj/item/bodypart/leg/left/robot/emp_act(severity)
+	. = ..()
+	if(!.) // other emp effects handled in parent
+		return
+	if(owner.incapacitated()) // so it doesn't double up with both legs
+		return
+	to_chat(owner, span_danger("Your [src]'s malfunction causes you to fall to the ground!"))
+	var/timer = 4 SECONDS
+	if(severity == EMP_HEAVY)
+		timer = 8 SECONDS
+	owner.Knockdown(timer)
+
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
@@ -129,6 +141,18 @@
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+
+/obj/item/bodypart/leg/right/robot/emp_act(severity)
+	. = ..()
+	if(!.) // other emp effects handled in parent
+		return
+	if(owner.incapacitated()) // so it doesn't double up with both legs
+		return
+	to_chat(owner, span_danger("Your [src.name] malfunctions and causes you to fall to the ground!"))
+	if(severity == EMP_LIGHT)
+		owner.Knockdown(4 SECONDS)
+	else
+		owner.Knockdown(8 SECONDS)
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -272,6 +296,18 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
+
+/obj/item/bodypart/leg/right/robot/emp_act(severity)
+	. = ..()
+	if(!.) // other emp effects handled in parent
+		return
+	if(owner.incapacitated()) // so it doesn't double up with both legs
+		return
+	to_chat(owner, span_danger("Your [src.name] malfunctions and causes you to fall to the ground!"))
+	if(severity == EMP_LIGHT)
+		owner.Knockdown(4 SECONDS)
+	else
+		owner.Knockdown(8 SECONDS)
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
