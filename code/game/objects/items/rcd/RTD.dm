@@ -271,6 +271,7 @@
 		qdel(rcd_effect)
 		return TRUE
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -334,6 +335,7 @@
 		qdel(rcd_effect)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
