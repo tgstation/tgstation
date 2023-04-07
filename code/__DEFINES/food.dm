@@ -178,7 +178,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)
 
 /// Point water boils at
-#define WATER_BOILING_POINT 373
+#define WATER_BOILING_POINT (T0C + 100)
 /// Point at which soups begin to burn at
 #define SOUP_BURN_TEMP 540
 
