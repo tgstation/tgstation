@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "the 'natural wig' item will no longer show a broken icon when it mimics a hairstyle whose icon path something other than the default 'icons/mob/species/human/human_face.dmi'"
