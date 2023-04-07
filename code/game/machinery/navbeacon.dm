@@ -189,7 +189,7 @@
 			glob_lists_deregister()
 			location = original_location
 			set_codes()
-			glob_lists_reregister()
+			glob_lists_register()
 			return TRUE
 		if("toggle_cover")
 			cover_locked = !cover_locked
@@ -206,7 +206,7 @@
 				return
 			glob_lists_deregister()
 			location = input_text
-			glob_lists_reregister()
+			glob_lists_register()
 			return TRUE
 		if("set_patrol_next")
 			var/next_patrol = codes[NAVBEACON_PATROL_NEXT]

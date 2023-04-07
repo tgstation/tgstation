@@ -25,6 +25,7 @@ export const NavBeacon = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Location">
               <Button
+                fluid
                 content={location ?? 'None set'}
                 icon="pencil-alt"
                 disabled={locked && !siliconUser}
@@ -42,6 +43,7 @@ export const NavBeacon = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Next patrol">
               <Button
+                fluid
                 content={patrol_next ?? 'No next patrol location'}
                 icon="pencil-alt"
                 disabled={locked && !siliconUser}
@@ -76,6 +78,7 @@ export const NavBeacon = (props, context) => {
             <LabeledList.Item label="Reset codes">
               {!!has_codes && (
                 <Button
+                  fluid
                   content={'Reset'}
                   icon="power-off"
                   disabled={locked && !siliconUser}
