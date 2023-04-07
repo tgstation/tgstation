@@ -124,13 +124,13 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/rnd/test_subject
-	desc = "That jumpsuit you're wearing looks stupid. On other people it looks fine, but scientist has noted that on you it looks 'stupid.'"
+	desc = "That jumpsuit you're wearing looks stupid. On other people it looks fine, but a scientist has noted that on you it looks 'stupid.'"
 	name = "test subject's jumpsuit"
 	icon_state = "testsubject"
 	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/rank/rnd/test_subject/skirt
-	desc = "That jumpskirt you're wearing looks stupid. On other people it looks fine, but scientist has noted that on you it looks 'stupid.'"
+	desc = "That jumpskirt you're wearing looks stupid. On other people it looks fine, but a scientist has noted that on you it looks 'stupid.'"
 	name = "test subject's jumpskirt"
 	icon_state = "testsubject_skirt"
 	inhand_icon_state = "w_suit"

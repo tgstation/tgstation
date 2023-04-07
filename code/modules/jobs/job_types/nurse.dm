@@ -22,7 +22,7 @@
 	bounty_types = CIV_JOB_MED
 	departments_list = list(
 		/datum/job_department/medical,
-		)
+	)
 
 	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom, /obj/item/reagent_containers/syringe, /obj/item/storage/pill_bottle)
 

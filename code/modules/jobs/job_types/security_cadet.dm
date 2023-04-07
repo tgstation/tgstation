@@ -9,8 +9,7 @@
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the security department and Head of Security"
-	minimal_player_age = 7
-	exp_requirements = 120 //Play one round, we hope you at least know how to talk
+	exp_requirements = 120 //Play few rounds, we hope you at least know how to talk
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SECURITY_CADET"
@@ -49,7 +48,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/grey
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
-		)
+	)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
