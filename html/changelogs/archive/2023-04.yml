@@ -158,3 +158,57 @@
   zxaber:
   - balance: Malf AIs that hack Head of Staff and Vault APCs will now find a discount
       issued on Doomsday.
+2023-04-06:
+  DaydreamIQ:
+  - rscadd: Added the Abandoned Interdyne facility, explore at your own peril
+  Ghilker:
+  - rscadd: Timestop blocks the SM from processing (can't be healed, doesn't output
+      gases but can still take damage)
+  JohnFulpWillard:
+  - balance: Flamethrowers no longer have a trigger guard, and can be used by anyone
+      (including if you're wearing Atmos gloves).
+  - bugfix: Slimes' mischievous emote now works.
+  LT3:
+  - rscadd: The tram now has a remote control for funny and/or nefarious purposes
+  LemonInTheDark:
+  - admin: All centcom ferries are now loadable. Yes this WASbroken
+  Melbert:
+  - refactor: Removes Rev code from core flash code
+  - bugfix: Getting converted on April Fools now triggers the meme force say as always
+      intended
+  - rscdel: The meme force say can no longer trigger on any day (it didn't work before
+      anyways)
+  Mey-Ha-Zah:
+  - imageadd: added new lavaland sprites, moved some sprites to a new location, adjusted
+      pixel shift for the updated sprites, adjusted the name of some sprites.
+  flowercuco:
+  - rscadd: Added new syndicate uplink beacon and associated systems that allow you
+      to get a replacement traitor uplink
+  - bugfix: Debug & nukie uplinks no longer runtime and work properly again
+  kinneb:
+  - rscadd: A new HUD, The 'Detective' UI
+  - imageadd: All the spritework for said HUD.
+  timothymtorres:
+  - imageadd: Split all icons in weapons_and_items.dmi to their own categories
+  - imagedel: Removed some unused icons
+2023-04-07:
+  Melbert:
+  - code_imp: Audits the placement of Generic events markers. Some departments which
+      previously had none now have some, and maintenance largely no longer holds them.
+  - balance: Anomalies from a supermatter delamination, radiation leaks, and suipermatter
+      cascade portals are now placed in more commonly traversed and easy to identify
+      areas. They will also now trigger in places like Icebox med and brig when they
+      previously couldn't.
+  - bugfix: Fixed cult conversion
+  NamelessFairy:
+  - bugfix: Basketball and Thunderdome maps should not load with broken turfs are
+      several resets of their maps.
+  Profakos:
+  - bugfix: Critical condition will clear properly when you leave crit
+  Shroopy:
+  - bugfix: The fire alarm in the vacant commissary on Delta Station now longer defies
+      gravity.
+  mc-oofert:
+  - bugfix: SM now dusts you if you fall on top of it from another Z level
+  softcerv:
+  - bugfix: The crew manifest now properly updates after ID modifications.
