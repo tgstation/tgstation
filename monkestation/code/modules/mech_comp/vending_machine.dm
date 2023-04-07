@@ -36,6 +36,9 @@
 		/obj/item/mcobject/synthcomp = LOW_COMPONENT_SUPPLY,
 		/obj/item/mcobject/graviton_accelerator = LOW_COMPONENT_SUPPLY,
 		/obj/item/mcobject/teleporter = LOW_COMPONENT_SUPPLY,
+		/obj/item/mcobject/interactor = LOW_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/storage = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/type_sensor = STANDARD_COMPONENT_SUPPLY,
 	)
 
 

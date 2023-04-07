@@ -45456,6 +45456,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "pmM" = (
@@ -63781,11 +63782,11 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "vIa" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
 /obj/machinery/newscaster/directional/north,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vIg" = (

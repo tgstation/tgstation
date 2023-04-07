@@ -5721,6 +5721,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "bpN" = (
@@ -65450,6 +65451,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/work)
+"pWd" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/vending/mechcomp,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "pWe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -126061,7 +126070,7 @@ iWk
 cec
 eOe
 bTN
-kpD
+pWd
 geR
 odD
 tZa

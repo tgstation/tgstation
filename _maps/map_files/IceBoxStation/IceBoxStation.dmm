@@ -3736,8 +3736,8 @@
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "bkF" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "bkK" = (
@@ -19444,6 +19444,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"ggu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vending/mechcomp,
+/obj/machinery/vending/mechcomp,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "ggD" = (
 /obj/structure/chair{
 	dir = 4
@@ -61576,6 +61586,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "tDa" = (
@@ -234760,7 +234771,7 @@ uJn
 paW
 gLu
 dth
-bTF
+ggu
 wRd
 gka
 swe

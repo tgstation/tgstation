@@ -35723,6 +35723,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -50410,6 +50411,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "rQS" = (

@@ -43116,12 +43116,12 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nUZ" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "nVc" = (
@@ -49980,6 +49980,14 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
+"qiu" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/vending/mechcomp,
+/turf/open/floor/iron/dark,
+/area/station/science/research)
 "qiB" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/item/kirbyplants/random,
@@ -114606,7 +114614,7 @@ vTX
 mtq
 tCh
 imS
-saE
+qiu
 jeU
 pdg
 iHL
