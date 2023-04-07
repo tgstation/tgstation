@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, check_direction = TRUE, is_fulltile = TRUE,category = CAT_WINDOWS) \
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, check_direction = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS) \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
