@@ -8,7 +8,7 @@
 /datum/unit_test/font_awesome_icons/Run()
 	var/file/font_awesome_file = file('html/font-awesome/css/all.min.css')
 	if(isnull(font_awesome_file))
-		TEST_FAIL(src, "Font Awesome CSS file could not be found!")
+		TEST_FAIL("Font Awesome CSS file could not be found!")
 		return
 
 	font_awesome_css = file2text(font_awesome_file)
