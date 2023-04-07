@@ -650,5 +650,5 @@
 	name = "\improper outlet cult corruption"
 
 //SYN-C Brutus, derelict frigate
-/area/ruin/space/infested_frigate
+/area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
