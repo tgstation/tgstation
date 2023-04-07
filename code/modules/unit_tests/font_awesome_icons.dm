@@ -39,7 +39,14 @@
  */
 /datum/unit_test/font_awesome_icons/proc/verify_quirk_icons()
 	for(var/datum/quirk/quirk as anything in subtypesof(/datum/quirk))
+		if(quirk == initial(quirk.abstract_parent_type))
+			continue
+
 		var/quirk_icon = initial(quirk.icon)
+		if(findtext(quirk_icon, " "))
+			var/list/split = splittext(quirk_icon, " ")
+			quirk_icon = split[length(split)] // respect modifier classes
+
 		if(findtext(quirk_icon, "tg-") == 1)
 			continue
 
