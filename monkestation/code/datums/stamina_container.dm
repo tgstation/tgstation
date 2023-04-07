@@ -64,3 +64,5 @@
 	var/modify = parent.pre_stamina_change(amt, forced)
 	current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
 	update()
+	if((adjust < 0) && is_regenerating)
+		pause(STAMINA_REGEN_TIME)
