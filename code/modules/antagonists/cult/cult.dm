@@ -279,6 +279,13 @@
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
+
+#ifdef UNIT_TESTS
+	// This proc is unnecessary clutter whilst running cult related unit tests
+	// Remove this if, at some point, someone decides to test that halos and eyes are added at expected ratios
+	return
+#endif
+
 	var/alive = 0
 	var/cultplayers = 0
 	for(var/I in GLOB.player_list)
