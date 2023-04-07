@@ -57,7 +57,7 @@
 	mood_bonus = -8
 	mood_message = "I can feel my lifespan shortening with every breath."
 
-/area/ruin/unpowered/Phone_booth
+/area/ruin/powered/icemoon_phone_booth
 	name = "\improper Phonebooth"
 
 /area/ruin/powered/hermit

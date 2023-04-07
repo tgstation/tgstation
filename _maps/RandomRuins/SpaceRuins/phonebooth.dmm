@@ -2,24 +2,24 @@
 "a" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "c" = (
 /obj/machinery/door/window{
 	dir = 1
 	},
 /obj/machinery/door/window,
 /turf/open/floor/iron/dark/smooth_edge,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "e" = (
 /turf/open/space/basic,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "k" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/snack/green{
 	onstation_override = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "q" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/airalarm/directional/south,
@@ -31,18 +31,18 @@
 	piping_layer = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
 /turf/open/space/basic,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "J" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -67,25 +67,25 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "M" = (
 /turf/closed/wall,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "R" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "V" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 "W" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/phonebooth)
+/area/ruin/space/has_grav/powered/space_phone_booth)
 
 (1,1,1) = {"
 v

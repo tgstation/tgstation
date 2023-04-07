@@ -587,7 +587,7 @@
 
 
 // The Phonebooth
-/area/ruin/space/phonebooth
+/area/ruin/space/has_grav/powered/space_phone_booth
 	name = "\improper Phonebooth"
 
 // Ruin of Derelict Construction

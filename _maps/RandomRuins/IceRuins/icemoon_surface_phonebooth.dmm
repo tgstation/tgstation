@@ -1,23 +1,27 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/machinery/holopad,
-/turf/open/floor/iron/dark,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
 "c" = (
 /obj/machinery/door/window{
 	dir = 1
 	},
 /obj/machinery/door/window,
-/turf/open/floor/iron/dark/smooth_edge,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
 "e" = (
-/turf/open/space/basic,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
 "k" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/coffee,
 /turf/open/floor/plating/icemoon,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 "q" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/airalarm/directional/south,
@@ -29,18 +33,20 @@
 	piping_layer = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
-/turf/open/space/basic,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
 "z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
 "J" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -65,25 +71,25 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 "M" = (
 /turf/closed/wall/ice,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 "R" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating/icemoon,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 "V" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/ruin/unpowered/Phone_booth)
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
 "W" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/unpowered/Phone_booth)
+/area/ruin/powered/icemoon_phone_booth)
 
 (1,1,1) = {"
 v
