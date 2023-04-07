@@ -109,7 +109,7 @@
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
-	name = has_core ? "stable " : "hollow " + name
+	name = (has_core ? "stable " : "hollow ") + name
 	aSignal = has_core ? aSignal : null
 	immobile = anchor
 
