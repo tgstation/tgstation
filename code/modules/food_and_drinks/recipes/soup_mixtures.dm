@@ -491,18 +491,18 @@
 	percentage_of_nutriment_converted = 0.15
 
 // Vegan Chili
-/datum/reagent/consumable/nutriment/soup/chili_con_carne
+/datum/reagent/consumable/nutriment/soup/chili_sin_carne
 	name = "Chili Sin Carne"
 	description = "For the hombres who don't want carne."
 	data = list("bitterness" = 1, "sourness" = 1)
 	color = "#E23D12"
 
-/datum/glass_style/has_foodtype/soup/chili_con_carne
-	required_drink_type = /datum/reagent/consumable/nutriment/soup/chili_con_carne
+/datum/glass_style/has_foodtype/soup/chili_sin_carne
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/chili_sin_carne
 	icon_state = "hotchili"
 	drink_type = VEGETABLES
 
-/datum/chemical_reaction/food/soup/chili_con_carne
+/datum/chemical_reaction/food/soup/chili_sin_carne
 	required_reagents = list(
 		/datum/reagent/water = 40,
 		/datum/reagent/consumable/salt = 5,
@@ -512,7 +512,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	results = list(
-		/datum/reagent/consumable/nutriment/soup/chili_con_carne = 30,
+		/datum/reagent/consumable/nutriment/soup/chili_sin_carne = 30,
 		/datum/reagent/consumable/tomatojuice = 10,
 	)
 

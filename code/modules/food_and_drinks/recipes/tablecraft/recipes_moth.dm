@@ -69,7 +69,7 @@
 /datum/crafting_recipe/food/loaded_curds
 	name = "Ozlsettitæloskekllön ede pommes (Loaded curds and fries)"
 	reqs = list(
-		/datum/reagent/consumable/nutriment/soup/chili_con_carne = 10,
+		/datum/reagent/consumable/nutriment/soup/chili_sin_carne = 10,
 		/obj/item/food/cheese/cheese_curds = 1,
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/cheese/wedge = 1,
@@ -410,7 +410,7 @@
 	reaction = /datum/chemical_reaction/food/soup/cheese_porridge
 	category = CAT_MOTH
 
-/datum/crafting_recipe/food/reaction/soup/chili_con_carne
+/datum/crafting_recipe/food/reaction/soup/chili_sin_carne
 	name = "Chili Sin Carne (Vegetarian Chili)"
-	reaction = /datum/chemical_reaction/food/soup/chili_con_carne
+	reaction = /datum/chemical_reaction/food/soup/chili_sin_carne
 	category = CAT_MOTH
