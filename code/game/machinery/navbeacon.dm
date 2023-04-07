@@ -186,8 +186,10 @@
 
 	switch(action)
 		if("reset_codes")
-			set_codes()
+			glob_lists_deregister()
 			location = original_location
+			set_codes()
+			glob_lists_reregister()
 			return TRUE
 		if("toggle_cover")
 			cover_locked = !cover_locked
@@ -202,9 +204,9 @@
 			var/input_text = tgui_input_text(usr, "Enter the beacon's location tag", "Beacon Location", location, 20)
 			if (!input_text || location == input_text)
 				return
-			GLOB.deliverybeacontags -= location
+			glob_lists_deregister()
 			location = input_text
-			GLOB.deliverybeacontags += input_text
+			glob_lists_reregister()
 			return TRUE
 		if("set_patrol_next")
 			var/next_patrol = codes[NAVBEACON_PATROL_NEXT]
