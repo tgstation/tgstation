@@ -1,3 +1,5 @@
+//RAPID PIPE DISPENSER
+
 #define ATMOS_CATEGORY 0
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
@@ -142,7 +144,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		row["previews"] += list(list(
 			"selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
-			"dir" = dir2text(numdir), 
+			"dir" = dir2text(numdir),
 			"dir_name" = dirs[dir],
 			"icon_state" = icon_state,
 			"flipped" = flipped,
@@ -326,7 +328,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		piping_layer = target.piping_layer
-		to_chat(user, span_notice("You change [src] to [paint_color] color and layer [piping_layer] pipes."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
@@ -353,7 +354,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
  */
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
 	if(rpd_up.upgrade_flags& upgrade_flags)
-		to_chat(user, span_warning("[src] has already installed this upgrade!"))
+		balloon_alert(user, "already installed!")
 		return
 	upgrade_flags |= rpd_up.upgrade_flags
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -509,7 +510,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = TRUE
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
-		to_chat(user, span_notice("You start destroying a pipe..."))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
 			activate()
@@ -521,19 +521,18 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
 		if(istype(S))
 			if (S.dir == ALL_CARDINALS)
-				to_chat(user, span_warning("\The [S] has no unconnected directions!"))
+				balloon_alert(user, "has no unconnected directions!")
 				return
 			var/old_init_dir = S.get_init_directions()
 			if (old_init_dir == p_init_dir)
-				to_chat(user, span_warning("\The [S] is already in this configuration!"))
+				balloon_alert(user, "already configured!")
 				return
 			// Check for differences in unconnected directions
 			var/target_differences = (p_init_dir ^ old_init_dir) & ~S.connections
 			if (!target_differences)
-				to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
+				balloon_alert(user, "already configured for its directions!")
 				return
 
-			to_chat(user, span_notice("You start reprogramming \the [S]..."))
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 			if(!do_after(user, reprogram_speed, target = S))
 				return
@@ -543,7 +542,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
 			if (target_differences & S.connections)
-				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
+				balloon_alert(user, "cant configure for its direction!")
 				return
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
 			var/current_init_dir = S.get_init_directions()
@@ -552,7 +551,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
 			// Don't make a smart pipe with only one connection
 			if (ISSTUB(new_init_dir))
-				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				balloon_alert(user, "no one directional pipes allowed!")
 				return
 			S.set_init_directions(new_init_dir)
 			// We're now reconfigured.
@@ -594,7 +593,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return ..()
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
-					to_chat(user, span_notice("You start building a meter..."))
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(attack_target))
@@ -602,7 +600,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
 				else if(recipe.type == /datum/pipe_info/sensor)
-					balloon_alert(user, "building air sensor...")
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
 						var/datum/pipe_info/sensor/sensor_recipe = recipe
@@ -612,12 +609,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						recipe = first_atmos
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
-						to_chat(user, span_notice("You can't build this object on the layer..."))
+						balloon_alert(user, "cant build on this layer!")
 						return ..()
-					to_chat(user, span_notice("You start building a pipe..."))
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
-							to_chat(user, span_notice("You can't build this object on the layer..."))
+							balloon_alert(user, "cant build on this layer!")
 							return ..()
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
@@ -647,15 +643,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					balloon_alert(user, "target is blocked!")
 					return
-				to_chat(user, span_notice("You start building a disposals pipe..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, disposal_build_speed, target = attack_target))
 					var/obj/structure/disposalconstruct/C = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
 
 					if(!C.can_place())
-						to_chat(user, span_warning("There's not enough room to build that here!"))
+						balloon_alert(user, "not enough room!")
 						qdel(C)
 						return
 
@@ -672,15 +667,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					balloon_alert(user, "something in the way!")
 					return
 
 				var/turf/target_turf = get_turf(attack_target)
 				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					balloon_alert(user, "something in the way!")
 					return
 
-				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
 					activate()
