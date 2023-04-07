@@ -1,0 +1,4237 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ai" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-9"
+	},
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ar" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-46"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"au" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"aB" = (
+/obj/structure/cable,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"aN" = (
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/shoes/cult/alt,
+/obj/structure/closet/crate,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"aX" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"bk" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-46"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"bn" = (
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/grunge{
+	name = "STORAGE - EMPLOYEES ONLY"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"bC" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-14"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"bJ" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"bS" = (
+/obj/structure/rack,
+/obj/item/storage/backpack,
+/obj/item/storage/backpack/duffelbag,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"bW" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ci" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"cl" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"cp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"cz" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"cK" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2-old"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "rune5"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"cL" = (
+/obj/effect/rune/apocalypse{
+	req_cultists = 999;
+	layer = 2
+	},
+/obj/structure/destructible/cult/pants_altar{
+	layer = 3
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"cZ" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gib2-old"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"da" = (
+/obj/structure/table/reinforced,
+/obj/machinery/gibber,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"df" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock{
+	name = "Break Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"dg" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"dn" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-127"
+	},
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"ds" = (
+/obj/structure/door_assembly/door_assembly_cult,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"dy" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "gibbl4"
+	},
+/obj/structure/emergency_shield/cult,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gib1-old"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"dF" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"eg" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"es" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"eN" = (
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"eO" = (
+/obj/structure/table/reinforced,
+/obj/item/folder,
+/obj/item/pen,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"fk" = (
+/obj/structure/cable,
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"fn" = (
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"fo" = (
+/obj/machinery/door/window/brigdoor/right/directional/north,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"fA" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"fO" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"fX" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/lizard,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"gc" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3-old"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"gf" = (
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"gy" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor4"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"gO" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-46"
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker,
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"gU" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/organ/internal/tongue/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/organ/external/tail/lizard,
+/obj/item/organ/internal/heart,
+/obj/item/organ/internal/brain,
+/obj/item/organ/internal/liver,
+/obj/item/organ/internal/lungs,
+/obj/item/organ/internal/stomach,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"gX" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"hh" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"hi" = (
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c10,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"hC" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"hG" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"hT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"il" = (
+/obj/effect/decal/cleanable/ants,
+/obj/machinery/light/directional/south,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-143"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"iq" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"iB" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"iC" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-157"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4-old"
+	},
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"iD" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"iL" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"iS" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"iY" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"jg" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ji" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"jv" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "pile"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"jw" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-13"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"jA" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/item/paper/fluff/ruins/the_outlet/amos_note,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"jD" = (
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/away/medical,
+/obj/effect/mapping_helpers/airlock/access/all/away/security,
+/obj/machinery/door/airlock/vault{
+	name = "Clothing Storage"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"jH" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"jM" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ko" = (
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"kq" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"kr" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"ks" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"kv" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/item/card/id/away/the_outlet/mad_manager,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"kB" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-11"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"kQ" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"kX" = (
+/obj/machinery/chem_master,
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"kY" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-9"
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ld" = (
+/obj/item/rack_parts,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-23"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"le" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"lK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"lZ" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-9"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"ma" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"mb" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/dry_ramen,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"mh" = (
+/obj/structure/table/reinforced,
+/obj/item/card/id/away/the_outlet/angry_assistant_manager,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"my" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/jacket/leather,
+/obj/item/clothing/under/color/lightbrown,
+/obj/item/clothing/shoes/cowboy/black,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/gloves/fingerless,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"mE" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"mX" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"nq" = (
+/obj/machinery/door/window,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"nx" = (
+/obj/structure/rack,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/shoes/sneakers/blue,
+/obj/item/clothing/glasses/regular,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"nD" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-191"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"nM" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"od" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"oi" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-10"
+	},
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"oG" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"oI" = (
+/obj/structure/rack,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/shoes/cowboy,
+/obj/item/clothing/under/costume/dutch,
+/obj/item/clothing/suit/costume/poncho,
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ps" = (
+/obj/structure/rack,
+/obj/item/clothing/under/misc/bouncer,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/shoes/laceup,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"pt" = (
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"pu" = (
+/obj/structure/statue/bone/rib,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"pC" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "side"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"pG" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"pM" = (
+/obj/structure/billboard/donk_n_go,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"pY" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-127"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2-old"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3-old"
+	},
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"qa" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"qc" = (
+/obj/effect/decal/cleanable/crayon,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"qe" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"qo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"qp" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"qs" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"qv" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"qy" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"qC" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"qF" = (
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"qP" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/item/storage/backpack/satchel/leather,
+/obj/item/storage/backpack/satchel,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"re" = (
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"rf" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/kirbyplants/random,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ri" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"rk" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"rz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"rF" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/reagent_containers/syringe/lethal/execution,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"rH" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor1-old"
+	},
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gib2-old"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"rI" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"rP" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/machinery/light/dim/directional/east,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"rV" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"rZ" = (
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Electrical"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"sc" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"sn" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"sq" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ss" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"sv" = (
+/obj/effect/spawner/random/decoration,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"sF" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/coffeemaker,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"sO" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"sR" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"sS" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"tC" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7-old"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"tG" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"tH" = (
+/obj/item/chair/stool,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"tN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ua" = (
+/obj/structure/closet/l3closet/virology,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"ug" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"uh" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"ux" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"uC" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-8"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"uE" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"uR" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"uW" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-8"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor6-old"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"va" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/table,
+/obj/item/soap,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"vb" = (
+/obj/item/stack/spacecash/c20,
+/obj/item/stack/spacecash/c50,
+/obj/structure/cable,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"vc" = (
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"vg" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"vs" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"vF" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/closed/mineral/random,
+/area/ruin/space)
+"vL" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-141"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"wf" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-13"
+	},
+/obj/structure/toilet,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"wl" = (
+/obj/effect/decal/cleanable/crayon,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"wo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"wH" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-207"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"wI" = (
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"wK" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/knife/butcher,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"wW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"xe" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"xj" = (
+/obj/item/rack_parts,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"xA" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"xI" = (
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"xL" = (
+/obj/structure/trap/cult,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"xQ" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ya" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-55"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"yg" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-5"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ym" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"yx" = (
+/obj/item/toy/plush/narplush,
+/obj/effect/decal/cleanable/crayon,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"yG" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing,
+/obj/effect/spawner/random/clothing,
+/obj/effect/spawner/random/clothing,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"yJ" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"zc" = (
+/obj/effect/decal/cleanable/crayon,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"zd" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"zm" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"zt" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-143"
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"zz" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-4"
+	},
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "rune6"
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"zA" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating"
+	},
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"zB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"zF" = (
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"zK" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"zR" = (
+/obj/structure/closet/crate/trashcart,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"zS" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"zX" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Aa" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4-old"
+	},
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Ab" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ae" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Womens Bathroom"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"An" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"AH" = (
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"AS" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/remains/human/smokey,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"AV" = (
+/obj/structure/sign/departments/restroom,
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Bb" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/light/dim/directional/west,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-8"
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Bg" = (
+/obj/item/flashlight,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Bo" = (
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Bz" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-23"
+	},
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"BC" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "gib3-old"
+	},
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"BK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"BT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"BW" = (
+/obj/machinery/door/window,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Ce" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-14"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"CC" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"CQ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-11"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"CT" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Da" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/card/id/away/the_outlet,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Db" = (
+/obj/effect/decal/cleanable/crayon,
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Do" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-207"
+	},
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Dp" = (
+/obj/structure/urinal{
+	dir = 4
+	},
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"DC" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/fluff/ruins/the_outlet/tanners_steps,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"DQ" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ee" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-55"
+	},
+/obj/structure/trap/cult,
+/obj/effect/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Ef" = (
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Eg" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Er" = (
+/turf/closed/mineral/random,
+/area/ruin/space)
+"Et" = (
+/obj/item/paper/crumpled/bloody/ruins/the_outlet/concerned_note,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor1-old"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3-old"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ez" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor1-old"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"ED" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Fi" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Fl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Fm" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ft" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Fv" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-7"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"FA" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-110"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"FD" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"FF" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"FG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"FO" = (
+/obj/machinery/door/airlock/cult/weak,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"FY" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Gu" = (
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"GG" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"GJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"GK" = (
+/obj/structure/mirror/directional,
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Hc" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"He" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Hg" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Ht" = (
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"HF" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Merchandise Storage"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"HH" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"HI" = (
+/obj/item/rack_parts,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"HO" = (
+/obj/item/clothing/suit/hooded/cultrobes,
+/obj/item/clothing/shoes/cult,
+/obj/item/sharpener/cult,
+/obj/structure/closet/crate,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"HV" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing,
+/obj/effect/spawner/random/clothing,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"HX" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/meter/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"HZ" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/hooded/bloated_human,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ie" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Ig" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing,
+/obj/effect/spawner/random/clothing,
+/obj/effect/spawner/random/clothing,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Iq" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Iy" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-63"
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Iz" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7-old"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"IA" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-110"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "rune2"
+	},
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"IF" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"IJ" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-63"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Jh" = (
+/obj/structure/aquarium/prefilled,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Kb" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Kp" = (
+/turf/template_noop,
+/area/template_noop)
+"Kq" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Kv" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Kw" = (
+/obj/structure/billboard/space_cola,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"KA" = (
+/obj/structure/rack,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/gloves/color/brown,
+/obj/item/clothing/head/beret,
+/obj/item/clothing/suit/costume/gothcoat,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"KV" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"KZ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Lc" = (
+/obj/structure/sink,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-14"
+	},
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Ld" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Ll" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/fluff/ruins/the_outlet/warning_notice,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Lw" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"LA" = (
+/obj/item/stack/rods/two,
+/turf/template_noop,
+/area/template_noop)
+"LL" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "rune2"
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"LR" = (
+/obj/machinery/chem_dispenser,
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"LV" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Mj" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/light/blacklight/directional/east,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Mk" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Mu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Mens Bathroom"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"MA" = (
+/obj/structure/fluff/broken_flooring{
+	dir = 4;
+	icon_state = "singular"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"MF" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-8"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman/super{
+	anchored = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"ML" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "gib2-old"
+	},
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"MR" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Electrical"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"MT" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"MV" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"MY" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/table,
+/obj/item/soap,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Nb" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Nj" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"NA" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "rune4"
+	},
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"NE" = (
+/obj/structure/table/wood,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"NK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"NP" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"NY" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-143"
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Oy" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"OD" = (
+/obj/item/paper/crumpled/bloody/ruins/the_outlet/final_regrets,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"OJ" = (
+/obj/structure/chair/sofa/corp/right,
+/obj/item/pillow,
+/obj/machinery/light/small/directional/north,
+/obj/item/bedsheet/cult{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"OL" = (
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Pb" = (
+/obj/structure/sign/departments/security,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Pg" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/microwave,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Po" = (
+/obj/machinery/door/airlock/security{
+	name = "Decontamination"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/away/medical,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ps" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-159"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"PB" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "bubblegumfoot"
+	},
+/obj/structure/emergency_shield/cult,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"PE" = (
+/obj/item/flashlight/flare/candle,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"PN" = (
+/obj/structure/sign/warning/cold_temp,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"PS" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-137"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"PV" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2-old"
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Qd" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Qi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Ql" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"QI" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-143"
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"QK" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Ra" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-14"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Rj" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	dir = 4
+	},
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Rx" = (
+/obj/structure/rack,
+/obj/item/clothing/head/costume/papersack,
+/obj/item/clothing/under/rank/medical/scrubs/blue,
+/obj/item/scalpel,
+/obj/item/clothing/shoes/sneakers/yellow,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"RB" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"RH" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"RL" = (
+/obj/machinery/light/dim/directional/east,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-0"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"RN" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"RO" = (
+/obj/structure/headpike/bone,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"RV" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4-old"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Sv" = (
+/obj/item/kirbyplants,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Sx" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/grunge{
+	name = "Research Quarters"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"SJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"SM" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"SU" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"SW" = (
+/obj/item/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Tm" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/knife/ritual,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Ts" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Tw" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"TM" = (
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"TZ" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Ub" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Ui" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-191"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"UF" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"UH" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/freezer{
+	name = "Fabric Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/access/all/away/medical,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"UO" = (
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/grunge{
+	name = "STORAGE - EMPLOYEES ONLY"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"UY" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Vr" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Vw" = (
+/obj/effect/spawner/random/entertainment/plushie,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Vx" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/food/meat/rawcutlet/plain/human,
+/obj/item/food/meat/rawcutlet/plain/human,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/stack/sheet/meat/five,
+/obj/item/stack/sheet/meat/five,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Vz" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"VT" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/crayon,
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-127"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"VU" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Wc" = (
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Wi" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Wm" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Wu" = (
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Wx" = (
+/obj/machinery/shower/directional/north,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Wz" = (
+/obj/machinery/door/airlock/glass_large,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"WC" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-3"
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7-old"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"WE" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"WR" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"WX" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/broken_bottle,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Xb" = (
+/obj/structure/closet/l3closet/virology,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Xj" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/coffeepot,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Xm" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-137"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/structure/toilet,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Xt" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Xu" = (
+/obj/effect/decal/remains/human,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Xv" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-159"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"XH" = (
+/obj/structure/destructible/cult/pylon,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"XO" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/closet/crate/trashcart,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"XQ" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"XW" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"Yr" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/crayon,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
+"Yx" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-4"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"YB" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-95"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"YK" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-1"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"YP" = (
+/obj/structure/sink,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/the_outlet/storefront)
+"Zl" = (
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-137"
+	},
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor7"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/the_outlet/employeesection)
+"Zy" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-5"
+	},
+/obj/machinery/shower/directional/north,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"ZO" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Merchandise Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+"ZZ" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt{
+	icon_state = "dirt-207"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
+
+(1,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(2,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+Kp
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(3,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Kp
+HH
+HH
+HH
+Er
+Er
+HH
+HH
+HH
+HH
+HH
+Kp
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(4,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+HH
+Er
+HH
+Er
+Er
+HH
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+HH
+HH
+Er
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(5,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(6,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+HH
+Kp
+Kp
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(7,1,1) = {"
+Kp
+Kp
+Kp
+HH
+Er
+Er
+Er
+Er
+Er
+Fm
+Fm
+UF
+Fm
+UF
+Fm
+UF
+Fm
+Fm
+UF
+Fm
+Fm
+UF
+UF
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(8,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+UF
+fX
+HZ
+Vx
+gU
+RV
+Fm
+Pg
+ED
+kB
+OL
+cK
+Nj
+Fm
+uE
+Ts
+Ts
+uE
+uE
+Er
+Er
+Er
+HH
+HH
+Er
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(9,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+UF
+wK
+LL
+fO
+Nb
+Ef
+Fm
+Xj
+OL
+IF
+IF
+ar
+uC
+UF
+rf
+hh
+Kb
+QK
+Ts
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(10,1,1) = {"
+Kp
+Kp
+Er
+Er
+HH
+Er
+Er
+Er
+Er
+Fm
+da
+DC
+Nb
+Ra
+Ef
+UF
+sF
+OL
+Ps
+mh
+Et
+OL
+Fm
+Fi
+YK
+yg
+jg
+Ts
+Ts
+uE
+Ts
+Ts
+uE
+Ts
+uE
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(11,1,1) = {"
+Kp
+Kp
+Kp
+HH
+HH
+Er
+Er
+Er
+Er
+UF
+le
+qo
+rz
+cZ
+qe
+UF
+Fm
+OJ
+OL
+eO
+FF
+ED
+UF
+mb
+Wc
+tH
+il
+uE
+MF
+jH
+sn
+ri
+bW
+Lw
+Ts
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(12,1,1) = {"
+Kp
+Kp
+Kp
+HH
+Er
+Er
+Er
+Er
+Er
+Fm
+oG
+qo
+PS
+Nb
+Hc
+kX
+UF
+gf
+xA
+TZ
+yJ
+OL
+UF
+eg
+WX
+NK
+hG
+uE
+Vz
+gX
+ss
+Ub
+YB
+dF
+uE
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(13,1,1) = {"
+Kp
+Kp
+Kp
+HH
+Er
+Er
+Er
+Er
+Er
+UF
+pY
+Fl
+Ql
+oi
+Nb
+LR
+UF
+Oy
+lK
+WE
+Ab
+tC
+Fm
+CC
+Xv
+nD
+Wc
+Ts
+cl
+AH
+xQ
+Bz
+NK
+Xt
+uE
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(14,1,1) = {"
+Kp
+Kp
+Kp
+HH
+HH
+Er
+Er
+Er
+Er
+Fm
+rF
+qo
+zB
+Nb
+Nb
+gO
+Fm
+OL
+NP
+NY
+VU
+zt
+Fm
+Jh
+zK
+NK
+SW
+Ts
+Ld
+NK
+wW
+NK
+HX
+gX
+uE
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(15,1,1) = {"
+Kp
+Kp
+Kp
+HH
+HH
+Er
+Er
+Er
+Er
+Fm
+rk
+lZ
+hT
+aB
+fk
+AS
+Fm
+Fv
+qv
+OL
+IF
+Nj
+Fm
+QI
+FA
+BK
+rV
+Ts
+XO
+bC
+CQ
+es
+NK
+qC
+Ts
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(16,1,1) = {"
+Kp
+Kp
+Kp
+HH
+HH
+Er
+Er
+Er
+UF
+UF
+Fm
+Fm
+UH
+PN
+UF
+UF
+Fm
+Fm
+Sx
+Fm
+Fm
+Fm
+UF
+Ts
+uE
+df
+uE
+uE
+gX
+pC
+wW
+Yx
+bJ
+Zl
+Ts
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(17,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+UF
+OL
+qp
+iB
+vg
+GG
+zz
+sS
+Bb
+Kv
+XQ
+ji
+ZO
+BT
+BT
+cp
+BT
+Qi
+Qi
+MR
+wW
+gy
+wW
+gX
+sR
+dF
+uE
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(18,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+UF
+MT
+OL
+ZZ
+mE
+rP
+mE
+OL
+mE
+OL
+mE
+Iq
+HF
+au
+au
+Hg
+SJ
+Wc
+mX
+rZ
+ya
+jw
+zR
+Qd
+RL
+ya
+uE
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(19,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+UF
+Fm
+Pb
+Po
+Fm
+UF
+qs
+qs
+RN
+RN
+qs
+RN
+RN
+qs
+qs
+qs
+aX
+yG
+SJ
+ci
+au
+uE
+Ts
+uE
+uE
+Ts
+uE
+uE
+Ts
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+"}
+(20,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+UF
+bk
+sc
+OL
+ua
+UF
+uR
+re
+Ce
+Gu
+eN
+Iz
+eN
+Gu
+Gu
+RN
+Wc
+xj
+Qi
+ld
+Wu
+Ts
+UY
+UY
+od
+UY
+od
+UY
+od
+UY
+od
+od
+Kw
+HH
+Kp
+HH
+Kp
+Kp
+"}
+(21,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+iL
+OL
+CT
+sc
+Wx
+iL
+re
+qy
+PB
+re
+Gu
+re
+re
+re
+Mk
+qs
+Ll
+Rj
+Qi
+Vr
+Wc
+uE
+od
+Eg
+xI
+rI
+FY
+FY
+FY
+zm
+MV
+od
+HH
+HH
+nM
+LA
+Kp
+Kp
+"}
+(22,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+iL
+iY
+kq
+vL
+IA
+ds
+PV
+eN
+Gu
+re
+Gu
+iC
+Gu
+re
+Gu
+RN
+au
+bS
+Qi
+xj
+IJ
+Ts
+od
+SM
+xI
+Ie
+wI
+wI
+wI
+TM
+xI
+UY
+HH
+RH
+nM
+nM
+nM
+Kp
+"}
+(23,1,1) = {"
+Kp
+Kp
+HH
+HH
+Er
+Er
+iL
+He
+ks
+DQ
+OL
+FO
+zd
+Gu
+Gu
+NA
+Gu
+Gu
+qy
+Ez
+zd
+RN
+sO
+au
+pG
+zA
+Hg
+uE
+od
+SM
+xI
+xI
+TM
+xI
+RB
+Bg
+Wm
+od
+UY
+UY
+UY
+Kp
+LA
+Kp
+"}
+(24,1,1) = {"
+Kp
+Kp
+HH
+Er
+Er
+Er
+UF
+VT
+XW
+OL
+Zy
+UF
+re
+re
+qy
+BC
+dy
+Gu
+re
+Gu
+Gu
+qs
+Iy
+Wc
+Qi
+Wc
+jM
+Ts
+UY
+Vw
+xI
+Ig
+xI
+xI
+TM
+uh
+xI
+Wz
+vs
+Kq
+SU
+An
+nM
+Kp
+"}
+(25,1,1) = {"
+Kp
+Kp
+Er
+Er
+Er
+Er
+iL
+OL
+wH
+Ui
+Xb
+iL
+Gu
+re
+Ez
+eN
+Gu
+Gu
+re
+Gu
+Gu
+qs
+Ts
+bn
+UO
+Ts
+Ts
+uE
+od
+vc
+xI
+HI
+xI
+ux
+xI
+HI
+xI
+kQ
+jv
+MA
+SU
+An
+Kp
+Kp
+"}
+(26,1,1) = {"
+Kp
+Er
+Er
+Er
+Er
+Er
+UF
+UF
+iL
+iL
+UF
+UF
+RN
+qy
+Iz
+re
+re
+re
+qy
+Ht
+xL
+qy
+od
+zS
+FG
+od
+od
+od
+AV
+Sv
+xI
+TM
+iD
+ux
+uh
+HI
+TM
+UY
+UY
+UY
+UY
+LA
+nM
+Kp
+"}
+(27,1,1) = {"
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+RN
+rH
+eN
+eN
+gc
+Yr
+Gu
+WC
+qy
+od
+zS
+FG
+dg
+tN
+wo
+sq
+wo
+Ft
+WR
+xI
+HI
+xI
+FD
+nq
+nx
+HH
+RH
+nM
+nM
+LA
+Kp
+"}
+(28,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+qy
+Gu
+Gu
+re
+dn
+re
+Gu
+re
+qy
+UY
+pt
+TM
+zS
+zS
+zS
+fA
+xI
+Ft
+tG
+Ft
+HV
+xI
+TM
+nq
+oI
+HH
+HH
+Kp
+nM
+nM
+Kp
+"}
+(29,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+RN
+qy
+RN
+qy
+RN
+RN
+qy
+qy
+Aa
+Gu
+re
+Gu
+Gu
+RN
+UY
+Mu
+UY
+od
+od
+Ae
+UY
+od
+UY
+Wi
+Ft
+GJ
+xI
+KV
+nq
+KA
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(30,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+qy
+XH
+kr
+hC
+qc
+hC
+qa
+RN
+qy
+xL
+re
+re
+Gu
+qy
+od
+LV
+Do
+UY
+ko
+zX
+od
+yx
+od
+HI
+Ft
+qP
+xI
+iD
+nq
+my
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(31,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+qy
+HO
+iS
+Gu
+xe
+Gu
+iS
+Gu
+RN
+re
+re
+uW
+Gu
+RN
+GK
+YP
+TM
+GK
+Lc
+TM
+UY
+vF
+od
+ug
+cz
+TM
+xI
+ma
+nq
+Rx
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(32,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+RN
+kr
+ym
+Gu
+PE
+OD
+kv
+qa
+qy
+qF
+Gu
+eN
+Gu
+qy
+UY
+va
+kY
+od
+MY
+ko
+od
+Er
+UY
+zF
+vb
+hi
+NE
+xI
+BW
+ps
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+"}
+(33,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+qy
+wl
+RO
+PE
+cL
+ML
+RO
+zc
+jD
+Gu
+Gu
+Bo
+eN
+RN
+od
+Xm
+ko
+UY
+wf
+ai
+od
+Er
+od
+jA
+xI
+Tw
+fn
+ae
+xI
+od
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+"}
+(34,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+qy
+KZ
+qa
+Gu
+PE
+Tm
+kr
+ym
+qy
+re
+qy
+Db
+Gu
+qy
+UY
+od
+Dp
+UY
+UY
+od
+UY
+Er
+od
+Xu
+xI
+xI
+TM
+sv
+xI
+od
+pM
+HH
+Kp
+Kp
+Kp
+Kp
+"}
+(35,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+qy
+aN
+iS
+Gu
+pu
+Gu
+iS
+Gu
+qy
+re
+Ee
+Gu
+Gu
+RN
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+UY
+Da
+iq
+iD
+xI
+fo
+Mj
+UY
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(36,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+RN
+XH
+KZ
+hC
+qc
+hC
+ym
+qy
+re
+re
+re
+eN
+qy
+RN
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+od
+od
+od
+UY
+od
+UY
+od
+od
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(37,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+qy
+qy
+qy
+RN
+RN
+qy
+qy
+RN
+RN
+qy
+RN
+RN
+qy
+Er
+Er
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+"}
+(38,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+Kp
+Er
+Kp
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+"}
+(39,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+Er
+Er
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+HH
+HH
+Kp
+Kp
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+Kp
+Kp
+Kp
+"}
+(40,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+Er
+HH
+Er
+Er
+Er
+Er
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(41,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Er
+Er
+HH
+Er
+HH
+HH
+Er
+HH
+HH
+HH
+HH
+Er
+HH
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(42,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+HH
+HH
+HH
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(43,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+HH
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
+(44,1,1) = {"
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+"}
