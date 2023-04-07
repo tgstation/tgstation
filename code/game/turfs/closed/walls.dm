@@ -214,11 +214,11 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T, distance_check = TRUE)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
-		if(F.try_build(src, user))
+		if(F.try_build(src, user, distance_check))
 			F.attach(src, user)
 			return TRUE
 		return FALSE
@@ -283,7 +283,7 @@
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
-			if(!try_wallmount(new_wallmount, user, src))
+			if(!try_wallmount(new_wallmount, user, src, !the_rcd.ranged))
 				qdel(new_wallmount)
 				return FALSE
 			return TRUE

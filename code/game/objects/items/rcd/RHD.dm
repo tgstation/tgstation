@@ -17,17 +17,24 @@
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	armor_type = /datum/armor/item_construction
 	resistance_flags = FIRE_PROOF
+	/// the spark system which sparks whever the ui options are dited
 	var/datum/effect_system/spark_spread/spark_system
+	/// current local matter inside the device, not used when silo link is on
 	var/matter = 0
+	/// maximum local matter this device can hold, not used when silo link is on
 	var/max_matter = 100
-	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
-	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
-	/// Bitflags for upgrades
+	/// controls whether or not does update_icon apply ammo indicator overlays
+	var/has_ammobar = FALSE
+	/// amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/ammo_sections = 10
+	/// bitflags for upgrades
 	var/upgrade = NONE
-	/// Bitflags for banned upgrades
+	/// bitflags for banned upgrades
 	var/banned_upgrades = NONE
-	var/datum/component/remote_materials/silo_mats //remote connection to the silo
-	var/silo_link = FALSE //switch to use internal or remote storage
+	/// remote connection to the silo
+	var/datum/component/remote_materials/silo_mats
+	/// switch to use internal or remote storage
+	var/silo_link = FALSE
 
 /datum/armor/item_construction
 	fire = 100
@@ -74,62 +81,61 @@
 		return TRUE
 	return ..()
 
-/obj/item/construction/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rcd_upgrade))
-		install_upgrade(W, user)
+/obj/item/construction/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/rcd_upgrade))
+		install_upgrade(item, user)
 		return TRUE
-	if(insert_matter(W, user))
+	if(insert_matter(item, user))
 		return TRUE
 	return ..()
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
-/obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/rcd_up, mob/user)
-	if(rcd_up.upgrade & upgrade)
+/obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/design_disk, mob/user)
+	if(design_disk.upgrade & upgrade)
 		balloon_alert(user, "already installed!")
 		return
-	if(rcd_up.upgrade & banned_upgrades)
+	if(design_disk.upgrade & banned_upgrades)
 		balloon_alert(user, "cannot install upgrade!")
 		return
-	upgrade |= rcd_up.upgrade
-	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
+	upgrade |= design_disk.upgrade
+	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-	qdel(rcd_up)
+	qdel(design_disk)
 
 /// Inserts matter into the RCD allowing it to build
-/obj/item/construction/proc/insert_matter(obj/O, mob/user)
+/obj/item/construction/proc/insert_matter(obj/item, mob/user)
 	if(iscyborg(user))
 		return FALSE
 
 	var/loaded = FALSE
-	if(istype(O, /obj/item/rcd_ammo))
-		var/obj/item/rcd_ammo/R = O
-		var/load = min(R.ammoamt, max_matter - matter)
+	if(istype(item, /obj/item/rcd_ammo))
+		var/obj/item/rcd_ammo/ammo = item
+		var/load = min(ammo.ammoamt, max_matter - matter)
 		if(load <= 0)
 			balloon_alert(user, "storage full!")
 			return FALSE
-		R.ammoamt -= load
-		if(R.ammoamt <= 0)
-			qdel(R)
+		ammo.ammoamt -= load
+		if(ammo.ammoamt <= 0)
+			qdel(ammo)
 		matter += load
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
-	else if(isstack(O))
-		loaded = loadwithsheets(O, user)
+	else if(isstack(item))
+		loaded = loadwithsheets(item, user)
 	if(loaded)
 		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
-/obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
-	var/value = S.matter_amount
-	if(value <= 0)
+/obj/item/construction/proc/loadwithsheets(obj/item/stack/the_stack, mob/user)
+	if(the_stack.matter_amount <= 0)
 		balloon_alert(user, "invalid sheets!")
 		return FALSE
-	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+	var/maxsheets = round((max_matter-matter) / the_stack.matter_amount) //calculate the max number of sheets that will fit in RCD
 	if(maxsheets > 0)
-		var/amount_to_use = min(S.amount, maxsheets)
-		S.use(amount_to_use)
-		matter += value*amount_to_use
+		var/amount_to_use = min(the_stack.amount, maxsheets)
+		the_stack.use(amount_to_use)
+		matter += the_stack.matter_amount * amount_to_use
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
 	balloon_alert(user, "storage full!")
@@ -235,10 +241,10 @@
 			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
-/obj/item/construction/proc/range_check(atom/A, mob/user)
-	if(A.z != user.z)
+/obj/item/construction/proc/range_check(atom/target, mob/user)
+	if(target.z != user.z)
 		return
-	if(!(A in dview(7, get_turf(user))))
+	if(!(target in dview(7, get_turf(user))))
 		balloon_alert(user, "out of range!")
 		flick("[icon_state]_empty", src)
 		return FALSE

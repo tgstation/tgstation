@@ -5,13 +5,9 @@
 ///each define maps to a variable used for construction in the RCD
 #define CONSTRUCTION_MODE "construction_mode"
 #define WINDOW_TYPE "window_type"
-#define WINDOW_GLASS "window_glass"
-#define WINDOW_SIZE "window_size"
 #define COMPUTER_DIR "computer_dir"
 #define WALLFRAME_TYPE "wallframe_type"
 #define FURNISH_TYPE "furnish_type"
-#define FURNISH_COST "furnish_cost"
-#define FURNISH_DELAY "furnish_delay"
 #define AIRLOCK_TYPE "airlock_type"
 
 ///flags to be sent to UI
@@ -46,10 +42,10 @@
 			//Walls & Windows
 			"Structures" = list(
 				list(CONSTRUCTION_MODE = RCD_FLOORWALL, ICON = "wallfloor", TITLE = "Wall/Floor"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowsize", TITLE = "Directional Window"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "window0", TITLE = "Full Tile Window"),
-				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window, ICON = "windowsize", TITLE = "Directional Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, ICON = "window0", TITLE = "Full Tile Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
 				list(CONSTRUCTION_MODE = RCD_CATWALK, ICON = "catwalk-0", TITLE = "Catwalk"),
 				list(CONSTRUCTION_MODE = RCD_REFLECTOR, ICON = "reflector_base", TITLE = "Reflector"),
 			),
@@ -57,10 +53,10 @@
 			//Computers & Machine Frames
 			"Machines" = list(
 				list(CONSTRUCTION_MODE = RCD_MACHINE, ICON = "box_1", TITLE = "Machine Frame"),
-				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 1, ICON = "cnorth", TITLE = "Computer North"),
-				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 2, ICON = "csouth", TITLE = "Computer South"),
-				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 4, ICON = "ceast", TITLE = "Computer East"),
-				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 8, ICON = "cwest", TITLE = "Computer West"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = NORTH, ICON = "cnorth", TITLE = "Computer North"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = SOUTH, ICON = "csouth", TITLE = "Computer South"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = EAST, ICON = "ceast", TITLE = "Computer East"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = WEST, ICON = "cwest", TITLE = "Computer West"),
 				list(CONSTRUCTION_MODE = RCD_FLOODLIGHT, ICON = "floodlight_c1", TITLE = "FloodLight Frame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/apc, ICON = "apc", TITLE = "APC WallFrame"),
 				list(CONSTRUCTION_MODE = RCD_WALLFRAME, WALLFRAME_TYPE = /obj/item/wallframe/airalarm, ICON = "alarm_bitem", TITLE = "AirAlarm WallFrame"),
@@ -69,13 +65,13 @@
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
 			"Furniture" = list(
-				list(FURNISH_TYPE = /obj/structure/chair, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "chair", TITLE = "Chair"),
-				list(FURNISH_TYPE = /obj/structure/chair/stool, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "stool", TITLE = "Stool"),
-				list(FURNISH_TYPE = /obj/structure/chair/stool/bar, FURNISH_COST = 4, FURNISH_DELAY = 5, ICON = "bar", TITLE = "Bar Stool"),
-				list(FURNISH_TYPE = /obj/structure/table, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "table",TITLE = "Table"),
-				list(FURNISH_TYPE = /obj/structure/table/glass, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "glass_table", TITLE = "Glass Table"),
-				list(FURNISH_TYPE = /obj/structure/rack, FURNISH_COST = 20, FURNISH_DELAY = 25, ICON = "rack", TITLE = "Rack"),
-				list(FURNISH_TYPE = /obj/structure/bed, FURNISH_COST = 10, FURNISH_DELAY = 15, ICON = "bed", TITLE = "Bed"),
+				list(FURNISH_TYPE = /obj/structure/chair, ICON = "chair", TITLE = "Chair"),
+				list(FURNISH_TYPE = /obj/structure/chair/stool, ICON = "stool", TITLE = "Stool"),
+				list(FURNISH_TYPE = /obj/structure/chair/stool/bar, ICON = "bar", TITLE = "Bar Stool"),
+				list(FURNISH_TYPE = /obj/structure/table, ICON = "table",TITLE = "Table"),
+				list(FURNISH_TYPE = /obj/structure/table/glass, ICON = "glass_table", TITLE = "Glass Table"),
+				list(FURNISH_TYPE = /obj/structure/rack, ICON = "rack", TITLE = "Rack"),
+				list(FURNISH_TYPE = /obj/structure/bed, ICON = "bed", TITLE = "Bed"),
 			),
 		),
 
@@ -129,30 +125,37 @@
 		"Airlock Access" = list()
 	)
 
-	///english name for the design to check if it was selected or not
+	/// name of currently selected design
 	var/design_title = "Wall/Floor"
+	/// category of currently selected design
 	var/design_category = "Structures"
+	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
 	var/root_category = "Construction"
-	var/closed = FALSE
-	///owner of this rcd. It can either be an construction console or an player
+	/// owner of this rcd. It can either be an construction console or an player
 	var/owner
+	/// type of structure being built, used to decide what variables are used to build what structure
 	var/mode = RCD_FLOORWALL
+	/// temporary holder of mode, used to restore mode original value after rcd deconstruction act
 	var/construction_mode = RCD_FLOORWALL
+	/// used by arcd, can this rcd work from a range
 	var/ranged = FALSE
-	var/computer_dir = 1
+	/// direction which computer frames are constructed in
+	var/computer_dir = NORTH
+	/// type of airlock/windoor being built[mode = RCD_AIRLOCK]
 	var/airlock_type = /obj/machinery/door/airlock
-	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
-	var/window_type = /obj/structure/window/fulltile
-	var/window_glass = RCD_WINDOW_NORMAL
-	var/window_size = RCD_WINDOW_FULLTILE
+	/// are we building glass/solid airlocks
+	var/airlock_glass = FALSE
+	/// are we building normal/reinforced directional/fulltile windows
+	var/obj/structure/window/window_type = /obj/structure/window/fulltile
+	/// type of wallmount airalarm,firealarm,apc we are trying to build
 	var/obj/item/wallframe/wallframe_type = /obj/item/wallframe/apc
+	/// type of furniture tables,chairs etc we are trying to build
 	var/furnish_type = /obj/structure/chair
-	var/furnish_cost = 8
-	var/furnish_delay = 10
-	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
+	/// delay multiplier for all construction types
 	var/delay_mod = 1
-	var/canRturf = FALSE //Variable for R walls to deconstruct them
-	/// Integrated airlock electronics for setting access to a newly built airlocks
+	/// variable for R walls to deconstruct them
+	var/canRturf = FALSE
+	/// integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
@@ -259,7 +262,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	user.visible_message(span_suicide("[user] pulls the trigger... But there is not enough ammo!"))
 	return SHAME
 
-//check can the structure be placed on the turf
+/// check can the structure be placed on the turf
 /obj/item/construction/rcd/proc/can_place(atom/A, list/rcd_results, mob/user)
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
@@ -267,8 +270,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	 *RCD_WALLFRAME is also returned as the mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_results["mode"] != RCD_WALLFRAME && rcd_results["mode"] != RCD_DECONSTRUCT)
-		//if we are trying to build a window on top of a grill we check for specific edge cases
 		var/turf/target_turf = get_turf(A)
+		//if we are trying to build a window on top of a grill we check for specific edge cases
 		if(rcd_results["mode"] == RCD_WINDOWGRILLE && istype(A, /obj/structure/grille))
 			var/list/structures_to_ignore
 
@@ -328,6 +331,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				balloon_alert(user, "something is on the tile!")
 				return FALSE
+
 	return TRUE
 
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
@@ -500,10 +504,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[WINDOW_TYPE] != null)
 					window_type = design[WINDOW_TYPE]
-				if(design[WINDOW_GLASS] != null)
-					window_glass = design[WINDOW_GLASS]
-				if(design[WINDOW_SIZE] != null)
-					window_size = design[WINDOW_SIZE]
 			else if(category_name == "Machines")
 				construction_mode = design[CONSTRUCTION_MODE]
 				if(design[COMPUTER_DIR] != null)
@@ -513,8 +513,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			else if(category_name == "Furniture")
 				construction_mode = RCD_FURNISHING
 				furnish_type = design[FURNISH_TYPE]
-				furnish_cost = design[FURNISH_COST]
-				furnish_delay = design[FURNISH_DELAY]
 
 			if(root_category == "Airlocks")
 				construction_mode = RCD_AIRLOCK
@@ -630,13 +628,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 #undef CONSTRUCTION_MODE
 #undef WINDOW_TYPE
-#undef WINDOW_GLASS
-#undef WINDOW_SIZE
 #undef COMPUTER_DIR
 #undef WALLFRAME_TYPE
 #undef FURNISH_TYPE
-#undef FURNISH_COST
-#undef FURNISH_DELAY
 #undef AIRLOCK_TYPE
 
 #undef TITLE
