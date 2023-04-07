@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Precipitates a movable (plus whatever buckled to it) to lower z levels if possible and then calls zImpact()
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, falling_from_move = FALSE)
 	var/direction = DOWN
-	if(falling.has_gravity() == NEGATIVE_GRAVITY)
+	if(falling.has_gravity() <= NEGATIVE_GRAVITY)
 		direction = UP
 	var/turf/target = get_step_multiz(src, direction)
 	if(!target)

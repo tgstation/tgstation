@@ -141,7 +141,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 /obj/item/traitor_machine_trapper
 	name = "suspicious device"
 	desc = "It looks dangerous."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "boobytrap"
 
 	/// Light explosion range, to hurt the person using the machine
