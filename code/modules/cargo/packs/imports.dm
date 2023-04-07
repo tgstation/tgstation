@@ -101,14 +101,14 @@
 	contains = list()
 	contraband = TRUE
 
-/datum/supply_pack/imports/mafia/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 4)
-		new /obj/effect/spawner/random/clothing/mafia_outfit(C)
-		new /obj/item/virgin_mary(C)
+/datum/supply_pack/imports/mafia/fill(obj/structure/closet/crate/our_crate)
+	for(var/items in 1 to 4)
+		new /obj/effect/spawner/random/clothing/mafia_outfit(our_crate)
+		new /obj/item/virgin_mary(our_crate)
 		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
-			new /obj/item/clothing/mask/fakemoustache/italian(C)
+			new /obj/item/clothing/mask/fakemoustache/italian(our_crate)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
-		new /obj/item/switchblade(C)
+		new /obj/item/switchblade(our_crate)
 
 /datum/supply_pack/imports/blackmarket_telepad
 	name = "Black Market LTSRBT"
@@ -151,10 +151,10 @@
 	)
 	crate_name = "crate"
 
-/datum/supply_pack/imports/contraband/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 10)
+/datum/supply_pack/imports/contraband/fill(obj/structure/closet/crate/our_crate)
+	for(var/items in 1 to 10)
 		var/item = pick(contains)
-		new item(C)
+		new item(our_crate)
 
 /datum/supply_pack/imports/wt550
 	name = "Smuggled WT-550 Autorifle Crate"
@@ -235,10 +235,10 @@
 		/obj/item/gun/ballistic/rifle/boltaction/surplus = 2,
 	)
 
-/datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 10)
+/datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/our_crate)
+	for(var/items in 1 to 10)
 		var/item = pick(contains)
-		new item(C)
+		new item(our_crate)
 
 /datum/supply_pack/imports/moistnuggets
 	name = "Refurbished Mosin Nagant Crate"
