@@ -57,6 +57,7 @@
 
 	if(fulltile)
 		setDir()
+		obj_flags &= ~NO_BUILD_ON_DIRECTION
 		obj_flags &= ~BUILD_ON_IGNORES_DENSITY
 		AddElement(/datum/element/can_barricade)
 

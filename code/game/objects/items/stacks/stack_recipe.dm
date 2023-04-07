@@ -18,6 +18,7 @@
 	/// If only one of the resulting atom is allowed per turf
 	var/one_per_turf = FALSE
 	/// If the atom is fulltile, as in a fulltile window. This is used for the direction check to prevent fulltile windows from being able to be built over directional stuff.
+	/// Setting this to true will also set check_direction to true.
 	var/is_fulltile = FALSE
 	/// If this atom should run the direction check, for use when building things like directional windows where you can have more than one per turf
 	var/check_direction = FALSE
@@ -68,7 +69,7 @@
 	src.on_solid_ground = on_solid_ground
 	src.on_tram = on_tram
 	src.is_fulltile = is_fulltile
-	src.check_direction = check_direction
+	src.check_direction = check_direction || is_fulltile
 	src.check_density = check_density
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
