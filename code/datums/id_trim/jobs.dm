@@ -1165,6 +1165,7 @@
 		ACCESS_CE,
 		)
 	job = /datum/job/station_engineer
+
 /datum/id_trim/job/test_subject
 	assignment = "Test Subject"
 	trim_state = "trim_testsubject"

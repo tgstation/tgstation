@@ -137,6 +137,7 @@
 	name = "nurse's jumpsuit"
 	icon_state = "nurse"
 	inhand_icon_state = "w_suit"
+
 /obj/item/clothing/under/rank/medical/doctor/nurse/skirt
 	desc = "It's a jumpskirt commonly worn by nursing staff in the medical department."
 	name = "nurse's jumpskirt"
@@ -146,6 +147,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /obj/item/clothing/under/rank/medical/doctor/nurse/alt
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
 	name = "nurse's suit"

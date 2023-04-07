@@ -333,7 +333,7 @@
 		JOB_ROBOTICIST,
 		JOB_GENETICIST,
 		JOB_TEST_SUBJECT,
-		)
+	)
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 

@@ -22,7 +22,7 @@
 	bounty_types = CIV_JOB_ENG
 	departments_list = list(
 		/datum/job_department/engineering,
-		)
+	)
 
 	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
@@ -31,7 +31,7 @@
 		/obj/item/lightreplacer = 10,
 		/obj/item/holosign_creator/engineering = 8,
 		/obj/item/wrench/bolter = 8,
-		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
+		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1,
 	)
 	rpg_title = "Junior Crystallomancer"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
