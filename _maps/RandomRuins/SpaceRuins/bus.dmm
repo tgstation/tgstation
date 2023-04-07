@@ -19,7 +19,7 @@
 "an" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/item/toy/plush/pkplush{
-	pixel_y = 17
+	pixel_z = 17
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -27,7 +27,7 @@
 /area/ruin/space)
 "ao" = (
 /obj/machinery/telecomms/server{
-	pixel_y = 12;
+	pixel_z = 12;
 	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
@@ -39,7 +39,7 @@
 	pixel_y = 15
 	},
 /obj/item/toy/plush/lizard_plushie/green{
-	pixel_y = 17
+	pixel_z = 17
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -49,7 +49,7 @@
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/helmet/knight{
-	pixel_y = 16
+	pixel_z = 16
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -58,10 +58,13 @@
 "ar" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/item/grown/novaflower{
-	pixel_y = 25
+	offset_at_init = 0;
+	pixel_z = 24;
+	pixel_y = 1
 	},
 /obj/item/food/grown/watermelon{
-	pixel_y = 17
+	offset_at_init = 0;
+	pixel_z = 17
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -71,13 +74,16 @@
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/moth{
-	pixel_y = 28
+	pixel_z = 26;
+	pixel_y = 2
 	},
 /obj/item/food/grown/citrus/orange{
-	pixel_y = 19
+	offset_at_init = 0;
+	pixel_z = 18;
+	pixel_y = 1
 	},
 /obj/item/toy/talking/ai{
-	pixel_y = 16
+	pixel_z = 16
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -141,11 +147,12 @@
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bodypart/arm/right{
-	pixel_y = 26;
+	pixel_z = 25;
+	pixel_y = 1;
 	pixel_x = -4
 	},
 /obj/item/food/meat/slab/penguin{
-	pixel_y = 13
+	pixel_z = 13
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -162,7 +169,7 @@
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/banhammer{
-	pixel_y = 22
+	pixel_z = 22
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -178,16 +185,19 @@
 "ba" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/ants{
-	pixel_y = 8;
-	pixel_x = 9
-	},
 /obj/item/food/grown/tomato{
-	pixel_y = 25
+	offset_at_init = 0;
+	pixel_z = 23;
+	pixel_y = 2
 	},
 /obj/item/food/donut/plain{
-	pixel_y = 16;
+	pixel_z = 15;
+	pixel_y = 1;
 	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/ants{
+	pixel_z = 8;
+	pixel_x = 9
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -279,14 +289,15 @@
 /area/ruin/space)
 "FZ" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/awakenedplushie{
+	pixel_z = 26;
+	pixel_y = 1
+	},
 /obj/machinery/telecomms/server{
-	pixel_y = 12;
+	pixel_z = 12;
 	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
-	},
-/obj/item/toy/plush/awakenedplushie{
-	pixel_y = 27
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -371,11 +382,13 @@
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/singlecard{
-	pixel_y = 25;
+	pixel_z = 24;
+	pixel_y = 1;
 	pixel_x = 0
 	},
 /obj/item/food/grown/potato{
-	pixel_y = 15
+	offset_at_init = 0;
+	pixel_z = 15
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"

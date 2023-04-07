@@ -145,37 +145,11 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
-/turf/open/floor/noslip/tram_plate
-	name = "linear induction plate"
-	desc = "The linear induction plate that powers the tram."
-	icon_state = "tram_plate"
-	base_icon_state = "tram_plate"
-	slowdown = 0
-
-/turf/open/floor/noslip/tram_platform
-	name = "tram platform"
-	desc = "A sturdy looking tram platform."
-	icon_state = "tram_platform"
-	base_icon_state = "tram_platform"
-	slowdown = 0
-
 /turf/open/floor/noslip/broken_states()
 	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
 /turf/open/floor/noslip/burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
-
-/turf/open/floor/noslip/tram_plate/broken_states()
-	return list("tram_plate-damaged1","tram_plate-damaged2")
-
-/turf/open/floor/noslip/tram_plate/burnt_states()
-	return list("tram_plate-scorched1","tram_plate-scorched2")
-
-/turf/open/floor/noslip/tram_platform/broken_states()
-	return list("tram_platform-damaged1","tram_platform-damaged2")
-
-/turf/open/floor/noslip/tram_platform/burnt_states()
-	return list("tram_platform-scorched1","tram_platform-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return

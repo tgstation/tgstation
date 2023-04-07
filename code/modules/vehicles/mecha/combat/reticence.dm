@@ -39,3 +39,12 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+
+/obj/vehicle/sealed/mecha/reticence/add_cell()
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+/obj/vehicle/sealed/mecha/reticence/add_scanmod()
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+
+/obj/vehicle/sealed/mecha/reticence/add_capacitor()
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
