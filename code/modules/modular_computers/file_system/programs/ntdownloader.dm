@@ -6,7 +6,6 @@
 	undeletable = TRUE
 	size = 4
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"

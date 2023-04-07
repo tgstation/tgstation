@@ -47,6 +47,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
+		/obj/item/folder/biscuit,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
@@ -57,7 +58,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
 	if (!fax_id)
-		fax_id = SSnetworks.assign_random_name()
+		fax_id = assign_random_name()
 	if (!fax_name)
 		fax_name = "Unregistered fax " + fax_id
 	wires = new /datum/wires/fax(src)
@@ -396,6 +397,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return "[state_prefix]_star"
 	if (istype(item, /obj/item/tcgcard))
 		return "[state_prefix]_tcg"
+	if (istype(item, /obj/item/folder/biscuit))
+		return "[state_prefix]_pbiscuit"
 	return "[state_prefix]_paper"
 
 /**

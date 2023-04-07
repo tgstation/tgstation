@@ -13,20 +13,18 @@
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 	handle_charge(owner, delta_time, times_fired)
 
-/obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
 	. = ..()
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
+	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
-/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
-	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-
-	owner.clear_mood_event("charge")
-	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
-	carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
-
-	return ..()
+/obj/item/organ/internal/stomach/ethereal/on_remove(mob/living/carbon/stomach_owner)
+	. = ..()
+	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	stomach_owner.clear_mood_event("charge")
+	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
+	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
 /obj/item/organ/internal/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
 	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - crystal_charge / 100)))

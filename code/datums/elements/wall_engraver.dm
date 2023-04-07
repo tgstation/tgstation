@@ -37,7 +37,7 @@
 	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC))
 		user.balloon_alert(user, "wall has already been engraved!")
 		return
-	if(!user.mind?.memories?.len)
+	if(!length(user.mind?.memories))
 		user.balloon_alert(user, "nothing memorable to engrave!")
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")

@@ -92,7 +92,10 @@
 
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>baked</b> into \a [initial(bake_result.name)].")
+			if(initial(bake_result.gender) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
 		return
 
 	if(positive_result)

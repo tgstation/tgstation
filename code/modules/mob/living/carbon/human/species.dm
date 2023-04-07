@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
+	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
+	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
@@ -165,9 +167,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
 
-
-	//Do NOT remove by setting to null. use OR make an ASSOCIATED TRAIT.
-	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
+	// Prefer anything other than setting these to null, such as TRAITS
+	// why?
+	// because traits also disable the downsides of not having an organ, removing organs but not having the trait or logic will make your species die
 
 	///Replaces default brain with a different organ
 	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
@@ -312,99 +314,130 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /**
+ * Gets the default mutant organ for the species based on the provided slot.
+ */
+/datum/species/proc/get_mutant_organ_type_for_slot(slot)
+	switch(slot)
+		if(ORGAN_SLOT_BRAIN)
+			return mutantbrain
+		if(ORGAN_SLOT_HEART)
+			return mutantheart
+		if(ORGAN_SLOT_LUNGS)
+			return mutantlungs
+		if(ORGAN_SLOT_APPENDIX)
+			return mutantappendix
+		if(ORGAN_SLOT_EYES)
+			return mutanteyes
+		if(ORGAN_SLOT_EARS)
+			return mutantears
+		if(ORGAN_SLOT_TONGUE)
+			return mutanttongue
+		if(ORGAN_SLOT_LIVER)
+			return mutantliver
+		if(ORGAN_SLOT_STOMACH)
+			return mutantstomach
+		else
+			CRASH("Invalid organ slot [slot]")
+
+/**
  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
  *
  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
  * can use replace_current to refresh all organs, creating an entirely new set.
  *
  * Arguments:
- * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
+ * * organ_holder - carbon, the owner of the species datum AKA whoever we're regenerating organs in
  * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
  * * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
  * * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
  * * visual_only - boolean, only load organs that change how the species looks. Do not use for normal gameplay stuff
  */
-/datum/species/proc/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
+/datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	//what should be put in if there is no mutantorgan (brains handled separately)
-	var/list/slot_mutantorgans = list(
-		ORGAN_SLOT_BRAIN = mutantbrain,
-		ORGAN_SLOT_HEART = mutantheart,
-		ORGAN_SLOT_LUNGS = mutantlungs,
-		ORGAN_SLOT_APPENDIX = mutantappendix,
-		ORGAN_SLOT_EYES = mutanteyes,
-		ORGAN_SLOT_EARS = mutantears,
-		ORGAN_SLOT_TONGUE = mutanttongue,
-		ORGAN_SLOT_LIVER = mutantliver,
-		ORGAN_SLOT_STOMACH = mutantstomach,
+	var/list/organ_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
 	)
 
-	for(var/slot in assoc_to_keys(slot_mutantorgans))
+	for(var/slot in organ_slots)
+		var/obj/item/organ/existing_organ = organ_holder.get_organ_slot(slot)
+		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
 
-		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
-		var/obj/item/organ/neworgan = slot_mutantorgans[slot] //used in adding
-		if(!neworgan) //these can be null, if so we shouldn't regenerate
+		if(isnull(new_organ)) // if they aren't suppose to have an organ here, remove it
+			if(existing_organ)
+				existing_organ.Remove(organ_holder, special = TRUE)
+				qdel(existing_organ)
 			continue
 
-		if(visual_only && !initial(neworgan.visual))
+		if(!isnull(old_species) && !isnull(existing_organ))
+			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot))
+				continue // we don't want to remove organs that are not the default for this species
+
+		// at this point we already know new_organ is not null
+		if(existing_organ?.type == new_organ)
+			continue // we don't want to remove organs that are the same as the new one
+
+		if(visual_only && !initial(new_organ.visual))
 			continue
 
 		var/used_neworgan = FALSE
-		neworgan = SSwardrobe.provide_type(neworgan)
-		var/should_have = neworgan.get_availability(src, C) //organ proc that points back to a species trait (so if the species is supposed to have this organ)
+		new_organ = SSwardrobe.provide_type(new_organ)
+		var/should_have = new_organ.get_availability(src, organ_holder)
 
-		/*
-		 * There is an existing organ in this slot, what should we do with it? Probably remove it!
-		 *
-		 * We will remove it if (and only if):
-		 * - We should not have the organ OR replace_current is passed to force old organs to regenerate
-		 * - The replaced organ is not in an excluded zone
-		 * - The replaced organ is not unremovable or synthetic (an implant)
-		 */
-		if(oldorgan && (!should_have || replace_current) && !(oldorgan.zone in excluded_zones) && !(oldorgan.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_SYNTHETIC)))
+		// Check for an existing organ, and if there is one check to see if we should remove it
+		var/health_pct = 1
+		var/remove_existing = !isnull(existing_organ) && !(existing_organ.zone in excluded_zones) && !(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
+		if(remove_existing)
+			health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
 			if(slot == ORGAN_SLOT_BRAIN)
-				var/obj/item/organ/internal/brain/brain = oldorgan
-				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
-					brain.before_organ_replacement(neworgan)
-					brain.Remove(C, special=TRUE, no_id_transfer=TRUE) //brain argument used so it doesn't cause any... sudden death.
-					QDEL_NULL(brain)
-					oldorgan = null //now deleted
+				var/obj/item/organ/internal/brain/existing_brain = existing_organ
+				if(!existing_brain.decoy_override)
+					existing_brain.before_organ_replacement(new_organ)
+					existing_brain.Remove(organ_holder, special = TRUE, no_id_transfer = TRUE)
+					QDEL_NULL(existing_organ)
 			else
-				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C, special=TRUE)
-				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
+				existing_organ.before_organ_replacement(new_organ)
+				existing_organ.Remove(organ_holder, special = TRUE)
+				QDEL_NULL(existing_organ)
 
-		if(oldorgan)
-			oldorgan.setOrganDamage(0)
-		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
+		if(isnull(existing_organ) && should_have && !(new_organ.zone in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C, special=TRUE, drop_if_replaced=FALSE)
+			new_organ.set_organ_damage(new_organ.maxHealth * (1 - health_pct))
+			new_organ.Insert(organ_holder, special = TRUE, drop_if_replaced = FALSE)
 
 		if(!used_neworgan)
-			qdel(neworgan)
+			QDEL_NULL(new_organ)
 
-	if(old_species)
-		for(var/mutantorgan in old_species.mutant_organs)
-			// Snowflake check. If our species share this mutant organ, let's not remove it
-			// just yet as we'll be properly replacing it later.
-			if(mutantorgan in mutant_organs)
-				continue
-			var/obj/item/organ/current_organ = C.getorgan(mutantorgan)
+	if(!isnull(old_species))
+		for(var/mutant_organ in old_species.mutant_organs)
+			if(mutant_organ in mutant_organs)
+				continue // need this mutant organ, but we already have it!
+
+			var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(mutant_organ)
 			if(current_organ)
-				current_organ.Remove(C)
+				current_organ.Remove(organ_holder)
 				QDEL_NULL(current_organ)
-	for(var/obj/item/organ/external/external_organ in C.internal_organs)
+
+	for(var/obj/item/organ/external/external_organ in organ_holder.organs)
 		// External organ checking. We need to check the external organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
 		if(external_organ in external_organs)
 			continue // Don't remove external organs this species is supposed to have.
-		external_organ.Remove(C)
+
+		external_organ.Remove(organ_holder)
 		QDEL_NULL(external_organ)
 
 	var/list/species_organs = mutant_organs + external_organs
-
 	for(var/organ_path in species_organs)
-		var/obj/item/organ/current_organ = C.getorgan(organ_path)
+		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
@@ -413,7 +446,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, special=TRUE, drop_if_replaced=FALSE)
+			replacement.Insert(organ_holder, special=TRUE, drop_if_replaced=FALSE)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
@@ -467,8 +500,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
-	for(var/X in inherent_traits)
-		ADD_TRAIT(C, X, SPECIES_TRAIT)
+	if(length(inherent_traits))
+		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
@@ -509,7 +542,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ in C.internal_organs)
+	for(var/obj/item/organ/external/organ in C.organs)
 		organ.Remove(C)
 		qdel(organ)
 
@@ -532,6 +565,45 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+
+/**
+ * Proc called when mail goodies need to be updated for this species.
+ *
+ * Updates the mail goodies if that is required. e.g. for the blood deficiency quirk, which sends bloodbags to quirk holders, update the sent bloodpack to match the species' exotic blood.
+ * This is currently only used for the blood deficiency quirk but more can be added as needed.
+ * Arguments:
+ * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
+ */
+/datum/species/proc/update_mail_goodies(mob/living/carbon/human/recipient)
+	update_quirk_mail_goodies(recipient, recipient.get_quirk(/datum/quirk/blooddeficiency))
+
+/**
+ * Updates the mail goodies of a specific quirk.
+ *
+ * Updates the mail goodies belonging to a specific quirk.
+ * Add implementation as needed for each individual species. The base species proc should give the species the 'default' version of whatever mail goodies are required.
+ * Arguments:
+ * * mob/living/carbon/human/recipient - the mob receiving the mail goodies
+ * * datum/quirk/quirk - the quirk to update the mail goodies of. Use get_quirk(datum/quirk/some_quirk) to get the actual mob's quirk to pass.
+ * * list/mail_goodies - a list of mail goodies. Generally speaking you should not be using this argument on the initial function call. You should instead add to the species' implementation of this proc.
+ */
+/datum/species/proc/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies)
+	if(isnull(quirk))
+		return
+	if(length(mail_goodies))
+		quirk.mail_goodies = mail_goodies
+		return
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
+			quirk.mail_goodies = list()
+			return
+
+
+	// The default case if no species implementation exists. Set quirk's mail_goodies to initial.
+	var/datum/quirk/readable_quirk = new quirk.type
+	quirk.mail_goodies = readable_quirk.mail_goodies
+	qdel(readable_quirk) // We have to do it this way because initial will not work on lists in this version of DM
+	return
 
 /**
  * Handles the body of a human
@@ -563,7 +635,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
-			var/obj/item/organ/internal/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
@@ -801,7 +873,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
 /datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
 	for(var/obj/item/organ/external/organ_path as anything in external_organs)
-		var/obj/item/organ/external/randomized_organ = human_mob.getorgan(organ_path)
+		var/obj/item/organ/external/randomized_organ = human_mob.get_organ_by_type(organ_path)
 		if(randomized_organ)
 			var/datum/bodypart_overlay/mutant/overlay = randomized_organ.bodypart_overlay
 			var/new_look = pick(overlay.get_global_feature_list())
@@ -885,7 +957,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
-			var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eyes?.no_glasses)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -993,6 +1065,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * NOTE: If you return TRUE, that reagent will not be removed liike normal! You must handle it manually.
  */
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
 	if(chem.type == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
@@ -1102,7 +1175,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return TRUE
 	else
 
-		var/obj/item/organ/internal/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/obj/item/bodypart/attacking_bodypart
 		if(brain)
 			attacking_bodypart = brain.get_attacking_limb(target)
@@ -1709,7 +1782,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(H.movement_type & FLYING)
-		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)

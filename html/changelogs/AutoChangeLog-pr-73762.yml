@@ -1,5 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes:
-  - rscadd: "Adds Ammoniated Mercury, a chemical to the game."
-  - balance: "Calomel now purges all chemicals again, and now Ammoniated Mercury only purges toxins."

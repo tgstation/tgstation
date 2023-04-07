@@ -1209,7 +1209,7 @@
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/bmp_asteroid)
 "gN" = (
-/obj/structure/holohoop,
+/obj/structure/hoop,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1221,13 +1221,13 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gP" = (
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gU" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 1
 	},
 /turf/open/floor/iron/dark{

@@ -1,5 +1,0 @@
-author: "atosti"
-delete-after: True
-changes:
-  - bugfix: "Re-implements physical and mental statuses in crewmember medical records."
-  - bugfix: "Re-implements changing a crewmember's physical/mental status via a Med-HUD."

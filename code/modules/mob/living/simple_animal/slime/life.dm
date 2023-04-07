@@ -1,11 +1,3 @@
-
-/mob/living/simple_animal/slime
-	var/AIproc = 0 // determines if the AI loop is activated
-	var/Atkcool = 0 // attack cooldown
-	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/SStun = 0 // stun variable
-
-
 /mob/living/simple_animal/slime/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
@@ -168,35 +160,34 @@
 	updatehealth()
 
 /mob/living/simple_animal/slime/proc/handle_feeding(delta_time, times_fired)
-	var/mob/M = buckled
+	var/mob/living/prey = buckled
 
 	if(stat)
 		Feedstop(silent = TRUE)
 
-	if(M.stat == DEAD) // our victim died
+	if(prey.stat == DEAD) // our victim died
 		if(!client)
 			if(!rabid && !attacked)
-				var/mob/last_to_hurt = M.LAssailant?.resolve()
-				if(last_to_hurt && last_to_hurt != M)
+				var/mob/last_to_hurt = prey.LAssailant?.resolve()
+				if(last_to_hurt && last_to_hurt != prey)
 					if(DT_PROB(30, delta_time))
 						add_friendship(last_to_hurt, 1)
 		else
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
-		if(M.client && ishuman(M))
+		if(prey.client && ishuman(prey))
 			if(DT_PROB(61, delta_time))
 				rabid = 1 //we go rabid after finishing to feed on a human with a client.
 
 		Feedstop()
 		return
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
-		C.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
+	if(iscarbon(prey))
+		prey.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		prey.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
-		if(DT_PROB(5, delta_time) && C.client)
-			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+		if(DT_PROB(5, delta_time) && prey.client)
+			to_chat(prey, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
 			"A low, rolling pain passes through your body!", \
@@ -204,12 +195,12 @@
 			"You feel extremely weak!", \
 			"A sharp, deep pain bathes every inch of your body!")]</span>")
 
-	else if(isanimal(M))
-		var/mob/living/simple_animal/SA = M
+	else if(isanimal_or_basicmob(prey))
+		var/mob/living/animal_victim = prey
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += SA.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
-		totaldamage += SA.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
+		totaldamage += animal_victim.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
 			Feedstop(0, 0)
@@ -400,12 +391,12 @@
 		else if (DT_PROB(0.5, delta_time))
 			newmood = pick("sad", ":3", "pout")
 
-	if ((mood == "sad" || mood == ":3" || mood == "pout") && !newmood)
+	if ((current_mood == "sad" || current_mood == ":3" || current_mood == "pout") && !newmood)
 		if(DT_PROB(50, delta_time))
-			newmood = mood
+			newmood = current_mood
 
-	if (newmood != mood) // This is so we don't redraw them every time
-		mood = newmood
+	if (newmood != current_mood) // This is so we don't redraw them every time
+		current_mood = newmood
 		regenerate_icons()
 
 /mob/living/simple_animal/slime/proc/handle_speech(delta_time, times_fired)
@@ -542,7 +533,7 @@
 				phrases += "Hrr..."
 				phrases += "Nhuu..."
 				phrases += "Unn..."
-			if (mood == ":3")
+			if (current_mood == ":3")
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
@@ -563,7 +554,7 @@
 				phrases += "Zap..."
 			if (powerlevel > 8)
 				phrases += "Zap... Bzz..."
-			if (mood == "sad")
+			if (current_mood == "sad")
 				phrases += "Bored..."
 			if (slimes_near)
 				phrases += "Slime friend..."

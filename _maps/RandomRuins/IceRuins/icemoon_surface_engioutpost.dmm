@@ -693,11 +693,11 @@
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "dr" = (
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
+/obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/effect/mob_spawn/corpse/human/engineer/mod,
-/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "ds" = (
@@ -784,10 +784,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kS" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "na" = (
@@ -830,8 +830,8 @@
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "Iy" = (
-/obj/effect/turf_decal/tile/yellow,
 /mob/living/simple_animal/hostile/construct/proteon,
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "Je" = (
@@ -850,10 +850,10 @@
 /area/ruin/planetengi)
 "Nd" = (
 /obj/structure/girder/displaced,
+/obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "UK" = (

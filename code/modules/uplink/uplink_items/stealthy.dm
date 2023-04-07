@@ -1,4 +1,3 @@
-// File organised based on progression
 /datum/uplink_category/stealthy
 	name = "Stealthy Weapons"
 	weight = 8
@@ -6,7 +5,6 @@
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
 
-// No progression cost
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -61,7 +59,6 @@
 	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-// Low progression cost
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
@@ -73,7 +70,6 @@
 	surplus = 0
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
-// Medium progression cost
 
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"

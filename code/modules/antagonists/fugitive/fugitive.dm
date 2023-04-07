@@ -52,18 +52,18 @@
 	backstory = back_story
 	var/message = "<span class='warningplain'>"
 	switch(backstory)
-		if("prisoner")
+		if(FUGITIVE_BACKSTORY_PRISONER)
 			message += "<BR><B>I can't believe we managed to break out of a Nanotrasen superjail! Sadly though, our work is not done. The emergency teleport at the station logs everyone who uses it, and where they went.</B>"
 			message += "<BR><B>It won't be long until CentCom tracks where we've gone off to. I need to work with my fellow escapees to prepare for the troops Nanotrasen is sending, I'm not going back.</B>"
-		if("cultist")
+		if(FUGITIVE_BACKSTORY_CULTIST)
 			message += "<BR><B>Blessed be our journey so far, but I fear the worst has come to our doorstep, and only those with the strongest faith will survive.</B>"
 			message += "<BR><B>Our religion has been repeatedly culled by Nanotrasen because it is categorized as an \"Enemy of the Corporation\", whatever that means.</B>"
 			message += "<BR><B>Now there are only four of us left, and Nanotrasen is coming. When will our god show itself to save us from this hellish station?!</B>"
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO)
 			message += "<BR><B>Hi, Friends!</B>"
 			message += "<BR><B>My name is Waldo. I'm just setting off on a galaxywide hike. You can come too. All you have to do is find me.</B>"
 			message += "<BR><B>By the way, I'm not traveling on my own. wherever I go, there are lots of other characters for you to spot. First find the people trying to capture me! They're somewhere around the station!</B>"
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			message += "<BR>[span_danger("ALERT: Wide-range teleport has scrambled primary systems.")]"
 			message += "<BR>[span_danger("Initiating diagnostics...")]"
 			message += "<BR>[span_danger("ERROR ER0RR $R0RRO$!R41.%%!! loaded.")]"

@@ -12,7 +12,6 @@
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_COMMUNICATION
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = TRUE
 	tgui_id = "NtosNetChat"

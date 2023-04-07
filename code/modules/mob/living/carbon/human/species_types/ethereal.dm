@@ -7,6 +7,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/ethereal
 	mutantheart = /obj/item/organ/internal/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
+	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	payday_modifier = 0.75
@@ -59,11 +60,11 @@
 	return ..()
 
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/new_ethereal, datum/species/old_species, pref_load)
 	. = ..()
-	if(!ishuman(C))
+	if(!ishuman(new_ethereal))
 		return
-	var/mob/living/carbon/human/ethereal = C
+	var/mob/living/carbon/human/ethereal = new_ethereal
 	default_color = ethereal.dna.features["ethcolor"]
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
@@ -73,22 +74,29 @@
 	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	ethereal_light = ethereal.mob_light()
 	spec_updatehealth(ethereal)
-	C.set_safe_hunger_level()
+	new_ethereal.set_safe_hunger_level()
+	update_mail_goodies(ethereal)
 
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
-	for(var/obj/item/bodypart/limb as anything in C.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in new_ethereal.bodyparts)
 		if(limb.limb_id == SPECIES_ETHEREAL)
 			limb.update_limb(is_creating = TRUE)
 
-/datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
-	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
-	UnregisterSignal(C, COMSIG_LIGHT_EATER_ACT)
+/datum/species/ethereal/on_species_loss(mob/living/carbon/human/former_ethereal, datum/species/new_species, pref_load)
+	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
+	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
+	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
 	return ..()
 
+/datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/ethereal
+		)
+	return ..()
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)

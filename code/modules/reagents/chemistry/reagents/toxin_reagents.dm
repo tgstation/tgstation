@@ -136,6 +136,9 @@
 		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 	return ..()
 
+#undef LIQUID_PLASMA_BP
+#undef LIQUID_PLASMA_IG
+
 /datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	. = ..()
 	if(methods & (TOUCH|VAPOR))

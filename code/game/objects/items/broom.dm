@@ -92,3 +92,5 @@
 /obj/item/pushbroom/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+#undef BROOM_PUSH_LIMIT

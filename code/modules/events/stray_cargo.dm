@@ -40,6 +40,8 @@
 	var/admin_override_contents
 
 /datum/round_event/stray_cargo/announce(fake)
+	if(fake)
+		impact_area = find_event_area()
 	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
 
 /**
