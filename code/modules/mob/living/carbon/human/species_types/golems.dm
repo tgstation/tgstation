@@ -869,7 +869,7 @@
 	desc = "It emits a strange aura, as if there was still life within it..."
 	max_integrity = 50
 	armor_type = /datum/armor/structure_cloth_pile
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
 
