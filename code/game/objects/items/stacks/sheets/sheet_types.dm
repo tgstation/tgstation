@@ -766,7 +766,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	. += GLOB.plastic_recipes
 
 GLOBAL_LIST_INIT(paperframe_recipes, list(
-new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_solid_ground = TRUE, check_direction = TRUE, is_fulltime = TRUE, time = 1 SECONDS), \
+new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_solid_ground = TRUE, check_direction = TRUE, is_fulltile = TRUE, time = 1 SECONDS), \
 new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperframe, 3, one_per_turf = TRUE, on_solid_ground = TRUE, time = 1 SECONDS )))
 
 /obj/item/stack/sheet/paperframes
