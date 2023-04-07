@@ -125,7 +125,7 @@
 			else if(the_rcd.furnish_type == /obj/structure/bed)
 				cost = 10
 				delay = 15
-			if(cost == 0)
+			if(!cost)
 				return FALSE
 			return list("mode" = RCD_FURNISHING, "delay" = cost, "cost" = delay)
 	return FALSE
