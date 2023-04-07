@@ -2,9 +2,15 @@
  * This unit test verifies that all Font Awesome icons are present in code, and that all quirk icons are valid.
  */
 /datum/unit_test/font_awesome_icons
+	var/font_awesome_css
 	var/list/allowed_icons
 
 /datum/unit_test/font_awesome_icons/Run()
+	font_awesome_css = file2text("html/font-awesome/css/all.min.css")
+	if(isnull(font_awesome_css))
+		TEST_NOTICE("Font Awesome CSS file could not be loaded.")
+		return
+
 	load_parse_verify()
 	verify_quirk_icons()
 
@@ -13,12 +19,6 @@
  * If there are any differences, note them.
  */
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
-	log_test("Loading Font Awesome CSS file...")
-	var/css = file2text("html/font-awesome/css/all.min.css")
-	if(isnull(css))
-		TEST_NOTICE("Font Awesome CSS file could not be loaded.")
-		return
-
 	log_test("CSS Actual: [length(css)]")
 	var/list/icons = parse_fa_css_into_icon_list(css)
 
