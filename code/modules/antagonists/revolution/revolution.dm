@@ -208,9 +208,6 @@
 /datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
-	// We can only flash people if we're next to them and click on them, anyway else this is invoked is invalid
-	ASSERT(source.Adjacent(flashed))
-
 	if(flashed.stat == DEAD)
 		return
 	if(flashed.stat != CONSCIOUS)
