@@ -18,6 +18,14 @@
 	var/static/lottery_pool = 500
 	///list of bank accounts playing the lottery with amount of tickets sold
 	var/static/list/ticket_owners = list()
+	///static variable to check if a lottery is running
+	var/static/lottery_running = FALSE
+
+/obj/machinery/atm/Initialize(mapload)
+	. = ..()
+	if(!lottery_running)
+		lottery_running = TRUE
+		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -87,10 +95,17 @@
 	return TRUE
 
 /obj/machinery/atm/proc/pull_lottery_winner()
-	var/datum/bank_account/winning_account = pick_weight(ticket_owners)
-	winning_account.account_balance += lottery_pool
-	lottery_pool = 500
+	if(length(ticket_owners))
+		var/datum/bank_account/winning_account = pick_weight(ticket_owners)
+		winning_account.account_balance += lottery_pool
+		priority_announce("[winning_account.account_holder] has just won the station lottery winning a total of [lottery_pool] credits! The next lottery will begin in 20 minutes!", "Nanotrasen Gambling Society")
+		lottery_pool = 0
+	lottery_pool += 500
 	ticket_owners = list()
+	lottery_running = FALSE
+	if(!lottery_running)
+		lottery_running = TRUE
+		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/proc/buy_lottery()
 	if(!iscarbon(usr))
