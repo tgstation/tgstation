@@ -176,7 +176,7 @@
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
-	id = "fountain"
+	id = "lava_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
