@@ -255,7 +255,7 @@
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
-	icon = "boxing-glove"
+	icon = "hand-fist"
 	value = -4
 	gain_text = span_danger("Your jaw feels loose.")
 	lose_text = span_notice("Your jaw feels fitting again.")
