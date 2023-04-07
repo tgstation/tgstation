@@ -5,25 +5,19 @@
  */
 
 /obj/item/bodypart/head/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
 
 /obj/item/bodypart/chest/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
 
 /obj/item/bodypart/arm/left/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
 
 /obj/item/bodypart/arm/right/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
 
 /obj/item/bodypart/leg/left/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
 
 /obj/item/bodypart/leg/right/robot/android
-	limb_id = SPECIES_ANDROID
 	change_exempt_flags = null
