@@ -3,7 +3,6 @@
  */
 /datum/unit_test/font_awesome_icons
 	var/list/allowed_icons
-	focus = TRUE
 
 /datum/unit_test/font_awesome_icons/Run()
 	load_parse_verify()
