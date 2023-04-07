@@ -1126,7 +1126,6 @@
 /obj/structure/cable,
 /obj/item/ammo_casing/spent,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "sA" = (
@@ -1479,7 +1478,6 @@
 /mob/living/simple_animal/hostile/alien{
 	faction = list("syndicate","xenomorph")
 	},
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "xp" = (
@@ -2710,7 +2708,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "PV" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /mob/living/carbon/alien/larva{
 	faction = list("syndicate","xenomorph")
@@ -3048,7 +3045,6 @@
 	name = "SYN-C Brutus Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Wk" = (
