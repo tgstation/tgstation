@@ -88,18 +88,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null)
 
-	if(param_color)
-		color = GLOB.cable_colors[param_color]
-		pipecleaner_color = param_color
-
-	if(!color)
-		var/list/pipe_cleaner_colors = GLOB.cable_colors
-		var/random_color = pick(pipe_cleaner_colors)
-		color = pipe_cleaner_colors[random_color]
-		pipecleaner_color = random_color
-
-	update_appearance()
+	if(!param_color)
+		param_color = "white"
+	color = GLOB.cable_colors[param_color]
+	pipecleaner_color = param_color
 	stored?.set_pipecleaner_color(pipecleaner_color)
+	update_appearance()
 
 	if(isturf(loc))
 		var/turf/turf_loc = loc
