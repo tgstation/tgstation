@@ -8,7 +8,7 @@
 /obj/item/paper/ruins/derelict_sulaco/birthday
 	name = "to our captain"
 	desc = "Although faint, you can make out the words 'always faithful!' on the back of this photo."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	icon_state = "photo"
 	show_written_words = FALSE
 
