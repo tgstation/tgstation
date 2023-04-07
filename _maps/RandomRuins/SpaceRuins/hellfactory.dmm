@@ -368,7 +368,9 @@
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/hellfactory)
 "bl" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/machinery/conveyor/auto,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
@@ -379,7 +381,9 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bn" = (
@@ -404,7 +408,9 @@
 /area/ruin/space/has_grav/hellfactory)
 "bs" = (
 /obj/machinery/conveyor/auto,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bt" = (
@@ -412,7 +418,9 @@
 /obj/machinery/conveyor/auto{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bu" = (
@@ -420,28 +428,38 @@
 /obj/machinery/conveyor/auto{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bv" = (
 /obj/machinery/conveyor/auto{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bw" = (
 /obj/structure/table,
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bx" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner/south,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "by" = (
@@ -450,7 +468,9 @@
 "bB" = (
 /obj/structure/fermenting_barrel,
 /obj/machinery/conveyor/auto,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bC" = (
@@ -458,7 +478,9 @@
 /obj/machinery/conveyor/auto{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bD" = (
@@ -481,7 +503,9 @@
 "bG" = (
 /obj/structure/closet/crate,
 /obj/machinery/conveyor/auto,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/reagent_containers/cup/glass/flask,
 /obj/item/stack/sheet/glass,
 /turf/open/floor/plating,
@@ -523,7 +547,9 @@
 "bN" = (
 /obj/structure/ore_box,
 /obj/machinery/conveyor/auto,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bP" = (
@@ -548,8 +574,10 @@
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/south,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bU" = (
@@ -557,7 +585,7 @@
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bV" = (
@@ -565,7 +593,7 @@
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plating,
@@ -574,8 +602,10 @@
 /obj/machinery/conveyor/auto{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/south,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bY" = (
@@ -826,7 +856,7 @@
 "cV" = (
 /obj/structure/table,
 /obj/item/stack/ducts/fifty,
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "hk" = (
@@ -947,7 +977,9 @@
 /obj/machinery/conveyor/auto{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)

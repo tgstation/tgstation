@@ -64,7 +64,9 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aK" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/template_noop,
 /area/template_noop)
 "aL" = (
@@ -85,7 +87,9 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aQ" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/template_noop,
 /area/template_noop)
 "aT" = (

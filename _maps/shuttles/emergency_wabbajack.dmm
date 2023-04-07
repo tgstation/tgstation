@@ -178,7 +178,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
@@ -263,7 +265,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
@@ -335,7 +338,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "IH" = (

@@ -695,7 +695,9 @@
 /area/shuttle/ruin/caravan/pirate)
 "Rb" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Weapon Storage"
 	},
@@ -724,7 +726,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/pirate)
 "UH" = (

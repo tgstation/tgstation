@@ -12,7 +12,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -23,8 +25,12 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "k" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -46,14 +52,20 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
 /area/template_noop)
 "y" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "white"
@@ -67,8 +79,12 @@
 /area/template_noop)
 "E" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/item/training_toolbox{
 	pixel_y = 4
 	},
@@ -79,7 +95,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "F" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/holofloor{
 	dir = 10;
 	icon_state = "white"
@@ -88,8 +106,12 @@
 "G" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
@@ -113,7 +135,9 @@
 	},
 /area/template_noop)
 "L" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
@@ -148,13 +172,17 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "U" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
 /area/template_noop)
 "Y" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

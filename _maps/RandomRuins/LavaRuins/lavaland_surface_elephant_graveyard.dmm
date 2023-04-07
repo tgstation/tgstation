@@ -70,7 +70,9 @@
 /area/ruin/powered/graveyard_shuttle)
 "bE" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)

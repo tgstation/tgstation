@@ -242,7 +242,8 @@
 /area/shuttle/labor)
 "x" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/line,

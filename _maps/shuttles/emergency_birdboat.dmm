@@ -202,20 +202,21 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	pixel_y = 2
 	},
 /turf/open/floor/mineral/plastitanium,

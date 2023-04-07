@@ -237,7 +237,9 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "U" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)

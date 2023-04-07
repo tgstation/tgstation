@@ -209,9 +209,15 @@
 /area/shuttle/mining)
 "r" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
@@ -224,7 +230,8 @@
 /area/shuttle/mining)
 "t" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/line,

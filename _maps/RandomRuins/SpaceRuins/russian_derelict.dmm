@@ -1281,7 +1281,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "pM" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "pN" = (
@@ -4957,7 +4959,9 @@
 /turf/closed/wall,
 /area/ruin/space/ks13/ai/corridor)
 "Jx" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/item/shard{
 	icon_state = "small"
 	},

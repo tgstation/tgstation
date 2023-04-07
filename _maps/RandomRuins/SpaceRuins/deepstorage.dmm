@@ -96,7 +96,9 @@
 /obj/machinery/conveyor_switch{
 	id = "bunkerrecycle"
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aw" = (
@@ -1044,7 +1046,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cM" = (
 /obj/machinery/shower/directional/east,
-/obj/structure/window/reinforced/plasma/spawner/south,
+/obj/structure/window/reinforced/plasma,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cN" = (
@@ -2534,8 +2536,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "he" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "hf" = (

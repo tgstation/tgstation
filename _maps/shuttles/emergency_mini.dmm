@@ -15,7 +15,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (

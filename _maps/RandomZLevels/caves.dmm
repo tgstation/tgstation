@@ -442,7 +442,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cB" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
@@ -481,7 +483,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cO" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
@@ -502,7 +506,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cT" = (
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -515,7 +519,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cW" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cX" = (
@@ -777,7 +783,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "ek" = (
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /mob/living/simple_animal/hostile/mining_drone,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
@@ -808,8 +816,10 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "es" = (
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner/south,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window,
 /mob/living/simple_animal/hostile/mining_drone,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)

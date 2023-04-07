@@ -15,7 +15,9 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/structure/window/spawner/east,
+/obj/structure/window{
+	dir = 4
+	},
 /obj/item/surgicaldrill,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/holofloor{
@@ -43,7 +45,9 @@
 /area/template_noop)
 "cI" = (
 /obj/structure/closet/crate/freezer/blood,
-/obj/structure/window/spawner/east,
+/obj/structure/window{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
@@ -79,7 +83,9 @@
 "dx" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -88,7 +94,9 @@
 	},
 /area/template_noop)
 "dX" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/structure/table/glass,
 /obj/item/storage/box/masks,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -99,7 +107,7 @@
 	},
 /area/template_noop)
 "gp" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
@@ -118,7 +126,9 @@
 	},
 /area/template_noop)
 "hK" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/structure/table/glass,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
@@ -132,7 +142,9 @@
 	},
 /area/template_noop)
 "hQ" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/structure/table/glass,
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -167,7 +179,9 @@
 	},
 /area/template_noop)
 "nj" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
@@ -176,7 +190,7 @@
 	},
 /area/template_noop)
 "pe" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
@@ -245,7 +259,9 @@
 	},
 /area/template_noop)
 "wV" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/structure/bed/roller,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -271,7 +287,9 @@
 	},
 /area/template_noop)
 "yk" = (
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /obj/machinery/computer/crew{
 	dir = 4
 	},
@@ -312,7 +330,9 @@
 	},
 /area/template_noop)
 "BI" = (
-/obj/structure/window/spawner/east,
+/obj/structure/window{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -420,7 +440,7 @@
 	},
 /area/template_noop)
 "Ke" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -443,7 +463,9 @@
 	},
 /area/template_noop)
 "LW" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
@@ -463,7 +485,9 @@
 	},
 /area/template_noop)
 "PJ" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/item/kirbyplants{
 	icon_state = "plant-08"
 	},
@@ -486,7 +510,9 @@
 	},
 /area/template_noop)
 "RA" = (
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /obj/machinery/computer/records/medical{
 	dir = 4
 	},
@@ -563,7 +589,7 @@
 	},
 /area/template_noop)
 "XM" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/holofloor{
 	icon_state = "white"

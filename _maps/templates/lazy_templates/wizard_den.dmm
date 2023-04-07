@@ -371,8 +371,9 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "OV" = (
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
 	color = "#008000";
+	dir = 1;
 	resistance_flags = 3
 	},
 /turf/open/lava,
@@ -411,8 +412,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
 	},
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
 	color = "#008000";
+	dir = 1;
 	resistance_flags = 3
 	},
 /turf/open/lava/airless,

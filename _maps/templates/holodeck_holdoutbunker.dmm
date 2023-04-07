@@ -1,12 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/foamedmetal,
-/obj/structure/window/spawner/west,
+/obj/structure/window{
+	dir = 8
+	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "b" = (
 /obj/structure/foamedmetal,
-/obj/structure/window/spawner/east,
+/obj/structure/window{
+	dir = 4
+	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "l" = (
@@ -30,7 +34,9 @@
 /area/template_noop)
 "x" = (
 /obj/structure/foamedmetal,
-/obj/structure/window/spawner/east,
+/obj/structure/window{
+	dir = 4
+	},
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)

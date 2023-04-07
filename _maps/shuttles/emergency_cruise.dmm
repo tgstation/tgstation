@@ -96,7 +96,9 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "iP" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -534,7 +536,9 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "El" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)

@@ -139,7 +139,9 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -153,7 +155,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/sbc_corvette)
 "au" = (
@@ -163,7 +167,9 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/zipties,
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -325,7 +331,9 @@
 	pixel_y = 3
 	},
 /obj/item/flashlight/seclite,
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},

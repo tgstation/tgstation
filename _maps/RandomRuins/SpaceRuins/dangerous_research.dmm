@@ -76,7 +76,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "aW" = (
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -154,7 +154,9 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "cl" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -289,8 +291,10 @@
 /area/ruin/space/has_grav/dangerous_research/maint)
 "ec" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
 /obj/item/reagent_containers/blood/b_minus,
 /obj/item/reagent_containers/blood/b_minus,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -398,8 +402,10 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "fE" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_2,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -495,8 +501,12 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "gH" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/item/trash/can,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -606,7 +616,9 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "iD" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/paper/fluff/ruins/dangerous_research/armstrong_memo_1,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -627,8 +639,12 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "iR" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -931,7 +947,9 @@
 /area/ruin/space/has_grav/dangerous_research)
 "nl" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/item/modular_computer/laptop/buildable,
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/dark,
@@ -1219,7 +1237,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "qp" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/clock/directional/south,
@@ -1266,7 +1286,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "qE" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -1308,7 +1330,9 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rc" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/microscope{
 	pixel_x = -3;
 	pixel_y = -2
@@ -2413,7 +2437,9 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "DY" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/item/trash/chips,
 /obj/item/trash/cnds,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3259,7 +3285,9 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "Qn" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/item/modular_computer/laptop/preset/civilian,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3505,7 +3533,9 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "SS" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/petri_dish/random,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -3555,7 +3585,9 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "TW" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/iv_drip/saline,
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/dark,

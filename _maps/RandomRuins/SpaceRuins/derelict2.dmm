@@ -3,7 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/template_noop,
 /area/template_noop)
 "c" = (
@@ -11,12 +13,18 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "d" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/template_noop,
 /area/template_noop)
 "e" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "f" = (
@@ -38,12 +46,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "k" = (
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /turf/template_noop,
 /area/template_noop)
 "l" = (
-/obj/structure/window/reinforced/spawner/south,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "m" = (
@@ -74,7 +84,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "p" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/template_noop,
 /area/template_noop)
 "q" = (

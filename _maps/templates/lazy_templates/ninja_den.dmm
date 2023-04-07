@@ -428,7 +428,9 @@
 /area/centcom/central_command_areas/holding)
 "lh" = (
 /obj/structure/toilet,
-/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /obj/machinery/door/window/survival_pod,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)

@@ -47,7 +47,7 @@
 /area/shuttle/sbc_starfury)
 "ah" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/window/reinforced/survival_pod/spawner/south,
+/obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/flora/rock/pile{
 	pixel_y = 2
@@ -831,8 +831,12 @@
 	req_access = list("syndicate_leader");
 	pixel_y = -4
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/west,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 9
 	},
@@ -1120,7 +1124,9 @@
 /area/shuttle/sbc_starfury)
 "ee" = (
 /obj/machinery/iv_drip,
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 9
@@ -1191,7 +1197,9 @@
 	pixel_y = 8
 	},
 /obj/item/folder/syndicate/red,
-/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
@@ -1293,7 +1301,9 @@
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -1358,8 +1368,12 @@
 /area/shuttle/sbc_starfury)
 "eN" = (
 /obj/item/aicard,
-/obj/structure/window/reinforced/survival_pod/spawner/east,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 5
 	},
@@ -3821,7 +3835,9 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mH" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "mI" = (
@@ -4184,7 +4200,9 @@
 "uq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/machinery/computer/communications/syndicate,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -4522,7 +4540,7 @@
 /area/shuttle/sbc_starfury)
 "BN" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/window/reinforced/survival_pod/spawner/south,
+/obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/flora/rock/pile/icy{
 	pixel_y = 2
@@ -4530,7 +4548,9 @@
 /turf/open/floor/fake_snow,
 /area/shuttle/sbc_starfury)
 "BO" = (
-/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /obj/item/toy/minimeteor,
 /turf/open/floor/fakespace,
 /area/shuttle/sbc_starfury)
@@ -4557,7 +4577,9 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "Cl" = (
-/obj/structure/window/reinforced/survival_pod/spawner/east,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/fakespace,
@@ -4735,7 +4757,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "Fr" = (
-/obj/structure/window/reinforced/survival_pod/spawner/south,
+/obj/structure/window/reinforced/survival_pod,
 /obj/machinery/power/turbine/turbine_outlet,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -5082,7 +5104,9 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "NG" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/machinery/computer/camera_advanced/syndie,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1

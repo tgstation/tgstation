@@ -4,7 +4,9 @@
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "c" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "h" = (
@@ -24,7 +26,7 @@
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "x" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "B" = (

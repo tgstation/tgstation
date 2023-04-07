@@ -1709,7 +1709,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/main)
 "kv" = (
@@ -1853,7 +1855,8 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 30
 	},
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	pixel_y = 1
 	},
 /obj/item/book/manual/chef_recipes{

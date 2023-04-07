@@ -49,7 +49,8 @@
 /area/shuttle/ruin/cyborg_mothership)
 "dI" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
 /turf/template_noop,
@@ -239,7 +240,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "nM" = (
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
 /obj/structure/closet/crate{
@@ -457,7 +459,8 @@
 /area/shuttle/ruin/cyborg_mothership)
 "xz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -763,14 +766,17 @@
 /area/shuttle/ruin/cyborg_mothership)
 "OY" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Pf" = (
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/structure/closet/crate/solarpanel_small,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -797,7 +803,7 @@
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Rv" = (
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -834,10 +840,13 @@
 /area/shuttle/ruin/cyborg_mothership)
 "SV" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ty" = (

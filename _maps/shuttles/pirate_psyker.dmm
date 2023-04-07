@@ -437,7 +437,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "xs" = (

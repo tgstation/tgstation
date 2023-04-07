@@ -49,8 +49,12 @@
 /area/shuttle/escape)
 "bT" = (
 /obj/machinery/computer/slot_machine,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "cb" = (
@@ -361,7 +365,9 @@
 /area/shuttle/escape)
 "kA" = (
 /obj/structure/chair/stool/directional/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "kM" = (
@@ -429,15 +435,21 @@
 /area/shuttle/escape)
 "lB" = (
 /obj/structure/chair/stool/directional/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mc" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -477,8 +489,12 @@
 /area/shuttle/escape)
 "mx" = (
 /obj/machinery/computer/slot_machine,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mz" = (
@@ -492,8 +508,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ni" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
@@ -534,7 +552,9 @@
 /area/shuttle/escape/brig)
 "oB" = (
 /obj/machinery/computer/slot_machine,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "pg" = (
@@ -964,7 +984,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "DA" = (

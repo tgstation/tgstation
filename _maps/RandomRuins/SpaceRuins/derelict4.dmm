@@ -23,7 +23,9 @@
 /area/ruin/space/has_grav)
 "i" = (
 /obj/structure/chair,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav)
 "j" = (
@@ -69,7 +71,9 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav)
 "s" = (

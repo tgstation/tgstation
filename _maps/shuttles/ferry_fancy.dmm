@@ -23,7 +23,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/south,
+/obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "g" = (
@@ -41,7 +41,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "k" = (
@@ -72,7 +74,8 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/north{
+/obj/structure/window/reinforced{
+	dir = 1;
 	pixel_y = 1
 	},
 /turf/open/floor/plating/airless,

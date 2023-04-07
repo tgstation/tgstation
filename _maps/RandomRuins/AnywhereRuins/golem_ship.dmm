@@ -48,7 +48,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "i" = (
@@ -88,7 +90,8 @@
 /area/ruin/powered/golem_ship)
 "q" = (
 /obj/structure/statue/gold/rd,
-/obj/structure/window/reinforced/spawner/east{
+/obj/structure/window/reinforced{
+	dir = 4;
 	name = "shrine of the liberator"
 	},
 /obj/machinery/light/directional/west,
@@ -114,7 +117,8 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/structure/window/reinforced/spawner/east{
+/obj/structure/window/reinforced{
+	dir = 4;
 	name = "shrine of the liberator"
 	},
 /turf/open/floor/mineral/titanium/purple,

@@ -6,7 +6,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
@@ -14,7 +16,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
@@ -44,7 +46,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "p" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
@@ -52,7 +54,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "q" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/holofloor,
@@ -62,7 +66,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "y" = (
-/obj/structure/window/spawner/south,
+/obj/structure/window,
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -99,7 +103,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "V" = (
-/obj/structure/window/spawner/north,
+/obj/structure/window{
+	dir = 1
+	},
 /obj/item/toy/dodgeball,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor,

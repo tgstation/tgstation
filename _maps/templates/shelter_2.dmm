@@ -62,7 +62,8 @@
 /turf/open/floor/pod,
 /area/misc/survivalpod)
 "n" = (
-/obj/structure/window/reinforced/survival_pod/spawner/west{
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8;
 	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
@@ -75,7 +76,9 @@
 /obj/item/cardboard_cutout{
 	starting_cutout = "Xenomorph Maid"
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "p" = (
@@ -92,7 +95,9 @@
 /turf/open/floor/pod,
 /area/misc/survivalpod)
 "r" = (
-/obj/structure/window/reinforced/survival_pod/spawner/west,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "s" = (
@@ -112,7 +117,9 @@
 /obj/machinery/microwave{
 	pixel_y = -2
 	},
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/structure/table/wood/fancy/black{
 	pixel_y = -9
 	},
@@ -125,7 +132,9 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "v" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
 /obj/structure/displaycase{
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
