@@ -6,7 +6,7 @@
 	var/list/allowed_icons
 
 /datum/unit_test/font_awesome_icons/Run()
-	var/file/font_awesome_file = file('html/font-awesome/css/all.min.css')
+	var/font_awesome_file = file('html/font-awesome/css/all.min.css')
 	if(isnull(font_awesome_file))
 		TEST_FAIL("Font Awesome CSS file could not be found!")
 		return
