@@ -1,7 +1,7 @@
 /datum/job/maintenance_technician
 	title = JOB_MAINTENANCE_TECHNICIAN
 	description = "Fix everything you are told to fix, \
-		 hope nobody notices when you accidentally break something."
+		hope nobody notices when you accidentally break something."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 3
@@ -54,5 +54,3 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 
 	box = /obj/item/storage/box/survival/engineer
-	pda_slot = ITEM_SLOT_LPOCKET
-	skillchips = list(/obj/item/skillchip/job/engineer)

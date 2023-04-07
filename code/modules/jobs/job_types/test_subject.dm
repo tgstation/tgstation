@@ -2,7 +2,7 @@
 	title = JOB_TEST_SUBJECT
 	description = "Be involved in experiments, have Geneticist mutate you into bloody mess, \
 		get your brain put into a mech, \
-		get feed to the slimes."
+		get fed to the slimes."
 	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 3

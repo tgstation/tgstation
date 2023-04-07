@@ -57,4 +57,3 @@
 
 	chameleon_extras = /obj/item/gun/syringe
 	box = /obj/item/storage/box/survival/medical
-	skillchips = list(/obj/item/skillchip/entrails_reader)

@@ -10,7 +10,7 @@
 	spawn_positions = 3
 	supervisors = "the security department and Head of Security"
 	minimal_player_age = 7
-	exp_requirements = 60 //Play one round, we hope you at least know how to talk
+	exp_requirements = 120 //Play one round, we hope you at least know how to talk
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SECURITY_CADET"
