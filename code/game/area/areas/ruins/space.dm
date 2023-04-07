@@ -589,6 +589,10 @@
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
 
+// Botnanical Haven
+/area/ruin/space/has_grav/powered/botanical_haven
+	name = "\improper Botanical Haven"
+
 // Ruin of Derelict Construction
 /area/ruin/space/has_grav/derelictconstruction
 	name = "\improper Derelict Construction Site"
