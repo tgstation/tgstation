@@ -273,6 +273,9 @@ multiple modular subtrees with behaviors
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
+	if(QDELETED(src) || QDELETED(pawn))
+		return // We're being deleted, don't bother.
+
 	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
 	if(!behavior)
 		CRASH("Behavior [behavior_type] not found.")
