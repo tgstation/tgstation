@@ -7,6 +7,9 @@
 /datum/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 
+	if(QDELETED(src) || QDELETED(controller))
+		return // we try to access the blackboard, but it might be gone
+
 	if(!success) //Don't try again on this item if we failed
 		var/list/item_blacklist = controller.blackboard[BB_MONKEY_BLACKLISTITEMS]
 		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
