@@ -1,16 +1,16 @@
 /// Component that makes items turn into other items when you use them on a loom (or any other thing really if you change the var)
 /datum/component/loomable
-	// What will spawn when the parent is loomed
+	/// What will spawn when the parent is loomed
 	var/resulting_item
-	// How much of parent do we need to loom, will be ignored if parent isnt a stack
+	/// How much of parent do we need to loom, will be ignored if parent isnt a stack
 	var/required_amount
-	// What thing we look for triggering the loom process (usually a loom)
+	/// What thing we look for triggering the loom process (usually a loom)
 	var/obj/target_thing
-	// What verb best fits the action of processing whatever the item is, for example "spun [thing]"
+	/// What verb best fits the action of processing whatever the item is, for example "spun [thing]"
 	var/process_completion_verb
-	// If target_thing needs to be anchored
+	/// If target_thing needs to be anchored
 	var/target_needs_anchoring
-	// How long it takes to loom the parent
+	/// How long it takes to loom the parent
 	var/loom_time
 
 /datum/component/loomable/Initialize(\
@@ -54,7 +54,7 @@
 			return
 
 	INVOKE_ASYNC(src, PROC_REF(loom_me), user, target)
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// If a do_after of the specified loom_time passes, will create a new one of resulting_item and either delete the parent, or .use the required amount if its a stack
 /datum/component/loomable/proc/loom_me(mob/living/user, obj/structure/loom/target)
