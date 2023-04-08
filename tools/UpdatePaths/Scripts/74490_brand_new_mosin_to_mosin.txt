@@ -1,0 +1,3 @@
+#comment This repaths the brand_new mosin subtpye to simply its parent type.
+
+/obj/item/weapon/rifle/boltaction/brand_new : /obj/item/weapon/rifle/boltaction{@OLD}
