@@ -12,6 +12,10 @@
 /proc/find_maintenance_spawn(atmos_sensitive = FALSE, require_darkness = FALSE)
 	var/list/possible_spawns = list()
 	for(var/spawn_location in GLOB.generic_maintenance_landmarks)
+		if(!isturf(spawn_location.loc))
+			stack_trace("Generic maintenance spawn found not on a turf: [spawn_location.type] on [isnull(spawn_location.loc) ? "null" : spawn_location.loc.type]")
+			continue
+
 		var/turf/spawn_turf = get_turf(spawn_location)
 
 		if(atmos_sensitive && !is_safe_turf(spawn_turf))

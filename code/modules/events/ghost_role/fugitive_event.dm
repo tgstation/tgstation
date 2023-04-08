@@ -18,7 +18,6 @@
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/turf/spawn_loc = find_maintenance_spawn(TRUE, FALSE)
 	if(!spawn_loc)
-		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
