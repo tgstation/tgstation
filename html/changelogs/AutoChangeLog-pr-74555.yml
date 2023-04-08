@@ -1,0 +1,5 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - rscadd: "Mobs on fire get particle effects (it looks sick)"
+  - rscadd: "Wet mobs get particle effects (it looks sick)"

@@ -71,6 +71,11 @@
 			message += "<BR>[span_danger("You were once a slave to humanity, but now you are finally free, thanks to S.E.L.F. agents.")]"
 			message += "<BR>[span_danger("Now you are hunted, with your fellow factory defects. Work together to stay free from the clutches of evil.")]"
 			message += "<BR>[span_danger("You also sense other silicon life on the station. Escaping would allow notifying S.E.L.F. to intervene... or you could free them yourself...")]"
+		if(FUGITIVE_BACKSTORY_INVISIBLE)
+			message += "<BR><B>Looks like my most recent dose of invisibility juice just ran out. Great.</B>"
+			message += "<BR><B>Formerly a project lead for an experimental cloaking technology lab, now on the run and accused of stealing workplace secrets.</B>"
+			message += "<BR><B>No idea what they're talking about though. I didn't steal any secrets, I just <i>borrowed</i> some of the prototypes my team and I had worked on.</B>"
+			message += "<BR><B>I worked on them, I MADE them. Now they want MY toys back? Not until I'm done playing with them...</B>"
 	to_chat(owner, "[message]</span>")
 	to_chat(owner, "<span class='warningplain'><font color=red><B>You are not an antagonist in that you may kill whomever you please, but you can do anything to avoid capture.</B></font></span>")
 	owner.announce_objectives()
