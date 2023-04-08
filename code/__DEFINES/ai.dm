@@ -214,7 +214,6 @@
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
-
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
