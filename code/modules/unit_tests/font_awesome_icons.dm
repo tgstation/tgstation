@@ -27,23 +27,6 @@
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
 	log_test("CSS Actual: [length(font_awesome_css)]")
 	var/list/icons = parse_fa_css_into_icon_list(font_awesome_css)
-
-	var/list/actual = list()
-	for(var/datum/font_awesome_icon/icon as anything in subtypesof(/datum/font_awesome_icon))
-		var/icon_class = initial(icon.name)
-		if(icon_class in actual)
-			TEST_FAIL("Font Awesome helper datum for icon 'fa-[icon_class]' is defined multiple times. ([icon])")
-			continue
-		actual += icon_class
-
-	var/list/diff = icons - actual
-	if(length(diff))
-		TEST_FAIL("Icons in Font Awesome are missing in code: [english_list(diff)]")
-
-	diff = actual - icons
-	if(length(diff))
-		TEST_FAIL("Icons in code are not present in Font Awesome: [english_list(diff)]")
-
 	allowed_icons = icons
 
 /**
@@ -58,9 +41,8 @@
 		if(findtext(quirk_icon, " "))
 			var/list/split = splittext(quirk_icon, " ")
 			quirk_icon = split[length(split)] // respect modifier classes
-
-		if(findtext(quirk_icon, "tg-") == 1)
-			continue
+		else
+			quirk_icon = "fa-[quirk_icon]"
 
 		if(!(quirk_icon in allowed_icons))
 			TEST_FAIL("Quirk [initial(quirk.name)]([quirk]) has invalid icon: [quirk_icon]")
@@ -87,7 +69,7 @@
 			if(!findtext(entry_name, ".fa-"))
 				continue
 
-			entry_name = replacetext(entry_name, ".fa-", "")
+			entry_name = replacetext(entry_name, ".fa-", "fa-")
 			entry_names |= entry_name
 		icons |= entry_names
 
@@ -101,12 +83,13 @@
 	output += ""
 
 	for(var/icon in allowed_icons)
-		output += "#DEFINE FA_ICON_[uppertext(replacetext(icon, "-", "_"))] \"fa-[icon]\""
+		var/icon_name = replacetext(icon, "fa-", "")
+		output += "#define FA_ICON_[uppertext(replacetext(icon_name, "-", "_"))] \"[icon]\""
 
-	var/output_file = output.Join("\n")
+	var/output_file = "[output.Join("\n")]\n"
 	text2file(output_file, "data/font_awesome_icons.dm")
 	var/current = file2text('code/__DEFINES/font_awesome_icons.dm')
 	if(current == output_file)
 		return
 
-	TEST_FAIL("Font Awesome helper file is out of date. Run locally and copy 'data/font_awesome_icons.dm' to 'code/datums/font_awesome_icons.dm'")
+	TEST_FAIL("Font Awesome helper file is out of date. Run locally and copy 'data/font_awesome_icons.dm' to 'code/__DEFINES/font_awesome_icons.dm'")
