@@ -3,6 +3,10 @@
 	//You absolutely must run last
 	priority = TEST_CREATE_AND_DESTROY
 
+	var/static/gc_time = 10 SECONDS
+
+TEST_FOCUS(/datum/unit_test/create_and_destroy)
+
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
@@ -104,6 +108,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
 
+	rustg_time_reset("init_start_time")
+
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
 	var/original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
@@ -144,12 +150,47 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Clear it, just in case
 	cached_contents.Cut()
 
+	log_test("Creating and destroying took [rustg_time_milliseconds("init_start_time") / 1000]s")
+
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
-	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
 	var/start_time = world.time
+
+#if DM_VERSION >= 515
+	var/old_queue_check_time = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
+	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = gc_time
+
+	var/time_left = gc_time
+	var/list/undeleted_objects
+
+	while (time_left > 0)
+		time_left -= 5 SECONDS
+		sleep(5 SECONDS)
+
+		undeleted_objects = undeleted_objects()
+		if (undeleted_objects.len == 0)
+			break
+		else
+			log_test("[undeleted_objects.len] object\s left")
+
+	if (undeleted_objects.len > 0)
+		var/list/names = list()
+		for (var/datum/object as anything in undeleted_objects)
+			names += "\t- [object] ([object.type])"
+
+		TEST_FAIL("Some objects were not deleted after [DisplayTimeText(gc_time)].\n[names.Join("\n")]")
+
+		for (var/datum/object as anything in undeleted_objects)
+			object.find_references()
+	else
+		log_test("Everything cleaned up in [DisplayTimeText(world.time - start_time)]")
+
+	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = old_queue_check_time
+#else
+	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
+	sleep(time_needed)
+
 	var/garbage_queue_processed = FALSE
 
-	sleep(time_needed)
 	while(!garbage_queue_processed)
 		var/list/queue_to_check = SSgarbage.queues[GC_QUEUE_CHECK]
 		//How the hell did you manage to empty this? Good job!
@@ -173,6 +214,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		SSgarbage.next_fire = 1
 		//Unless you've seriously fucked up, queue processing shouldn't take "that" long. Let her run for a bit, see if anything's changed
 		sleep(20 SECONDS)
+#endif
 
 	//Alright, time to see if anything messed up
 	var/list/cache_for_sonic_speed = SSgarbage.items
@@ -198,3 +240,15 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10 SECONDS
+
+/datum/unit_test/create_and_destroy/proc/undeleted_objects()
+	RETURN_TYPE(/list)
+	var/list/undeleted_objects = list()
+
+	for (var/list/queue_data in SSgarbage.queues[GC_QUEUE_CHECK])
+		var/datum/thing = queue_data[GC_QUEUE_ITEM_REF]
+		// References are `datum/thing`, and the argument passed through.
+		if (refcount(thing) != 2)
+			undeleted_objects += thing
+
+	return undeleted_objects

@@ -147,7 +147,7 @@
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
 	playsound(src, pick(spooky_noises), 100, TRUE)
-	QDEL_IN(src, 2 MINUTES)
+	QDEL_IN(WEAKREF(src), 2 MINUTES)
 
 /obj/structure/ghost_portal/process(delta_time)
 	. = ..()

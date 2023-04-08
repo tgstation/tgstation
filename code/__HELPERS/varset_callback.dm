@@ -6,7 +6,15 @@
 	if(length(list_or_datum))
 		list_or_datum[var_name] = var_value
 		return
+
 	var/datum/datum = list_or_datum
+
+	if (isweakref(datum))
+		var/datum/weakref/datum_weakref = datum
+		datum = datum_weakref.resolve()
+		if (isnull(datum))
+			return
+
 	if(IsAdminAdvancedProcCall())
 		datum.vv_edit_var(var_name, var_value) //same result generally, unless badmemes
 	else
