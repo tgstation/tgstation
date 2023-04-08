@@ -12,10 +12,3 @@
 // Keep savefile compatibilty at minimum supported level
 /savefile
 	byond_version = MIN_COMPILER_VERSION
-
-// 515 split call for external libraries into call_ext
-#if DM_VERSION < 515
-#define LIBCALL call
-#else
-#define LIBCALL call_ext
-#endif

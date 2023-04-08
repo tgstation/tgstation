@@ -298,19 +298,19 @@ GLOBAL_VAR(restart_counter)
 			TgsEndProcess()
 
 	log_world("World rebooted at [time_stamp()]")
-	
+
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	auxcleanup()
-	
+
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
-	
+
 	..()
 
 /world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		LIBCALL(debug_server, "auxtools_shutdown")()
+		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
 	auxcleanup()
@@ -432,7 +432,7 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = LIBCALL(library, "init")()
+	var/init_result = call_ext(library, "init")()
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
