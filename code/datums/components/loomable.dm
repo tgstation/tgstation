@@ -13,7 +13,7 @@
 	/// How long it takes to loom the parent
 	var/loom_time
 
-/datum/component/loomable/Initialize(\
+/datum/component/loomable/Initialize(
 	resulting_item,
 	required_amount = 4,
 	target_thing = /obj/structure/loom,
