@@ -846,7 +846,7 @@
 	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	possible_spawns += pick(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
 	if(!possible_spawns.len)
 		return MAP_ERROR
 	return ..()
