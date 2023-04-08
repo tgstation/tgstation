@@ -14,6 +14,7 @@
 #_maps/RandomRuins/SpaceRuins/asteroid6.dmm
 #_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
 #_maps/RandomRuins/SpaceRuins/bigderelict1.dmm
+#_maps/RandomRuins/SpaceRuins/botanical_haven.dmm
 #_maps/RandomRuins/SpaceRuins/bus.dmm
 #_maps/RandomRuins/SpaceRuins/caravanambush.dmm
 #_maps/RandomRuins/SpaceRuins/clericden.dmm
@@ -38,6 +39,7 @@
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
+#_maps/RandomRuins/SpaceRuins/infested_frigate.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/interdyne.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
@@ -60,6 +62,7 @@
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
 #_maps/RandomRuins/SpaceRuins/thelizardsgas.dmm
+#_maps/RandomRuins/SpaceRuins/the_outlet.dmm
 #_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
 #_maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
 #_maps/RandomRuins/SpaceRuins/transit_booth.dmm
