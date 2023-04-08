@@ -1,7 +1,9 @@
+//RAPID TILING DEVICE
+
 /// time taken to create tile
-#define CONSTRUCTION_TIME 0.4 SECONDS
+#define CONSTRUCTION_TIME(cost)((cost * 0.15) SECONDS)
 /// time taken to destroy a tile
-#define DECONSTRUCTION_TIME 0.2 SECONDS
+#define DECONSTRUCTION_TIME(cost)((cost * 0.25) SECONDS)
 
 /**
  * An tool used to create, destroy, and copy & clear decals of floor tiles
@@ -139,9 +141,7 @@
 	. = ..()
 	selected_design = new
 	tile_design = new
-
 	selected_design.set_info(GLOB.floor_designs[root_category][design_category][1])
-	update_appearance()
 
 /obj/item/construction/rtd/Destroy()
 	QDEL_NULL(selected_design)
@@ -225,17 +225,13 @@
 
 	return TRUE
 
-/// RTD can lay floor tiles only on these 2 types of platings. this procs checks for that
-/obj/item/construction/rtd/proc/is_valid_plating(turf/open/floor)
-	return floor.type == /turf/open/floor/plating ||  floor.type == /turf/open/floor/plating/reinforced
-
 /obj/item/construction/rtd/afterattack(turf/open/floor/floor, mob/user)
 	. = ..()
 	if(!istype(floor) || !range_check(floor,user))
 		return TRUE
 
 	var/floor_designs = GLOB.floor_designs
-	if(!is_valid_plating(floor)) //we infer what floor type it is if its not the usual plating
+	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
 		user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
@@ -267,30 +263,38 @@
 		balloon_alert(user, "design not supported!")
 		return TRUE
 
+	var/delay = CONSTRUCTION_TIME(selected_design.cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+
+	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))
+		qdel(rcd_effect)
+		return TRUE
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	if(!do_after(user, delay, target = floor))
+		qdel(beam)
+		qdel(rcd_effect)
+		return TRUE
+	if(!checkResource(selected_design.cost, user))
+		qdel(rcd_effect)
 		return TRUE
 
-	//All special effect stuff
-	user.Beam(floor, icon_state = "light_beam", time = CONSTRUCTION_TIME)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, CONSTRUCTION_TIME, RCD_FLOORWALL)
-	if(!do_after(user, CONSTRUCTION_TIME, target = floor))
-		rcd_effect.end_animation()
+	if(!useResource(selected_design.cost, user))
+		qdel(rcd_effect)
 		return TRUE
-
-	//consume resource only if tile was placed successfully
+	activate()
+	//step 1 create tile
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
-		rcd_effect.end_animation()
+		qdel(rcd_effect)
 		balloon_alert(user, "tile got merged with the stack beneath you!")
 		return TRUE
-
+	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
-	if(new_turf)
-		//apply infered overlays
+	if(new_turf) //apply infered overlays
 		for(var/datum/overlay_info/info in design_overlays)
 			info.add_decal(new_turf)
-		//use material
-		useResource(selected_design.cost, user)
 	rcd_effect.end_animation()
 
 	return TRUE
@@ -300,32 +304,51 @@
 	if(!istype(floor) || !range_check(floor,user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_valid_plating(floor)) //cant deconstruct normal plating thats the RCD's job
+	if(istype(floor, /turf/open/floor/plating)) //cant deconstruct normal plating thats the RCD's job
 		balloon_alert(user, "nothing to deconstruct!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/floor_designs = GLOB.floor_designs
 
 	//we only deconstruct floors which are supported by the RTD
-	var/can_deconstruct = FALSE
-	var/cost
+	var/cost = 0
 	for(var/main_root in floor_designs)
-		if(can_deconstruct)
+		if(cost)
 			break
 		for(var/sub_category in floor_designs[main_root])
-			if(can_deconstruct)
+			if(cost)
 				break
 			for(var/list/design_info in floor_designs[main_root][sub_category])
 				var/obj/item/stack/tile/tile_type = design_info["type"]
 				if(initial(tile_type.turf_type) == floor.type)
-					cost = tile_design.cost
-					can_deconstruct = TRUE
+					cost = design_info["tile_cost"]
 					break
-	if(!can_deconstruct || !checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
-		if(!can_deconstruct)
-			balloon_alert(user, "can't deconstruct this type!")
+	if(!cost)
+		balloon_alert(user, "can't deconstruct this type!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	var/delay = DECONSTRUCTION_TIME(cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+
+	//resource sanity check before & after delay along with beam effects
+	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	if(!do_after(user, delay, target = floor))
+		qdel(beam)
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!checkResource(cost * 0.7, user))
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	//do the tiling
+	if(!useResource(cost * 0.7, user))
+		qdel(rcd_effect)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	activate()
 	//find & collect all decals
 	var/list/all_decals = list()
 	for(var/obj/effect/decal in floor.contents)
@@ -334,21 +357,10 @@
 	for(var/obj/effect/decal in all_decals)
 		floor.contents -= decal
 		qdel(decal)
-
-	//All special effect stuff
-	user.Beam(floor, icon_state = "light_beam", time = DECONSTRUCTION_TIME)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, DECONSTRUCTION_TIME, RCD_FLOORWALL)
-	if(!do_after(user, DECONSTRUCTION_TIME, target = floor))
-		rcd_effect.end_animation()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/turf/new_turf = null
 	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
-		new_turf = floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else // for every other turf we scarp away exposing base turf underneath
-		new_turf = floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(new_turf)
-		useResource(cost * 0.7, user)
+		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

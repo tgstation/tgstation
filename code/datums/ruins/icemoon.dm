@@ -32,7 +32,7 @@
 
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
-	id = "fountain"
+	id = "ice_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
