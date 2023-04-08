@@ -38,7 +38,7 @@
 	button_icon_state = "rift"
 	desc = "Open a rift through the carp stream, allowing passage to somewhere close by."
 	cooldown_time = 15 SECONDS
-	melee_cooldown_time = 3 SECONDS
+	melee_cooldown_time = 0 SECONDS // Handled by rift
 	/// How far away can you place a rift?
 	var/max_range = 3
 
