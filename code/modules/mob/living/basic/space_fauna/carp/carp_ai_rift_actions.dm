@@ -99,8 +99,7 @@
 /datum/ai_behavior/make_carp_rift/away
 
 /datum/ai_behavior/make_carp_rift/away/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
-	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
-	return get_ranged_target_turf(controller.pawn, run_direction, ability.max_range)
+	return get_ranged_target_turf_direct(controller.pawn, target, range = ability.max_range, offset = 180)
 
 /**
  * # Make carp rift forwards

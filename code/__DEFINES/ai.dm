@@ -214,12 +214,15 @@
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
 
+
 ///Targetting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///Blackboard key for a whitelist typecache of "things we can target while trying to move"
+#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
