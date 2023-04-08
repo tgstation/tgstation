@@ -44,7 +44,7 @@
 		return
 
 	if(target_needs_anchoring && !(target.anchored))
-		user.balloon_alert(user, "[target] must be secured")
+		user.balloon_alert(user, "[target] must be secured!")
 		return
 
 	if((required_amount > 1) && istype(parent, /obj/item/stack))
