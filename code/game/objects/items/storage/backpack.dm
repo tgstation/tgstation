@@ -244,13 +244,18 @@
 	throwforce = 15
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	///Sounds used in the squeak component
 	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	///Reagents added to the edible component, ingested when you EAT the MEAT
 	var/list/meat_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
+	///The food types of the edible component
 	var/foodtypes = MEAT | RAW
+	///How our MEAT tastes. It tastes like MEAT
 	var/list/tastes = list("MEAT" = 1)
+	///Eating verbs when consuming the MEAT
 	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
 
 /obj/item/storage/backpack/meat/Initialize(mapload)
