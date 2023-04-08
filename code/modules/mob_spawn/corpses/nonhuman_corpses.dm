@@ -49,7 +49,3 @@
 	mob_type = /mob/living/simple_animal/hostile/headcrab
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "headcrab_dead"
-
-/obj/effect/mob_spawn/corpse/headcrab/special(mob/living/simple_animal/hostile/headcrab/crab)
-	. = ..()
-	crab.egg_lain = TRUE // Prevents using mad science to become a changeling
