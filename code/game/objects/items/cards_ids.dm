@@ -99,6 +99,8 @@
 
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
+	///are we allowed to tie an account to the id card
+	var/accepts_accounts = TRUE
 
 /datum/armor/card_id
 	fire = 100
