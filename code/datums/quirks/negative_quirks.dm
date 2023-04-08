@@ -95,7 +95,7 @@
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
-	icon = "eye-slash"
+	icon = FA_ICON_EYE_SLASH
 	value = -16
 	gain_text = span_danger("You can't see anything.")
 	lose_text = span_notice("You miraculously gain back your vision.")
@@ -121,7 +121,7 @@
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	icon = "brain"
+	icon = FA_ICON_BRAIN
 	value = -12
 	gain_text = span_danger("You feel smooth.")
 	lose_text = span_notice("You feel wrinkled again.")
@@ -154,7 +154,7 @@
 /datum/quirk/item_quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
-	icon = "deaf"
+	icon = FA_ICON_DEAF
 	value = -8
 	mob_trait = TRAIT_DEAF
 	gain_text = span_danger("You can't hear anything.")
@@ -182,7 +182,7 @@
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
-	icon = "toolbox"
+	icon = FA_ICON_TOOLBOX
 	value = -2
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
@@ -369,7 +369,7 @@
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
-	icon = "glasses"
+	icon = FA_ICON_GLASSES
 	value = -4
 	gain_text = span_danger("Things far away from you start looking blurry.")
 	lose_text = span_notice("You start seeing faraway things normally again.")
@@ -753,7 +753,7 @@
 /datum/quirk/item_quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
-	icon = "pills"
+	icon = FA_ICON_PILLS
 	value = -6
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
@@ -843,7 +843,7 @@
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
-	icon = "smoking"
+	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	medical_record_text = "Patient is a current smoker."
@@ -904,7 +904,7 @@
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
-	icon = "prescription-bottle"
+	icon = FA_ICON_PRESCRIPTION_BOTTLE
 	value = -6
 	gain_text = span_danger("You feel your immune system shift.")
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")

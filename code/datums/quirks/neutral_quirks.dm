@@ -300,7 +300,7 @@
 /datum/quirk/item_quirk/bald
 	name = "Smooth-Headed"
 	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
-	icon = "egg"
+	icon = FA_ICON_EGG
 	value = 0
 	mob_trait = TRAIT_BALD
 	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
@@ -356,7 +356,7 @@
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
 	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
-	icon = "camera"
+	icon = FA_ICON_CAMERA
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = span_notice("You know everything about photography.")
