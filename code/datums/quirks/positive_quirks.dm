@@ -30,7 +30,7 @@
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
 	desc = "Nothing like a good drink to make you feel on top of the world. Whenever you're drunk, you slowly recover from injuries."
-	icon = "wine-bottle"
+	icon = FA_ICON_WINE_BOTTLE
 	value = 8
 	gain_text = span_notice("You feel like a drink would do you good.")
 	lose_text = span_danger("You no longer feel like drinking would ease your pain.")
@@ -53,7 +53,7 @@
 /datum/quirk/empath
 	name = "Empath"
 	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
-	icon = "smile-beam"
+	icon = FA_ICON_SMILE_BEAM
 	value = 8
 	mob_trait = TRAIT_EMPATH
 	gain_text = span_notice("You feel in tune with those around you.")
@@ -134,7 +134,7 @@
 /datum/quirk/friendly
 	name = "Friendly"
 	desc = "You give the best hugs, especially when you're in the right mood."
-	icon = "hands-helping"
+	icon = FA_ICON_HANDS_HELPING
 	value = 2
 	mob_trait = TRAIT_FRIENDLY
 	gain_text = span_notice("You want to hug someone.")
@@ -156,7 +156,7 @@
 /datum/quirk/light_step
 	name = "Light Step"
 	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful. Also, your hands and clothes will not get messed in case of stepping in blood."
-	icon = "shoe-prints"
+	icon = FA_ICON_SHOE_PRINTS
 	value = 4
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = span_notice("You walk with a little more litheness.")
@@ -313,7 +313,7 @@
 /datum/quirk/voracious
 	name = "Voracious"
 	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine."
-	icon = "drumstick-bite"
+	icon = FA_ICON_DRUMSTICK_BITE
 	value = 4
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = span_notice("You feel HONGRY.")

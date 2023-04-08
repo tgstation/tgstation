@@ -15,7 +15,7 @@
 /datum/quirk/introvert
 	name = "Introvert"
 	desc = "You are energized by having time to yourself, and enjoy spending your free time in the library."
-	icon = "book-reader"
+	icon = FA_ICON_BOOK_READER
 	value = 0
 	mob_trait = TRAIT_INTROVERT
 	gain_text = span_notice("You feel like reading a good book quietly.")
@@ -26,7 +26,7 @@
 /datum/quirk/no_taste
 	name = "Ageusia"
 	desc = "You can't taste anything! Toxic food will still poison you."
-	icon = "meh-blank"
+	icon = FA_ICON_MEH_BLANK
 	value = 0
 	mob_trait = TRAIT_AGEUSIA
 	gain_text = span_notice("You can't taste anything!")
@@ -91,7 +91,7 @@
 /datum/quirk/snob
 	name = "Snob"
 	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
-	icon = "user-tie"
+	icon = FA_ICON_USER_TIE
 	value = 0
 	gain_text = span_notice("You feel like you understand what things should look like.")
 	lose_text = span_notice("Well who cares about deco anyways?")
@@ -102,7 +102,7 @@
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
-	icon = "thumbs-up"
+	icon = FA_ICON_THUMBS_UP
 	value = 0
 	gain_text = span_notice("You feel an intense craving for pineapple.")
 	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
@@ -128,7 +128,7 @@
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
 	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
-	icon = "thumbs-down"
+	icon = FA_ICON_THUMBS_DOWN
 	value = 0
 	gain_text = span_notice("You find yourself pondering what kind of idiot actually enjoys pineapples...")
 	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
@@ -160,7 +160,7 @@
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
-	icon = "grin-tongue-squint"
+	icon = FA_ICON_GRIN_TONGUE_SQUINT
 	value = 0
 	gain_text = span_notice("You start craving something that tastes strange.")
 	lose_text = span_notice("You feel like eating normal food again.")
@@ -191,7 +191,7 @@
 /datum/quirk/heterochromatic
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
-	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
+	icon = FA_ICON_EYE_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
@@ -291,7 +291,7 @@
 /datum/quirk/shifty_eyes
 	name = "Shifty Eyes"
 	desc = "Your eyes tend to wander all over the place, whether you mean to or not, causing people to sometimes think you're looking directly at them when you aren't."
-	icon = "far eye"
+	icon = FA_ICON_EYE
 	value = 0
 	medical_record_text = "Fucking creep kept staring at me the whole damn checkup. I'm only diagnosing this because it's less awkward than thinking it was on purpose."
 	mob_trait = TRAIT_SHIFTY_EYES

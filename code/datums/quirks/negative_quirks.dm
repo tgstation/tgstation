@@ -255,7 +255,7 @@
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
-	icon = "hand-fist"
+	icon = FA_ICON_HAND_FIST
 	value = -4
 	gain_text = span_danger("Your jaw feels loose.")
 	lose_text = span_notice("Your jaw feels fitting again.")
@@ -517,7 +517,7 @@
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
-	icon = "user-secret"
+	icon = FA_ICON_USER_SECRET
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
@@ -595,7 +595,7 @@
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
 		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
 		THIS IS NOT A LICENSE TO GRIEF."
-	icon = "grin-tongue-wink"
+	icon = FA_ICON_GRIN_TONGUE_WINK
 	value = -8
 	gain_text = span_userdanger("...")
 	lose_text = span_notice("You feel in tune with the world again.")
@@ -638,7 +638,7 @@
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
-	icon = "comment-slash"
+	icon = FA_ICON_COMMENT_SLASH
 	value = -3
 	gain_text = span_danger("You start worrying about what you're saying.")
 	lose_text = span_notice("You feel easier about talking again.") //if only it were that easy!
@@ -999,7 +999,7 @@
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
 	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
-	icon = "box-open"
+	icon = FA_ICON_BOX_OPEN
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
@@ -1054,7 +1054,7 @@
 /datum/quirk/illiterate
 	name = "Illiterate"
 	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
-	icon = "graduation-cap"
+	icon = FA_ICON_GRADUATION_CAP
 	value = -8
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
@@ -1065,7 +1065,7 @@
 /datum/quirk/mute
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
-	icon = "volume-xmark"
+	icon = FA_ICON_VOLUME_XMARK
 	value = -4
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
@@ -1076,7 +1076,7 @@
 /datum/quirk/body_purist
 	name = "Body Purist"
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
-	icon = "person-rays"
+	icon = FA_ICON_PERSON_RAYS
 	value = -2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("You now begin to hate the idea of having cybernetic implants.")
@@ -1145,7 +1145,7 @@
 /datum/quirk/cursed
 	name = "Cursed"
 	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
-	icon = "cloud-showers-heavy"
+	icon = FA_ICON_CLOUD_SHOWERS_HEAVY
 	value = -8
 	mob_trait = TRAIT_CURSED
 	gain_text = span_danger("You feel like you're going to have a bad day.")
