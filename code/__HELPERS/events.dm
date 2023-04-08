@@ -5,6 +5,8 @@
  *
  * Goes through the list of the generic mainteance landmark locations, checking for atmos safety if required, and returns
  * a valid turf. Returns MAP_ERROR if no valid locations are present.
+ * Returns nothing and alerts admins if no valid points are found. Keep this in mind
+ * when using this helper.
  */
 
 /proc/find_maintenance_spawn(atmos_sensitive = FALSE, require_darkness = FALSE)

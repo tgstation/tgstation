@@ -16,14 +16,10 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/spawn_turf in GLOB.generic_maintenance_landmarks)
-		if(istype(get_area(spawn_turf), /area/station/maintenance) && is_safe_turf(spawn_turf))
-			possible_spawns += spawn_turf
-	if(!possible_spawns.len)
+	var/turf/spawn_loc = find_maintenance_spawn(TRUE, FALSE)
+	if(!spawn_loc)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
-	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 
@@ -53,14 +49,14 @@
 		members += pick_n_take(candidates)
 
 	for(var/mob/dead/selected in members)
-		var/mob/living/carbon/human/S = gear_fugitive(selected, landing_turf, backstory)
+		var/mob/living/carbon/human/S = gear_fugitive(selected, spawn_loc, backstory)
 		spawned_mobs += S
 	if(!isnull(leader))
-		gear_fugitive_leader(leader, landing_turf, backstory)
+		gear_fugitive_leader(leader, spawn_loc, backstory)
 
 	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
-	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
+	new /obj/item/storage/toolbox/mechanical(spawn_loc) //so they can actually escape maint
 	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
