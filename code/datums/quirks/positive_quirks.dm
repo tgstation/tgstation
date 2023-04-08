@@ -4,7 +4,7 @@
 /datum/quirk/alcohol_tolerance
 	name = "Alcohol Tolerance"
 	desc = "You become drunk more slowly and suffer fewer drawbacks from alcohol."
-	icon = "beer"
+	icon = FA_ICON_BEER
 	value = 4
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = span_notice("You feel like you could drink a whole keg!")
@@ -15,7 +15,7 @@
 /datum/quirk/apathetic
 	name = "Apathetic"
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
-	icon = "meh"
+	icon = FA_ICON_MEH
 	value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
@@ -123,7 +123,7 @@
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
-	icon = "running"
+	icon = FA_ICON_RUNNING
 	value = 8
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = span_notice("You feel lithe on your feet!")
@@ -146,7 +146,7 @@
 /datum/quirk/jolly
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
-	icon = "grin"
+	icon = FA_ICON_GRIN
 	value = 4
 	mob_trait = TRAIT_JOLLY
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
@@ -181,7 +181,7 @@
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
-	icon = "eye"
+	icon = FA_ICON_EYE
 	value = 4
 	mob_trait = TRAIT_NIGHT_VISION
 	gain_text = span_notice("The shadows seem a little less dark.")
@@ -242,7 +242,7 @@
 /datum/quirk/selfaware
 	name = "Self-Aware"
 	desc = "You know your body well, and can accurately assess the extent of your wounds."
-	icon = "bone"
+	icon = FA_ICON_BONE
 	value = 8
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
@@ -251,7 +251,7 @@
 /datum/quirk/skittish
 	name = "Skittish"
 	desc = "You're easy to startle, and hide frequently. Run into a closed locker to jump into it, as long as you have access. You can walk to avoid this."
-	icon = "trash"
+	icon = FA_ICON_TRASH
 	value = 8
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
@@ -302,7 +302,7 @@
 /datum/quirk/throwingarm
 	name = "Throwing Arm"
 	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
-	icon = "baseball"
+	icon = FA_ICON_BASEBALL
 	value = 7
 	mob_trait = TRAIT_THROWINGARM
 	gain_text = span_notice("Your arms are full of energy!")

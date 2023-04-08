@@ -3,7 +3,7 @@
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
-	icon = "hiking"
+	icon = FA_ICON_HIKING
 	value = -8
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("Your back REALLY hurts!")
@@ -54,7 +54,7 @@
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
-	icon = "tint"
+	icon = FA_ICON_TINT
 	value = -8
 	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = span_danger("You feel your vigor slowly fading away.")
@@ -169,7 +169,7 @@
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
-	icon = "frown"
+	icon = FA_ICON_FROWN
 	mob_trait = TRAIT_DEPRESSION
 	value = -3
 	gain_text = span_danger("You start feeling depressed.")
@@ -306,7 +306,7 @@
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
-	icon = "skull"
+	icon = FA_ICON_SKULL
 	value = -6
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = span_danger("You feel frail.")
@@ -318,7 +318,7 @@
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
-	icon = "bed"
+	icon = FA_ICON_BED
 	value = -2
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = span_danger("You feel sleepy.")
@@ -338,7 +338,7 @@
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
 	desc = "For better or worse, everything seems to affect your mood more than it should."
-	icon = "flushed"
+	icon = FA_ICON_FLUSHED
 	value = -2
 	gain_text = span_danger("You seem to make a big deal out of everything.")
 	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
@@ -357,7 +357,7 @@
 /datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
-	icon = "cocktail"
+	icon = FA_ICON_COCKTAIL
 	value = -2
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = span_notice("Just the thought of drinking alcohol makes your head spin.")
@@ -406,7 +406,7 @@
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
-	icon = "lightbulb"
+	icon = FA_ICON_LIGHTBULB
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 5
@@ -453,7 +453,7 @@
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
-	icon = "peace"
+	icon = FA_ICON_PEACE
 	value = -8
 	mob_trait = TRAIT_PACIFISM
 	gain_text = span_danger("You feel repulsed by the thought of violence!")
@@ -465,7 +465,7 @@
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
-	icon = "wheelchair"
+	icon = FA_ICON_WHEELCHAIR
 	value = -12
 	gain_text = null // Handled by trauma.
 	lose_text = null
@@ -507,7 +507,7 @@
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
-	icon = "bullseye"
+	icon = FA_ICON_BULLSEYE
 	value = -4
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
@@ -581,7 +581,7 @@
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
-	icon = "handshake"
+	icon = FA_ICON_HANDSHAKE
 	value = -8
 	mob_trait = TRAIT_GRABWEAKNESS
 	gain_text = span_danger("You feel like a pushover.")
@@ -892,7 +892,7 @@
 /datum/quirk/unstable
 	name = "Unstable"
 	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
-	icon = "angry"
+	icon = FA_ICON_ANGRY
 	value = -10
 	mob_trait = TRAIT_UNSTABLE
 	gain_text = span_danger("There's a lot on your mind right now.")

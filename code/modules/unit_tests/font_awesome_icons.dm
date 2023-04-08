@@ -38,6 +38,9 @@
 			continue
 
 		var/quirk_icon = initial(quirk.icon)
+		if(findtext(quirk_icon, "tg-") == 1)
+			continue
+
 		if(findtext(quirk_icon, " "))
 			var/list/split = splittext(quirk_icon, " ")
 			quirk_icon = split[length(split)] // respect modifier classes
