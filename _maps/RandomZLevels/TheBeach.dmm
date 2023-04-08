@@ -1109,7 +1109,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "Jr" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "Kg" = (

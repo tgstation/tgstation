@@ -15,7 +15,8 @@
 	inverse_chem = null
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
-	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
+	/// affects mood, typically higher for mixed drinks with more complex recipes'
+	var/quality = 0
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	current_cycle++
@@ -820,16 +821,6 @@
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	..()
-
-/datum/reagent/consumable/clownstears
-	name = "Clown's Tears"
-	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#eef442" // rgb: 238, 244, 66
-	taste_description = "mournful honking"
-	ph = 9.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"

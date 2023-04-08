@@ -10649,7 +10649,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Ar" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
