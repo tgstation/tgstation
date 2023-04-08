@@ -4,3 +4,4 @@
 #define ME_CHANNEL "Me"
 #define OOC_CHANNEL "OOC"
 #define ADMIN_CHANNEL "Admin"
+#define MENTOR_CHANNEL "Mentor"
