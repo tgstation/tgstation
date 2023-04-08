@@ -294,7 +294,7 @@
  * used for figuring out different properties of the click, mostly right vs left and such.
  */
 
-/mob/proc/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return

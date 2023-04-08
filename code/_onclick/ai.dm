@@ -90,7 +90,7 @@
 	The below is only really for safety, or you can alter the way
 	it functions and re-insert it above.
 */
-/mob/living/silicon/ai/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/silicon/ai/UnarmedAttack(atom/A, proximity_flag)
 	A.attack_ai(src)
 
 /mob/living/silicon/ai/RangedAttack(atom/A)
