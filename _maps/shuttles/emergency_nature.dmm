@@ -379,7 +379,7 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
-/obj/item/food/soup/monkeysdelight{
+/obj/item/reagent_containers/cup/bowl/soup/monkey{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy{

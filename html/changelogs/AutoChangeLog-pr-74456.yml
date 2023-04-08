@@ -1,0 +1,9 @@
+author: "DrDiasyl aka DrTuxedo#0931"
+delete-after: True
+changes:
+  - imageadd: "Requestions consoles got a new sprite!"
+  - imageadd: "Gulag consoles got a new sprite!"
+  - imageadd: "Escape and assault pod consoles got a new sprite!"
+  - qol: "Now the gulag and pods consoles use overlays, instead of having turned ON screen in their base icon."
+  - qol: "Now the gulag and pods consoles screen change when they are emagged."
+  - qol: "Requests console now shows examine prompt on how to open their panel. Also shows a prompt if they were hacked."

@@ -1,0 +1,4 @@
+author: "DaydreamIQ"
+delete-after: True
+changes:
+  - bugfix: "Interdyne Ruin should now have power"

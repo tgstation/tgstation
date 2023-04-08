@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ad" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aj" = (

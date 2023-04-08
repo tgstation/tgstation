@@ -1107,7 +1107,21 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/oven
 	req_components = list(/datum/stock_part/micro_laser = 1)
-	needs_anchored = FALSE
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/stove
+	name = "Stove"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/stove
+	req_components = list(/datum/stock_part/micro_laser = 1)
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/range
+	name = "Range (Oven & Stove)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/oven/range
+	req_components = list(/datum/stock_part/micro_laser = 2)
+	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive"
