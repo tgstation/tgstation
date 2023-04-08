@@ -58,7 +58,7 @@
 			qdel(held)
 	held_items?.Cut()
 
-	if(ai_controller && !ispath(ai_controller))
+	if(isdatum(ai_controller))
 		QDEL_NULL(ai_controller)
 
 	return ..()
