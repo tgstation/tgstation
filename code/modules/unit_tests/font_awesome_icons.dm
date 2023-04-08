@@ -38,7 +38,7 @@
 			continue
 
 		var/quirk_icon = initial(quirk.icon)
-		if(findtext(quirk_icon, "tg-") == 1)
+		if(findtext(quirk_icon, "tg-") == 1) // TODO: Validate these as well
 			continue
 
 		if(findtext(quirk_icon, " "))
