@@ -63,8 +63,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
-	blackboard.Cut() // can contain hard refs, although really never should
-	current_behaviors.Cut()
+	blackboard?.Cut() // can contain hard refs, although really never should
+	current_behaviors?.Cut()
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
