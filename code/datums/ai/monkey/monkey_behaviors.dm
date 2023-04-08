@@ -13,10 +13,7 @@
 	if(!success) //Don't try again on this item if we failed
 		var/list/item_blacklist = controller.blackboard[BB_MONKEY_BLACKLISTITEMS]
 		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
-
 		item_blacklist[target] = TRUE
-		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
-			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
