@@ -725,29 +725,29 @@
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
 
 	if(reagents)
-		if(reagents.flags & TRANSPARENT)
-			. += "It contains:"
-			if(length(reagents.reagent_list))
-				if(user.can_see_reagents()) //Show each individual reagent
-					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-						. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
-					if(reagents.is_reacting)
-						. += span_warning("It is currently reacting!")
-					. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
-				else //Otherwise, just show the total volume
-					var/total_volume = 0
-					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-						total_volume += current_reagent.volume
-					. += "[total_volume] units of various reagents"
-			else
-				. += "Nothing."
-		else if(reagents.flags & AMOUNT_VISIBLE)
-			if(reagents.total_volume)
-				. += span_notice("It has [reagents.total_volume] unit\s left.")
-			else
-				. += span_danger("It's empty.")
+		var/user_sees_reagents = user.can_see_reagents()
+		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_PARENT_REAGENT_EXAMINE, user, ., user_sees_reagents)
+		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
+			if(reagents.flags & TRANSPARENT)
+				if(reagents.total_volume > 0)
+					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
+					if(user_sees_reagents) //Show each individual reagent
+						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+						if(reagents.is_reacting)
+							. += span_warning("It is currently reacting!")
+						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
+
+				else
+					. += "It contains:<br>Nothing."
+			else if(reagents.flags & AMOUNT_VISIBLE)
+				if(reagents.total_volume)
+					. += span_notice("It has [reagents.total_volume] unit\s left.")
+				else
+					. += span_danger("It's empty.")
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)
  *

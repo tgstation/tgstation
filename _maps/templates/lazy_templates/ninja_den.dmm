@@ -1815,7 +1815,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "Rg" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)

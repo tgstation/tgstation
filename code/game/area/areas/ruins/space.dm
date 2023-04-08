@@ -648,3 +648,7 @@
 
 /area/ruin/space/has_grav/the_outlet/cultinfluence
 	name = "\improper outlet cult corruption"
+
+//SYN-C Brutus, derelict frigate
+/area/ruin/space/has_grav/infested_frigate
+	name = "SYN-C Brutus"
