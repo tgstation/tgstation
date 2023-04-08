@@ -869,6 +869,7 @@
 #include "code\datums\components\clickbox.dm"
 #include "code\datums\components\clothing_fov_visor.dm"
 #include "code\datums\components\codeword_hearing.dm"
+#include "code\datums\components\combo_attacks.dm"
 #include "code\datums\components\combustible_flooder.dm"
 #include "code\datums\components\connect_containers.dm"
 #include "code\datums\components\connect_loc_behalf.dm"
