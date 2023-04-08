@@ -91,22 +91,31 @@
 
 	controller.blackboard[BB_MONKEY_PICKPOCKETING] = TRUE
 
-	var/success = FALSE
+	var/do_after_passed = do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim)
+	if(QDELETED(src) || QDELETED(living_pawn) || QDELETED(target))
+		finish_action(controller, FALSE)
+		return
 
-	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && living_pawn.CanReach(victim))
+	if(!do_after_passed || !living_pawn.CanReach(victim))
+		finish_action(controller, FALSE)
+		return
 
-		for(var/obj/item/I in victim.held_items)
-			if(I == target)
-				victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
-				if(victim.temporarilyRemoveItemFromInventory(target))
-					if(!QDELETED(target) && !equip_item(controller))
-						target.forceMove(living_pawn.drop_location())
-						success = TRUE
-						break
-				else
-					victim.visible_message(span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"), span_userdanger("[living_pawn] tried to grab [target]!"))
+	if(!(target in victim.held_items) || !victim.temporarilyRemoveItemFromInventory(target))
+		victim.visible_message(
+			span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"),
+			span_userdanger("[living_pawn] tried to grab [target]!"),
+			)
+		finish_action(controller, FALSE)
+		return
 
-	finish_action(controller, success) //We either fucked up or got the item.
+	victim.visible_message(
+		span_danger("[living_pawn] snatches [target] from [victim]."),
+		span_userdanger("[living_pawn] snatched [target]!"),
+		)
+
+	if(!equip_item(controller))
+		target.forceMove(living_pawn.drop_location())
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/monkey_equip/pickpocket/finish_action(datum/ai_controller/controller, success)
 	. = ..()
