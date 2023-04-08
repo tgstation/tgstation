@@ -36,6 +36,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	density = TRUE
 	anchored = TRUE
 
+/obj/machinery/bsa/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
 /obj/machinery/bsa/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 1 SECONDS)
