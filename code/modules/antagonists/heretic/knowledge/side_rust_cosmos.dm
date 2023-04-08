@@ -1,4 +1,4 @@
-// Sidepaths for knowledge between Rust and Ash.
+// Sidepaths for knowledge between Rust and Cosmos.
 
 /datum/heretic_knowledge/essence
 	name = "Priest's Ritual"
@@ -8,7 +8,7 @@
 		Created by the Priest - the Liquid that both was and is not."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_regen,
-		/datum/heretic_knowledge/spell/ash_passage,
+		/datum/heretic_knowledge/spell/cosmic_runes,
 		)
 	required_atoms = list(
 		/obj/structure/reagent_dispensers/watertank = 1,
@@ -25,8 +25,8 @@
 		that a victim has touched or is covered in the victim's blood to empower the curse."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
 	next_knowledge = list(
-		/datum/heretic_knowledge/mad_mask,
 		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/spell/star_blast,
 	)
 	required_atoms = list(
 		/obj/item/wirecutters = 1,
@@ -56,10 +56,10 @@
 	name = "Rusted Ritual"
 	desc = "Allows you to transmute a pool of vomit, a book, and a head into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
-	gain_text = "I combined my principle of hunger with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
+	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/entropic_plume,
-		/datum/heretic_knowledge/spell/flame_birth,
+		/datum/heretic_knowledge/spell/cosmic_expansion,
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
