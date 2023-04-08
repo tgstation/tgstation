@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/inherent_explosive_resistance = -1
 
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
+	var/static/list/banned_edits = list(NAMEOF_STATIC(x), NAMEOF_STATIC(y), NAMEOF_STATIC(z))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()

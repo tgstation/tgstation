@@ -405,9 +405,9 @@
 	return destination //used by some child types checks and zMove()
 
 /atom/movable/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF_STATIC(src, step_x) = TRUE, NAMEOF_STATIC(src, step_y) = TRUE, NAMEOF_STATIC(src, step_size) = TRUE, NAMEOF_STATIC(src, bounds) = TRUE)
-	var/static/list/careful_edits = list(NAMEOF_STATIC(src, bound_x) = TRUE, NAMEOF_STATIC(src, bound_y) = TRUE, NAMEOF_STATIC(src, bound_width) = TRUE, NAMEOF_STATIC(src, bound_height) = TRUE)
-	var/static/list/not_falsey_edits = list(NAMEOF_STATIC(src, bound_width) = TRUE, NAMEOF_STATIC(src, bound_height) = TRUE)
+	var/static/list/banned_edits = list(NAMEOF_STATIC(step_x) = TRUE, NAMEOF_STATIC(step_y) = TRUE, NAMEOF_STATIC(step_size) = TRUE, NAMEOF_STATIC(bounds) = TRUE)
+	var/static/list/careful_edits = list(NAMEOF_STATIC(bound_x) = TRUE, NAMEOF_STATIC(bound_y) = TRUE, NAMEOF_STATIC(bound_width) = TRUE, NAMEOF_STATIC(bound_height) = TRUE)
+	var/static/list/not_falsey_edits = list(NAMEOF_STATIC(bound_width) = TRUE, NAMEOF_STATIC(bound_height) = TRUE)
 	if(banned_edits[var_name])
 		return FALSE //PLEASE no.
 	if(careful_edits[var_name] && (var_value % world.icon_size) != 0)

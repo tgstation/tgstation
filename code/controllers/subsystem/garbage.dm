@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(garbage)
 			fail_counts[i] = 0
 
 // 1 from the hard reference in the queue,
-// and 1 from the variable used before ref_count is called.
+// and 1 from the variable used before refcount is called.
 #define EXPECTED_REF_COUNT_FOR_SOFT_DEL 2
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_FILTER)
