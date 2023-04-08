@@ -14,10 +14,6 @@
 	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
 	/// Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
 	var/product_types
-	/// A lazylist typecache of items that can harvest this flora.
-	/// Will be set automatically on Initialization depending on flora_flags.
-	/// Paths in this list and their subtypes will be able to harvest the flora.
-	var/list/required_tools
 	/// If the user is able to harvest this with their hands
 	var/harvest_with_hands = FALSE
 	/// The "verb" to use when the user harvests the flora
@@ -55,14 +51,6 @@
 
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
-
-/obj/structure/flora/Initialize(mapload)
-	. = ..()
-	if(!required_tools)
-		if(flora_flags & FLORA_WOODEN)
-			required_tools += FLORA_HARVEST_WOOD_TOOLS //This list does not include TOOL_SAW tools, they are handled seperately in can_harvest() for the purpose of on/off states
-		if(flora_flags & FLORA_STONE)
-			required_tools += FLORA_HARVEST_STONE_TOOLS
 
 /obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
 	if(user.combat_mode)
@@ -168,9 +156,6 @@
 		return null
 
 	if(harvesting_item)
-		//If its a required_tool then it skips all checks and gets forced to succeed
-		if(is_type_in_typecache(harvesting_item, required_tools))
-			return TRUE
 		//Check to see if wooden flora is being attacked by a saw item (letting the items on/off state control this is better than putting them in the list)
 		if((flora_flags & FLORA_WOODEN) && (harvesting_item.tool_behaviour == TOOL_SAW))
 			return TRUE
