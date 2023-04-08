@@ -43,8 +43,9 @@ export const Icon = (props) => {
     if (preprendFa) {
       iconClass += 'fa-';
     }
+    iconClass += faName;
     if (spin) {
-      iconClass += 'fa-spin ';
+      iconClass += ' fa-spin';
     }
   }
   return (
