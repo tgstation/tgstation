@@ -64,6 +64,7 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	blackboard.Cut() // can contain hard refs, although really never should
+	current_behaviors.Cut()
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
@@ -186,6 +187,9 @@ multiple modular subtrees with behaviors
 			return
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(!able_to_run())
+			SSmove_manager.stop_looping(pawn)
+			return // something we did made us unable to run, abort
 
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
