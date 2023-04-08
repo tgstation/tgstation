@@ -30,5 +30,5 @@
 	lifespan = 1 SECONDS
 	fade = 0.2 SECONDS
 	fadein = 0.7 SECONDS
-	position = generator("vector", list(-3, 5, 0), list(3, 6.5, 0), NORMAL_RAND)
-	velocity = generator("vector", list(-0.1, 0.4, 0), list(0.1, 0.5, 0), NORMAL_RAND)
+	position = generator(GEN_VECTOR, list(-3, 5, 0), list(3, 6.5, 0), NORMAL_RAND)
+	velocity = generator(GEN_VECTOR, list(-0.1, 0.4, 0), list(0.1, 0.5, 0), NORMAL_RAND)
