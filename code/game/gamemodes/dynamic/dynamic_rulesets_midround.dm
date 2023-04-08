@@ -512,7 +512,7 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
-	var/turf/spawn_loc = find_maintenance_spawn(TRUE, TRUE) //Checks if there's a single safe, dark tile on station.
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
 	if(!spawn_loc)
 		return FALSE
 	. = ..()
@@ -846,7 +846,7 @@
 	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	possible_spawns += pick(find_maintenance_spawn(TRUE, FALSE))
+	possible_spawns += pick(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 	if(!possible_spawns.len)
 		return MAP_ERROR
 	return ..()

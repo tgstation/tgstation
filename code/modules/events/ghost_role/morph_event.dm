@@ -22,7 +22,7 @@
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 
-	var/turf/spawn_loc = find_maintenance_spawn(TRUE, FALSE)
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
 	if(!spawn_loc)
 		return MAP_ERROR
 

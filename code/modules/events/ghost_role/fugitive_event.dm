@@ -16,8 +16,8 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/turf/spawn_loc = find_maintenance_spawn(TRUE, FALSE)
-	if(!spawn_loc)
+	var/turf/landing_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!landing_turf)
 		return MAP_ERROR
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
@@ -48,14 +48,14 @@
 		members += pick_n_take(candidates)
 
 	for(var/mob/dead/selected in members)
-		var/mob/living/carbon/human/S = gear_fugitive(selected, spawn_loc, backstory)
+		var/mob/living/carbon/human/S = gear_fugitive(selected, landing_turf, backstory)
 		spawned_mobs += S
 	if(!isnull(leader))
-		gear_fugitive_leader(leader, spawn_loc, backstory)
+		gear_fugitive_leader(leader, landing_turf, backstory)
 
 	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
-	new /obj/item/storage/toolbox/mechanical(spawn_loc) //so they can actually escape maint
+	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
