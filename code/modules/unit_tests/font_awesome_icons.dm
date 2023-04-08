@@ -26,8 +26,7 @@
  */
 /datum/unit_test/font_awesome_icons/proc/load_parse_verify()
 	log_test("CSS Actual: [length(font_awesome_css)]")
-	var/list/icons = parse_fa_css_into_icon_list(font_awesome_css)
-	allowed_icons = icons
+	allowed_icons = parse_fa_css_into_icon_list(font_awesome_css)
 
 /**
  * Verifies that all quirk icons are valid.
