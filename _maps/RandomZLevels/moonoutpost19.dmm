@@ -5,6 +5,14 @@
 "ac" = (
 /turf/closed/mineral/random/labormineral,
 /area/awaymission/moonoutpost19/main)
+"ad" = (
+/obj/item/stack/tile/iron,
+/obj/effect/decal/cleanable/crayon,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "ae" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/moonoutpost19/main)
@@ -131,6 +139,23 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
+"aT" = (
+/obj/item/toy/beach_ball/baseball{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/item/toy/beach_ball/baseball{
+	pixel_x = -11;
+	pixel_y = -4
+	},
+/obj/item/toy/beach_ball/baseball{
+	pixel_y = 4
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "aU" = (
 /turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
@@ -800,7 +825,10 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
 /obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
 /area/awaymission/moonoutpost19/syndicate)
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1091,6 +1119,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1158,9 +1187,9 @@
 "dz" = (
 /obj/machinery/power/floodlight,
 /obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dA" = (
@@ -1411,6 +1440,7 @@
 /area/awaymission/moonoutpost19/research)
 "eL" = (
 /obj/structure/alien/weeds,
+/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
 	},
@@ -1770,6 +1800,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"fS" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "fV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -1844,6 +1882,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"gk" = (
+/obj/structure/fence/cut/large{
+	dir = 8
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "gl" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -2062,6 +2109,15 @@
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
+"gO" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "gP" = (
 /obj/structure/chair/office,
 /turf/open/floor/iron{
@@ -2353,6 +2409,24 @@
 /area/awaymission/moonoutpost19/arrivals)
 "hR" = (
 /mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
+"ib" = (
+/obj/item/clothing/head/soft/blue{
+	pixel_x = 12;
+	pixel_y = -12;
+	name = "medbay runtimes cap"
+	},
+/obj/item/clothing/head/soft/blue{
+	pixel_x = 12;
+	name = "medbay runtimes cap"
+	},
+/obj/item/clothing/head/soft/blue{
+	name = "medbay runtimes cap"
+	},
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -2764,6 +2838,14 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"kk" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "kl" = (
 /obj/structure/fluff/meteor/sharp,
 /turf/open/misc/asteroid/moon{
@@ -2836,6 +2918,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/white/corner{
 	heat_capacity = 1e+006
 	},
@@ -3554,6 +3637,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"nT" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "nV" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/structure/window/reinforced,
@@ -3561,6 +3651,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"nX" = (
+/obj/structure/ore_box,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "nY" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/generic,
@@ -3636,6 +3734,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"oz" = (
+/obj/structure/bed/dogbed/runtime,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "oB" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -3651,6 +3756,13 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/moonoutpost19/arrivals)
+"oH" = (
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "oY" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/structure/lattice/catwalk,
@@ -3746,6 +3858,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"pL" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/medkit,
+/obj/structure/rack,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "pW" = (
 /obj/structure/fluff/meteor/large,
 /turf/open/misc/asteroid/basalt,
@@ -3855,6 +3976,7 @@
 	req_access = "201"
 	},
 /obj/item/clothing/under/suit/navy,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/carpet/orange,
 /area/awaymission/moonoutpost19/arrivals)
 "ro" = (
@@ -3924,6 +4046,15 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
+"rO" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/main)
 "rV" = (
 /obj/machinery/vending/snack,
 /obj/structure/sign/poster/contraband/eat{
@@ -4088,6 +4219,13 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"tj" = (
+/obj/item/stack/tile/iron,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "tr" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
@@ -4310,15 +4448,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"uC" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "uF" = (
 /obj/item/stack/ore/iron,
 /obj/effect/decal/cleanable/blood/drip,
@@ -4351,6 +4480,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
+"uR" = (
+/obj/item/stack/ore/uranium,
+/turf/open/misc/asteroid/moon/dug,
+/area/awaymission/moonoutpost19/main)
 "uV" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	req_access = "150"
@@ -4424,6 +4557,19 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"vC" = (
+/obj/item/toy/crayon/white{
+	pixel_y = 13
+	},
+/obj/item/toy/crayon/white,
+/obj/item/toy/crayon/white{
+	pixel_y = 4
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "vF" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes/line{
@@ -4478,6 +4624,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"vX" = (
+/obj/item/clothing/head/soft,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "wc" = (
 /obj/machinery/duct,
 /turf/open/floor/iron{
@@ -4593,9 +4746,27 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"xn" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "xo" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/pod/dark,
+/area/awaymission/moonoutpost19/main)
+"xt" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining cart. It's caked with old basalt and lunar debris.";
+	name = "mining car"
+	},
+/obj/item/stack/ore/glass/basalt{
+	amount = 37
+	},
+/turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
 "xu" = (
 /obj/item/pickaxe{
@@ -4714,6 +4885,16 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"yy" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "yC" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/drone{
@@ -4810,6 +4991,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"yZ" = (
+/obj/structure/rack,
+/obj/structure/lattice/catwalk,
+/obj/item/pickaxe,
+/obj/item/t_scanner,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "za" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -4830,6 +5021,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
+"zh" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "zi" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/drip,
@@ -5182,6 +5381,13 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/pod/light,
 /area/awaymission/moonoutpost19/main)
+"Bz" = (
+/obj/item/stack/ore/uranium,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "BA" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/moon{
@@ -5413,6 +5619,15 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
+	},
+/area/awaymission/moonoutpost19/main)
+"Df" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/rack,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
 "Di" = (
@@ -5724,6 +5939,13 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Fm" = (
+/obj/item/melee/baseball_bat,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Fq" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6044,6 +6266,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Ht" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "line"
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Hu" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/asteroid/corner,
@@ -6126,6 +6357,14 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/awaymission/moonoutpost19/arrivals)
+"HT" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/circular_saw,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "HW" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -6155,10 +6394,7 @@
 "If" = (
 /obj/machinery/light/small/directional/south,
 /obj/item/stack/cable_coil/five,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
+/turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/research)
 "Ig" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
@@ -6455,6 +6691,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Lm" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Lt" = (
 /obj/machinery/door/window{
 	dir = 1;
@@ -6731,6 +6976,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"NC" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "line";
+	rotation = 90
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "NM" = (
 /obj/structure/cable,
 /obj/structure/fluff/tram_rail/floor,
@@ -6777,6 +7032,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"Of" = (
+/obj/structure/fluff/minepost,
+/obj/item/stack/sheet/mineral/uranium/five,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Og" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/stripes/line{
@@ -6808,6 +7071,14 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
+"On" = (
+/obj/structure/fluff/minepost,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Oq" = (
 /obj/machinery/shower{
 	dir = 8
@@ -6821,6 +7092,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
+"Ov" = (
+/obj/structure/chair/pew{
+	dir = 8
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Ox" = (
 /obj/item/stack/ore/iron,
 /obj/item/stack/ore/iron{
@@ -6855,6 +7135,9 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
 "OB" = (
@@ -6921,6 +7204,16 @@
 	},
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
+"OW" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/obj/item/clothing/head/soft,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "OZ" = (
 /obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid/moon{
@@ -7051,6 +7344,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals)
+"PL" = (
+/obj/structure/chair/pew{
+	dir = 8
+	},
+/obj/item/food/peanuts/salted,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "PR" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -7288,6 +7591,16 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/moonoutpost19/arrivals)
+"Rr" = (
+/obj/structure/rack,
+/obj/structure/lattice/catwalk,
+/obj/item/pickaxe,
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "RE" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood/drip,
@@ -7348,6 +7661,20 @@
 "Sa" = (
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid/moon/dug,
+/area/awaymission/moonoutpost19/main)
+"Sd" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "line";
+	rotation = 90
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "line";
+	rotation = 90
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
 /area/awaymission/moonoutpost19/main)
 "Se" = (
 /obj/machinery/airalarm/directional/north{
@@ -7566,6 +7893,15 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"Tp" = (
+/obj/structure/fence/cut{
+	dir = 4
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Tu" = (
 /obj/structure/grille,
 /obj/machinery/duct,
@@ -7608,6 +7944,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"TO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "TU" = (
 /obj/structure/rack,
 /obj/item/stack/ducts/fifty,
@@ -7893,6 +8237,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"VL" = (
+/obj/structure/flora/rock/style_random{
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "VQ" = (
 /obj/structure/alien/weeds,
 /obj/structure/flora/lunar_plant,
@@ -8009,6 +8363,14 @@
 	},
 /obj/machinery/cell_charger,
 /turf/open/floor/pod/dark,
+/area/awaymission/moonoutpost19/main)
+"WX" = (
+/obj/structure/fluff/minepost,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
 /area/awaymission/moonoutpost19/main)
 "Xc" = (
 /obj/structure/alien/weeds/node,
@@ -8256,6 +8618,25 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"YD" = (
+/obj/structure/flora/rock/style_random{
+	pixel_y = -2
+	},
+/obj/item/clothing/head/soft/blue{
+	pixel_x = 12;
+	pixel_y = -12;
+	name = "medbay runtimes cap"
+	},
+/obj/item/clothing/head/soft/blue{
+	pixel_y = 8;
+	pixel_x = 12;
+	name = "medbay runtimes cap"
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "YF" = (
 /obj/machinery/light/warm/no_nightlight/directional/west,
 /obj/item/cigbutt{
@@ -8340,6 +8721,16 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
+"Zf" = (
+/obj/item/clothing/head/soft,
+/obj/item/clothing/head/soft{
+	pixel_y = 3
+	},
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Zg" = (
 /turf/open/space/basic,
 /area/space)
@@ -8433,6 +8824,16 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"ZX" = (
+/obj/structure/flora/rock/style_random{
+	pixel_y = -2
+	},
+/obj/item/trash/peanuts,
+/turf/open/misc/asteroid/moon{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 
 (1,1,1) = {"
 Zg
@@ -18816,7 +19217,7 @@ dA
 dA
 dA
 dA
-DZ
+On
 dA
 dA
 dA
@@ -24206,7 +24607,7 @@ rg
 rg
 rg
 rg
-DZ
+WX
 px
 Yh
 px
@@ -29408,7 +29809,7 @@ dA
 ac
 xR
 px
-px
+oz
 ac
 dA
 dA
@@ -31905,7 +32306,7 @@ dA
 dA
 dA
 Bb
-Bb
+VL
 dA
 dA
 dA
@@ -37065,8 +37466,8 @@ Pr
 Pr
 Pr
 Pr
-Pr
-Pr
+qY
+qY
 px
 px
 Bb
@@ -37323,7 +37724,7 @@ Ux
 ur
 Ux
 qC
-Pr
+gO
 Pr
 px
 px
@@ -37580,7 +37981,7 @@ By
 vO
 xo
 qC
-px
+zh
 Pr
 Pr
 px
@@ -37837,7 +38238,7 @@ GN
 vO
 xo
 qC
-px
+OZ
 px
 Pr
 Pr
@@ -38086,7 +38487,7 @@ px
 px
 px
 Pr
-Pr
+qY
 px
 Ux
 Ae
@@ -38094,12 +38495,12 @@ Eh
 vO
 Uw
 qC
+OZ
 px
 px
 px
 px
-px
-px
+OZ
 px
 px
 Pr
@@ -38343,7 +38744,7 @@ px
 px
 Pr
 Pr
-px
+OZ
 px
 Ux
 WN
@@ -38351,12 +38752,12 @@ Ta
 Wh
 vp
 qC
+kk
 px
 px
 px
 px
-px
-px
+OZ
 px
 px
 Pr
@@ -38600,7 +39001,7 @@ px
 Pr
 Pr
 px
-px
+OZ
 px
 Ux
 Ux
@@ -38608,12 +39009,12 @@ Ux
 vS
 qC
 qC
+TO
 px
 px
 px
 px
-px
-px
+OZ
 px
 px
 Pr
@@ -39625,7 +40026,7 @@ px
 px
 px
 dz
-px
+OZ
 OZ
 px
 px
@@ -39644,7 +40045,7 @@ OZ
 px
 px
 px
-uC
+dz
 px
 px
 px
@@ -40861,7 +41262,7 @@ dx
 As
 Bc
 Xj
-px
+BA
 px
 px
 px
@@ -41766,7 +42167,7 @@ WG
 Gx
 YZ
 px
-px
+oH
 px
 px
 px
@@ -41910,7 +42311,7 @@ px
 px
 px
 px
-px
+BA
 px
 px
 px
@@ -42204,14 +42605,14 @@ px
 px
 px
 OZ
-px
+xt
 OZ
 px
 px
 px
 pr
 OZ
-Pr
+qY
 dz
 px
 dA
@@ -42714,7 +43115,7 @@ px
 Pr
 Pr
 px
-px
+OZ
 px
 px
 px
@@ -42971,7 +43372,7 @@ px
 px
 Pr
 Pr
-px
+zh
 px
 px
 px
@@ -43203,7 +43604,7 @@ px
 px
 px
 px
-px
+BA
 px
 px
 ae
@@ -43228,7 +43629,7 @@ px
 px
 px
 Pr
-dz
+rO
 Pr
 Pr
 Pr
@@ -45564,7 +45965,7 @@ Bb
 rg
 dA
 dA
-px
+ib
 px
 Bb
 dA
@@ -45820,9 +46221,9 @@ rg
 rg
 dA
 dA
-Bb
+YD
 px
-px
+Fm
 dA
 px
 px
@@ -46081,7 +46482,7 @@ px
 px
 px
 px
-px
+aT
 dA
 dA
 dA
@@ -46332,12 +46733,12 @@ dA
 dA
 dA
 Bb
-px
-px
-px
-px
-px
-px
+tj
+Ht
+Ht
+Ht
+Ht
+ad
 px
 px
 Bb
@@ -46586,15 +46987,15 @@ px
 px
 px
 px
+le
+Zf
+px
+NC
 px
 px
 px
 px
-px
-px
-px
-px
-px
+Sd
 px
 dA
 dA
@@ -46843,18 +47244,18 @@ px
 px
 px
 wD
+le
+vX
+px
+NC
 px
 px
 px
 px
+NC
 px
-px
-px
-px
-px
-px
-px
-rs
+vC
+HT
 dA
 dA
 dA
@@ -47100,19 +47501,19 @@ px
 px
 px
 px
+le
+vX
+px
+NC
 px
 px
 px
 px
+NC
 px
 px
 px
-px
-px
-px
-px
-px
-px
+rs
 Bb
 dA
 dA
@@ -47357,19 +47758,19 @@ px
 px
 px
 px
+le
+px
+px
+NC
 px
 px
 px
 px
+NC
 px
 px
 px
-px
-px
-px
-px
-px
-px
+rs
 dA
 dA
 dA
@@ -47614,19 +48015,19 @@ px
 px
 px
 px
+le
+px
+px
+tj
+Ht
+Ht
+Ht
+Ht
+tj
 px
 px
 px
-px
-px
-px
-px
-px
-px
-px
-px
-px
-px
+rs
 dA
 dA
 ac
@@ -47862,6 +48263,16 @@ dA
 px
 px
 px
+OZ
+px
+OZ
+OZ
+OZ
+OZ
+px
+px
+px
+Tp
 px
 px
 px
@@ -47871,17 +48282,7 @@ px
 px
 px
 px
-px
-px
-px
-px
-px
-px
-px
-px
-px
-px
-Bb
+ZX
 dA
 dA
 dA
@@ -48094,7 +48495,7 @@ px
 px
 px
 px
-px
+Df
 dA
 ae
 ae
@@ -48119,23 +48520,23 @@ ae
 dA
 dA
 dA
-ro
+xn
+OZ
+xn
+OZ
 px
-ro
-px
-px
-px
-px
-px
+OZ
 px
 px
 px
+gk
 px
 px
-px
-px
-px
-px
+OW
+PL
+Ov
+Ov
+yy
 px
 dA
 dA
@@ -48351,7 +48752,7 @@ px
 px
 px
 ro
-px
+pL
 dA
 ae
 ae
@@ -48379,13 +48780,13 @@ px
 dA
 px
 dA
-rs
-px
-px
+fS
+Rr
+yZ
 Bb
 px
 px
-px
+le
 px
 px
 px
@@ -48603,9 +49004,9 @@ px
 px
 px
 px
-px
-px
-ro
+nX
+OZ
+Lm
 px
 px
 ro
@@ -48642,7 +49043,7 @@ dA
 dA
 dA
 dA
-px
+le
 px
 Bb
 px
@@ -53533,7 +53934,7 @@ dA
 dA
 px
 px
-px
+wD
 dA
 dA
 dA
@@ -54804,7 +55205,7 @@ Oi
 px
 Oi
 Oi
-px
+nT
 dA
 dA
 ae
@@ -55335,7 +55736,7 @@ dA
 px
 tH
 px
-px
+wD
 dA
 dA
 dA
@@ -57366,7 +57767,7 @@ dA
 px
 px
 px
-px
+wD
 px
 px
 dA
@@ -57899,7 +58300,7 @@ ae
 ae
 dA
 dA
-px
+wD
 px
 px
 dA
@@ -58133,7 +58534,7 @@ ae
 dA
 dA
 px
-px
+wD
 px
 px
 dA
@@ -58163,7 +58564,7 @@ dA
 dA
 dA
 dA
-px
+wD
 px
 px
 dA
@@ -58402,7 +58803,7 @@ px
 Bb
 dA
 px
-px
+wD
 dA
 dA
 ae
@@ -58654,7 +59055,7 @@ dA
 DZ
 px
 px
-wD
+uR
 px
 dA
 DZ
@@ -58904,11 +59305,11 @@ dA
 px
 px
 px
-px
+nT
 dA
 dA
 dA
-wD
+uR
 px
 px
 Bb
@@ -59179,7 +59580,7 @@ ae
 ae
 dA
 dA
-px
+wD
 px
 px
 dA
@@ -59422,12 +59823,12 @@ dA
 dA
 dA
 dA
+wD
 px
 px
-px
-px
+Bz
 dA
-px
+wD
 px
 px
 dA
@@ -59682,7 +60083,7 @@ dA
 px
 px
 px
-px
+Bz
 dA
 px
 px
@@ -59691,7 +60092,7 @@ dA
 ae
 dA
 dA
-px
+nT
 px
 px
 px
@@ -60192,11 +60593,11 @@ Bb
 dA
 dA
 dA
+nT
 px
 px
 px
-px
-wD
+uR
 dA
 px
 px
@@ -60441,15 +60842,15 @@ ae
 ae
 ae
 dA
-px
-px
-px
-px
-px
-dA
-dA
-dA
 wD
+px
+px
+px
+px
+dA
+dA
+dA
+uR
 Bb
 px
 Bb
@@ -60960,10 +61361,10 @@ px
 px
 px
 px
-px
+wD
 dA
 dA
-DZ
+Of
 px
 dA
 dA
@@ -61218,7 +61619,7 @@ px
 px
 px
 px
-px
+nT
 dA
 dA
 dA
@@ -61995,7 +62396,7 @@ dA
 Bb
 px
 px
-px
+wD
 dA
 ae
 ae
@@ -62502,7 +62903,7 @@ ae
 ae
 dA
 dA
-px
+wD
 px
 px
 px
