@@ -53,6 +53,14 @@
 	if(mock_client)
 		mock_client.mob = null
 
+	for(var/held in held_items)
+		if(!isnull(held))
+			qdel(held)
+	held_items.Cut()
+
+	if(ai_controller && !ispath(ai_controller))
+		QDEL_NULL(ai_controller)
+
 	return ..()
 
 /mob/New()

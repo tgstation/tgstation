@@ -18,7 +18,7 @@ multiple modular subtrees with behaviors
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
-	var/atom/current_movement_target
+	VAR_PRIVATE/datum/weakref/current_movement_target
 	///Identifier for what last touched our movement target, so it can be cleared conditionally
 	var/movement_target_source
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
@@ -63,14 +63,19 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
+	blackboard.Cut() // can contain hard refs, although really never should
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
 	movement_target_source = source
-	current_movement_target = target
+	current_movement_target = WEAKREF(target)
 	if(new_movement)
 		change_ai_movement_type(new_movement)
+
+/// Gets the current movement target, if any
+/datum/ai_controller/proc/get_movement_target()
+	return current_movement_target?.resolve()
 
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
@@ -170,16 +175,16 @@ multiple modular subtrees with behaviors
 		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
 		return
 
-	if(current_movement_target)
-		if(!isatom(current_movement_target))
-			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
+	var/atom/resolved_target = current_movement_target?.resolve()
+	if(!isnull(resolved_target))
+		if(!isatom(resolved_target))
+			stack_trace("[pawn]'s current movement target is not an atom, rather a [resolved_target.type]!")
 			CancelActions()
 			return
 
-		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
+		if(get_dist(pawn, resolved_target) > max_target_distance) //The distance is out of range
 			CancelActions()
 			return
-
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
@@ -187,13 +192,12 @@ multiple modular subtrees with behaviors
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
 		var/action_delta_time = max(current_behavior.action_cooldown * 0.1, delta_time)
-
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
-			if(!current_movement_target)
+			if(isnull(resolved_target))
 				stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
 				return //This can cause issues, so don't let these slide.
-			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
-				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
+			if(current_behavior.required_distance >= get_dist(pawn, resolved_target)) ///Are we close enough to engage?
+				if(ai_movement.moving_controllers[src] == resolved_target) //We are close enough, if we're moving stop.
 					ai_movement.stop_moving_towards(src)
 
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
@@ -201,8 +205,8 @@ multiple modular subtrees with behaviors
 				ProcessBehavior(action_delta_time, current_behavior)
 				return
 
-			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
-				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
+			else if(ai_movement.moving_controllers[src] != resolved_target) //We're too far, if we're not already moving start doing it.
+				ai_movement.start_moving_towards(src, resolved_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown

@@ -23,7 +23,7 @@
 	if (escaped)
 		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
 		return
-	if (get_dist(controller.pawn, controller.current_movement_target) > required_distance)
+	if (get_dist(controller.pawn, controller.get_movement_target()) > required_distance)
 		return
 	if(plot_path_away_from(controller, target))
 		return
