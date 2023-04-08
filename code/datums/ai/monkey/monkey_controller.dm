@@ -4,6 +4,8 @@ have ways of interacting with a specific mob and control it.
 */
 ///OOK OOK OOK
 
+#define EYES_PRIMAL_MESSAGE "eyes have a primal look in them."
+
 /datum/ai_controller/monkey
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
@@ -31,7 +33,13 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	AddElement(/datum/element/ai_control_examine, list(
-		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
+		ORGAN_SLOT_EYES = span_monkey(EYES_PRIMAL_MESSAGE),
+	))
+	return ..()
+
+/datum/ai_controller/monkey/Destroy(force, ...)
+	RemoveElement(/datum/element/ai_control_examine, list(
+		ORGAN_SLOT_EYES = span_monkey(EYES_PRIMAL_MESSAGE),
 	))
 	return ..()
 
