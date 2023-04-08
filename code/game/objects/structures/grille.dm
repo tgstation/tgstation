@@ -11,7 +11,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1
-	obj_flags = CAN_BE_HIT | BUILD_ON_IGNORES_DENSITY
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50

@@ -376,7 +376,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(!dest_turf)
 		return FALSE
 	for(var/obj/turf_content in dest_turf)
-		if(turf_content.obj_flags & NO_BUILD_ON_DIRECTION)
+		if(turf_content.obj_flags & BLOCKS_CONSTRUCTION_DIR)
 			if(is_fulltile)  // for making it so fulltile things can't be built over directional things--a special case
 				return FALSE
 			if(turf_content.dir == test_dir)

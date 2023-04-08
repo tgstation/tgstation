@@ -18,7 +18,7 @@
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH
-	obj_flags = CAN_BE_HIT | NO_BUILD_ON_DIRECTION
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	set_dir_on_move = FALSE
 
 	var/obj/item/electronics/airlock/electronics = null

@@ -7,7 +7,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
-	obj_flags = CAN_BE_HIT | NO_BUILD_ON_DIRECTION | BUILD_ON_IGNORES_DENSITY
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
@@ -57,8 +57,8 @@
 
 	if(fulltile)
 		setDir()
-		obj_flags &= ~NO_BUILD_ON_DIRECTION
-		obj_flags &= ~BUILD_ON_IGNORES_DENSITY
+		obj_flags &= ~BLOCKS_CONSTRUCTION_DIR
+		obj_flags &= ~IGNORE_DENSITY
 		AddElement(/datum/element/can_barricade)
 
 	//windows only block while reinforced and fulltile
