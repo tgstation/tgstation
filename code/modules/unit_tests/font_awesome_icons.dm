@@ -44,8 +44,6 @@
 		if(findtext(quirk_icon, " "))
 			var/list/split = splittext(quirk_icon, " ")
 			quirk_icon = split[length(split)] // respect modifier classes
-		else
-			quirk_icon = "fa-[quirk_icon]"
 
 		if(!(quirk_icon in allowed_icons))
 			TEST_FAIL("Quirk [initial(quirk.name)]([quirk]) has invalid icon: [quirk_icon]")
