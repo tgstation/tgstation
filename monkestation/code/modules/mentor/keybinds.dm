@@ -7,4 +7,4 @@
 
 //Snowflakey fix for mentors not being able to use the hotkey, without moving the hotkey to a new category
 /datum/keybinding/admin/mentor_say/can_use(client/user)
-	return is_mentor(user) ? TRUE : FALSE
+	return user.is_mentor() ? TRUE : FALSE
