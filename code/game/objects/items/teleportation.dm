@@ -316,7 +316,7 @@
 
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
-	desc = "A reverse-engineered version of the Nanotrasen portable handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
+	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
@@ -424,6 +424,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
+		make_residues(current_location, destination, user)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -459,6 +460,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
+		make_residues(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -490,6 +492,12 @@
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
+/obj/item/syndicate_teleporter/proc/make_residues(turf/old_location, turf/new_location, mob/user)
+	var/obj/effect/decal/cleanable/bluespace_residue/entryresidue = new /obj/effect/decal/cleanable/bluespace_residue(old_location)
+	var/obj/effect/decal/cleanable/bluespace_residue/exitresidue = new /obj/effect/decal/cleanable/bluespace_residue(new_location)
+	entryresidue.add_fingerprint(user, ignoregloves = TRUE)
+	exitresidue.add_fingerprint(user, ignoregloves = TRUE)
+
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
 	default_raw_text = {"
@@ -513,6 +521,15 @@
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5
+
+/obj/effect/decal/cleanable/bluespace_residue
+	name = "bluespace residue"
+	desc = "A pseudoliquid formed when unstable bluespace crystals are subjected to extreme heat."
+	icon_state = "blueresidue"
+
+/obj/effect/decal/cleanable/bluespace_residue/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	setDir(pick(GLOB.cardinals))
 
 #undef PORTAL_LOCATION_DANGEROUS
 #undef PORTAL_DANGEROUS_EDGE_LIMIT
