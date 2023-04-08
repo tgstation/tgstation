@@ -2561,6 +2561,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
+"aFJ" = (
+/obj/machinery/button/door/directional/north{
+	id = "sm_bolt";
+	name = "SM Chamber Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "aFV" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/bot,
@@ -7149,6 +7158,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
+"bKG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/floor/wood,
+/area/station/service/theater)
 "bKP" = (
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -8123,6 +8137,7 @@
 "bXw" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
+	id_tag = "sm_bolt";
 	name = "Supermatter Engine"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -12620,7 +12635,7 @@
 /area/space/nearstation)
 "dkk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/supply,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dkn" = (
@@ -24116,6 +24131,10 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/airalarm/directional/east,
+/obj/item/multitool,
+/obj/item/screwdriver,
+/obj/item/wrench,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tcomms)
 "gxW" = (
@@ -31981,10 +32000,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
 	},
-/obj/item/paper{
-	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.<br> In this order:<br> 1. Wrench in the plasma can. <br> 2. Turn on the Waste Cooling Gas pump and turn the thermomachines to cold. <br> 3. Set up the scrubbers in the  chamber using the air alarm. <br> 4. Turn on/replace the filter to the canisters. <br> 5. Decide if you want to send the gas to atmos with the Supermatter Waste To Port pump, or waste it by sending it to space with the Emergency Release Valve.";
-	name = "HOW TO SET UP THE SM WASTE"
-	},
+/obj/machinery/meter,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "iLH" = (
@@ -46592,14 +46608,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor2/starboard/aft)
-"mzD" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/fax{
-	fax_name = "Engineering Lobby";
-	name = "Engineering Lobby Fax Machine"
-	},
-/turf/open/floor/iron,
-/area/station/engineering/lobby)
 "mzI" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/pod/dark,
@@ -51982,6 +51990,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/pink/visible/layer2{
 	dir = 1
 	},
+/obj/machinery/meter/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "nQj" = (
@@ -58193,7 +58202,6 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "pCc" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "pCg" = (
@@ -59752,13 +59760,8 @@
 /turf/open/floor/iron/kitchen/herringbone,
 /area/station/service/kitchen)
 "pZB" = (
-/obj/structure/mirror/directional/north{
-	pixel_y = 29
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
-/obj/structure/sink/directional/south,
+/obj/structure/urinal/directional/north,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "pZD" = (
@@ -67429,6 +67432,7 @@
 	pixel_x = -26
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood,
 /area/station/service/theater)
 "sdN" = (
@@ -68077,6 +68081,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/carpet/red,
 /area/station/service/theater)
 "sqv" = (
@@ -71020,6 +71025,12 @@
 /obj/effect/landmark/start/botanist,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"tfw" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/floor/carpet/red,
+/area/station/service/theater)
 "tfE" = (
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
@@ -71609,6 +71620,7 @@
 /area/station/medical/treatment_center)
 "toh" = (
 /obj/machinery/holopad,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/theater)
 "tou" = (
@@ -71946,6 +71958,7 @@
 "ttI" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/theater)
 "ttJ" = (
@@ -72479,7 +72492,9 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/effect/landmark/start/clown,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "tBv" = (
@@ -72670,6 +72685,10 @@
 "tEU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible/layer4{
 	dir = 4
+	},
+/obj/item/paper{
+	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.<br> In this order:<br> 1. Wrench in the plasma can. <br> 2. Turn on the Waste Cooling Gas pump and turn the thermomachines to cold. <br> 3. Set up the scrubbers in the  chamber using the air alarm. <br> 4. Turn on/replace the filter to the canisters. <br> 5. Decide if you want to send the gas to atmos with the Supermatter Waste To Port pump, or waste it by sending it to space with the Emergency Release Valve.";
+	name = "HOW TO SET UP THE SM WASTE"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
@@ -75531,9 +75550,12 @@
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "uxj" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/structure/mirror/directional/north{
+	pixel_y = 29
 	},
+/obj/structure/sink/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "uxt" = (
@@ -83217,6 +83239,7 @@
 /obj/structure/chair/wood{
 	dir = 8
 	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/service/theater)
 "wyU" = (
@@ -85722,16 +85745,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/fitness)
-"xgf" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/mirror/directional/north{
-	pixel_y = 29
-	},
-/obj/structure/sink/directional/south,
-/turf/open/floor/iron/showroomfloor,
-/area/station/service/theater)
 "xgg" = (
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 4
@@ -86893,8 +86906,8 @@
 	},
 /area/station/cargo/miningdock)
 "xwo" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply,
 /obj/machinery/meter/monitored/distro_loop,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xwx" = (
@@ -87223,9 +87236,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "xAL" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "xBe" = (
@@ -87249,8 +87260,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "xBB" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
+/obj/machinery/door/airlock/public{
+	id_tag = "theater_toilets";
+	name = "Theater Toilet"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
@@ -87367,7 +87379,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "xDm" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/button/door/directional/south{
+	id = "theater_toilets";
+	name = "Door Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/theater)
 "xDw" = (
@@ -134025,7 +134042,7 @@ dej
 oII
 hAn
 ejF
-mzD
+loN
 bXe
 saA
 vvK
@@ -135560,7 +135577,7 @@ xgW
 wmC
 sly
 uyD
-mMq
+aFJ
 mMq
 tPq
 uyD
@@ -263304,7 +263321,7 @@ vlq
 vGi
 wyJ
 frW
-xgf
+frW
 xBB
 frW
 yll
@@ -263563,7 +263580,7 @@ wAz
 frW
 tBl
 xDm
-diS
+frW
 yll
 qmb
 jLh
@@ -265101,7 +265118,7 @@ hip
 uEG
 khS
 vJE
-wKE
+tfw
 frW
 eTT
 xNL
@@ -265617,7 +265634,7 @@ ueJ
 vQb
 wKE
 frW
-ugW
+bKG
 hrC
 piR
 piR
