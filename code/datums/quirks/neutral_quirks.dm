@@ -386,7 +386,7 @@
 /datum/quirk/item_quirk/colorist
 	name = "Colorist"
 	desc = "You like carrying around a hair dye spray to quickly apply color patterns to your hair."
-	icon = "fill-drip"
+	icon = FA_ICON_FILL_DRIP
 	value = 0
 	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
 	mail_goodies = list(/obj/item/dyespray)
@@ -495,7 +495,7 @@
 /datum/quirk/item_quirk/pride_pin
 	name = "Pride Pin"
 	desc = "Show off your pride with this changing pride pin!"
-	icon = "rainbow"
+	icon = FA_ICON_RAINBOW
 	value = 0
 	gain_text = span_notice("You feel fruity.")
 	lose_text = span_danger("You feel only slightly less fruity than before.")

@@ -64,7 +64,7 @@
 /datum/quirk/item_quirk/clown_enjoyer
 	name = "Clown Enjoyer"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
-	icon = "map-pin"
+	icon = FA_ICON_MAP_PIN
 	value = 2
 	mob_trait = TRAIT_CLOWN_ENJOYER
 	gain_text = span_notice("You are a big enjoyer of clowns.")
@@ -93,7 +93,7 @@
 /datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
 	desc = "You're a fan of mime antics and get a mood boost from wearing your mime pin."
-	icon = "thumbtack"
+	icon = FA_ICON_THUMBTACK
 	value = 2
 	mob_trait = TRAIT_MIME_FAN
 	gain_text = span_notice("You are a big fan of the Mime.")
@@ -167,7 +167,7 @@
 /datum/quirk/item_quirk/musician
 	name = "Musician"
 	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."
-	icon = "guitar"
+	icon = FA_ICON_GUITAR
 	value = 2
 	mob_trait = TRAIT_MUSICIAN
 	gain_text = span_notice("You know everything about musical instruments.")
@@ -210,7 +210,7 @@
 /datum/quirk/item_quirk/poster_boy
 	name = "Poster Boy"
 	desc = "You have some great posters! Hang them up and make everyone have a great time."
-	icon = "tape"
+	icon = FA_ICON_TAPE
 	value = 4
 	mob_trait = TRAIT_POSTERBOY
 	medical_record_text = "Patient reports a desire to cover walls with homemade objects."
@@ -260,7 +260,7 @@
 /datum/quirk/item_quirk/spiritual
 	name = "Spiritual"
 	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others. Being in the chapel makes you happy."
-	icon = "bible"
+	icon = FA_ICON_BIBLE
 	value = 4
 	mob_trait = TRAIT_SPIRITUAL
 	gain_text = span_notice("You have faith in a higher power.")
@@ -281,7 +281,7 @@
 /datum/quirk/item_quirk/tagger
 	name = "Tagger"
 	desc = "You're an experienced artist. People will actually be impressed by your graffiti, and you can get twice as many uses out of drawing supplies."
-	icon = "spray-can"
+	icon = FA_ICON_SPRAY_CAN
 	value = 4
 	mob_trait = TRAIT_TAGGER
 	gain_text = span_notice("You know how to tag walls efficiently.")
@@ -323,7 +323,7 @@
 /datum/quirk/item_quirk/signer
 	name = "Signer"
 	desc = "You possess excellent communication skills in sign language."
-	icon = "hands"
+	icon = FA_ICON_HANDS
 	value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
