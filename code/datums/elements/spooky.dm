@@ -40,7 +40,7 @@
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(10) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
-		to_chat(C, "<span class='notice'>You're feeling more bony.</span>")
+		to_chat(C, "<span class='danger'>You're feeling more bony.</span>")
 		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
 
 	else //the sound will spook monkeys.
