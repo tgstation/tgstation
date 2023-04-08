@@ -108,15 +108,21 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 	set_light(1.5, 0.7, "#34D352")//green light
 
-/obj/machinery/requests_console/update_icon_state()
-	if(open)
-		icon_state = "[base_icon_state]_[hackState ? "rewired" : "open"]"
-		return ..()
-	icon_state = "[base_icon_state]_off"
-	return ..()
+/obj/machinery/requests_console/examine(mob/user)
+	. = ..()
+	if(!open)
+		. += span_notice("It looks like you can pry open the panel with <b>a crowbar</b>.")
+	else
+		. += span_warning("The panel was pried open, you can close it with <b>a crowbar</b>.")
+
+	if(hackState)
+		. += span_warning("The console seems to have been tampered with!")
 
 /obj/machinery/requests_console/update_overlays()
 	. = ..()
+
+	if(open)
+		. += mutable_appearance(icon, "req_comp_open")
 
 	if(open || (machine_stat & NOPOWER))
 		return

@@ -7012,7 +7012,7 @@
 /area/ruin/space/ancientstation/beta/mining)
 "Kv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Kw" = (
