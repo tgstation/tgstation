@@ -12,24 +12,25 @@ type Data = {
   message: string;
   title: string;
   timeout: number;
+  max_checked: number;
 };
 
 /** Renders a list of checkboxes per items for input. */
 export const CheckboxInput = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { items = [], message, timeout, title } = data;
+  const { items = [], max_checked, message, timeout, title } = data;
 
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
-    'searchQuery',
-    ''
-  );
   const [selections, setSelections] = useLocalState<string[]>(
     context,
     'selections',
     []
   );
 
+  const [searchQuery, setSearchQuery] = useLocalState<string>(
+    context,
+    'searchQuery',
+    ''
+  );
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
 
@@ -48,7 +49,8 @@ export const CheckboxInput = (props, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <NoticeBox info textAlign="center">
-              {decodeHtmlEntities(message)}
+              {decodeHtmlEntities(message)}{' '}
+              {max_checked < 50 && ` (Max: ${max_checked})`}
             </NoticeBox>
           </Stack.Item>
           <Stack.Item grow mt={0}>
@@ -59,6 +61,10 @@ export const CheckboxInput = (props, context) => {
                     <TableCell>
                       <Button.Checkbox
                         checked={selections.includes(item)}
+                        disabled={
+                          selections.length >= max_checked &&
+                          !selections.includes(item)
+                        }
                         onClick={() => selectItem(item)}>
                         {item}
                       </Button.Checkbox>

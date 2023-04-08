@@ -6,9 +6,10 @@
  * message - The message inside the window
  * title - The title of the window
  * list/items - The list of items to display
+ * max_checked - The maximum number of checkboxes that can be checked (optional)
  * timeout - The timeout for the input (optional)
  */
-/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, timeout = 0)
+/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, max_checked = 50, timeout = 0)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -21,7 +22,7 @@
 			return
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
-	var/datum/tgui_checkbox_input/input = new(user, message, title, items, timeout)
+	var/datum/tgui_checkbox_input/input = new(user, message, title, items, max_checked, timeout)
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -44,11 +45,14 @@
 	var/timeout
 	/// Whether the input was closed
 	var/closed
+	/// Maximum number of checkboxes that can be checked
+	var/max_checked
 
-/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, timeout)
+/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, max_checked, timeout)
 	src.title = title
 	src.message = message
 	src.items = items.Copy()
+	src.max_checked = max_checked
 
 	if (timeout)
 		src.timeout = timeout
@@ -90,6 +94,7 @@
 	var/list/data = list()
 
 	data["items"] = items
+	data["max_checked"] = max_checked
 	data["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
 	data["message"] = message
 	data["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
@@ -105,7 +110,7 @@
 	switch(action)
 		if("submit")
 			var/list/selections = params["entry"]
-			if(length(selections) > 0)
+			if(length(selections) > 0 && length(selections) <= max_checked)
 				set_choices(selections)
 			closed = TRUE
 			SStgui.close_uis(src)
