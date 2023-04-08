@@ -1018,7 +1018,7 @@
 	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! \
 		You aren't as strong as a normal changeling, as you are newly born."))
 	to_chat(owner, span_userdanger("Remember, being a headslug changeling doesn't make you an antagonist. \
-		You do not have a licence to freely kill."))
+		It doesn't give you a licence to freely kill."))
 
 /datum/antagonist/changeling/space
 	name = "\improper Space Changeling"
