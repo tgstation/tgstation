@@ -499,16 +499,19 @@
 	var/list/atom/considering = list()  // let's define this ONCE
 	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
-		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
-			considering += iter_possible_target
-	if(considering.len)
+		var/mob/living/checking_target = (temporary_unstoppable_movement) ? iter_possible_target : iter_possible_target.lowest_buckled_mob()
+		if(checking_target in considering)
+			continue
+		if(can_hit_target(checking_target, checking_target == original, TRUE, checking_target == bumped))
+			considering |= checking_target
+	if(length(considering))
 		var/mob/living/hit_living = pick(considering)
-		return hit_living.lowest_buckled_mob()
+		return hit_living
 	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
 			considering += i
-	if(considering.len)
+	if(length(considering))
 		return pick(considering)
 	// 5. turf
 	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
