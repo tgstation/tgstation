@@ -171,8 +171,9 @@
 	if(istype(owner, /mob/living/basic/star_gazer))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
-	if(spell_caster_resolved)
-		if(HAS_TRAIT_FROM(owner, TRAIT_HERETIC_SUMMON, spell_caster_resolved))
+	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(spell_caster_resolved && monster)
+		if(monster.master?.current == spell_caster_resolved)
 			return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
