@@ -181,7 +181,7 @@
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
-	icon = FA_ICON_EYE
+	icon = FA_ICON_MOON
 	value = 4
 	mob_trait = TRAIT_NIGHT_VISION
 	gain_text = span_notice("The shadows seem a little less dark.")
