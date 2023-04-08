@@ -50,7 +50,7 @@
 	if((required_amount > 1) && istype(parent, /obj/item/stack))
 		var/obj/item/stack/parent_stack = parent
 		if(parent_stack.amount < required_amount)
-			user.balloon_alert(user, "need [required_amount] of [parent]")
+			user.balloon_alert(user, "need [required_amount] of [parent]!")
 			return
 
 	INVOKE_ASYNC(src, PROC_REF(loom_me), user, target)
