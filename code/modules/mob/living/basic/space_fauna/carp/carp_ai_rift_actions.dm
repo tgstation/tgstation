@@ -161,7 +161,7 @@
  * Make a rift towards your target if you are blocked from moving or if it is far away
  */
 /datum/ai_behavior/make_carp_rift/towards/aggressive
-	teleport_buffer_distance = 2 // Don't aggressively drop carps directly on top of a target mob
+	teleport_buffer_distance = 1 // Don't aggressively drop carps directly on top of a target mob
 
 /**
  * # Make carp rift forwards (unvalidated)
@@ -183,9 +183,9 @@
  */
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift
 	/// How far away do we look for rifts?
-	var/search_distance = 2
+	var/search_distance = 3
 	/// Minimum distance we should be from the target before we bother performing this action
-	var/minimum_distance = 3
+	var/minimum_distance = 2
 
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
