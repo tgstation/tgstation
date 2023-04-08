@@ -41,11 +41,11 @@
 	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
-			for(var/X in internal_organs)
+			for(var/X in organs)
 				if(no_brain || !istype(X, /obj/item/organ/internal/brain))
 					qdel(X)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
-			for(var/obj/item/organ/organs as anything in internal_organs)
+			for(var/obj/item/organ/organs as anything in organs)
 				if(no_brain && istype(organs, /obj/item/organ/internal/brain))
 					qdel(organs) //so the brain isn't transfered to the head when the head drops.
 					continue
@@ -55,7 +55,7 @@
 					organs.forceMove(Tsec)
 					organs.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
-		for(var/obj/item/organ/organs as anything in internal_organs)
+		for(var/obj/item/organ/organs as anything in organs)
 			if(no_brain && istype(organs, /obj/item/organ/internal/brain))
 				qdel(organs)
 				continue
@@ -76,7 +76,7 @@
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
-	var/obj/item/organ/internal/brain/userbrain = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)
 		userbrain.suicided = suicide_state
 

@@ -16,6 +16,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
+	/// A particle effect, for things like embers
+	var/obj/effect/abstract/particle_holder/particle_effect
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -74,6 +76,19 @@
 
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
+
+	update_particles()
+
+/datum/status_effect/fire_handler/on_remove()
+	if(particle_effect)
+		QDEL_NULL(particle_effect)
+	return ..()
+
+/**
+ * Updates the particles for the status effects
+ */
+/datum/status_effect/fire_handler/proc/update_particles()
+	SHOULD_CALL_PARENT(FALSE)
 
 /**
  * Setter and adjuster procs for firestacks
@@ -157,6 +172,18 @@
 
 	deal_damage(delta_time, times_fired)
 	update_overlay()
+	update_particles()
+
+/datum/status_effect/fire_handler/fire_stacks/update_particles()
+	if(on_fire)
+		if(!particle_effect)
+			particle_effect = new(owner, /particles/embers)
+		if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
+			particle_effect.particles.spawning = 5
+		else
+			particle_effect.particles.spawning = 1
+	else if(particle_effect)
+		QDEL_NULL(particle_effect)
 
 /**
  * Proc that handles damage dealing and all special effects
@@ -220,6 +247,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
+	update_particles()
 	return TRUE
 
 /**
@@ -235,6 +263,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
+	update_particles()
 	if(!iscarbon(owner))
 		return
 
@@ -247,6 +276,7 @@
 		extinguish()
 	set_stacks(0)
 	update_overlay()
+	return ..()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
 	last_icon_state = owner.update_fire_overlay(stacks, on_fire, last_icon_state)
@@ -265,3 +295,8 @@
 	adjust_stacks(-0.5 * delta_time)
 	if(stacks <= 0)
 		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/update_particles()
+	if(particle_effect)
+		return
+	particle_effect = new(owner, /particles/droplets)

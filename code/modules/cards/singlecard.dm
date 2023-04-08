@@ -1,6 +1,3 @@
-#define CARD_FACEDOWN 0
-#define CARD_FACEUP 1
-
 /obj/item/toy/singlecard
 	name = "card"
 	desc = "A playing card used to play card games like poker."
@@ -24,7 +21,7 @@
 	/// The name of the card
 	var/cardname = "Ace of Spades"
 	/// Is the card flipped facedown (FALSE) or flipped faceup (TRUE)
-	var/flipped = FALSE
+	var/flipped = CARD_FACEDOWN
 	/// The card is blank and can be written on with a pen.
 	var/blank = FALSE
 	/// The color used to mark a card for cheating (by pens or crayons)
@@ -48,6 +45,9 @@
 		if(parent_deck.holodeck)
 			flags_1 |= HOLOGRAM_1
 			parent_deck.holodeck.spawned += src
+	if(mapload)
+		//maploaded card needs to be faceup anyways, and doing this will give it its name and appearance properly
+		Flip(CARD_FACEUP)
 
 	register_context()
 
@@ -109,11 +109,11 @@
  * Flips the card over
  *
  * * Arguments:
- * * orientation (optional) - Sets flipped state to CARD_FACEDOWN or CARD_FACEUP if given orientation (otherwise just invert the flipped state)
+ * * is_face_up (optional) - Sets flipped state to CARD_FACEDOWN or CARD_FACEUP if given (otherwise just invert the flipped state)
  */
-/obj/item/toy/singlecard/proc/Flip(orientation)
-	if(!isnull(orientation))
-		flipped = orientation
+/obj/item/toy/singlecard/proc/Flip(is_face_up)
+	if(!isnull(is_face_up))
+		flipped = is_face_up
 	else
 		flipped = !flipped
 

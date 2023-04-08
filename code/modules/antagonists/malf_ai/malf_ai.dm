@@ -151,6 +151,7 @@
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 
 	malf_ai.set_zeroth_law(law, law_borg)
+	malf_ai.laws.protected_zeroth = TRUE
 	malf_ai.set_syndie_radio()
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")

@@ -72,8 +72,7 @@
 	awakened = TRUE
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
-	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
+	cursed.add_traits(list(TRAIT_CLUMSY, TRAIT_PACIFISM), CURSED_ITEM_TRAIT(cursed_item.type))
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
 
@@ -83,8 +82,7 @@
 	var/obj/item/cursed_item = parent
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
-	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
+	uncursed.remove_traits(list(TRAIT_CLUMSY, TRAIT_PACIFISM), CURSED_ITEM_TRAIT(cursed_item.type))
 	//remove either one of the signals that could have called this proc
 	UnregisterSignal(cursed_item, COMSIG_ITEM_DROPPED)
 

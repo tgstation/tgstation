@@ -12,7 +12,6 @@
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_COMMUNICATION
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = TRUE
 	tgui_id = "NtosNetChat"
@@ -52,7 +51,6 @@
 	. = ..()
 	if(.)
 		return
-
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
 	var/authed = FALSE
 	if(channel && ((channel.channel_operator == src) || netadmin_mode))
@@ -218,7 +216,7 @@
 	return data
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	if(!SSmodular_computers.chat_channels)
 		return data
 

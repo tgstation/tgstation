@@ -60,6 +60,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_keyboard = null
+	icon_screen = null
 	icon_state = "control_boxp"
 	//kobatashi has a smaller list of events, so we copy from the global list and cut whatever isn't here
 	var/list/event_whitelist = list(
@@ -500,7 +502,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /mob/living/basic/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
-	faction = list("orion")
+	faction = list(FACTION_ORION)
 	loot = list()
 
 /obj/item/orion_ship

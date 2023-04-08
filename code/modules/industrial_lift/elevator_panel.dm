@@ -15,9 +15,9 @@
 	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs."
 	density = FALSE
 
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_control_standby"
-	base_icon_state = "airlock_control"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "elevpanel0"
+	base_icon_state = "elevpanel"
 
 	power_channel = AREA_USAGE_ENVIRON
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
@@ -45,6 +45,11 @@
 	var/last_move_target
 	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid
+	/// The light mask overlay we use
+	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
+	light_range = 1.5
+	light_color = LIGHT_COLOR_DARK_BLUE
+	var/light_mask = "elev-light-mask"
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
@@ -359,4 +364,12 @@
 
 	door_reset_timerid = null
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 30)
+/obj/machinery/elevator_control_panel/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/elevator_control_panel, 31)

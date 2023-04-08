@@ -9,6 +9,7 @@
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
 	max_integrity = 250
+	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -50,8 +51,11 @@
 	var/message_cooldown
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
-	/// How fast it charges cells in a suit
-	var/charge_rate = 250
+	/// Power contributed by this machine to charge the mod suits cell without any capacitors
+	var/base_charge_rate = 200
+	// Final charge rate which is base_charge_rate + contribution by capacitors
+	var/final_charge_rate = 250
+
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -209,6 +213,10 @@
 		else
 			. += "[base_icon_state]_ready"
 
+/obj/machinery/suit_storage_unit/RefreshParts()
+	. = ..()
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
@@ -230,8 +238,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
-		new /obj/item/stack/sheet/iron(loc, 2)
-	qdel(src)
+	return ..()
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
 	var/static/list/items
@@ -455,9 +462,9 @@
 	if(!cell || cell.charge == cell.maxcharge)
 		return
 
-	var/cell_charged = cell.give(charge_rate * delta_time)
+	var/cell_charged = cell.give(final_charge_rate * delta_time)
 	if(cell_charged)
-		use_power((active_power_usage + charge_rate) * delta_time)
+		use_power((active_power_usage + final_charge_rate) * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -551,9 +558,13 @@
 		update_appearance()
 		return
 
-	if(panel_open && is_wire_tool(I))
-		wires.interact(user)
-		return
+	if(panel_open)
+		if(is_wire_tool(I))
+			wires.interact(user)
+			return
+		else if(I.tool_behaviour == TOOL_CROWBAR)
+			default_deconstruction_crowbar(I)
+			return
 	if(!state_open)
 		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))	//Set to base_icon_state because the panels for this are overlays
 			update_appearance()

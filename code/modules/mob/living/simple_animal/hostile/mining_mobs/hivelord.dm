@@ -270,7 +270,7 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	speed = 3
-	faction = list("mining")
+	faction = list(FACTION_MINING)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -284,9 +284,9 @@
 	.=..()
 	AddComponent(\
 		/datum/component/spawner,\
-		mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
+		spawn_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion),\
 		spawn_time = 20 SECONDS,\
-		max_mobs = 3,\
+		max_spawned = 3,\
 		spawn_text = "peels itself off from",\
 		faction = faction,\
 	)

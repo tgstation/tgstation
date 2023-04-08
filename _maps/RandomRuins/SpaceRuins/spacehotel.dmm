@@ -4028,7 +4028,7 @@
 	},
 /area/ruin/space/has_grav/hotel/workroom)
 "Tm" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /obj/structure/sign/warning/no_smoking/circle/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Kitchen";

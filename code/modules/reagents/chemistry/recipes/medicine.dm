@@ -127,6 +127,11 @@
 	required_temp = 374
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/medicine/ammoniated_mercury
+	results = list(/datum/reagent/medicine/ammoniated_mercury = 3)
+	required_reagents = list(/datum/reagent/medicine/calomel = 1, /datum/reagent/ammonia = 2)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+
 /datum/chemical_reaction/medicine/potass_iodide
 	results = list(/datum/reagent/medicine/potass_iodide = 2)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/iodine = 1)

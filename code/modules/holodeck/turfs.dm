@@ -196,3 +196,11 @@
 
 /turf/open/floor/holofloor/stairs/right
 	icon_state = "stairs-r"
+
+/turf/open/floor/holofloor/chess_white
+	icon_state = "white_large"
+	color = "#eeeed2"
+
+/turf/open/floor/holofloor/chess_black
+	icon_state = "white_large"
+	color = "#93b570"

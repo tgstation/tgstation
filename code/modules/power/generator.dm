@@ -228,3 +228,5 @@
 	if(cold_circ)
 		cold_circ.generator = null
 		cold_circ = null
+
+#undef GENRATE

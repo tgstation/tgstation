@@ -278,7 +278,7 @@
 	///How long it takes between shooting the tracer and the projectile.
 	var/shot_delay = 8
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
-	var/faction = list("mining")
+	var/faction = list(FACTION_MINING)
 
 /datum/armor/structure_legionturret
 	laser = 100

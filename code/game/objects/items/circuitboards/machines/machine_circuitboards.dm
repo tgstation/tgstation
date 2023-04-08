@@ -46,6 +46,15 @@
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/suit_storage_unit
+	name = "Suit Storage Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/suit_storage_unit
+	req_components = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/capacitor = 1)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1098,7 +1107,21 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/oven
 	req_components = list(/datum/stock_part/micro_laser = 1)
-	needs_anchored = FALSE
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/stove
+	name = "Stove"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/stove
+	req_components = list(/datum/stock_part/micro_laser = 1)
+	needs_anchored = TRUE
+
+/obj/item/circuitboard/machine/range
+	name = "Range (Oven & Stove)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/oven/range
+	req_components = list(/datum/stock_part/micro_laser = 2)
+	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive"

@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Replaces the emergency shuttle with a random one."
-	admin_setup = /datum/event_admin_setup/warn_admin/shuttle_catastrophe
+	admin_setup = list(/datum/event_admin_setup/warn_admin/shuttle_catastrophe, /datum/event_admin_setup/listed_options/shuttle_catastrophe)
 
 /datum/round_event_control/shuttle_catastrophe/can_spawn_event(players, allow_magic = FALSE)
 	. = ..()
@@ -38,7 +38,7 @@
 	priority_announce(message, "[command_name()] Spacecraft Engineering")
 
 /datum/round_event/shuttle_catastrophe/setup()
-	if(SSshuttle.shuttle_insurance)
+	if(SSshuttle.shuttle_insurance || !isnull(new_shuttle)) //If an admin has overridden it don't re-roll it
 		return
 	var/list/valid_shuttle_templates = list()
 	for(var/shuttle_id in SSmapping.shuttle_templates)
@@ -64,3 +64,18 @@
 
 /datum/event_admin_setup/warn_admin/shuttle_catastrophe/should_warn()
 	return EMERGENCY_AT_LEAST_DOCKED || istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build)
+
+/datum/event_admin_setup/listed_options/shuttle_catastrophe
+	input_text = "Select a specific shuttle?"
+	normal_run_option = "Random shuttle"
+
+/datum/event_admin_setup/listed_options/shuttle_catastrophe/get_list()
+	var/list/valid_shuttle_templates = list()
+	for(var/shuttle_id in SSmapping.shuttle_templates)
+		var/datum/map_template/shuttle/template = SSmapping.shuttle_templates[shuttle_id]
+		if(!isnull(template.who_can_purchase) && template.credit_cost < INFINITY) //Even admins cannot force the cargo shuttle to act as an escape shuttle
+			valid_shuttle_templates += template
+	return valid_shuttle_templates
+
+/datum/event_admin_setup/listed_options/shuttle_catastrophe/apply_to_event(datum/round_event/shuttle_catastrophe/event)
+	event.new_shuttle = chosen

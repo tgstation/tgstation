@@ -68,7 +68,7 @@ Difficulty: Hard
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
-	faction = list("mining", "boss", "hell")
+	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
 	/// Actual time where enrage ends
@@ -398,3 +398,7 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
+
+#undef BUBBLEGUM_CAN_ENRAGE
+#undef BUBBLEGUM_IS_ENRAGED
+#undef BUBBLEGUM_SMASH

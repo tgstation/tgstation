@@ -1,0 +1,3 @@
+# moves arm-mounted abstract chainsaw to a chainsaw subtype
+
+/obj/item/mounted_chainsaw : /obj/item/chainsaw/mounted_chainsaw{@OLD}

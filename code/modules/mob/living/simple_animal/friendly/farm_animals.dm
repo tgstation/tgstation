@@ -179,6 +179,8 @@
 	..()
 	amount_grown = 0
 
+/// Counter for number of chicken mobs in the universe. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
+GLOBAL_VAR_INIT(chicken_count, 0)
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -210,14 +212,12 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	footstep_type = FOOTSTEP_MOB_CLAW
-	///counter for how many chickens are in existence to stop too many chickens from lagging shit up
-	var/static/chicken_count = 0
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
-	var/process_eggs = TRUE
+	var/fertile = TRUE
 
 /mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
-	chicken_count++
+	GLOB.chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
 	AddComponent(/datum/component/egg_layer,\
@@ -236,25 +236,20 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
-	chicken_count--
+	GLOB.chicken_count--
 	return ..()
 
 /mob/living/simple_animal/chicken/proc/egg_laid(obj/item/egg)
-	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
-		START_PROCESSING(SSobj, egg)
-
-/obj/item/food/egg/var/amount_grown = 0
-
-/obj/item/food/egg/process(delta_time)
-	if(isturf(loc))
-		amount_grown += rand(1,2) * delta_time
-		if(amount_grown >= 200)
-			visible_message(span_notice("[src] hatches with a quiet cracking sound."))
-			new /mob/living/simple_animal/chick(get_turf(src))
-			STOP_PROCESSING(SSobj, src)
-			qdel(src)
-	else
-		STOP_PROCESSING(SSobj, src)
+	if(GLOB.chicken_count <= MAX_CHICKENS && fertile && prob(25))
+		egg.AddComponent(/datum/component/fertile_egg,\
+			embryo_type = /mob/living/simple_animal/chick,\
+			minimum_growth_rate = 1,\
+			maximum_growth_rate = 2,\
+			total_growth_required = 200,\
+			current_growth = 0,\
+			location_allowlist = typecacheof(list(/turf)),\
+			spoilable = TRUE,\
+		)
 
 /mob/living/simple_animal/deer
 	name = "doe"

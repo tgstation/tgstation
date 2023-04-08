@@ -198,7 +198,7 @@
 	idle_power_usage = 0;
 	use_power = 0
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "ir" = (
 /obj/structure/chair/comfy/shuttle{
@@ -314,7 +314,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "ls" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "mq" = (
 /obj/structure/railing{
@@ -653,7 +653,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "CM" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1005,7 +1005,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ov" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -1076,7 +1076,7 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "RV" = (
 /obj/structure/rack,
@@ -1129,7 +1129,7 @@
 /obj/structure/table/reinforced,
 /obj/item/binoculars,
 /obj/item/binoculars,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "TK" = (
 /obj/structure/flora/bush/ferny/style_random,
@@ -1172,7 +1172,7 @@
 "Vn" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Vv" = (
 /obj/structure/rack,
@@ -1207,7 +1207,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Xb" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Xk" = (
 /obj/structure/closet/crate/critter,
@@ -1232,14 +1232,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ya" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ye" = (
 /obj/structure/table/reinforced,
@@ -1248,7 +1248,7 @@
 	pixel_y = 2
 	},
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Yj" = (
 /turf/open/floor/carpet/blue,
@@ -1257,7 +1257,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Yn" = (
 /obj/structure/table,

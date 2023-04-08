@@ -24,7 +24,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 500
 
-	faction = list("gnomes")
+	faction = list(FACTION_GNOME)
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = HOSTILE_SPAWN
 	greyscale_config = /datum/greyscale_config/garden_gnome
@@ -109,8 +109,7 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 10, paralyze_duration = 1 SECONDS, flags = CALTROP_BYPASS_SHOES)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 /mob/living/basic/garden_gnome/proc/apply_colour()
 	if(!greyscale_config)

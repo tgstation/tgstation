@@ -1,6 +1,6 @@
 // Simple app meant to test tgstation's TGS integration given a fresh TGS install with the default account
 //
-// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token
+// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token, (OPTIONAL) PR Number 
 
 using System.Reflection;
 using System.Text;
@@ -16,10 +16,9 @@ using YamlDotNet.Serialization;
 
 Console.WriteLine("Parsing args...");
 
-const int ExpectedArgs = 5;
-if (args.Length != ExpectedArgs)
+if (args.Length < 5 || args.Length > 6)
 {
-	Console.WriteLine($"Incorrect number of args: {args.Length}. Expected {ExpectedArgs}");
+	Console.WriteLine($"Incorrect number of args: {args.Length}. Expected 5-6");
 	return 1;
 }
 
@@ -28,6 +27,18 @@ var instancePath = args[1];
 var tgsApiPortString = args[2];
 var pushedCommitHash = args[3];
 var gitHubToken = args[4];
+
+int? pullRequest = default;
+if(args.Length == 6)
+{
+	if (!Int32.TryParse(args[5], out int prNumber))
+	{
+		Console.WriteLine($"Invalid repo slug: {repoSlug}");
+		return 10;
+	}
+
+	pullRequest = prNumber;
+}
 
 var repoSlugSplits = repoSlug.Split('/', StringSplitOptions.RemoveEmptyEntries);
 if(repoSlugSplits.Length != 2)
@@ -314,6 +325,25 @@ try
 
 	if (!await WaitForJob(repoCloneJob.ActiveJob!, 600))
 		return 7;
+
+	if (pullRequest.HasValue)
+	{
+		Console.WriteLine($"Applying test merge #{pullRequest}...");
+		var testMergeJob = await instanceClient.Repository.Update(new RepositoryUpdateRequest
+		{
+			NewTestMerges = new List<TestMergeParameters>
+			{
+				new TestMergeParameters
+				{
+					Comment = "Active Pull Request",
+					Number = pullRequest.Value,
+					TargetCommitSha = pushedCommitHash
+				}
+			}
+		}, default);
+		if (!await WaitForJob(testMergeJob.ActiveJob!, 60))
+			return 11;
+	}
 
 	Console.WriteLine("Deploying...");
 	var deploymentJob = await instanceClient.DreamMaker.Compile(default);

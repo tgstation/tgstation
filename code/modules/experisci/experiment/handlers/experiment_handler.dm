@@ -72,7 +72,7 @@
 	// Note this won't work at the moment for non-machines that have been included
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
-		var/list/found_servers = get_available_servers(parent)
+		var/list/found_servers = get_available_servers()
 		var/obj/machinery/rnd/server/selected_server = length(found_servers) ? found_servers[1] : null
 		if (selected_server)
 			link_techweb(selected_server.stored_research)
@@ -292,25 +292,6 @@
 	selected_experiment = null
 
 /**
- * Get rnd servers that are on the same z-level or the same station as the experiment source
- *
- * Arguments:
- * * turf_source - The turf where the experiment conducted
- */
-/datum/component/experiment_handler/proc/get_available_servers(turf/turf_source = null)
-	if (!turf_source)
-		turf_source = get_turf(parent)
-	var/list/local_servers = list()
-	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
-		for (var/obj/machinery/rnd/server/server as anything in techwebs.techweb_servers)
-			var/turf/turf_server = get_turf(server)
-			if (!turf_source || !turf_server)
-				break
-			if(is_valid_z_level(turf_source, turf_server))
-				local_servers += server
-	return local_servers
-
-/**
  * Checks if an experiment is valid to be selected by this handler
  *
  * Arguments:
@@ -348,6 +329,32 @@
 	// If we haven't returned yet then this shouldn't be allowed
 	return FALSE
 
+/**
+ * Goes through all techwebs and goes through their servers to find ones on a valid z-level
+ * Returns the full list of all techweb servers.
+ */
+/datum/component/experiment_handler/proc/get_available_servers()
+	var/list/local_servers = list()
+	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
+		var/list/servers = find_valid_servers(techwebs)
+		if(length(servers))
+			local_servers += servers
+	return local_servers
+
+/**
+ * Goes through an individual techweb's servers and finds one on a valid z-level
+ * Returns a list of existing ones, or an empty list otherwise.
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/component/experiment_handler/proc/find_valid_servers(datum/techweb/checking_web)
+	var/list/valid_servers = list()
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), get_turf(parent)))
+			continue
+		valid_servers += server
+	return valid_servers
+
 /datum/component/experiment_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
@@ -366,7 +373,7 @@
 			if(techwebs == linked_web) //disconnect if OUR techweb lost their servers.
 				unlink_techweb()
 			continue
-		if(!is_valid_z_level(get_turf(techwebs.techweb_servers[1]), get_turf(parent)))
+		if(!length(find_valid_servers(techwebs)))
 			continue
 		var/list/data = list(
 			web_id = techwebs.id,
