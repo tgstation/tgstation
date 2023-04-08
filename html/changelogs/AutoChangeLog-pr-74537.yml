@@ -1,5 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "Syndicate teleporter is no longer secretly nerfed due to internal code mishaps. (-1 range)"
-  - bugfix: "Syndicate teleporter now gibs you where it should correctly; resulting in it being much more dangerous to use"

@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "Turfs made through stack crafting (so none currently) will have materials applied if the var is set"
