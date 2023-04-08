@@ -139,12 +139,9 @@ SUBSYSTEM_DEF(garbage)
 			pass_counts[i] = 0
 			fail_counts[i] = 0
 
-#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
-// 1 from the hard reference in the queue, and 1 from the variable used before this
-#define IS_DELETED(datum, _) (refcount(##datum) == 2)
-#else
-#define IS_DELETED(datum, gcd_at_time) (isnull(##datum) || ##datum.gc_destroyed != gcd_at_time)
-#endif
+// 1 from the hard reference in the queue,
+// and 1 from the variable used before ref_count is called.
+#define EXPECTED_REF_COUNT_FOR_SOFT_DEL 2
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_FILTER)
 	if (level == GC_QUEUE_FILTER)
@@ -177,17 +174,9 @@ SUBSYSTEM_DEF(garbage)
 			break // Everything else is newer, skip them
 		count++
 
-#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
 		var/datum/D = L[GC_QUEUE_ITEM_REF]
-#else
-		var/GCd_at_time = L[GC_QUEUE_ITEM_GCD_DESTROYED]
 
-		var/refID = L[GC_QUEUE_ITEM_REF]
-		var/datum/D
-		D = locate(refID)
-#endif
-
-		if (IS_DELETED(D, GCd_at_time)) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		if (refcount(D) == EXPECTED_REF_COUNT_FOR_SOFT_DEL) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
@@ -261,7 +250,7 @@ SUBSYSTEM_DEF(garbage)
 		queue.Cut(1,count+1)
 		count = 0
 
-#undef IS_DELETED
+#undef EXPECTED_REF_COUNT_FOR_SOFT_DEL
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_FILTER)
 	if (isnull(D))
@@ -271,17 +260,12 @@ SUBSYSTEM_DEF(garbage)
 		return
 	var/queue_time = world.time
 
-#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
-	var/refid = D
-#else
-	var/refid = text_ref(D)
-#endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
-	
+
 	var/list/queue = queues[level]
 
-	queue[++queue.len] = list(queue_time, refid, D.gc_destroyed) // not += for byond reasons
+	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
