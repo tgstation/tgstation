@@ -1,4 +1,5 @@
 /obj/item/tail_pin
+	icon = 'icons/obj/poster.dmi'
 	icon_state = "tailpin"
 	name = "tail pin"
 	desc = "Offically branded 'pin the tail on the corgi' style party implement. Not intended to be used on people."

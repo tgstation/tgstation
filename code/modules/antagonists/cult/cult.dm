@@ -489,21 +489,20 @@
 /proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
 	if(!istype(target))
 		return FALSE
-	if(target.mind)
-		if(ishuman(target) && (target.mind.holy_role))
-			return FALSE
-		if(specific_cult?.is_sacrifice_target(target.mind))
-			return FALSE
-		var/mob/living/master = target.mind.enslaved_to?.resolve()
-		if(master && !IS_CULTIST(master))
-			return FALSE
-		if(target.mind.unconvertable)
-			return FALSE
-		if(target.mind.has_antag_datum(/datum/antagonist/heretic))
-			return FALSE
-	else
+	if(isnull(target.mind) || !GET_CLIENT(target))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target) || !target.client)
+	if(target.mind.unconvertable)
+		return FALSE
+	if(ishuman(target) && target.mind.holy_role)
+		return FALSE
+	if(specific_cult?.is_sacrifice_target(target.mind))
+		return FALSE
+	var/mob/living/master = target.mind.enslaved_to?.resolve()
+	if(master && !IS_CULTIST(master))
+		return FALSE
+	if(IS_HERETIC_OR_MONSTER(target))
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target))
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 

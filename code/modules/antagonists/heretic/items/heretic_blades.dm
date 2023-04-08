@@ -105,3 +105,12 @@
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
+
+// Path of Cosmos's blade
+/obj/item/melee/sickly_blade/cosmic
+	name = "\improper cosmic blade"
+	desc = "A mote of celestial resonance, shaped into a star-woven blade. \
+		An iridescent exile, carving radiant trails, desperately seeking unification."
+	icon_state = "cosmic_blade"
+	inhand_icon_state = "cosmic_blade"
+	after_use_message = "The Stargazer hears your call..."

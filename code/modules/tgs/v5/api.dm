@@ -99,9 +99,10 @@
 
 /datum/tgs_api/v5/proc/TopicResponse(error_message = null)
 	var/list/response = list()
-	response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
-
-	return json_encode(response)
+	if(error_message)
+		response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
+		return json_encode(response)
+	return "{}"
 
 /datum/tgs_api/v5/OnTopic(T)
 	RequireInitialBridgeResponse()
@@ -128,9 +129,16 @@
 
 	switch(command)
 		if(DMAPI5_TOPIC_COMMAND_CHAT_COMMAND)
+			intercepted_message_queue = list()
 			var/result = HandleCustomCommand(topic_parameters[DMAPI5_TOPIC_PARAMETER_CHAT_COMMAND])
 			if(!result)
 				result = TopicResponse("Error running chat command!")
+			//TODO: make this not need the decode/encode.
+			if (length(intercepted_message_queue))
+				var/list/result_array = json_decode(result)
+				result_array[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+				result = json_encode(result_array)
+			intercepted_message_queue = null
 			return result
 		if(DMAPI5_TOPIC_COMMAND_EVENT_NOTIFICATION)
 			intercepted_message_queue = list()
