@@ -499,14 +499,10 @@
 	var/list/atom/considering = list()  // let's define this ONCE
 	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
-		var/mob/living/checking_target = (temporary_unstoppable_movement) ? iter_possible_target : iter_possible_target.lowest_buckled_mob()
-		if(checking_target in considering)
-			continue
-		if(can_hit_target(checking_target, checking_target == original, TRUE, checking_target == bumped))
-			considering |= checking_target
+		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
+			considering |= iter_possible_target
 	if(length(considering))
-		var/mob/living/hit_living = pick(considering)
-		return hit_living
+		return pick(considering)
 	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
@@ -547,17 +543,18 @@
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
 	else
-		var/mob/living/L = target
+		var/mob/living/living_target = target
 		if(direct_target)
 			return TRUE
-		if(L.stat == DEAD)
+		if(living_target.stat == DEAD)
 			return FALSE
-		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
 		if(!hit_prone_targets)
-			if(!L.density)
+			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
+			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
 				return FALSE
-			if(L.body_position != LYING_DOWN)
+			if(living_target.body_position != LYING_DOWN)
 				return TRUE
 	return TRUE
 
