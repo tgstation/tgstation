@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram doors open as expected while in motion"
-  - soundadd: "New tram door open/close sounds"
-  - qol: "Tram doors open faster when unpowered"
