@@ -162,8 +162,7 @@ multiple modular subtrees with behaviors
 		return FALSE
 	if(world.time < paused_until)
 		return FALSE
-	return TRUE
-
+	return !QDELETED(pawn) && !QDELETED(src)
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(delta_time)
