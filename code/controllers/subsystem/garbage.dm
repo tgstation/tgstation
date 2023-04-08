@@ -210,10 +210,7 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
-				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
-#if DM_VERSION >= 515
-				message = "[message] (ref count of [refcount(D)])"
-#endif
+				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd -- (ref count of [refcount(D)])"
 				log_world(message)
 
 				#ifdef TESTING
