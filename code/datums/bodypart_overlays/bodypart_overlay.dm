@@ -25,7 +25,7 @@
 	CRASH("Get image needs to be overridden")
 
 /datum/bodypart_overlay/proc/get_image_inner(layer, obj/item/bodypart/limb)
-	CRASH("Get image needs to be overridden")
+	return FALSE
 ///Color the image
 /datum/bodypart_overlay/proc/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return
