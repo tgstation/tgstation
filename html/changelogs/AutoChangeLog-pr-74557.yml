@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "makes ai sat turrets actually able to fire upon silicons"

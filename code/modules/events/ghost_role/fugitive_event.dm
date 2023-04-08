@@ -17,7 +17,7 @@
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/spawn_turf in GLOB.xeno_spawn)
+	for(var/turf/spawn_turf in GLOB.generic_maintenance_landmarks)
 		if(istype(get_area(spawn_turf), /area/station/maintenance) && is_safe_turf(spawn_turf))
 			possible_spawns += spawn_turf
 	if(!possible_spawns.len)
@@ -31,7 +31,7 @@
 		return NOT_ENOUGH_PLAYERS
 
 	if(length(candidates) < TEAM_BACKSTORY_SIZE || prob(30 - (length(candidates) * 2))) //Solo backstories are always considered if a larger backstory cannot be filled out. Otherwise, it's a rare chance that gets rarer if more people sign up.
-		possible_backstories += list(FUGITIVE_BACKSTORY_WALDO) //less common as it comes with magicks and is kind of immershun shattering
+		possible_backstories += list(FUGITIVE_BACKSTORY_WALDO, FUGITIVE_BACKSTORY_INVISIBLE) //less common as it comes with magicks and is kind of immershun shattering
 
 	if(length(candidates) >= TEAM_BACKSTORY_SIZE)//group refugees
 		possible_backstories += list(FUGITIVE_BACKSTORY_PRISONER, FUGITIVE_BACKSTORY_CULTIST, FUGITIVE_BACKSTORY_SYNTH)
@@ -42,7 +42,7 @@
 	switch(backstory)
 		if(FUGITIVE_BACKSTORY_SYNTH)
 			leader = pick_n_take(candidates)
-		if(FUGITIVE_BACKSTORY_WALDO)
+		if(FUGITIVE_BACKSTORY_WALDO, FUGITIVE_BACKSTORY_INVISIBLE)
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
 	var/list/members = list()
 	var/list/spawned_mobs = list()
@@ -85,6 +85,8 @@
 			S.equipOutfit(/datum/outfit/waldo)
 		if(FUGITIVE_BACKSTORY_SYNTH)
 			S.equipOutfit(/datum/outfit/synthetic)
+		if(FUGITIVE_BACKSTORY_INVISIBLE)
+			S.equipOutfit(/datum/outfit/invisible_man)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
 	S.log_message("was spawned as a Fugitive by an event.", LOG_GAME)
 	spawned_mobs += S

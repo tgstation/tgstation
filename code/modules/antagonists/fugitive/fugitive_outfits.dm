@@ -248,3 +248,22 @@
 
 /obj/item/card/id/advanced/bountyhunter/ert
 	trim = /datum/id_trim/centcom/bounty_hunter
+
+/datum/outfit/invisible_man
+	name = "Invisible Man"
+	uniform = /obj/item/clothing/under/suit/black_really
+	back = /obj/item/storage/backpack/satchel/leather
+	shoes = /obj/item/clothing/shoes/laceup
+	glasses = /obj/item/clothing/glasses/monocle
+	mask = /obj/item/clothing/mask/cigarette/pipe
+	ears = /obj/item/radio/headset
+
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/medipen/invisibility = 3,
+	)
+
+/datum/outfit/invisible_man/post_equip(mob/living/carbon/human/equipee, visualsOnly)
+	. = ..()
+
+	var/obj/item/implant/camouflage/invisibility_implant = new(equipee)
+	invisibility_implant.implant(equipee)
