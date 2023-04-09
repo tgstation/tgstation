@@ -107,6 +107,9 @@
 			summon_objective.summoned = FALSE
 			summon_objective.killed = TRUE
 
+	if (GLOB.cult_narsie == src)
+		GLOB.cult_narsie = null
+
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
