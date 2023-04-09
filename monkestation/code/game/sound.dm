@@ -25,7 +25,7 @@
 	var/list/channels = list()
 	for(var/channel in GLOB.used_sound_channels)
 		if(!user.client.prefs.channel_volume["[channel]"])
-			user.client.prefs.channel_volume["[channel]"] = 100
+			user.client.prefs.channel_volume["[channel]"] = 50
 			user.client.prefs.save_preferences()
 		channels += list(list(
 			"num" = channel,
