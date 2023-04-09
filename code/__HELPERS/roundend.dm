@@ -284,10 +284,6 @@
 	standard_reboot()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
-#ifdef UNIT_TESTS
-	UNTIL(ready_for_reboot)
-#endif
-
 	if(ready_for_reboot)
 		if(GLOB.station_was_nuked)
 			Reboot("Station destroyed by Nuclear Device.", "nuke")
