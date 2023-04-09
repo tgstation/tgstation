@@ -45,10 +45,6 @@
 
 	/// The microfusion lens used for generating the beams.
 	var/obj/item/ammo_casing/energy/laser/microfusion/microfusion_lens
-	/// The time it takes for someone to (tactically) reload this gun. In deciseconds.
-	var/reload_time = 4 SECONDS
-	/// The time it takes for someone to normally reload this gun. In deciseconds.
-	var/reload_time_slow = 2 SECONDS
 	/// The sound played when you insert a cell.
 	var/sound_cell_insert = 'modular_skyrat/modules/microfusion/sound/mag_insert.ogg'
 	/// Should the insertion sound played vary?
@@ -257,7 +253,7 @@
 
 /obj/item/gun/microfusion/crowbar_act(mob/living/user, obj/item/tool)
 	if(!phase_emitter)
-		to_chat(user, span_danger("There is no phase emitter for you to remove!"))
+		balloon_alert(user, "no phase emitter!")
 		return
 	playsound(src, 'sound/items/crowbar.ogg', 70, TRUE)
 	remove_emitter()
@@ -361,7 +357,7 @@
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+					balloon_alert(user, "lethally chambered!")
 					return
 			calculated_spread = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)
@@ -410,7 +406,7 @@
 	if(chambered?.loaded_projectile)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+				balloon_alert(user, "lethally chambered!")
 				return
 		if(randomspread)
 			calculated_spread = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -546,16 +542,16 @@
 	phase_emitter.forceMove(get_turf(src))
 	if(user)
 		user.put_in_hands(phase_emitter)
-		to_chat(user, span_notice("You remove [phase_emitter] from [src]!"))
+		balloon_alert(user, "removed phase emitter")
 	phase_emitter.parent_gun = null
 	phase_emitter = null
 	update_appearance()
 
 /obj/item/gun/microfusion/proc/insert_emitter(obj/item/microfusion_phase_emitter/inserting_phase_emitter, mob/living/user)
 	if(phase_emitter)
-		to_chat(user, span_danger("There is already a phase emitter installed!"))
+		balloon_alert(user, "already one installed!")
 		return FALSE
-	to_chat(user, span_notice("You carefully insert [inserting_phase_emitter] into the slot."))
+	balloon_alert(user, "inserted phase emitter")
 	playsound(src, sound_cell_remove, 50, TRUE)
 	inserting_phase_emitter.forceMove(src)
 	phase_emitter = inserting_phase_emitter
@@ -565,44 +561,24 @@
 
 /// Try to insert the cell into the gun, if successful, return TRUE
 /obj/item/gun/microfusion/proc/insert_cell(mob/user, obj/item/stock_parts/cell/microfusion/inserting_cell, display_message = TRUE)
-	var/tactical_reload = FALSE //We need to do this so that cells don't fall on the ground.
-	var/obj/item/stock_parts/cell/old_cell = cell
-	reload_time_slow = inserting_cell.reloading_time
-	reload_time = inserting_cell.reloading_time_tactical
+	var/hotswap = FALSE
 	if(cell)
-		if(reload_time && !HAS_TRAIT(user, TRAIT_INSTANT_RELOAD)) //This only happens when you're attempting a tactical reload, e.g. there's a mag already inserted.
-			if(inserting_cell.charge)
-				to_chat(user, span_warning("It would be far too dangerous to insert [inserting_cell] into [src] without <b>discharging it first</b>."))
-				return FALSE
-			if(display_message)
-				to_chat(user, span_notice("You start to insert [inserting_cell] into [src]!"))
-			if(!do_after(user, reload_time, src))
-				if(display_message)
-					to_chat(user, span_warning("You fail to insert [inserting_cell] into [src]!"))
-				return FALSE
-		if(display_message)
-			to_chat(user, span_notice("You tactically reload [src], replacing [cell] inside!"))
-		tactical_reload = TRUE
+		hotswap = TRUE
+	var/obj/item/stock_parts/cell/old_cell = cell
+	if(inserting_cell.charge)
+		balloon_alert(user, "can't insert a charged cell!")
+		return FALSE
+	if(display_message)
+		balloon_alert(user, "cell inserted")
+	if(hotswap)
 		eject_cell(user, FALSE, FALSE)
-	else
-		if(inserting_cell.charge)
-			to_chat(user, span_warning("It would be far too dangerous to insert [inserting_cell] into [src] without <b>discharging it first</b>."))
-			return FALSE
-		if(display_message)
-			to_chat(user, span_notice("You start to insert [inserting_cell] into [src]!"))
-		if(!do_after(user, reload_time_slow, src))
-			if(display_message)
-				to_chat(user, span_warning("You fail to insert [inserting_cell] into [src]!"))
-			return FALSE
-		if(display_message)
-			to_chat(user, span_notice("You insert [inserting_cell] into [src]!"))
 	if(sound_cell_insert)
 		playsound(src, sound_cell_insert, sound_cell_insert_volume, sound_cell_insert_vary)
 	cell = inserting_cell
 	inserting_cell.forceMove(src)
 	inserting_cell.inserted_into_weapon()
 	cell.parent_gun = src
-	if(tactical_reload)
+	if(old_cell)
 		user.put_in_hands(old_cell)
 	recharge_newshot()
 	update_appearance()
@@ -621,41 +597,38 @@
 		if(put_in_hands)
 			user.put_in_hands(old_cell)
 		if(display_message)
-			to_chat(user, span_notice("You remove [old_cell] from [src]!"))
+			balloon_alert(user, "cell removed")
 	if(sound_cell_remove)
 		playsound(src, sound_cell_remove, sound_cell_remove_volume, sound_cell_remove_vary)
 	old_cell.update_appearance()
 	cell.parent_gun = null
 	cell = null
-	// RESET THE RELOAD TIMER WHEN CELL IS OUT
-	reload_time = 6 SECONDS
-	reload_time_slow = 4 SECONDS
 	update_appearance()
 
 /// Attatching an upgrade.
 /obj/item/gun/microfusion/proc/add_attachment(obj/item/microfusion_gun_attachment/microfusion_gun_attachment, mob/living/user)
 	if(is_type_in_list(microfusion_gun_attachment, attachments))
-		to_chat(user, span_warning("[src] already has [microfusion_gun_attachment] installed!"))
+		balloon_alert(user, "already has one!")
 		return FALSE
 	if(!(microfusion_gun_attachment.slot in attachment_slots))
-		to_chat(user, span_warning("[src] cannot install [microfusion_gun_attachment]!"))
+		balloon_alert(user, "can't install!")
 		return FALSE
 	for(var/obj/item/microfusion_gun_attachment/iterating_attachment in attachments)
 		if(is_type_in_list(microfusion_gun_attachment, iterating_attachment.incompatable_attachments))
-			to_chat(user, span_warning("[microfusion_gun_attachment] is not compatible with [iterating_attachment]!"))
+			balloon_alert(user, "not compatible with [iterating_attachment]!")
 			return FALSE
 		if(iterating_attachment.slot != GUN_SLOT_UNIQUE && iterating_attachment.slot == microfusion_gun_attachment.slot)
-			to_chat(user, span_warning("[microfusion_gun_attachment] cannot be installed in the same slot as [iterating_attachment]!"))
+			balloon_alert(user, "slot full!")
 			return FALSE
 	attachments += microfusion_gun_attachment
 	microfusion_gun_attachment.forceMove(src)
 	microfusion_gun_attachment.run_attachment(src)
-	to_chat(user, span_notice("You successfully install [microfusion_gun_attachment] onto [src]!"))
+	balloon_alert(user, "installed attachment")
 	playsound(src, 'sound/effects/structure_stress/pop2.ogg', 70, TRUE)
 	return TRUE
 
 /obj/item/gun/microfusion/proc/remove_attachment(obj/item/microfusion_gun_attachment/microfusion_gun_attachment, mob/living/user)
-	to_chat(user, span_notice("You remove [microfusion_gun_attachment] from [src]!"))
+	balloon_alert(user, "removed attachment")
 	playsound(src, 'sound/items/screwdriver.ogg', 70)
 	microfusion_gun_attachment.forceMove(get_turf(src))
 	attachments -= microfusion_gun_attachment
