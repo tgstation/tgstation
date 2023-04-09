@@ -174,7 +174,7 @@
  * Ghosts are deleted two minutes after being made, and exist to punch stuff until it breaks.
  */
 
-/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
+/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list = list())
 	if(!length(candidate_list)) //If we are not passed a candidate list we just poll everyone who is dead, meaning these can also be spawned directly.
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list
