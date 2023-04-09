@@ -8380,6 +8380,7 @@
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
+/obj/item/reagent_containers/cup/rag,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "deg" = (
