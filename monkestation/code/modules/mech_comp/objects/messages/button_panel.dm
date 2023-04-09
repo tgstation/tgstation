@@ -2,6 +2,7 @@
 	name = "button panel component"
 	desc = ""
 	icon_state = "comp_buttpanel"
+	base_icon_state = "comp_buttpanel"
 	///current list of active buttons
 	var/list/active_buttons = list()
 
@@ -49,7 +50,7 @@
 	if(button_label in active_buttons)
 		say("ERROR: There is already a button with that name!")
 		return
-	active_buttons |= button_label
+	active_buttons += button_label
 	active_buttons[button_label] = button_signal
 	update_appearance()
 	return TRUE

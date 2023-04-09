@@ -1,7 +1,7 @@
 /// Standard mechcomp component supply.
 #define STANDARD_COMPONENT_SUPPLY 30
 /// Components that place a higher than usual load on the server by their use.
-#define LOW_COMPONENT_SUPPLY 5
+#define LOW_COMPONENT_SUPPLY 15
 /obj/machinery/vending/mechcomp
 	name = "\improper ThinkTronic MechComp Dispenser"
 	desc = "A rather plain vendor for ThinkTronic's line of field-assemblable components."
@@ -39,6 +39,8 @@
 		/obj/item/mcobject/interactor = LOW_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/storage = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/type_sensor = STANDARD_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/repeater = LOW_COMPONENT_SUPPLY,
+		/obj/item/mcobject/messaging/clock = STANDARD_COMPONENT_SUPPLY,
 	)
 
 
