@@ -20,6 +20,10 @@ export type NavBeaconControl = {
   cover_locked: BooleanLike;
 };
 
+export type DisabledProps = {
+  disabled: BooleanLike;
+};
+
 export type NavBeaconStaticControl = {
   direction_options: String[];
   has_codes: BooleanLike;
@@ -38,88 +42,104 @@ export const NavBeacon = (props, context) => {
 
 export const NavBeaconContent = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { locked, siliconUser, controls, static_controls } = data;
+  const { controls, static_controls } = data;
   const disabled = data.locked && !data.siliconUser;
   return (
     <Stack vertical fill>
       <InterfaceLockNoticeBox />
-      <Section title="Controls">
-        <LabeledList>
-          <LabeledList.Item label="Location">
-            <Button
-              fluid
-              content={controls.location ?? 'None set'}
-              icon="pencil-alt"
-              disabled={disabled}
-              onClick={() => act('set_location')}
-            />
-          </LabeledList.Item>
-          <LabeledList.Item label="Enable as Patrol Beacon">
-            <Button.Checkbox
-              fluid
-              checked={controls.patrol_enabled}
-              content={controls.patrol_enabled ? 'Enabled' : 'Disabled'}
-              disabled={disabled}
-              onClick={() => act('toggle_patrol')}
-            />
-          </LabeledList.Item>
-          <LabeledList.Item label="Next patrol">
-            <Button
-              fluid
-              content={controls.patrol_next ?? 'No next patrol location'}
-              icon="pencil-alt"
-              disabled={disabled}
-              onClick={() => act('set_patrol_next')}
-            />
-          </LabeledList.Item>
-          <LabeledList.Item label="Enable as Delivery Beacon">
-            <Button.Checkbox
-              fluid
-              checked={controls.delivery_enabled}
-              content={controls.delivery_enabled ? 'Enabled' : 'Disabled'}
-              disabled={disabled}
-              onClick={() => act('toggle_delivery')}
-            />
-          </LabeledList.Item>
-          <LabeledList.Item label="Delivery Direction">
-            <Dropdown
-              disabled={locked && !siliconUser}
-              options={static_controls.direction_options}
-              displayText={controls.delivery_direction || 'none'}
-              onSelected={(value) =>
-                act('set_delivery_direction', {
-                  direction: value,
-                })
-              }
-            />
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-      <Section title="Maintenance">
-        <LabeledList>
-          <LabeledList.Item label="Reset codes">
-            {!!static_controls.has_codes && (
-              <Button
-                fluid
-                content={'Reset'}
-                icon="power-off"
-                disabled={disabled}
-                onClick={() => act('reset_codes')}
-              />
-            )}
-            {!static_controls.has_codes && <Box>No backup codes found</Box>}
-          </LabeledList.Item>
-          <LabeledList.Item label="Maintenance hatch cover">
-            <Button.Checkbox
-              fluid
-              checked={controls.cover_locked}
-              content={controls.cover_locked ? 'Locked' : 'Unlocked'}
-              disabled={disabled}
-              onClick={() => act('toggle_cover')}
-            />
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
+      <NavBeaconControlSection disabled={disabled} />
+      <NavBeaconMaintenanceSection disabled={disabled} />
     </Stack>
+  );
+};
+
+export const NavBeaconControlSection = (props: DisabledProps, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { controls, static_controls } = data;
+  return (
+    <Section title="Controls">
+      <LabeledList>
+        <LabeledList.Item label="Location">
+          <Button
+            fluid
+            content={controls.location ?? 'None set'}
+            icon="pencil-alt"
+            disabled={props.disabled}
+            onClick={() => act('set_location')}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Enable as Patrol Beacon">
+          <Button.Checkbox
+            fluid
+            checked={controls.patrol_enabled}
+            content={controls.patrol_enabled ? 'Enabled' : 'Disabled'}
+            disabled={props.disabled}
+            onClick={() => act('toggle_patrol')}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Next patrol">
+          <Button
+            fluid
+            content={controls.patrol_next ?? 'No next patrol location'}
+            icon="pencil-alt"
+            disabled={props.disabled}
+            onClick={() => act('set_patrol_next')}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Enable as Delivery Beacon">
+          <Button.Checkbox
+            fluid
+            checked={controls.delivery_enabled}
+            content={controls.delivery_enabled ? 'Enabled' : 'Disabled'}
+            disabled={props.disabled}
+            onClick={() => act('toggle_delivery')}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Delivery Direction">
+          <Dropdown
+            disabled={props.disabled}
+            options={static_controls.direction_options}
+            displayText={controls.delivery_direction || 'none'}
+            onSelected={(value) =>
+              act('set_delivery_direction', {
+                direction: value,
+              })
+            }
+          />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+export const NavBeaconMaintenanceSection = (props: DisabledProps, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { controls, static_controls } = data;
+  return (
+    <Section title="Maintenance">
+      <LabeledList>
+        <LabeledList.Item label="Reset codes">
+          {!!static_controls.has_codes && (
+            <Button
+              fluid
+              content={'Reset'}
+              icon="power-off"
+              disabled={props.disabled}
+              onClick={() => act('reset_codes')}
+            />
+          )}
+          {!static_controls.has_codes && <Box>No backup codes found</Box>}
+        </LabeledList.Item>
+        <LabeledList.Item label="Maintenance hatch cover">
+          <Button.Checkbox
+            fluid
+            checked={controls.cover_locked}
+            content={controls.cover_locked ? 'Locked' : 'Unlocked'}
+            disabled={props.disabled}
+            onClick={() => act('toggle_cover')}
+          />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
   );
 };
