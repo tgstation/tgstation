@@ -74,11 +74,13 @@
 	// We don't want to check these areas
 	var/static/list/area/ignored_types = list(
 		/area/station/asteroid,
+		/area/station/engineering/supermatter,
 		/area/station/holodeck,
 		/area/station/maintenance,
 		/area/station/science/ordnance/bomb,
 		/area/station/science/ordnance/burnchamber,
 		/area/station/science/ordnance/freezerchamber,
+		/area/station/solars,
 		/area/station/tcommsat/server,
 	)
 
