@@ -18,7 +18,7 @@
 	spawned_human.mind.add_antag_datum(fughunter)
 	fughunter.greet()
 	message_admins("[ADMIN_LOOKUPFLW(spawned_human)] has been made into a Fugitive Hunter by an event.")
-	log_game("[key_name(spawned_human)] was spawned as a Fugitive Hunter by an event.")
+	spawned_human.log_message("was spawned as a Fugitive Hunter by an event.", LOG_GAME)
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol
 	name = "police pod"
@@ -36,7 +36,7 @@
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 	prompt_name = "a russian"
 	you_are_text = "Ay blyat. I am a Space-Russian smuggler!"
 	flavour_text = "We were mid-flight when our cargo was beamed off our ship! Must be on station somewhere? \

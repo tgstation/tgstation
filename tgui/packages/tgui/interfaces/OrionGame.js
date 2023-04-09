@@ -25,23 +25,23 @@ const fuelstyle = {
 };
 
 const variousButtonIcons = {
-  "Restore Hull": "wrench",
-  "Fix Engine": "rocket",
-  "Repair Electronics": "server",
-  "Wait": "clock",
-  "Continue": "arrow-right",
-  "Explore Ship": "door-open",
-  "Leave the Derelict": "arrow-right",
-  "Welcome aboard.": "user-plus",
-  "Where did you go?!": "user-minus",
-  "A good find.": "box-open",
-  "Continue travels.": "arrow-right",
-  "Keep Speed": "tachometer-alt",
-  "Slow Down": "arrow-left",
-  "Speed Past": "tachometer-alt",
-  "Go Around": "redo",
-  "Oh...": "circle",
-  "Dock": "dollar-sign",
+  'Restore Hull': 'wrench',
+  'Fix Engine': 'rocket',
+  'Repair Electronics': 'server',
+  'Wait': 'clock',
+  'Continue': 'arrow-right',
+  'Explore Ship': 'door-open',
+  'Leave the Derelict': 'arrow-right',
+  'Welcome aboard.': 'user-plus',
+  'Where did you go?!': 'user-minus',
+  'A good find.': 'box-open',
+  'Continue travels.': 'arrow-right',
+  'Keep Speed': 'tachometer-alt',
+  'Slow Down': 'arrow-left',
+  'Speed Past': 'tachometer-alt',
+  'Go Around': 'redo',
+  'Oh...': 'circle',
+  'Dock': 'dollar-sign',
 };
 
 const STATUS2COMPONENT = [
@@ -54,40 +54,49 @@ const STATUS2COMPONENT = [
 
 const locationInfo = [
   {
-    title: "Pluto",
-    blurb: "Pluto, long since occupied with long-range sensors and scanners, stands ready to, and indeed continues to probe the far reaches of the galaxy.",
+    title: 'Pluto',
+    blurb:
+      'Pluto, long since occupied with long-range sensors and scanners, stands ready to, and indeed continues to probe the far reaches of the galaxy.',
   },
   {
-    title: "Asteroid Belt",
-    blurb: "At the edge of the Sol system lies a treacherous asteroid belt. Many have been crushed by stray asteroids and misguided judgement.",
+    title: 'Asteroid Belt',
+    blurb:
+      'At the edge of the Sol system lies a treacherous asteroid belt. Many have been crushed by stray asteroids and misguided judgement.',
   },
   {
-    title: "Proxima Centauri",
-    blurb: "The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now a low-population sanctuary for adventurers and traders.",
+    title: 'Proxima Centauri',
+    blurb:
+      'The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now a low-population sanctuary for adventurers and traders.',
   },
   {
-    title: "Dead Space",
-    blurb: "This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.",
+    title: 'Dead Space',
+    blurb:
+      'This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.',
   },
   {
-    title: "Rigel Prime",
-    blurb: "Rigel Prime, the center of the Rigel system, burns hot, basking its planetary bodies in warmth and radiation.",
+    title: 'Rigel Prime',
+    blurb:
+      'Rigel Prime, the center of the Rigel system, burns hot, basking its planetary bodies in warmth and radiation.',
   },
   {
-    title: "Tau Ceti Beta",
-    blurb: "Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.",
+    title: 'Tau Ceti Beta',
+    blurb:
+      'Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.',
   },
   {
-    title: "Space Bugs",
-    blurb: "You see some space bugs out your window. They contort in various reality bending ways, and it makes you sick. You know it's Galactic Policy to report all sightings of space bugs.",
+    title: 'Space Bugs',
+    blurb:
+      "You see some space bugs out your window. They contort in various reality bending ways, and it makes you sick. You know it's Galactic Policy to report all sightings of space bugs.",
   },
   {
-    title: "Space Outpost Beta-9",
-    blurb: "You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
+    title: 'Space Outpost Beta-9',
+    blurb:
+      "You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
   },
   {
-    title: "Orion Prime",
-    blurb: "You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!",
+    title: 'Orion Prime',
+    blurb:
+      'You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!',
   },
 ];
 
@@ -108,7 +117,7 @@ const AdventureStatus = (props, context) => {
     <Section
       title="Adventure Status"
       fill
-      buttons={(
+      buttons={
         !!lings_suspected && (
           <Button
             fluid
@@ -117,12 +126,13 @@ const AdventureStatus = (props, context) => {
             icon="skull"
             content="RANDOM KILL"
             disabled={eventname}
-            onClick={() => act('random_kill')} />
+            onClick={() => act('random_kill')}
+          />
         )
-      )} >
+      }>
       <Stack mb={-1} fill>
         <Stack.Item grow mb={-0.5}>
-          {settlers?.map(settler => (
+          {settlers?.map((settler) => (
             <Stack key={settler}>
               <Stack.Item grow mt={0.9}>
                 {settler}
@@ -135,12 +145,17 @@ const AdventureStatus = (props, context) => {
                   icon="skull"
                   content="KILL"
                   disabled={lings_suspected || eventname}
-                  onClick={() => act('target_kill', {
-                    who: settler,
-                  })} />
+                  onClick={() =>
+                    act('target_kill', {
+                      who: settler,
+                    })
+                  }
+                />
               </Stack.Item>
               <Stack.Item mr={0}>
-                <Box className={'moods32x32 mood' + (settlermoods[settler] + 1)} />
+                <Box
+                  className={'moods32x32 mood' + (settlermoods[settler] + 1)}
+                />
               </Stack.Item>
             </Stack>
           ))}
@@ -152,36 +167,41 @@ const AdventureStatus = (props, context) => {
               <Button
                 fluid
                 icon="hamburger"
-                content={"Food Left: " + food}
-                color="green" />
+                content={'Food Left: ' + food}
+                color="green"
+              />
             </Stack.Item>
             <Stack.Item>
               <Button
                 fluid
                 icon="gas-pump"
-                content={"Fuel Left: " + fuel}
-                color="olive" />
+                content={'Fuel Left: ' + fuel}
+                color="olive"
+              />
             </Stack.Item>
             <Stack.Item>
               <Button
                 fluid
                 icon="wrench"
-                content={"Hull Parts: "+hull}
-                color="average" />
+                content={'Hull Parts: ' + hull}
+                color="average"
+              />
             </Stack.Item>
             <Stack.Item>
               <Button
                 fluid
                 icon="server"
-                content={"Electronics: "+electronics}
-                color="blue" />
+                content={'Electronics: ' + electronics}
+                color="blue"
+              />
             </Stack.Item>
             <Stack.Item mb={1}>
               <Button
                 fluid
                 icon="rocket"
-                content={"Engine Parts: "+engine}
-                color="violet" />
+                content={'Engine Parts: ' + engine}
+                color="violet"
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -192,18 +212,14 @@ const AdventureStatus = (props, context) => {
 
 const ORION_STATUS_START = (props, context) => {
   const { data, act } = useBackend(context);
-  const {
-    gamename,
-  } = data;
+  const { gamename } = data;
   return (
     <Section fill>
       <Stack vertical textAlign="center" fill>
         <Stack.Item grow={1} />
-        <Stack.Item fontSize="32px">
-          {gamename}
-        </Stack.Item>
+        <Stack.Item fontSize="32px">{gamename}</Stack.Item>
         <Stack.Item grow fontSize="15px" color="label">
-          {"\"Experience the journey of your ancestors!\""}
+          {'"Experience the journey of your ancestors!"'}
         </Stack.Item>
         <Stack.Item fontSize="15px">
           <Button
@@ -211,7 +227,8 @@ const ORION_STATUS_START = (props, context) => {
             fluid
             icon="play"
             content="Begin Game"
-            onClick={() => act('start_game')} />
+            onClick={() => act('start_game')}
+          />
         </Stack.Item>
         <Stack.Item fontSize="15px">
           <Button
@@ -219,7 +236,8 @@ const ORION_STATUS_START = (props, context) => {
             fluid
             icon="info"
             content="Instructions"
-            onClick={() => act('instructions')} />
+            onClick={() => act('instructions')}
+          />
         </Stack.Item>
         <Stack.Item grow={3} />
       </Stack>
@@ -229,28 +247,29 @@ const ORION_STATUS_START = (props, context) => {
 
 const ORION_STATUS_INSTRUCTIONS = (props, context) => {
   const { act } = useBackend(context);
-  const fake_settlers = ["John", "William", "Alice", "Tom"];
+  const fake_settlers = ['John', 'William', 'Alice', 'Tom'];
   return (
     <>
       <Section
         color="label"
         title="Objective"
-        buttons={(
+        buttons={
           <Button
             content="Back to Main Menu"
-            onClick={() => act('back_to_menu')} />
-        )}>
+            onClick={() => act('back_to_menu')}
+          />
+        }>
         <Box fontSize="11px">
-          In the 2200&apos;s, the Orion trail was established as a dangerous
-          yet opportunistic trail through space for those willing to risk it.
-          Many pioneers seeking new lives on the galactic frontier would find
-          exactly what they were seeking... or lose their lives on the way.
+          In the 2200&apos;s, the Orion trail was established as a dangerous yet
+          opportunistic trail through space for those willing to risk it. Many
+          pioneers seeking new lives on the galactic frontier would find exactly
+          what they were seeking... or lose their lives on the way.
         </Box>
       </Section>
       <Section title="Status Example">
         <Stack mb={-1}>
           <Stack.Item basis={70} grow mb={-0.5}>
-            {fake_settlers?.map(settler => (
+            {fake_settlers?.map((settler) => (
               <Stack key={settler}>
                 <Stack.Item grow mt={0.9}>
                   {settler}
@@ -261,7 +280,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
                     color="red"
                     textAlign="center"
                     icon="skull"
-                    content="KILL" />
+                    content="KILL"
+                  />
                 </Stack.Item>
                 <Stack.Item mr={0}>
                   <Box className={'moods32x32 mood5'} />
@@ -271,14 +291,14 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
           </Stack.Item>
           <Divider vertical />
           <Stack.Item>
-            This is the status panel for your pioneers. Each one requires
-            1 food every time you continue
-            towards <span style={goodstyle}>Orion</span>.
-            You can find more crew on your journey, and lose them as
-            fast as you found &apos;em.
-            <br /><br />
-            If you run out of food or crew,
-            it&apos;s <span style={badstyle}>GAME OVER</span> for you!
+            This is the status panel for your pioneers. Each one requires 1 food
+            every time you continue towards <span style={goodstyle}>Orion</span>
+            . You can find more crew on your journey, and lose them as fast as
+            you found &apos;em.
+            <br />
+            <br />
+            If you run out of food or crew, it&apos;s{' '}
+            <span style={badstyle}>GAME OVER</span> for you!
           </Stack.Item>
         </Stack>
       </Section>
@@ -288,11 +308,11 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
             If you want to make it to <span style={goodstyle}>Orion</span>,
             you&apos;ll need to manage your resources:
             <br />
-            <span style={goodstyle}>Food</span>: Your crewmembers consume
-            it. More crew means this goes down faster!
+            <span style={goodstyle}>Food</span>: Your crewmembers consume it.
+            More crew means this goes down faster!
             <br />
-            <span style={fuelstyle}>Fuel</span>: You use 5u of fuel with
-            every movement. Don&apos;t let it run out.
+            <span style={fuelstyle}>Fuel</span>: You use 5u of fuel with every
+            movement. Don&apos;t let it run out.
             <br />
             <span style={partstyle}>Parts</span>: Used to repair breakdowns.
             Nobody likes wasting time on repairs!
@@ -304,36 +324,41 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
                 <Button
                   fluid
                   icon="hamburger"
-                  content={"Food Left: 80"}
-                  color="green" />
+                  content={'Food Left: 80'}
+                  color="green"
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   fluid
                   icon="gas-pump"
-                  content={"Fuel Left: 60"}
-                  color="olive" />
+                  content={'Fuel Left: 60'}
+                  color="olive"
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   fluid
                   icon="wrench"
-                  content={"Hull Parts: 1"}
-                  color="average" />
+                  content={'Hull Parts: 1'}
+                  color="average"
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   fluid
                   icon="server"
-                  content={"Electronics: 1"}
-                  color="blue" />
+                  content={'Electronics: 1'}
+                  color="blue"
+                />
               </Stack.Item>
               <Stack.Item mb={-0.3}>
                 <Button
                   fluid
                   icon="rocket"
-                  content={"Engine Parts: 1"}
-                  color="violet" />
+                  content={'Engine Parts: 1'}
+                  color="violet"
+                />
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -361,20 +386,20 @@ const ORION_STATUS_NORMAL = (props, context) => {
   return (
     <Stack vertical fill>
       <Stack.Item grow>
-        <Section title={!!eventname && "Event" || "Location"} fill>
+        <Section title={(!!eventname && 'Event') || 'Location'} fill>
           <Stack fill textAlign="center" vertical>
-            <Stack.Item grow >
+            <Stack.Item grow>
               <Box bold fontSize="15px">
-                {!!eventname && eventname || locationInfo[turns-1].title}
+                {(!!eventname && eventname) || locationInfo[turns - 1].title}
               </Box>
               <br />
               <Box fontSize="15px">
-                {!!eventtext && eventtext || locationInfo[turns-1].blurb}
+                {(!!eventtext && eventtext) || locationInfo[turns - 1].blurb}
               </Box>
             </Stack.Item>
             <Stack.Item>
-              {!!buttons && (
-                buttons.map(button => (
+              {(!!buttons &&
+                buttons.map((button) => (
                   <Stack.Item key={button}>
                     <Button
                       mb={1}
@@ -382,17 +407,18 @@ const ORION_STATUS_NORMAL = (props, context) => {
                       width={16}
                       icon={variousButtonIcons[button]}
                       content={button}
-                      onClick={() => act(button)} />
+                      onClick={() => act(button)}
+                    />
                   </Stack.Item>
-                ))
-              ) || (
+                ))) || (
                 <Button
                   mb={1}
                   lineHeight={3}
                   width={16}
                   icon="arrow-right"
                   content="Continue"
-                  onClick={() => act('continue')} />
+                  onClick={() => act('continue')}
+                />
               )}
             </Stack.Item>
           </Stack>
@@ -407,15 +433,13 @@ const ORION_STATUS_NORMAL = (props, context) => {
 
 const ORION_STATUS_GAMEOVER = (props, context) => {
   const { data, act } = useBackend(context);
-  const {
-    reason,
-  } = data;
+  const { reason } = data;
   return (
     <Section fill>
       <Stack vertical textAlign="center" fill>
         <Stack.Item grow={1} />
         <Stack.Item color="red" fontSize="32px">
-          {"Game Over"}
+          {'Game Over'}
         </Stack.Item>
         <Stack.Item grow fontSize="15px" color="label">
           {reason}
@@ -426,7 +450,8 @@ const ORION_STATUS_GAMEOVER = (props, context) => {
             fluid
             icon="arrow-left"
             content="Main Menu"
-            onClick={() => act('back_to_menu')} />
+            onClick={() => act('back_to_menu')}
+          />
         </Stack.Item>
         <Stack.Item grow={3} />
       </Stack>
@@ -438,61 +463,57 @@ const marketButtonSpacing = 0.8;
 
 const ORION_STATUS_MARKET = (props, context) => {
   const { data, act } = useBackend(context);
-  const {
-    turns,
-    spaceport_raided,
-  } = data;
+  const { turns, spaceport_raided } = data;
   return (
     <Stack vertical fill>
       <Stack.Item grow>
         <Section
           title="Market"
           fill
-          buttons={(
+          buttons={
             <>
               <Button
                 content="Raid"
                 icon="skull"
                 color="black"
                 disabled={spaceport_raided}
-                onClick={() => act('raid_spaceport')} />
+                onClick={() => act('raid_spaceport')}
+              />
               <Button
                 content="Leave"
                 icon="arrow-right"
-                onClick={() => act('leave_spaceport')} />
+                onClick={() => act('leave_spaceport')}
+              />
             </>
-          )}>
+          }>
           <Stack fill textAlign="center" vertical>
-            <Stack.Item grow >
+            <Stack.Item grow>
               <Box mb={-2} bold fontSize="15px">
-                {turns === 4 && "Tau Ceti Beta" || "Small Space Port"}
+                {(turns === 4 && 'Tau Ceti Beta') || 'Small Space Port'}
               </Box>
               <br />
               <Box fontSize="14px">
-                {spaceport_raided && (
+                {(spaceport_raided && (
                   <Box color="red">
-                    You are lucky to have escaped with your life. Attempting
-                    to dock again would be certain death.
+                    You are lucky to have escaped with your life. Attempting to
+                    dock again would be certain death.
                   </Box>
-                ) || (
+                )) ||
                   "Hello, Pioneer! We have supplies for you to help \
-                  you reach Orion. They aren't free, though!"
-                )}
+                  you reach Orion. They aren't free, though!"}
               </Box>
             </Stack.Item>
-            {spaceport_raided && (
+            {(spaceport_raided && (
               <>
                 <Stack.Item>
-                  The Port is under high security. Any possibility of
-                  purchasing goods has long since sailed.
+                  The Port is under high security. Any possibility of purchasing
+                  goods has long since sailed.
                 </Stack.Item>
                 <Stack.Item grow />
               </>
-            ) || (
+            )) || (
               <>
-                <Stack.Item>
-                  General Markets:
-                </Stack.Item>
+                <Stack.Item>General Markets:</Stack.Item>
                 <Stack.Item>
                   <Stack mb={-1} fill>
                     <Stack.Item grow basis={0}>
@@ -501,45 +522,55 @@ const ORION_STATUS_MARKET = (props, context) => {
                           <Button
                             fluid
                             icon="gas-pump"
-                            content={"5 Food -> 5 Fuel"}
+                            content={'5 Food -> 5 Fuel'}
                             color="green"
-                            onClick={() => act('trade', {
-                              what: 2,
-                            })} />
+                            onClick={() =>
+                              act('trade', {
+                                what: 2,
+                              })
+                            }
+                          />
                         </Stack.Item>
                         <Divider />
-                        <Stack.Item mt={0}>
-                          Port Hangar Bay:
-                        </Stack.Item>
+                        <Stack.Item mt={0}>Port Hangar Bay:</Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="wrench"
-                            content={"5 Fuel for Hull Plates"}
+                            content={'5 Fuel for Hull Plates'}
                             color="average"
-                            onClick={() => act('buyparts', {
-                              part: 2,
-                            })} />
+                            onClick={() =>
+                              act('buyparts', {
+                                part: 2,
+                              })
+                            }
+                          />
                         </Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="server"
-                            content={"5 Fuel for Electronics"}
+                            content={'5 Fuel for Electronics'}
                             color="blue"
-                            onClick={() => act('buyparts', {
-                              part: 3,
-                            })} />
+                            onClick={() =>
+                              act('buyparts', {
+                                part: 3,
+                              })
+                            }
+                          />
                         </Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="rocket"
-                            content={"5 Fuel for Engine Parts"}
+                            content={'5 Fuel for Engine Parts'}
                             color="violet"
-                            onClick={() => act('buyparts', {
-                              part: 1,
-                            })} />
+                            onClick={() =>
+                              act('buyparts', {
+                                part: 1,
+                              })
+                            }
+                          />
                         </Stack.Item>
                       </Stack>
                     </Stack.Item>
@@ -549,41 +580,47 @@ const ORION_STATUS_MARKET = (props, context) => {
                           <Button
                             fluid
                             icon="hamburger"
-                            content={"5 Fuel -> 5 Food"}
+                            content={'5 Fuel -> 5 Food'}
                             color="olive"
-                            onClick={() => act('trade', {
-                              what: 1,
-                            })} />
+                            onClick={() =>
+                              act('trade', {
+                                what: 1,
+                              })
+                            }
+                          />
                         </Stack.Item>
                         <Divider />
-                        <Stack.Item mt={0}>
-                          Port Bar:
-                        </Stack.Item>
+                        <Stack.Item mt={0}>Port Bar:</Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="user-plus"
-                            content={"10 Food, 10 Fuel for Crew"}
+                            content={'10 Food, 10 Fuel for Crew'}
                             color="white"
-                            onClick={() => act('buycrew')} />
+                            onClick={() => act('buycrew')}
+                          />
                         </Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="user-minus"
-                            content={"Crew for 7 Food, 7 Fuel"}
+                            content={'Crew for 7 Food, 7 Fuel'}
                             color="black"
-                            onClick={() => act('sellcrew')} />
+                            onClick={() => act('sellcrew')}
+                          />
                         </Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
                             icon="meteor"
-                            content={"Odd Crew (Same Price)"}
+                            content={'Odd Crew (Same Price)'}
                             color="purple"
-                            onClick={() => act('buycrew', {
-                              odd: 1,
-                            })} />
+                            onClick={() =>
+                              act('buycrew', {
+                                odd: 1,
+                              })
+                            }
+                          />
                         </Stack.Item>
                       </Stack>
                     </Stack.Item>
@@ -591,7 +628,6 @@ const ORION_STATUS_MARKET = (props, context) => {
                 </Stack.Item>
               </>
             )}
-
           </Stack>
         </Section>
       </Stack.Item>
@@ -604,22 +640,13 @@ const ORION_STATUS_MARKET = (props, context) => {
 
 export const OrionGame = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    gamestatus,
-    gamename,
-    eventname,
-  } = data;
+  const { gamestatus, gamename, eventname } = data;
   const GameStatusComponent = STATUS2COMPONENT[gamestatus].component();
   const MarketRaid = STATUS2COMPONENT[2].component();
   return (
-    <Window
-      title={gamename}
-      width={420}
-      height={510}>
+    <Window title={gamename} width={420} height={510}>
       <Window.Content scrollable>
-        {eventname === "Space Port Raid" && (
-          <MarketRaid />
-        ) || (
+        {(eventname === 'Space Port Raid' && <MarketRaid />) || (
           <GameStatusComponent />
         )}
       </Window.Content>

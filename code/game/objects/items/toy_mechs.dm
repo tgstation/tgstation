@@ -12,7 +12,7 @@
 #define MAX_BATTLE_LENGTH 50
 
 /obj/item/toy/mecha
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "fivestarstoy"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -179,7 +179,7 @@
 		to_chat(user, span_notice("You offer battle to [target.name]!"))
 		to_chat(target, span_notice("<b>[user.name] wants to battle with [user.p_their()] [name]!</b> <i>Attack them with a toy mech to initiate combat.</i>"))
 		wants_to_battle = TRUE
-		addtimer(CALLBACK(src, .proc/withdraw_offer, user), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(withdraw_offer), user), 6 SECONDS)
 		return
 
 	..()
@@ -266,7 +266,7 @@
 /**
  * Override the say proc if they're mute
  */
-/obj/item/toy/mecha/say()
+/obj/item/toy/mecha/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(!quiet)
 		. = ..()
 

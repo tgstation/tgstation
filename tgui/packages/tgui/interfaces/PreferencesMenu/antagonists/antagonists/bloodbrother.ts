@@ -1,9 +1,9 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 const BloodBrother: Antagonist = {
-  key: "bloodbrother",
-  name: "Blood Brother",
+  key: 'bloodbrother',
+  name: 'Blood Brother',
   description: [
     multiline`
       Team up with other crew members as blood brothers to combine the strengths

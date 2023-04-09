@@ -18,6 +18,7 @@
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
 	wound_bonus = 20
+	demolition_mod = 1.25
 	grind_results = list(/datum/reagent/lead = 20)
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.
@@ -40,4 +41,5 @@
 /obj/item/stock_parts/cell/lead/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	charge = rand(0.2,0.8) * maxcharge
+	var/initial_percent = rand(20, 80) / 100
+	charge = initial_percent * maxcharge

@@ -8,13 +8,13 @@
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
 	/// Left arm part of the endoskeleton
-	var/obj/item/bodypart/l_arm/robot/l_arm = null
+	var/obj/item/bodypart/arm/left/robot/l_arm = null
 	/// Right arm part of the endoskeleton
-	var/obj/item/bodypart/r_arm/robot/r_arm = null
+	var/obj/item/bodypart/arm/right/robot/r_arm = null
 	/// Left leg part of this endoskeleton
-	var/obj/item/bodypart/l_leg/robot/l_leg = null
+	var/obj/item/bodypart/leg/left/robot/l_leg = null
 	/// Right leg part of this endoskeleton
-	var/obj/item/bodypart/r_leg/robot/r_leg = null
+	var/obj/item/bodypart/leg/right/robot/r_leg = null
 	/// Chest part of this endoskeleton
 	var/obj/item/bodypart/chest/robot/chest = null
 	/// Head part of this endoskeleton
@@ -145,9 +145,9 @@
 	to_chat(user, span_notice("You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"]."))
 	chest.cell = temp_cell
 	return TRUE
+
 //ADD
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
-
 	if(istype(W, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
@@ -155,14 +155,14 @@
 				var/obj/item/bot_assembly/ed209/B = new
 				B.forceMove(drop_location())
 				to_chat(user, span_notice("You arm the robot frame."))
-				var/holding_this = user.get_inactive_held_item()==src
+				var/holding_this = user.get_inactive_held_item() == src
 				qdel(src)
 				if (holding_this)
 					user.put_in_inactive_hand(B)
 			else
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
 				return
-	else if(istype(W, /obj/item/bodypart/l_leg/robot))
+	else if(istype(W, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -172,7 +172,7 @@
 		l_leg = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/r_leg/robot))
+	else if(istype(W, /obj/item/bodypart/leg/right/robot))
 		if(src.r_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -182,7 +182,7 @@
 		r_leg = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/l_arm/robot))
+	else if(istype(W, /obj/item/bodypart/arm/left/robot))
 		if(l_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -192,7 +192,7 @@
 		l_arm = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/r_arm/robot))
+	else if(istype(W, /obj/item/bodypart/arm/right/robot))
 		if(r_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -220,10 +220,9 @@
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/HD = W
-		for(var/X in HD.contents)
-			if(istype(X, /obj/item/organ))
-				to_chat(user, span_warning("There are organs inside [HD]!"))
-				return
+		if(locate(/obj/item/organ/internal) in HD)
+			to_chat(user, span_warning("There are organs inside [HD]!"))
+			return
 		if(head)
 			return
 		if(HD.flash2 && HD.flash1)
@@ -299,8 +298,9 @@
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
+			// This canonizes that MMI'd cyborgs have memories of their previous life
+			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
 			brainmob.mind.transfer_to(O)
-			brainmob.mind.add_memory(MEMORY_BORGED, list(DETAIL_PROTAGONIST = user), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_SKIP_UNCONSCIOUS)
 			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)
@@ -311,7 +311,8 @@
 			forceMove(O)
 			O.robot_suit = src
 
-			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
+			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
+			M.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
@@ -324,7 +325,7 @@
 		var/obj/item/borg/upgrade/ai/M = W
 		if(check_completion())
 			if(!isturf(loc))
-				to_chat(user, span_warning("You cannot install[M], the frame has to be standing on the ground to be perfectly precise!"))
+				to_chat(user, span_warning("You cannot install [M], the frame has to be standing on the ground to be perfectly precise!"))
 				return
 			if(!user.temporarilyRemoveItemFromInventory(M))
 				to_chat(user, span_warning("[M] is stuck to your hand!"))
@@ -401,16 +402,19 @@
 				created_name = ""
 				return
 			created_name = new_name
-			log_game("[key_name(user)] have set \"[new_name]\" as a cyborg shell name at [loc_name(user)]")
+			log_silicon("[key_name(user)] has set \"[new_name]\" as a cyborg shell name at [loc_name(user)]")
 			return TRUE
 		if("locomotion")
 			locomotion = !locomotion
+			log_silicon("[key_name(user)] has [locomotion ? "enabled" : "disabled"] movement on a cyborg shell at [loc_name(user)]")
 			return TRUE
 		if("panel")
 			panel_locked = !panel_locked
+			log_silicon("[key_name(user)] has [panel_locked ? "locked" : "unlocked"] the panel on a cyborg shell at [loc_name(user)]")
 			return TRUE
 		if("aisync")
 			aisync = !aisync
+			log_silicon("[key_name(user)] has [aisync ? "enabled" : "disabled"] the AI sync for a cyborg shell at [loc_name(user)]")
 			return TRUE
 		if("set_ai")
 			var/selected_ai = select_active_ai(user, z)
@@ -420,7 +424,9 @@
 				to_chat(user, span_alert("No active AIs detected."))
 				return
 			forced_ai = selected_ai
+			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)]")
 			return TRUE
 		if("lawsync")
 			lawsync = !lawsync
+			log_silicon("[key_name(user)] has [lawsync ? "enabled" : "disabled"] the law sync for a cyborg shell at [loc_name(user)]")
 			return TRUE

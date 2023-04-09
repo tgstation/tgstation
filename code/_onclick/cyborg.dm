@@ -49,7 +49,7 @@
 	face_atom(A) // change direction to face what you clicked on
 
 	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode(sound = FALSE)
 		aicamera.captureimage(A, usr)
 		return
 
@@ -178,6 +178,9 @@
 	A.attack_robot(src)
 
 /atom/proc/attack_robot(mob/user)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
+
 	attack_ai(user)
 	return
 
@@ -189,4 +192,7 @@
  * * modifiers The list of the custom click modifiers
  */
 /atom/proc/attack_robot_secondary(mob/user, list/modifiers)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
+
 	return attack_ai_secondary(user, modifiers)

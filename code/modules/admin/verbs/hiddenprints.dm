@@ -3,18 +3,18 @@
 		return
 
 	var/interface = "A log of every player who has touched [victim], sorted by last touch.<br><br><ol>"
-	var/victim_hiddenprints = victim.return_hiddenprints()
+	var/victim_hiddenprints = GET_ATOM_HIDDENPRINTS(victim)
 
 	if(!islist(victim_hiddenprints))
 		victim_hiddenprints = list()
 
 	var/list/hiddenprints = flatten_list(victim_hiddenprints)
-	remove_nulls_from_list(hiddenprints)
+	list_clear_nulls(hiddenprints)
 
 	if(!length(hiddenprints))
 		hiddenprints = list("Nobody has touched this yet!")
 
-	hiddenprints = sort_list(hiddenprints, /proc/cmp_hiddenprint_lasttime_dsc)
+	hiddenprints = sort_list(hiddenprints, GLOBAL_PROC_REF(cmp_hiddenprint_lasttime_dsc))
 	for(var/record in hiddenprints)
 		interface += "<li>[record]</li><br>"
 

@@ -26,20 +26,20 @@
 
 /datum/gas_reaction/h2fire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen is consumed equal to the amount of hydrogen available on the fast burn. Not consumed on the slow burn. Needs to be more than the hydrogen amount to trigger fast burn. Acts as the reaction rate on slow burn.",
-		/datum/gas/hydrogen = "[(1/HYDROGEN_BURN_H2_FACTOR)*100]% of the hydrogen is always consumed on the fast burn. [(1/HYDROGEN_BURN_OXY_FACTOR)*100]% of the oxygen amount is consumed on the slow burn. Need to be less than the oxygen amount to trigger fast burn. Acts as the reaction rate on fast burn.",
-		/datum/gas/water_vapor = "Water vapor is formed at [1/HYDROGEN_BURN_H2_FACTOR] reaction rate for the fast burn, [1/HYDROGEN_BURN_OXY_FACTOR]% reaction rate for the slow burn.",
+		/datum/gas/oxygen = "Oxygen is consumed at 0.5 reaction rate. Higher oxygen concentration up to [HYDROGEN_OXYGEN_FULLBURN] times the hydrogen increases the reaction rate.",
+		/datum/gas/hydrogen = "Hydrogen is consumed at 1 reaction rate. Its relationship with oxygen also determines the reaction speed.",
+		/datum/gas/water_vapor = "Water vapor is formed at 1 reaction rate.",
 		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
-		"Energy" = "[FIRE_HYDROGEN_ENERGY_RELEASED*HYDROGEN_OXYBURN_MULTIPLIER] joules of energy is released per rate for the fast burn, [FIRE_HYDROGEN_ENERGY_RELEASED] joules for the slow burn. Needs [MINIMUM_TRITIUM_OXYBURN_ENERGY] joules to start the fast burn.",
+		"Energy" = "[FIRE_HYDROGEN_ENERGY_RELEASED] joules of energy is released per mol of hydrogen consumed.",
 	)
 
 /datum/gas_reaction/tritfire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen is consumed equal to the amount of tritium available on the fast burn. Not consumed on the slow burn. Need to be more than the tritium amount to trigger fast burn. Acts as the reaction rate on slow burn.",
-		/datum/gas/tritium = "[(1/TRITIUM_BURN_TRIT_FACTOR)*100]% of the tritium is always consumed on the fast burn. [(1/TRITIUM_BURN_OXY_FACTOR)*100]% of the oxygen amount is consumed on the slow burn. Need to be less than the oxygen amount to trigger fast burn. Acts as the reaction rate on fast burn.",
-		/datum/gas/water_vapor = "Water vapor is formed at [1/TRITIUM_BURN_TRIT_FACTOR]% reaction rate for the fast burn, [1/TRITIUM_BURN_OXY_FACTOR]% reaction rate for the slow burn.",
+		/datum/gas/oxygen = "Oxygen is consumed at 0.5 reaction rate. Higher oxygen concentration up to [TRITIUM_OXYGEN_FULLBURN] times the tritium increases the reaction rate.",
+		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate. Its relationship with oxygen also determines the reaction speed.",
+		/datum/gas/water_vapor = "Water vapor is formed at 1 reaction rate.",
 		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
-		"Energy" = "[FIRE_TRITIUM_ENERGY_RELEASED*TRITIUM_OXYBURN_MULTIPLIER] joules of energy is released per rate for the fast burn, [FIRE_TRITIUM_ENERGY_RELEASED] joules for the slow burn. Needs [MINIMUM_TRITIUM_OXYBURN_ENERGY] joules to start the fast burn.",
+		"Energy" = "[FIRE_TRITIUM_ENERGY_RELEASED] joules of energy is released per mol of tritium consumed.",
 		"Radiation" = "This reaction emits radiation proportional to the amount of energy released.",
 	)
 
@@ -75,12 +75,12 @@
 
 /datum/gas_reaction/bzformation/init_factors()
 	factor = list(
-		/datum/gas/plasma = "Plasma is consumed at 2 reaction rate. If there is more plasma than nitrous oxide reaction rate is slowed down.",
-		/datum/gas/nitrous_oxide = "Nitrous oxide is consumed at 1 reaction rate. If there is less nitrous oxide than plasma the reaction rate is slowed down.",
-		/datum/gas/bz = "BZ is formed at 2.5 reaction rate. A small malus up to half a mole per tick is applied if the reaction rate is constricted by nitrous oxide.",
-		/datum/gas/oxygen = "Oxygen is produced from the BZ malus. This only happens when the reaction rate is being constricted by the amount of nitrous oxide present. I.E. amount of nitrous oxide is less than the reaction rate.", // Less than the reaction rate AND half the plasma, but suppose that's not necessary to mention.
-		"Pressure" = "The lower the pressure the faster the reaction rate goes.",
-		"Energy" = "[FIRE_CARBON_ENERGY_RELEASED] joules of energy is released per reaction rate",
+		/datum/gas/plasma = "Each mole of BZ made consumes 0.8 moles of plasma. If there is more plasma than nitrous oxide reaction rate is slowed down.",
+		/datum/gas/nitrous_oxide = "Each mole of bz made consumes 0.4 moles of Nitrous oxide. If there is less nitrous oxide than plasma the reaction rate is slowed down. At three times the amount of plasma to Nitrous oxide it will start breaking down into Nitrogen and Oxygen, the lower the ratio the more Nitrous oxide decomposes.",
+		/datum/gas/bz = "The lower the pressure and larger the volume the more bz gets made. Less nitrous oxide than plasma will slow down the reaction.",
+		/datum/gas/nitrogen = "Each mole Nitrous oxide decomposed makes 1 mol Nitrogen. Lower ratio of Nitrous oxide to Plasma means a higher ratio of decomposition to BZ production.",
+		/datum/gas/oxygen = "Each mole Nitrous oxide decomposed makes 0.5 moles Oxygen. Lower ratio of Nitrous oxide to Plasma means a higher ratio of decomposition to BZ production.",
+		"Energy" = "[BZ_FORMATION_ENERGY] joules of energy is released per mol of BZ made. Nitrous oxide decomposition releases [N2O_DECOMPOSITION_ENERGY] per mol decomposed",
 	)
 
 /datum/gas_reaction/pluox_formation/init_factors()
@@ -116,12 +116,12 @@
 
 /datum/gas_reaction/freonformation/init_factors()
 	factor = list(
-		/datum/gas/plasma = "40 moles of plasma needs to be present for the reaction to occur. Plasma is consumed at 1.5 reaction rate.",
-		/datum/gas/carbon_dioxide = "20 moles of carbon dioxide needs to be present for the reaction to occur. Carbon dioxide is consumed at 0.75 reaction rate.",
-		/datum/gas/bz = "20 moles of BZ needs to be present for the reaction to occur. BZ is consumed at 0.25 reaction rate.",
-		/datum/gas/freon = "Freon is produced at 2.5 reaction rate",
-		"Energy" = "[FREON_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
-		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] Kelvin to occur",
+		/datum/gas/plasma = "At least 0.06 moles of plasma needs to be present. Plasma is consumed at 0.6 moles per tile/pipenet",
+		/datum/gas/carbon_dioxide = "At least 0.03 moles of CO2 needs to be present. CO2 is consumed at 0.3 moles per tile/pipenet",
+		/datum/gas/bz = "At least 0.01 moles of BZ needs to be present. BZ is consumed at 0.1 moles per tile/pipenet",
+		/datum/gas/freon = "Freon is produced at 1 mole per tile/pipenet",
+		"Energy" = "Between 100 and 800 joules of energy is absorbed per mole of freon produced",
+		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] Kelvin to occur, with production peak at 800 K. However at temperatures above 5500 K higher rates are possible maxing out at three times the low temperature rate at over 8500 K.",
 	)
 
 /datum/gas_reaction/nobliumformation/init_factors()
@@ -130,17 +130,8 @@
 		/datum/gas/tritium = "5 moles of tritium needs to be present for the reaction to occur. Tritium is consumed at 5 reaction rate",
 		/datum/gas/hypernoblium = "Hyper-Noblium is produced at 1 reaction rate",
 		"Energy" = "[NOBLIUM_FORMATION_ENERGY] joules of energy is released per reaction rate.",
-		/datum/gas/bz = "BZ is not consumed in the reaction but will lower the amount of energy released",
+		/datum/gas/bz = "BZ is not consumed in the reaction but will lower the amount of energy released. It also reduces amount of trit consumed by a ratio between trit and bz, greater bz than trit will reduce more.",
 		"Temperature" = "Can only occur between [NOBLIUM_FORMATION_MIN_TEMP] - [NOBLIUM_FORMATION_MAX_TEMP] kelvin",
-	)
-
-/datum/gas_reaction/halon_formation/init_factors()
-	factor = list(
-		/datum/gas/bz = "BZ is consumed at 0.25 reaction rate",
-		/datum/gas/tritium = "Tritium is consumed at 4 reaction rate",
-		/datum/gas/halon = "Halon is produced at 4.25 reaction rate",
-		"Energy" = "[HALON_FORMATION_ENERGY] joules of energy is released per reaction rate",
-		"Temperature" = "Can only occur between [HALON_FORMATION_MIN_TEMPERATURE] - [HALON_FORMATION_MAX_TEMPERATURE] kelvin",
 	)
 
 /datum/gas_reaction/halon_o2removal/init_factors()
@@ -151,7 +142,7 @@
 		"Energy" = "[HALON_COMBUSTION_ENERGY] joules of energy is absorbed per reaction rate",
 		"Temperature" = "Can only occur above [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin. Higher temperature increases the reaction rate.",
 	)
-	
+
 /datum/gas_reaction/healium_formation/init_factors()
 	factor = list(
 		/datum/gas/bz = "BZ is consumed at 0.25 reaction rate",
@@ -169,7 +160,7 @@
 		"Temperature" = "Can only occur between [ZAUKER_FORMATION_MIN_TEMPERATURE] - [ZAUKER_FORMATION_MAX_TEMPERATURE] kelvin",
 		"Energy" = "[ZAUKER_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
-	
+
 /datum/gas_reaction/zauker_decomp/init_factors() //Fixed reaction rate
 	factor = list(
 		/datum/gas/zauker = "Zauker is consumed at 1 reaction rate",
@@ -186,7 +177,7 @@
 		"Energy" = "[PN_FORMATION_ENERGY] joules of energy is released per reaction rate",
 		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. Higher temperature increases the reaction rate.",
 	)
-	
+
 /datum/gas_reaction/proto_nitrate_hydrogen_response/init_factors() // Fixed reaction rate
 	factor = list(
 		/datum/gas/hydrogen = "[PN_HYDROGEN_CONVERSION_THRESHOLD] moles of hydrogen needs to be present for the reaction to occur. Hydrogen is consumed at 1 reaction rate.",
@@ -194,7 +185,7 @@
 		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
-/datum/gas_reaction/proto_nitrate_tritium_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_tritium_response/init_factors()
 	factor = list(
 		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate.",
 		/datum/gas/proto_nitrate = "Proto nitrate is consumed at 0.01 reaction rate.",
@@ -203,7 +194,7 @@
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 	)
 
-/datum/gas_reaction/proto_nitrate_bz_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_bz_response/init_factors()
 	factor = list(
 		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur",
 		/datum/gas/bz = "BZ is consumed at 1 reaction rate.",
@@ -213,4 +204,5 @@
 		"Energy" = "[PN_BZASE_ENERGY] joules of energy is released per reaction rate",
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 		"Hallucinations" = "This reaction can cause various carbon based lifeforms in the vicinity to hallucinate.",
+		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, up to [PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per reaction rate.",
 	)

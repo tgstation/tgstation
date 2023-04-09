@@ -5,10 +5,9 @@
 /obj/machinery/chem_recipe_debug
 	name = "chemical reaction tester"
 	density = TRUE
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC_debug"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	///List of every reaction in the game kept locally for easy access
 	var/list/cached_reactions = list()
@@ -134,7 +133,7 @@
 				say(span_warning("Unable to find product [reagent_type] in holder after reaction! reagents found are:"))
 				for(var/other_reagent in reagents.reagent_list)
 					say("[other_reagent]")
-				var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
+				var/obj/item/reagent_containers/cup/beaker/bluespace/beaker = new /obj/item/reagent_containers/cup/beaker/bluespace(loc)
 				reagents.trans_to(beaker)
 				beaker.name = "[cached_reactions[index]] failed"
 				if(!failed)
@@ -152,7 +151,7 @@
 				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [span_warning("[reagent.volume]u")] purity of [reagent.purity] index:[index]\n"
 			cached_purity = reagent.purity
 		if(beaker_spawn && reagents.total_volume)
-			var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
+			var/obj/item/reagent_containers/cup/beaker/bluespace/beaker = new /obj/item/reagent_containers/cup/beaker/bluespace(loc)
 			reagents.trans_to(beaker)
 			beaker.name = "[cached_reactions[index]] purity: [cached_purity]"
 		reagents.clear_reagents()

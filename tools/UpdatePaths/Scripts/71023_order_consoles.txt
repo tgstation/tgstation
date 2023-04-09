@@ -1,0 +1,2 @@
+/obj/machinery/mineral/equipment_vendor/@SUBTYPES : /obj/machinery/computer/order_console/mining/@SUBTYPES
+/obj/machinery/computer/chef_order : /obj/machinery/computer/order_console/cook {@OLD}

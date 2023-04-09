@@ -10,8 +10,8 @@
 		"emergency": "emergency_meta"
 	},
 	"job_changes": {
-		"cook": {
-			"additional_cqc_areas": ["/area/service/bar", "/area/service/kitchen/coldroom", "/area/commons/lounge"]
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
 		}
 	}
 }

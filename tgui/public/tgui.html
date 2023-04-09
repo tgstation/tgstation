@@ -4,19 +4,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
 
-<!-- Inlined data -->
+<!-- Inlined metadata -->
 <meta id="tgui:windowId" content="[tgui:windowId]">
+<meta id="tgui:strictMode" content="[tgui:strictMode]">
 
 <!-- Early setup -->
 <script type="text/javascript">
-// Read window id into a global
-window.__windowId__ = document
-  .getElementById('tgui:windowId')
-  .getAttribute('content');
-if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
-  window.__windowId__ = null;
-}
-
 (function () {
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -31,13 +24,27 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     }
     return target;
   };
+  var parseMetaTag = function (name) {
+    var content = document.getElementById(name).getAttribute('content');
+    if (content === '[' + name + ']') {
+      return null;
+    }
+    return content;
+  };
 
   // BYOND API object
   // ------------------------------------------------------
 
   var Byond = window.Byond = {};
+
+  // Expose inlined metadata
+  Byond.windowId = parseMetaTag('tgui:windowId');
+
+  // Backwards compatibility
+  window.__windowId__ = Byond.windowId;
+
   // Trident engine version
-  var tridentVersion = (function () {
+  Byond.TRIDENT = (function () {
     var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
     var majorVersion = groups && groups[1];
     return majorVersion
@@ -46,17 +53,21 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   })();
 
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = (tridentVersion !== null || window.cef_to_byond)
+  var isByond = (Byond.TRIDENT !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0
     && location.search !== '?external';
+    //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
+    //&& location.pathname.indexOf('/tmp') === 0
 
   // Version constants
   Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = tridentVersion !== null && tridentVersion <= 4;
-  Byond.IS_LTE_IE9 = tridentVersion !== null && tridentVersion <= 5;
-  Byond.IS_LTE_IE10 = tridentVersion !== null && tridentVersion <= 6;
-  Byond.IS_LTE_IE11 = tridentVersion !== null && tridentVersion <= 7;
+  Byond.IS_LTE_IE8 = Byond.TRIDENT !== null && Byond.TRIDENT <= 4;
+  Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
+  Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
+  Byond.IS_LTE_IE11 = Byond.TRIDENT !== null && Byond.TRIDENT <= 7;
+
+  // Strict mode flag
+  Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
@@ -143,6 +154,9 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   };
 
   Byond.winget = function (id, propName) {
+    if (id === null) {
+      id = '';
+    }
     var isArray = propName instanceof Array;
     var isSpecific = propName && propName !== '*' && !isArray;
     var promise = Byond.callAsync('winget', {
@@ -158,7 +172,10 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   };
 
   Byond.winset = function (id, propName, propValue) {
-    if (typeof id === 'object' && id !== null) {
+    if (id === null) {
+      id = '';
+    }
+    else if (typeof id === 'object') {
       return Byond.call('winset', id);
     }
     var props = {};
@@ -181,6 +198,41 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     }
   };
 
+  Byond.sendMessage = function (type, payload) {
+    var message = typeof type === 'string'
+      ? { type: type, payload: payload }
+      : type;
+    // JSON-encode the payload
+    if (message.payload !== null && message.payload !== undefined) {
+      message.payload = JSON.stringify(message.payload);
+    }
+    // Append an identifying header
+    assign(message, {
+      tgui: 1,
+      window_id: Byond.windowId,
+    });
+    Byond.topic(message);
+  };
+
+  // This function exists purely for debugging, do not use it in code!
+  Byond.injectMessage = function (type, payload) {
+    window.update(JSON.stringify({ type: type, payload: payload }));
+  };
+
+  Byond.subscribe = function (listener) {
+    window.update.flushQueue(listener);
+    window.update.listeners.push(listener);
+  };
+
+  Byond.subscribeTo = function (type, listener) {
+    var _listener = function (_type, payload) {
+      if (_type === type) {
+        listener(payload);
+      }
+    };
+    window.update.flushQueue(_listener);
+    window.update.listeners.push(_listener);
+  };
 
   // Asset loaders
   // ------------------------------------------------------
@@ -202,6 +254,8 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     var len = styleSheets.length;
     for (var i = 0; i < len; i++) {
       var styleSheet = styleSheets[i];
+      if(styleSheet.href === undefined)
+        continue;
       if (styleSheet.href.indexOf(url) !== -1) {
         return styleSheet.rules.length > 0;
       }
@@ -253,6 +307,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     if (type === 'js') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
+      node.crossOrigin = 'anonymous';
       // IE8: Prefer non-https protocols
       node.src = Byond.IS_LTE_IE9
         ? url.replace('https://', 'http://')
@@ -312,8 +367,11 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   };
 })();
 
-// Global error handling
+// Error handling
+// ------------------------------------------------------
+
 window.onerror = function (msg, url, line, col, error) {
+  window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
   var stack = error && error.stack;
   // Ghetto stacktrace
@@ -326,41 +384,51 @@ window.onerror = function (msg, url, line, col, error) {
   // Augment the stack
   stack = window.__augmentStack__(stack, error);
   // Print error to the page
-  var errorRoot = document.getElementById('FatalError');
-  var errorStack = document.getElementById('FatalError__stack');
-  if (errorRoot) {
-    errorRoot.className = 'FatalError FatalError--visible';
-    if (window.onerror.__stack__) {
-      window.onerror.__stack__ += '\n\n' + stack;
+  if (Byond.strictMode) {
+    var errorRoot = document.getElementById('FatalError');
+    var errorStack = document.getElementById('FatalError__stack');
+    if (errorRoot) {
+      errorRoot.className = 'FatalError FatalError--visible';
+      if (window.onerror.__stack__) {
+        window.onerror.__stack__ += '\n\n' + stack;
+      }
+      else {
+        window.onerror.__stack__ = stack;
+      }
+      var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+      errorStack[textProp] = window.onerror.__stack__;
     }
-    else {
-      window.onerror.__stack__ = stack;
-    }
-    var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
-    errorStack[textProp] = window.onerror.__stack__;
+    // Set window geometry
+    var setFatalErrorGeometry = function () {
+      Byond.winset(Byond.windowId, {
+        titlebar: true,
+        'is-visible': true,
+        'can-resize': true,
+      });
+    };
+    setFatalErrorGeometry();
+    setInterval(setFatalErrorGeometry, 1000);
   }
-  // Set window geometry
-  var setFatalErrorGeometry = function () {
-    Byond.winset(window.__windowId__, {
-      titlebar: true,
-      size: '600x600',
-      'is-visible': true,
-      'can-resize': true,
-    });
-  };
-  setFatalErrorGeometry();
-  setInterval(setFatalErrorGeometry, 1000);
   // Send logs to the game server
-  Byond.topic({
-    tgui: 1,
-    window_id: window.__windowId__,
-    type: 'log',
-    fatal: 1,
-    message: stack,
-  });
+  if (Byond.strictMode) {
+    Byond.sendMessage({
+      type: 'log',
+      fatal: 1,
+      message: stack,
+    });
+  }
+  else if (window.onerror.errorCount <= 1) {
+    stack += '\nWindow is in non-strict mode, future errors are suppressed.';
+    Byond.sendMessage({
+      type: 'log',
+      message: stack,
+    });
+  }
   // Short-circuit further updates
-  window.__updateQueue__ = [];
-  window.update = function () {};
+  if (Byond.strictMode) {
+    window.update = function () {};
+    window.update.queue = [];
+  }
   // Prevent default action
   return true;
 };
@@ -382,64 +450,83 @@ window.__augmentStack__ = function (stack, error) {
   return stack + '\nUser Agent: ' + navigator.userAgent;
 };
 
-// Early initialization
-window.__updateQueue__ = [];
-window.update = function (message) {
-  window.__updateQueue__.push(message);
+// Incoming message handling
+// ------------------------------------------------------
+
+// Message handler
+window.update = function (rawMessage) {
+  // Push onto the queue (active during initialization)
+  if (window.update.queueActive) {
+    window.update.queue.push(rawMessage);
+    return;
+  }
+  // Parse the message
+  var message = Byond.parseJson(rawMessage);
+  // Notify listeners
+  var listeners = window.update.listeners;
+  for (var i = 0; i < listeners.length; i++) {
+    listeners[i](message.type, message.payload);
+  }
 };
-Byond.topic({
-  tgui: 1,
-  window_id: window.__windowId__,
-  type: 'ready',
-});
 
-// Necessary polyfill to make Webpack code splitting work on IE8
-if (!Function.prototype.bind) (function () {
-  var slice = Array.prototype.slice;
-  Function.prototype.bind = function () {
-    var thatFunc = this, thatArg = arguments[0];
-    var args = slice.call(arguments, 1);
-    if (typeof thatFunc !== 'function') {
-      // closest thing possible to the ECMAScript 5
-      // internal IsCallable function
-      throw new TypeError('Function.prototype.bind - ' +
-        'what is trying to be bound is not callable');
+// Properties and variables of this specific handler
+window.update.listeners = [];
+window.update.queue = [];
+window.update.queueActive = true;
+window.update.flushQueue = function (listener) {
+  // Disable and clear the queue permanently on short delay
+  if (window.update.queueActive) {
+    window.update.queueActive = false;
+    if (window.setTimeout) {
+      window.setTimeout(function () {
+        window.update.queue = [];
+      }, 0);
     }
-    return function () {
-      var funcArgs = args.concat(slice.call(arguments))
-      return thatFunc.apply(thatArg, funcArgs);
-    };
-  };
-})();
+  }
+  // Process queued messages on provided listener
+  var queue = window.update.queue;
+  for (var i = 0; i < queue.length; i++) {
+    var message = Byond.parseJson(queue[i]);
+    listener(message.type, message.payload);
+  }
+};
 
-if (!Array.prototype['forEach']) {
-  Array.prototype.forEach = function (callback, thisArg) {
-    if (this == null) {
-      throw new TypeError('Array.prototype.forEach called on null or undefined');
-    }
-    var T, k;
-    var O = Object(this);
-    var len = O.length >>> 0;
-    if (typeof callback !== "function") {
-      throw new TypeError(callback + ' is not a function');
-    }
-    if (arguments.length > 1) {
-      T = thisArg;
-    }
-    k = 0;
-    while (k < len) {
-      var kValue;
-      if (k in O) {
-        kValue = O[k];
-        callback.call(T, kValue, k, O);
+window.replaceHtml = function (inline_html) {
+  var children = document.body.childNodes;
+
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeValue == " tgui:inline-html-start ") {
+      while (children[i].nodeValue != " tgui:inline-html-end ") {
+        children[i].remove();
       }
-      k++;
+      children[i].remove();
     }
-  };
-}
+  }
+
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    "<!-- tgui:inline-html-start -->"
+      + inline_html
+      + "<!-- tgui:inline-html-end -->"
+  );
+};
+
+// Signal tgui that we're ready to receive updates
+Byond.sendMessage('ready');
 </script>
 
 <style>
+/* Blink polyfill, originally authored on /tg/ by @iamgoofball */
+blink {
+  animation: 1s linear infinite condemned-blink-effect;
+}
+
+@keyframes condemned-blink-effect {
+  0% { visibility: hidden; }
+  50% { visibility: hidden; }
+  100% { visibility: visible; }
+}
+
 .FatalError {
   display: none;
   position: absolute;
@@ -524,16 +611,19 @@ if (!Array.prototype['forEach']) {
   100% { top: -15px; }
 }
 </style>
+
+<!-- tgui:inline-css -->
 </head>
 <body>
 
-<!-- Inline assets -->
+<!-- tgui:inline-polyfill -->
 <!-- tgui:assets -->
+<!-- tgui:inline-html-start -->
+<!-- tgui:inline-html -->
+<!-- tgui:inline-html-end -->
+<!-- tgui:inline-js -->
 
-<!-- Inline HTML -->
-<!-- tgui:html -->
-
-<!-- tgui container -->
+<!-- Root element for tgui interfaces -->
 <div id="react-root"></div>
 
 <!-- Fatal error container -->
@@ -556,7 +646,7 @@ Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>
 <div class="FatalError__footer">
-Nanotrasen (c) 2525-2562
+<!-- tgui:nt-copyright -->
 </div>
 </div>
 

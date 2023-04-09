@@ -22,7 +22,7 @@
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning),\
 		config_mode = EXPERIMENT_CONFIG_CLICK, \
-		start_experiment_callback = CALLBACK(src, .proc/activate))
+		start_experiment_callback = CALLBACK(src, PROC_REF(activate)))
 
 ///Activates the machine; checks if it can actually scan, then starts.
 /obj/machinery/destructive_scanner/proc/activate()
@@ -35,6 +35,7 @@
 			return
 		aggressive = TRUE
 	start_closing(aggressive)
+	use_power(idle_power_usage)
 
 ///Closes the machine to kidnap everything in the turf into it.
 /obj/machinery/destructive_scanner/proc/start_closing(aggressive)
@@ -47,7 +48,8 @@
 	scanning = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
-	addtimer(CALLBACK(src, .proc/start_scanning, aggressive), 1.2 SECONDS)
+	use_power(idle_power_usage)
+	addtimer(CALLBACK(src, PROC_REF(start_scanning), aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
 /obj/machinery/destructive_scanner/proc/start_scanning(aggressive)
@@ -55,7 +57,8 @@
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
 		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
-	addtimer(CALLBACK(src, .proc/finish_scanning, aggressive), 6 SECONDS)
+	use_power(active_power_usage)
+	addtimer(CALLBACK(src, PROC_REF(finish_scanning), aggressive), 6 SECONDS)
 
 
 ///Performs the actual scan, happens once the tube effects are done
@@ -64,7 +67,7 @@
 	scanning = FALSE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg', 100)
-	addtimer(CALLBACK(src, .proc/open, aggressive), 1.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open), aggressive), 1.2 SECONDS)
 
 ///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
 /obj/machinery/destructive_scanner/proc/open(aggressive)
@@ -78,6 +81,7 @@
 		movable_atom.forceMove(this_turf)
 		if(isliving(movable_atom))
 			var/mob/living/fucked_up_thing = movable_atom
+			fucked_up_thing.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			fucked_up_thing.gib()
 
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)

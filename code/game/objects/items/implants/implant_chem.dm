@@ -2,7 +2,7 @@
 	name = "chem implant"
 	desc = "Injects things."
 	icon_state = "reagents"
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -32,7 +32,7 @@
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()

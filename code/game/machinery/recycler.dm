@@ -33,7 +33,11 @@
 		/datum/material/bluespace
 	)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
-	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/butchering/recycler, \
+	speed = 0.1 SECONDS, \
+	effectiveness = amount_produced, \
+	bonus_modifier = amount_produced/5, \
+	)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -42,20 +46,15 @@
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
+	. = ..()
 	var/amt_made = 0
-	var/mat_mod = 0
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		mat_mod = 2 * B.rating
-	mat_mod *= 50000
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		amt_made = 12.5 * M.rating //% of materials salvaged
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.max_amount = mat_mod
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		amt_made = 12.5 * manipulator.tier //% of materials salvaged
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
@@ -77,7 +76,7 @@
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -110,60 +109,63 @@
 
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/eat, AM)
+	INVOKE_ASYNC(src, PROC_REF(eat), AM)
 
-/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
-	if(iseffect(AM0))
+	if(iseffect(morsel))
 		return
-	if(!isturf(AM0.loc))
+	if(!isturf(morsel.loc))
 		return //I don't know how you called Crossed() but stop it.
+	if(morsel.resistance_flags & INDESTRUCTIBLE)
+		return
 
-	var/list/to_eat = AM0.get_all_contents()
+	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
 	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
-	for(var/i in to_eat)
-		var/atom/movable/AM = i
-		if(istype(AM, /obj/item))
-			var/obj/item/bodypart/head/as_head = AM
-			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+	for(var/thing in to_eat)
+		var/obj/as_object = thing
+		if(istype(as_object))
+			if(as_object.resistance_flags & INDESTRUCTIBLE)
+				if(!isturf(as_object.loc) && !isliving(as_object.loc))
+					as_object.forceMove(loc) // so you still cant shove it in a locker
+				continue
+			var/obj/item/bodypart/head/as_head = thing
+			var/obj/item/mmi/as_mmi = thing
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
-			nom += AM
-		else if(isliving(AM))
+			nom += thing
+		else if(isliving(thing))
 			living_detected = TRUE
-			crunchy_nom += AM
+			crunchy_nom += thing
+
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
 					crush_living(CRUNCH)
+					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
 	for(var/nommed in nom)
 		recycle_item(nommed)
+		use_power(active_power_usage)
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
-	if(!ismob(AM0))
-		qdel(AM0)
-	else // Lets not qdel a mob, yes?
-		for(var/i in AM0.contents)
-			var/atom/movable/content = i
-			content.moveToNullspace()
-			qdel(content)
+	if(!ismob(morsel))
+		qdel(morsel)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-
 	var/obj/item/grown/log/L = I
 	if(istype(L))
 		var/seed_modifier = 0
@@ -173,18 +175,16 @@
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
-		if(!material_amount)
-			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		materials.retrieve_all()
+		if(material_amount)
+			materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+			materials.retrieve_all()
 	qdel(I)
-
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
@@ -224,6 +224,6 @@
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+	default_raw_text = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
 
 #undef SAFETY_COOLDOWN

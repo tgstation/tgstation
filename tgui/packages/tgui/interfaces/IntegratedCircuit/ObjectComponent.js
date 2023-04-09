@@ -1,12 +1,8 @@
-import {
-  Box,
-  Stack, Button,
-} from '../../components';
+import { Box, Stack, Button } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from '../../../common/react';
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
-import { Port } from "./Port";
-
+import { Port } from './Port';
 
 export class ObjectComponent extends Component {
   constructor() {
@@ -77,10 +73,10 @@ export class ObjectComponent extends Component {
     const { input_ports, output_ports } = this.props;
 
     return (
-      shallowDiffers(this.props, nextProps)
-      || shallowDiffers(this.state, nextState)
-      || shallowDiffers(input_ports, nextProps.input_ports)
-      || shallowDiffers(output_ports, nextProps.output_ports)
+      shallowDiffers(this.props, nextProps) ||
+      shallowDiffers(this.state, nextState) ||
+      shallowDiffers(input_ports, nextProps.input_ports) ||
+      shallowDiffers(output_ports, nextProps.output_ports)
     );
   }
 
@@ -129,8 +125,7 @@ export class ObjectComponent extends Component {
         onMouseDown={this.handleStartDrag}
         onMouseUp={this.handleStopDrag}
         onComponentWillUnmount={this.handleDrag}
-        {...rest}
-      >
+        {...rest}>
         <Box
           backgroundColor={color}
           py={1}
@@ -140,29 +135,35 @@ export class ObjectComponent extends Component {
             <Stack.Item grow={1} unselectable="on">
               {name}
             </Stack.Item>
-            {!!ui_buttons && Object.keys(ui_buttons).map(icon => (
-              <Stack.Item key={icon}>
-                <Button
-                  icon={icon}
-                  color="transparent"
-                  compact
-                  onClick={() => act('perform_action', {
-                    component_id: index,
-                    action_name: ui_buttons[icon],
-                  })}
-                />
-              </Stack.Item>
-            ))}
+            {!!ui_buttons &&
+              Object.keys(ui_buttons).map((icon) => (
+                <Stack.Item key={icon}>
+                  <Button
+                    icon={icon}
+                    color="transparent"
+                    compact
+                    onClick={() =>
+                      act('perform_action', {
+                        component_id: index,
+                        action_name: ui_buttons[icon],
+                      })
+                    }
+                  />
+                </Stack.Item>
+              ))}
             <Stack.Item>
               <Button
                 color="transparent"
                 icon="info"
                 compact
-                onClick={(e) => act('set_examined_component', {
-                  component_id: index,
-                  x: e.pageX,
-                  y: e.pageY + ABSOLUTE_Y_OFFSET,
-                })} />
+                onClick={(e) =>
+                  act('set_examined_component', {
+                    component_id: index,
+                    x: e.pageX,
+                    y: e.pageY + ABSOLUTE_Y_OFFSET,
+                  })
+                }
+              />
             </Stack.Item>
             {!!removable && (
               <Stack.Item>
@@ -170,7 +171,10 @@ export class ObjectComponent extends Component {
                   color="transparent"
                   icon="times"
                   compact
-                  onClick={() => act('detach_component', { component_id: index })} />
+                  onClick={() =>
+                    act('detach_component', { component_id: index })
+                  }
+                />
               </Stack.Item>
             )}
           </Stack>
@@ -206,7 +210,8 @@ export class ObjectComponent extends Component {
                       portIndex={portIndex + 1}
                       componentId={index}
                       {...PortOptions}
-                      isOutput />
+                      isOutput
+                    />
                   </Stack.Item>
                 ))}
               </Stack>

@@ -10,10 +10,9 @@
 
 /obj/item/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
-	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one. \
-		<span class='boldnotice'>Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or \
-		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
-	icon = 'icons/obj/guns/energy.dmi'
+	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one."
+	desc_controls = "Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or changing where you're pointing at while aiming will delay the aiming process depending on how much you changed."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "esniper"
 	inhand_icon_state = null
 	worn_icon_state = null
@@ -29,6 +28,7 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
+	actions_types = list(/datum/action/item_action/zoom_lock_action)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
 	var/aiming = FALSE
@@ -72,7 +72,6 @@
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
 
-	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 	var/mob/listeningTo
 
 /obj/item/gun/energy/beam_rifle/debug
@@ -95,7 +94,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, zoom_lock_action))
+	if(istype(actiontype, /datum/action/item_action/zoom_lock_action))
 		zoom_lock++
 		if(zoom_lock > 3)
 			zoom_lock = 0
@@ -109,8 +108,9 @@
 			if(ZOOM_LOCK_OFF)
 				to_chat(user, span_boldnotice("You disable [src]'s zooming system."))
 		reset_zooming()
-	else
-		..()
+		return
+
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -148,7 +148,7 @@
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
-	to_chat(user, span_boldnotice("You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode."))
+	balloon_alert(user, "switched to [projectile_setting_pierce ? "pierce":"impact"] mode")
 	aiming_beam()
 
 /obj/item/gun/energy/beam_rifle/proc/update_slowdown()
@@ -162,7 +162,6 @@
 	fire_delay = delay
 	current_tracers = list()
 	START_PROCESSING(SSfastprocess, src)
-	zoom_lock_action = new(src)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -239,7 +238,7 @@
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
 		process_aim()
-		INVOKE_ASYNC(src, .proc/aiming_beam, TRUE)
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam), TRUE)
 
 /obj/item/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time
@@ -267,7 +266,7 @@
 		current_user = null
 	if(istype(user))
 		current_user = user
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
 		listeningTo = user
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
@@ -303,6 +302,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -420,7 +420,7 @@
 	damage_type = BURN
 	armor_flag = ENERGY
 	range = 150
-	jitter = 10
+	jitter = 20 SECONDS
 	var/obj/item/gun/energy/beam_rifle/gun
 	var/structure_pierce_amount = 0 //All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
@@ -488,7 +488,7 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
-	if(nodamage)
+	if(!is_hostile_projectile())
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 	if(!do_pierce)
@@ -499,6 +499,9 @@
 /obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
 	handle_hit(target, piercing_hit)
 	return ..()
+
+/obj/projectile/beam/beam_rifle/is_hostile_projectile()
+	return TRUE // on hit = boom fire
 
 /obj/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -527,7 +530,6 @@
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
-	nodamage = TRUE
 	damage = 0
 	constant_tracer = TRUE
 	hitscan_light_range = 0
@@ -535,9 +537,19 @@
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
 
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/is_hostile_projectile()
+	return FALSE // just an aiming reticle
+
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
 	return BULLET_ACT_BLOCK
+
+#undef AIMING_BEAM_ANGLE_CHANGE_THRESHOLD
+#undef AUTOZOOM_PIXEL_STEP_FACTOR
+#undef ZOOM_LOCK_AUTOZOOM_ANGLELOCK
+#undef ZOOM_LOCK_AUTOZOOM_FREEMOVE
+#undef ZOOM_LOCK_CENTER_VIEW
+#undef ZOOM_LOCK_OFF

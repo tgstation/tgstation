@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "makarov pistol"
+	name = "\improper Makarov pistol"
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
@@ -16,21 +16,32 @@
 	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
 	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
 	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
-	suppressor_x_offset = 4
+	suppressor_x_offset = 10
+	suppressor_y_offset = -1
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/fire_mag
+	mag_type = /obj/item/ammo_box/magazine/m9mm/fire
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine
+	name = "\improper Ansem pistol"
+	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
+	icon_state = "pistol_evil"
+	mag_type = /obj/item/ammo_box/magazine/m10mm
+	empty_indicator = TRUE
+	suppressor_x_offset = 12
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -70,8 +81,25 @@
 	icon_state = "deaglecamo"
 	inhand_icon_state = "deagleg"
 
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal
+	name = "\improper Regal Condor"
+	desc = "Unlike the Desert Eagle, this weapon seems to utilize some kind of advance internal stabilization system to significantly \
+		reduce felt recoil and substantially increases overall accuracy, though at the cost of using a smaller caliber. This modification does \
+		allow it to fire in a 2-round burst. Uses 10mm ammo."
+	icon_state = "reagle"
+	inhand_icon_state = "deagleg"
+	burst_size = 2
+	fire_delay = 1
+	spread = 10
+	projectile_damage_multiplier = 1.25
+	mag_type = /obj/item/ammo_box/magazine/r10mm
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/pistol/aps
-	name = "stechkin APS machine pistol"
+	name = "\improper Stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL

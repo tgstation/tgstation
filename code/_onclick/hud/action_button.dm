@@ -1,13 +1,15 @@
-#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
-
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action
 	var/datum/hud/our_hud
 	var/actiontooltipstyle = ""
 	screen_loc = null
 
-	var/button_icon_state
-	var/appearance_cache
+	/// The icon state of our active overlay, used to prevent re-applying identical overlays
+	var/active_overlay_icon_state
+	/// The icon state of our active underlay, used to prevent re-applying identical underlays
+	var/active_underlay_icon_state
+	/// The overlay we have overtop our button
+	var/mutable_appearance/button_overlay
 
 	/// Where we are currently placed on the hud. SCRN_OBJ_DEFAULT asks the linked action what it thinks
 	var/location = SCRN_OBJ_DEFAULT
@@ -29,15 +31,17 @@
 	return ..()
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
+	if(isobserver(user))
+		var/mob/dead/observer/dead_mob = user
+		if(dead_mob.observetarget) // Observers can only click on action buttons if they're not observing something
+			return FALSE
+
 	if(linked_action)
 		if(linked_action.viewers[user.hud_used])
 			return TRUE
 		return FALSE
-	else if (isobserver(user))
-		var/mob/dead/observer/O = user
-		return !O.observetarget
-	else
-		return TRUE
+
+	return TRUE
 
 /atom/movable/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
@@ -145,20 +149,38 @@
 		return
 	user.client.prefs.action_buttons_screen_locs -= "[name]_[id]"
 
+/**
+ * This is a silly proc used in hud code code to determine what icon and icon state we should be using
+ * for hud elements (such as action buttons) that don't have their own icon and icon state set.
+ *
+ * It returns a list, which is pretty much just a struct of info
+ */
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()
 	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
+	.["bg_state_active"] = "template_active"
 
-//see human and alien hud for specific implementations.
+/**
+ * Updates all action buttons this mob has.
+ *
+ * Arguments:
+ * * update_flags - Which flags of the action should we update
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/mob/proc/update_mob_action_buttons(update_flags = ALL, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.build_all_button_icons(update_flags, force)
 
-/mob/proc/update_action_buttons_icon(status_only = FALSE)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtons(status_only)
-
-//This is the proc used to update all the action buttons.
-/mob/proc/update_action_buttons(reload_screen)
+/**
+ * This proc handles adding all of the mob's actions to their screen
+ *
+ * If you just need to update existing buttons, use [/mob/proc/update_mob_action_buttons]!
+ *
+ * Arguments:
+ * * update_flags - reload_screen - bool, if TRUE, this proc will add the button to the screen of the passed mob as well
+ */
+/mob/proc/update_action_buttons(reload_screen = FALSE)
 	if(!hud_used || !client)
 		return
 
@@ -167,7 +189,7 @@
 
 	for(var/datum/action/action as anything in actions)
 		var/atom/movable/screen/movable/action_button/button = action.viewers[hud_used]
-		action.UpdateButtons()
+		action.build_all_button_icons()
 		if(reload_screen)
 			client.screen += button
 
@@ -175,6 +197,48 @@
 		hud_used.update_our_owner()
 	// This holds the logic for the palette buttons
 	hud_used.palette_actions.refresh_actions()
+
+/**
+ * Show (most) of the another mob's action buttons to this mob
+ *
+ * Used for observers viewing another mob's screen
+ */
+/mob/proc/show_other_mob_action_buttons(mob/take_from)
+	if(!hud_used || !client)
+		return
+
+	for(var/datum/action/action as anything in take_from.actions)
+		if(!action.show_to_observers)
+			continue
+		action.GiveAction(src)
+	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
+	RegisterSignal(take_from, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed))
+
+/**
+ * Hide another mob's action buttons from this mob
+ *
+ * Used for observers viewing another mob's screen
+ */
+/mob/proc/hide_other_mob_action_buttons(mob/take_from)
+	for(var/datum/action/action as anything in take_from.actions)
+		action.HideFrom(src)
+	UnregisterSignal(take_from, list(COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
+
+/// Signal proc for [COMSIG_MOB_GRANTED_ACTION] - If we're viewing another mob's action buttons,
+/// we need to update with any newly added buttons granted to the mob.
+/mob/proc/on_observing_action_granted(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	if(!action.show_to_observers)
+		return
+	action.GiveAction(src)
+
+/// Signal proc for [COMSIG_MOB_REMOVED_ACTION] - If we're viewing another mob's action buttons,
+/// we need to update with any removed buttons from the mob.
+/mob/proc/on_observing_action_removed(mob/living/source, datum/action/action)
+	SIGNAL_HANDLER
+
+	action.HideFrom(src)
 
 /atom/movable/screen/button_palette
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
@@ -247,7 +311,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	if(color_timer_id)
 		return
 	add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY) //We unfortunately cannot animate matrix colors. Curse you lummy it would be ~~non~~trivial to interpolate between the two valuessssssssss
-	color_timer_id = addtimer(CALLBACK(src, .proc/remove_color, color), 2 SECONDS)
+	color_timer_id = addtimer(CALLBACK(src, PROC_REF(remove_color), color), 2 SECONDS)
 
 /atom/movable/screen/button_palette/proc/remove_color(list/to_remove)
 	color_timer_id = null
@@ -297,7 +361,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 		return
 
 	if(expanded)
-		RegisterSignal(usr.client, COMSIG_CLIENT_CLICK, .proc/clicked_while_open)
+		RegisterSignal(usr.client, COMSIG_CLIENT_CLICK, PROC_REF(clicked_while_open))
 	else
 		UnregisterSignal(usr.client, COMSIG_CLIENT_CLICK)
 

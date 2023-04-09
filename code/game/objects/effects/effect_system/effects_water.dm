@@ -7,7 +7,6 @@
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-
 /obj/effect/particle_effect/water/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 70)
@@ -40,8 +39,8 @@
 /// Returns the created loop
 /obj/effect/particle_effect/water/extinguisher/proc/move_at(atom/target, delay, lifetime)
 	var/datum/move_loop/loop = SSmove_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_forcemove)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/movement_stopped)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_forcemove))
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stopped))
 	return loop
 
 /obj/effect/particle_effect/water/extinguisher/proc/post_forcemove(datum/move_loop/source, success)
@@ -57,6 +56,17 @@
 /obj/effect/particle_effect/water/extinguisher/proc/end_life(datum/move_loop/engine)
 	QDEL_IN(src, engine.delay) //Gotta let it stop drifting
 	animate(src, alpha = 0, time = engine.delay)
+
+/obj/effect/particle_effect/water/extinguisher/stomach_acid
+	name = "acid"
+	icon_state = "xenobarf"
+
+// Stomach acid doesn't use legacy because it's not "targeted", and we instead want the circular sorta look
+/obj/effect/particle_effect/water/extinguisher/stomach_acid/move_at(atom/target, delay, lifetime)
+	var/datum/move_loop/loop = SSmove_manager.move_towards(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_forcemove))
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stopped))
+	return loop
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM

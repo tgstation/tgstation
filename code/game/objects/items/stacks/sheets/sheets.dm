@@ -1,7 +1,8 @@
 /obj/item/stack/sheet
 	name = "sheet"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	icon_state = "sheet-metal_3"
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5
@@ -16,7 +17,6 @@
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
 	var/walltype
-	var/tram_wall_type
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()

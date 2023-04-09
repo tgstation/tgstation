@@ -44,6 +44,7 @@
 	turbine_core = WEAKREF(machine)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TurbineComputer", name)
@@ -52,7 +53,7 @@
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core.resolve()
+	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
 
 	data["connected"] = main_control ? TRUE : FALSE
 	if(!main_control)

@@ -1,8 +1,8 @@
 //"Don't leave food on the floor, that's how we get ants"
 
-#define DECOMPOSITION_TIME 10 MINUTES
-#define DECOMPOSITION_TIME_RAW 5 MINUTES
-#define DECOMPOSITION_TIME_GROSS 7 MINUTES
+#define DECOMPOSITION_TIME (10 MINUTES)
+#define DECOMPOSITION_TIME_RAW (5 MINUTES)
+#define DECOMPOSITION_TIME_GROSS (7 MINUTES)
 
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -33,16 +33,16 @@
 		handled = FALSE
 	src.produce_ants = ant_attracting
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
-	RegisterSignal(parent, list(
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
+	RegisterSignals(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_STORAGE_ENTERED), //Object enters a storage object (boxes, etc.)
-		.proc/picked_up)
-	RegisterSignal(parent, list(
+		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
+		PROC_REF(picked_up))
+	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
-		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
-		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
+		PROC_REF(dropped))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
 
 	if(custom_time) // We have a custom decomposition time, set it to that
 		original_time = custom_time
@@ -59,10 +59,10 @@
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP,
-		COMSIG_STORAGE_ENTERED,
+		COMSIG_ATOM_ENTERED,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_STORAGE_EXITED,
+		COMSIG_ATOM_EXITED,
 		COMSIG_PARENT_EXAMINE))
 
 /datum/component/decomposition/proc/handle_movement()
@@ -73,7 +73,7 @@
 
 	var/turf/open/open_turf = food.loc
 
-	if(!istype(open_turf) || istype(open_turf, /turf/open/lava) || istype(open_turf, /turf/open/misc/asteroid)) //Are we actually in a valid open turf?
+	if(!istype(open_turf) || islava(open_turf) || isasteroidturf(open_turf)) //Are we actually in a valid open turf?
 		remove_timer()
 		return
 
@@ -83,7 +83,7 @@
 			return
 
 	// If all other checks fail, then begin decomposition.
-	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(decompose)), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /datum/component/decomposition/Destroy()
 	remove_timer()

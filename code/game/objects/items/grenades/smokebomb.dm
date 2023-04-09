@@ -6,7 +6,7 @@
 /obj/item/grenade/smokebomb
 	name = "smoke grenade"
 	desc = "Real bruh moment if you ever see this. Probably tell a c*der or something."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "smokewhite"
 	inhand_icon_state = "smoke"
 	slot_flags = ITEM_SLOT_BELT
@@ -26,8 +26,8 @@
 
 	update_mob()
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-	var/datum/effect_system/smoke_spread/bad/smoke = new
-	smoke.set_up(4, src)
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+	smoke.set_up(4, holder = src, location = src)
 	smoke.start()
 	qdel(smoke) //And deleted again. Sad really.
 	for(var/obj/structure/blob/blob in view(8, src))

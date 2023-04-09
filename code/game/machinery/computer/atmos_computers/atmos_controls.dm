@@ -118,7 +118,10 @@
 	circuit = /obj/item/circuitboard/computer/atmos_control/nocontrol/incinerator
 	atmos_chambers = list(ATMOS_GAS_MONITOR_INCINERATOR = "Incinerator Chamber")
 
-/obj/machinery/computer/atmos_control/nocontrol/ordnancemix
-	name = "Ordnance Chamber Monitor"
-	circuit = /obj/item/circuitboard/computer/atmos_control/nocontrol/ordnancemix
-	atmos_chambers = list(ATMOS_GAS_MONITOR_ORDNANCE_LAB = "Ordnance Chamber")
+/obj/machinery/computer/atmos_control/ordnancemix
+	name = "Ordnance Chamber Control"
+	circuit = /obj/item/circuitboard/computer/atmos_control/ordnancemix
+	atmos_chambers = list(
+		ATMOS_GAS_MONITOR_ORDNANCE_BURN = "Ordnance Burn Chamber",
+		ATMOS_GAS_MONITOR_ORDNANCE_FREEZER = "Ordnance Freezer Chamber",
+	)

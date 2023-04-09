@@ -23,7 +23,6 @@
 /area/shuttle/abandoned/engine)
 "ad" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ae" = (
@@ -43,7 +42,7 @@
 /area/shuttle/abandoned/engine)
 "ag" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
-/obj/machinery/portable_atmospherics/canister/tier_2,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
@@ -60,7 +59,7 @@
 	pixel_y = 4
 	},
 /obj/item/flashlight,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/no_nightlight/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -77,7 +76,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "ak" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "am" = (
@@ -114,14 +113,13 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
 "aq" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/crew)
 "ar" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Engineering"
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -146,7 +144,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "au" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -155,7 +153,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "av" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -203,7 +201,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/abandoned/cargo)
 "aD" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aE" = (
@@ -251,10 +249,10 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "aM" = (
-/obj/structure/shuttle/engine/large{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -284,7 +282,7 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aT" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aU" = (
@@ -306,7 +304,7 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -315,7 +313,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "aY" = (
-/obj/structure/sign/warning/chemdiamond,
+/obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aZ" = (
@@ -376,7 +374,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/abandoned/cargo)
 "bj" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -440,12 +438,11 @@
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
-/obj/item/shard/plasma,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "bu" = (
-/obj/item/shard,
+/obj/item/shard/titanium,
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
@@ -509,7 +506,7 @@
 	dir = 5
 	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "bE" = (
 /obj/machinery/stasis/survival_pod,
 /obj/effect/turf_decal/stripes/white/line{
@@ -523,12 +520,15 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "bG" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Command"
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -538,11 +538,11 @@
 /area/shuttle/abandoned/bridge)
 "bI" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = -1;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = 10;
 	pixel_y = 9
 	},
@@ -550,14 +550,14 @@
 	pixel_x = -2
 	},
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "bJ" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/closet/syndicate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/under/syndicate/coldres,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /obj/item/clothing/head/beret/centcom_formal,
 /obj/item/clothing/suit/armor/vest,
 /obj/effect/turf_decal/bot_white,
@@ -576,13 +576,10 @@
 "bN" = (
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 6;
-	height = 27;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2;
-	width = 13
+	port_direction = 2
 	},
 /obj/effect/turf_decal/stripes/white/box,
 /obj/machinery/door/airlock/external/ruin,
@@ -591,25 +588,25 @@
 /area/shuttle/abandoned/engine)
 "bO" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = -1;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/large{
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = 7
 	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "bP" = (
 /obj/structure/closet/crate/radiation,
 /obj/effect/turf_decal/bot_white,
@@ -621,7 +618,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "bS" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
@@ -637,18 +634,18 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "bV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/machinery/stasis/survival_pod,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned/engine)
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned/crew)
 "ca" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -669,11 +666,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "ce" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
+/obj/structure/window/reinforced/plasma/spawner,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "cg" = (
 /obj/structure/sign/warning/fire,
@@ -684,7 +681,9 @@
 /area/shuttle/abandoned/engine)
 "cj" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Atmospherics"
+	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -694,7 +693,9 @@
 /area/shuttle/abandoned/engine)
 "ck" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Engine Room"
+	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -720,7 +721,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "cv" = (
-/obj/item/shard,
+/obj/item/shard/titanium,
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "cx" = (
@@ -817,6 +818,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "cO" = (
@@ -829,12 +831,14 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "cS" = (
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "cU" = (
@@ -844,6 +848,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "cV" = (
@@ -853,6 +858,7 @@
 /area/shuttle/abandoned/cargo)
 "cY" = (
 /obj/structure/window/reinforced/spawner/east,
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "da" = (
@@ -868,15 +874,14 @@
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
 /area/shuttle/abandoned/bridge)
 "de" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/bridge)
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/crew)
 "df" = (
 /obj/structure/rack,
 /obj/item/food/canned/beans{
@@ -896,7 +901,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dg" = (
 /obj/structure/cable,
 /obj/structure/chair{
@@ -907,9 +912,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dh" = (
-/obj/machinery/door/window/brigdoor,
+/obj/machinery/door/window/brigdoor{
+	name = "Captain's Quarters"
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
@@ -918,6 +925,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -953,16 +961,16 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "dl" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dm" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dn" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/knife/kitchen,
@@ -970,16 +978,20 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/bridge)
 "do" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Bridge"
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
 "dp" = (
@@ -987,11 +999,14 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_half,
 /area/shuttle/abandoned/bridge)
 "dq" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Crew Quarters"
+	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -1002,7 +1017,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "ds" = (
 /obj/structure/sign/poster/official/do_not_question,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1033,7 +1048,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -1050,7 +1065,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plastic,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "dA" = (
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/arrows/red{
@@ -1060,7 +1075,7 @@
 /turf/open/floor/mineral/titanium/white/airless,
 /area/shuttle/abandoned/cargo)
 "fh" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
@@ -1087,9 +1102,9 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "iH" = (
-/obj/item/shard,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
@@ -1117,7 +1132,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "nV" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/microwave{
@@ -1127,17 +1142,16 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/bridge)
 "pm" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/bridge)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/crew)
 "rP" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/phone{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -1161,7 +1175,7 @@
 /area/shuttle/abandoned/bridge)
 "sE" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/reagent_containers/glass/maunamug{
+/obj/item/reagent_containers/cup/maunamug{
 	pixel_x = 7;
 	pixel_y = 8
 	},
@@ -1219,7 +1233,7 @@
 /obj/structure/closet/syndicate,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "yd" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/bot_white,
@@ -1232,7 +1246,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "zN" = (
 /obj/machinery/stasis/survival_pod,
 /obj/effect/turf_decal/stripes/white/line{
@@ -1240,7 +1254,7 @@
 	},
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "AC" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/mob_spawn/corpse/human/assistant,
@@ -1258,7 +1272,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/smooth_half,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "DS" = (
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/stripes/white/line{
@@ -1268,10 +1282,11 @@
 /area/shuttle/abandoned/bridge)
 "Fp" = (
 /obj/structure/window/reinforced/spawner/west,
+/obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/abandoned/cargo)
 "FQ" = (
-/obj/item/shard,
+/obj/item/shard/titanium,
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/airless,
@@ -1291,12 +1306,13 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "Ic" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -1324,7 +1340,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "Ki" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1380,9 +1396,9 @@
 /obj/effect/turf_decal/bot_white,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "Qy" = (
-/obj/item/shard,
+/obj/item/shard/titanium,
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
@@ -1409,7 +1425,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_half,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "Tj" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/holosign/barrier,
@@ -1417,7 +1433,6 @@
 /area/shuttle/abandoned/cargo)
 "UC" = (
 /obj/effect/turf_decal/stripes/white/box,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/external/ruin{
 	name = "Escape Pod Loader"
 	},
@@ -1437,11 +1452,11 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = 10;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_x = 9;
 	pixel_y = 4
 	},
@@ -1465,7 +1480,7 @@
 	dir = 6
 	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/bridge)
+/area/shuttle/abandoned/crew)
 "ZA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1499,8 +1514,8 @@ dy
 dy
 dy
 dy
-pm
-pm
+dx
+dx
 mj
 "}
 (2,1,1) = {"
@@ -1530,12 +1545,12 @@ nV
 Wm
 DS
 rP
-pm
+dx
 "}
 (3,1,1) = {"
 cM
 cM
-bV
+aM
 ce
 ag
 bx
@@ -1559,7 +1574,7 @@ Ic
 Io
 Mp
 sE
-pm
+dx
 "}
 (4,1,1) = {"
 cM
@@ -1588,7 +1603,7 @@ dn
 yd
 OL
 sw
-pm
+dx
 "}
 (5,1,1) = {"
 aZ
@@ -1626,7 +1641,7 @@ ad
 ca
 ai
 bx
-aq
+ad
 cY
 cY
 cY
@@ -1640,7 +1655,7 @@ cD
 cY
 cY
 cY
-de
+dx
 dj
 dp
 dt
@@ -1684,7 +1699,7 @@ ad
 ae
 aj
 ap
-aq
+ad
 Fp
 Fp
 Fp
@@ -1698,7 +1713,7 @@ cF
 Fp
 Fp
 Fp
-de
+dx
 dk
 LM
 du
@@ -1726,14 +1741,14 @@ aY
 aG
 bz
 cS
-da
-dy
+de
+aq
 dl
 dq
-dv
-dy
-dy
-da
+pm
+aq
+aq
+de
 "}
 (10,1,1) = {"
 cM
@@ -1755,14 +1770,14 @@ cA
 bv
 cL
 cV
-dy
+aq
 df
 bO
 Rg
 dw
 zN
-bE
-dy
+bV
+aq
 "}
 (11,1,1) = {"
 cM
@@ -1784,19 +1799,19 @@ aS
 cG
 bA
 cU
-dy
+aq
 dg
 dm
 IC
 hr
 Hp
 nM
-dy
+aq
 "}
 (12,1,1) = {"
 cM
 cM
-bV
+aM
 ce
 ao
 bs
@@ -1813,14 +1828,14 @@ cA
 cH
 bB
 cV
-dy
+aq
 bI
 dz
 CS
 yA
 Qm
 wp
-dy
+aq
 "}
 (13,1,1) = {"
 cM
@@ -1843,11 +1858,11 @@ aG
 bz
 cP
 bD
-dy
-dy
-dy
-dy
-dy
-dy
+aq
+aq
+aq
+aq
+aq
+aq
 YI
 "}

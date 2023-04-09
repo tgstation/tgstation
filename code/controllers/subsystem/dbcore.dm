@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(dbcore)
 		if(2)
 			message_admins("Could not get schema version from database")
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/dbcore/stat_entry(msg)
 	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(dbcore)
 	while(length(processing_queries))
 		var/datum/db_query/query = popleft(processing_queries)
 		if(world.time - query.last_activity_time > (5 MINUTES))
-			message_admins("Found undeleted query, please check the server logs and notify coders.")
+			stack_trace("Found undeleted query, check the sql.log for the undeleted query and add a delete call to the query datum.")
 			log_sql("Undeleted query: \"[query.sql]\" LA: [query.last_activity] LAT: [query.last_activity_time]")
 			qdel(query)
 		if(MC_TICK_CHECK)
@@ -318,21 +318,33 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	return new /datum/db_query(connection, sql_query, arguments)
 
-/datum/controller/subsystem/dbcore/proc/QuerySelect(list/querys, warn = FALSE, qdel = FALSE)
-	if (!islist(querys))
-		if (!istype(querys, /datum/db_query))
-			CRASH("Invalid query passed to QuerySelect: [querys]")
-		querys = list(querys)
+/** QuerySelect
+	Run a list of query datums in parallel, blocking until they all complete.
+	* queries - List of queries or single query datum to run.
+	* warn - Controls rather warn_execute() or Execute() is called.
+	* qdel - If you don't care about the result or checking for errors, you can have the queries be deleted afterwards.
+		This can be combined with invoke_async as a way of running queries async without having to care about waiting for them to finish so they can be deleted.
+*/
+/datum/controller/subsystem/dbcore/proc/QuerySelect(list/queries, warn = FALSE, qdel = FALSE)
+	if (!islist(queries))
+		if (!istype(queries, /datum/db_query))
+			CRASH("Invalid query passed to QuerySelect: [queries]")
+		queries = list(queries)
+	else
+		queries = queries.Copy() //we don't want to hide bugs in the parent caller by removing invalid values from this list.
 
-	for (var/thing in querys)
-		var/datum/db_query/query = thing
+	for (var/datum/db_query/query as anything in queries)
+		if (!istype(query))
+			queries -= query
+			stack_trace("Invalid query passed to QuerySelect: `[query]` [REF(query)]")
+			continue
+
 		if (warn)
-			INVOKE_ASYNC(query, /datum/db_query.proc/warn_execute)
+			INVOKE_ASYNC(query, TYPE_PROC_REF(/datum/db_query, warn_execute))
 		else
-			INVOKE_ASYNC(query, /datum/db_query.proc/Execute)
+			INVOKE_ASYNC(query, TYPE_PROC_REF(/datum/db_query, Execute))
 
-	for (var/thing in querys)
-		var/datum/db_query/query = thing
+	for (var/datum/db_query/query as anything in queries)
 		query.sync()
 		if (qdel)
 			qdel(query)
@@ -482,7 +494,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	status = DB_QUERY_STARTED
 	if(async)
-		if(!Master.current_runlevel || Master.processing == 0)
+		if(!MC_RUNNING(SSdbcore.init_stage))
 			SSdbcore.run_query_sync(src)
 		else
 			SSdbcore.queue_query(src)

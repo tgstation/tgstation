@@ -1,10 +1,10 @@
 /obj/structure/blob/special/core
 	name = "blob core"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	max_integrity = BLOB_CORE_MAX_HP
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 75, ACID = 90)
+	armor_type = /datum/armor/special_core
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
@@ -17,6 +17,10 @@
 	max_spores = BLOB_CORE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
+/datum/armor/special_core
+	fire = 75
+	acid = 90
+
 /obj/structure/blob/special/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
@@ -27,7 +31,9 @@
 	if(overmind)
 		overmind.blobstrain.on_gain()
 		update_appearance()
-	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+	AddElement(/datum/element/blocks_explosives)
+	return ..()
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src
@@ -42,11 +48,11 @@
 
 /obj/structure/blob/special/core/update_overlays()
 	. = ..()
-	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
 	. += blob_overlay
-	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
+	. += mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay")
 
 /obj/structure/blob/special/core/update_icon()
 	. = ..()
@@ -74,10 +80,6 @@
 	reinforce_area(delta_time)
 	produce_spores()
 	..()
-
-/obj/structure/blob/special/core/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)
 	if(overmind && is_station_level(new_turf?.z))

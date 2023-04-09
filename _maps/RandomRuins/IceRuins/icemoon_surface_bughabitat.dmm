@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "as" = (
 /obj/machinery/door/airlock/public,
-/turf/closed/mineral/random/snow,
+/turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "ax" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -129,9 +129,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "of" = (
-/obj/structure/sink{
-	dir = 4
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 8
@@ -299,7 +297,7 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden/crude,
-/turf/closed/mineral/random/snow,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "Kc" = (
 /obj/structure/table,
@@ -336,7 +334,7 @@
 	dir = 8
 	},
 /obj/item/plunger,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)

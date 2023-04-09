@@ -25,7 +25,7 @@
 	var/obj/item/seeds/planted_not_food_seed = allocate(/obj/item/seeds/sunflower) //grown inedible
 	var/obj/item/seeds/planted_densified_seed = allocate(/obj/item/seeds/redbeet) //grown + densified chemicals
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	hydroponics_tray.forceMove(run_loc_floor_bottom_left)
 	human.forceMove(locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -56,10 +56,10 @@
 	var/saved_name = tray.name // Name gets cleared when some plants are harvested.
 
 	if(!tray.myseed)
-		Fail("Hydroponics harvest from [saved_name] had no seed set properly to test.")
+		TEST_FAIL("Hydroponics harvest from [saved_name] had no seed set properly to test.")
 
 	if(tray.myseed != seed)
-		Fail("Hydroponics harvest from [saved_name] had [tray.myseed] planted when it was testing [seed].")
+		TEST_FAIL("Hydroponics harvest from [saved_name] had [tray.myseed] planted when it was testing [seed].")
 
 	var/double_chemicals = seed.get_gene(/datum/plant_gene/trait/maxchem)
 	var/expected_yield = seed.getYield()
@@ -74,7 +74,7 @@
 		all_harvested_items += harvested_food
 
 	if(!all_harvested_items.len)
-		Fail("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
+		TEST_FAIL("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
 
 	TEST_ASSERT_EQUAL(all_harvested_items.len, expected_yield, "Hydroponics harvest from [saved_name] only harvested [all_harvested_items.len] items instead of [expected_yield] items.")
 	TEST_ASSERT(all_harvested_items[1].reagents, "Hydroponics harvest from [saved_name] had no reagent container.")

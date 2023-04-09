@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	/client/proc/cmd_admin_areatest_station_no_maintenance,
 	#ifdef TESTING
 	/client/proc/see_dirty_varedits,
 	#endif
@@ -53,7 +54,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/place_ruin,
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
-	/client/proc/check_atmos_controls,
+	/client/proc/check_for_obstructed_atmospherics,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -69,7 +70,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
 	if(!on)
 		var/list/seen = list()
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
@@ -104,7 +105,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	var/list/obj/machinery/camera/CL = list()
 
-	for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		CL += C
 
 	var/output = {"<B>Camera Abnormalities Report</B><HR>
@@ -299,15 +300,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/job/JB = new job
 		switch(JB.title)
 			if(JOB_AI)
-				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
+				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
 			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)
 				D.dress_up_as_job(JB, TRUE)
-				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)
 	qdel(D)
@@ -322,7 +322,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	var/list/z_list = SSmapping.z_list
 	var/list/messages = list()
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
+	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -366,7 +366,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/datum/space_level/S in linked_levels)
 		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
 
-	messages += "<table border='1'>"
+	messages += "<br><table border='1'>"
 	for(var/y in max_y to min_y step -1)
 		var/list/part = list()
 		for(var/x in min_x to max_x)
@@ -374,7 +374,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, messages.Join(""), confidential = TRUE)
+	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"
@@ -422,97 +422,64 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	popup.set_content(page_contents)
 	popup.open()
 
-/// Checks the atmos monitor, sensors, meters, vents, and injectors, and makes sure they dont overlap or do nothing.
-/client/proc/check_atmos_controls()
-	set name = "Check Atmos Chamber Devices"
+/// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
+/client/proc/check_for_obstructed_atmospherics()
+	set name = "Check For Obstructed Atmospherics"
 	set category = "Mapping"
-
-	if(SSticker.current_state == GAME_STATE_STARTUP)
-		to_chat(usr, "Game still loading, please run this again later!", confidential = TRUE)
+	if(!holder)
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
+	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Atmos Controls debug command."))
-	log_admin("[key_name(usr)] used the Test Atmos Controls debug command.")
+	var/list/results = list()
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
+	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
 
-	/// broadcaster[id_tag] = machine
-	var/list/broadcasters = list()
-	/// listened_to[atmos_chamber_entry] = bool
-	/// TRUE means we have the corresponding id_tag being listened to by an atmos control computer.
-	var/list/listened_to = list()
-	/// broadcasted_to[id_tag[1]] = bool
-	/// TRUE means we have the corresponding id_tag being broadcasted to by a device, be it meter, sensors, etc.
-	var/list/broadcasted_to = list()
+	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
+	var/list/ignore_list = list(
+		/obj/effect,
+		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary, //don't wanna flag on the vent or scrubber itself.
+		/obj/machinery/atmospherics/pipe,
+		/obj/machinery/button,
+		/obj/machinery/camera,
+		/obj/machinery/door_buttons,
+		/obj/machinery/door/window, // i kind of wish we didn't have to do it but we have some particularly compact areas that we need to be wary of
+		/obj/machinery/duct,
+		/obj/machinery/firealarm,
+		/obj/machinery/flasher,
+		/obj/machinery/light_switch,
+		/obj/machinery/light,
+		/obj/machinery/navbeacon,
+		/obj/machinery/newscaster,
+		/obj/machinery/portable_atmospherics,
+		/obj/machinery/power/apc,
+		/obj/machinery/power/terminal,
+		/obj/machinery/sparker,
+		/obj/machinery/status_display,
+		/obj/machinery/turretid,
+		/obj/structure/cable,
+		/obj/structure/disposalpipe,
+		/obj/structure/extinguisher_cabinet,
+		/obj/structure/lattice,
+		/obj/structure/sign,
+		/obj/structure/urinal, // the reason why this one gets to live and not the shower/sink is because it's pretty firmly on a wall.
+		/obj/structure/window/reinforced,
+	)
 
-	/// How many things dont fit the recognized subtypes.
-	var/invalid_machine = 0
-	/// How many things have invalid (messes with our delimiter) tags.
-	var/invalid_tag = 0
-	/// How many things have empty tags, invalids but much worse.
-	var/tagless = 0
-	/// How many things have duped id_tag.
-	var/duplicate_tag = 0
-	/// How many things are broadcasting without an atmos computer listening
-	var/not_heard = 0
-	/// How many atmos computers are listening to an empty tag.
-	var/not_told = 0
-
-	var/list/valid_device_types = typecacheof(list(
-		/obj/machinery/computer/atmos_control, 
-		/obj/machinery/air_sensor,
-		/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
-		/obj/machinery/meter/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
-		/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
-	))
-	var/list/valid_tag_endings = list("sensor", "in", "out")
-
-	for (var/datum/weakref/device_ref as anything in frequency.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(!machine)
+	for(var/turf/iterated_turf in world)
+		var/obj/machinery/atmospherics/components/unary/device = locate() in iterated_turf.contents
+		if(!device)
 			continue
-		if(!valid_device_types[machine.type])
-			to_chat(usr, "Unrecognized machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] in FREQ_ATMOS_STORAGE ([FREQ_ATMOS_STORAGE]) frequency.", confidential=TRUE)
-			invalid_machine += 1
-			continue
-		if(istype(machine,/obj/machinery/computer/atmos_control))
-			var/obj/machinery/computer/atmos_control/atmos_comp = machine
-			for(var/listened_tags in atmos_comp.atmos_chambers)
-				LAZYINITLIST(listened_to[listened_tags])
-				listened_to[listened_tags] += atmos_comp
-			continue
-		// Code below is for valid machineries that are not atmos control.
-		var/list/tags = splittext(machine.id_tag, "_")
-		if(tags.len == 0 || length(tags[1]) == 0)
-			to_chat(usr, "Machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] does not have a tag or have an empty identifier tag: [machine.id_tag]", confidential=TRUE)
-			tagless += 1
-			continue
-		if(tags.len != 2 || !(tags[2] in valid_tag_endings))
-			to_chat(usr, "Invalid tag for machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type]. Tag = [machine.id_tag]", confidential=TRUE)
-			invalid_tag += 1
-			continue
-		if(broadcasters[machine.id_tag])
-			var/obj/original_machine = broadcasters[machine.id_tag]
-			to_chat(usr, "Duplicate machine id_tag ([machine.id_tag]) detected. Implicated machineries: [ADMIN_VERBOSEJMP(machine)] under [machine.type] and [ADMIN_VERBOSEJMP(original_machine)] under [original_machine.type]", confidential=TRUE)
-			duplicate_tag += 1
-			continue
-		broadcasters[machine.id_tag] = machine
-		LAZYINITLIST(broadcasted_to[tags[1]])
-		broadcasted_to[tags[1]] += machine
+		var/list/obj/obstruction = locate(/obj) in iterated_turf.contents
+		if(!is_type_in_list(obstruction, ignore_list))
+			results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(iterated_turf)].<br>"
 
-	for (var/tag in listened_to)
-		if(!broadcasted_to[tag])
-			for (var/obj/computer in listened_to[tag])
-				to_chat(usr, "A computer [ADMIN_VERBOSEJMP(computer)] is listening to tag: [tag] yet it no devices is broadcasting there.", confidential=TRUE)
-			not_told += 1
-	for (var/tag in broadcasted_to)
-		if(!listened_to[tag])
-			for (var/obj/machine in broadcasted_to[tag])
-				to_chat(usr, "A machinery [ADMIN_VERBOSEJMP(machine)] is broadcasting in tag: [tag] yet there are no listeners. Are you sure you want to use a monitored atmos device?", confidential=TRUE)
-			not_heard += 1
-
-	if(!(invalid_machine || invalid_tag || tagless || duplicate_tag || not_heard || not_told))
-		to_chat(usr, "Atmos control frequency check passed without encountering problems.", confidential=TRUE)
+	if(results.len == 1) // only the header is in the list, we're good
+		to_chat(src, "No obstructions detected.", confidential = TRUE)
 	else
-		to_chat(usr, "Total errors: [invalid_machine + invalid_tag + tagless + duplicate_tag + not_heard + not_told]", confidential=TRUE)
+		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
+		popup.set_content(results.Join())
+		popup.open()

@@ -14,6 +14,14 @@
 
 	var/datum/port/input/option/logic_options
 
+	/// Ports to do comparisons with
+	var/list/comparison_ports = list()
+
+	ui_buttons = list(
+		"plus" = "add",
+		"minus" = "remove"
+	)
+
 /obj/item/circuit_component/compare/logic/populate_options()
 	var/static/component_options = list(
 		COMP_LOGIC_AND,
@@ -22,17 +30,25 @@
 	)
 	logic_options = add_option_port("Logic Options", component_options)
 
-/obj/item/circuit_component/compare/logic/do_comparisons(list/ports)
+/obj/item/circuit_component/compare/logic/populate_custom_ports()
+	AddComponent(/datum/component/circuit_component_add_port, \
+		port_list = comparison_ports, \
+		add_action = "add", \
+		remove_action = "remove", \
+		port_type = PORT_TYPE_ANY, \
+		prefix = "Port", \
+		order = 0.9, \
+		minimum_amount = 2 \
+	)
+
+/obj/item/circuit_component/compare/logic/do_comparisons()
 	. = FALSE
 	var/current_option = logic_options.value
 
 	// Used by XOR
 	var/total_ports = 0
 	var/total_true_ports = 0
-	for(var/datum/port/input/port as anything in ports)
-		if(isnull(port.value) && length(port.connected_ports) == 0)
-			continue
-
+	for(var/datum/port/input/port as anything in comparison_ports)
 		total_ports += 1
 		switch(current_option)
 			if(COMP_LOGIC_AND)
@@ -52,6 +68,7 @@
 			return FALSE
 		if(.)
 			return TRUE
+	return .
 
 #undef COMP_LOGIC_AND
 #undef COMP_LOGIC_OR

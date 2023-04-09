@@ -4,8 +4,9 @@
 	name = "improvised firebomb"
 	desc = "A weak, improvised incendiary device."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "improvised_grenade"
+	icon_state_preview = "ied_preview"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -38,12 +39,12 @@
 	check_parts = TRUE
 
 /obj/item/grenade/iedcasing/spawned/Initialize(mapload)
-	new /obj/item/reagent_containers/food/drinks/soda_cans/random(src)
+	new /obj/item/reagent_containers/cup/soda_cans/random(src)
 	return ..()
 
 /obj/item/grenade/iedcasing/CheckParts(list/parts_list)
 	..()
-	var/obj/item/reagent_containers/food/drinks/soda_cans/can = locate() in contents
+	var/obj/item/reagent_containers/cup/soda_cans/can = locate() in contents
 	if(!can)
 		stack_trace("[src] generated without a soda can!") //this shouldn't happen.
 		qdel(src)

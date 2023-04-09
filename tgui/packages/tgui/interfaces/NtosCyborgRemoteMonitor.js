@@ -4,9 +4,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props, context) => {
   return (
-    <NtosWindow
-      width={600}
-      height={800}>
+    <NtosWindow width={600} height={800}>
       <NtosWindow.Content>
         <NtosCyborgRemoteMonitorContent />
       </NtosWindow.Content>
@@ -14,7 +12,7 @@ export const NtosCyborgRemoteMonitor = (props, context) => {
   );
 };
 
-export const ProgressSwitch = param => {
+export const ProgressSwitch = (param) => {
   switch (param) {
     case -1:
       return '_';
@@ -34,19 +32,11 @@ export const ProgressSwitch = param => {
 export const NtosCyborgRemoteMonitorContent = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
-  const {
-    card,
-    cyborgs = [],
-    DL_progress,
-  } = data;
+  const { card, cyborgs = [], DL_progress } = data;
   const storedlog = data.borglog || [];
 
   if (!cyborgs.length) {
-    return (
-      <NoticeBox>
-        No cyborg units detected.
-      </NoticeBox>
-    );
+    return <NoticeBox>No cyborg units detected.</NoticeBox>;
   }
 
   return (
@@ -73,67 +63,77 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
         <>
           {!card && (
             <Stack.Item>
-              <NoticeBox>
-                Certain features require an ID card login.
-              </NoticeBox>
+              <NoticeBox>Certain features require an ID card login.</NoticeBox>
             </Stack.Item>
           )}
           <Stack.Item grow={1}>
             <Section fill scrollable>
-              {cyborgs.map(cyborg => (
+              {cyborgs.map((cyborg) => (
                 <Section
                   key={cyborg.ref}
                   title={cyborg.name}
-                  buttons={(
+                  buttons={
                     <Button
                       icon="terminal"
                       content="Send Message"
                       color="blue"
                       disabled={!card}
-                      onClick={() => act('messagebot', {
-                        ref: cyborg.ref,
-                      })} />
-                  )}>
+                      onClick={() =>
+                        act('messagebot', {
+                          ref: cyborg.ref,
+                        })
+                      }
+                    />
+                  }>
                   <LabeledList>
                     <LabeledList.Item label="Status">
-                      <Box color={cyborg.status
-                        ? 'bad'
-                        : cyborg.locked_down
-                          ? 'average'
-                          : 'good'}>
+                      <Box
+                        color={
+                          cyborg.status
+                            ? 'bad'
+                            : cyborg.locked_down
+                              ? 'average'
+                              : 'good'
+                        }>
                         {cyborg.status
-                          ? "Not Responding"
+                          ? 'Not Responding'
                           : cyborg.locked_down
-                            ? "Locked Down"
+                            ? 'Locked Down'
                             : cyborg.shell_discon
-                              ? "Nominal/Disconnected"
-                              : "Nominal"}
+                              ? 'Nominal/Disconnected'
+                              : 'Nominal'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Condition">
-                      <Box color={cyborg.integ <= 25
-                        ? 'bad'
-                        : cyborg.integ <= 75
-                          ? 'average'
-                          : 'good'}>
-                        {cyborg.integ === 0
-                          ? "Hard Fault"
-                          : cyborg.integ <= 25
-                            ? "Functionality Disrupted"
+                      <Box
+                        color={
+                          cyborg.integ <= 25
+                            ? 'bad'
                             : cyborg.integ <= 75
-                              ? "Functionality Impaired"
-                              : "Operational"}
+                              ? 'average'
+                              : 'good'
+                        }>
+                        {cyborg.integ === 0
+                          ? 'Hard Fault'
+                          : cyborg.integ <= 25
+                            ? 'Functionality Disrupted'
+                            : cyborg.integ <= 75
+                              ? 'Functionality Impaired'
+                              : 'Operational'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Charge">
-                      <Box color={cyborg.charge <= 30
-                        ? 'bad'
-                        : cyborg.charge <= 70
-                          ? 'average'
-                          : 'good'}>
+                      <Box
+                        color={
+                          cyborg.charge <= 30
+                            ? 'bad'
+                            : cyborg.charge <= 70
+                              ? 'average'
+                              : 'good'
+                        }>
                         {typeof cyborg.charge === 'number'
-                          ? cyborg.charge + "%"
-                          : "Not Found"}
+                          ? cyborg.charge + '%'
+                          : 'Not Found'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Model">
@@ -154,23 +154,15 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
           <Stack.Item>
             <Section>
               Scan a cyborg to download stored logs.
-              <ProgressBar
-                value={DL_progress/100}>
+              <ProgressBar value={DL_progress / 100}>
                 {ProgressSwitch(DL_progress)}
               </ProgressBar>
             </Section>
           </Stack.Item>
-          <Stack.Item
-            grow={1}>
-            <Section
-              fill
-              scrollable
-              backgroundColor="black">
-              {storedlog.map(log => (
-                <Box
-                  mb={1}
-                  key={log}
-                  color="green">
+          <Stack.Item grow={1}>
+            <Section fill scrollable backgroundColor="black">
+              {storedlog.map((log) => (
+                <Box mb={1} key={log} color="green">
                   {log}
                 </Box>
               ))}

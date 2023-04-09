@@ -1,11 +1,21 @@
-///Calculate the angle between two points and the west|east coordinate
+///Calculate the angle between two movables and the west|east coordinate
 /proc/get_angle(atom/movable/start, atom/movable/end)//For beams.
 	if(!start || !end)
 		return 0
-	var/dy
-	var/dx
-	dy=(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
-	dx=(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
+	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
+	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
+	if(!dy)
+		return (dx >= 0) ? 90 : 270
+	. = arctan(dx/dy)
+	if(dy < 0)
+		. += 180
+	else if(dx < 0)
+		. += 360
+
+/// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
+/proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
+	var/dy = (32 * end_y + end_pixel_y) - (32 * start_y + start_pixel_y)
+	var/dx = (32 * end_x + end_pixel_x) - (32 * start_x + start_pixel_x)
 	if(!dy)
 		return (dx >= 0) ? 90 : 270
 	. = arctan(dx/dy)
@@ -106,7 +116,7 @@
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)
-	return (rand(1,value)==value)
+	return (rand(1,value) == value)
 
 ///counts the number of bits in Byond's 16-bit width field, in constant time and memory!
 /proc/bit_count(bit_field)
@@ -133,3 +143,15 @@
 			return "centuple"
 		else //It gets too tedious to use latin prefixes from here.
 			return "[number]-tuple"
+
+/// Takes a value, and a threshold it has to at least match
+/// returns the correctly signed value max'd to the threshold
+/proc/at_least(new_value, threshold)
+	var/sign = SIGN(new_value)
+	// SIGN will return 0 if the value is 0, so we just go to the positive threshold
+	if(!sign)
+		return threshold
+	if(sign == 1)
+		return max(new_value, threshold)
+	if(sign == -1)
+		return min(new_value, threshold * -1)

@@ -9,7 +9,7 @@
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/gbs/stage_act(delta_time, times_fired)
@@ -29,5 +29,6 @@
 		if(4)
 			to_chat(affected_mob, span_userdanger("Your body feels as if it's trying to rip itself apart!"))
 			if(DT_PROB(30, delta_time))
+				affected_mob.investigate_log("has been gibbed by GBS.", INVESTIGATE_DEATHS)
 				affected_mob.gib()
 				return FALSE

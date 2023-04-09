@@ -13,7 +13,6 @@
 	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/catwalk_tile
 	layer = CATWALK_LAYER
-	plane = GAME_PLANE
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
@@ -44,13 +43,13 @@
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 		layer = TURF_LAYER
-		plane = FLOOR_PLANE
 		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
 		layer = CATWALK_LAYER
-		plane = GAME_PLANE
 		icon_state = "[catwalk_type]_above"
+
+	levelupdate()
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	tool.play_tool_sound(src)
 	update_appearance()

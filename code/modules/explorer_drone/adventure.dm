@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 			CRASH("Invalid delay in adventure [name]")
 		SEND_SIGNAL(src,COMSIG_ADVENTURE_DELAY_START,delay_time,delay_message)
 		delayed_action = list(delay_time,delay_message)
-		addtimer(CALLBACK(src,.proc/finish_delay,exit_id),delay_time)
+		addtimer(CALLBACK(src, PROC_REF(finish_delay),exit_id),delay_time)
 		return
 	navigate_to_node(exit_id)
 
@@ -492,6 +492,9 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 			return qualities[qkey] < qval
 		if("exists")
 			return qkey in qualities
+
+#undef ADVENTURE_VERSION_FIELD
+#undef CURRENT_ADVENTURE_VERSION
 
 #undef ADVENTURE_NAME_FIELD
 #undef ADVENTURE_STARTING_NODE_FIELD

@@ -10,7 +10,7 @@
 	desc = "A component that shows an three digit counter. Requires a BCI shell."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
 
 	var/datum/port/input/counter_number
 
@@ -19,7 +19,7 @@
 
 	var/datum/port/input/signal_update
 
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/organ/internal/cyberimp/bci/bci
 	var/list/numbers = list()
 	var/datum/weakref/counter_appearance
 
@@ -32,9 +32,9 @@
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
@@ -65,7 +65,7 @@
 	QDEL_NULL(overlay)
 
 	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
-	counter.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(counter, ABOVE_LIGHTING_PLANE, owner)
 
 	if(image_pixel_x.value != null)
 		counter.pixel_x = image_pixel_x.value
@@ -78,7 +78,7 @@
 		counter,
 		owner,
 	)
-	alt_appearance.add_hud_to(owner)
+	alt_appearance.show_to(owner)
 
 	counter_appearance = WEAKREF(alt_appearance)
 
@@ -87,7 +87,7 @@
 	for(var/i = 1 to 3)
 		var/cur_num = round(cleared_number / (10 ** (3 - i))) % 10
 		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner, layer = RIPPLE_LAYER)
-		number.plane = ABOVE_LIGHTING_PLANE
+		SET_PLANE_EXPLICIT(number, ABOVE_LIGHTING_PLANE, owner)
 
 		if(image_pixel_x.value != null)
 			number.pixel_x = image_pixel_x.value + (i - 1) * 9
@@ -103,7 +103,7 @@
 			number,
 			owner,
 		)
-		number_alt_appearance.add_hud_to(owner)
+		number_alt_appearance.show_to(owner)
 
 		numbers += WEAKREF(number_alt_appearance)
 
@@ -115,7 +115,7 @@
 	numbers = list()
 
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
-	overlay.remove_hud_from(owner)
+	overlay.hide_from(owner)
 	QDEL_NULL(overlay)
 
 /obj/item/circuit_component/counter_overlay/Destroy()

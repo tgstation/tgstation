@@ -78,9 +78,9 @@
 	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
@@ -88,12 +88,12 @@
 	. = ..()
 	if(var_name == NAMEOF(src, mat_container_flags) && parent)
 		if(!(old_flags & MATCONTAINER_EXAMINE) && mat_container_flags & MATCONTAINER_EXAMINE)
-			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
 			UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
 			UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 
@@ -129,7 +129,7 @@
 		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [parent]."))
 		return
 	if(!has_space(material_amount))
-		if(istype(I, /obj/item/stack))
+		if(isstack(I))
 			//figure out how much space is left
 			var/space_left = max_amount - total_amount
 			//figure out the amount of sheets that can fit that space
@@ -140,7 +140,7 @@
 				to_chat(user, span_warning("[parent] can't hold any more of [I] sheets."))
 				return
 			//split the amount we don't need off
-			INVOKE_ASYNC(stack_to_split, /obj/item/stack.proc/split_stack, user, stack_to_split.amount - sheets_to_insert)
+			INVOKE_ASYNC(stack_to_split, TYPE_PROC_REF(/obj/item/stack, split_stack), user, stack_to_split.amount - sheets_to_insert)
 		else
 			to_chat(user, span_warning("[I] contains more materials than [parent] has space to hold."))
 			return
@@ -151,7 +151,7 @@
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(held_item, /obj/item/stack) && precise_insertion)
+	if(isstack(held_item) && precise_insertion)
 		var/atom/current_parent = parent
 		var/obj/item/stack/item_stack = held_item
 		requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
@@ -265,7 +265,7 @@
 /datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
-	if((amt==0)||(!T)||(!mat))
+	if((amt == 0) || (!T) || (!mat))
 		return FALSE
 	if(amt<0)
 		return T.transer_amt_to(src, -amt, mat)
@@ -301,6 +301,8 @@
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[x] * multiplier
+		if(amount_required < 0)
+			return FALSE //No negative mats
 		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
 			return FALSE //Can't afford it
 		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove
@@ -442,6 +444,7 @@
 			"amount" = amount,
 			"sheets" = round(amount / MINERAL_MATERIAL_AMOUNT),
 			"removable" = amount >= MINERAL_MATERIAL_AMOUNT,
+			"color" = material.greyscale_colors
 		))
 
 	return data

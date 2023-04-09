@@ -1,0 +1,1 @@
+Files in this directory will be placed in /tgstation/config during runtime of the container and overwriting existing files in the process, though, seeing that this is inside of the container, this shouldn't matter all that much.

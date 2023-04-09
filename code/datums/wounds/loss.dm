@@ -44,9 +44,9 @@
 			if(WOUND_BURN)
 				occur_text = "is completely incinerated, falling to dust!"
 
-	var/msg = span_bolddanger("[victim]'s [dismembered_part.name] [occur_text]")
+	var/msg = span_bolddanger("[victim]'s [dismembered_part.plaintext_zone] [occur_text]")
 
-	victim.visible_message(msg, span_userdanger("Your [dismembered_part.name] [self_msg ? self_msg : occur_text]"))
+	victim.visible_message(msg, span_userdanger("Your [dismembered_part.plaintext_zone] [self_msg ? self_msg : occur_text]"))
 
 	set_limb(dismembered_part)
 	second_wind()

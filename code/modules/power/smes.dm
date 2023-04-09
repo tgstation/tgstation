@@ -61,11 +61,12 @@
 	update_appearance()
 
 /obj/machinery/power/smes/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
 	var/IO = 0
 	var/MC = 0
 	var/C
-	for(var/obj/item/stock_parts/capacitor/CP in component_parts)
-		IO += CP.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		IO += capacitor.tier
 	input_level_max = initial(input_level_max) * IO
 	output_level_max = initial(output_level_max) * IO
 	for(var/obj/item/stock_parts/cell/PC in component_parts)
@@ -150,9 +151,9 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("[src] has been deconstructed by [key_name(user)] at [AREACOORD(src)]")
-		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_ENGINE)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)].")
+		user.log_message("deconstructed [src]", LOG_GAME)
+		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return
 	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)
 		return
@@ -407,7 +408,8 @@
 	log_smes()
 
 /obj/machinery/power/smes/engineering
-	charge = 1.5e6 // Engineering starts with some charge for singulo
+	charge = 2.5e6 // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	output_level = 90000
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

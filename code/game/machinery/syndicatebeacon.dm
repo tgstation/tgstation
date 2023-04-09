@@ -4,7 +4,7 @@
 /obj/machinery/power/singularity_beacon
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "beacon0"
 
 	anchored = FALSE
@@ -22,8 +22,7 @@
 		if(user)
 			to_chat(user, span_notice("The connected wire doesn't have enough current."))
 		return
-	for (var/_singulo in GLOB.singularities)
-		var/datum/component/singularity/singulo = _singulo
+	for (var/datum/component/singularity/singulo as anything in GLOB.singularities)
 		var/atom/singulo_atom = singulo.parent
 		if(singulo_atom.z == z)
 			singulo.target = src
@@ -117,8 +116,8 @@
 	name = "suspicious beacon"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
 	w_class = WEIGHT_CLASS_SMALL
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate

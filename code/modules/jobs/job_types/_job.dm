@@ -35,9 +35,6 @@
 	/// Supervisors, who this person answers to directly
 	var/supervisors = ""
 
-	/// Selection screen color
-	var/selection_color = "#ffffff"
-
 	/// What kind of mob type joining players with this job as their assigned role are spawned as.
 	var/spawn_type = /mob/living/carbon/human
 
@@ -61,16 +58,20 @@
 	/// Experience type granted by playing in this job.
 	var/exp_granted_type = ""
 
-	var/paycheck = PAYCHECK_MINIMAL
+	///How much money does this crew member make in a single paycheck? Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
+	var/paycheck = PAYCHECK_CREW
+	///Which department does this paycheck pay from?
 	var/paycheck_department = ACCOUNT_CIV
 
-	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+	/// Traits added to the mind of the mob assigned this job
+	var/list/mind_traits
 
 	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
 	var/list/liver_traits = null
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
+	///What types of bounty tasks can this job recieve past the default?
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
@@ -116,45 +117,48 @@
 	///RPG job names, for the memes
 	var/rpg_title
 
+	/// Does this job ignore human authority?
+	var/ignore_human_authority = FALSE
+
+	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
+	/// You'll probably break someone's config if you change this, so it's best to not to.
+	var/config_tag = ""
+
+	/// custom ringtone for this job
+	var/job_tone
+
 
 /datum/job/New()
 	. = ..()
-	var/list/jobs_changes = get_map_changes()
-	if(!jobs_changes)
-		return
-	if(isnum(jobs_changes["spawn_positions"]))
-		spawn_positions = jobs_changes["spawn_positions"]
-	if(isnum(jobs_changes["total_positions"]))
-		total_positions = jobs_changes["total_positions"]
-
-/// Loads up map configs if necessary and returns job changes for this job.
-/datum/job/proc/get_map_changes()
-	var/string_type = "[type]"
-	var/list/splits = splittext(string_type, "/")
-	var/endpart = splits[splits.len]
-
 	var/list/job_changes = SSmapping.config.job_changes
-	if(!(endpart in job_changes))
-		return list()
+	if(!job_changes[title])
+		return TRUE
 
-	return job_changes[endpart]
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	if(isnum(job_positions_edits["spawn_positions"]))
+		spawn_positions = job_positions_edits["spawn_positions"]
+	if(isnum(job_positions_edits["total_positions"]))
+		total_positions = job_positions_edits["total_positions"]
 
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
-	for(var/trait in mind_traits)
-		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
+	if(length(mind_traits))
+		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
-	var/obj/item/organ/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		for(var/trait in liver_traits)
-			ADD_TRAIT(liver, trait, JOB_TRAIT)
+	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && length(liver_traits))
+		liver.add_traits(liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
 		return
 
+	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
 
 	if(!config) //Needed for robots.
@@ -166,10 +170,8 @@
 		roundstart_experience = skills
 
 	if(roundstart_experience)
-		var/mob/living/carbon/human/experiencer = spawned
 		for(var/i in roundstart_experience)
-			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
-
+			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
@@ -177,7 +179,7 @@
 
 
 //Used for a special check of whether to allow a client to latejoin as this job.
-/datum/job/proc/special_check_latejoin(client/C)
+/datum/job/proc/special_check_latejoin(client/latejoin)
 	return TRUE
 
 
@@ -203,34 +205,66 @@
 /datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
 		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/_addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
-/datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0)
+/datum/job/proc/player_old_enough(client/player)
+	if(!player || !available_in_days(player))
 		return TRUE //Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
 
-/datum/job/proc/available_in_days(client/C)
-	if(!C)
+/datum/job/proc/available_in_days(client/player)
+	if(!player)
 		return 0
+
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
+
+	//Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
 	if(!SSdbcore.Connect())
-		return 0 //Without a database connection we can't get a player's age so we'll assume they're old enough for all jobs
+		return 0
+
+	// As of the time of writing this comment, verifying database connection isn't "solved". Sometimes rust-g will report a
+	// connection mid-shift despite the database dying.
+	// If the client age is -1, it means that no code path has overwritten it. Even first time connections get it set to 0,
+	// so it's a pretty good indication of a database issue. We'll again just assume they're old enough for all jobs.
+	if(player.player_age == -1)
+		return 0
+
 	if(!isnum(minimal_player_age))
 		return 0
 
-	return max(0, minimal_player_age - C.player_age)
+	return max(0, minimal_player_age - player.player_age)
 
 /datum/job/proc/config_check()
 	return TRUE
 
+/**
+ * # map_check
+ *
+ * Checks the map config for job changes
+ * If they have 0 spawn and total positions in the config, the job is entirely removed from occupations prefs for the round.
+ */
 /datum/job/proc/map_check()
-	var/list/job_changes = get_map_changes()
-	if(!job_changes)
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!job_changes[title]) //no edits made
+		return TRUE
+
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	var/available_roundstart = TRUE
+	var/available_latejoin = TRUE
+	if(!isnull(job_positions_edits["spawn_positions"]) && (job_positions_edits["spawn_positions"] == 0))
+		available_roundstart = FALSE
+	if(!isnull(job_positions_edits["total_positions"]) && (job_positions_edits["total_positions"] == 0))
+		available_latejoin = FALSE
+
+	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
+
 	return TRUE
 
 /datum/job/proc/radio_help_message(mob/M)
@@ -244,7 +278,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/pda
+	belt = /obj/item/modular_computer/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -290,33 +324,47 @@
 	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-/datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/datum/job/J = SSjob.GetJobType(jobtype)
-	if(!J)
-		J = SSjob.GetJob(H.job)
+	var/datum/job/equipped_job = SSjob.GetJobType(jobtype)
 
-	var/obj/item/card/id/C = H.wear_id
-	if(istype(C))
-		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
-		C.registered_name = H.real_name
-		if(H.age)
-			C.registered_age = H.age
-		C.update_label()
-		C.update_icon()
-		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
-		if(B && B.account_id == H.account_id)
-			C.registered_account = B
-			B.bank_cards += C
-		H.sec_hud_set_ID()
+	if(!equipped_job)
+		equipped_job = SSjob.GetJob(equipped.job)
 
-	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
-	if(istype(PDA))
-		PDA.owner = H.real_name
-		PDA.ownjob = J.title
-		PDA.update_label()
+	var/obj/item/card/id/card = equipped.wear_id
+
+	if(istype(card))
+		ADD_TRAIT(card, TRAIT_JOB_FIRST_ID_CARD, ROUNDSTART_TRAIT)
+		shuffle_inplace(card.access) // Shuffle access list to make NTNet passkeys less predictable
+		card.registered_name = equipped.real_name
+
+		if(equipped.age)
+			card.registered_age = equipped.age
+
+		card.update_label()
+		card.update_icon()
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[equipped.account_id]"]
+
+		if(account && account.account_id == equipped.account_id)
+			card.registered_account = account
+			account.bank_cards += card
+
+		equipped.sec_hud_set_ID()
+
+	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
+
+	if(istype(pda))
+		pda.saved_identification = equipped.real_name
+		pda.saved_job = equipped_job.title
+		pda.update_ringtone(equipped_job.job_tone)
+		pda.UpdateDisplay()
+
+		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+
+		if(equipped_client)
+			pda.update_pda_prefs(equipped_client)
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
@@ -356,7 +404,7 @@
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
-			return get_safe_random_station_turf(typesof(/area/hallway)) || get_latejoin_spawn_point()
+			return get_safe_random_station_turf(typesof(/area/station/hallway)) || get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 			var/obj/effect/landmark/start/hangover_spawn_point
 			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
@@ -423,6 +471,10 @@
 		return // Disconnected while checking for the appearance ban.
 
 	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	if(require_human)
+		var/all_authority_require_human = CONFIG_GET(flag/enforce_human_authority_on_everyone)
+		if(!all_authority_require_human && job.ignore_human_authority)
+			require_human = FALSE
 
 	src.job = job.title
 

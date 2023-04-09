@@ -15,11 +15,11 @@
 #define LANGUAGE_CURATOR "curator"
 #define LANGUAGE_GLAND "gland"
 #define LANGUAGE_HAT "hat"
-#define LANGUAGE_HIGH "high"
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"
 #define LANGUAGE_SOFTWARE "software"
 #define LANGUAGE_STONER "stoner"
 #define LANGUAGE_VOICECHANGE "voicechange"
-
+#define LANGUAGE_RADIOKEY "radiokey"
+#define LANGUAGE_BABEL "babel"

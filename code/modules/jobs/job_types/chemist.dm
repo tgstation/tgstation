@@ -2,20 +2,20 @@
 	title = JOB_CHEMIST
 	description = "Supply the doctors with chemicals, make medicine, as well as \
 		less likable substances in the comfort of a fully reinforced room."
-	department_head = list("Chief Medical Officer")
+	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
+	supervisors = SUPERVISOR_CMO
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CHEMIST"
 
 	outfit = /datum/outfit/job/chemist
 	plasmaman_outfit = /datum/outfit/plasmaman/chemist
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
@@ -29,9 +29,9 @@
 	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/flash_powder = 15,
-		/obj/item/reagent_containers/glass/bottle/exotic_stabilizer = 5,
-		/obj/item/reagent_containers/glass/bottle/leadacetate = 5,
+		/obj/item/reagent_containers/cup/bottle/flash_powder = 15,
+		/obj/item/reagent_containers/cup/bottle/exotic_stabilizer = 5,
+		/obj/item/reagent_containers/cup/bottle/leadacetate = 5,
 		/obj/item/paper/secretrecipe = 1
 	)
 	rpg_title = "Alchemist"
@@ -45,11 +45,11 @@
 	id_trim = /datum/id_trim/job/chemist
 	uniform = /obj/item/clothing/under/rank/medical/chemist
 	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
-	belt = /obj/item/pda/chemist
+	belt = /obj/item/modular_computer/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
 	glasses = /obj/item/clothing/glasses/science
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_pocket = /obj/item/reagent_containers/glass/bottle/random_buffer
+	l_pocket = /obj/item/reagent_containers/cup/bottle/random_buffer
 	r_pocket = /obj/item/reagent_containers/dropper
 
 	backpack = /obj/item/storage/backpack/chemistry

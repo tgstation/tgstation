@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(radiochannels, list(
 	RADIO_CHANNEL_SECURITY = FREQ_SECURITY,
 	RADIO_CHANNEL_CENTCOM = FREQ_CENTCOM,
 	RADIO_CHANNEL_SYNDICATE = FREQ_SYNDICATE,
+	RADIO_CHANNEL_UPLINK = FREQ_UPLINK,
 	RADIO_CHANNEL_SUPPLY = FREQ_SUPPLY,
 	RADIO_CHANNEL_SERVICE = FREQ_SERVICE,
 	RADIO_CHANNEL_AI_PRIVATE = FREQ_AI_PRIVATE,
@@ -118,6 +119,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_SECURITY]" = RADIO_CHANNEL_SECURITY,
 	"[FREQ_CENTCOM]" = RADIO_CHANNEL_CENTCOM,
 	"[FREQ_SYNDICATE]" = RADIO_CHANNEL_SYNDICATE,
+	"[FREQ_UPLINK]" = RADIO_CHANNEL_UPLINK,
 	"[FREQ_SUPPLY]" = RADIO_CHANNEL_SUPPLY,
 	"[FREQ_SERVICE]" = RADIO_CHANNEL_SERVICE,
 	"[FREQ_AI_PRIVATE]" = RADIO_CHANNEL_AI_PRIVATE,
@@ -180,11 +182,13 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	if (!filter)
 		filter = "_default"
 
+	var/datum/weakref/new_listener = WEAKREF(device)
+	if(isnull(new_listener))
+		return stack_trace("null, non-datum, or qdeleted device")
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
 		devices[filter] = devices_line = list()
-	devices_line += WEAKREF(device)
-
+	devices_line += new_listener
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
@@ -194,7 +198,6 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		devices_line -= WEAKREF(device)
 		if(!devices_line.len)
 			devices -= devices_filter
-
 
 /obj/proc/receive_signal(datum/signal/signal)
 	return

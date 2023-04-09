@@ -16,7 +16,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
 	density = FALSE
@@ -42,7 +42,6 @@
 	var/skin
 	var/mob/living/carbon/patient
 	var/mob/living/carbon/oldpatient
-	var/oldloc
 	var/last_found = 0
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
@@ -138,21 +137,21 @@
 
 	skin = new_skin
 	update_appearance()
-	linked_techweb = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		linked_techweb = SSresearch.science_tech
 
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \
-		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
-		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
-		post_untipped_callback = CALLBACK(src, .proc/after_righted))
+		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
+		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
 	patient = null
 	oldpatient = null
-	oldloc = null
 	last_found = world.time
 	update_appearance()
 
@@ -165,6 +164,11 @@
 
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
+
+/mob/living/simple_animal/bot/medbot/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb = tool.buffer
+	return TRUE
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/medbot/ui_data(mob/user)
@@ -199,6 +203,9 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 			path = list()
 		if("sync_tech")
+			if(!linked_techweb)
+				to_chat(usr, span_notice("No research techweb connected."))
+				return
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
 			for(var/index in linked_techweb.researched_designs)
@@ -234,20 +241,20 @@
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
-		return
-
+		return null
 	if((H == oldpatient) && (world.time < last_found + 200))
-		return
+		return null
+	if(!assess_patient(H))
+		return null
 
-	if(assess_patient(H))
-		last_found = world.time
-		if(COOLDOWN_FINISHED(src, last_newpatient_speak))
-			COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 50, FALSE)
-		return H
+	last_found = world.time
+	if(COOLDOWN_FINISHED(src, last_newpatient_speak))
+		COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
+		var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 50, FALSE)
+	return H
 
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.
@@ -358,15 +365,28 @@
 	if(QDELETED(patient))
 		if(medical_mode_flags & MEDBOT_SPEAK_MODE && prob(1))
 			if(bot_cover_flags & BOT_COVER_EMAGGED && prob(30))
-				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
+				var/list/i_need_scissors = list(
+					'sound/voice/medbot/fuck_you.ogg',
+					'sound/voice/medbot/turn_off.ogg',
+					'sound/voice/medbot/im_different.ogg',
+					'sound/voice/medbot/close.ogg',
+					'sound/voice/medbot/shindemashou.ogg',
+				)
 				playsound(src, pick(i_need_scissors), 70)
 			else
-				var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg', "Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg')
+				var/static/list/messagevoice = list(
+					"Delicious!" = 'sound/voice/medbot/delicious.ogg',
+					"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',
+					"Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',
+					"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',
+					"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',
+					"Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg',
+				)
 				var/message = pick(messagevoice)
 				speak(message)
 				playsound(src, messagevoice[message], 50)
 		var/scan_range = (medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
-		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
+		patient = scan(list(/mob/living/carbon/human), oldpatient, scan_range)
 		oldpatient = patient
 
 	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!
@@ -388,10 +408,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, patient, 30,id=access_card)
+		path = get_path_to(src, patient, max_distance=30, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, patient, 30,1,id=access_card)
+			path = get_path_to(src, patient, max_distance=30, mintargetdist=1, id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 
@@ -423,7 +443,7 @@
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
 
-	if(C.suiciding)
+	if(HAS_TRAIT_FROM_ONLY(C, TRAIT_SUICIDED, REF(C)))
 		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Everyone needs our medicine. (Our medicine is toxins)
@@ -537,7 +557,7 @@
 			C.visible_message(span_danger("[src] is trying to tend the wounds of [patient]!"), \
 				span_userdanger("[src] is trying to tend your wounds!"))
 
-			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
+			if(do_after(src, 2 SECONDS, patient)) //Slightly faster than default tend wounds, but does less HPS
 				if((get_dist(src, patient) <= 1) && (bot_mode_flags & BOT_MODE_ON) && assess_patient(patient))
 					var/healies = heal_amount
 					var/obj/item/storage/medkit/medkit = medkit_type

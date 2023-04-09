@@ -37,9 +37,10 @@ SUBSYSTEM_DEF(traitor)
 	var/generate_objectives = TRUE
 	/// Objectives that have been completed by type. Used for limiting objectives.
 	var/list/taken_objectives_by_type = list()
+	/// A list of all existing objectives by type
+	var/list/all_objectives_by_type = list()
 
-/datum/controller/subsystem/traitor/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/traitor/Initialize()
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
@@ -50,6 +51,7 @@ SUBSYSTEM_DEF(traitor)
 			if(!actual_typepath)
 				log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
 			configuration_data[actual_typepath] = data[typepath]
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
@@ -87,7 +89,7 @@ SUBSYSTEM_DEF(traitor)
 	uplink_handlers |= uplink_handler
 	// An uplink handler can be registered multiple times if they get assigned to new uplinks, so
 	// override is set to TRUE here because it is intentional that they could get added multiple times.
-	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, .proc/uplink_handler_deleted, override = TRUE)
+	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, PROC_REF(uplink_handler_deleted), override = TRUE)
 
 /datum/controller/subsystem/traitor/proc/uplink_handler_deleted(datum/uplink_handler/uplink_handler)
 	SIGNAL_HANDLER
@@ -97,13 +99,17 @@ SUBSYSTEM_DEF(traitor)
 	if(!istype(objective))
 		return
 
-	var/datum/traitor_objective/current_type = objective.type
-	while(current_type != /datum/traitor_objective)
-		if(!taken_objectives_by_type[current_type])
-			taken_objectives_by_type[current_type] = list(objective)
-		else
-			taken_objectives_by_type[current_type] += objective
-		current_type = type2parent(current_type)
+	add_objective_to_list(objective, taken_objectives_by_type)
 
 /datum/controller/subsystem/traitor/proc/get_taken_count(datum/traitor_objective/objective_type)
 	return length(taken_objectives_by_type[objective_type])
+
+
+/datum/controller/subsystem/traitor/proc/add_objective_to_list(datum/traitor_objective/objective, list/objective_list)
+	var/datum/traitor_objective/current_type = objective.type
+	while(current_type != /datum/traitor_objective)
+		if(!objective_list[current_type])
+			objective_list[current_type] = list(objective)
+		else
+			objective_list[current_type] += objective
+		current_type = type2parent(current_type)

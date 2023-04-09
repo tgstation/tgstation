@@ -29,6 +29,29 @@
 	select_name = "practice"
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/chameleon
+	projectile_type = /obj/projectile/energy/chameleon
+	e_cost = 0
+	var/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+
+	loaded_projectile.name = projectile_vars["name"]
+	loaded_projectile.icon = projectile_vars["icon"]
+	loaded_projectile.icon_state = projectile_vars["icon_state"]
+	loaded_projectile.speed = projectile_vars["speed"]
+	loaded_projectile.color = projectile_vars["color"]
+	loaded_projectile.hitsound = projectile_vars["hitsound"]
+	loaded_projectile.impact_effect_type = projectile_vars["impact_effect_type"]
+	loaded_projectile.range = projectile_vars["range"]
+	loaded_projectile.suppressed = projectile_vars["suppressed"]
+	loaded_projectile.hitsound_wall =	projectile_vars["hitsound_wall"]
+	loaded_projectile.pass_flags = projectile_vars["pass_flags"]
+
+	if(!loaded_projectile)
+		newshot()
+
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/projectile/beam/scatter
 	pellets = 5

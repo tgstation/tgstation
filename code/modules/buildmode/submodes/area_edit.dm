@@ -5,7 +5,7 @@
 	var/image/areaimage
 
 /datum/buildmode_mode/area_edit/New()
-	areaimage = image('icons/turf/areas.dmi', null, "yellow")
+	areaimage = image('icons/area/areas_misc.dmi', null, "yellow")
 	..()
 
 /datum/buildmode_mode/area_edit/enter_mode(datum/buildmode/BM)

@@ -31,6 +31,11 @@ const ritualstyle = {
   color: 'violet',
 };
 
+const grandritualstyle = {
+  fontWeight: 'bold',
+  color: '#bd54e0',
+};
+
 type Objective = {
   count: number;
   name: string;
@@ -38,18 +43,21 @@ type Objective = {
   complete: BooleanLike;
   was_uncompleted: BooleanLike;
   reward: number;
-}
+};
+
+type GrandRitual = {
+  remaining: number;
+  next_area: string;
+};
 
 type Info = {
   objectives: Objective[];
+  ritual: GrandRitual;
 };
 
 export const AntagInfoWizard = (props, context) => {
   return (
-    <Window
-      width={620}
-      height={580}
-      theme="wizard">
+    <Window width={620} height={620} theme="wizard">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -68,26 +76,31 @@ export const AntagInfoWizard = (props, context) => {
             <Section fill title="Spellbook">
               <Stack vertical fill>
                 <Stack.Item>
-                  You have a spellbook which is bound to you. You can use it
-                  to choose a magical arsenal.<br />
+                  You have a spellbook which is bound to you. You can use it to
+                  choose a magical arsenal.
+                  <br />
                   <span style={destructionstyle}>
                     The deadly page has the offensive spells, to destroy your
                     enemies.
-                  </span><br />
+                  </span>
+                  <br />
                   <span style={defensestyle}>
                     The defensive page has defensive spells, to keep yourself
-                    alive. Remember, you may be powerful, but you are still
-                    only human.
-                  </span><br />
+                    alive. Remember, you may be powerful, but you are still only
+                    human.
+                  </span>
+                  <br />
                   <span style={transportstyle}>
                     The transport page has mobility spells, very important
                     aspect of staying alive and getting things done.
-                  </span><br />
+                  </span>
+                  <br />
                   <span style={summonstyle}>
                     The summoning page has summoning and other helpful spells
                     for not fighting alone. Careful, not every summon is on your
                     side.
-                  </span><br />
+                  </span>
+                  <br />
                   <span style={ritualstyle}>
                     The rituals page has powerful global effects, that will pit
                     the station against itself. Do mind that these are either
@@ -96,8 +109,8 @@ export const AntagInfoWizard = (props, context) => {
                 </Stack.Item>
                 <Stack.Item textColor="lightgreen">
                   (If you are unsure what to get or are new to the Federation,
-                  go to the &quot;Wizard Approved Loadouts&quot; section.
-                  There you will find some kits that work fairly well for new
+                  go to the &quot;Wizard Approved Loadouts&quot; section. There
+                  you will find some kits that work fairly well for new
                   wizards.)
                 </Stack.Item>
               </Stack>
@@ -107,13 +120,14 @@ export const AntagInfoWizard = (props, context) => {
             <Section title="Misc Gear">
               <Stack>
                 <Stack.Item>
-                  <span style={teleportstyle}>Teleport scroll:</span> 4
-                  uses to teleport wherever you want.
-                  You will not be able to come back to the den, so
-                  be sure you have everything ready before departing.<br />
-                  <span style={robestyle}>Wizard robes:</span> Used
-                  to cast most spells. Your spellbook will let
-                  you know which spells cannot be cast without a garb.
+                  <span style={teleportstyle}>Teleport scroll:</span> 4 uses to
+                  teleport wherever you want. You will not be able to come back
+                  to the den, so be sure you have everything ready before
+                  departing.
+                  <br />
+                  <span style={robestyle}>Wizard robes:</span> Used to cast most
+                  spells. Your spellbook will let you know which spells cannot
+                  be cast without a garb.
                 </Stack.Item>
               </Stack>
             </Section>
@@ -131,22 +145,42 @@ export const AntagInfoWizard = (props, context) => {
 
 const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
+  const { objectives, ritual } = data;
   return (
     <Stack vertical>
       <Stack.Item bold>
         The Space Wizards Federation has given you the following tasks:
       </Stack.Item>
       <Stack.Item>
-        {!objectives && "None!"
-        || objectives.map(objective => (
-          <Stack.Item key={objective.count}>
-            #{objective.count}: {objective.explanation}
-          </Stack.Item>
-        )) }
+        {(!objectives && 'None!') ||
+          objectives.map((objective) => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
       </Stack.Item>
+      <RitualPrintout />
     </Stack>
+  );
+};
+
+const RitualPrintout = (props, context) => {
+  const { data } = useBackend<Info>(context);
+  const { objectives, ritual } = data;
+  if (!ritual.next_area) {
+    return <Stack.Item />;
+  }
+  return (
+    <Stack.Item>
+      Alternately, complete the{' '}
+      <span style={grandritualstyle}>Grand Ritual </span>
+      by invoking a ritual circle at several nexuses of power.
+      <br />
+      You must complete the ritual
+      <span style={grandritualstyle}> {ritual.remaining}</span> more times.
+      <br />
+      Your next ritual location is the
+      <span style={grandritualstyle}> {ritual.next_area}</span>.
+    </Stack.Item>
   );
 };

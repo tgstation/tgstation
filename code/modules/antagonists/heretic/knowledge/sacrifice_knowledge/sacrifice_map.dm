@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// What path this landmark is intended for.
 	var/for_heretic_path = PATH_START
 
-/obj/effect/landmark/heretic/Initialize()
+/obj/effect/landmark/heretic/Initialize(mapload)
 	. = ..()
 	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = src
 
@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// Light power of the signpost.
 	var/power = 0.8
 
-/obj/structure/no_effect_signpost/void/Initialize()
+/obj/structure/no_effect_signpost/void/Initialize(mapload)
 	. = ..()
 	set_light(range, power)
 
@@ -69,6 +69,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	nightshift_allowed = FALSE
 	bulb_colour = "#d6b6a6ff"
 	brightness = 3
+	fire_brightness = 2
 	bulb_power = 0.5
 
 /obj/machinery/light/very_dim/directional/north
@@ -84,32 +85,32 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	dir = WEST
 
 // Rooms for where heretic sacrifices send people.
-/area/heretic_sacrifice
+/area/centcom/heretic_sacrifice
 	name = "Mansus"
-	icon_state = "away"
+	icon_state = "heretic"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
 
-/area/heretic_sacrifice/Initialize(mapload)
+/area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 		ambientsounds += 'sound/ambience/ambiatm1.ogg'
 	return ..()
 
-/area/heretic_sacrifice/ash //also, the default
+/area/centcom/heretic_sacrifice/ash //also, the default
 	name = "Mansus Ash Gate"
 
-/area/heretic_sacrifice/void
+/area/centcom/heretic_sacrifice/void
 	name = "Mansus Void Gate"
 	sound_environment = SOUND_ENVIRONMENT_UNDERWATER
 
-/area/heretic_sacrifice/flesh
+/area/centcom/heretic_sacrifice/flesh
 	name = "Mansus Flesh Gate"
 	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
-/area/heretic_sacrifice/rust
+/area/centcom/heretic_sacrifice/rust
 	name = "Mansus Rust Gate"
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE

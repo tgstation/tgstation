@@ -4,13 +4,20 @@
 ///// Debride burnt flesh
 /datum/surgery/debride
 	name = "Debride burnt flesh"
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	targetable_wound = /datum/wound/burn
+	possible_locs = list(
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+	)
 	steps = list(
 		/datum/surgery_step/debride,
-		/datum/surgery_step/dress)
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
-	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/burn
+		/datum/surgery_step/dress,
+	)
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
 	if(!istype(target))
@@ -24,7 +31,7 @@
 
 ///// Debride
 /datum/surgery_step/debride
-	name = "excise infection"
+	name = "excise infection (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCALPEL = 85,
@@ -67,9 +74,13 @@
 			surgery.status++
 			repeatable = FALSE
 			return
-		display_results(user, target, span_notice("You begin to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]..."),
+		display_results(
+			user,
+			target,
+			span_notice("You begin to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]..."),
 			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)] with [tool]."),
-			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]."))
+			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]."),
+		)
 		display_pain(target, "The infection in your [parse_zone(user.zone_selected)] stings like hell! It feels like you're being stabbed!")
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
@@ -78,9 +89,13 @@
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
 	if(burn_wound)
 		var/progress_text = get_progress(user, target, burn_wound)
-		display_results(user, target, span_notice("You successfully excise some of the infected flesh from [target]'s [parse_zone(target_zone)][progress_text]."),
+		display_results(
+			user,
+			target,
+			span_notice("You successfully excise some of the infected flesh from [target]'s [parse_zone(target_zone)][progress_text]."),
 			span_notice("[user] successfully excises some of the infected flesh from [target]'s [parse_zone(target_zone)] with [tool]!"),
-			span_notice("[user] successfully excises some of the infected flesh from  [target]'s [parse_zone(target_zone)]!"))
+			span_notice("[user] successfully excises some of the infected flesh from  [target]'s [parse_zone(target_zone)]!"),
+		)
 		log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 		burn_wound.infestation -= infestation_removed
@@ -93,9 +108,13 @@
 
 /datum/surgery_step/debride/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
-	display_results(user, target, span_notice("You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)]."),
+	display_results(
+		user,
+		target,
+		span_notice("You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] carves away some of the healthy flesh from [target]'s [parse_zone(target_zone)] with [tool]!"),
-		span_notice("[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!"))
+		span_notice("[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!"),
+	)
 	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=TRUE)
 
 /datum/surgery_step/debride/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
@@ -108,7 +127,7 @@
 
 ///// Dressing burns
 /datum/surgery_step/dress
-	name = "bandage burns"
+	name = "bandage burns (gauze/tape)"
 	implements = list(
 		/obj/item/stack/medical/gauze = 100,
 		/obj/item/stack/sticky_tape/surgical = 100)
@@ -122,9 +141,13 @@
 /datum/surgery_step/dress/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
 	if(burn_wound)
-		display_results(user, target, span_notice("You begin to dress the burns on [target]'s [parse_zone(user.zone_selected)]..."),
+		display_results(
+			user,
+			target,
+			span_notice("You begin to dress the burns on [target]'s [parse_zone(user.zone_selected)]..."),
 			span_notice("[user] begins to dress the burns on [target]'s [parse_zone(user.zone_selected)] with [tool]."),
-			span_notice("[user] begins to dress the burns on [target]'s [parse_zone(user.zone_selected)]."))
+			span_notice("[user] begins to dress the burns on [target]'s [parse_zone(user.zone_selected)]."),
+		)
 		display_pain(target, "The burns on your [parse_zone(user.zone_selected)] sting like hell!")
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
@@ -132,9 +155,13 @@
 /datum/surgery_step/dress/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
 	if(burn_wound)
-		display_results(user, target, span_notice("You successfully wrap [target]'s [parse_zone(target_zone)] with [tool]."),
+		display_results(
+			user,
+			target,
+			span_notice("You successfully wrap [target]'s [parse_zone(target_zone)] with [tool]."),
 			span_notice("[user] successfully wraps [target]'s [parse_zone(target_zone)] with [tool]!"),
-			span_notice("[user] successfully wraps [target]'s [parse_zone(target_zone)]!"))
+			span_notice("[user] successfully wraps [target]'s [parse_zone(target_zone)]!"),
+		)
 		log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		burn_wound.sanitization += sanitization_added
 		burn_wound.flesh_healing += flesh_healing_added
@@ -146,6 +173,6 @@
 
 /datum/surgery_step/dress/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
-	if(istype(tool, /obj/item/stack))
+	if(isstack(tool))
 		var/obj/item/stack/used_stack = tool
 		used_stack.use(1)

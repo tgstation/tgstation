@@ -34,7 +34,7 @@
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT,.proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, PROC_REF(start_singing))
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
@@ -59,10 +59,10 @@
 	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 	///and hook into the instrument this time, preventing other weird exploity stuff.
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, .proc/tempo_change)
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, PROC_REF(tempo_change))
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, PROC_REF(stop_singing))
 	if(!allow_repeats)
-		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
+		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, PROC_REF(stop_singing))
 
 	linked_song = starting_song
 
@@ -85,10 +85,15 @@
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 	if(viable_for_final_effect)
-		if(!finished)
-			to_chat(parent, span_warning("The song was interrupted, you cannot activate the finishing ability!"))
+		if(finished && linked_songtuner_rite && linked_song)
+			for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
+				if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+					continue
+
+				linked_songtuner_rite.finish_effect(listener, parent)
 		else
-			linked_songtuner_rite.finish_effect(parent, linked_song)
+			to_chat(parent, span_warning("The song was interrupted, you cannot activate the finishing ability!"))
+
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
 		COMSIG_INSTRUMENT_TEMPO_CHANGE,
@@ -99,8 +104,12 @@
 	qdel(src)
 
 /datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
-	if(linked_songtuner_rite)
-		linked_songtuner_rite.song_effect(parent, linked_song)
+	if(linked_songtuner_rite && linked_song)
+		for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
+			if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
+				continue
+
+			linked_songtuner_rite.song_effect(listener, parent)
 	else
 		stop_singing()
 

@@ -10,7 +10,7 @@
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_HARMFUL
 	var/stagedamage = 0 //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
@@ -36,7 +36,7 @@
 			return FALSE
 		if(DT_PROB(1.5 * stage, delta_time))
 			to_chat(affected_mob, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
-			affected_mob.add_confusion(8)
+			affected_mob.adjust_confusion(8 SECONDS)
 			affected_mob.adjustStaminaLoss(20, FALSE)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)
@@ -67,4 +67,4 @@
 					affected_mob.set_haircolor("#1d2953", override = TRUE)
 				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
-				addtimer(CALLBACK(src, .proc/cure), 10 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(cure)), 10 SECONDS)

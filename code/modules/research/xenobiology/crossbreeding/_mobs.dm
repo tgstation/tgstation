@@ -4,34 +4,41 @@ Slimecrossing Mobs
 	Collected here for clarity.
 */
 
-//Slime transformation power - Burning Black
-/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform
+/// Slime transformation power - from Burning Black
+/datum/action/cooldown/spell/shapeshift/slime_form
 	name = "Slime Transformation"
 	desc = "Transform from a human to a slime, or back again!"
-	action_icon_state = "transformslime"
-	cooldown_min = 0
-	charge_max = 0
+	button_icon_state = "transformslime"
+	cooldown_time = 0 SECONDS
+
 	invocation_type = INVOCATION_NONE
-	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
+	spell_requirements = NONE
+
 	convert_damage = TRUE
 	convert_damage_type = CLONE
+	possible_shapes = list(/mob/living/simple_animal/slime/transformed_slime)
+
+	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human
 	var/remove_on_restore = FALSE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/restore_form(mob/living/shape)
+/datum/action/cooldown/spell/shapeshift/slime_form/do_unshapeshift(mob/living/caster)
+	. = ..()
+	if(!.)
+		return
+
 	if(remove_on_restore)
-		if(shape.mind)
-			shape.mind.RemoveSpell(src)
-	return ..()
+		qdel(src)
 
-//Transformed slime - Burning Black
-/mob/living/simple_animal/slime/transformedslime
+/// Transformed slime - from Burning Black
+/mob/living/simple_animal/slime/transformed_slime
 
-/mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
-	to_chat(src, span_warning("I can't reproduce..."))
+// Just in case.
+/mob/living/simple_animal/slime/transformed_slime/Reproduce()
+	to_chat(src, span_warning("I can't reproduce...")) // Mood
 	return
 
 //Slime corgi - Chilling Pink
-/mob/living/simple_animal/pet/dog/corgi/puppy/slime
+/mob/living/basic/pet/dog/corgi/puppy/slime
 	name = "\improper slime corgi puppy"
 	real_name = "slime corgi puppy"
 	desc = "An unbearably cute pink slime corgi puppy."
@@ -41,5 +48,8 @@ Slimecrossing Mobs
 	nofur = TRUE
 	gold_core_spawnable = NO_SPAWN
 	speak_emote = list("blorbles", "bubbles", "borks")
-	emote_hear = list("bubbles!", "splorts.", "splops!")
-	emote_see = list("gets goop everywhere.", "flops.", "jiggles!")
+
+/mob/living/basic/pet/dog/corgi/puppy/slime/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+	speech.speak = string_list(list())
+	speech.emote_hear = string_list(list("bubbles!", "splorts.", "splops!"))
+	speech.emote_see = string_list(list("gets goop everywhere.", "flops.", "jiggles!"))

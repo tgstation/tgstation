@@ -4,7 +4,7 @@
 
 	if(!isturf(target))
 		return
-	atmos_scan(user=usr, target=target, tool=null, silent=TRUE)
+	atmos_scan(user=usr, target=target, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -75,7 +75,7 @@
 		return
 
 	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
-	if(confirm !="Yes")
+	if(confirm != "Yes")
 		return
 
 	load_admins()
@@ -106,6 +106,5 @@
 		admin_disabled_cdn_transport = current_transport
 		CONFIG_SET(string/asset_transport, "simple")
 		SSassets.OnConfigLoad()
-		SSassets.transport.dont_mutate_filenames = TRUE
 		message_admins("[key_name_admin(usr)] disabled the CDN asset transport")
 		log_admin("[key_name(usr)] disabled the CDN asset transport")

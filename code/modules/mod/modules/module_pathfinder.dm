@@ -3,10 +3,10 @@
 	name = "MOD pathfinder module"
 	desc = "This module, brought to you by Nakamura Engineering, has two components. \
 		The first component is a series of thrusters and a computerized location subroutine installed into the \
-		very control unit of the suit, allowing it flight at highway speeds, \
-		and to be able to locate the second part of the system; \
+		very control unit of the suit, allowing it flight at highway speeds using the suit's access locks \
+		to navigate through the station, and to be able to locate the second part of the system; \
 		a pathfinding implant installed into the base of the user's spine, \
-		broadcasting their location to the suit and allowing them to recall it to their back at any time. \
+		broadcasting their location to the suit and allowing them to recall it to their person at any time. \
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
@@ -109,7 +109,7 @@
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
-	mod_ai.current_movement_target = imp_in
+	mod_ai.set_movement_target(type, imp_in)
 	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
 	mod_ai.blackboard[BB_MOD_IMPLANT] = src
 	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
@@ -117,7 +117,7 @@
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
 	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	module.mod.add_overlay(jet_icon)
-	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	balloon_alert(imp_in, "suit recalled")
 	return TRUE
 
@@ -145,8 +145,9 @@
 	name = "Recall MOD"
 	desc = "Recall a MODsuit anyplace, anytime."
 	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	background_icon_state = "bg_mod"
+	overlay_icon_state = "bg_mod_border"
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
 	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)

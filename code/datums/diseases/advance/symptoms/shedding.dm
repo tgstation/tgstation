@@ -1,22 +1,15 @@
-/*
-//////////////////////////////////////
-Alopecia
-
-	Not Noticeable.
-	Increases resistance slightly.
-	Increases stage speed.
-	Transmittable.
-	Intense Level.
-
-BONUS
-	Makes the mob lose hair.
-
-//////////////////////////////////////
+/*Alopecia
+ * No change to stealth
+ * Slight increase to resistance
+ * Increases stage speed
+ * Increases transmissibility
+ * Near critcal level
+ * Bonus: Makes the mob lose hair.
 */
-
 /datum/symptom/shedding
 	name = "Alopecia"
 	desc = "The virus causes rapid shedding of head and body hair."
+	illness = "Thin Skinned"
 	stealth = 0
 	resistance = 1
 	stage_speed = 2
@@ -41,11 +34,11 @@ BONUS
 			if(3, 4)
 				if(!(H.hairstyle == "Bald") && !(H.hairstyle == "Balding Hair"))
 					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
-					addtimer(CALLBACK(src, .proc/Shed, H, FALSE), 50)
+					addtimer(CALLBACK(src, PROC_REF(Shed), H, FALSE), 50)
 			if(5)
 				if(!(H.facial_hairstyle == "Shaved") || !(H.hairstyle == "Bald"))
 					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
-					addtimer(CALLBACK(src, .proc/Shed, H, TRUE), 50)
+					addtimer(CALLBACK(src, PROC_REF(Shed), H, TRUE), 50)
 
 /datum/symptom/shedding/proc/Shed(mob/living/carbon/human/H, fullbald)
 	if(fullbald)
@@ -53,4 +46,4 @@ BONUS
 		H.hairstyle = "Bald"
 	else
 		H.hairstyle = "Balding Hair"
-	H.update_hair()
+	H.update_body_parts()

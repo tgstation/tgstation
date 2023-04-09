@@ -21,7 +21,8 @@ const GenomeImage = (props, context) => {
         'margin-left': '4px',
         outline,
       }}
-      onClick={onClick} />
+      onClick={onClick}
+    />
   );
 };
 
@@ -33,7 +34,7 @@ const GeneCycler = (props, context) => {
     <Button
       {...rest}
       color={color}
-      onClick={e => {
+      onClick={(e) => {
         e.preventDefault();
         if (e.ctrlKey) {
           act('pulse_gene', {
@@ -52,7 +53,7 @@ const GeneCycler = (props, context) => {
 
         return;
       }}
-      oncontextmenu={e => {
+      oncontextmenu={(e) => {
         e.preventDefault();
 
         act('pulse_gene', {
@@ -69,11 +70,7 @@ const GeneCycler = (props, context) => {
 const GenomeSequencer = (props, context) => {
   const { mutation } = props;
   if (!mutation) {
-    return (
-      <Box color="average">
-        No genome selected for sequencing.
-      </Box>
-    );
+    return <Box color="average">No genome selected for sequencing.</Box>;
   }
   if (mutation.Scrambled) {
     return (
@@ -94,16 +91,14 @@ const GenomeSequencer = (props, context) => {
         textAlign="center"
         disabled={!!mutation.Scrambled || mutation.Class !== MUT_NORMAL}
         className={
-          (defaultSeq?.charAt(i) === 'X' && !mutation.Active)
-            ? classes([
-              "outline-solid",
-              "outline-color-orange",
-            ])
+          defaultSeq?.charAt(i) === 'X' && !mutation.Active
+            ? classes(['outline-solid', 'outline-color-orange'])
             : false
         }
         gene={gene}
         index={i}
-        alias={mutation.Alias} />
+        alias={mutation.Alias}
+      />
     );
     buttons.push(button);
   }
@@ -111,22 +106,20 @@ const GenomeSequencer = (props, context) => {
   const pairs = [];
   for (let i = 0; i < buttons.length; i += 2) {
     const pair = (
-      <Box
-        key={i}
-        inline
-        m={0.5}>
+      <Box key={i} inline m={0.5}>
         {buttons[i]}
         <Box
           mt="-2px"
           ml="10px"
           width="2px"
           height="8px"
-          backgroundColor="label" />
+          backgroundColor="label"
+        />
         {buttons[i + 1]}
       </Box>
     );
 
-    if ((i % 8 === 0) && (i !== 0)) {
+    if (i % 8 === 0 && i !== 0) {
       pairs.push(
         <Box
           key={`${i}_divider`}
@@ -136,7 +129,8 @@ const GenomeSequencer = (props, context) => {
           left="-1px"
           width="8px"
           height="2px"
-          backgroundColor="label" />,
+          backgroundColor="label"
+        />
       );
     }
 
@@ -144,12 +138,10 @@ const GenomeSequencer = (props, context) => {
   }
   return (
     <>
-      <Box m={-0.5}>
-        {pairs}
-      </Box>
+      <Box m={-0.5}>{pairs}</Box>
       <Box color="label" mt={1}>
-        <b>Tip:</b> Ctrl+Click on the gene to set it to X.
-        Right Click to cycle in reverse.
+        <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to cycle
+        in reverse.
       </Box>
     </>
   );
@@ -158,25 +150,20 @@ const GenomeSequencer = (props, context) => {
 export const DnaConsoleSequencer = (props, context) => {
   const { data, act } = useBackend(context);
   const mutations = data.storage?.occupant ?? [];
-  const {
-    isJokerReady,
-    isMonkey,
-    jokerSeconds,
-    subjectStatus,
-  } = data;
+  const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
-  const mutation = mutations.find(mutation => (
-    mutation.Alias === sequencerMutation
-  ));
+  const mutation = mutations.find(
+    (mutation) => mutation.Alias === sequencerMutation
+  );
   return (
     <>
       <Stack mb={1}>
-        <Stack.Item width={mutations.length <= 8 && "154px" || "174px"}>
+        <Stack.Item width={(mutations.length <= 8 && '154px') || '174px'}>
           <Section
             title="Sequences"
             height="214px"
-            overflowY={mutations.length > 8 && "scroll"}>
-            {mutations.map(mutation => (
+            overflowY={mutations.length > 8 && 'scroll'}>
+            {mutations.map((mutation) => (
               <GenomeImage
                 key={mutation.Alias}
                 url={resolveAsset(mutation.Image)}
@@ -188,69 +175,70 @@ export const DnaConsoleSequencer = (props, context) => {
                   act('check_discovery', {
                     alias: mutation.Alias,
                   });
-                }} />
+                }}
+              />
             ))}
           </Section>
         </Stack.Item>
         <Stack.Item grow={1} basis={0}>
-          <Section
-            title="Sequence Info"
-            minHeight="100%">
-            <MutationInfo
-              mutation={mutation} />
+          <Section title="Sequence Info" minHeight="100%">
+            <MutationInfo mutation={mutation} />
           </Section>
         </Stack.Item>
       </Stack>
-      {subjectStatus === SUBJECT_DEAD && (
+      {(subjectStatus === SUBJECT_DEAD && (
         <Section color="bad">
           Genetic sequence corrupted. Subject diagnostic report: DECEASED.
         </Section>
-      ) || (isMonkey && mutation?.Name !== 'Monkified') && (
-        <Section color="bad">
-          Genetic sequence corrupted. Subject diagnostic report: MONKEY.
-        </Section>
-      ) || (subjectStatus === SUBJECT_TRANSFORMING) && (
-        <Section color="bad">
-          Genetic sequence corrupted. Subject diagnostic report: TRANSFORMING.
-        </Section>
-      ) || (
-        <Section
-          title="Genome Sequencer™"
-          buttons={(
-            !isJokerReady && (
-              <Box
-                lineHeight="20px"
-                color="label">
-                Joker on cooldown ({jokerSeconds}s)
-              </Box>
-            ) || jokerActive && (
-              <>
-                <Box
-                  mr={1}
-                  inline
-                  color="label">
-                  Click on a gene to reveal it.
+      )) ||
+        (isMonkey && mutation?.Name !== 'Monkified' && (
+          <Section color="bad">
+            Genetic sequence corrupted. Subject diagnostic report: MONKEY.
+          </Section>
+        )) ||
+        (subjectStatus === SUBJECT_TRANSFORMING && (
+          <Section color="bad">
+            Genetic sequence corrupted. Subject diagnostic report: TRANSFORMING.
+          </Section>
+        )) || (
+          <Section
+            title="Genome Sequencer™"
+            buttons={
+              (!isJokerReady && (
+                <Box lineHeight="20px" color="label">
+                  Joker on cooldown ({jokerSeconds}s)
                 </Box>
+              )) ||
+              (jokerActive && (
+                <>
+                  <Box mr={1} inline color="label">
+                    Click on a gene to reveal it.
+                  </Box>
+                  <Button
+                    content="Cancel Joker"
+                    onClick={() =>
+                      act('set_view', {
+                        jokerActive: '',
+                      })
+                    }
+                  />
+                </>
+              )) || (
                 <Button
-                  content="Cancel Joker"
-                  onClick={() => act('set_view', {
-                    jokerActive: '',
-                  })} />
-              </>
-            ) || (
-              <Button
-                icon="crown"
-                color="purple"
-                content="Use Joker"
-                onClick={() => act('set_view', {
-                  jokerActive: '1',
-                })} />
-            )
-          )}>
-          <GenomeSequencer
-            mutation={mutation} />
-        </Section>
-      )}
+                  icon="crown"
+                  color="purple"
+                  content="Use Joker"
+                  onClick={() =>
+                    act('set_view', {
+                      jokerActive: '1',
+                    })
+                  }
+                />
+              )
+            }>
+            <GenomeSequencer mutation={mutation} />
+          </Section>
+        )}
     </>
   );
 };

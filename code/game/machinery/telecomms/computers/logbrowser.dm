@@ -20,7 +20,7 @@
 	/// Can the monitor translate languages?
 	var/universal_translate = FALSE
 	/// Access required to delete messages
-	req_access = list(ACCESS_TCOMSAT)
+	req_access = list(ACCESS_TCOMMS)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/ui_data(mob/user)
@@ -158,6 +158,7 @@
 	return FALSE
 
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "ServerMonitor", name)

@@ -7,31 +7,31 @@
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
-		/obj/item/reagent_containers/food/drinks/waterbottle = 10,
-		/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3
+		/obj/item/reagent_containers/cup/soda_cans/cola = 10,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 10,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 10,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 10,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 10,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 10,
+		/obj/item/reagent_containers/cup/soda_cans/lemon_lime = 10,
+		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 10,
+		/obj/item/reagent_containers/cup/glass/waterbottle = 10,
+		/obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha = 3,
 	)
 	contraband = list(
-		/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
-		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6
+		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 6,
+		/obj/item/reagent_containers/cup/soda_cans/shamblers = 6,
 	)
 	premium = list(
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1,
-		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/rootbeer = 1
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
+		/obj/item/reagent_containers/cup/soda_cans/air = 1,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 1,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/rootbeer = 1,
 	)
 	refill_canister = /obj/item/vending_refill/cola
-	default_price = PAYCHECK_ASSISTANT * 0.7
-	extra_price = PAYCHECK_MEDIUM
+	default_price = PAYCHECK_CREW * 0.7
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
 
@@ -91,16 +91,28 @@
 	name = "\improper Shambler's Vendor"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers_juice"
-	products = list(/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 10)
+	products = list(
+		/obj/item/reagent_containers/cup/soda_cans/cola = 10,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 10,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 10,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 10,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 10,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 10,
+		/obj/item/reagent_containers/cup/soda_cans/lemon_lime = 10,
+		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 10,
+		/obj/item/reagent_containers/cup/soda_cans/shamblers = 10,
+		)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
-	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
+	product_ads = "Refreshing!;Thirsty for DNA? Satiate your craving!;Over 1 trillion souls drank!;Made with real DNA!;The hivemind demands your thirst!;Drink up!;Absorb your thirst."
 	light_mask = "shamblers-light-mask"
 	light_color = COLOR_MOSTLY_PURE_PINK
+
+/obj/machinery/vending/cola/shamblers/Initialize(mapload)
+	. = ..()
+	var/datum/language_holder/ling_languages = get_language_holder()
+	ling_languages.selected_language = ling_languages.get_random_spoken_language()
+
+/obj/machinery/vending/cola/shamblers/speak(message)
+	. = ..()
+	var/datum/language_holder/ling_languages = get_language_holder()
+	ling_languages.selected_language = ling_languages.get_random_spoken_language()

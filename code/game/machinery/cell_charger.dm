@@ -3,9 +3,6 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
@@ -30,7 +27,7 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
-	. += "There's [charging ? "a" : "no"] cell in the charger."
+	. += "There's [charging ? "\a [charging]" : "no cell"] in the charger."
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
@@ -128,9 +125,10 @@
 		charging.emp_act(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
+	. = ..()
 	charge_rate = 250
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		charge_rate *= C.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		charge_rate *= capacitor.tier
 
 /obj/machinery/cell_charger/process(delta_time)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))

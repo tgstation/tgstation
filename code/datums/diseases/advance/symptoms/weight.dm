@@ -1,25 +1,14 @@
-/*
-//////////////////////////////////////
-
-Weight Loss
-
-	Very Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Reduced Transmittable.
-	High level.
-
-Bonus
-	Decreases the weight of the mob,
-	forcing it to be skinny.
-
-//////////////////////////////////////
+/*Weight Loss
+ * Reduces stealth
+ * Increases resistance
+ * Reduces stage speed
+ * Reduces transmissibility
+ * Bonus: Drains nutrition from the host
 */
-
 /datum/symptom/weight_loss
-
 	name = "Weight Loss"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
+	illness = "Placid Reflux"
 	stealth = -2
 	resistance = 2
 	stage_speed = -2

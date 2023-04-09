@@ -125,3 +125,26 @@
 	name = "reinforced porous rock"
 	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
 	decon_type = /turf/closed/mineral/asteroid/porous
+
+/turf/closed/wall/space
+	name = "illusionist wall"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "space"
+	plane = PLANE_SPACE
+	turf_flags = NO_RUST
+	smoothing_flags = NONE
+	canSmoothWith = null
+	smoothing_groups = null
+
+/turf/closed/wall/material/meat
+	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless

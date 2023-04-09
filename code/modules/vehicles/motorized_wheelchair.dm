@@ -1,6 +1,8 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
+	icon_state = "motorized_wheelchair"
+	overlay_icon = "motorized_wheelchair_overlay"
 	foldabletype = null
 	max_integrity = 150
 	///How "fast" the wheelchair goes only affects ramming
@@ -13,34 +15,49 @@
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
 	var/list/required_parts = list(
-		/obj/item/stock_parts/manipulator,
-		/obj/item/stock_parts/manipulator,
-		/obj/item/stock_parts/capacitor,
+		/datum/stock_part/manipulator,
+		/datum/stock_part/manipulator,
+		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
 	var/obj/item/stock_parts/cell/power_cell
+	///stock parts for this chair
+	var/list/component_parts = list()
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
-	. = ..()
+	for(var/obj/item/stock_parts/part in parts_list)
+		// find macthing datum/stock_part for this part and add to component list
+		var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[part.type]
+		if(isnull(newstockpart))
+			CRASH("No corresponding datum/stock_part for [part.type]")
+		component_parts += newstockpart
+		// delete this part
+		part.moveToNullspace()
+		qdel(part)
 	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
-	for(var/obj/item/stock_parts/manipulator/M in contents)
-		speed += M.rating
-	for(var/obj/item/stock_parts/capacitor/C in contents)
-		power_efficiency = C.rating
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		speed += manipulator.tier
+	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
+	if(icon_state != chair_icon)
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
+
+	icon_state = chair_icon
+
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		power_efficiency = capacitor.tier
 
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
 
 /obj/vehicle/ridden/wheelchair/motorized/atom_destruction(damage_flag)
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/atom_content as anything in contents)
-		atom_content.forceMove(T)
+	for(var/datum/stock_part/part in component_parts)
+		new part.physical_object_type(drop_location())
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
@@ -55,14 +72,6 @@
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
 	return ..()
-
-/obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
-	. = ..()
-	set_density(TRUE)
-
-/obj/vehicle/ridden/wheelchair/motorized/post_unbuckle_mob()
-	. = ..()
-	set_density(FALSE)
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
@@ -93,18 +102,27 @@
 	if(!istype(I, /obj/item/stock_parts))
 		return ..()
 
-	var/obj/item/stock_parts/newstockpart = I
-	for(var/obj/item/stock_parts/oldstockpart in contents)
+	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[I.type]
+	if(isnull(newstockpart))
+		CRASH("No corresponding datum/stock_part for [newstockpart.type]")
+	for(var/datum/stock_part/oldstockpart in component_parts)
 		var/type_to_check
-		for(var/pathtypes in required_parts)
-			if(ispath(oldstockpart.type, pathtypes))
-				type_to_check = oldstockpart.type
+		for(var/pathtype in required_parts)
+			if(ispath(oldstockpart.type, pathtype))
+				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
-			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
-				newstockpart.forceMove(src)
-				user.put_in_hands(oldstockpart)
-				user.visible_message(span_notice("[user] replaces [oldstockpart] with [newstockpart] in [src]."), span_notice("You replace [oldstockpart] with [newstockpart]."))
+			if(newstockpart.tier > oldstockpart.tier)
+				// delete the part in the users hand and add the datum part to the component_list
+				I.moveToNullspace()
+				qdel(I)
+				component_parts += newstockpart
+				// create an new instance of the old datum stock part physical type & put it in the users hand
+				var/obj/item/stock_parts/part = new oldstockpart.physical_object_type
+				user.put_in_hands(part)
+				component_parts -= oldstockpart
+				// user message
+				user.visible_message(span_notice("[user] replaces [oldstockpart.name()] with [newstockpart.name()] in [src]."), span_notice("You replace [oldstockpart.name()] with [newstockpart.name()]."))
 				break
 	refresh_parts()
 
@@ -115,9 +133,8 @@
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/atom_content as anything in contents)
-		atom_content.forceMove(T)
+	for(var/datum/stock_part/part in component_parts)
+		new part.physical_object_type(drop_location())
 	qdel(src)
 	return TRUE
 
@@ -132,10 +149,20 @@
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
 
+/obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
+	. = ..()
+	if (.)
+		return
+	if (!has_buckled_mobs())
+		return
+	for (var/mob/living/guy in newloc)
+		if(!(guy in buckled_mobs))
+			Bump(guy)
+
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
+	if(obj_flags & EMAGGED && (isclosedturf(A) || isliving(A)))
 		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message(span_boldwarning("[src] explodes!!"))
 		return

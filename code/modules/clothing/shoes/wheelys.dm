@@ -5,7 +5,9 @@
 	greyscale_colors = "#545454#ffffff"
 	icon_state = "sneakers"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	inhand_icon_state = "wheelys"
+	inhand_icon_state = "sneakers_back"
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
@@ -18,7 +20,7 @@
 
 /obj/item/clothing/shoes/wheelys/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_FEET)
 	wheels = new wheels(null)
 	wheels.link_shoes(src)
 
@@ -60,22 +62,24 @@
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
+	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
-	custom_premium_price = PAYCHECK_EASY * 5
-	custom_price = PAYCHECK_EASY * 5
+	custom_premium_price = PAYCHECK_CREW * 5
+	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
+	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
-	custom_premium_price = PAYCHECK_EASY * 1.6
-	custom_price = PAYCHECK_EASY * 1.6
+	custom_premium_price = PAYCHECK_CREW * 1.6
+	custom_price = PAYCHECK_CREW * 1.6

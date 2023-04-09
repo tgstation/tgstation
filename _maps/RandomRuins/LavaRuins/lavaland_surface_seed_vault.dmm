@@ -36,10 +36,10 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "ai" = (
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -184,19 +184,12 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aC" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aD" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -208,8 +201,8 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/machinery/light/directional/west,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
@@ -246,10 +239,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aK" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -314,11 +304,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aT" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -351,8 +341,8 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
@@ -364,11 +354,7 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aZ" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark,
@@ -491,16 +477,16 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/disposaloutlet,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/palebush,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/pale/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bo" = (
@@ -536,27 +522,27 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "br" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bs" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
 /obj/structure/window/spawner,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/effect/decal/cleanable/glass,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)

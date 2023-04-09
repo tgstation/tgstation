@@ -1,5 +1,3 @@
-// File ordered based on progression
-
 /datum/uplink_category/stealthy_tools
 	name = "Stealth Gadgets"
 	weight = 4
@@ -7,7 +5,6 @@
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
 
-// No progression cost
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -21,10 +18,10 @@
 /datum/uplink_item/stealthy_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
-			activated to display their exact viewing location and nearby security camera blind spots. Knowing when \
-			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
-			blind spots can help you identify escape routes."
+			activated to get an rough estimate of the AI's presence. Knowing when \
+			an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/multitool/ai_detect
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
 
 /datum/uplink_item/stealthy_tools/chameleon
@@ -34,6 +31,14 @@
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
+
+/datum/uplink_item/stealthy_tools/syndigaloshes
+	name = "No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces."
+	item = /obj/item/clothing/shoes/chameleon/noslip
+	cost = 2
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
@@ -57,6 +62,11 @@
 	item = /obj/item/flashlight/emp
 	cost = 4
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/emplight/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -82,25 +92,12 @@
 	surplus = 30
 	illegal_tech = FALSE
 
-// Medium progression cost
-
-/datum/uplink_item/stealthy_tools/syndigaloshes
-	name = "No-Slip Chameleon Shoes"
-	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces."
-	progression_minimum = 20 MINUTES
-	item = /obj/item/clothing/shoes/chameleon/noslip
-	cost = 2
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-// High progression cost
-
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 30 MINUTES
+	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 4
 	restricted = TRUE
@@ -116,7 +113,7 @@
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 40 MINUTES
+	progression_minimum = 20 MINUTES
 	limited_stock = 1
 	cost = 6
 	restricted = TRUE

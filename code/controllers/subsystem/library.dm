@@ -19,10 +19,10 @@ SUBSYSTEM_DEF(library)
 	var/list/library_areas = list()
 
 /datum/controller/subsystem/library/Initialize()
-	. = ..()
 	prepare_official_posters()
 	prepare_library_areas()
 	load_shelves()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/library/proc/load_shelves()
 	for(var/obj/structure/bookcase/case_to_load as anything in shelves_to_load)
@@ -49,10 +49,11 @@ SUBSYSTEM_DEF(library)
 /datum/controller/subsystem/library/proc/prepare_official_posters()
 	printable_posters = list()
 	for(var/obj/structure/sign/poster/official/poster_type as anything in subtypesof(/obj/structure/sign/poster/official))
-		printable_posters[initial(poster_type.name)] = poster_type
+		if (initial(poster_type.printable) == TRUE) //Mostly this check exists to keep directionals from ending up in the printable list
+			printable_posters[initial(poster_type.name)] = poster_type
 
 /datum/controller/subsystem/library/proc/prepare_library_areas()
-	library_areas = typesof(/area/service/library) - /area/service/library/abandoned
+	library_areas = typesof(/area/station/service/library) - /area/station/service/library/abandoned
 	var/list/additional_areas = SSmapping.config.library_areas
 	if(additional_areas)
 		library_areas += additional_areas

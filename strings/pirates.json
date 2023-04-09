@@ -1,5 +1,5 @@
 {
-	"beginnings":[
+	"generic_beginnings":[
 		"Comet",
 		"Ion",
 		"Laser",
@@ -11,7 +11,7 @@
 		"Star",
 		"Void"
 	],
-	"endings":[
+	"generic_endings":[
 		"beard",
 		"bilge",
 		"deck",
@@ -23,6 +23,46 @@
 		"keel",
 		"knot",
 		"salt"
+	],
+	"psyker_beginnings":[
+		"Arch",
+		"Brain",
+		"Cheeze",
+		"Corpo",
+		"Crazy-",
+		"Cronen-",
+		"Dain",
+		"Doctor",
+		"Flesh",
+		"Fortune",
+		"Gore",
+		"Mad",
+		"Mind",
+		"Professor",
+		"Psychic-",
+		"Psycho",
+		"Snirby",
+		"Stun",
+		"Super",
+		"Wise"
+	],
+	"psyker_endings":[
+		"bound",
+		"brain",
+		"brammage",
+		"gore",
+		"guy",
+		"head",
+		"locked",
+		"naut",
+		"nuts",
+		"rat",
+		"reader",
+		"scanner",
+		"sponge",
+		"storm",
+		"teller",
+		"whiz"
 	],
 	"rogue_names":[
 		"Abyssal Titan",
@@ -69,6 +109,7 @@
 	],
 	"silverscale_names":[
 		"Antelope's Run",
+		"Archduke's Silver Ring",
 		"Aristocrat's Principle",
 		"Aristocratic Tributary",
 		"Bane of Serfs",
@@ -90,13 +131,49 @@
 		"Ruling Body",
 		"Serpentine Dominion",
 		"Silver Fox",
+		"Silver Steed",
 		"Silver Sterling",
 		"Silverchain's Sovereignty",
 		"Spaceflower",
 		"Status Quo",
 		"Swords and Sandals",
-		"Thesaurus Terror",
-		"Archduke's Silver Ring",
-		"Silver Steed"
+		"Thesaurus Terror"
+	],
+	"skeleton_names":[
+		"Flying Dutchman"
+	],
+	"psyker_names":[
+		"Big Gulchergut for Gore",
+		"Blowkaine",
+		"Brainframe",
+		"Dead Freight",
+		"Debased",
+		"Dentist's Office",
+		"Echolocator",
+		"Free Your Mind",
+		"Galactic Crackhouse",
+		"Gaslighters",
+		"Gore Gore Gore",
+		"Gore-binger",
+		"Goretastic",
+		"Happy Dust",
+		"Headache",
+		"Heptadome",
+		"Home For The Disturbed",
+		"Kronkainery",
+		"Live Free or Die",
+		"Milkman Conspiracy",
+		"Mind Palace",
+		"Mind's Garden",
+		"Motherlobe",
+		"Planetarium",
+		"Psychoisolation",
+		"Psychosocial",
+		"Psychozone",
+		"Psykerden",
+		"Suppository",
+		"The Dreaming",
+		"Ultra Violence",
+		"Where We're Going"
 	]
 }

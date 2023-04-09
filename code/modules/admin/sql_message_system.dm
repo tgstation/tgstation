@@ -253,7 +253,7 @@
 					return
 				new_expiry = query_validate_expire_time_edit.item[1]
 			qdel(query_validate_expire_time_edit)
-		var/edit_text = "Expiration time edited by [editor_key] on [SQLtime()] from [old_expiry] to [new_expiry]<hr>"
+		var/edit_text = "Expiration time edited by [editor_key] on [SQLtime()] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]<hr>"
 		var/datum/db_query/query_edit_message_expiry = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET expire_timestamp = :expire_time, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -264,8 +264,8 @@
 			qdel(query_find_edit_expiry_message)
 			return
 		qdel(query_edit_message_expiry)
-		log_admin_private("[kn] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
-		message_admins("[kna] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
+		log_admin_private("[kn] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]")
+		message_admins("[kna] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]")
 		if(browse)
 			browse_messages("[type]")
 		else
@@ -524,7 +524,7 @@
 			if(!linkless)
 				if(type == "note")
 					if(severity)
-						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity=="none" ? "No" : "[capitalize(severity)]"] Severity</a>"
+						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity == "none" ? "No" : "[capitalize(severity)]"] Severity</a>"
 					else
 						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>N/A Severity</a>"
 				data += " <a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>Change Expiry Time</a>"
@@ -668,13 +668,13 @@
 		var/editor_key = query_get_message_output.item[5]
 		switch(type)
 			if("message")
-				output += "<font color='red' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
+				output += "<font color='[COLOR_RED]' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
 			if("note")
-				output += "<font color='red' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
+				output += "<font color='[COLOR_RED]' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text]</font><br>"
 			if("watchlist entry")
-				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
+				message_admins("<font color='[COLOR_RED]'><B>Notice: </B></font><font color='[COLOR_ADMIN_PINK]'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
 				send2tgs_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "[span_memo("Memo by <span class='prefix'>[admin_key]")] on [timestamp]"

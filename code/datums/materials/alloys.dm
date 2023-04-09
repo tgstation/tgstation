@@ -82,13 +82,15 @@
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
 	color = "#ff80f4"
-	greyscale_colors = "#ff80f4"
+	greyscale_colors = "#ff80f496"
 	alpha = 150
+	starlight_color = COLOR_STRONG_MAGENTA
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 0.5
 	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
+	debris_type = /obj/effect/decal/cleanable/glass/plasma
 	value_per_unit = 0.075
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
@@ -101,12 +103,14 @@
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
 	color = "#cfbee0"
-	greyscale_colors = "#cfbee0"
+	greyscale_colors = "#cfbee096"
 	alpha = 150
+	starlight_color = COLOR_COMMAND_BLUE
 	init_flags = MATERIAL_INIT_MAPLOAD
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, FIRE = 0.8, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/titaniumglass
-	shard_type = /obj/item/shard
+	shard_type = /obj/item/shard/titanium
+	debris_type = /obj/effect/decal/cleanable/glass/titanium
 	value_per_unit = 0.04
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
@@ -119,13 +123,15 @@
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
 	color = "#5d3369"
-	greyscale_colors = "#5d3369"
+	greyscale_colors = "#5d336996"
+	starlight_color = COLOR_CENTCOM_BLUE
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 1.1
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
-	shard_type = /obj/item/shard/plasma
+	shard_type = /obj/item/shard/plastitanium
+	debris_type = /obj/effect/decal/cleanable/glass/plastitanium
 	value_per_unit = 0.125
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)

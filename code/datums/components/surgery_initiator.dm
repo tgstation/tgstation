@@ -11,6 +11,9 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/obj/item/surgery_tool = parent
+	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+
 /datum/component/surgery_initiator/Destroy(force, silent)
 	last_user_ref = null
 	surgery_target_ref = null
@@ -18,10 +21,11 @@
 	return ..()
 
 /datum/component/surgery_initiator/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(initiate_surgery_moment))
+	RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/surgery_initiator/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
 	unregister_signals()
 
 /datum/component/surgery_initiator/proc/unregister_signals()
@@ -38,7 +42,7 @@
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
-	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, target, user)
+	INVOKE_ASYNC(src, PROC_REF(do_initiate_surgery_moment), target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/surgery_initiator/proc/do_initiate_surgery_moment(mob/living/target, mob/user)
@@ -69,8 +73,8 @@
 	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
-	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
-	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
+	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, PROC_REF(on_set_selected_zone))
+	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_mob_surgery_started))
 
 	ui_interact(user)
 
@@ -87,15 +91,15 @@
 		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
 		if(affecting)
-			if(!surgery.requires_bodypart)
+			if(!(surgery.surgery_flags & SURGERY_REQUIRE_LIMB))
 				continue
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
 				continue
-			if(surgery.requires_real_bodypart && affecting.is_pseudopart)
+			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && affecting.is_pseudopart)
 				continue
-		else if(carbon_target && surgery.requires_bodypart) //mob with no limb in surgery zone when we need a limb
+		else if(carbon_target && (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)) //mob with no limb in surgery zone when we need a limb
 			continue
-		if(surgery.lying_required && target.body_position != LYING_DOWN)
+		if((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
 			continue
 		if(!surgery.can_start(user, target))
 			continue
@@ -123,9 +127,6 @@
 		qdel(the_surgery)
 		return
 
-	if(!the_surgery.can_cancel)
-		return
-
 	var/required_tool_type = TOOL_CAUTERY
 	var/obj/item/close_tool = user.get_inactive_held_item()
 	var/is_robotic = the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC
@@ -143,7 +144,7 @@
 		return
 
 	if(the_surgery.operated_bodypart)
-		the_surgery.operated_bodypart.generic_bleedstacks -= 5
+		the_surgery.operated_bodypart.adjustBleedStacks(-5)
 
 	patient.surgeries -= the_surgery
 	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
@@ -207,7 +208,7 @@
 				return TRUE
 
 			var/atom/movable/screen/zone_sel/zone_selector = user.hud_used?.zone_select
-			zone_selector?.set_selected_zone(zone, user)
+			zone_selector?.set_selected_zone(zone, user, should_log = FALSE)
 
 			return TRUE
 		if ("start_surgery")
@@ -292,19 +293,18 @@
 		var/mob/living/carbon/carbon_target = target
 		affecting_limb = carbon_target.get_bodypart(check_zone(selected_zone))
 
-	if (surgery.requires_bodypart == isnull(affecting_limb))
-		if (surgery.requires_bodypart)
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) == isnull(affecting_limb))
+		if (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
 			target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
 		else
 			target.balloon_alert(user, "patient has \a [parse_zone(selected_zone)]!")
-
 		return
 
 	if (!isnull(affecting_limb) && surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
 		target.balloon_alert(user, "not the right type of limb!")
 		return
 
-	if (surgery.lying_required && target.body_position != LYING_DOWN)
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
 		target.balloon_alert(user, "patient is not lying down!")
 		return
 
@@ -334,5 +334,24 @@
 	var/mob/living/user = last_user_ref?.resolve()
 	if (isnull(user))
 		return FALSE
+	if(surgery.surgery_flags & SURGERY_IGNORE_CLOTHES)
+		return FALSE
 
-	return !surgery.ignore_clothes && !get_location_accessible(target, user.zone_selected)
+	return !get_location_accessible(target, user.zone_selected)
+
+/**
+ * Adds context sensitivy directly to the surgery initator file for screentips
+ * Arguments:
+ * * source - the surgery drapes, cloak, or bedsheet calling surgery initator
+ * * context - Preparing Surgery, the component has a lot of ballon alerts to deal with most contexts
+ * * target - the living target mob you are doing surgery on
+ * * user - refers to user who will see the screentip when the drapes are on a living target
+ */
+/datum/component/surgery_initiator/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Prepare Surgery"
+	return CONTEXTUAL_SCREENTIP_SET

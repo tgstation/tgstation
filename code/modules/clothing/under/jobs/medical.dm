@@ -1,8 +1,10 @@
 /obj/item/clothing/under/rank/medical
 	icon = 'icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
-	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/rank_medical
+
+/datum/armor/rank_medical
+	bio = 50
 
 /obj/item/clothing/under/rank/medical/doctor
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
@@ -35,6 +37,12 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
+	name = "chief medical officer's scrubs"
+	desc = "A distinctive set of white and turquoise scrubs given to chief medical officers who desire a clinical look."
+	icon_state = "scrubscmo"
+	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	name = "chief medical officer's turtleneck"
@@ -73,7 +81,6 @@
 
 /obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/scrubs/blue
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
@@ -85,14 +92,19 @@
 
 /obj/item/clothing/under/rank/medical/scrubs/purple
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
-	icon_state = "scrubspurple"
+	icon_state = "scrubswine"
 
 /obj/item/clothing/under/rank/medical/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
 	name = "chemist's jumpsuit"
 	icon_state = "chemistry"
 	inhand_icon_state = "w_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 65)
+	armor_type = /datum/armor/medical_chemist
+
+/datum/armor/medical_chemist
+	bio = 10
+	fire = 50
+	acid = 65
 
 /obj/item/clothing/under/rank/medical/chemist/skirt
 	name = "chemist's jumpskirt"
@@ -109,7 +121,6 @@
 	name = "paramedic jumpsuit"
 	icon_state = "paramedic"
 	inhand_icon_state = "w_suit"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/medical/paramedic/skirt
 	name = "paramedic jumpskirt"

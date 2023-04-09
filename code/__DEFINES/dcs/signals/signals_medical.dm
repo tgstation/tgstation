@@ -4,3 +4,11 @@
 /// From /datum/surgery_step/success(): (datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 #define COMSIG_MOB_SURGERY_STEP_SUCCESS "mob_surgery_step_success"
 
+/// From /obj/item/shockpaddles/proc/do_success(): (obj/item/shockpaddles/source)
+#define COMSIG_DEFIBRILLATOR_SUCCESS "defib_success"
+	#define COMPONENT_DEFIB_STOP (1<<0)
+
+/// From /datum/surgery/can_start(): (mob/source, datum/surgery/surgery, mob/living/patient)
+#define COMSIG_SURGERY_STARTING "surgery_starting"
+	#define COMPONENT_CANCEL_SURGERY (1<<0)
+	#define COMPONENT_FORCE_SURGERY (1<<1)

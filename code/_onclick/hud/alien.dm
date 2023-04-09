@@ -7,7 +7,7 @@
 
 /atom/movable/screen/alien/leap/Click()
 	if(isalienhunter(usr))
-		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+		var/mob/living/carbon/alien/adult/hunter/AH = usr
 		AH.toggle_leap()
 
 /atom/movable/screen/alien/plasma_display
@@ -24,7 +24,7 @@
 /datum/hud/alien
 	ui_style = 'icons/hud/screen_alien.dmi'
 
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
+/datum/hud/alien/New(mob/living/carbon/alien/adult/owner)
 	..()
 
 	var/atom/movable/screen/using
@@ -57,7 +57,7 @@
 	static_inventory += action_intent
 
 	if(isalienhunter(mymob))
-		var/mob/living/carbon/alien/humanoid/hunter/H = mymob
+		var/mob/living/carbon/alien/adult/hunter/H = mymob
 		H.leap_icon = new /atom/movable/screen/alien/leap()
 		H.leap_icon.screen_loc = ui_alien_storage_r
 		static_inventory += H.leap_icon
@@ -126,7 +126,7 @@
 /datum/hud/alien/persistent_inventory_update()
 	if(!mymob)
 		return
-	var/mob/living/carbon/alien/humanoid/H = mymob
+	var/mob/living/carbon/alien/adult/H = mymob
 	if(hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))

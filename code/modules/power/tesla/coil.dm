@@ -6,7 +6,7 @@
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
-	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon = 'icons/obj/engine/tesla_coil.dmi'
 	icon_state = "coil0"
 
 	// Executing a traitor caught releasing tesla was never this fun!
@@ -39,12 +39,13 @@
 	wires = new /datum/wires/tesla_coil(src)
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
+	. = ..()
 	var/power_multiplier = 0
 	zap_cooldown = 100
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		power_multiplier += C.rating
-		zap_cooldown -= (C.rating * 20)
-	input_power_multiplier = (0.85 * (power_multiplier / 4)) //Max out at 85% efficency.
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		power_multiplier += capacitor.tier
+		zap_cooldown -= (capacitor.tier * 20)
+	input_power_multiplier = max(1 * (power_multiplier / 8), 0.25) //Max out at 50% efficency.
 
 /obj/machinery/power/energy_accumulator/tesla_coil/examine(mob/user)
 	. = ..()
@@ -90,8 +91,8 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/zap_act(power, zap_flags)
 	if(!anchored || panel_open)
 		return ..()
-	obj_flags |= BEING_SHOCKED
-	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	ADD_TRAIT(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
 	flick("coilhit", src)
 	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
 		return 0
@@ -116,7 +117,7 @@
 /obj/machinery/power/energy_accumulator/grounding_rod
 	name = "grounding rod"
 	desc = "Keeps an area from being fried by Edison's Bane."
-	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon = 'icons/obj/engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
 	density = TRUE

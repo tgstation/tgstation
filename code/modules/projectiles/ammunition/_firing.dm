@@ -32,7 +32,7 @@
 	return TRUE
 
 /obj/item/ammo_casing/proc/tk_firing(mob/living/user, atom/fired_from)
-	return fired_from.loc != user ? TRUE : FALSE
+	return fired_from != user && !user.contains(fired_from)
 
 /obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
 	if (!loaded_projectile)
@@ -71,9 +71,8 @@
 		new firing_effect_type(get_turf(src), firing_dir)
 
 	var/direct_target
-	if(targloc == curloc)
-		if(target) //if the target is right on our location we'll skip the travelling code in the proj's fire()
-			direct_target = target
+	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
+		direct_target = target
 	if(!direct_target)
 		var/modifiers = params2list(params)
 		loaded_projectile.preparePixelProjectile(target, fired_from, modifiers, spread)

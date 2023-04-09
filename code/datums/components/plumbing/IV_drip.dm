@@ -13,12 +13,12 @@
 /datum/component/plumbing/iv_drip/RegisterWithParent()
 	. = ..()
 
-	RegisterSignal(parent, list(COMSIG_IV_ATTACH), .proc/update_attached)
-	RegisterSignal(parent, list(COMSIG_IV_DETACH), .proc/clear_attached)
+	RegisterSignal(parent, COMSIG_IV_ATTACH, PROC_REF(update_attached))
+	RegisterSignal(parent, COMSIG_IV_DETACH, PROC_REF(clear_attached))
 
 /datum/component/plumbing/iv_drip/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_IV_ATTACH))
-	UnregisterSignal(parent, list(COMSIG_IV_DETACH))
+	UnregisterSignal(parent, COMSIG_IV_ATTACH)
+	UnregisterSignal(parent, COMSIG_IV_DETACH)
 
 ///When an IV is attached, we will use whoever is attached as our receiving container
 /datum/component/plumbing/iv_drip/proc/update_attached(datum/source, mob/living/attachee)

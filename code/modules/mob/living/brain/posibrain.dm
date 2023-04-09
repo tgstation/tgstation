@@ -3,7 +3,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "posibrain"
 	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -37,8 +37,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/picked_name
 	///Whether this positronic brain is currently looking for a ghost to enter it.
 	var/searching = FALSE
-	///If it pings on creation immediately
-	var/autoping = TRUE
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
 
@@ -72,15 +70,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	next_ask = world.time + ask_delay
 	searching = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/check_success), ask_delay)
+	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
 /obj/item/mmi/posibrain/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
 	if(isnull(input_seed))
 		return
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
 	ask_role = input_seed
@@ -119,13 +117,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
 		return
-	if(user.suiciding) //if they suicided, they're out forever.
+	if(HAS_TRAIT(src, TRAIT_SUICIDED)) //if they suicided, they're out forever.
 		to_chat(user, span_warning("[src] fizzles slightly. Sadly it doesn't take those who suicided!"))
 		return
 	var/posi_ask = tgui_alert(user, "Become a [name]? (Warning, You can no longer be revived, and all past lives will be forgotten!)", "Confirm", list("Yes","No"))
 	if(posi_ask != "Yes" || QDELETED(src))
 		return
-	if(brainmob.suiciding) //clear suicide status if the old occupant suicided.
+	if(HAS_TRAIT(brainmob, TRAIT_SUICIDED)) //clear suicide status if the old occupant suicided.
 		brainmob.set_suicide(FALSE)
 	transfer_personality(user)
 
@@ -187,7 +185,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			. += span_notice("Current consciousness seed: \"[ask_role]\"")
 		. += span_boldnotice("Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.")
 
-/obj/item/mmi/posibrain/Initialize(mapload)
+/obj/item/mmi/posibrain/Initialize(mapload, autoping = TRUE)
 	. = ..()
 	set_brainmob(new /mob/living/brain(src))
 	var/new_name

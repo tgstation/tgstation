@@ -1,5 +1,5 @@
 /// How often the sensor data is updated
-#define SENSORS_UPDATE_PERIOD 10 SECONDS //How often the sensor data updates.
+#define SENSORS_UPDATE_PERIOD (10 SECONDS) //How often the sensor data updates.
 /// The job sorting ID associated with otherwise unknown jobs
 #define UNKNOWN_JOB_ID 81
 
@@ -8,9 +8,6 @@
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 250
-	active_power_usage = 500
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
 
@@ -82,6 +79,7 @@
 	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/crew/ui_interact(mob/user)
+	. = ..()
 	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
@@ -123,11 +121,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_STATION_ENGINEER = 41,
 		JOB_ATMOSPHERIC_TECHNICIAN = 42,
 		// 50-59: Cargo
-		JOB_HEAD_OF_PERSONNEL = 50,
-		JOB_QUARTERMASTER = 51,
-		JOB_SHAFT_MINER = 52,
-		JOB_CARGO_TECHNICIAN = 53,
+		JOB_QUARTERMASTER = 50,
+		JOB_SHAFT_MINER = 51,
+		JOB_CARGO_TECHNICIAN = 52,
 		// 60+: Civilian/other
+		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_BARTENDER = 61,
 		JOB_COOK = 62,
 		JOB_BOTANIST = 63,

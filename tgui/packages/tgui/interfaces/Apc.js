@@ -5,9 +5,7 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props, context) => {
   return (
-    <Window
-      width={450}
-      height={445}>
+    <Window width={450} height={445}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -59,103 +57,117 @@ const malfMap = {
 const ApcContent = (props, context) => {
   const { act, data } = useBackend(context);
   const locked = data.locked && !data.siliconUser;
-  const externalPowerStatus = powerStatusMap[data.externalPower]
-    || powerStatusMap[0];
-  const chargingStatus = powerStatusMap[data.chargingStatus]
-    || powerStatusMap[0];
+  const externalPowerStatus =
+    powerStatusMap[data.externalPower] || powerStatusMap[0];
+  const chargingStatus =
+    powerStatusMap[data.chargingStatus] || powerStatusMap[0];
   const channelArray = data.powerChannels || [];
   const malfStatus = malfMap[data.malfStatus] || malfMap[0];
   const adjustedCellChange = data.powerCellStatus / 100;
   if (data.failTime > 0) {
     return (
-      <NoticeBox>
-        <b><h3>SYSTEM FAILURE</h3></b>
-        <i>
-          I/O regulators malfunction detected!
-          Waiting for system reboot...
-        </i>
+      <NoticeBox info textAlign="center" mb={0}>
+        <b>
+          <h3>SYSTEM FAILURE</h3>
+        </b>
+        I/O regulators have malfunctioned! <br />
+        Awaiting system reboot.
         <br />
-        Automatic reboot in {data.failTime} seconds...
+        Executing software reboot in {data.failTime} seconds...
+        <br />
+        <br />
         <Button
           icon="sync"
           content="Reboot Now"
-          onClick={() => act('reboot')} />
+          tooltip="Force an interface reset."
+          tooltipPosition="bottom"
+          onClick={() => act('reboot')}
+        />
       </NoticeBox>
     );
   }
   return (
     <>
-      <InterfaceLockNoticeBox />
+      <InterfaceLockNoticeBox
+        siliconUser={data.remoteAccess || data.siliconUser}
+        preventLocking={data.remoteAccess}
+      />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item
             label="Main Breaker"
             color={externalPowerStatus.color}
-            buttons={(
+            buttons={
               <Button
                 icon={data.isOperating ? 'power-off' : 'times'}
                 content={data.isOperating ? 'On' : 'Off'}
                 selected={data.isOperating && !locked}
                 disabled={locked}
-                onClick={() => act('breaker')} />
-            )}>
+                onClick={() => act('breaker')}
+              />
+            }>
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
           <LabeledList.Item label="Power Cell">
-            <ProgressBar
-              color="good"
-              value={adjustedCellChange} />
+            <ProgressBar color="good" value={adjustedCellChange} />
           </LabeledList.Item>
           <LabeledList.Item
             label="Charge Mode"
             color={chargingStatus.color}
-            buttons={(
+            buttons={
               <Button
                 icon={data.chargeMode ? 'sync' : 'times'}
                 content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
-                onClick={() => act('charge')} />
-            )}>
+                onClick={() => act('charge')}
+              />
+            }>
             [ {chargingStatus.chargingText} ]
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Power Channels">
         <LabeledList>
-          {channelArray.map(channel => {
+          {channelArray.map((channel) => {
             const { topicParams } = channel;
             return (
               <LabeledList.Item
                 key={channel.title}
                 label={channel.title}
-                buttons={(
+                buttons={
                   <>
-                    <Box inline mx={2}
+                    <Box
+                      inline
+                      mx={2}
                       color={channel.status >= 2 ? 'good' : 'bad'}>
                       {channel.status >= 2 ? 'On' : 'Off'}
                     </Box>
                     <Button
                       icon="sync"
                       content="Auto"
-                      selected={!locked && (
-                        channel.status === 1 || channel.status === 3
-                      )}
+                      selected={
+                        !locked &&
+                        (channel.status === 1 || channel.status === 3)
+                      }
                       disabled={locked}
-                      onClick={() => act('channel', topicParams.auto)} />
+                      onClick={() => act('channel', topicParams.auto)}
+                    />
                     <Button
                       icon="power-off"
                       content="On"
                       selected={!locked && channel.status === 2}
                       disabled={locked}
-                      onClick={() => act('channel', topicParams.on)} />
+                      onClick={() => act('channel', topicParams.on)}
+                    />
                     <Button
                       icon="times"
                       content="Off"
                       selected={!locked && channel.status === 0}
                       disabled={locked}
-                      onClick={() => act('channel', topicParams.off)} />
+                      onClick={() => act('channel', topicParams.off)}
+                    />
                   </>
-                )}>
+                }>
                 {channel.powerLoad}
               </LabeledList.Item>
             );
@@ -167,48 +179,62 @@ const ApcContent = (props, context) => {
       </Section>
       <Section
         title="Misc"
-        buttons={!!data.siliconUser && (
-          <>
-            {!!data.malfStatus && (
+        buttons={
+          !!data.siliconUser && (
+            <>
+              {!!data.malfStatus && (
+                <Button
+                  icon={malfStatus.icon}
+                  content={malfStatus.content}
+                  color="bad"
+                  onClick={() => act(malfStatus.action)}
+                />
+              )}
               <Button
-                icon={malfStatus.icon}
-                content={malfStatus.content}
-                color="bad"
-                onClick={() => act(malfStatus.action)} />
-            )}
-            <Button
-              icon="lightbulb-o"
-              content="Overload"
-              onClick={() => act('overload')} />
-          </>
-        )}>
+                icon="lightbulb-o"
+                content="Overload"
+                onClick={() => act('overload')}
+              />
+            </>
+          )
+        }>
         <LabeledList>
           <LabeledList.Item
             label="Cover Lock"
-            buttons={(
+            buttons={
               <Button
+                tooltip="APC cover can be pried open with a crowbar."
                 icon={data.coverLocked ? 'lock' : 'unlock'}
                 content={data.coverLocked ? 'Engaged' : 'Disengaged'}
                 disabled={locked}
-                onClick={() => act('cover')} />
-            )} />
+                onClick={() => act('cover')}
+              />
+            }
+          />
           <LabeledList.Item
             label="Emergency Lighting"
-            buttons={(
+            buttons={
               <Button
+                tooltip="Lights use internal power cell when there is no power available."
                 icon="lightbulb-o"
                 content={data.emergencyLights ? 'Enabled' : 'Disabled'}
                 disabled={locked}
-                onClick={() => act('emergency_lighting')} />
-            )} />
+                onClick={() => act('emergency_lighting')}
+              />
+            }
+          />
           <LabeledList.Item
             label="Night Shift Lighting"
-            buttons={(
+            buttons={
               <Button
+                tooltip="Dim lights to reduce power consumption."
                 icon="lightbulb-o"
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
-                onClick={() => act('toggle_nightshift')} />
-            )} />
+                disabled={data.disable_nightshift_toggle}
+                onClick={() => act('toggle_nightshift')}
+              />
+            }
+          />
         </LabeledList>
       </Section>
     </>

@@ -4,7 +4,7 @@
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
 	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null)
 	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
-	if(!istype(P1)||!istype(P2))
+	if(!istype(P1) || !istype(P2))
 		return
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE
@@ -44,7 +44,8 @@
 			return FALSE
 	return ..()
 
-/obj/effect/portal/newtonian_move(direction, instant = FALSE) // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+// Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+/obj/effect/portal/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
@@ -111,7 +112,7 @@
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
+	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
 	if(last_effect == world.time)
@@ -119,7 +120,7 @@
 	else
 		last_effect = world.time
 	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
-		if(istype(M, /obj/projectile))
+		if(isprojectile(M))
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
 		return TRUE
@@ -182,4 +183,5 @@
 
 /obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
 	. = ..()
-	qdel(src)
+	if (. && !isdead(M))
+		qdel(src)

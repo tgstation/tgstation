@@ -1,18 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Modal,
-  RoundGauge,
-  Section,
-  Slider,
-  Stack,
-  NoticeBox,
-  Tabs,
-  LabeledList,
-} from '../components';
+import { Box, Button, Flex, Icon, Modal, RoundGauge, Section, Slider, Stack, NoticeBox, Tabs, LabeledList } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
@@ -45,7 +32,8 @@ const TankCompressorContent = (props, context) => {
                 fluid
                 icon={currentTab === 1 ? 'clipboard-list' : 'times'}
                 onClick={() =>
-                  currentTab === 1 ? changeTab(2) : changeTab(1)}>
+                  currentTab === 1 ? changeTab(2) : changeTab(1)
+                }>
                 {currentTab === 1 ? 'Open Records' : 'Close Records'}
               </Button>
             </Stack.Item>
@@ -167,9 +155,9 @@ const TankCompressorControls = (props, context) => {
                     icon_name="biohazard"
                     color="red"
                     active={
-                      (pressure >= leakPressure
-                        && pressure < fragmentPressure)
-                      || leaking
+                      (pressure >= leakPressure &&
+                        pressure < fragmentPressure) ||
+                      leaking
                     }
                   />
                 </Stack.Item>
@@ -198,7 +186,8 @@ const TankCompressorControls = (props, context) => {
                 step={0.5}
                 unit="L/S"
                 onDrag={(e, new_rate) =>
-                  act('change_rate', { target: new_rate })}
+                  act('change_rate', { target: new_rate })
+                }
               />
             </Stack.Item>
             <Stack.Item>
@@ -258,9 +247,9 @@ const TankCompressorRecords = (props, context) => {
     'recordRef',
     records[0]?.ref
   );
-  const activeRecord
-    = !!activeRecordRef
-    && records.find((record) => activeRecordRef === record.ref);
+  const activeRecord =
+    !!activeRecordRef &&
+    records.find((record) => activeRecordRef === record.ref);
   if (records.length === 0) {
     return (
       <Stack.Item grow>
@@ -301,14 +290,14 @@ const TankCompressorRecords = (props, context) => {
                     }}
                   />,
                   <Button
-                    key="print"
-                    icon="print"
-                    content="Print"
+                    key="save"
+                    icon="floppy-disk"
+                    content="Save"
                     disabled={!disk}
-                    tooltip="Print the record selected. Requires a data disk."
+                    tooltip="Save the record selected to an inserted data disk."
                     tooltipPosition="bottom"
                     onClick={() => {
-                      act('print_record', {
+                      act('save_record', {
                         'ref': activeRecord.ref,
                       });
                     }}

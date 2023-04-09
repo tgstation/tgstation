@@ -15,17 +15,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-/* 21st Sept 2010
-Updated by Skie -- Still not perfect but better!
-Stuff you can't do:
-Call proc /mob/proc/Dizzy() for some player
-Because if you select a player mob as owner it tries to do the proc for
-/mob/living/carbon/human/ instead. And that gives a run-time error.
-But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
-*/
-
 /client/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
@@ -34,7 +23,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	atmos_scan(user=usr, target=T, tool=null, silent=TRUE)
+	atmos_scan(user=usr, target=T, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -45,65 +34,104 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		tgui_alert(usr,"Wait until the game starts")
 		return
 	log_admin("[key_name(src)] has robotized [M.key].")
-	INVOKE_ASYNC(M, /mob.proc/Robotize)
+	INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, Robotize))
 
-/client/proc/makepAI(turf/T in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Make pAI"
-	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
+/client/proc/poll_type_to_del(search_string)
+	var/list/types = get_fancy_list_of_atom_types()
+	if (!isnull(search_string) && search_string != "")
+		types = filter_fancy_list(types, search_string)
 
-	var/list/available = list()
-	for(var/mob/C in GLOB.mob_list)
-		if(C.key)
-			available.Add(C)
-	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sort_names(available))
-	if(isnull(choice))
-		return
-	if(!isobserver(choice))
-		var/confirm = tgui_alert(usr, "[choice.key] isn't ghosting right now. Are you sure you want to yank them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
-		if(confirm != "Yes")
-			return
-	var/obj/item/paicard/card = new(T)
-	var/mob/living/silicon/pai/pai = new(card)
-
-	var/chosen_name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text|null
-
-	if (isnull(chosen_name))
+	if(!length(types))
 		return
 
-	pai.name = chosen_name
-	pai.real_name = pai.name
-	pai.key = choice.key
-	card.setPersonality(pai)
-	for(var/datum/pai_candidate/candidate in SSpai.candidates)
-		if(candidate.key == choice.key)
-			SSpai.candidates.Remove(candidate)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/key = input(usr, "Choose an object to delete.", "Delete:") as null|anything in sort_list(types)
+
+	if(!key)
+		return
+	return types[key]
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all(object as text)
 	set category = "Debug"
 	set name = "Del-All"
 
-	var/list/matches = get_fancy_list_of_atom_types()
-	if (!isnull(object) && object!="")
-		matches = filter_fancy_list(matches, object)
+	var/type_to_del = poll_type_to_del(object)
 
-	if(matches.len==0)
+	if(!type_to_del)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in sort_list(matches)
-	if(hsbitem)
-		hsbitem = matches[hsbitem]
-		var/counter = 0
-		for(var/atom/O in world)
-			if(istype(O, hsbitem))
-				counter++
-				qdel(O)
-			CHECK_TICK
-		log_admin("[key_name(src)] has deleted all ([counter]) instances of [hsbitem].")
-		message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [hsbitem].")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+	var/counter = 0
+	for(var/atom/O in world)
+		if(istype(O, type_to_del))
+			counter++
+			qdel(O)
+		CHECK_TICK
+	log_admin("[key_name(src)] has deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [type_to_del].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_debug_force_del_all(object as text)
+	set category = "Debug"
+	set name = "Force-Del-All"
+
+	var/type_to_del = poll_type_to_del(object)
+
+	if(!type_to_del)
+		return
+
+	var/counter = 0
+	for(var/atom/O in world)
+		if(istype(O, type_to_del))
+			counter++
+			qdel(O, force = TRUE)
+		CHECK_TICK
+	log_admin("[key_name(src)] has force-deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(src)] has force-deleted all ([counter]) instances of [type_to_del].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force-Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_debug_hard_del_all(object as text)
+	set category = "Debug"
+	set name = "Hard-Del-All"
+
+	var/type_to_del = poll_type_to_del(object)
+
+	if(!type_to_del)
+		return
+
+	var/choice = alert("ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
+	if(choice != "Yes")
+		return
+
+	choice = alert("Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
+	var/should_pre_qdel = TRUE
+	if(choice == "No")
+		should_pre_qdel = FALSE
+
+	choice = alert("Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
+	var/should_check_tick = TRUE
+	if(choice == "Ignore the server")
+		should_check_tick = FALSE
+
+	var/counter = 0
+	if(should_check_tick)
+		for(var/atom/O in world)
+			if(istype(O, type_to_del))
+				counter++
+				if(should_pre_qdel)
+					qdel(O)
+				del(O)
+			CHECK_TICK
+	else
+		for(var/atom/O in world)
+			if(istype(O, type_to_del))
+				counter++
+				if(should_pre_qdel)
+					qdel(O)
+				del(O)
+			CHECK_TICK
+	log_admin("[key_name(src)] has hard deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(src)] has hard deleted all ([counter]) instances of [type_to_del].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hard Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
@@ -139,10 +167,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/pda))
-				var/obj/item/pda/PDA = worn
-				PDA.id = id
-				id.forceMove(PDA)
+			if(istype(worn, /obj/item/modular_computer/pda))
+				var/obj/item/modular_computer/pda/PDA = worn
+				PDA.InsertID(id, H)
+
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
@@ -206,7 +234,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest(on_station)
+/client/proc/cmd_admin_areatest(on_station, filter_maint)
 	set category = "Mapping"
 	set name = "Test Areas"
 
@@ -220,7 +248,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
-	var/static/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engineering/supermatter, /area/science/test_area, /area/space, /area/solars, /area/mine, /area/ruin, /area/asteroid))
+	/**We whitelist in case we're doing something on a planetary station that shares multiple different types of areas, this should only be full of "station" area types.
+	This only goes into effect when we explicitly do the "on station" Areas Test.
+	*/
+	var/static/list/station_areas_whitelist = typecacheof(list(
+		/area/station,
+	))
+	///Additionally, blacklist in order to filter out the types of areas that can show up on station Z-levels that we never need to test for.
+	var/static/list/station_areas_blacklist = typecacheof(list(
+		/area/centcom/asteroid,
+		/area/mine,
+		/area/ruin,
+		/area/shuttle,
+		/area/space,
+		/area/station/engineering/supermatter,
+		/area/station/holodeck/rec_center,
+		/area/station/science/ordnance/bomb,
+		/area/station/solars,
+	))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)
@@ -232,18 +277,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_message = "station z-levels"
 	else
 		log_message = "all z-levels"
+	if(filter_maint)
+		dat += "<b>Maintenance Areas Filtered Out</b>"
+		log_message += ", with no maintenance areas"
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Areas debug command checking [log_message]."))
 	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
 
-	for(var/area/A in world)
+	for(var/area/A as anything in GLOB.areas)
 		if(on_station)
 			var/list/area_turfs = get_area_turfs(A.type)
 			if (!length(area_turfs))
 				continue
 			var/turf/picked = pick(area_turfs)
 			if(is_station_level(picked.z))
-				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
+				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist) && is_type_in_typecache(A, station_areas_whitelist))
+					if(filter_maint && istype(A, /area/station/maintenance))
+						continue
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
@@ -269,7 +319,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			areas_with_air_alarm.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/requests_console/RC in GLOB.machines)
+	for(var/obj/machinery/requests_console/RC in GLOB.allConsoles)
 		var/area/A = get_area(RC)
 		if(!A)
 			dat += "Skipped over [RC] in invalid location, [RC.loc].<br>"
@@ -296,7 +346,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			areas_with_LS.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/item/radio/intercom/I in GLOB.machines)
+	for(var/obj/item/radio/intercom/I as anything in GLOB.intercoms_list)
 		var/area/A = get_area(I)
 		if(!A)
 			dat += "Skipped over [I] in invalid location, [I.loc].<br>"
@@ -305,7 +355,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			areas_with_intercom.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/camera/C in GLOB.machines)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		var/area/A = get_area(C)
 		if(!A)
 			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
@@ -380,8 +430,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
-	set name = "Test Areas (STATION Z)"
+	set name = "Test Areas (STATION ONLY)"
 	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_station_no_maintenance()
+	set category = "Mapping"
+	set name = "Test Areas (STATION - NO MAINT)"
+	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
 
 /client/proc/cmd_admin_areatest_all()
 	set category = "Mapping"
@@ -452,7 +507,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!istype(M))
 		tgui_alert(usr,"Cannot revive a ghost")
 		return
-	M.revive(full_heal = TRUE, admin_revive = TRUE)
+	M.revive(ADMIN_HEAL_ALL)
 
 	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
@@ -574,6 +629,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	holder.color_test.ui_interact(mob)
 
+/client/proc/debug_plane_masters()
+	set category = "Debug"
+	set name = "Edit/Debug Planes"
+	set desc = "Edit and visualize plane masters and their connections (relays)"
+
+	edit_plane_masters()
+
+/client/proc/edit_plane_masters(mob/debug_on)
+	if(!holder)
+		return
+	if(debug_on)
+		holder.plane_debug.set_mirroring(TRUE)
+		holder.plane_debug.set_target(debug_on)
+	else
+		holder.plane_debug.set_mirroring(FALSE)
+	holder.plane_debug.ui_interact(mob)
+
 /client/proc/debug_huds(i as num)
 	set category = "Debug"
 	set name = "Debug HUDs"
@@ -627,14 +699,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
+	var/list/themed_names
 	for (var/theme in SSmapping.themed_ruins)
 		names += "---- [theme] ----"
+		themed_names = list()
 		for (var/name in SSmapping.themed_ruins[theme])
 			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
-			names[name] = list(ruin, theme, list(ruin.default_area))
+			themed_names[name] = list(ruin, theme, list(ruin.default_area))
+		names += sort_list(themed_names)
 
-
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
+	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]
 	if (!data)
 		return
@@ -658,6 +732,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
+/client/proc/unload_ctf()
+	set category = "Debug"
+	set name = "Unload CTF"
+	set desc = "Despawns the majority of CTF"
+
+	toggle_id_ctf(usr, unload=TRUE)
+
 /client/proc/run_empty_query(val as num)
 	set category = "Debug"
 	set name = "Run empty query"
@@ -666,7 +747,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/queries = list()
 	for(var/i in 1 to val)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
-		INVOKE_ASYNC(query, /datum/db_query.proc/Execute)
+		INVOKE_ASYNC(query, TYPE_PROC_REF(/datum/db_query, Execute))
 		queries += query
 
 	for(var/datum/db_query/query as anything in queries)
@@ -714,6 +795,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	GLOB.error_cache.show_to(src)
 
+	// The runtime viewer has the potential to crash the server if there's a LOT of runtimes
+	// this has happened before, multiple times, so we'll just leave an alert on it
+	if(GLOB.total_runtimes >= 50000) // arbitrary number, I don't know when exactly it happens
+		var/warning = "There are a lot of runtimes, clicking any button (especially \"linear\") can have the potential to lag or crash the server"
+		if(GLOB.total_runtimes >= 100000)
+			warning = "There are a TON of runtimes, clicking any button (especially \"linear\") WILL LIKELY crash the server"
+		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
+		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
+
 /client/proc/pump_random_event()
 	set category = "Debug"
 	set name = "Pump Random Event"
@@ -755,9 +845,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Shows tracked profiling info from code lines that support it"
 
 	var/sortlist = list(
-		"Avg time" = /proc/cmp_profile_avg_time_dsc,
-		"Total Time" = /proc/cmp_profile_time_dsc,
-		"Call Count" = /proc/cmp_profile_count_dsc
+		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
+		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),
+		"Call Count" = GLOBAL_PROC_REF(cmp_profile_count_dsc)
 	)
 	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
 	if (!sort)
@@ -771,7 +861,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Force config reload to world default"
 	if(!check_rights(R_DEBUG))
 		return
-	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", list("No", "Yes")) == "Yes")
+	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
 /// A debug verb to check the sources of currently running timers
@@ -815,7 +905,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/sorted = list()
 	for (var/source in per_source)
 		sorted += list(list("source" = source, "count" = per_source[source]))
-	sorted = sortTim(sorted, .proc/cmp_timer_data)
+	sorted = sortTim(sorted, GLOBAL_PROC_REF(cmp_timer_data))
 
 	// Now that everything is sorted, compile them into an HTML output
 	var/output = "<table border='1'>"
@@ -862,7 +952,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
@@ -887,7 +977,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)

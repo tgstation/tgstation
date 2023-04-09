@@ -1,4 +1,3 @@
-// File organised based on progression
 /datum/uplink_category/stealthy
 	name = "Stealthy Weapons"
 	weight = 8
@@ -6,7 +5,6 @@
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
 
-// No progression cost
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -15,6 +13,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -60,20 +59,17 @@
 	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-// Low progression cost
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
 			perfectly aerodynamic (and potentially lethal) paper airplanes."
-	progression_minimum = 15 MINUTES
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
-	cost = 14
+	progression_minimum = 10 MINUTES
+	cost = 4
 	surplus = 0
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
-
-// Medium progression cost
 
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
@@ -93,7 +89,7 @@
 	toxin that will damage and disorient targets, causing them to \
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
-	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	item = /obj/item/gun/energy/recharge/ebow
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 50

@@ -1,7 +1,7 @@
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
-	custom_price = PAYCHECK_ASSISTANT * 0.7
+	custom_price = PAYCHECK_LOWER * 0.7
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -9,8 +9,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150)
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
@@ -55,4 +55,4 @@
 			I.appearance = MA
 			t_ray_images += I
 	if(t_ray_images.len)
-		flick_overlay(t_ray_images, list(viewer.client), flick_time)
+		flick_overlay_global(t_ray_images, list(viewer.client), flick_time)

@@ -33,26 +33,26 @@
 /datum/sparring_match/proc/hook_signals(mob/living/carbon/human/sparring)
 	//weapon conditions
 	if(weapons_condition < CONDITION_ANY_WEAPON)
-		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
-		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
+		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, PROC_REF(gun_violation))
+		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, PROC_REF(grenade_violation))
 	if(weapons_condition <= CONDITION_CEREMONIAL_ONLY)
-		RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/melee_violation)
+		RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, PROC_REF(melee_violation))
 	//arena conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
+	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, PROC_REF(arena_violation))
 	//severe violations (insta violation win for other party) conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
+	RegisterSignal(sparring, COMSIG_MOVABLE_POST_TELEPORT, PROC_REF(teleport_violation))
 	//win conditions
-	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
+	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, PROC_REF(check_for_victory))
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
+	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, PROC_REF(outsider_interference), override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_interference), override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_interference), override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_interference), override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_HITBY, PROC_REF(thrown_interference), override = TRUE)
+	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_interference), override = TRUE)
 	//severe flubs (insta match ender, no winners) conditions
-	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
-	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
+	RegisterSignal(sparring, COMSIG_LIVING_DEATH, PROC_REF(death_flub))
+	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, PROC_REF(deletion_flub))
 
 /datum/sparring_match/proc/unhook_signals(mob/living/carbon/human/sparring)
 	if(!sparring)
@@ -62,7 +62,7 @@
 		COMSIG_MOB_GRENADE_ARMED,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_POST_TELEPORT,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,
@@ -91,14 +91,14 @@
 	SIGNAL_HANDLER
 	if(attacker == chaplain || attacker == opponent)
 		return
-	INVOKE_ASYNC(src, .proc/flub, attacker)
+	INVOKE_ASYNC(src, PROC_REF(flub), attacker)
 
 /datum/sparring_match/proc/hulk_interference(datum/source, mob/attacker)
 	SIGNAL_HANDLER
 	if((attacker == chaplain || attacker == opponent))
 		// fist fighting a hulk is so dumb. i can't fathom why you would do this.
 		return
-	INVOKE_ASYNC(src, .proc/flub, attacker)
+	INVOKE_ASYNC(src, PROC_REF(flub), attacker)
 
 /datum/sparring_match/proc/hand_interference(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -106,7 +106,7 @@
 		//you can pretty much always use fists as a participant
 		return
 
-	INVOKE_ASYNC(src, .proc/flub, attacker)
+	INVOKE_ASYNC(src, PROC_REF(flub), attacker)
 
 /datum/sparring_match/proc/paw_interference(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -115,16 +115,16 @@
 		//you can pretty much always use paws as a participant
 		return
 
-	INVOKE_ASYNC(src, .proc/flub, attacker)
+	INVOKE_ASYNC(src, PROC_REF(flub), attacker)
 
 /datum/sparring_match/proc/thrown_interference(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(istype(thrown_movable, /obj/item))
+	if(isitem(thrown_movable))
 		var/mob/living/honorbound = source
 		var/obj/item/thrown_item = thrown_movable
 		var/mob/thrown_by = thrown_item.thrownby?.resolve()
 		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			INVOKE_ASYNC(src, .proc/flub, thrown_by)
+			INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
 
 /datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
 	SIGNAL_HANDLER
@@ -134,7 +134,7 @@
 	var/mob/living/interfering
 	if(isliving(proj.firer))
 		interfering = proj.firer
-	INVOKE_ASYNC(src, .proc/flub, interfering)
+	INVOKE_ASYNC(src, PROC_REF(flub), interfering)
 
 ///someone randomly fucking died
 /datum/sparring_match/proc/death_flub(datum/deceased)
@@ -208,7 +208,7 @@
 		switch(pick(possible_punishments))
 			if(PUNISHMENT_OMEN)
 				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
-				interfering.AddComponent(/datum/component/omen, TRUE, null, FALSE)
+				interfering.AddComponent(/datum/component/omen)
 			if(PUNISHMENT_LIGHTNING)
 				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
 				lightningbolt(interfering)
@@ -285,7 +285,7 @@
 					return
 				to_chat(loser, span_userdanger("[GLOB.deity] is enraged by your lackluster sparring record!"))
 				lightningbolt(loser)
-				SEND_SIGNAL(loser, COMSIG_ADD_MOOD_EVENT, "sparring", /datum/mood_event/banished)
+				loser.add_mood_event("sparring", /datum/mood_event/banished)
 				loser.mind.holy_role = NONE
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		if(STAKES_MONEY_MATCH)
@@ -294,7 +294,7 @@
 			var/datum/bank_account/winner_account = winner.get_bank_account()
 			if(!loser_account || !winner_account)//the winner is pretty owned in this case but whatever shoulda read the fine print of the contract
 				return
-			winner_account.transfer_money(loser_account, loser_account.account_balance)
+			winner_account.transfer_money(loser_account, loser_account.account_balance, "Bet: Sparring")
 		if(STAKES_YOUR_SOUL)
 			var/turf/shard_turf = get_turf(loser)
 			if(!shard_turf)

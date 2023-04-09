@@ -38,16 +38,15 @@ SUBSYSTEM_DEF(wardrobe)
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
 
-/datum/controller/subsystem/wardrobe/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/wardrobe/Initialize()
 	setup_callbacks()
 	load_outfits()
 	load_species()
-	load_pda_nicknacks()
 	load_storage_contents()
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
+	return SS_INIT_SUCCESS
 
 /// Resets the load queue to the master template, accounting for the existing stock
 /datum/controller/subsystem/wardrobe/proc/hard_refresh_queue()
@@ -304,17 +303,14 @@ SUBSYSTEM_DEF(wardrobe)
 /// Mind this
 /datum/controller/subsystem/wardrobe/proc/setup_callbacks()
 	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Turns out there's a global list of pdas. Let's work around that yeah?
-	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, /obj/item/pda/proc/display_pda)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/pda/proc/cloak_pda)
-	initial_callbacks[/obj/item/pda] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Don't want organs rotting on the job
-	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, /obj/item/organ/proc/enter_wardrobe)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/organ/proc/exit_wardrobe)
+	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ,enter_wardrobe))
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ,exit_wardrobe))
 	initial_callbacks[/obj/item/organ] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/storage/box/survival/proc/wardrobe_removal)
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival,wardrobe_removal))
 	initial_callbacks[/obj/item/storage/box/survival] = play_with
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
@@ -336,19 +332,11 @@ SUBSYSTEM_DEF(wardrobe)
 				canonize_type(species_request)
 		CHECK_TICK
 
-/datum/controller/subsystem/wardrobe/proc/load_pda_nicknacks()
-	for(var/obj/item/pda/pager as anything in typesof(/obj/item/pda))
-		var/obj/item/pda/flip_phone = new pager()
-		for(var/datum/outfit_item_type as anything in flip_phone.get_types_to_preload())
-			canonize_type(outfit_item_type)
-		qdel(flip_phone)
-		CHECK_TICK
-
 /datum/controller/subsystem/wardrobe/proc/load_storage_contents()
 	for(var/obj/item/storage/crate as anything in subtypesof(/obj/item/storage))
 		if(!initial(crate.preload))
 			continue
-		var/obj/item/pda/another_crate = new crate()
+		var/obj/item/storage/another_crate = new crate()
 		//Unlike other uses, I really don't want people being lazy with this one.
 		var/list/somehow_more_boxes = another_crate.get_types_to_preload()
 		if(!length(somehow_more_boxes))

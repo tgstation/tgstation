@@ -8,9 +8,9 @@
 /area/shuttle/escape)
 "c" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
+	name = "Emergency Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -57,10 +57,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	dwidth = 3;
-	height = 5;
-	name = "Secure Transport Vessel 5";
-	width = 14
+	name = "Secure Transport Vessel 5"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -112,11 +109,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "u" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "v" = (

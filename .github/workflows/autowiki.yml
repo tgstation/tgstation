@@ -3,9 +3,12 @@ on:
   schedule:
   - cron: "5 4 * * *"
   workflow_dispatch:
+permissions:
+  contents: read
+
 jobs:
   autowiki:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: "Check for AUTOWIKI_USERNAME"
       id: secrets_set
@@ -14,13 +17,13 @@ jobs:
       run: |
         unset SECRET_EXISTS
         if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
-        echo "::set-output name=SECRETS_ENABLED::$SECRET_EXISTS"
+        echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
     - name: Checkout
       if: steps.secrets_set.outputs.SECRETS_ENABLED
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Restore BYOND cache
       if: steps.secrets_set.outputs.SECRETS_ENABLED
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}

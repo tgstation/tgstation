@@ -59,11 +59,16 @@
 	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = ABOVE_LIGHTING_PLANE
+	var/overlay_plane = AREA_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
 	var/immunity_type
+	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
+	/// Taken from weather_glow.dmi
+	var/use_glow = TRUE
+	/// List of all overlays to apply to our turfs
+	var/list/overlay_cache
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -110,16 +115,8 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(telegraph_message)
-				to_chat(player, telegraph_message)
-			if(telegraph_sound)
-				SEND_SOUND(player, sound(telegraph_sound))
-	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
+	send_alert(telegraph_message, telegraph_sound)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /**
  * Starts the actual weather and effects from it
@@ -134,17 +131,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(weather_message)
-				to_chat(player, weather_message)
-			if(weather_sound)
-				SEND_SOUND(player, sound(weather_sound))
+	send_alert(weather_message, weather_sound)
 	if(!perpetual)
-		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -159,16 +148,8 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
-			var/turf/mob_turf = get_turf(player)
-			if(!mob_turf)
-				continue
-			if(end_message)
-				to_chat(player, end_message)
-			if(end_sound)
-				SEND_SOUND(player, sound(end_sound))
-	addtimer(CALLBACK(src, .proc/end), end_duration)
+	send_alert(end_message, end_sound)
+	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
 
 /**
  * Fully ends the weather
@@ -184,6 +165,22 @@
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
+
+// handles sending all alerts
+/datum/weather/proc/send_alert(alert_msg, alert_sfx)
+	for(var/z_level in impacted_z_levels)
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
+			if(!can_get_alert(player))
+				continue
+			if(alert_msg)
+				to_chat(player, alert_msg)
+			if(alert_sfx)
+				SEND_SOUND(player, sound(alert_sfx))
+
+// the checks for if a mob should recieve alerts, returns TRUE if can
+/datum/weather/proc/can_get_alert(mob/player)
+	var/turf/mob_turf = get_turf(player)
+	return !isnull(mob_turf)
 
 /**
  * Returns TRUE if the living mob can be affected by the weather
@@ -224,23 +221,45 @@
  *
  */
 /datum/weather/proc/update_areas()
-	for(var/V in impacted_areas)
-		var/area/N = V
-		N.layer = overlay_layer
-		N.plane = overlay_plane
-		N.icon = 'icons/effects/weather_effects.dmi'
-		N.color = weather_color
-		switch(stage)
-			if(STARTUP_STAGE)
-				N.icon_state = telegraph_overlay
-			if(MAIN_STAGE)
-				N.icon_state = weather_overlay
-			if(WIND_DOWN_STAGE)
-				N.icon_state = end_overlay
-			if(END_STAGE)
-				N.color = null
-				N.icon_state = ""
-				N.icon = 'icons/turf/areas.dmi'
-				N.layer = initial(N.layer)
-				N.plane = initial(N.plane)
-				N.set_opacity(FALSE)
+	var/list/new_overlay_cache = generate_overlay_cache()
+	for(var/area/impacted as anything in impacted_areas)
+		if(length(overlay_cache))
+			impacted.overlays -= overlay_cache
+		if(length(new_overlay_cache))
+			impacted.overlays += new_overlay_cache
+
+	overlay_cache = new_overlay_cache
+
+/// Returns a list of visual offset -> overlays to use
+/datum/weather/proc/generate_overlay_cache()
+	// We're ending, so no overlays at all
+	if(stage == END_STAGE)
+		return list()
+
+	var/weather_state = ""
+	switch(stage)
+		if(STARTUP_STAGE)
+			weather_state = telegraph_overlay
+		if(MAIN_STAGE)
+			weather_state = weather_overlay
+		if(WIND_DOWN_STAGE)
+			weather_state = end_overlay
+
+	// Use all possible offsets
+	// Yes this is a bit annoying, but it's too slow to calculate and store these from turfs, and it shouldn't (I hope) look weird
+	var/list/gen_overlay_cache = list()
+	for(var/offset in 0 to SSmapping.max_plane_offset)
+		// Note: what we do here is effectively apply two overlays to each area, for every unique multiz layer they inhabit
+		// One is the base, which will be masked by lighting. the other is "glowing", and provides a nice contrast
+		// This method of applying one overlay per z layer has some minor downsides, in that it could lead to improperly doubled effects if some have alpha
+		// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
+		// LU
+		var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+		glow_overlay.color = weather_color
+		gen_overlay_cache += glow_overlay
+
+		var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, offset_const = offset)
+		weather_overlay.color = weather_color
+		gen_overlay_cache += weather_overlay
+
+	return gen_overlay_cache

@@ -7,14 +7,16 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
+	///category for plumbing RCD
+	category="Synthesizers"
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -42,6 +44,7 @@
 		return
 	var/obj/item/I = AM
 	if(I.juice_results || I.grind_results)
+		use_power(active_power_usage)
 		if(I.juice_results)
 			I.on_juice()
 			reagents.add_reagent_list(I.juice_results)

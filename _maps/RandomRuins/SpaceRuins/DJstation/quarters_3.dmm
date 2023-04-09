@@ -45,9 +45,7 @@
 /turf/template_noop,
 /area/template_noop)
 "s" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "t" = (
@@ -145,9 +143,7 @@
 /area/space/nearstation)
 "X" = (
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 17
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "Y" = (

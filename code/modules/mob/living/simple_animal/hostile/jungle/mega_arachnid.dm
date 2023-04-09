@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/jungle/mega_arachnid
 	name = "mega arachnid"
 	desc = "Though physically imposing, it prefers to ambush its prey, and it will only engage with an already crippled opponent."
-	icon = 'icons/mob/jungle/arachnid.dmi'
+	icon = 'icons/mob/simple/jungle/arachnid.dmi'
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
@@ -62,11 +62,8 @@
 
 /obj/projectile/mega_arachnid
 	name = "flesh snare"
-	nodamage = TRUE
-
-
-	damage = 0
 	icon_state = "tentacle_end"
+	damage = 0
 
 /obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target) && blocked < 100)

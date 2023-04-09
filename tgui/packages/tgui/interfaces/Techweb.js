@@ -1,7 +1,6 @@
-import { filter, map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
+import { Button, Section, Modal, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
 import { Window, NtosWindow } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
@@ -11,15 +10,15 @@ import { Experiment } from './ExperimentConfigure';
 // as larger sizes cause a delay for the user when opening the UI.
 
 const remappingIdCache = {};
-const remapId = id => remappingIdCache[id];
+const remapId = (id) => remappingIdCache[id];
 
-const selectRemappedStaticData = data => {
+const selectRemappedStaticData = (data) => {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
   const node_cache = {};
   for (let id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
-    const costs = Object.keys(node.costs || {}).map(x => ({
+    const costs = Object.keys(node.costs || {}).map((x) => ({
       type: remapId(x),
       value: node.costs[x],
     }));
@@ -41,7 +40,7 @@ const selectRemappedStaticData = data => {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
-      class: classes.startsWith("design") ? classes : `design32x32 ${classes}`,
+      class: classes.startsWith('design') ? classes : `design32x32 ${classes}`,
     };
   }
 
@@ -53,7 +52,7 @@ const selectRemappedStaticData = data => {
 
 let remappedStaticData;
 
-const useRemappedBackend = context => {
+const useRemappedBackend = (context) => {
   const { data, ...rest } = useBackend(context);
   // Only remap the static data once, cache for future use
   if (!remappedStaticData) {
@@ -75,59 +74,56 @@ const useRemappedBackend = context => {
 // Utility Functions
 
 const abbreviations = {
-  "General Research": "Gen. Res.",
+  'General Research': 'Gen. Res.',
 };
-const abbreviateName = name => abbreviations[name] ?? name;
+const abbreviateName = (name) => abbreviations[name] ?? name;
 
 // Actual Components
 
 export const Techweb = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
-  const {
-    locked,
-  } = data;
   return (
-    <Window
-      width={640}
-      height={735}>
+    <Window width={640} height={735}>
       <Window.Content scrollable>
-        {!!locked && (
-          <Modal width="15em" align="center" className="Techweb__LockedModal">
-            <div><b>Console Locked</b></div>
-            <Button
-              icon="unlock"
-              onClick={() => act("toggleLock")}>
-              Unlock
-            </Button>
-          </Modal>
-        )}
-        <TechwebContent />
+        <TechwebStart />
       </Window.Content>
     </Window>
   );
 };
 
+const TechwebStart = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { locked, stored_research } = data;
+  if (locked) {
+    return (
+      <Modal width="15em" align="center" className="Techweb__LockedModal">
+        <div>
+          <b>Console Locked</b>
+        </div>
+        <Button icon="unlock" onClick={() => act('toggleLock')}>
+          Unlock
+        </Button>
+      </Modal>
+    );
+  }
+  if (!stored_research) {
+    return (
+      <Modal width="25em" align="center" className="Techweb__LockedModal">
+        <div>
+          <b>No research techweb found, please synchronize the console.</b>
+        </div>
+      </Modal>
+    );
+  }
+  return <TechwebContent />;
+};
+
 export const AppTechweb = (props, context) => {
   const { act, data } = useRemappedBackend(context);
-  const {
-    locked,
-  } = data;
+  const { locked } = data;
   return (
-    <NtosWindow
-      width={640}
-      height={735}>
+    <NtosWindow width={640} height={735}>
       <NtosWindow.Content scrollable>
-        {!!locked && (
-          <Modal width="15em" align="center" className="Techweb__LockedModal">
-            <div><b>Console Locked</b></div>
-            <Button
-              icon="unlock"
-              onClick={() => act("toggleLock")}>
-              Unlock
-            </Button>
-          </Modal>
-        )}
-        <TechwebContent />
+        <TechwebStart />
       </NtosWindow.Content>
     </NtosWindow>
   );
@@ -144,14 +140,12 @@ export const TechwebContent = (props, context) => {
     d_disk,
     locked,
   } = data;
-  const [
-    techwebRoute,
-    setTechwebRoute,
-  ] = useLocalState(context, 'techwebRoute', null);
-  const [
-    lastPoints,
-    setLastPoints,
-  ] = useLocalState(context, 'lastPoints', {});
+  const [techwebRoute, setTechwebRoute] = useLocalState(
+    context,
+    'techwebRoute',
+    null
+  );
+  const [lastPoints, setLastPoints] = useLocalState(context, 'lastPoints', {});
 
   return (
     <Flex direction="column" className="Techweb__Viewport" height="100%">
@@ -161,12 +155,10 @@ export const TechwebContent = (props, context) => {
             <Box>
               Available points:
               <ul className="Techweb__PointSummary">
-                {Object.keys(points).map(k => (
+                {Object.keys(points).map((k) => (
                   <li key={k}>
                     <b>{k}</b>: {points[k]}
-                    {!!points_last_tick[k] && (
-                      ` (+${points_last_tick[k]}/sec)`
-                    )}
+                    {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                   </li>
                 ))}
               </ul>
@@ -174,30 +166,36 @@ export const TechwebContent = (props, context) => {
             <Box>
               Security protocols:
               <span
-                className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
-                {sec_protocols ? "Engaged" : "Disengaged"}
+                className={`Techweb__SecProtocol ${
+                  !!sec_protocols && 'engaged'
+                }`}>
+                {sec_protocols ? 'Engaged' : 'Disengaged'}
               </span>
             </Box>
           </Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
-            <Button fluid
-              onClick={() => act("toggleLock")}
-              icon="lock">
+            <Button fluid onClick={() => act('toggleLock')} icon="lock">
               Lock Console
             </Button>
             {d_disk && (
               <Flex.Item>
-                <Button fluid
-                  onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                <Button
+                  fluid
+                  onClick={() =>
+                    setTechwebRoute({ route: 'disk', diskType: 'design' })
+                  }>
                   Design Disk Inserted
                 </Button>
               </Flex.Item>
             )}
             {t_disk && (
               <Flex.Item>
-                <Button fluid
-                  onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                <Button
+                  fluid
+                  onClick={() =>
+                    setTechwebRoute({ route: 'disk', diskType: 'tech' })
+                  }>
                   Tech Disk Inserted
                 </Button>
               </Flex.Item>
@@ -213,53 +211,47 @@ export const TechwebContent = (props, context) => {
 };
 
 const TechwebRouter = (props, context) => {
-  const [
-    techwebRoute,
-  ] = useLocalState(context, 'techwebRoute', null);
+  const [techwebRoute] = useLocalState(context, 'techwebRoute', null);
 
   const route = techwebRoute?.route;
-  const RoutedComponent = (
-    route === "details" && TechwebNodeDetail
-    || route === "disk" && TechwebDiskMenu
-    || TechwebOverview
-  );
+  const RoutedComponent =
+    (route === 'details' && TechwebNodeDetail) ||
+    (route === 'disk' && TechwebDiskMenu) ||
+    TechwebOverview;
 
-  return (
-    <RoutedComponent {...techwebRoute} />
-  );
+  return <RoutedComponent {...techwebRoute} />;
 };
 
 const TechwebOverview = (props, context) => {
   const { act, data } = useRemappedBackend(context);
   const { nodes, node_cache, design_cache } = data;
-  const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'overviewTabIndex', 1);
-  const [
-    searchText,
-    setSearchText,
-  ] = useLocalState(context, 'searchText');
+  const [tabIndex, setTabIndex] = useLocalState(context, 'overviewTabIndex', 1);
+  const [searchText, setSearchText] = useLocalState(context, 'searchText');
 
   // Only search when 3 or more characters have been input
   const searching = searchText && searchText.trim().length > 1;
 
   let displayedNodes = nodes;
   if (searching) {
-    displayedNodes = displayedNodes.filter(x => {
+    displayedNodes = displayedNodes.filter((x) => {
       const n = node_cache[x.id];
-      return n.name.toLowerCase().includes(searchText)
-        || n.description.toLowerCase().includes(searchText)
-        || n.design_ids.some(e =>
-          design_cache[e].name.toLowerCase().includes(searchText));
+      return (
+        n.name.toLowerCase().includes(searchText) ||
+        n.description.toLowerCase().includes(searchText) ||
+        n.design_ids.some((e) =>
+          design_cache[e].name.toLowerCase().includes(searchText)
+        )
+      );
     });
   } else {
-    displayedNodes = sortBy(x => node_cache[x.id].name)(tabIndex < 2
-      ? nodes.filter(x => x.tier === tabIndex)
-      : nodes.filter(x => x.tier >= tabIndex));
+    displayedNodes = sortBy((x) => node_cache[x.id].name)(
+      tabIndex < 2
+        ? nodes.filter((x) => x.tier === tabIndex)
+        : nodes.filter((x) => x.tier >= tabIndex)
+    );
   }
 
-  const switchTab = tab => {
+  const switchTab = (tab) => {
     setTabIndex(tab);
     setSearchText(null);
   };
@@ -288,27 +280,21 @@ const TechwebOverview = (props, context) => {
                 onClick={() => switchTab(2)}>
                 Future
               </Tabs.Tab>
-              {!!searching && (
-                <Tabs.Tab
-                  selected>
-                  Search Results
-                </Tabs.Tab>
-              )}
+              {!!searching && <Tabs.Tab selected>Search Results</Tabs.Tab>}
             </Tabs>
           </Flex.Item>
-          <Flex.Item align={"center"}>
+          <Flex.Item align={'center'}>
             <Input
               value={searchText}
               onInput={(e, value) => setSearchText(value)}
-              placeholder={"Search..."} />
+              placeholder={'Search...'}
+            />
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item className={"Techweb__OverviewNodes"} height="100%">
-        {displayedNodes.map(n => {
-          return (
-            <TechNode node={n} key={n.id} />
-          );
+      <Flex.Item className={'Techweb__OverviewNodes'} height="100%">
+        {displayedNodes.map((n) => {
+          return <TechNode node={n} key={n.id} />;
         })}
       </Flex.Item>
     </Flex>
@@ -320,29 +306,28 @@ const TechwebNodeDetail = (props, context) => {
   const { nodes } = data;
   const { selectedNode } = props;
 
-  const selectedNodeData = selectedNode
-    && nodes.find(x => x.id === selectedNode);
-  return (
-    <TechNodeDetail node={selectedNodeData} />
-  );
+  const selectedNodeData =
+    selectedNode && nodes.find((x) => x.id === selectedNode);
+  return <TechNodeDetail node={selectedNodeData} />;
 };
 
 const TechwebDiskMenu = (props, context) => {
   const { act, data } = useRemappedBackend(context);
   const { diskType } = props;
   const { t_disk, d_disk } = data;
-  const [
-    techwebRoute,
-    setTechwebRoute,
-  ] = useLocalState(context, 'techwebRoute', null);
+  const [techwebRoute, setTechwebRoute] = useLocalState(
+    context,
+    'techwebRoute',
+    null
+  );
 
   // Check for the disk actually being inserted
-  if ((diskType === "design" && !d_disk) || (diskType === "tech" && !t_disk)) {
+  if ((diskType === 'design' && !d_disk) || (diskType === 'tech' && !t_disk)) {
     return null;
   }
 
-  const DiskContent = diskType === "design" && TechwebDesignDisk
-    || TechwebTechDisk;
+  const DiskContent =
+    (diskType === 'design' && TechwebDesignDisk) || TechwebTechDisk;
   return (
     <Flex direction="column" height="100%">
       <Flex.Item>
@@ -352,40 +337,29 @@ const TechwebDiskMenu = (props, context) => {
           </Flex.Item>
           <Flex.Item grow={1}>
             <Tabs>
-              <Tabs.Tab selected>
-                Stored Data
-              </Tabs.Tab>
+              <Tabs.Tab selected>Stored Data</Tabs.Tab>
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
-            {diskType === "tech" && (
-              <Button
-                icon="save"
-                onClick={() => act("loadTech")}>
+            {diskType === 'tech' && (
+              <Button icon="save" onClick={() => act('loadTech')}>
                 Web &rarr; Disk
               </Button>
             )}
             <Button
               icon="upload"
-              onClick={() => act("uploadDisk", { type: diskType })}>
+              onClick={() => act('uploadDisk', { type: diskType })}>
               Disk &rarr; Web
-            </Button>
-            <Button
-              icon="trash"
-              onClick={() => act("eraseDisk", { type: diskType })}>
-              Erase
             </Button>
             <Button
               icon="eject"
               onClick={() => {
-                act("ejectDisk", { type: diskType });
+                act('ejectDisk', { type: diskType });
                 setTechwebRoute(null);
               }}>
               Eject
             </Button>
-            <Button
-              icon="home"
-              onClick={() => setTechwebRoute(null)}>
+            <Button icon="home" onClick={() => setTechwebRoute(null)}>
               Home
             </Button>
           </Flex.Item>
@@ -400,98 +374,19 @@ const TechwebDiskMenu = (props, context) => {
 
 const TechwebDesignDisk = (props, context) => {
   const { act, data } = useRemappedBackend(context);
-  const {
-    design_cache,
-    researched_designs,
-    d_disk,
-  } = data;
+  const { design_cache, d_disk } = data;
   const { blueprints } = d_disk;
-  const [
-    selectedDesign,
-    setSelectedDesign,
-  ] = useLocalState(context, "designDiskSelect", null);
-  const [
-    showModal,
-    setShowModal,
-  ] = useLocalState(context, 'showDesignModal', -1);
-
-  const designIdByIdx = Object.keys(researched_designs);
-  const designOptions = flow([
-    filter(x => x.toLowerCase() !== "error"),
-    map((id, idx) => `${design_cache[id].name} [${idx}]`),
-    sortBy(x => x),
-  ])(designIdByIdx);
 
   return (
     <>
-      {showModal >= 0 && (
-        <Modal width="20em">
-          <Flex direction="column" className="Techweb__DesignModal">
-            <Flex.Item>
-              Select a design to save...
-            </Flex.Item>
-            <Flex.Item>
-              <Dropdown
-                width="100%"
-                options={designOptions}
-                onSelected={val => {
-                  const idx = parseInt(val.split('[').pop().split(']')[0], 10);
-                  setSelectedDesign(designIdByIdx[idx]);
-                }} />
-            </Flex.Item>
-            <Flex.Item align="center">
-              <Button
-                onClick={() => setShowModal(-1)}>
-                Cancel
-              </Button>
-              <Button
-                disabled={selectedDesign === null}
-                onClick={() => {
-                  act("writeDesign", {
-                    slot: showModal + 1,
-                    selectedDesign: selectedDesign,
-                  });
-                  setShowModal(-1);
-                  setSelectedDesign(null);
-                }}>
-                Select
-              </Button>
-            </Flex.Item>
-          </Flex>
-        </Modal>
-      )}
       {blueprints.map((x, i) => (
-        <Section
-          key={i}
-          title={`Slot ${i + 1}`}
-          buttons={
-            <>
-              {x !== null && (
-                <Button
-                  icon="upload"
-                  onClick={() => act("uploadDesignSlot", { slot: i + 1 })}>
-                  Upload Design to Web
-                </Button>
-              )}
-              <Button
-                icon="save"
-                onClick={() => setShowModal(i)}>
-                {x !== null ? "Overwrite Slot" : "Load Design to Slot"}
-              </Button>
-              {x !== null && (
-                <Button
-                  icon="trash"
-                  onClick={() => act("clearDesignSlot", { slot: i + 1 })}>
-                  Clear Slot
-                </Button>
-              )}
-            </>
-          }>
-          {x === null && 'Empty' || (
+        <Section key={i} title={`Slot ${i + 1}`}>
+          {(x === null && 'Empty') || (
             <>
               Contains the design for <b>{design_cache[x].name}</b>:<br />
               <span
-                className={`${design_cache[x].class} Techweb__DesignIcon`} />
+                className={`${design_cache[x].class} Techweb__DesignIcon`}
+              />
             </>
           )}
         </Section>
@@ -505,33 +400,33 @@ const TechwebTechDisk = (props, context) => {
   const { t_disk } = data;
   const { stored_research } = t_disk;
 
-  return Object.keys(stored_research).map(x => ({ id: x })).map(n => (
-    <TechNode key={n.id} nocontrols node={n} />
-  ));
+  return Object.keys(stored_research)
+    .map((x) => ({ id: x }))
+    .map((n) => <TechNode key={n.id} nocontrols node={n} />);
 };
 
 const TechNodeDetail = (props, context) => {
   const { act, data } = useRemappedBackend(context);
-  const {
-    nodes,
-    node_cache,
-  } = data;
+  const { nodes, node_cache } = data;
   const { node } = props;
   const { id } = node;
   const { prereq_ids, unlock_ids } = node_cache[id];
-  const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'nodeDetailTabIndex', 0);
-  const [
-    techwebRoute,
-    setTechwebRoute,
-  ] = useLocalState(context, 'techwebRoute', null);
+  const [tabIndex, setTabIndex] = useLocalState(
+    context,
+    'nodeDetailTabIndex',
+    0
+  );
+  const [techwebRoute, setTechwebRoute] = useLocalState(
+    context,
+    'techwebRoute',
+    null
+  );
 
-  const prereqNodes = nodes.filter(x => prereq_ids.includes(x.id));
-  const complPrereq = prereq_ids
-    .filter(x => nodes.find(y => y.id === x)?.tier === 0).length;
-  const unlockedNodes = nodes.filter(x => unlock_ids.includes(x.id));
+  const prereqNodes = nodes.filter((x) => prereq_ids.includes(x.id));
+  const complPrereq = prereq_ids.filter(
+    (x) => nodes.find((y) => y.id === x)?.tier === 0
+  ).length;
+  const unlockedNodes = nodes.filter((x) => unlock_ids.includes(x.id));
 
   return (
     <Flex direction="column" height="100%">
@@ -556,9 +451,7 @@ const TechNodeDetail = (props, context) => {
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
-            <Button
-              icon="home"
-              onClick={() => setTechwebRoute(null)}>
+            <Button icon="home" onClick={() => setTechwebRoute(null)}>
               Home
             </Button>
           </Flex.Item>
@@ -570,14 +463,14 @@ const TechNodeDetail = (props, context) => {
       </Flex.Item>
       {tabIndex === 0 && (
         <Flex.Item className="Techweb__OverviewNodes" grow={1}>
-          {prereqNodes.map(n => (
+          {prereqNodes.map((n) => (
             <TechNode key={n.id} node={n} />
           ))}
         </Flex.Item>
       )}
       {tabIndex === 1 && (
         <Flex.Item className="Techweb__OverviewNodes" grow={1}>
-          {unlockedNodes.map(n => (
+          {unlockedNodes.map((n) => (
             <TechNode key={n.id} node={n} />
           ))}
         </Flex.Item>
@@ -588,13 +481,7 @@ const TechNodeDetail = (props, context) => {
 
 const TechNode = (props, context) => {
   const { act, data } = useRemappedBackend(context);
-  const {
-    node_cache,
-    design_cache,
-    experiments,
-    points,
-    nodes,
-  } = data;
+  const { node_cache, design_cache, experiments, points, nodes } = data;
   const { node, nodetails, nocontrols } = props;
   const { id, can_unlock, tier } = node;
   const {
@@ -606,18 +493,20 @@ const TechNode = (props, context) => {
     required_experiments,
     discount_experiments,
   } = node_cache[id];
-  const [
-    techwebRoute,
-    setTechwebRoute,
-  ] = useLocalState(context, 'techwebRoute', null);
-  const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'nodeDetailTabIndex', 0);
+  const [techwebRoute, setTechwebRoute] = useLocalState(
+    context,
+    'techwebRoute',
+    null
+  );
+  const [tabIndex, setTabIndex] = useLocalState(
+    context,
+    'nodeDetailTabIndex',
+    0
+  );
 
-  const expcompl = required_experiments
-    .filter(x => experiments[x]?.completed)
-    .length;
+  const expcompl = required_experiments.filter(
+    (x) => experiments[x]?.completed
+  ).length;
   const experimentProgress = (
     <ProgressBar
       ranges={{
@@ -630,9 +519,9 @@ const TechNode = (props, context) => {
     </ProgressBar>
   );
 
-  const techcompl = prereq_ids
-    .filter(x => nodes.find(y => y.id === x)?.tier === 0)
-    .length;
+  const techcompl = prereq_ids.filter(
+    (x) => nodes.find((y) => y.id === x)?.tier === 0
+  ).length;
   const techProgress = (
     <ProgressBar
       ranges={{
@@ -645,10 +534,10 @@ const TechNode = (props, context) => {
     </ProgressBar>
   );
 
-  // Notice this logic will have te be changed if we make the discounts
+  // Notice that this logic will have to be changed if we make the discounts
   // pool-specific
   const nodeDiscount = Object.keys(discount_experiments)
-    .filter(x => experiments[x]?.completed)
+    .filter((x) => experiments[x]?.completed)
     .reduce((tot, curr) => {
       return tot + discount_experiments[curr];
     }, 0);
@@ -657,31 +546,33 @@ const TechNode = (props, context) => {
     <Section
       className="Techweb__NodeContainer"
       title={name}
-      buttons={!nocontrols && (
-        <>
-          {!nodetails && (
-            <Button
-              icon="tasks"
-              onClick={() => {
-                setTechwebRoute({ route: "details", selectedNode: id });
-                setTabIndex(0);
-              }}>
-              Details
-            </Button>
-          )}
-          {tier > 0 && (
-            <Button
-              icon="lightbulb"
-              disabled={!can_unlock || tier > 1}
-              onClick={() => act("researchNode", { node_id: id })}>
-              Research
-            </Button>
-          )}
-        </>
-      )}>
+      buttons={
+        !nocontrols && (
+          <>
+            {!nodetails && (
+              <Button
+                icon="tasks"
+                onClick={() => {
+                  setTechwebRoute({ route: 'details', selectedNode: id });
+                  setTabIndex(0);
+                }}>
+                Details
+              </Button>
+            )}
+            {tier > 0 && (
+              <Button
+                icon="lightbulb"
+                disabled={!can_unlock || tier > 1}
+                onClick={() => act('researchNode', { node_id: id })}>
+                Research
+              </Button>
+            )}
+          </>
+        )
+      }>
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
-          {costs.map(k => {
+          {costs.map((k) => {
             const reqPts = Math.max(0, k.value - nodeDiscount);
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
@@ -692,9 +583,11 @@ const TechNode = (props, context) => {
                     average: [0.25, 0.5],
                     bad: [-Infinity, 0.25],
                   }}
-                  value={reqPts === 0
-                    ? 1
-                    : Math.min(1, (points[k.type]||0) / reqPts)}>
+                  value={
+                    reqPts === 0
+                      ? 1
+                      : Math.min(1, (points[k.type] || 0) / reqPts)
+                  }>
                   {abbreviateName(k.type)} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
@@ -721,7 +614,7 @@ const TechNode = (props, context) => {
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
             tooltip={design_cache[k].name}
-            tooltipPosition={i % 15 < 7 ? "right" : "left"}
+            tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
           />
         ))}
       </Box>
@@ -729,16 +622,12 @@ const TechNode = (props, context) => {
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments">
-          {required_experiments.map(k => {
+          {required_experiments.map((k) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return (
-                <LockedExperiment />
-              );
+              return <LockedExperiment />;
             }
-            return (
-              <Experiment key={thisExp} exp={thisExp} />
-            );
+            return <Experiment key={thisExp} exp={thisExp} />;
           })}
         </Collapsible>
       )}
@@ -746,18 +635,16 @@ const TechNode = (props, context) => {
         <Collapsible
           className="TechwebNodeExperimentsRequired"
           title="Discount-Eligible Experiments">
-          {Object.keys(discount_experiments).map(k => {
+          {Object.keys(discount_experiments).map((k) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return (
-                <LockedExperiment />
-              );
+              return <LockedExperiment />;
             }
             return (
               <Experiment key={thisExp} exp={thisExp}>
                 <Box className="Techweb__ExperimentDiscount">
-                  Provides a discount of {discount_experiments[k]} points
-                  to all required point pools.
+                  Provides a discount of {discount_experiments[k]} points to all
+                  required point pools.
                 </Box>
               </Experiment>
             );
@@ -771,25 +658,22 @@ const TechNode = (props, context) => {
 const LockedExperiment = (props, context) => {
   return (
     <Box m={1} className="ExperimentConfigure__ExperimentPanel">
-      <Button fluid
+      <Button
+        fluid
         backgroundColor="#40628a"
         className="ExperimentConfigure__ExperimentName"
         disabled>
         <Flex align="center" justify="space-between">
-          <Flex.Item
-            color="rgba(0, 0, 0, 0.6)">
+          <Flex.Item color="rgba(0, 0, 0, 0.6)">
             <Icon name="lock" />
             Undiscovered Experiment
           </Flex.Item>
-          <Flex.Item
-            color="rgba(0, 0, 0, 0.5)">
-            ???
-          </Flex.Item>
+          <Flex.Item color="rgba(0, 0, 0, 0.5)">???</Flex.Item>
         </Flex>
       </Button>
-      <Box className={"ExperimentConfigure__ExperimentContent"}>
-        This experiment has not been discovered yet, continue researching
-        nodes in the tree to discover the contents of this experiment.
+      <Box className={'ExperimentConfigure__ExperimentContent'}>
+        This experiment has not been discovered yet, continue researching nodes
+        in the tree to discover the contents of this experiment.
       </Box>
     </Box>
   );

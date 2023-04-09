@@ -1,0 +1,284 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"b" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"e" = (
+/obj/item/pickaxe/rusted,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"f" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/bonfire,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"k" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"p" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"q" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"r" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/cups,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"s" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"t" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/stack/sheet/mineral/wood{
+	amount = 10
+	},
+/obj/item/hatchet/wooden,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"v" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"w" = (
+/obj/structure/closet/mini_fridge,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"z" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"A" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"G" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/chair/stool/directional/west,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"H" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"I" = (
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/machinery/light/small/directional/north,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"J" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/station/asteroid)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/six,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"N" = (
+/turf/template_noop,
+/area/template_noop)
+"S" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"U" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/station/asteroid)
+"V" = (
+/turf/closed/wall/rock/porous,
+/area/station/asteroid)
+"X" = (
+/turf/closed/wall,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Z" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+N
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+N
+a
+a
+a
+q
+q
+q
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+N
+a
+a
+q
+q
+k
+q
+q
+a
+a
+a
+"}
+(4,1,1) = {"
+N
+a
+H
+q
+J
+a
+e
+q
+q
+q
+a
+"}
+(5,1,1) = {"
+N
+a
+S
+q
+a
+a
+a
+V
+q
+J
+a
+"}
+(6,1,1) = {"
+N
+X
+s
+X
+X
+a
+w
+p
+q
+q
+a
+"}
+(7,1,1) = {"
+N
+Z
+v
+i
+X
+q
+U
+b
+q
+q
+a
+"}
+(8,1,1) = {"
+N
+i
+i
+i
+X
+I
+z
+f
+S
+q
+V
+"}
+(9,1,1) = {"
+o
+i
+i
+i
+X
+A
+U
+G
+q
+q
+a
+"}
+(10,1,1) = {"
+N
+y
+d
+M
+X
+a
+t
+r
+q
+q
+a
+"}
+(11,1,1) = {"
+N
+N
+N
+N
+X
+a
+a
+V
+a
+a
+a
+"}

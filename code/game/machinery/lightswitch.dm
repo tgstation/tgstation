@@ -2,31 +2,33 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
-
-/obj/machinery/light_switch/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/light_switch,
-	))
+	///Range of the light emitted when powered, but off
+	var/light_on_range = 1
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/light_switch,
+	))
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))
 		area = GLOB.areas_by_type[area]
 	if(!area)
 		area = get_area(src)
-
 	if(!name)
 		name = "light switch ([area.name])"
 
@@ -37,20 +39,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
+	set_light(area.lightswitch ? 0 : light_on_range)
+	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]-p"
+		icon_state += "-nopower"
 		return ..()
-	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
+	icon_state += "[area.lightswitch ? "-on" : "-off"]"
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
-	if(!(machine_stat & NOPOWER))
-		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
+	if(machine_stat & NOPOWER)
+		return ..()
+	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", src, alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
-	. += "It is [area.lightswitch ? "on" : "off"]."
+	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
@@ -80,6 +85,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
 
+/obj/machinery/light_switch/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/light_switch(loc)
+	qdel(src)
+
+/obj/item/wallframe/light_switch
+	name = "light switch"
+	desc = "An unmounted light switch. Attach it to a wall to use."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light-nopower"
+	result_path = /obj/machinery/light_switch
+	pixel_shift = 26
+
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"
 	desc = "Allows to control the lights of an area."
@@ -100,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	if(istype(parent, /obj/machinery/light_switch))
 		attached_switch = parent
-		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_SET, .proc/on_light_switch_set)
+		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_SET, PROC_REF(on_light_switch_set))
 
 /obj/item/circuit_component/light_switch/unregister_usb_parent(atom/movable/parent)
 	attached_switch = null

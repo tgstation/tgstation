@@ -64,7 +64,7 @@
 /datum/market_item/tool/thermite_bottle
 	name = "Thermite Bottle"
 	desc = "30u of Thermite to assist in creating a quick access point or get away!"
-	item = /obj/item/reagent_containers/glass/bottle/thermite
+	item = /obj/item/reagent_containers/cup/bottle/thermite
 
 	price_min = CARGO_CRATE_VALUE * 2.5
 	price_max = CARGO_CRATE_VALUE * 7.5

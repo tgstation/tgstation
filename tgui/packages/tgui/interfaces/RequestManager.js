@@ -32,8 +32,8 @@ export const RequestManager = (props, context) => {
       (request) =>
         decodeHtmlEntities(request.message)
           .toLowerCase()
-          .includes(filterText)
-        || request.owner_name.toLowerCase().includes(filterText)
+          .includes(filterText) ||
+        request.owner_name.toLowerCase().includes(filterText)
     );
   }
 
@@ -84,6 +84,8 @@ const displayTypeMap = {
   'request_centcom': 'CENTCOM',
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',
+  'request_fax': 'FAX',
+  'request_internet_sound': 'INTERNET SOUND',
 };
 
 const RequestType = (props) => {
@@ -117,11 +119,17 @@ const RequestControls = (props, context) => {
           SETCODE
         </Button>
       )}
+      {request.req_type === 'request_fax' && (
+        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+      )}
+      {request.req_type === 'request_internet_sound' && (
+        <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
+      )}
     </div>
   );
 };
 
-const FilterPanel = (_, context) => {
+const FilterPanel = (props, context) => {
   const [filterVisible, setFilterVisible] = useLocalState(
     context,
     'filterVisible',

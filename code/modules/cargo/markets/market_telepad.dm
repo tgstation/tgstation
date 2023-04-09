@@ -4,9 +4,9 @@
 	build_path = /obj/machinery/ltsrbt
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
-		/obj/item/stock_parts/subspace/ansible = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 2)
+		/datum/stock_part/ansible = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/scanning_module = 2)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
@@ -16,7 +16,7 @@
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
 
-	idle_power_usage = 200
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2
 
 	/// Divider for power_usage_per_teleport.
 	var/power_efficiency = 1
@@ -48,15 +48,16 @@
 	. = ..()
 
 /obj/machinery/ltsrbt/RefreshParts()
+	. = ..()
 	recharge_time = base_recharge_time
 	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
-	for(var/obj/item/stock_parts/scanning_module/scan in component_parts)
-		recharge_time -= scan.rating * 10
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		recharge_time -= scanning_module.tier * 10
 	recharge_cooldown = recharge_time
 
 	power_efficiency = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		power_efficiency += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		power_efficiency += laser.tier
 	// Shouldn't happen but you never know.
 	if(!power_efficiency)
 		power_efficiency = 1

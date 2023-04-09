@@ -5,8 +5,9 @@
 import DOMPurify from 'dompurify';
 
 // Default values
-let defTag = [
+const defTag = [
   'b',
+  'blockquote',
   'br',
   'center',
   'code',
@@ -43,21 +44,36 @@ let defTag = [
   'u',
   'ul',
 ];
-let defAttr = ['class', 'style'];
+
+// Advanced HTML tags that we can trust admins (but not players) with
+const advTag = ['img'];
+
+const defAttr = ['class', 'style'];
 
 /**
  * Feed it a string and it should spit out a sanitized version.
  *
  * @param {string} input
+ * @param {boolean} advHtml
  * @param {array} tags
  * @param {array} forbidAttr
+ * @param {array} advTags
  */
-export const sanitizeText = (input, tags = defTag, forbidAttr = defAttr) => {
+export const sanitizeText = (
+  input,
+  advHtml,
+  tags = defTag,
+  forbidAttr = defAttr,
+  advTags = advTag
+) => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
   // the default DOMPurify kills javascript, it dosn't
   // kill href links or such
+  if (advHtml) {
+    tags = tags.concat(advTags);
+  }
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: tags,
     FORBID_ATTR: forbidAttr,

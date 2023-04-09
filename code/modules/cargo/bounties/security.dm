@@ -14,14 +14,14 @@
 
 /datum/bounty/item/security/prison_clothes
 	name = "Prison Uniforms"
-	description = "Terragov has been unable to source any new prisoner uniforms, so if you have any spares, we'll take them off your hands."
+	description = "TerraGov has been unable to source any new prisoner uniforms, so if you have any spares, we'll take them off your hands."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 4
 	wanted_types = list(/obj/item/clothing/under/rank/prisoner = TRUE)
 
 /datum/bounty/item/security/plates
 	name = "License Plates"
-	description = "As a result of a bad clown car crash, we could use an advance on some of your prisoner's license plates."
+	description = "As a result of a bad clown car crash, we could use an advance on some of your prisoners' license plates."
 	reward = CARGO_CRATE_VALUE * 2
 	required_count = 10
 	wanted_types = list(/obj/item/stack/license_plates/filled = TRUE)
@@ -50,17 +50,23 @@
 	var/area/demanded_area
 
 /datum/bounty/item/security/paperwork/New()
-	///list of areas for security to choose from to perform an inspection.
-	var/static/list/possible_areas = list(\
-		/area/maintenance,\
-		/area/commons,\
-		/area/service,\
-		/area/hallway/primary,\
-		/area/security/office,\
-		/area/security/prison,\
-		/area/security/range,\
-		/area/security/checkpoint,\
-		/area/security/interrogation)
+	///list of areas for security to choose from to perform an inspection. Pulls the list and cross references it to the map to make sure the area is on the map before assigning.
+	var/static/list/possible_areas
+	if(!possible_areas)
+		possible_areas = typecacheof(list(\
+			/area/station/maintenance,\
+			/area/station/commons,\
+			/area/station/service,\
+			/area/station/hallway/primary,\
+			/area/station/security/office,\
+			/area/station/security/prison,\
+			/area/station/security/range,\
+			/area/station/security/checkpoint,\
+			/area/station/security/interrogation))
+		for (var/area_type in possible_areas)
+			if(GLOB.areas_by_type[area_type])
+				continue
+			possible_areas -= area_type
 	demanded_area = pick(possible_areas)
 	name = name + ": [initial(demanded_area.name)]"
 	description = initial(description) + " [initial(demanded_area.name)]"

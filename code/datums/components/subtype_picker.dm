@@ -24,7 +24,7 @@
 
 /datum/component/subtype_picker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 
 /datum/component/subtype_picker/UnregisterFromParent()
 	. = ..()
@@ -33,7 +33,7 @@
 ///signal called by the stat of the target changing
 /datum/component/subtype_picker/proc/on_attack_self(datum/target, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/pick_subtype, target, user)
+	INVOKE_ASYNC(src, PROC_REF(pick_subtype), target, user)
 
 /**
  * pick_subtype: turns the list of types to their description into all the data radial menus need
@@ -60,7 +60,7 @@
  */
 /datum/component/subtype_picker/proc/pick_subtype(datum/target, mob/picker)
 
-	var/name_of_type = show_radial_menu(picker, target, built_radial_list, custom_check = CALLBACK(src, .proc/check_menu, target, picker), radius = 42, require_near = TRUE)
+	var/name_of_type = show_radial_menu(picker, target, built_radial_list, custom_check = CALLBACK(src, PROC_REF(check_menu), target, picker), radius = 42, require_near = TRUE)
 	if(!name_of_type || !check_menu(target, picker))
 		return
 

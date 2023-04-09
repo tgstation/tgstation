@@ -32,6 +32,23 @@
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = TRUE
 
+	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker) && !CONFIG_GET(flag/panic_bunker_interview))
+		var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
+			"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
+			list("ckey" = ckey)
+		)
+		if(!query_client_in_db.Execute())
+			qdel(query_client_in_db)
+			return
+
+		var/client_is_in_db = query_client_in_db.NextRow()
+		if(!client_is_in_db)
+			
+			var/reject_message = "Failed Login: [key] [address]-[computer_id] - New Account attempting to connect during panic bunker, but was rejected due to no prior connections to game servers (no database entry)"
+			log_access(reject_message)
+			if (message)
+				message_admins(span_adminnotice("[reject_message]"))
+			return list("reason"="panicbunker", "desc" = "Sorry but the server is currently not accepting connections from never before seen players")
 
 	//Whitelist
 	if(!real_bans_only && !C && CONFIG_GET(flag/usewhitelist))
@@ -109,9 +126,9 @@
 			return
 		GLOB.stickybanadminexemptions[ckey] = world.time
 		stoplag() // sleep a byond tick
-		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 		return
-		
+
 	var/list/ban = ..() //default pager ban stuff
 
 	if (ban)
@@ -181,7 +198,7 @@
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)
-					sleep(1)
+					sleep(1 TICKS)
 					world.SetConfig("ban", bannedckey, null)
 					if (!ban["fromdb"])
 						cachedban = cachedban.Copy() //so old references to the list still see the ban as reverting

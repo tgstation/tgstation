@@ -5,67 +5,88 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/structure_fireaxecabinet
 	max_integrity = 150
 	integrity_failure = 0.33
+	/// Do we need to be unlocked to be opened.
 	var/locked = TRUE
+	/// Are we opened, can someone take the held item out.
 	var/open = FALSE
-	var/obj/item/fireaxe/fireaxe
+	/// The item we're holding.
+	var/obj/item/held_item
+	/// The path of the item we spawn and can hold.
+	var/item_path = /obj/item/fireaxe
+	/// Overlay we get when the item is inside us.
+	var/item_overlay = "axe"
+	/// Whether we should populate our own contents on Initialize()
+	var/populate_contents = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
+/datum/armor/structure_fireaxecabinet
+	melee = 50
+	bullet = 20
+	energy = 100
+	bomb = 10
+	fire = 90
+	acid = 50
+
 /obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
-	fireaxe = new(src)
+	if(populate_contents)
+		held_item = new item_path(src)
 	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()
-	if(fireaxe)
-		QDEL_NULL(fireaxe)
+	if(held_item)
+		QDEL_NULL(held_item)
 	return ..()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/living/user, params)
-	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
+/obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(iscyborg(user) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
-	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=2))
+			if(!attacking_item.tool_start_check(user, amount = 2))
 				return
-
-			to_chat(user, span_notice("You begin repairing [src]."))
-			if(I.use_tool(src, user, 40, volume=50, amount=2))
-				atom_integrity = max_integrity
+			balloon_alert(user, "repairing...")
+			if(attacking_item.use_tool(src, user, 4 SECONDS, volume= 50, amount = 2))
+				repair_damage(max_integrity - get_integrity())
 				update_appearance()
-				to_chat(user, span_notice("You repair [src]."))
+				balloon_alert(user, "repaired")
 		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
+			balloon_alert(user, "already repaired!")
 		return
-	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
-		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() < 2)
-			to_chat(user, span_warning("You need two glass sheets to fix [src]!"))
+	else if(istype(attacking_item, /obj/item/stack/sheet/glass) && broken)
+		var/obj/item/stack/sheet/glass/glass_stack = attacking_item
+		if(glass_stack.get_amount() < 2)
+			balloon_alert(user, "need more glass!")
 			return
-		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src) && G.use(2))
+		balloon_alert(user, "repairing")
+		if(do_after(user, 2 SECONDS, target = src) && glass_stack.use(2))
 			broken = FALSE
-			atom_integrity = max_integrity
+			repair_damage(max_integrity - get_integrity())
 			update_appearance()
 	else if(open || broken)
-		if(istype(I, /obj/item/fireaxe) && !fireaxe)
-			var/obj/item/fireaxe/F = I
-			if(F?.wielded)
-				to_chat(user, span_warning("Unwield the [F.name] first."))
+		if(istype(attacking_item, item_path) && !held_item)
+			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED))
+				balloon_alert(user, "unwield it!")
 				return
-			if(!user.transferItemToLoc(F, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			fireaxe = F
-			to_chat(user, span_notice("You place the [F.name] back in the [name]."))
+			held_item = attacking_item
 			update_appearance()
 			return
 		else if(!broken)
 			toggle_open()
 	else
 		return ..()
+
+/obj/structure/fireaxecabinet/Exited(atom/movable/gone, direction)
+	if(gone == held_item)
+		held_item = null
+		update_appearance()
+	return ..()
 
 /obj/structure/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -95,37 +116,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(fireaxe && loc)
-			fireaxe.forceMove(loc)
-			fireaxe = null
-		new /obj/item/stack/sheet/iron(loc, 2)
+		if(held_item && loc)
+			held_item.forceMove(loc)
+		new /obj/item/wallframe/fireaxecabinet(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
-	if(fireaxe)
-		fireaxe.forceMove(loc)
-		fireaxe = null
+	if(held_item)
+		held_item.forceMove(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(open || broken)
-		if(fireaxe)
-			user.put_in_hands(fireaxe)
-			fireaxe = null
-			to_chat(user, span_notice("You take the fire axe from the [name]."))
-			src.add_fingerprint(user)
-			update_appearance()
-			return
-	if(locked)
-		to_chat(user, span_warning("The [name] won't budge!"))
-		return
-	else
-		open = !open
+	if((open || broken) && held_item)
+		user.put_in_hands(held_item)
+		add_fingerprint(user)
 		update_appearance()
 		return
+	toggle_open(user)
+
+/obj/structure/fireaxecabinet/attack_hand_secondary(mob/user, list/modifiers)
+	toggle_open(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -134,20 +148,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	toggle_lock(user)
 	return
 
-
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
-	if(locked)
-		to_chat(user, span_warning("The [name] won't budge!"))
-		return
-	open = !open
-	update_appearance()
-
+	toggle_open(user)
 
 /obj/structure/fireaxecabinet/update_overlays()
 	. = ..()
-	if(fireaxe)
-		. += "axe"
+	if(held_item)
+		. += item_overlay
 	if(open)
 		. += "glass_raised"
 		return
@@ -170,20 +178,53 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, span_notice("Resetting circuitry..."))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
-	if(do_after(user, 20, target = src))
+	if(do_after(user, 2 SECONDS, target = src))
 		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
 		locked = !locked
 		update_appearance()
 
-/obj/structure/fireaxecabinet/verb/toggle_open()
-	set name = "Open/Close"
-	set category = "Object"
-	set src in oview(1)
-
+/obj/structure/fireaxecabinet/proc/toggle_open(mob/user)
 	if(locked)
-		to_chat(usr, span_warning("The [name] won't budge!"))
+		balloon_alert(user, "won't budge!")
 		return
 	else
 		open = !open
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 		update_appearance()
 		return
+
+/obj/structure/fireaxecabinet/empty
+	populate_contents = FALSE
+
+/obj/item/wallframe/fireaxecabinet
+	name = "fire axe cabinet"
+	desc = "Home to a window's greatest nightmare. Apply to wall to use."
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "fireaxe"
+	result_path = /obj/structure/fireaxecabinet/empty
+	pixel_shift = 32
+
+/obj/structure/fireaxecabinet/mechremoval
+	name = "mech removal tool cabinet"
+	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the tool. As if."
+	icon_state = "mechremoval"
+	item_path = /obj/item/crowbar/mechremoval
+	item_overlay = "crowbar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+
+/obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(held_item && loc)
+			held_item.forceMove(loc)
+		new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
+	qdel(src)
+
+/obj/structure/fireaxecabinet/mechremoval/empty
+	populate_contents = FALSE
+
+/obj/item/wallframe/fireaxecabinet/mechremoval
+	name = "mech removal tool cabinet"
+	desc = "Home to a very special crowbar. Apply to wall to use."
+	icon_state = "mechremoval"
+	result_path = /obj/structure/fireaxecabinet/mechremoval/empty

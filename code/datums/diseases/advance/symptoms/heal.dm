@@ -10,17 +10,7 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
-	threshold_descs = list(
-		"Stage Speed 6" = "Doubles healing speed.",
-		"Stealth 4" = "Healing will no longer be visible to onlookers.",
-	)
 
-/datum/symptom/heal/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
-		return
-	if(A.totalStageSpeed() >= 6) //stronger healing
-		power = 2
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
@@ -47,6 +37,13 @@
 /datum/symptom/heal/proc/passive_message_condition(mob/living/M)
 	return TRUE
 
+/*Starlight Condensation
+ * Slightly reduces stealth
+ * Reduces resistance
+ * No change to stage speed
+ * Slightly increases transmissibility
+ * Bonus: Heals host when exposed to starlight
+*/
 
 /datum/symptom/heal/starlight
 	name = "Starlight Condensation"
@@ -56,7 +53,7 @@
 	stage_speed = 0
 	transmittable = 1
 	level = 6
-	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
+	passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
 	threshold_descs = list(
 		"Stage Speed 6" = "Increases healing speed.",
@@ -160,13 +157,13 @@
 
 	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -175,6 +172,13 @@
 		return TRUE
 	return FALSE
 
+/*Toxolysis
+ * No change to stealth
+ * Reduces resistance
+ * Increases stage speed
+ * Reduces transmissibility
+ * Bonus: Removes all reagents from the host
+*/
 /datum/symptom/heal/chem
 	name = "Toxolysis"
 	stealth = 0
@@ -208,7 +212,14 @@
 	return 1
 
 
-
+/*Metabolic Boost
+ * Slightly reduces stealth
+ * Reduces resistance
+ * Increases stage speed
+ * Slightly increases transmissibility
+ * Bonus: Doubles the rate of chemical metabolisation
+ * Increases nutrition loss rate
+*/
 /datum/symptom/heal/metabolism
 	name = "Metabolic Boost"
 	stealth = -1
@@ -245,7 +256,13 @@
 	if(prob(2))
 		to_chat(C, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
 	return 1
-
+/*Nocturnal Regeneration
+ * Increases stealth
+ * Slightly reduces resistance
+ * Reduces stage speed
+ * Slightly reduces transmissibility
+ * Bonus: Heals brute damage when in the dark
+*/
 /datum/symptom/heal/darkness
 	name = "Nocturnal Regeneration"
 	desc = "The virus is able to mend the host's flesh when in conditions of low light, repairing physical damage. More effective against brute damage."
@@ -254,7 +271,7 @@
 	stage_speed = -2
 	transmittable = -1
 	level = 6
-	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
+	passive_message = span_notice("You feel tingling on your skin as light passes over it.")
 	threshold_descs = list(
 		"Stage Speed 8" = "Doubles healing speed.",
 	)
@@ -278,7 +295,7 @@
 /datum/symptom/heal/darkness/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1,BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
@@ -287,7 +304,7 @@
 		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, null, BODYTYPE_ORGANIC)) //more effective on brute
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, BODYTYPE_ORGANIC)) //more effective on brute
 			M.update_damage_overlays()
 	return 1
 
@@ -295,7 +312,13 @@
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 	return FALSE
-
+/*Regen Coma
+ * No effect on stealth
+ * Increases resistance
+ * Reduces stage speed greatly
+ * Decreases transmissibility
+ * Bonus: Puts the host into a coma when severely hurt, healing them
+*/
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
 	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
@@ -304,7 +327,7 @@
 	stage_speed = -3
 	transmittable = -2
 	level = 8
-	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
+	passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
@@ -357,12 +380,12 @@
 	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+		addtimer(CALLBACK(src, PROC_REF(coma), M), 60)
 
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	M.fakedeath("regenerative_coma", !deathgasp)
-	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
 
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
@@ -381,7 +404,7 @@
 		return
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
@@ -402,7 +425,7 @@
 	stage_speed = 0
 	transmittable = 1
 	level = 6
-	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
+	passive_message = span_notice("Your skin feels oddly dry...")
 	var/absorption_coeff = 1
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
@@ -422,7 +445,7 @@
 	. = 0
 	var/mob/living/M = A.affected_mob
 	if(M.fire_stacks < 0)
-		M.set_fire_stacks(min(M.fire_stacks + 1 * absorption_coeff, 0))
+		M.adjust_fire_stacks(min(absorption_coeff, -M.fire_stacks))
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
@@ -434,7 +457,7 @@
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC) //more effective on burns
+	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC) //more effective on burns
 
 	if(!parts.len)
 		return
@@ -443,7 +466,7 @@
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	return 1
@@ -453,8 +476,18 @@
 		return TRUE
 	return FALSE
 
-///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
 #define HEALING_PER_MOL 1.1
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma being breathed through internals
+#define HEALING_PER_BREATH_PRESSURE 0.05
+/// Determines the highest amount you can be healed for when breathing plasma from internals
+#define MAX_HEAL_COEFFICIENT_INTERNALS 0.75
+/// Determines the highest amount you can be healed for from pulling plasma from the environment
+#define MAX_HEAL_COEFFICIENT_ENVIRONMENT 0.5
+/// Determines the highest amount you can be healed for when there is plasma in the bloodstream
+#define MAX_HEAL_COEFFICIENT_BLOODSTREAM 0.75
+/// This is the base heal amount before being multiplied by the healing coefficients
+#define BASE_HEAL_PLASMA_FIXATION 4
 
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
@@ -464,7 +497,7 @@
 	stage_speed = -2
 	transmittable = -2
 	level = 8
-	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
+	passive_message = span_notice("You feel an odd attraction to plasma.")
 	var/temp_rate = 1
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
@@ -480,24 +513,59 @@
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
-/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
+// We do this to prevent liver damage from injecting plasma when plasma fixation virus reaches stage 4 and beyond
+/datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/advanced_disease)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(advanced_disease.stage >= 4)
+		ADD_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	else
+		REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/plasma/End(datum/disease/advance/advanced_disease)
+	. = ..()
+	if(!.)
+		return
+
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+
+// Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
+/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
+	var/mob/living/diseased_mob = advanced_disease.affected_mob
 	var/datum/gas_mixture/environment
 	var/list/gases
 
 	. = 0
 
-	if(M.loc)
-		environment = M.loc.return_air()
+	// Check internals
+	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
+	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
+	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
+	if(iscarbon(diseased_mob))
+		var/mob/living/carbon/breather = diseased_mob
+		var/obj/item/tank/internals/internals_tank = breather.internal
+		if(internals_tank)
+			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
+			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
+				if(tank_contents.gases[/datum/gas/plasma])
+					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
+					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
+	// Check environment
+	if(diseased_mob.loc)
+		environment = diseased_mob.loc.return_air()
 	if(environment)
 		gases = environment.gases
 		if(gases[/datum/gas/plasma])
-			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
-	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
+			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	// Check for reagents in bloodstream
+	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 4 * actual_power
+	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
@@ -514,18 +582,23 @@
 
 	M.adjustToxLoss(-heal_amt)
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 	if(!parts.len)
 		return
 	if(prob(5))
 		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
 ///Plasma End
 #undef HEALING_PER_MOL
+#undef HEALING_PER_BREATH_PRESSURE
+#undef MAX_HEAL_COEFFICIENT_INTERNALS
+#undef MAX_HEAL_COEFFICIENT_ENVIRONMENT
+#undef MAX_HEAL_COEFFICIENT_BLOODSTREAM
+#undef BASE_HEAL_PLASMA_FIXATION
 
 /datum/symptom/heal/radiation
 	name = "Radioactive Resonance"
@@ -537,7 +610,7 @@
 	level = 6
 	symptom_delay_min = 1
 	symptom_delay_max = 1
-	passive_message = "<span class='notice'>Your skin glows faintly for a moment.</span>"
+	passive_message = span_notice("Your skin glows faintly for a moment.")
 	var/cellular_damage = FALSE
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
@@ -564,7 +637,7 @@
 
 	M.adjustToxLoss(-(2 * heal_amt))
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
@@ -573,6 +646,6 @@
 		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1

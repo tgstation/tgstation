@@ -5,8 +5,12 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 
+
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
+	category="Synthesizers"
 
 	///input dir
 	var/eat_dir = SOUTH
@@ -15,7 +19,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -47,4 +51,5 @@
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)
+			use_power(active_power_usage * amount)
 			qdel(G)

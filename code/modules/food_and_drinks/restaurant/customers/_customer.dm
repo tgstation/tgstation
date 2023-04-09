@@ -25,6 +25,8 @@
 	var/second_warning_line = "This is your last warning!"
 	///Line when harrased by someone for the last time
 	var/self_defense_line = "Omae wa mo, shinderou."
+	///Line sent when the customer is clicked on by someone with a 0 force item that's not the correct order
+	var/wrong_item_line = "No, I don't want that."
 
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
@@ -33,7 +35,7 @@
 	///Prefix file to uise
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
-	var/base_icon = 'icons/mob/tourists.dmi'
+	var/base_icon = 'icons/mob/simple/tourists.dmi'
 	///Base icon state for the customer
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks
@@ -49,12 +51,6 @@
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
-
-/// Gets the order of this customer.
-/// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
-/// If the list of orders are static, just modify orderable_objects.
-/datum/customer_data/proc/get_order(datum/venue/venue)
-	return pick_weight(orderable_objects[venue.venue_type])
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
@@ -87,12 +83,14 @@
 			/obj/item/food/burger/baconburger = 10,
 			/obj/item/food/pancakes = 4,
 			/obj/item/food/eggsausage = 5,
+			/datum/custom_order/icecream = 14,
+			/obj/item/food/danish_hotdog = 3,
 		),
 		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/beer = 25,
 			/datum/reagent/consumable/ethanol/b52 = 6,
 			/datum/reagent/consumable/ethanol/manhattan = 3,
 			/datum/reagent/consumable/ethanol/atomicbomb = 1,
-			/datum/reagent/consumable/ethanol/beer = 25,
 		),
 	)
 
@@ -123,9 +121,11 @@
 			/obj/item/food/pizza/margherita = 2,
 			/obj/item/food/lasagna = 4,
 			/obj/item/food/cannoli = 3,
-			/obj/item/food/salad/risotto =5,
+			/obj/item/food/salad/risotto = 5,
 			/obj/item/food/eggplantparm = 3,
 			/obj/item/food/cornuto = 2,
+			/datum/custom_order/icecream = 10,
+			/obj/item/food/salad/greek_salad = 6,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/fanciulli = 5,
@@ -136,6 +136,7 @@
 			/datum/reagent/consumable/ethanol/wine = 3,
 			/datum/reagent/consumable/ethanol/grappa = 3,
 			/datum/reagent/consumable/ethanol/amaretto = 5,
+			/datum/reagent/consumable/cucumberlemonade = 2,
 		),
 	)
 
@@ -158,9 +159,10 @@
 		VENUE_RESTAURANT = list(
 			/obj/item/food/baguette = 20,
 			/obj/item/food/garlicbread = 5,
-			/obj/item/food/soup/onion = 4,
-			/obj/item/food/pie/berryclafoutis = 2,
 			/obj/item/food/omelette = 15,
+			/datum/custom_order/icecream = 6,
+			/datum/reagent/consumable/nutriment/soup/french_onion = 4,
+			/obj/item/food/pie/berryclafoutis = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/champagne = 10,
@@ -170,6 +172,7 @@
 			/datum/reagent/consumable/ethanol/between_the_sheets = 4,
 			/datum/reagent/consumable/ethanol/beer = 5,
 			/datum/reagent/consumable/ethanol/wine = 5,
+			/datum/reagent/consumable/ethanol/gin_garden = 2,
 		),
 	)
 
@@ -198,14 +201,16 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/food/tofu = 5,
-			/obj/item/food/breadslice/plain = 5,
-			/obj/item/food/soup/miso = 10,
-			/obj/item/food/soup/vegetable = 4,
-			/obj/item/food/sashimi = 4,
-			/obj/item/food/chawanmushi = 4,
-			/obj/item/food/muffin/berry = 2,
+			/datum/custom_order/icecream = 4,
+			/datum/reagent/consumable/nutriment/soup/miso = 10,
+			/datum/reagent/consumable/nutriment/soup/vegetable_soup = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/breadslice/plain = 5,
+			/obj/item/food/chawanmushi = 4,
+			/obj/item/food/fish_poke = 5,
+			/obj/item/food/muffin/berry = 2,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/tofu = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/sake = 8,
@@ -240,13 +245,14 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/food/tofu = 5,
-			/obj/item/food/soup/miso = 6,
-			/obj/item/food/soup/vegetable = 4,
-			/obj/item/food/sashimi = 4,
-			/obj/item/food/chawanmushi = 4,
-			/obj/item/food/meatbun = 4,
+			/datum/reagent/consumable/nutriment/soup/miso = 6,
+			/datum/reagent/consumable/nutriment/soup/vegetable_soup = 4,
 			/obj/item/food/beef_stroganoff = 2,
+			/obj/item/food/chawanmushi = 4,
+			/obj/item/food/meat_poke = 4,
+			/obj/item/food/meatbun = 4,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/tofu = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/beer = 14,
@@ -273,12 +279,9 @@
 
 	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
 
-	// Always asks for the clothes that you have on, but this is a fallback.
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
-			/obj/item/clothing/head/chefhat = 3,
-			/obj/item/clothing/shoes/sneakers/black = 3,
-			/obj/item/clothing/gloves/color/black = 1,
+			/datum/custom_order/moth_clothing = 1,
 		),
 	)
 
@@ -292,27 +295,12 @@
 // If it takes any more effort, it loses a bit of the comedy.
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue)
-	return !isnull(get_dynamic_order(venue))
-
-/datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
 	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet))
-		return
-
-	var/list/orderable = list()
-
-	if (!QDELETED(buffet.head))
-		orderable[buffet.head] = 5
-
-	if (!QDELETED(buffet.gloves))
-		orderable[buffet.gloves] = 5
-
-	if (!QDELETED(buffet.shoes))
-		orderable[buffet.shoes] = 1
-
-	if (orderable.len)
-		var/datum/order = pick_weight(orderable)
-		return order.type
+		return FALSE
+	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))
+		return FALSE
+	return TRUE
 
 /datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
@@ -325,7 +313,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
 	wings_behind.appearance_flags = RESET_COLOR
 	underlays += wings_behind
 
@@ -336,7 +324,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
 	wings_front.appearance_flags = RESET_COLOR
 	overlays += wings_front
 
@@ -345,12 +333,6 @@
 	overlays += jetpack
 
 	return overlays
-
-/datum/customer_data/moth/get_order(datum/venue/venue)
-	var/dynamic_order = get_dynamic_order(venue)
-
-	// Fall back to basic clothing.
-	return dynamic_order || ..()
 
 /datum/customer_data/mexican
 	base_icon_state = "mexican"
@@ -369,6 +351,7 @@
 			/obj/item/food/pie/dulcedebatata = 2,
 			/obj/item/food/cubannachos = 3,
 			/obj/item/food/stuffedlegion = 1,
+			/datum/custom_order/icecream = 2,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/whiskey = 6,
@@ -403,15 +386,16 @@
 
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
+			/datum/custom_order/icecream = 8,
+			/datum/reagent/consumable/nutriment/soup/indian_curry = 3,
+			/datum/reagent/consumable/nutriment/soup/stew = 10,
+			/obj/item/food/beef_wellington_slice = 2,
+			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
-			/obj/item/food/soup/stew = 10,
-			/obj/item/food/salad/ricepudding = 5,
+			/obj/item/food/full_english = 2,
 			/obj/item/food/grilled_cheese_sandwich = 5,
 			/obj/item/food/pie/meatpie = 5,
-			/obj/item/food/benedict = 5,
-			/obj/item/food/full_english = 2,
-			/obj/item/food/soup/indian_curry = 3,
-			/obj/item/food/beef_wellington_slice = 2,
+			/obj/item/food/salad/ricepudding = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/ale = 10,
@@ -478,5 +462,3 @@
 	first_warning_line = "You'd fit in well where I'm from. But you better stop."
 	second_warning_line = "Breaking-you-so-bad-you'll-reminisce-the-days-before-I-made-you-crooked.exe: booting..."
 	self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
-
-

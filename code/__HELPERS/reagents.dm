@@ -79,11 +79,13 @@
 	GLOB.chemical_reactions_list_reactant_index[primary_reagent] += R
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
-/datum/reagents/proc/create_foam(foamtype,foam_volume,metaltype = 0,notification = null)
+/datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
 	var/location = get_turf(my_atom)
-	var/datum/effect_system/foam_spread/foam = new foamtype()
-	foam.set_up(foam_volume, location, src, metaltype)
-	foam.start()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
+	foam.set_up(amount = foam_volume, holder = my_atom, location = location, carry = src, result_type = result_type)
+	foam.start(log = log)
+
 	clear_reagents()
 	if(!notification)
 		return
@@ -182,10 +184,9 @@
 /proc/get_random_reagent_id()
 	var/static/list/random_reagents = list()
 	if(!random_reagents.len)
-		for(var/thing in subtypesof(/datum/reagent))
-			var/datum/reagent/R = thing
-			if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				random_reagents += R
+		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
+			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+				random_reagents += reagent_path
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
 

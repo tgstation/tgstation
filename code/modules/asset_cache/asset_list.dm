@@ -7,12 +7,18 @@
 GLOBAL_LIST_EMPTY(asset_datums)
 
 //get an assetdatum or make a new one
-/proc/get_asset_datum(type)
+//does NOT ensure it's filled, if you want that use get_asset_datum()
+/proc/load_asset_datum(type)
 	return GLOB.asset_datums[type] || new type()
+
+/proc/get_asset_datum(type)
+	var/datum/asset/loaded_asset = GLOB.asset_datums[type] || new type()
+	return loaded_asset.ensure_ready()
 
 /datum/asset
 	var/_abstract = /datum/asset
-	var/cached_url_mappings
+	var/cached_serialized_url_mappings
+	var/cached_serialized_url_mappings_transport_type
 
 	/// Whether or not this asset should be loaded in the "early assets" SS
 	var/early = FALSE
@@ -26,15 +32,25 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	GLOB.asset_datums[type] = src
 	register()
 
+/// Stub that allows us to react to something trying to get us
+/// Not useful here, more handy for sprite sheets
+/datum/asset/proc/ensure_ready()
+	return src
+
+/// Stub to hook into if your asset is having its generation queued by SSasset_loading
+/datum/asset/proc/queued_generation()
+	CRASH("[type] inserted into SSasset_loading despite not implementing /proc/queued_generation")
+
 /datum/asset/proc/get_url_mappings()
 	return list()
 
 /// Returns a cached tgui message of URL mappings
 /datum/asset/proc/get_serialized_url_mappings()
-	if (isnull(cached_url_mappings))
-		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+	if (isnull(cached_serialized_url_mappings) || cached_serialized_url_mappings_transport_type != SSassets.transport.type)
+		cached_serialized_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+		cached_serialized_url_mappings_transport_type = SSassets.transport.type
 
-	return cached_url_mappings
+	return cached_serialized_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -86,7 +102,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/group/register()
 	for(var/type in children)
-		get_asset_datum(type)
+		load_asset_datum(type)
 
 /datum/asset/group/send(client/C)
 	for(var/type in children)
@@ -111,10 +127,25 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
 	var/name
+	/// List of arguments to pass into queuedInsert
+	/// Exists so we can queue icon insertion, mostly for stuff like preferences
+	var/list/to_generate = list()
 	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
 	var/list/cached_spritesheets_needed
 	var/generating_cache = FALSE
+	var/fully_generated = FALSE
+	/// If this asset should be fully loaded on new
+	/// Defaults to false so we can process this stuff nicely
+	var/load_immediately = FALSE
+
+/datum/asset/spritesheet/proc/should_load_immediately()
+#ifdef DO_NOT_DEFER_ASSETS
+	return TRUE
+#else
+	return load_immediately
+#endif
+
 
 /datum/asset/spritesheet/should_refresh()
 	if (..())
@@ -136,9 +167,28 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		CRASH("spritesheet [type] cannot register without a name")
 
 	if (!should_refresh() && read_from_cache())
+		fully_generated = TRUE
 		return
 
+	// If it's cached, may as well load it now, while the loading is cheap
+	if(CONFIG_GET(flag/cache_assets) && cross_round_cachable)
+		load_immediately = TRUE
+
 	create_spritesheets()
+	if(should_load_immediately())
+		realize_spritesheets(yield = FALSE)
+	else
+		SSasset_loading.queue_asset(src)
+
+/datum/asset/spritesheet/proc/realize_spritesheets(yield)
+	if(fully_generated)
+		return
+	while(length(to_generate))
+		var/list/stored_args = to_generate[to_generate.len]
+		to_generate.len--
+		queuedInsert(arglist(stored_args))
+		if(yield && TICK_CHECK)
+			return
 
 	ensure_stripped()
 	for(var/size_id in sizes)
@@ -153,6 +203,17 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
 		write_to_cache()
+	fully_generated = TRUE
+	// If we were ever in there, remove ourselves
+	SSasset_loading.dequeue_asset(src)
+
+/datum/asset/spritesheet/queued_generation()
+	realize_spritesheets(yield = TRUE)
+
+/datum/asset/spritesheet/ensure_ready()
+	if(!fully_generated)
+		realize_spritesheets(yield = FALSE)
+	return ..()
 
 /datum/asset/spritesheet/send(client/client)
 	if (!name)
@@ -275,6 +336,16 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	CRASH("create_spritesheets() not implemented for [type]!")
 
 /datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+	if(should_load_immediately())
+		queuedInsert(sprite_name, I, icon_state, dir, frame, moving)
+	else
+		to_generate += list(args.Copy())
+
+// LEMON NOTE
+// A GOON CODER SAYS BAD ICON ERRORS CAN BE THROWN BY THE "ICON CACHE"
+// APPARENTLY IT MAKES ICONS IMMUTABLE
+// LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
+/datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
@@ -289,8 +360,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if (size)
 		var/position = size[SPRSZ_COUNT]++
 		var/icon/sheet = size[SPRSZ_ICON]
+		var/icon/sheet_copy = icon(sheet)
 		size[SPRSZ_STRIPPED] = null
-		sheet.Insert(I, icon_state=sprite_name)
+		sheet_copy.Insert(I, icon_state=sprite_name)
+		size[SPRSZ_ICON] = sheet_copy
+
 		sprites[sprite_name] = list(size_id, position)
 	else
 		sizes[size_id] = size = list(1, I, null)
@@ -472,18 +546,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 
 /datum/asset/json/send(client)
-	return SSassets.transport.send_assets(client, "data/[name].json")
+	return SSassets.transport.send_assets(client, "[name].json")
 
 /datum/asset/json/get_url_mappings()
 	return list(
-		"[name].json" = SSassets.transport.get_asset_url("data/[name].json"),
+		"[name].json" = SSassets.transport.get_asset_url("[name].json"),
 	)
 
 /datum/asset/json/register()
 	var/filename = "data/[name].json"
 	fdel(filename)
 	text2file(json_encode(generate()), filename)
-	SSassets.transport.register_asset(filename, fcopy_rsc(filename))
+	SSassets.transport.register_asset("[name].json", fcopy_rsc(filename))
 	fdel(filename)
 
 /// Returns the data that will be JSON encoded

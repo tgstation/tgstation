@@ -125,6 +125,16 @@
 
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
+	var/material_requirement_string = "It needs "
+	if (iron_cost > 0)
+		material_requirement_string += "[iron_cost] iron "
+		if (glass_cost > 0)
+			material_requirement_string += "and "
+	if (glass_cost > 0)
+		material_requirement_string += "[glass_cost] glass "
+	if (iron_cost > 0 || glass_cost > 0)
+		material_requirement_string += "to produce one drone shell."
+		. += span_notice(material_requirement_string)
 	if((mode == DRONE_RECHARGING) && !machine_stat && recharging_text)
 		. += span_warning("[recharging_text]")
 

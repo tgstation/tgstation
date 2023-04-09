@@ -37,11 +37,11 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "h" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "j" = (
-/obj/structure/sink/kitchen,
+/obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "k" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (
@@ -69,7 +69,7 @@
 /obj/item/pen,
 /obj/machinery/light/broken/directional/west,
 /obj/item/paper/crumpled/bloody{
-	info = "help...";
+	default_raw_text = "help...";
 	text = ""
 	},
 /turf/open/floor/wood,

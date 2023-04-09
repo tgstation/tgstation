@@ -6,16 +6,16 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
+	supervisors = SUPERVISOR_CMO
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "VIROLOGIST"
 
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
@@ -29,9 +29,9 @@
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/glass/bottle/random_virus = 15,
-		/obj/item/reagent_containers/glass/bottle/formaldehyde = 10,
-		/obj/item/reagent_containers/glass/bottle/synaptizine = 10,
+		/obj/item/reagent_containers/cup/bottle/random_virus = 15,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
+		/obj/item/reagent_containers/cup/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
 		/obj/item/stack/sheet/mineral/uranium = 5,
 	)
@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/pda/viro
+	belt = /obj/item/modular_computer/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white

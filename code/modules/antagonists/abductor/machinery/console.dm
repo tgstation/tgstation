@@ -7,6 +7,7 @@
 
 /obj/machinery/abductor
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	use_power = NO_POWER_USE
 	var/team_number = 0
 
 //Console

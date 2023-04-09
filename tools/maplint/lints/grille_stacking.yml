@@ -1,0 +1,7 @@
+help: "Please replace with the proper structure spawner."
+=/obj/structure/grille:
+  banned_neighbors:
+    /obj/structure/cable:
+    /obj/structure/window/reinforced/plasma/plastitanium:
+    FULLTILE_WINDOW:
+      pattern: ^/obj/structure/window[/\w]*?fulltile$

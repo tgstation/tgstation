@@ -1,36 +1,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored
-	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
-	/// The unique string that represents which atmos chamber to associate with.
-	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/Initialize(mapload)
-	id_tag = chamber_id + "_out"
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/Destroy()
-	SSradio.remove_object(src, frequency)
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/on_deconstruction()
+	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(new_frequency)
-		radio_connection = SSradio.add_object(src, new_frequency, RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/proc/broadcast_destruction(frequency)
-	var/datum/signal/signal = new(list(
-		"sigtype" = "destroyed",
-		"tag" = id_tag,
-		"timestamp" = world.time,
-	))
-	var/datum/radio_frequency/connection = SSradio.return_frequency(frequency)
-	connection.post_signal(null, signal, filter = RADIO_ATMOSIA)
+	//we dont want people messing with these special vents using the air alarm interface
+	disconnect_from_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output
 	name = "plasma tank output inlet"
@@ -120,44 +96,24 @@
 	name = "incinerator chamber output inlet"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR
 
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_mixing_output
-	name = "ordnance mixing output inlet"
-	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_LAB
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_burn_chamber_output
+	name = "ordnance burn chamber output inlet"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_BURN
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/ordnance_freezer_chamber_output
+	name = "ordnance freezer chamber output inlet"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_FREEZER
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored
-	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
-	var/chamber_id
 
 // Same as the rest, but bigger volume.
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Initialize(mapload)
-	id_tag = chamber_id + "_out"
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Destroy()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
-	SSradio.remove_object(src, frequency)
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/on_deconstruction()
+	id_tag = CHAMBER_OUTPUT_FROM_ID(chamber_id)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(new_frequency)
-		radio_connection = SSradio.add_object(src, new_frequency, RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/proc/broadcast_destruction(frequency)
-	var/datum/signal/signal = new(list(
-		"sigtype" = "destroyed",
-		"tag" = id_tag,
-		"timestamp" = world.time,
-	))
-	var/datum/radio_frequency/connection = SSradio.return_frequency(frequency)
-	connection.post_signal(null, signal, filter = RADIO_ATMOSIA)
+	//we dont want people messing with these special vents using the air alarm interface
+	disconnect_from_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output
 	name = "air mix tank output inlet"

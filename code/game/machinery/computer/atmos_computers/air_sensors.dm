@@ -2,10 +2,6 @@
 	name = "plasma tank gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_PLAS
 
-/obj/machinery/air_sensor/ordnance_mixing_tank
-	name = "ordnance mixing gas sensor"
-	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_LAB
-
 /obj/machinery/air_sensor/oxygen_tank
 	name = "oxygen tank gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_O2
@@ -93,3 +89,11 @@
 /obj/machinery/air_sensor/incinerator_tank
 	name = "incinerator chamber gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR
+
+/obj/machinery/air_sensor/ordnance_burn_chamber
+	name = "ordnance burn chamber gas sensor"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_BURN
+
+/obj/machinery/air_sensor/ordnance_freezer_chamber
+	name = "ordnance freezer chamber gas sensor"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_FREEZER

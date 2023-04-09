@@ -20,5 +20,5 @@
 /obj/structure/server/wrench_act(mob/living/user, obj/item/tool)
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
-	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
+	balloon_alert(user, anchored ? "secured" : "unsecured")
 	return TRUE

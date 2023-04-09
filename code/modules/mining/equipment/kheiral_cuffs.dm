@@ -22,10 +22,10 @@
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
 
-/obj/item/kheiral_cuffs/Initialize()
+/obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z))
 
 	check_z(new_turf = loc)
 
@@ -35,11 +35,11 @@
 		. += span_notice("The cuff's GPS signal is on.")
 
 /obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return slot == ITEM_SLOT_GLOVES
+	return (slot & ITEM_SLOT_GLOVES)
 
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_GLOVES)
+	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 	on_wrist = TRUE
 	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -62,9 +62,9 @@
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
 	if(id_card)
 		gps_name = id_card.registered_name
-	AddComponent(/datum/component/gps, "*[gps_name]'s Kheiral Link")
-	balloon_alert(user, "GPS activated")
-	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
+	AddComponent(/datum/component/gps/kheiral_cuffs, "*[gps_name]'s Kheiral Link")
+	balloon_alert(user, "gps activated")
+	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = TRUE
 
 /// Disables the GPS and removes the multiz trait
@@ -73,9 +73,8 @@
 		return
 	if(on_wrist && far_from_home)
 		return
-	balloon_alert(user, "GPS de-activated")
-	qdel(GetComponent(/datum/component/gps))
-	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
+	balloon_alert(user, "gps de-activated")
+	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
@@ -94,22 +93,22 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
+// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "strandcuff_emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "strandcuff_emissive", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
+	. += emissive_appearance(icon, "strand_light", src, alpha = src.alpha)
 
 /obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
-	var/mob/living/carbon/human/victim
-	if(ishuman(user))
-		victim = user
-	else
-		return ..()
-	user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/victim = user
+	victim.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
 		if(!do_after(victim, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
 			break

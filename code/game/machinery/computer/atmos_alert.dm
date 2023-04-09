@@ -5,21 +5,12 @@
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	light_color = LIGHT_COLOR_CYAN
+
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = FREQ_ATMOS_ALARMS
-	var/datum/radio_frequency/radio_connection
-
-
-/obj/machinery/computer/atmos_alert/Initialize(mapload)
-	. = ..()
-	set_frequency(receive_frequency)
-
-/obj/machinery/computer/atmos_alert/Destroy()
-	SSradio.remove_object(src, receive_frequency)
-	return ..()
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosAlertConsole", name)
@@ -55,29 +46,33 @@
 				. = TRUE
 	update_appearance()
 
-/obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, receive_frequency)
-	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
+/obj/machinery/computer/atmos_alert/process()
+	. = ..()
+	if (!.)
+		return FALSE
 
-/obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
+	var/alarm_count = priority_alarms.len + minor_alarms.len
 
-	var/zone = signal.data["zone"]
-	var/severity = signal.data["alert"]
+	priority_alarms.Cut()
+	minor_alarms.Cut()
 
-	if(!zone || !severity)
-		return
+	for (var/obj/machinery/airalarm/air_alarm as anything in GLOB.air_alarms)
+		if (air_alarm.z != z)
+			continue
 
-	minor_alarms -= zone
-	priority_alarms -= zone
-	if(severity == "severe")
-		priority_alarms += zone
-	else if (severity == "minor")
-		minor_alarms += zone
-	update_appearance()
-	return
+		switch (air_alarm.danger_level)
+			if (AIR_ALARM_ALERT_NONE)
+				continue
+			if (AIR_ALARM_ALERT_WARNING)
+				minor_alarms += get_area_name(air_alarm, format_text = TRUE)
+			if (AIR_ALARM_ALERT_HAZARD)
+				priority_alarms += get_area_name(air_alarm, format_text = TRUE)
+
+	// Either we got new alarms, or we have no alarms anymore
+	if ((alarm_count == 0) != (minor_alarms.len + priority_alarms.len == 0))
+		update_appearance(UPDATE_ICON)
+
+	return TRUE
 
 /obj/machinery/computer/atmos_alert/update_overlays()
 	. = ..()

@@ -26,9 +26,17 @@
 #define ATMOS_GAS_MONITOR_HELIUM "helium"
 #define ATMOS_GAS_MONITOR_ANTINOBLIUM "antinoblium"
 #define ATMOS_GAS_MONITOR_INCINERATOR "incinerator"
-#define ATMOS_GAS_MONITOR_ORDNANCE_LAB "ordnancelab"
+#define ATMOS_GAS_MONITOR_ORDNANCE_BURN "ordnanceburn"
+#define ATMOS_GAS_MONITOR_ORDNANCE_FREEZER "ordnancefreezer"
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
+
+///maps a chamber id to its air sensor
+#define CHAMBER_SENSOR_FROM_ID(chamber_id) ((chamber_id) + "_sensor")
+///maps an air sensor's chamber id to its input valve[ i.e. outlet_injector] id
+#define CHAMBER_INPUT_FROM_ID(chamber_id) ((chamber_id) + "_in")
+///maps an air sensor's chamber id to its output valve[i.e. vent pump] id
+#define CHAMBER_OUTPUT_FROM_ID(chamber_id) ((chamber_id) + "_out")
 
 // Human-readble names of these funny tags.
 GLOBAL_LIST_INIT(station_gas_chambers, list(
@@ -55,7 +63,8 @@ GLOBAL_LIST_INIT(station_gas_chambers, list(
 	ATMOS_GAS_MONITOR_ANTINOBLIUM = "Antinoblium Supply",
 	ATMOS_GAS_MONITOR_MIX = "Mix Chamber",
 	ATMOS_GAS_MONITOR_INCINERATOR = "Incinerator Chamber",
-	ATMOS_GAS_MONITOR_ORDNANCE_LAB = "Ordnance Chamber",
+	ATMOS_GAS_MONITOR_ORDNANCE_BURN = "Ordnance Burn Chamber",
+	ATMOS_GAS_MONITOR_ORDNANCE_FREEZER = "Ordnance Freezer Chamber",
 	ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop",
 	ATMOS_GAS_MONITOR_WASTE = "Waste Loop",
 ))

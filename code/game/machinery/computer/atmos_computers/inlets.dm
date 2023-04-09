@@ -1,73 +1,10 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
-	/// The unique string that represents which atmos chamber to associate with.
-	var/chamber_id
-	var/frequency = FREQ_ATMOS_STORAGE
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Initialize(mapload)
-	id_tag = chamber_id + "_in"
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	id_tag = CHAMBER_INPUT_FROM_ID(chamber_id)
 	return ..()
-	
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/atmos_init()
-	. = ..()
-	broadcast_status()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Destroy()
-	SSradio.remove_object(src, frequency)
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/on_deconstruction()
-	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ui_act(action, params)
-	. = ..()
-	if(.)
-		broadcast_status()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"sigtype" = "status",
-		"device" = "AO",
-		"power" = on,
-		"volume_rate" = volume_rate,
-		"timestamp" = world.time,
-	))
-	radio_connection.post_signal(src, signal)
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/proc/broadcast_destruction(frequency)
-	var/datum/signal/signal = new(list(
-		"sigtype" = "destroyed",
-		"tag" = id_tag,
-		"timestamp" = world.time,
-	))
-	var/datum/radio_frequency/connection = SSradio.return_frequency(frequency)
-	connection.post_signal(null, signal, filter = RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return
-
-	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-
-	if("power_toggle" in signal.data)
-		on = !on
-
-	if("set_volume_rate" in signal.data)
-		var/number = text2num(signal.data["set_volume_rate"])
-		var/datum/gas_mixture/air_contents = airs[1]
-		volume_rate = clamp(number, 0, air_contents.volume)
-
-	broadcast_status()
-	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input
 	name = "plasma tank input injector"
@@ -161,6 +98,12 @@
 	name = "incinerator chamber input injector"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_mixing_input
-	name = "ordnance mixing input injector"
-	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_LAB
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_burn_chamber_input
+	on = FALSE
+	name = "ordnance burn chamber input injector"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_BURN
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_freezer_chamber_input
+	on = FALSE
+	name = "ordnance freezer chamber input injector"
+	chamber_id = ATMOS_GAS_MONITOR_ORDNANCE_FREEZER

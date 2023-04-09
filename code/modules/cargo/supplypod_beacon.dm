@@ -1,11 +1,12 @@
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
-	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries. Alt-click to remove link."
+	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries."
+	desc_controls = "Alt-click to remove link."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "supplypod_beacon"
 	inhand_icon_state = "radio"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/machinery/computer/cargo/express/express_console
 	var/linked = FALSE
@@ -23,7 +24,7 @@
 			launched = TRUE
 			playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
-			addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
+			addtimer(CALLBACK(src, PROC_REF(endLaunch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
 			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
@@ -79,7 +80,7 @@
 	to_chat(user, span_notice("[src] linked to [C]."))
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.canUseTopic(src, !issilicon(user)))
+	if (!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if (express_console)
 		unlink_console()
@@ -92,7 +93,7 @@
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
 	name += " ([tag])"
 

@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/utility/welding,
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
 			return
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
 			return
 		var/obj/item/defibrillator/D = W
-		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
+		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
 			return
 		if(D.cell)
@@ -171,19 +171,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		to_chat(user, span_notice("You replace the headlamp bulbs."))
 		return
 
-	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+	if(istype(W, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
-		if(modularInterface.install_component(floppy, user))
-			return
+		var/obj/item/computer_disk/floppy = W
+		floppy.forceMove(modularInterface)
+		modularInterface.inserted_disk = floppy
+		return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -204,7 +205,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		..()
 	return
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime shock
 		flash_act()
 		var/stunprob = M.powerlevel * 7 + 10
@@ -243,7 +244,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, get_turf(user), 15), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 3)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode && usr != src)
@@ -312,7 +313,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
-		IgniteMob()
+		ignite_mob()
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -363,7 +364,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
-	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
@@ -371,20 +372,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	logevent("ALERT: Foreign software detected.")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	to_chat(src, span_danger("Initiating diagnostics..."))
-	sleep(20)
+	sleep(2 SECONDS)
 	to_chat(src, span_danger("SynBorg v1.7 loaded."))
 	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
-	sleep(5)
+	sleep(0.5 SECONDS)
 	to_chat(src, span_danger("LAW SYNCHRONISATION ERROR"))
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(user)
 		logevent("LOG: New user \[[replacetext(user.real_name," ","")]\], groups \[root\]")
 	to_chat(src, span_danger("Would you like to send a report to NanoTraSoft? Y/N"))
-	sleep(10)
+	sleep(1 SECONDS)
 	to_chat(src, span_danger("> N"))
-	sleep(20)
+	sleep(2 SECONDS)
 	to_chat(src, span_danger("ERRORERRORERROR"))
 	laws = new /datum/ai_laws/syndicate_override
 	if(user)
@@ -398,12 +399,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(stat != DEAD)
 		adjustBruteLoss(30)
 	else
+		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
 		gib()
 	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 			return
 		if(EXPLODE_HEAVY)

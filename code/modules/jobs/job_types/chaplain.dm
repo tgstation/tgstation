@@ -6,14 +6,14 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
-	selection_color = "#bbe291"
+	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CHAPLAIN"
 
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
@@ -21,19 +21,21 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
+	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/cup/glass/bottle/holywater)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/food/drinks/bottle/holywater = 30,
+		/obj/item/reagent_containers/cup/glass/bottle/holywater = 30,
 		/obj/item/toy/plush/awakenedplushie = 10,
 		/obj/item/grenade/chem_grenade/holy = 5,
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1
 	)
 	rpg_title = "Paladin"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CAN_BE_INTERN
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
+
+	job_tone = "holy"
 
 
 /datum/job/chaplain/after_spawn(mob/living/spawned, client/player_client)
@@ -120,7 +122,7 @@
 		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
 		)
-	belt = /obj/item/pda/chaplain
+	belt = /obj/item/modular_computer/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack

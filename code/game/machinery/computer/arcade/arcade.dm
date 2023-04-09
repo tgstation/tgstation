@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/mecha/ripley = 1,
 		/obj/item/toy/mecha/ripleymkii = 1,
@@ -35,7 +36,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/talking/owl = 2,
 		/obj/item/toy/talking/griffin = 2,
 		/obj/item/coin/antagtoken = 2,
-		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/stack/tile/fakepit/loaded = 2,
 		/obj/item/stack/tile/eighties/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
@@ -57,13 +57,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/moth = 2,
 		/obj/item/toy/plush/pkplush = 2,
 		/obj/item/toy/plush/rouny = 2,
-		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/toy/plush/abductor = 2,
+		/obj/item/toy/plush/abductor/agent = 2,
+		/obj/item/toy/plush/greek_cucumber = 2,
+		/obj/item/storage/belt/military/snack/full = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 1,
 		/obj/item/toy/foamfinger = 2,
-		/obj/item/clothing/glasses/trickblindfold = 2))
+		/obj/item/clothing/glasses/trickblindfold = 2,
+		/obj/item/clothing/mask/party_horn = 2,
+		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
@@ -72,6 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -82,7 +88,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
+/obj/machinery/computer/arcade/proc/prizevend(mob/living/user, prizes = 1)
 	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
@@ -90,7 +96,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
 	for(var/i in 1 to prizes)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+		user.add_mood_event("arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
 			new /obj/item/gun/energy/pulse/prize(src)
 			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))
@@ -223,17 +229,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/name_part1
 	var/name_part2
 
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
-	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+	else if(check_holidays(CHRISTMAS))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
-	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+	else if(check_holidays(VALENTINES))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
@@ -360,7 +366,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
 
-	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,player_stance,user),1 SECONDS,TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(enemy_action),player_stance,user),1 SECONDS,TIMER_STOPPABLE)
 	gameover_check(user)
 
 
@@ -553,12 +559,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				usr.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
 				Reset()
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
 			else
-				prizevend(user)
+				new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+				to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 			user.won_game()
@@ -574,6 +581,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(obj_flags & EMAGGED)
 			var/mob/living/living_user = user
 			if (istype(living_user))
+				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()
@@ -645,31 +653,40 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
+/obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
+	return //that's a pretty damn big guillotine
+
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(!iscarbon(user))
 		return
-	var/mob/living/carbon/c_user = user
-	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
-		return
-	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
-	usr.played_game()
-	if(do_after(c_user, 50, target = src))
-		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
-		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-		var/which_hand = BODY_ZONE_L_ARM
-		if(!(c_user.active_hand_index % 2))
-			which_hand = BODY_ZONE_R_ARM
-		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
+	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
+	user.played_game()
+	var/obj/item/bodypart/chopchop = user.get_active_hand()
+	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
+		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
-		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
-		prizevend(user, rand(3,5))
+		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
+		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
+		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
+		return
+	else if(!do_they_still_have_that_hand(user, chopchop))
+		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
+		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	else
-		to_chat(c_user, span_notice("You (wisely) decide against putting your hand in the machine."))
-		user.lost_game()
+		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
+	user.lost_game()
+
+///Makes sure the user still has their starting hand.
+/obj/machinery/computer/arcade/amputation/proc/do_they_still_have_that_hand(mob/user, obj/item/bodypart/chopchop)
+	if(QDELETED(chopchop) || chopchop.owner != user) //No pulling your arm out of the machine!
+		return FALSE
+	return TRUE
+
 
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"

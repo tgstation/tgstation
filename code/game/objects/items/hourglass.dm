@@ -8,7 +8,7 @@
 	var/finish_time //So countdown doesn't need to fiddle with timers
 	var/timing_id //if present we're timing
 	var/hand_activated = TRUE
-	icon = 'icons/obj/hourglass.dmi'
+	icon = 'icons/obj/toys/hourglass.dmi'
 	icon_state = "hourglass_idle"
 
 /obj/item/hourglass/Initialize(mapload)
@@ -35,7 +35,7 @@
 
 /obj/item/hourglass/proc/start()
 	finish_time = world.time + time
-	timing_id = addtimer(CALLBACK(src, .proc/finish), time, TIMER_STOPPABLE)
+	timing_id = addtimer(CALLBACK(src, PROC_REF(finish)), time, TIMER_STOPPABLE)
 	countdown.start()
 	timing_animation()
 

@@ -19,18 +19,15 @@
 	dir = 4;
 	dwidth = 3;
 	height = 12;
-	id = "huntership_home";
+	shuttle_id = "huntership_home";
 	name = "Deep Space";
 	width = 7
 	},
 /obj/docking_port/mobile{
 	dir = 4;
-	dwidth = 3;
-	height = 12;
-	id = "huntership";
+	shuttle_id = "huntership";
 	name = "hunter shuttle";
-	rechargeTime = 1800;
-	width = 7
+	rechargeTime = 1800
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"
@@ -91,7 +88,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "hB" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,

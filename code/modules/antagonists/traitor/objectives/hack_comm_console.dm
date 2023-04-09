@@ -14,15 +14,21 @@
 
 	var/progression_objectives_minimum = 20 MINUTES
 
-/datum/traitor_objective/hack_comm_console/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/hack_comm_console/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(SStraitor.get_taken_count(/datum/traitor_objective/hack_comm_console) > 0)
 		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
-		signals = list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK = .proc/on_unarmed_attack))
-	RegisterSignal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE
+
+/datum/traitor_objective/hack_comm_console/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
+		signals = list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK = PROC_REF(on_unarmed_attack)))
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, PROC_REF(on_global_obj_completed))
+	return TRUE
+
+/datum/traitor_objective/hack_comm_console/ungenerate_objective()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED)
 
 /datum/traitor_objective/hack_comm_console/proc/on_global_obj_completed(datum/source, datum/traitor_objective/objective)
 	SIGNAL_HANDLER
@@ -37,12 +43,11 @@
 		return
 	if(!istype(target))
 		return
-	INVOKE_ASYNC(src, .proc/begin_hack, user, target)
+	INVOKE_ASYNC(src, PROC_REF(begin_hack), user, target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/traitor_objective/hack_comm_console/proc/begin_hack(mob/user, obj/machinery/computer/communications/target)
-	target.AI_notify_hack()
-	if(!do_after(user, 30 SECONDS, target))
+	if(!target.try_hack_console(user))
 		return
+
 	succeed_objective()
-	target.hack_console(user)

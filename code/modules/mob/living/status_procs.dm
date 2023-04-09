@@ -1,6 +1,5 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+//The effects include: stun, knockdown, unconscious, sleeping, resting
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
@@ -71,7 +70,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(SEND_SIGNAL(src, /datum/status_effect/incapacitating/knockdown, amount, ignore_canstun) & COMPONENT_NO_STUN)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
@@ -483,15 +482,24 @@
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
-	if(HAS_TRAIT(src, quirktype))
-		return
-	var/datum/quirk/quirk = quirktype
-	var/qname = initial(quirk.name)
+/**
+ * Adds the passed quirk to the mob
+ *
+ * Arguments
+ * * quirktype - Quirk typepath to add to the mob
+ * * override_client - optional, allows a client to be passed to the quirks on add procs.
+ * If not passed, defaults to this mob's client.
+ *
+ * Returns TRUE on success, FALSE on failure (already has the quirk, etc)
+ */
+/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client)
+	if(has_quirk(quirktype))
+		return FALSE
+	var/qname = initial(quirktype.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
-		return
-	quirk = new quirktype()
-	if(quirk.add_to_holder(src))
+		return FALSE
+	var/datum/quirk/quirk = new quirktype()
+	if(quirk.add_to_holder(new_holder = src, client_source = override_client))
 		return TRUE
 	qdel(quirk)
 	return FALSE
@@ -509,31 +517,19 @@
 			return TRUE
 	return FALSE
 
-/* TRAIT PROCS */
-/mob/living/proc/cure_blind(source)
-	if(source)
-		REMOVE_TRAIT(src, TRAIT_BLIND, source)
-	else
-		REMOVE_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(QUIRK_TRAIT, EYES_COVERED, BLINDFOLD_TRAIT))
-	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		update_blindness()
-
-/mob/living/proc/become_blind(source)
-	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
-		ADD_TRAIT(src, TRAIT_BLIND, source)
-		update_blindness()
-	else
-		ADD_TRAIT(src, TRAIT_BLIND, source)
-
-/mob/living/proc/cure_nearsighted(source)
-	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		clear_fullscreen("nearsighted")
-
-/mob/living/proc/become_nearsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
+/**
+ * Getter function for a mob's quirk
+ *
+ * Arguments:
+ * * quirktype - the type of the quirk to acquire e.g. /datum/quirk/some_quirk
+ *
+ * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure
+ */
+/mob/living/proc/get_quirk(quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			return quirk
+	return null
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
@@ -551,8 +547,7 @@
 		ADD_TRAIT(src, TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(source)
-	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
-	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, source)
+	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	if(stat != DEAD)
 		tod = null
 
@@ -562,8 +557,7 @@
 		return
 	if(!silent)
 		emote("deathgasp")
-	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
-	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
+	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	tod = station_time_timestamp()
 
 
@@ -604,38 +598,6 @@
 		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
 	if(update)
 		update_movespeed()
-
-/// Gets the amount of confusion on the mob.
-/mob/living/proc/get_confusion()
-	var/datum/status_effect/confusion/confusion = has_status_effect(/datum/status_effect/confusion)
-	return confusion ? confusion.strength : 0
-
-/// Set the confusion of the mob. Confusion will make the mob walk randomly.
-/mob/living/proc/set_confusion(new_confusion)
-	new_confusion = max(new_confusion, 0)
-
-	if (new_confusion)
-		var/datum/status_effect/confusion/confusion_status = has_status_effect(/datum/status_effect/confusion) || apply_status_effect(/datum/status_effect/confusion)
-		confusion_status.set_strength(new_confusion)
-	else
-		remove_status_effect(/datum/status_effect/confusion)
-
-/// Add confusion to the mob. Confusion will make the mob walk randomly.
-/// Shorthand for set_confusion(confusion + x).
-/mob/living/proc/add_confusion(confusion_to_add)
-	set_confusion(get_confusion() + confusion_to_add)
-
-/**
- * Sets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/set_shocked()
-	flags_1 |= SHOCKED_1
-
-/**
- * Unsets the [SHOCKED_1] flag on this mob.
- */
-/mob/living/proc/reset_shocked()
-	flags_1 &= ~ SHOCKED_1
 
 /**
  * Adjusts a timed status effect on the mob,taking into account any existing timed status effects.
@@ -727,3 +689,75 @@
 
 	else if(duration > 0)
 		apply_status_effect(effect, duration)
+
+/**
+ * Gets how many deciseconds are remaining in
+ * the duration of the passed status effect on this mob.
+ *
+ * If the mob is unaffected by the passed effect, returns 0.
+ */
+/mob/living/proc/get_timed_status_effect_duration(effect)
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("get_timed_status_effect_duration: called with an invalid effect type. (Got: [effect])")
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(!existing)
+		return 0
+	// Infinite duration status effects technically are not "timed status effects"
+	// by name or nature, but support is included just in case.
+	if(existing.duration == -1)
+		return INFINITY
+
+	return existing.duration - world.time
+
+/**
+ * Adjust the "drunk value" the mob is currently experiencing,
+ * or applies a drunk effect if the mob isn't currently drunk (or tipsy)
+ *
+ * The drunk effect doesn't have a set duration, like dizziness or drugginess,
+ * but instead relies on a value that decreases every status effect tick (2 seconds) by:
+ * 4% the current drunk_value + 0.01
+ *
+ * A "drunk value" of 6 is the border between "tipsy" and "drunk".
+ *
+ * amount - the amount of "drunkness" to apply to the mob.
+ * down_to - the lower end of the clamp, when adding the value
+ * up_to - the upper end of the clamp, when adding the value
+ */
+/mob/living/proc/adjust_drunk_effect(amount, down_to = 0, up_to = INFINITY)
+	if(!isnum(amount))
+		CRASH("adjust_drunk_effect: called with an invalid amount. (Got: [amount])")
+
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(inebriation)
+		inebriation.set_drunk_value(clamp(inebriation.drunk_value + amount, down_to, up_to))
+	else if(amount > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, amount)
+
+
+/**
+ * Directly sets the "drunk value" the mob is currently experiencing to the passed value,
+ * or applies a drunk effect with the passed value if the mob isn't currently drunk
+ *
+ * set_to - the amount of "drunkness" to set on the mob.
+ */
+/mob/living/proc/set_drunk_effect(set_to)
+	if(!isnum(set_to) || set_to < 0)
+		CRASH("set_drunk_effect: called with an invalid value. (Got: [set_to])")
+
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(inebriation)
+		inebriation.set_drunk_value(set_to)
+	else if(set_to > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, set_to)
+
+/// Helper to get the amount of drunkness the mob's currently experiencing.
+/mob/living/proc/get_drunk_amount()
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	return inebriation?.drunk_value || 0
+
+/// Helper to check if we seem to be alive or not
+/mob/living/proc/appears_alive()
+	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
+#undef IS_STUN_IMMUNE

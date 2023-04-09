@@ -78,7 +78,7 @@
 	if(active)
 		. += active_overlay
 		if(emissive)
-			. += emissive_appearance(icon, active_overlay)
+			. += emissive_appearance(icon, active_overlay, src)
 	else
 		. += off_overlay
 
@@ -95,13 +95,12 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, 50)
-	panel_open = !panel_open
+	toggle_panel_open()
 	if(panel_open)
 		disable_parts(user)
 	else
 		enable_parts(user)
-	var/descriptor = panel_open ? "open" : "close"
-	balloon_alert(user, "you [descriptor] the maintenance hatch of [src]")
+	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -117,9 +116,17 @@
 	return ..()
 
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "panel is closed!")
+		return
 	if(!installed_part)
+		balloon_alert(user, "no rotor installed!")
+		return
+	if(active)
+		balloon_alert(user, "[src] is on!")
 		return
 	user.put_in_hands(installed_part)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /**
  * Allow easy enabling of each machine for connection to the main controller
@@ -133,7 +140,7 @@
 /obj/machinery/power/turbine/proc/disable_parts(mob/user)
 	can_connect = FALSE
 
-/obj/machinery/power/turbine/Moved(atom/OldLoc, Dir)
+/obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	disable_parts()
 	air_update_turf(TRUE)
@@ -557,16 +564,17 @@
 	var/output_mix_heat_capacity = output_mix.heat_capacity()
 	if(!output_mix_heat_capacity)
 		return 0
-	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * output_mix.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
+	work_done = min(work_done, (output_mix_heat_capacity * output_mix.temperature - output_mix_heat_capacity * TCMB) / TURBINE_HEAT_CONVERSION_MULTIPLIER)
+	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
 	return work_done
 
 /obj/item/paper/guides/jobs/atmos/turbine
 	name = "paper- 'Quick guide on the new and improved turbine!'"
-	info = "<B>How to operate the turbine</B><BR>\
+	default_raw_text = "<B>How to operate the turbine</B><BR>\
 	-The new turbine is not much different from the old one, just put gases in the chamber, light them up and activate the machine from the nearby computer.\
-	-As you will see there is a new parameter in the computer UI, damage. Yes this machine can be damaged when the heat gets too high, so ensure proper burning temperature in the chamber.\
-	-You can avoid a critial failure by upgrading the parts of the machine, but not stock parts, we implemented 3 new and improved items.<BR>\
-	-These items are: the compressor part, the rotor part and the stator part. All of them can be printed in any engi lathes (both proto and auto).\
-	-There are 4 tiers for these items, only the first one can be printed, the rest must be crafted by hand using the materials shown when examining the part.\
-	-Each tier increases the efficiency (more power) the max reachable RPM and the max temperature that the machine can held (up to fusion temperatures at the last tier!).\
-	-A note of warning, the machine is very inefficient regarding gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect them and reuse them."
+	-There is a new parameter that's visible within the turbine computer's UI, damage. The turbine will be damaged when the heat gets too high, according to the tiers of the parts used. Make sure it doesn't get too hot!<BR>\
+	-You can avoid the turbine critically failing by upgrading the parts of the machine, but not with stock parts as you might be used to. There are 3 all-new parts, one for each section of the turbine.<BR>\
+	-These items are: the compressor part, the rotor part and the stator part. All of them can be printed in any engi lathes (both proto and auto).<BR>\
+	-There are 4 tiers for these items, only the first tier can be printed. The next tier of each part can be made by using various materials on the part (clicking with the material in hand, on the part). The material required to reach the next tier is stated in the part's examine text, try shift clicking it!<BR>\
+	-Each tier increases the efficiency (more power), the max reachable RPM, and the max temperature that the machine can process without taking damage (up to fusion temperatures at the last tier!).<BR>\
+	-A word of warning, the machine is very inefficient in its gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect the unburnt gases and reuse them."

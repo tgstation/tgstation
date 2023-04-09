@@ -23,42 +23,15 @@
 /obj/effect/holodeck_effect/proc/safety(active)
 	return
 
-
 // Generates a holodeck-tracked card deck
 /obj/effect/holodeck_effect/cards
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_nanotrasen_full"
-	var/obj/item/toy/cards/deck/deck
+	icon = 'icons/obj/toys/playing_cards.dmi'
+	icon_state = "deck_syndicate_full"
 
-/obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/HC)
-	deck = new(loc)
-	safety(!(HC.obj_flags & EMAGGED))
-	deck.holo = HC
-	RegisterSignal(deck, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
+/obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
+	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(loc, holodeck)
+	deck.flags_1 |= HOLOGRAM_1
 	return deck
-
-/obj/effect/holodeck_effect/cards/proc/handle_card_delete(datum/source)
-	SIGNAL_HANDLER
-	deck = null
-
-/obj/effect/holodeck_effect/cards/safety(active)
-	if(!deck)
-		return
-	if(active)
-		deck.card_hitsound = null
-		deck.card_force = 0
-		deck.card_throwforce = 0
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks"))
-	else
-		deck.card_hitsound = 'sound/weapons/bladeslice.ogg'
-		deck.card_force = 5
-		deck.card_throwforce = 10
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
-
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
 	var/turf/T = get_turf(src)
@@ -80,7 +53,7 @@
 	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
-	var/mobtype = /mob/living/simple_animal/hostile/carp/holocarp
+	var/mobtype = /mob/living/basic/carp/holographic
 	var/mob/our_mob = null
 
 /obj/effect/holodeck_effect/mobspawner/activate(obj/machinery/computer/holodeck/HC)
@@ -92,7 +65,7 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
 		our_mob.vars[v] = null
-	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_delete)
+	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
@@ -112,12 +85,12 @@
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/chick/holo,
 		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/rabbit,
+		/mob/living/basic/rabbit,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/pet/dog/corgi/puppy,
-		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/basic/pet/dog/corgi,
+		/mob/living/basic/pet/dog/corgi/puppy,
+		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
 		/mob/living/simple_animal/pet/cat,
@@ -140,3 +113,6 @@
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
 	mobtype = /mob/living/simple_animal/pet/penguin/baby
+
+/obj/effect/holodeck_effect/mobspawner/crab/jon
+	mobtype = /mob/living/simple_animal/crab/jon

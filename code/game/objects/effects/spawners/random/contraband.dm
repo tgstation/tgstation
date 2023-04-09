@@ -55,7 +55,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/paper/fluff/jobs/prisoner/letter,
 		/obj/item/storage/wallet/random,
-		/obj/item/pda,
+		/obj/item/modular_computer/pda,
 		/obj/item/radio/off,
 	)
 
@@ -74,8 +74,7 @@
 
 /obj/effect/spawner/random/contraband/cannabis
 	name = "Random Cannabis Spawner" //blasphemously overpowered, use extremely sparingly (if at all)
-	icon = 'goon/icons/obj/hydroponics.dmi'
-	icon_state = "cannabis_spawner"
+	icon_state = "cannabis"
 	loot = list(
 		/obj/item/food/grown/cannabis = 25,
 		/obj/item/food/grown/cannabis/white = 25,

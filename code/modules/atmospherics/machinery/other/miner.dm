@@ -26,8 +26,8 @@
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
-	idle_power_usage = 150
-	active_power_usage = 2000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 /obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
@@ -243,3 +243,9 @@
 	name = "\improper Antinoblium Gas Miner"
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/antinoblium
+
+#undef GASMINER_POWER_NONE
+#undef GASMINER_POWER_STATIC
+#undef GASMINER_POWER_MOLES
+#undef GASMINER_POWER_KPA
+#undef GASMINER_POWER_FULLSCALE

@@ -3,10 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger"
 	base_icon_state = "recharger"
-	desc = "A charging dock for energy based weaponry."
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 4
-	active_power_usage = 250
+	desc = "A charging dock for energy based weaponry, PDAs, and other devices."
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
@@ -23,8 +20,9 @@
 	))
 
 /obj/machinery/recharger/RefreshParts()
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_coeff = C.rating
+	. = ..()
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		recharge_coeff = capacitor.tier
 
 /obj/machinery/recharger/examine(mob/user)
 	. = ..()
@@ -138,7 +136,7 @@
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff * delta_time / 2)
-				use_power(125 * recharge_coeff * delta_time)
+				use_power(active_power_usage * recharge_coeff * delta_time)
 				using_power = TRUE
 			update_appearance()
 
@@ -146,7 +144,7 @@
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)
 				R.stored_ammo += new R.ammo_type(R)
-				use_power(100 * recharge_coeff * delta_time)
+				use_power(active_power_usage * recharge_coeff * delta_time)
 				using_power = TRUE
 			update_appearance()
 			return
@@ -191,13 +189,13 @@
 
 	if(!charging)
 		. += mutable_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-empty", src, alpha = src.alpha)
 		return
 
 	if(using_power)
 		. += mutable_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-charging", src, alpha = src.alpha)
 		return
 
 	. += mutable_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
-	. += emissive_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-full", src, alpha = src.alpha)

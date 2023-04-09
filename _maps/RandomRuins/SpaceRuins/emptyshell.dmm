@@ -8,45 +8,45 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall/r_wall,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "d" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "e" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "f" = (
 /obj/item/ammo_box/magazine/sniper_rounds,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "g" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "h" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "i" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "j" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "k" = (
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "l" = (
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "m" = (
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a

@@ -10,33 +10,30 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/H)
-	H.gender = pick(MALE, FEMALE)
-	H.physique = H.gender
-	H.real_name = random_unique_name(H.gender)
-	H.name = H.real_name
-	H.underwear = random_underwear(H.gender)
-	H.underwear_color = "#[random_color()]"
-	H.skin_tone = random_skin_tone()
-	H.hairstyle = random_hairstyle(H.gender)
-	H.facial_hairstyle = random_facial_hairstyle(H.gender)
-	H.hair_color = "#[random_color()]"
-	H.facial_hair_color = H.hair_color
-	H.eye_color = random_eye_color()
-	H.dna.blood_type = random_blood_type()
+/proc/randomize_human(mob/living/carbon/human/human)
+	if(human.dna.species.sexes)
+		human.gender = pick(MALE, FEMALE, PLURAL)
+	else
+		human.gender = PLURAL
+	human.physique = human.gender
+	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
+	human.name = human.real_name
+	human.hairstyle = random_hairstyle(human.gender)
+	human.facial_hairstyle = random_facial_hairstyle(human.gender)
+	human.hair_color = "#[random_color()]"
+	human.facial_hair_color = human.hair_color
+	var/random_eye_color = random_eye_color()
+	human.eye_color_left = random_eye_color
+	human.eye_color_right = random_eye_color
 
-	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
-	H.dna.features["mcolor"] = "#[random_color()]"
-	H.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
-	H.dna.features["snout"] = pick(GLOB.snouts_list)
-	H.dna.features["horns"] = pick(GLOB.horns_list)
-	H.dna.features["frills"] = pick(GLOB.frills_list)
-	H.dna.features["spines"] = pick(GLOB.spines_list)
-	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	H.dna.features["moth_wings"] = pick(GLOB.moth_wings_list)
-	H.dna.features["moth_antennae"] = pick(GLOB.moth_antennae_list)
-	H.dna.features["pod_hair"] = pick(GLOB.pod_hair_list)
+	human.dna.blood_type = random_blood_type()
+	human.dna.features["mcolor"] = "#[random_color()]"
+	human.dna.species.randomize_active_underwear_only(human)
 
-	H.update_body(is_creating = TRUE)
-	H.update_hair(is_creating = TRUE)
+	for(var/datum/species/species_path as anything in subtypesof(/datum/species))
+		var/datum/species/new_species = new species_path
+		new_species.randomize_features(human)
+	human.dna.species.spec_updatehealth(human)
+	human.dna.update_dna_identity()
+	human.updateappearance()
+	human.update_body(is_creating = TRUE)

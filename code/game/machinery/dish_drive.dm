@@ -5,15 +5,14 @@
 	Or you can just drop your plates on the floor, like civilized folk."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
-	idle_power_usage = 8 //5 with default parts
-	active_power_usage = 13 //10 with default parts
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
-		/obj/item/reagent_containers/glass/bowl,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
@@ -68,9 +67,10 @@
 	..()
 
 /obj/machinery/dish_drive/RefreshParts()
+	. = ..()
 	var/total_rating = 0
-	for(var/obj/item/stock_parts/S in component_parts)
-		total_rating += S.rating
+	for(var/datum/stock_part/stock_part in component_parts)
+		total_rating += stock_part.tier
 	if(total_rating >= 9)
 		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
@@ -80,7 +80,6 @@
 	if(board)
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
-
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)
@@ -105,7 +104,7 @@
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)))
+	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)

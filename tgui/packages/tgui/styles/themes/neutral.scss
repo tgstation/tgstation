@@ -3,41 +3,48 @@
  * SPDX-License-Identifier: MIT
  */
 
- @use 'sass:color';
- @use 'sass:meta';
+@use 'sass:color';
+@use 'sass:meta';
 
- $neutral: #ffb300;
+$neutral: #ffb300;
 
- @use '../colors.scss' with (
+@use '../colors.scss' with (
    $primary: $neutral,
    $fg-map-keys: (),
    $bg-map-keys: (),
  );
- @use '../base.scss' with (
+@use '../base.scss' with (
    $color-bg: color.scale($neutral, $lightness: -40%),
    $color-bg-grad-spread: 6%,
  );
 
- .theme-neutral {
-   // Components
-   @include meta.load-css('../components/Button.scss', $with: (
-     'color-default': color.scale($neutral, $lightness: -30%),
-     'color-transparent-text': color.scale($neutral, $lightness: 30%),
-   ));
-   @include meta.load-css('../components/ProgressBar.scss', $with: (
-     'color-default-fill': $neutral,
-     'background-color': rgba(0, 0, 0, 0.5),
-   ));
-   @include meta.load-css('../components/Section.scss');
+.theme-neutral {
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': color.scale($neutral, $lightness: -30%),
+      'color-transparent-text': color.scale($neutral, $lightness: 30%)
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: (
+      'color-default-fill': $neutral,
+      'background-color': rgba(0, 0, 0, 0.5)
+    )
+  );
+  @include meta.load-css('../components/Section.scss');
 
-   // Layouts
-   @include meta.load-css('../layouts/Layout.scss');
-   @include meta.load-css('../layouts/Window.scss');
-   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-     'background-color': color.scale($neutral, $lightness: -25%),
-   ));
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': color.scale($neutral, $lightness: -25%))
+  );
 
-   .Layout__content {
-     background-image: url('../../assets/bg-neutral.svg');
-   }
- }
+  .Layout__content {
+    background-image: url('../../assets/bg-neutral.svg');
+  }
+}
