@@ -26,3 +26,10 @@
 /obj/effect/landmark/atmospheric_sanity/goal_area
 	name = "Atmospheric Sanity Goal"
 	icon_state = "atmos_sanity_goal"
+
+/**
+ * Marks an area as ignored for purposes of default station connectivity.
+ */
+/obj/effect/landmark/atmospheric_sanity/ignore_area
+	name = "Atmospheric Sanity Ignore"
+	icon_state = "atmos_sanity_ignore"

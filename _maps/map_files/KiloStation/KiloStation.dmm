@@ -60372,6 +60372,11 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
+"tGk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/open/floor/plating,
+/area/station/cargo/warehouse)
 "tGx" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Xenolab";
@@ -119741,7 +119746,7 @@ mDD
 itR
 dME
 gIw
-nuf
+tGk
 eNb
 sTy
 ulJ

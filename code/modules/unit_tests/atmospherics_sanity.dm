@@ -70,6 +70,9 @@
 			log_test("No goal areas found, defaulting...")
 			mark_station_areas_as_goals()
 
+	for(var/obj/effect/landmark/atmospheric_sanity/ignore_area/ignore_marker in GLOB.landmarks_list)
+		remaining_areas -= get_area(ignore_marker)
+
 /datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
 	// We don't want to check these areas
 	var/static/list/area/ignored_types = list(
