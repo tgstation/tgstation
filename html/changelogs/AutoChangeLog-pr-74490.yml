@@ -1,9 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "A significant overhaul of various illicit and dubiously legal goods and gadgets available via cargo."
-  - balance: "Cargo now has an Import category for all non-departmental goods. (And black market goods)"
-  - balance: "Most contraband that already exists has been moved into Imports."
-  - rscadd: "Includes several new imports of dubious quality. You get what you pay for."
-  - code_imp: "Removes the brand new mosin subtype as it is now defunct."
-  - bugfix: "Fixes potentially exploitative code in the jamming proc. Cleans up that code while I'm at it."
