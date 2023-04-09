@@ -216,7 +216,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/checker/airless,
-/turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Kr" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
