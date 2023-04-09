@@ -477,13 +477,11 @@
 	if((held_item.flags_1 & HOLOGRAM_1) || (held_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(held_item, allowed_item_typecache)))
 		return NONE
 	var/list/item_materials = held_item.get_material_composition(mat_container_flags)
-	var/has_materials = FALSE
+	if(!length(item_materials))
+		return NONE
 	for(var/material in item_materials)
-		if(!can_hold_material(material))
+		if(can_hold_material(material))
 			continue
-		has_materials = TRUE
-		break
-	if(!has_materials)
 		return NONE
 
 	context[SCREENTIP_CONTEXT_LMB] = "Insert"
