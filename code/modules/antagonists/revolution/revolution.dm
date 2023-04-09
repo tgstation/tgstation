@@ -187,30 +187,36 @@
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_PRE_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	UnregisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON)
+	UnregisterSignal(real_mob, list(COMSIG_MOB_PRE_FLASHED_CARBON, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON))
 
-/// Signal proc for [COMSIG_MOB_FLASHED_CARBON].
-/// The bread and butter of head revolutionary conversions.
+/// Signal proc for [COMSIG_MOB_PRE_FLASHED_CARBON].
+/// Flashes will always result in partial success even if it's from behind someone
 /datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
 	// Always partial flash at the very least
-	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
+/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
+/// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
+/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+	SIGNAL_HANDLER
 
 	if(flashed.stat == DEAD)
-		return .
+		return
 	if(flashed.stat != CONSCIOUS)
 		to_chat(source, span_warning("[flashed.p_they(capitalized = TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
-		return .
+		return
 
 	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
-		return .
+		return
 
 	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
@@ -219,8 +225,6 @@
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
 	else
 		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
-
-	return .
 
 /// Used / called async from [proc/on_flash] to deliver a funny meme line
 /datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)

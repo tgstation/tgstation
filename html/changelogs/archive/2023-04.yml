@@ -212,3 +212,124 @@
   - bugfix: SM now dusts you if you fall on top of it from another Z level
   softcerv:
   - bugfix: The crew manifest now properly updates after ID modifications.
+2023-04-08:
+  Donglesplonge:
+  - rscadd: central commands meteorological divsion has picked up a new asteroid drifting
+      in NT space, what secrets could it hold?
+  Fikou:
+  - bugfix: fixes medkits (and wallets, candle boxes) being able to store normal sized
+      items
+  Ical92:
+  - rscadd: Added "Botanical Haven", a small sanctuary for flora and spacefaring botanists.
+  LT3:
+  - bugfix: Tram doors open as expected while in motion
+  - soundadd: New tram door open/close sounds
+  - qol: Tram doors open faster when unpowered
+  LemonInTheDark:
+  - bugfix: The fountain ruin will now properly spawn on lavaland
+  Melbert:
+  - bugfix: Head revs can no longer convert with the AOE flash mode
+  Paxilmaniac:
+  - bugfix: Turfs made through stack crafting (so none currently) will have materials
+      applied if the var is set
+  Squishypone:
+  - bugfix: Fixed the drawings on normal sized paintings not appearing on the ground
+  SyncIt21:
+  - code_imp: RCD & all its subtypes and other devices like it[RTD, RLD, Plumbing
+      RCD, RWD, RFC, RPD] now moved into 1 folder, removes unused vars
+  - refactor: RCD window type cost & delay are set based on the window type selected.
+  - refactor: RLD, RCD & plumbing RCD now has extra resource & target placement sanity
+      checks, optimizes RLD and code readability.
+  - refactor: RTD now sets the correct delay with the cost of the tile type currently
+      being constructed/deconstructed taken into account
+  - refactor: large majority of to_chat() replaced with balloon alerts
+  - bugfix: RLD silo link now works again
+  - bugfix: RTD can place tiles on any subtype of plating
+  - bugfix: RCL now lays the correct colour of pipe cleaner when its colour is changed
+  - imageadd: empty blinking yellow icon states for RTD & RLD & an ammo bar for RLD
+  TheBoondock:
+  - bugfix: fixed missing Goliath tentacles icons
+  Xander3359:
+  - bugfix: Anomaly releaser no longer creates a "Stable "
+  ZephyrTFA:
+  - bugfix: Syndicate teleporter is no longer secretly nerfed due to internal code
+      mishaps. (-1 range)
+  - bugfix: Syndicate teleporter now gibs you where it should correctly; resulting
+      in it being much more dangerous to use
+  massaheartsu:
+  - rscadd: Added a new ruin!
+  thgvr:
+  - imageadd: Lizards have been resprited, as well as Digitigrade sprites. Please
+      remember to update your colors to account for this.
+  timothymtorres:
+  - bugfix: Fix basketball and mafia minigame UI not removing inactive clients
+  - rscadd: Add two new basketball teams and stadiums - Ass Blast USA and Soviet Bears
+  vinylspiders:
+  - bugfix: the atrocinator modsuit mod will now make you fall up again when activated.
+2023-04-09:
+  ChungusGamer666:
+  - rscadd: Mobs on fire get particle effects (it looks sick)
+  - rscadd: Wet mobs get particle effects (it looks sick)
+  Comxy:
+  - rscadd: Adds new Cosmic Heretic.
+  - soundadd: Adds Cosmic Heretic sounds.
+  - imageadd: Adds Cosmic Heretic sprites.
+  DaydreamIQ:
+  - bugfix: Interdyne Ruin should now have power
+  DrDiasyl aka DrTuxedo#0931:
+  - imageadd: Requestions consoles got a new sprite!
+  - imageadd: Gulag consoles got a new sprite!
+  - imageadd: Escape and assault pod consoles got a new sprite!
+  - qol: Now the gulag and pods consoles use overlays, instead of having turned ON
+      screen in their base icon.
+  - qol: Now the gulag and pods consoles screen change when they are emagged.
+  - qol: Requests console now shows examine prompt on how to open their panel. Also
+      shows a prompt if they were hacked.
+  FernandoJ8:
+  - balance: chicken eggs can now, rarely (1/256 chance), spawn 4 chicks instead of
+      1 or none
+  Fikou:
+  - balance: 2 More Cargo Tech slots
+  Ical92:
+  - bugfix: fixed duplicate pipe in Underground Outpost 45 Away Mission
+  Melbert, stove and pot sprites by Kryson, ladle sprite by Kinneb:
+  - rscadd: Kitchens are now stocked with Ranges.
+  - rscadd: You can now print (and create) Stoves.
+  - rscadd: The dinnerware vendor now dispenses ladles.
+  - rscadd: Spoons can now actually spoon... things.
+  - rscadd: Soup has been reworked entirely. Soups are now reagents, cooked via a
+      soup pot on a Stove or Range. Simply add water and your required items, then
+      apply heat. Be careful not to boil over!
+  - rscadd: Stoves, Ranges, and Griddles will now heat up their surroundings - don't
+      turn them on around plasma!
+  - bugfix: Fixes being able to cook in an Oven while the room is depowered
+  - qol: Hitting a customer bot with an incorrect recipe no longer counts as a hostile
+      attack leading to your demise shortly after
+  - refactor: Customer bots that request a reagent now use custom orders
+  - code_imp: Cut down a lot of code in the crafting menu code, and removes some ugly
+      ispaths
+  - rscdel: Soup is no longer food items, so can't appear in random food pools (at
+      least not yet).
+  - balance: Virus Food recipe now requires you cool it to 200k.
+  Paxilmaniac:
+  - code_imp: The ability for objects to be loomed is now a component, with all of
+      the looming behavior moved off of the structure and into said component. The
+      actual behavior for looming cotton (clicking on a loom with cotton) is completely
+      unchanged.
+  carlarctg:
+  - qol: Activating arm implant items in hand now automatically retracts and opens
+      the radial menu, unless it's a welding tool.
+  mc-oofert:
+  - bugfix: waystation cargo techs get shoes now
+  - bugfix: makes ai sat turrets actually able to fire upon silicons
+  necromanceranne:
+  - balance: A significant overhaul of various illicit and dubiously legal goods and
+      gadgets available via cargo.
+  - balance: Cargo now has an Import category for all non-departmental goods. (And
+      black market goods)
+  - balance: Most contraband that already exists has been moved into Imports.
+  - rscadd: Includes several new imports of dubious quality. You get what you pay
+      for.
+  - code_imp: Removes the brand new mosin subtype as it is now defunct.
+  - bugfix: Fixes potentially exploitative code in the jamming proc. Cleans up that
+      code while I'm at it.
