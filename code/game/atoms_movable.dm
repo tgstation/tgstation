@@ -281,10 +281,12 @@
 	underlay_appearance.overlays += turf_mask
 
 /atom/movable/update_overlays()
-	. = ..()
+	var/list/overlays = ..()
 	var/emissive_block = update_emissive_block()
 	if(emissive_block)
-		. += emissive_block
+		// Emissive block should always go at the beginning of the list
+		overlays.Insert(1, emissive_block)
+	return overlays
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
