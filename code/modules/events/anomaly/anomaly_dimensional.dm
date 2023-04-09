@@ -11,8 +11,8 @@
 	admin_setup = list(/datum/event_admin_setup/set_location/anomaly, /datum/event_admin_setup/listed_options/anomaly_dimensional)
 
 /datum/round_event/anomaly/anomaly_dimensional
-	start_when = 10
-	announce_when = 3
+	start_when = ANOMALY_START_MEDIUM_TIME
+	announce_when = ANOMALY_ANNOUNCE_MEDIUM_TIME
 	anomaly_path = /obj/effect/anomaly/dimensional
 	/// What theme should the anomaly initially apply to the area?
 	var/anomaly_theme
@@ -23,7 +23,7 @@
 	new_anomaly.prepare_area(new_theme_path = anomaly_theme)
 
 /datum/round_event/anomaly/anomaly_dimensional/announce(fake)
-	priority_announce("Localized dimensional instability detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Dimensional instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")
 
 /datum/event_admin_setup/listed_options/anomaly_dimensional
 	input_text = "Select a dimensional anomaly theme?"

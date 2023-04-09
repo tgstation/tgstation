@@ -21,8 +21,10 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
+	/// The mind to transfer to our egg when it hatches
 	var/datum/mind/origin
-	var/egg_lain = 0
+	/// Set to true once we've implanted our egg
+	var/egg_lain = FALSE
 
 /mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
@@ -39,20 +41,21 @@
 		I.forceMove(egg)
 	visible_message(span_warning("[src] plants something in [victim]'s flesh!"), \
 					span_danger("We inject our egg into [victim]'s body!"))
-	egg_lain = 1
+	egg_lain = TRUE
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
 	. = ..()
-	if(. && !egg_lain && iscarbon(target) && !ismonkey(target))
-		// Changeling egg can survive in aliens!
-		var/mob/living/carbon/C = target
-		if(C.stat == DEAD)
-			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
-				to_chat(src, span_userdanger("A foreign presence repels us from this body. Perhaps we should try to infest another?"))
-				return
-			Infect(target)
-			to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
-			addtimer(CALLBACK(src, PROC_REF(death)), 100)
+	if (!. || egg_lain || !iscarbon(target) || ismonkey(target))
+		return
+	var/mob/living/carbon/victim = target
+	if(victim.stat != DEAD)
+		return
+	if(HAS_TRAIT(victim, TRAIT_XENO_HOST))
+		target.balloon_alert(src, "already pregnant!") // Maybe the worst balloon alert in the codebase
+		return
+	Infect(target)
+	to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
+	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
 /obj/item/organ/internal/body_egg/changeling_egg
 	name = "changeling egg"

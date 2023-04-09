@@ -16,8 +16,8 @@
 
 /datum/round_event/anomaly/anomaly_ectoplasm
 	anomaly_path = /obj/effect/anomaly/ectoplasm
-	start_when = 3
-	announce_when = 20
+	start_when = ANOMALY_START_HARMFUL_TIME
+	announce_when = ANOMALY_ANNOUNCE_HARMFUL_TIME
 	///The admin-set impact effect intensity override
 	var/effect_override
 	///The admin-set number of ghosts, for use in calculating impact size.
@@ -39,7 +39,7 @@
 		announce_to_ghosts(newAnomaly)
 
 /datum/round_event/anomaly/anomaly_ectoplasm/announce(fake)
-	priority_announce("Localized ectoplasmic outburst detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Paranormal ectoplasmic outburst detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert")
 
 /datum/event_admin_setup/anomaly_ectoplasm
 	///The admin-selected intensity

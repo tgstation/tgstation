@@ -156,7 +156,7 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	color = rgb(255,255,255)
+	color = rgb(255, 255, 255)
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
@@ -204,19 +204,19 @@
 	update_armrest()
 
 /obj/structure/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(70, 47, 28)
 
 /obj/structure/chair/comfy/beige
-	color = rgb(255,253,195)
+	color = rgb(240, 238, 198)
 
 /obj/structure/chair/comfy/teal
-	color = rgb(0,255,255)
+	color = rgb(117, 214, 214)
 
 /obj/structure/chair/comfy/black
-	color = rgb(167,164,153)
+	color = rgb(61, 60, 56)
 
 /obj/structure/chair/comfy/lime
-	color = rgb(255,251,0)
+	color = rgb(193, 248, 104)
 
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"

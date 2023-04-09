@@ -52,6 +52,8 @@
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	if(!.)
+		return
 	owner.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
 	refresh()
@@ -85,7 +87,7 @@
 		owner.dna?.species?.handle_body(affected_human) //updates eye icon
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	..()
+	. = ..()
 	if(ishuman(eye_owner))
 		var/mob/living/carbon/human/human_owner = eye_owner
 		if(initial(eye_color_left))
@@ -114,7 +116,7 @@
 
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
-	if(!istype(parent) || parent.getorgan(/obj/item/organ/internal/eyes) != src)
+	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
@@ -147,7 +149,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
@@ -280,7 +282,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(10 * severity))
-		applyOrganDamage(20 * severity)
+		apply_organ_damage(20 * severity)
 		to_chat(owner, span_warning("Your eyes start to fizzle in their sockets!"))
 		do_sparks(2, TRUE, owner)
 		owner.emote("scream")
@@ -292,13 +294,13 @@
 	eye_color_right = "000"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
-/obj/item/organ/internal/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/eyes/robotic/xray/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
-/obj/item/organ/internal/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/eyes/robotic/xray/on_remove(mob/living/carbon/eye_owner)
+	. = ..()
 	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
-	return ..()
 
 /obj/item/organ/internal/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -324,8 +326,8 @@
 /obj/item/organ/internal/eyes/robotic/flashlight/emp_act(severity)
 	return
 
-/obj/item/organ/internal/eyes/robotic/flashlight/Insert(mob/living/carbon/victim, special = FALSE, drop_if_replaced = FALSE)
-	..()
+/obj/item/organ/internal/eyes/robotic/flashlight/on_insert(mob/living/carbon/victim)
+	. = ..()
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
@@ -334,12 +336,12 @@
 	victim.become_blind(FLASHLIGHT_EYES)
 
 
-/obj/item/organ/internal/eyes/robotic/flashlight/Remove(mob/living/carbon/victim, special = 0)
+/obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
+	. = ..()
 	eye.on = FALSE
 	eye.update_brightness(victim)
 	eye.forceMove(src)
 	victim.cure_blind(FLASHLIGHT_EYES)
-	..()
 
 // Welding shield implant
 /obj/item/organ/internal/eyes/robotic/shield
@@ -438,11 +440,11 @@
 		return
 	deactivate(silent = TRUE)
 
-/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_visuals))
 
-/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
 
@@ -582,23 +584,23 @@
 	high_light_cutoff = list(30, 35, 50)
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
-/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	//add lighting
 	if(!adapt_light)
 		adapt_light = new /obj/item/flashlight/eyelight/adapted()
 	adapt_light.on = TRUE
-	adapt_light.forceMove(adapted)
-	adapt_light.update_brightness(adapted)
-	ADD_TRAIT(adapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
+	adapt_light.forceMove(eye_owner)
+	adapt_light.update_brightness(eye_owner)
+	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
-		applyOrganDamage(10) //blind quickly
+		apply_organ_damage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
 	else
-		applyOrganDamage(-10) //heal quickly
+		apply_organ_damage(-10) //heal quickly
 	. = ..()
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
@@ -608,3 +610,5 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+#undef RGB2EYECOLORSTRING

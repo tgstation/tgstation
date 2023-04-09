@@ -1,22 +1,52 @@
+/// Candidates for the petsplosion wizard event
+GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
+	/mob/living/simple_animal/pet,
+	/mob/living/simple_animal/parrot,
+	/mob/living/simple_animal/hostile/lizard,
+	/mob/living/simple_animal/sloth,
+	/mob/living/simple_animal/hostile/retaliate/goat,
+	/mob/living/simple_animal/chicken,
+	/mob/living/simple_animal/hostile/retaliate/bat,
+	/mob/living/simple_animal/butterfly,
+	/mob/living/simple_animal/hostile/retaliate/snake,
+	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/basic/carp/pet/cayenne,
+	/mob/living/basic/cow,
+	/mob/living/basic/mothroach,
+	/mob/living/basic/pet,
+	/mob/living/basic/pig,
+	/mob/living/basic/rabbit,
+	/mob/living/basic/giant_spider/sgt_araneus,
+	/mob/living/basic/sheep,
+	/mob/living/basic/mouse/brown/tom,
+)))
+
 /datum/round_event_control/wizard/petsplosion //the horror
 	name = "Petsplosion"
 	weight = 2
 	typepath = /datum/round_event/wizard/petsplosion
 	max_occurrences = 1 //Exponential growth is nothing to sneeze at!
 	earliest_start = 0 MINUTES
-	var/mobs_to_dupe = 0
 	description = "Rapidly multiplies the animals on the station."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
+	/// Number of mobs we're going to duplicate
+	var/mobs_to_dupe = 0
 
 /datum/round_event_control/wizard/petsplosion/preRunEvent()
-	for(var/mob/living/simple_animal/F in GLOB.alive_mob_list)
-		if(!ishostile(F) && is_station_level(F.z))
-			mobs_to_dupe++
+	for(var/mob/living/basic/dupe_animal in GLOB.alive_mob_list)
+		count_mob(dupe_animal)
+	for(var/mob/living/simple_animal/dupe_animal in GLOB.alive_mob_list)
+		count_mob(dupe_animal)
 	if(mobs_to_dupe > 100 || !mobs_to_dupe)
 		return EVENT_CANT_RUN
 
-	..()
+	return ..()
+
+/// Counts whether we found some kind of valid living mob
+/datum/round_event_control/wizard/petsplosion/proc/count_mob(mob/living/dupe_animal)
+	if(is_type_in_typecache(dupe_animal, GLOB.petsplosion_candidates) && is_station_level(dupe_animal.z))
+		mobs_to_dupe++
 
 /datum/round_event/wizard/petsplosion
 	end_when = 61 //1 minute (+1 tick for endWhen not to interfere with tick)
@@ -24,12 +54,21 @@
 	var/mobs_duped = 0
 
 /datum/round_event/wizard/petsplosion/tick()
-	if(activeFor >= 30 * countdown) // 0 seconds : 2 animals | 30 seconds : 4 animals | 1 minute : 8 animals
-		countdown += 1
-		for(var/mob/living/simple_animal/F in GLOB.alive_mob_list) //If you cull the heard before the next replication, things will be easier for you
-			if(!ishostile(F) && is_station_level(F.z))
-				new F.type(F.loc)
-				mobs_duped++
-				if(mobs_duped > 400)
-					kill()
+	if(activeFor < 30 * countdown) // 0 seconds : 2 animals | 30 seconds : 4 animals | 1 minute : 8 animals
+		return
+	countdown += 1
 
+	//If you cull the herd before the next replication, things will be easier for you
+	for(var/mob/living/basic/dupe_animal in GLOB.alive_mob_list)
+		duplicate_mob(dupe_animal)
+	for(var/mob/living/simple_animal/dupe_animal in GLOB.alive_mob_list)
+		duplicate_mob(dupe_animal)
+
+/// Makes a duplicate of a valid mob and increments our "too many mobs" counter
+/datum/round_event/wizard/petsplosion/proc/duplicate_mob(mob/living/dupe_animal)
+	if(!is_type_in_typecache(dupe_animal, GLOB.petsplosion_candidates) || !is_station_level(dupe_animal.z))
+		return
+	new dupe_animal.type(dupe_animal.loc)
+	mobs_duped++
+	if(mobs_duped > 400)
+		kill()

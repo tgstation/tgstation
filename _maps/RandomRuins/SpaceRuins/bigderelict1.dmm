@@ -1446,11 +1446,11 @@
 "MT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/alien/weeds/creature,
-/obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/button/door/directional/south{
 	id = "bigderelictcheckpoint";
 	name = "security checkpoint control"
 	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 "Pr" = (

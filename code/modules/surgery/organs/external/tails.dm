@@ -121,7 +121,7 @@
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(.)
-		paired_spines = ownerlimb.owner.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES)
+		paired_spines = ownerlimb.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		paired_spines?.paired_tail = src
 
 /obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, moving)

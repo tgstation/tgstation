@@ -1,9 +1,3 @@
-// Flags for [/obj/item/grenade/var/dud_flags]
-/// The grenade cannot detonate at all. It is innately nonfunctional.
-#define GRENADE_DUD (1<<0)
-/// The grenade has been used and as such cannot detonate.
-#define GRENADE_USED (1<<1)
-
 /**
  * Base class for all grenades.
  */

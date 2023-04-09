@@ -97,6 +97,9 @@
 /datum/movespeed_modifier/tarantula_web
 	multiplicative_slowdown = 5
 
+/datum/movespeed_modifier/duct_spider_web
+	multiplicative_slowdown = 1
+
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
 	variable = TRUE

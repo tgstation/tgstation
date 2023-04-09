@@ -195,12 +195,12 @@
 	pixel_y = 7
 	},
 /obj/item/raw_anomaly_core/random,
-/obj/item/disk/tech_disk/spaceloot{
+/obj/item/disk/design_disk/bepis{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/disk/tech_disk/spaceloot,
-/obj/item/disk/tech_disk/spaceloot{
+/obj/item/disk/design_disk/bepis,
+/obj/item/disk/design_disk/bepis{
 	pixel_x = 3;
 	pixel_y = 3
 	},

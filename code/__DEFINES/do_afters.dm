@@ -5,3 +5,4 @@
 #define DOAFTER_SOURCE_CLIMBING_LADDER "doafter_climbingladder"
 #define DOAFTER_SOURCE_SPIDER "doafter_spider"
 #define DOAFTER_SOURCE_HEAL_TOUCH "doafter_heal_touch"
+#define DOAFTER_SOURCE_PLANTING_DEVICE "doafter_planting_device"

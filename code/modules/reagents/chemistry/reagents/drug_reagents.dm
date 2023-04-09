@@ -216,16 +216,14 @@
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	L.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE), type)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	L.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE), type)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -702,7 +700,7 @@
 ///This proc turns the living mob passed as the arg "invisible_man"s invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man, requires_liver = TRUE)
 	if(requires_liver)
-		if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
+		if(!invisible_man.get_organ_slot(ORGAN_SLOT_LIVER))
 			return
 		if(invisible_man.undergoing_liver_failure())
 			return
@@ -711,8 +709,7 @@
 	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
-	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
-	ADD_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
+	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
 
 	var/datum/dna/druggy_dna = invisible_man.has_dna()
 	if(druggy_dna?.species)
@@ -726,8 +723,8 @@
 	. = ..()
 	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
-		REMOVE_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
-		REMOVE_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
+		invisible_man.remove_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
+
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
 
 		var/datum/dna/druggy_dna = invisible_man.has_dna()
@@ -751,6 +748,13 @@
 	if(DT_PROB(5, delta_time))
 		invisible_man.emote("laugh")
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time, required_organtype = affected_organtype)
+
+/datum/reagent/drug/saturnx/stable
+	name = "Stabilized Saturn-X"
+	description = "A chemical extract originating from the Saturn-X compound, stabilized and safer for tactical use. After the recipe was discovered, it was planned to be put into mass production, but the program fell apart after its lead disappeared and was never seen again."
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
+	overdose_threshold = 50
+	addiction_types = list(/datum/addiction/maintenance_drugs = 35)
 
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"

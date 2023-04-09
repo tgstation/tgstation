@@ -1413,12 +1413,12 @@
 /area/mine/storage/public)
 "iH" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/item/kitchen/fork{
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -1589,10 +1589,10 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "jU" = (
@@ -1614,12 +1614,12 @@
 /area/mine/production)
 "ka" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/machinery/newscaster/directional/north,
 /obj/item/plate/large,
 /obj/item/kitchen/fork,
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "kg" = (
@@ -2978,9 +2978,6 @@
 "qs" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 7
@@ -2988,6 +2985,9 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6;
 	pixel_y = 5
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -4219,11 +4219,11 @@
 /area/mine/living_quarters)
 "yN" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -5456,10 +5456,10 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "HH" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/telecomms/relay/preset/mining,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
 "HI" = (
@@ -5714,8 +5714,8 @@
 /obj/machinery/door/airlock/security{
 	name = "Labor Camp Gate Monitoring"
 	},
-/obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "Jl" = (
@@ -7562,10 +7562,10 @@
 /area/lavaland/surface/outdoors)
 "US" = (
 /obj/structure/table/wood,
+/obj/item/toy/cards/deck,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/item/toy/cards/deck,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "UV" = (

@@ -32,6 +32,12 @@
 		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
 		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
 
+	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
+	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
+		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
+		if(!isnull(blooddeficiency))
+			blooddeficiency.lose_blood(delta_time)
+
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
 	switch(blood_volume)
@@ -255,7 +261,7 @@
 		else if(last_mind)
 			blood_data["ckey"] = ckey(last_mind.key)
 
-		if(!suiciding)
+		if(!HAS_TRAIT_FROM(src, TRAIT_SUICIDED, REF(src)))
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = dna.blood_type
 		blood_data["gender"] = gender
@@ -364,3 +370,5 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+#undef BLOOD_DRIP_RATE_MOD

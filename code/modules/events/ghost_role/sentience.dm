@@ -1,20 +1,24 @@
 GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
-	/mob/living/basic/pet,
 	/mob/living/simple_animal/pet,
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/hostile/lizard,
 	/mob/living/simple_animal/sloth,
-	/mob/living/basic/mouse/brown/tom,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/chicken,
-	/mob/living/basic/cow,
 	/mob/living/simple_animal/hostile/retaliate/bat,
-	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/snake,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/simple_animal/bot/mulebot,
 	/mob/living/simple_animal/bot/secbot/beepsky,
+	/mob/living/basic/carp/pet/cayenne,
+	/mob/living/basic/cow,
+	/mob/living/basic/pet,
+	/mob/living/basic/pig,
+	/mob/living/basic/rabbit,
+	/mob/living/basic/giant_spider/sgt_araneus,
+	/mob/living/basic/sheep,
+	/mob/living/basic/mouse/brown/tom,
 )))
 
 /datum/round_event_control/sentience
@@ -59,16 +63,10 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	var/list/hi_pri = list()
 	var/list/low_pri = list()
 
-	for(var/mob/living/simple_animal/L in GLOB.alive_mob_list)
-		var/turf/T = get_turf(L)
-		if(!T || !is_station_level(T.z))
-			continue
-		if((L in GLOB.player_list) || L.mind || (L.flags_1 & HOLOGRAM_1))
-			continue
-		if(is_type_in_typecache(L, GLOB.high_priority_sentience))
-			hi_pri += L
-		else
-			low_pri += L
+	for(var/mob/living/simple_animal/check_mob in GLOB.alive_mob_list)
+		set_mob_priority(check_mob, hi_pri, low_pri)
+	for(var/mob/living/basic/check_mob in GLOB.alive_mob_list)
+		set_mob_priority(check_mob, hi_pri, low_pri)
 
 	shuffle_inplace(hi_pri)
 	shuffle_inplace(low_pri)
@@ -82,29 +80,45 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 	var/spawned_animals = 0
 	while(spawned_animals < animals && candidates.len && potential.len)
-		var/mob/living/simple_animal/SA = popleft(potential)
-		var/mob/dead/observer/SG = pick_n_take(candidates)
+		var/mob/living/selected = popleft(potential)
+		var/mob/dead/observer/picked_candidate = pick_n_take(candidates)
 
 		spawned_animals++
 
-		SA.key = SG.key
+		selected.key = picked_candidate.key
 
-		SA.grant_all_languages(TRUE, FALSE, FALSE)
+		selected.grant_all_languages(TRUE, FALSE, FALSE)
 
-		SA.sentience_act()
+		if (isanimal(selected))
+			var/mob/living/simple_animal/animal_selected = selected
+			animal_selected.sentience_act()
+			animal_selected.del_on_death = FALSE
+		else if	(isbasicmob(selected))
+			var/mob/living/basic/animal_selected = selected
+			animal_selected.basic_mob_flags &= ~DEL_ON_DEATH
 
-		SA.maxHealth = max(SA.maxHealth, 200)
-		SA.health = SA.maxHealth
-		SA.del_on_death = FALSE
+		selected.maxHealth = max(selected.maxHealth, 200)
+		selected.health = selected.maxHealth
+		spawned_mobs += selected
 
-		spawned_mobs += SA
-
-		to_chat(SA, span_userdanger("Hello world!"))
-		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(selected, span_userdanger("Hello world!"))
+		to_chat(selected, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
 			and the ability to speak and understand human language!</span>")
 
 	return SUCCESSFUL_SPAWN
+
+/// Adds a mob to either the high or low priority event list
+/datum/round_event/ghost_role/sentience/proc/set_mob_priority(mob/living/checked_mob, list/high, list/low)
+	var/turf/mob_turf = get_turf(checked_mob)
+	if(!mob_turf || !is_station_level(mob_turf.z))
+		return
+	if((checked_mob in GLOB.player_list) || checked_mob.mind || (checked_mob.flags_1 & HOLOGRAM_1))
+		return
+	if(is_type_in_typecache(checked_mob, GLOB.high_priority_sentience))
+		high += checked_mob
+	else
+		low += checked_mob
 
 /datum/round_event_control/sentience/all
 	name = "Station-wide Human-level Intelligence"

@@ -283,10 +283,10 @@
 		if(milk.volume > 50)
 			reagents.remove_reagent(milk.type, milk.volume - 5)
 			to_chat(owner, span_warning("The excess milk is dripping off your bones!"))
-		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		body.heal_bodypart_damage(milk_brute_healing * REM * delta_time, milk_burn_healing * REM * delta_time)
 
 		for(var/datum/wound/iter_wound as anything in body.all_wounds)
-			iter_wound.on_xadone(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			iter_wound.on_xadone(1 * REM * delta_time)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 

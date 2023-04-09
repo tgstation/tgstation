@@ -165,6 +165,10 @@ again.
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/shuttle)
 
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible
+	name = "indestructible shuttle window spawner"
+	icon_state = "swindow_spawner"
+	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/shuttle/indestructible)
 
 //plastitanium window
 

@@ -10,9 +10,14 @@
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
 	var/fail_message = "invalid user!"
-	var/selfdestruct = FALSE // Explode when user check is failed.
-	var/force_replace = FALSE // Can forcefully replace other pins.
-	var/pin_removeable = FALSE // Can be replaced by any pin.
+	/// Explode when user check is failed.
+	var/selfdestruct = FALSE
+	/// Can forcefully replace other pins.
+	var/force_replace = FALSE
+	/// Can be replaced by any pin.
+	var/pin_hot_swappable = FALSE
+	///Can be removed from the gun using tools or replaced by a pin with force_replace
+	var/pin_removable = TRUE
 	var/obj/item/gun/gun
 
 /obj/item/firing_pin/New(newloc)
@@ -27,8 +32,7 @@
 			. |= AFTERATTACK_PROCESSED_ITEM
 			var/obj/item/gun/targetted_gun = target
 			var/obj/item/firing_pin/old_pin = targetted_gun.pin
-			if(old_pin && (force_replace || old_pin.pin_removeable))
-				balloon_alert(user, "firing pin removed")
+			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
@@ -39,7 +43,10 @@
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
 				if(gun_insert(user, targetted_gun))
-					balloon_alert(user, "firing pin inserted.")
+					if(old_pin)
+						balloon_alert(user, "swapped firing pin")
+					else
+						balloon_alert(user, "inserted firing pin")
 			else
 				to_chat(user, span_notice("This firearm already has a firing pin installed."))
 
@@ -87,7 +94,7 @@
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
 	fail_message = "test range check failed!"
-	pin_removeable = TRUE
+	pin_hot_swappable = TRUE
 
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
 	if(!istype(user))

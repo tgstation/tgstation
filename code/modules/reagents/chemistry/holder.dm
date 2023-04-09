@@ -66,10 +66,16 @@
 		for(var/reaction in D.required_reagents)
 			reaction_ids += reaction
 			var/datum/reagent/reagent = find_reagent_object_from_type(reaction)
+			if(!istype(reagent))
+				stack_trace("Invalid reagent found in [D] required_reagents: [reaction]")
+				continue
 			reagents += list(list("name" = reagent.name, "id" = reagent.type))
 
 		for(var/product in D.results)
 			var/datum/reagent/reagent = find_reagent_object_from_type(product)
+			if(!istype(reagent))
+				stack_trace("Invalid reagent found in [D] results: [product]")
+				continue
 			product_names += reagent.name
 			product_ids += product
 
@@ -481,7 +487,7 @@
 	else
 		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
-			var/obj/item/organ/internal/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
+			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 			if(!belly)
 				eater.expel_ingested(my_atom, amount)
 				return
@@ -714,8 +720,8 @@
 		expose_temperature(owner.bodytemperature, 0.25)
 
 	var/need_mob_update = FALSE
-	var/obj/item/organ/internal/stomach/belly = owner.getorganslot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/internal/liver/liver = owner.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/liver_tolerance
 	if(liver)
 		var/liver_health_percent = (liver.maxHealth - liver.damage) / liver.maxHealth
@@ -927,21 +933,13 @@
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				if(!reaction.required_container)
-					matching_container = TRUE
-				else
-					if(cached_my_atom.type == reaction.required_container)
-						matching_container = TRUE
-				if (isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+				matching_container = reaction.required_container ? (cached_my_atom.type == reaction.required_container) : TRUE
+
+				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
-				if(!reaction.required_other)
-					matching_other = TRUE
 
-				else if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/extract = cached_my_atom
+				matching_other = reaction.required_other ? reaction.pre_reaction_other_checks(src) : TRUE
 
-					if(extract.Uses > 0) // added a limit to slime cores -- Muskets requested this
-						matching_other = TRUE
 			else
 				if(!reaction.required_container)
 					matching_container = TRUE

@@ -264,3 +264,5 @@
 
 	StartCooldown()
 	return TRUE
+
+#undef GOOSE_SATIATED

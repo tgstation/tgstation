@@ -114,7 +114,7 @@
 
 /obj/item/dna_probe/carp_scanner/examine_more(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(/datum/antagonist/traitor))
+	if(IS_TRAITOR(user))
 		. = list(span_notice("Using this on a Space Carp will harvest its DNA. Use it in-hand once complete to mutate it with yourself."))
 
 /obj/item/dna_probe/carp_scanner/scan_dna(atom/target, mob/user)

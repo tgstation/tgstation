@@ -4,6 +4,8 @@
 
 	if(!check_rights(R_ADMIN))
 		return
+	if(!isobserver(usr) && SSticker.HasRoundStarted())
+		message_admins("[key_name_admin(usr)] checked AI laws via the Law Panel.")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Law Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	var/datum/law_panel/tgui = new()
@@ -283,7 +285,11 @@
 		borg_information["ref"] = REF(borgo)
 
 		var/datum/ai_laws/lawset = borgo.laws
-		if(!isnull(lawset))
+		if(isnull(lawset))
+			// Whoopsie something wrong wrong this isn't supposed to happen
+			borg_information["laws"] = null
+
+		else
 			var/list/borg_laws = list()
 			// zeroth law on top
 			if(lawset.zeroth || lawset.zeroth_borg)

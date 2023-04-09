@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Something which is \"forced\" to embed will now always actually embed. Resultingly, accidentally swallowing glass or encountering it behind a poster without adequate protection will now always cause it to embed into your body."
-  - balance: "Thin and fingerless gloves may no longer protect you from having glass in your hand after pulling down a poster"
-  - bugfix: "Bullets containing shrapnel now use their correct chance to embed, which may cause bullet wounds to contain shrapnel more frequently."

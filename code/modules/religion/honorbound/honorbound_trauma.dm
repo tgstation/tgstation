@@ -149,9 +149,9 @@
 	))
 	if(!is_type_in_typecache(proj, guilty_projectiles))
 		return
-	if((proj.damage_type == STAMINA))
+	if(proj.damage_type == STAMINA || !proj.is_hostile_projectile())
 		return
-	if(!proj.nodamage && proj.damage < shot_honorbound.health && isliving(proj.firer))
+	if(proj.damage > 0 && proj.damage < shot_honorbound.health && isliving(proj.firer))
 		guilty(proj.firer)
 
 /datum/brain_trauma/special/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)

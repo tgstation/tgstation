@@ -13,16 +13,12 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	target.add_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
 	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	target.faction |= FACTION_CARP //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	REMOVE_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	target.remove_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
 	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
 	target.faction -= FACTION_CARP //:(
 	. = ..()
@@ -181,7 +177,7 @@
 	throw_speed = 2
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -251,3 +247,7 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return FALSE
+
+#undef STRONG_PUNCH_COMBO
+#undef LAUNCH_KICK_COMBO
+#undef DROP_KICK_COMBO

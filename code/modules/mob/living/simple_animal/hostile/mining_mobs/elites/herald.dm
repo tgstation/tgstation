@@ -19,11 +19,14 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald
 	name = "herald"
 	desc = "A monstrous beast which fires deadly projectiles at threats and prey."
+	icon = 'icons/mob/simple/lavaland/lavaland_elites_64.dmi'
 	icon_state = "herald"
 	icon_living = "herald"
 	icon_aggro = "herald"
 	icon_dead = "herald_dying"
 	icon_gib = "syndicate_gib"
+	pixel_x = -16
+	base_pixel_x = -16
 	health_doll_icon = "herald"
 	maxHealth = 1000
 	health = 1000
@@ -199,6 +202,8 @@
 	maxHealth = 60
 	icon_state = "herald_mirror"
 	icon_aggro = "herald_mirror"
+	pixel_x = -16
+	base_pixel_x = -16
 	death_message = "shatters violently!"
 	death_sound = 'sound/effects/glassbr1.ogg'
 	del_on_death = TRUE
@@ -226,20 +231,21 @@
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/teleshot
-	name ="golden bolt"
-	damage = 0
-	color = rgb(255,255,102)
-
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
 		if(mob_target.faction_check_mob(firer))
-			nodamage = TRUE
+			damage = 0
+
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/rock_target = target
 		rock_target.gets_drilled()
+
+/obj/projectile/herald/teleshot
+	name = "golden bolt"
+	damage = 0
+	color = rgb(255,255,102)
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -276,3 +282,8 @@
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
+
+#undef HERALD_TRISHOT
+#undef HERALD_DIRECTIONALSHOT
+#undef HERALD_TELESHOT
+#undef HERALD_MIRROR
