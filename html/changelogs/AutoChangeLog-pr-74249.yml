@@ -1,5 +1,0 @@
-author: "kinneb"
-delete-after: True
-changes:
-  - imageadd: "Resprites the Wirebrush"
-  - imagedel: "Removes the sprite for the Advanced Wirebrush"

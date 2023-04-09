@@ -2093,13 +2093,14 @@
 	taste_description = "custard and alcohol"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/eggnog
+/datum/glass_style/has_foodtype/drinking_glass/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "eggnog"
 	desc = "For enjoying the most wonderful time of the year."
 	icon_state = "glass_yellow"
+	drink_type = FRUIT
 
-/datum/glass_style/juicebox/eggnog
+/datum/glass_style/has_foodtype/juicebox/eggnog
 	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "carton of eggnog"
 	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
@@ -3138,6 +3139,34 @@
 	desc = "If you like pina coladas, and getting caught in the rain... well, you'll like this drink."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pina_colada"
+
+/datum/reagent/consumable/ethanol/pina_olivada
+	name = "Piña Olivada"
+	description = "An oddly designed concoction of olive oil and pineapple juice."
+	boozepwr = 20 // the oil coats your gastrointestinal tract, meaning you can't absorb as much alcohol. horrifying
+	color = "#493c00"
+	quality = DRINK_NICE
+	taste_description = "a horrible emulsion of pineapple and olive oil"
+
+/datum/reagent/consumable/ethanol/pina_olivada/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(8, delta_time))
+		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
+	if(DT_PROB(3, delta_time))
+		var/static/list/messages = list(
+			"A horrible aftertaste coats your mouth.",
+			"You feel like you're going to choke on the oil in your throat.",
+			"You start to feel some heartburn coming on.",
+			"You want to throw up, but you know that nothing can come out due to the clog in your esophagus.",
+			"Your throat feels horrible.",
+		)
+		to_chat(drinker, span_notice(pick(messages)))
+	return ..()
+
+/datum/glass_style/drinking_glass/pina_olivada
+	required_drink_type = /datum/reagent/consumable/ethanol/pina_olivada
+	name = "Piña Olivada"
+	desc = "A balance of fruity pineapple with thick, rich olive oil. Stir well before drinking."
+	icon_state = "pina_olivada"
 
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
 	name = "Pruno"

@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "TGC decks will no longer allow you to insert an illegal 31st card."
