@@ -48,6 +48,9 @@
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	air = space_gas
+	
+	if(check_holidays(APRIL_FOOLS))
+		thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
 	if (PERFORM_ALL_TESTS(focus_only/multiple_space_initialization))
 		if(flags_1 & INITIALIZED_1)
