@@ -14,7 +14,7 @@
 #define FISH_DEAD "dead"
 
 #define MIN_AQUARIUM_TEMP T0C
-#define MAX_AQUARIUM_TEMP T0C + 100
+#define MAX_AQUARIUM_TEMP (T0C + 100)
 #define DEFAULT_AQUARIUM_TEMP 300
 
 #define FISH_RARITY_BASIC 1000
@@ -24,7 +24,7 @@
 
 #define AQUARIUM_FLUID_FRESHWATER "Freshwater"
 #define AQUARIUM_FLUID_SALTWATER "Saltwater"
-#define AQUARIUM_FLUID_SULPHWATEVER "Sulphuric Water"
+#define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
 #define AQUARIUM_FLUID_AIR "Air"
 #define AQUARIUM_FLUID_ANADROMOUS "Adaptive to both Freshwater and Saltwater"
 

@@ -34,6 +34,7 @@
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
 	icon_state = "seed-replicapod"
+	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist
@@ -42,6 +43,7 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
+	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	var/ckey
@@ -63,9 +65,9 @@
 
 /obj/item/seeds/replicapod/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), .proc/on_reagent_add)
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), PROC_REF(on_reagent_add))
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles the seeds' reagents datum getting deleted.
 /obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
@@ -92,7 +94,7 @@
 		sampleDNA = B.data["blood_DNA"]
 		contains_sample = TRUE
 		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
-		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
+		investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
 	else
 		visible_message(span_warning("The [src] rejects the sample!"))
 	return NONE
@@ -163,7 +165,7 @@
 			return result
 
 		// Make sure they can still interact with the parent hydroponics tray.
-		if(!user.canUseTopic(parent, BE_CLOSE))
+		if(!user.can_perform_action(parent))
 			to_chat(user, text = "You are no longer able to harvest the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
 			return result
 
@@ -194,11 +196,22 @@
 	podman.faction |= factions
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
+	if(!features["pod_hair"])
+		features["pod_hair"] = pick(GLOB.pod_hair_list)
+
 	for(var/V in quirks)
 		new V(podman)
-	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+	podman.hardset_dna(null, null, null, podman.real_name, blood_type, new /datum/species/pod, features) // Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
-	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	parent.update_tray()
+	//Get the most plentiful reagent, if there's none: get water
+	var/list/most_plentiful_reagent = list(/datum/reagent/water = 0)
+	for(var/reagent in reagents_add)
+		if(reagents_add[reagent] > most_plentiful_reagent[most_plentiful_reagent[1]])
+			most_plentiful_reagent.Cut()
+			most_plentiful_reagent[reagent] = reagents_add[reagent]
+
+	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
+	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
+	parent.update_tray(user, 1)
 	return result

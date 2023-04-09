@@ -1,17 +1,10 @@
-import {
-  Section,
-  Button,
-  Dropdown,
-  Stack,
-  Box,
-  Input,
-} from '../../components';
+import { Section, Button, Dropdown, Stack, Input } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
-import { fetchRetry } from "../../http";
+import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
-import { Port } from './Port';
-import { DEFAULT_COMPONENT_MENU_LIMIT, noop } from './constants';
+import { DisplayComponent } from './DisplayComponent';
+import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 
 // Cache response so it's only sent once
 let fetchServerData;
@@ -20,9 +13,9 @@ export class ComponentMenu extends Component {
   constructor() {
     super();
     this.state = {
-      selectedTab: "All",
+      selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
-      currentSearch: "",
+      currentSearch: '',
     };
   }
 
@@ -32,15 +25,17 @@ export class ComponentMenu extends Component {
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetchRetry(resolveAsset("circuit_components.json"))
-        .then(response => response.json());
+      fetchServerData = fetchRetry(
+        resolveAsset('circuit_components.json')
+      ).then((response) => response.json());
     }
 
     const circuitData = await fetchServerData;
 
     this.setState({
-      componentData: circuitData.sort((a, b) =>
-        a.name.toLowerCase() < b.name.toLowerCase()),
+      componentData: circuitData.sort(
+        (a, b) => a.name.toLowerCase() < b.name.toLowerCase()
+      ),
     });
   }
 
@@ -69,19 +64,20 @@ export class ComponentMenu extends Component {
       currentSearch,
     } = this.state;
 
-    const tabs = ["All"];
-    let shownComponents = componentData.filter(val => {
+    const tabs = ['All'];
+    let shownComponents = componentData.filter((val) => {
       let shouldShow = showAll || components.includes(val.type);
       if (shouldShow) {
         if (!tabs.includes(val.category)) {
           tabs.push(val.category);
         }
-        if (currentSearch !== "") {
-          const result
-            = val.name.toLowerCase().search(currentSearch.toLowerCase());
-          return result !== -1;
+        if (currentSearch !== '') {
+          const result = val.name
+            .toLowerCase()
+            .includes(currentSearch.toLowerCase());
+          return result !== false;
         }
-        return selectedTab === "All" || selectedTab === val.category;
+        return selectedTab === 'All' || selectedTab === val.category;
       }
       return false;
     });
@@ -98,28 +94,24 @@ export class ComponentMenu extends Component {
         {...rest}
         fill
         buttons={
-          <Button
-            icon="times"
-            color="transparent"
-            mr={2}
-            onClick={onClose}
-          />
+          <Button icon="times" color="transparent" mr={2} onClick={onClose} />
         }
         onMouseUp={(event) => {
           event.preventDefault();
         }}
-        scrollable
-      >
+        scrollable>
         <Stack vertical>
           <Stack.Item>
             <Dropdown
               width="100%"
               options={tabs}
-              onSelected={(value) => this.setState({
-                selectedTab: value,
-                currentSearch: "",
-                currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
-              })}
+              onSelected={(value) =>
+                this.setState({
+                  selectedTab: value,
+                  currentSearch: '',
+                  currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
+                })
+              }
               displayText={`Category: ${selectedTab}`}
               color="transparent"
               className="IntegratedCircuit__BlueBorder"
@@ -130,75 +122,23 @@ export class ComponentMenu extends Component {
               placeholder="Search.."
               value={currentSearch}
               fluid
-              onInput={(e, val) => this.setState({
-                currentSearch: val,
-                selectedTab: "All",
-                currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
-              })}
+              onInput={(e, val) =>
+                this.setState({
+                  currentSearch: val,
+                  selectedTab: 'All',
+                  currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
+                })
+              }
             />
           </Stack.Item>
           <Stack.Item>
             <Stack vertical fill>
-              {shownComponents.map(val => (
+              {shownComponents.map((val) => (
                 <Stack.Item
                   key={val.type}
                   mt={1}
-                  onMouseDown={(e) => onMouseDownComponent(e, val)}
-                >
-                  <Box
-                    backgroundColor={val.color || "blue"}
-                    py={1}
-                    px={1}
-                    className="ObjectComponent__Titlebar"
-                  >
-                    <Stack>
-                      <Stack.Item grow={1} unselectable="on">
-                        {val.name}
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Button
-                          color="transparent"
-                          icon="info"
-                          compact
-                          tooltip={val.description}
-                          tooltipPosition="top"
-                        />
-                      </Stack.Item>
-                    </Stack>
-                  </Box>
-                  <Box
-                    className="ObjectComponent__Content"
-                    unselectable="on"
-                    py={1}
-                    px={1}>
-                    <Stack>
-                      <Stack.Item grow>
-                        <Stack vertical fill>
-                          {val.input_ports.map((port, portIndex) => (
-                            <Stack.Item key={portIndex}>
-                              <Port
-                                port={port}
-                                act={noop}
-                              />
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Stack vertical>
-                          {val.output_ports.map((port, portIndex) => (
-                            <Stack.Item key={portIndex}>
-                              <Port
-                                port={port}
-                                act={noop}
-                                isOutput
-                              />
-                            </Stack.Item>
-                          ))}
-                        </Stack>
-                      </Stack.Item>
-                    </Stack>
-                  </Box>
+                  onMouseDown={(e) => onMouseDownComponent(e, val)}>
+                  <DisplayComponent component={val} fixedSize />
                 </Stack.Item>
               ))}
               {trueLength > currentLimit && (
@@ -209,9 +149,11 @@ export class ComponentMenu extends Component {
                     py={1}
                     mb={1}
                     content="Show More"
-                    onClick={() => this.setState({
-                      currentLimit: currentLimit + 5,
-                    })}
+                    onClick={() =>
+                      this.setState({
+                        currentLimit: currentLimit + 5,
+                      })
+                    }
                     fluid
                   />
                 </Stack.Item>

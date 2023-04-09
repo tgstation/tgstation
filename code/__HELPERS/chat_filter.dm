@@ -59,7 +59,7 @@
 
 	return null
 
-///Given a text, will return that word is on the soft OOC filter, with the reason.
+/// Given a text, will return that word is on the soft OOC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_soft_ooc_filtered(message)
 	if (config.soft_ooc_filter_regex?.Find(message))
@@ -67,5 +67,9 @@
 		return list(matched_group, config.soft_shared_filter_reasons[matched_group])
 
 	return null
+
+/// Logs to the filter log with the given message, match, and scope
+/proc/log_filter(scope, message, filter_result)
+	log_filter_raw("[scope] filter:\n\tMessage: [message]\n\tFilter match: [filter_result[CHAT_FILTER_INDEX_WORD]]")
 
 #undef GET_MATCHED_GROUP

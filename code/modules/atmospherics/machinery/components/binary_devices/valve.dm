@@ -15,6 +15,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
 	custom_reconcilation = TRUE
+	use_power = NO_POWER_USE
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
 	var/valve_type = MANUAL_VALVE
 	///Bool to stop interactions while the opening/closing animation is going
@@ -41,10 +42,12 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.reconcile_air()
 		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		balloon_alert_to_viewers("valve opened")
 		vent_movement |= VENTCRAWL_ALLOWED
 	else
 		update_icon_nopipes()
 		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		balloon_alert_to_viewers("valve closed")
 		vent_movement &= ~VENTCRAWL_ALLOWED
 
 
@@ -54,8 +57,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	. = ..()
 	if(!on)
 		return
-	. += parents[1]
-	. += parents[2]
+	. |= parents[1]
+	. |= parents[2]
 
 /obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)
@@ -63,7 +66,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		return
 	update_icon_nopipes(TRUE)
 	switching = TRUE
-	addtimer(CALLBACK(src, .proc/finish_interact), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_interact)), 1 SECONDS)
 
 /**
  * Called by iteract() after a 1 second timer, calls toggle(), allows another interaction with the component.
@@ -116,7 +119,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/valve/digital))
 		attached_valve = shell
-		RegisterSignal(attached_valve, COMSIG_VALVE_SET_OPEN, .proc/handle_valve_toggled)
+		RegisterSignal(attached_valve, COMSIG_VALVE_SET_OPEN, PROC_REF(handle_valve_toggled))
 
 /obj/item/circuit_component/digital_valve/unregister_usb_parent(atom/movable/shell)
 	UnregisterSignal(attached_valve, COMSIG_VALVE_SET_OPEN)

@@ -18,6 +18,17 @@
 	var/list/fired = list()
 	var/countdown_length = 10
 	var/countdown_step = 0
+	var/pairing_code = ""
+
+/datum/duel/New(new_gun_A, new_gun_B)
+	pairing_code = SSnetworks.assign_random_name()
+
+	gun_A = new_gun_A
+	gun_B = new_gun_B
+	gun_A.duel = src
+	gun_B.duel = src
+
+	. = ..()
 
 /datum/duel/proc/try_begin()
 	//Check if both guns are held and if so begin.
@@ -83,7 +94,7 @@
 
 
 /datum/duel/proc/back_to_prep()
-	message_duelists(span_notice("Positions invalid. Please move to valid positions [required_distance] steps away from each other to continue."))
+	message_duelists(span_notice("Positions invalid. Please move to valid positions exactly [required_distance] steps away from each other to continue."))
 	state = DUEL_PREPARATION
 	confirmations.Cut()
 	countdown_step = countdown_length
@@ -128,6 +139,12 @@
 			return FALSE
 	return TRUE
 
+///For each linked gun that still exists, clear its reference to us, then delete.
+/datum/duel/proc/clear_duel()
+	gun_A?.duel = null
+	gun_B?.duel = null
+	qdel(src)
+
 /obj/item/gun/energy/dueling
 	name = "dueling pistol"
 	desc = "High-tech dueling pistol. Launches chaff and projectile according to preset settings."
@@ -147,6 +164,24 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
+/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/gun/energy/dueling))
+		var/obj/item/gun/energy/dueling/other_gun = W
+
+		if(!check_valid_duel(user, FALSE) && !other_gun.check_valid_duel(user, FALSE))
+			var/datum/duel/D = new(src, other_gun)
+			to_chat(user,span_notice("Pairing established. Pairing code: [D.pairing_code]"))
+			return
+
+	return ..()
+
+/obj/item/gun/energy/dueling/examine_more(mob/user)
+	. = ..()
+	if(check_valid_duel(user, FALSE))
+		. += "The pairing code is: [duel.pairing_code]"
+	else
+		. += "[src] is currently unpaired."
+
 /obj/item/gun/energy/dueling/proc/setting_iconstate()
 	switch(setting)
 		if(DUEL_SETTING_A)
@@ -159,6 +194,9 @@
 
 /obj/item/gun/energy/dueling/attack_self(mob/living/user)
 	. = ..()
+	if(!check_valid_duel(user, TRUE))
+		return
+
 	if(duel.state == DUEL_IDLE)
 		duel.try_begin()
 	else
@@ -183,15 +221,15 @@
 
 /obj/item/gun/energy/dueling/Destroy()
 	. = ..()
-	if(duel)
-		if(duel.gun_A == src)
-			duel.gun_A = null
-		if(duel.gun_B == src)
-			duel.gun_B = null
-		duel = null
+	duel?.clear_duel()
 
-/obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
+/obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE //not honorable.
 	. = ..()
+	if(!check_valid_duel(user, TRUE))
+		return FALSE
+
 	switch(duel.state)
 		if(DUEL_FIRING)
 			return . && !duel.fired[src]
@@ -209,6 +247,8 @@
 	return TRUE
 
 /obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	if(!check_valid_duel(user, TRUE))
+		return
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
 		to_chat(user,span_notice("You confirm your readiness."))
@@ -223,6 +263,14 @@
 /obj/item/gun/energy/dueling/before_firing(target,user)
 	var/obj/item/ammo_casing/energy/duel/D = chambered
 	D.setting = setting
+
+///Return a boolean of whether or not the pistol has a valid duel datum, if false optionally warn the user
+/obj/item/gun/energy/dueling/proc/check_valid_duel(mob/living/user, do_warn)
+	if(!duel)
+		if(do_warn)
+			to_chat(user,span_warning("[src] is currently unpaired."))
+		return FALSE
+	return TRUE
 
 /obj/effect/temp_visual/dueling_chaff
 	icon = 'icons/effects/effects.dmi'
@@ -317,15 +365,14 @@
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
 
-/obj/item/storage/lockbox/dueling/ComponentInitialize()
+/obj/item/storage/lockbox/dueling/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_items = 2
-	STR.set_holdable(list(/obj/item/gun/energy/dueling))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 2
+	atom_storage.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
-	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	if(atom_storage?.locked)
 		icon_state = icon_locked
 		return ..()
 	if(broken)
@@ -338,8 +385,4 @@
 	. = ..()
 	var/obj/item/gun/energy/dueling/gun_A = new(src)
 	var/obj/item/gun/energy/dueling/gun_B = new(src)
-	var/datum/duel/D = new
-	gun_A.duel = D
-	gun_B.duel = D
-	D.gun_A = gun_A
-	D.gun_B = gun_B
+	new /datum/duel(gun_A, gun_B)

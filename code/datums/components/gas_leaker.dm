@@ -20,7 +20,7 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/atmospherics/components))
 		process_type = PROCESS_COMPONENT
-	else if(istype(parent, /obj/machinery))
+	else if(ismachinery(parent))
 		process_type = PROCESS_MACHINE
 	else if(isobj(parent))
 		process_type = PROCESS_OBJ
@@ -36,7 +36,7 @@
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
+	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(start_processing))
 
 /datum/component/gas_leaker/UnregisterFromParent()
 	. = ..()

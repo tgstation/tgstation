@@ -15,8 +15,8 @@
 #define CARDINAL_TO_FULLPIPES(cardinals) (cardinals)
 #define CARDINAL_TO_SHORTPIPES(cardinals) ((cardinals) << 4)
 // A pipe is a stub if it only has zero or one permitted direction. For a regular pipe this is nonsensical, and there are no pipe sprites for this, so it is not allowed.
-#define ISSTUB(bits) !((bits) & (bits - 1))
-#define ISNOTSTUB(bits) ((bits) & (bits - 1))
+#define ISSTUB(bits) !((bits) & ((bits) - 1))
+#define ISNOTSTUB(bits) ((bits) & ((bits) - 1))
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
@@ -51,6 +51,13 @@
 #define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
 /// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
 #define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
+/// Denotes that our tank is overpressurized simply from gas merging.
+#define TANK_MERGE_OVERPRESSURE "tank_overpressure"
+// Indices for the reaction_results returned by explosion_information()
+/// Reactions that have happened in the tank.
+#define TANK_RESULTS_REACTION 1
+/// Additional information of the tank.
+#define TANK_RESULTS_MISC 2
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
@@ -60,7 +67,7 @@
 #define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
-#define PIPING_LAYER_LCHANGE 0.05
+#define PIPING_LAYER_LCHANGE 0.005
 
 /// intended to connect with all layers, check for all instead of just one.
 #define PIPING_ALL_LAYER (1<<0)

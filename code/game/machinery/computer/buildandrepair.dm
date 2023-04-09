@@ -1,7 +1,12 @@
 /obj/structure/frame/computer
 	name = "computer frame"
+	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"
 	state = 0
+
+/obj/structure/frame/computer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/living/user, params)
 	add_fingerprint(user)
@@ -153,13 +158,15 @@
 						new_computer.component_parts += movable_part
 
 					new_computer.RefreshParts()
-					new_computer.on_construction()
+					new_computer.on_construction(user)
 
 				qdel(src)
 				return
 	if(user.combat_mode)
 		return ..()
 
+/obj/structure/frame/computer/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -169,14 +176,3 @@
 		if(state >= 3)
 			new /obj/item/stack/cable_coil(drop_location(), 5)
 	..()
-
-/obj/structure/frame/computer/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
-
-	if(anchored)
-		to_chat(usr, span_warning("You must unwrench [src] before rotating it!"))
-		return
-
-	setDir(turn(dir, -90))

@@ -4,71 +4,67 @@ import { Window } from '../layouts';
 
 export const MassDriverControl = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    connected,
-    minutes,
-    seconds,
-    timing,
-    power,
-    poddoor,
-  } = data;
+  const { connected, minutes, seconds, timing, power, poddoor } = data;
   return (
-    <Window
-      width={300}
-      height={connected ? 215 : 107}>
+    <Window width={300} height={connected ? 215 : 107}>
       <Window.Content>
         {!!connected && (
           <Section
             title="Auto Launch"
-            buttons={(
+            buttons={
               <Button
-                icon={"clock-o"}
+                icon={'clock-o'}
                 content={timing ? 'Stop' : 'Start'}
                 selected={timing}
-                onClick={() => act('time')} />
-            )}>
+                onClick={() => act('time')}
+              />
+            }>
             <Button
               icon="fast-backward"
               disabled={timing}
-              onClick={() => act('input', { adjust: -30 })} />
+              onClick={() => act('input', { adjust: -30 })}
+            />
             <Button
               icon="backward"
               disabled={timing}
-              onClick={() => act('input', { adjust: -1 })} />
-            {' '}
+              onClick={() => act('input', { adjust: -1 })}
+            />{' '}
             {String(minutes).padStart(2, '0')}:
-            {String(seconds).padStart(2, '0')}
-            {' '}
+            {String(seconds).padStart(2, '0')}{' '}
             <Button
               icon="forward"
               disabled={timing}
-              onClick={() => act('input', { adjust: 1 })} />
+              onClick={() => act('input', { adjust: 1 })}
+            />
             <Button
               icon="fast-forward"
               disabled={timing}
-              onClick={() => act('input', { adjust: 30 })} />
+              onClick={() => act('input', { adjust: 30 })}
+            />
           </Section>
         )}
         <Section
           title="Controls"
-          buttons={(
+          buttons={
             <Button
-              icon={"toggle-on"}
+              icon={'toggle-on'}
               content="Toggle Outer Door"
               disabled={timing || !poddoor}
-              onClick={() => act('door')} />
-          )}>
-          {!!connected && (
+              onClick={() => act('door')}
+            />
+          }>
+          {(!!connected && (
             <>
               <LabeledList>
                 <LabeledList.Item
                   label="Power Level"
                   buttons={
                     <Button
-                      icon={"bomb"}
+                      icon={'bomb'}
                       content="Test Fire"
                       disabled={timing}
-                      onClick={() => act('driver_test')} />
+                      onClick={() => act('driver_test')}
+                    />
                   }>
                   <NumberInput
                     value={power}
@@ -79,7 +75,8 @@ export const MassDriverControl = (props, context) => {
                       return act('set_power', {
                         power: value,
                       });
-                    }} />
+                    }}
+                  />
                 </LabeledList.Item>
               </LabeledList>
               <Button
@@ -89,13 +86,10 @@ export const MassDriverControl = (props, context) => {
                 mt={1.5}
                 icon="arrow-up"
                 textAlign="center"
-                onClick={() => act('launch')} />
+                onClick={() => act('launch')}
+              />
             </>
-          ) || (
-            <Box color="bad">
-              No connected mass driver
-            </Box>
-          )}
+          )) || <Box color="bad">No connected mass driver</Box>}
         </Section>
       </Window.Content>
     </Window>

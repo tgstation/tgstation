@@ -15,9 +15,9 @@
 		return COMPONENT_INCOMPATIBLE
 	if (connected_bag)
 		attach_bag(null, connected_bag)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/suck)
-	RegisterSignal(parent, COMSIG_VACUUM_BAG_ATTACH, .proc/attach_bag)
-	RegisterSignal(parent, COMSIG_VACUUM_BAG_DETACH, .proc/detach_bag)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(suck))
+	RegisterSignal(parent, COMSIG_VACUUM_BAG_ATTACH, PROC_REF(attach_bag))
+	RegisterSignal(parent, COMSIG_VACUUM_BAG_DETACH, PROC_REF(detach_bag))
 
 /**
  * Called when parent moves, deligates vacuuming functionality
@@ -39,7 +39,7 @@
 		return
 
 	// suck the things
-	INVOKE_ASYNC(src, .proc/suck_items, tile)
+	INVOKE_ASYNC(src, PROC_REF(suck_items), tile)
 
 /**
  * Sucks up items as possible from a provided turf into the connected trash bag
@@ -58,7 +58,7 @@
 
 	// if we did indeed suck up something, play a funny noise
 	if (sucked)
-		playsound(parent, "rustle", 50, TRUE, -5)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 /**
  * Handler for when a new trash bag is attached
@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 
 	vacuum_bag = new_bag
-	RegisterSignal(new_bag, COMSIG_PARENT_QDELETING, .proc/detach_bag)
+	RegisterSignal(new_bag, COMSIG_PARENT_QDELETING, PROC_REF(detach_bag))
 
 /**
  * Handler for when a trash bag is detached

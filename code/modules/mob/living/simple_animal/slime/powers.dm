@@ -7,11 +7,12 @@
 
 /datum/action/innate/slime
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
 	var/needs_growth = NO_GROWTH_NEEDED
 
-/datum/action/innate/slime/IsAvailable()
+/datum/action/innate/slime/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -30,15 +31,16 @@
 		return FALSE
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && Adjacent(C))
-			choices += C
+	for(var/mob/living/nearby_mob in view(1,src))
+		if(nearby_mob != src && Adjacent(nearby_mob))
+			choices += nearby_mob
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sort_names(choices)
-	if(!M)
+	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
+	if(isnull(choice))
 		return FALSE
-	if(CanFeedon(M))
-		Feedon(M)
+	var/mob/living/victim = choice
+	if(CanFeedon(victim))
+		Feedon(victim)
 		return TRUE
 	return FALSE
 
@@ -59,7 +61,7 @@
 		Feedstop()
 		return FALSE
 
-	if(issilicon(M))
+	if(issilicon(M) || M.mob_biotypes & MOB_ROBOTIC)
 		return FALSE
 
 	if(isanimal(M))

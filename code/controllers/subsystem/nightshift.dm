@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
 		can_fire = FALSE
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
 	if(resumed)
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(nightshift)
 	priority_announce(message, sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 
 /datum/controller/subsystem/nightshift/proc/check_nightshift()
-	var/emergency = SSsecurity_level.current_level >= SEC_LEVEL_RED
+	var/emergency = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	var/announcing = TRUE
 	var/time = station_time()
 	var/night_time = (time < nightshift_end_time) || (time > nightshift_start_time)
@@ -56,6 +56,6 @@ SUBSYSTEM_DEF(nightshift)
 	for(var/obj/machinery/power/apc/APC as anything in currentrun)
 		currentrun -= APC
 		if (APC.area && (APC.area.type in GLOB.the_station_areas))
-			APC.set_nightshift(active)
+			APC.set_nightshift(nightshift_active)
 		if(MC_TICK_CHECK)
 			return

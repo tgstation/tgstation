@@ -4,11 +4,11 @@
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "album"
 	inhand_icon_state = "album"
-	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -16,10 +16,9 @@
 
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/photo))
-	STR.max_combined_w_class = 42
-	STR.max_items = 21
+	atom_storage.set_holdable(list(/obj/item/photo))
+	atom_storage.max_total_storage = 42
+	atom_storage.max_slots = 21
 	LAZYADD(SSpersistence.photo_albums, src)
 
 /obj/item/storage/photo_album/Destroy()
@@ -42,7 +41,7 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/item/storage/photo_album/proc/persistence_load()
-	var/list/data = SSpersistence.GetPhotoAlbums()
+	var/list/data = SSpersistence.get_photo_albums()
 	if(data[persistence_id])
 		populate_from_id_list(data[persistence_id])
 
@@ -53,7 +52,7 @@
 			continue
 		var/obj/item/photo/old/P = load_photo_from_disk(i)
 		if(istype(P))
-			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, P, null, TRUE, TRUE))
+			if(!atom_storage?.attempt_insert(P, override = TRUE))
 				qdel(P)
 
 /obj/item/storage/photo_album/hos
@@ -110,6 +109,11 @@
 	name = "photo album (Chapel)"
 	icon_state = "album_blue"
 	persistence_id = "chapel"
+
+/obj/item/storage/photo_album/listeningstation
+	name = "photo album (Listening Station)"
+	icon_state = "album_red"
+	persistence_id = "listeningstation"
 
 /obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"

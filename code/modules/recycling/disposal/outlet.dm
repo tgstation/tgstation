@@ -1,3 +1,13 @@
+//how fast disposal machinery is ejecting things (does not effect range)
+/// The slowest setting for disposal eject speed
+#define EJECT_SPEED_SLOW 1
+/// The default setting for disposal eject speed
+#define EJECT_SPEED_MED 2
+/// The fast setting for disposal eject speed
+#define EJECT_SPEED_FAST 4
+/// The fastest setting for disposal eject speed
+#define EJECT_SPEED_YEET 6
+
 // the disposal outlet machine
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
@@ -26,9 +36,10 @@
 
 	target = get_ranged_target_turf(src, dir, 10)
 
-	trunk = locate() in loc
-	if(trunk)
-		trunk.linked = src // link the pipe trunk to self
+	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+	if(found_trunk)
+		found_trunk.set_linked(src) // link the pipe trunk to self
+		trunk = found_trunk
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -45,9 +56,9 @@
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, FALSE)
-		addtimer(CALLBACK(src, .proc/expel_holder, H, TRUE), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 20)
 	else
-		addtimer(CALLBACK(src, .proc/expel_holder, H), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 20)
 
 /obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
 	if(playsound)
@@ -111,3 +122,8 @@
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+
+#undef EJECT_SPEED_SLOW
+#undef EJECT_SPEED_MED
+#undef EJECT_SPEED_FAST
+#undef EJECT_SPEED_YEET

@@ -113,13 +113,12 @@
 /area/shuttle/supply)
 "m" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/docking_port/mobile/supply{
-	dir = 4;
-	dwidth = 4
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
@@ -158,13 +157,13 @@
 	id = "QMLoaddoor";
 	name = "Off Ramp Toggle";
 	pixel_y = 8;
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor2";
 	name = "On Ramp Toggle";
 	pixel_y = -8;
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
@@ -176,17 +175,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/departments/cargo{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "r" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "s" = (
@@ -260,24 +257,24 @@
 /area/shuttle/supply)
 "A" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "B" = (
 /turf/template_noop,
 /area/template_noop)
 "C" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "D" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "E" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)

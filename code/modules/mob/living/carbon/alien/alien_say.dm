@@ -16,10 +16,10 @@
 			var/link = FOLLOW_LINK(S, src)
 			to_chat(S, "[link] [rendered]")
 
-/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
+/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, shown_name = name)
 	..(message, shown_name, TRUE)
 
 /mob/living/carbon/hivecheck()
-	var/obj/item/organ/alien/hivenode/N = getorgan(/obj/item/organ/alien/hivenode)
+	var/obj/item/organ/internal/alien/hivenode/N = getorgan(/obj/item/organ/internal/alien/hivenode)
 	if(N && !N.recent_queen_death) //Mob has alien hive node and is not under the dead queen special effect.
 		return TRUE

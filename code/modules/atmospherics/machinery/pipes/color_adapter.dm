@@ -52,12 +52,16 @@
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer1
 	icon_state = "adapter_map-1"
+	piping_layer = 1
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer2
 	icon_state = "adapter_map-2"
+	piping_layer = 2
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer4
 	icon_state = "adapter_map-4"
+	piping_layer = 4
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer5
 	icon_state = "adapter_map-5"
+	piping_layer = 5

@@ -5,7 +5,7 @@
 /obj/item/gavelhammer
 	name = "gavel hammer"
 	desc = "Order, order! No bombs in my courthouse."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "gavelhammer"
 	force = 5
 	throwforce = 6
@@ -18,15 +18,15 @@
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
-/obj/item/gavelhammer/suicide_act(mob/user)
+/obj/item/gavelhammer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/gavelblock
 	name = "gavel block"
 	desc = "Smack it with a gavel hammer when the assistants get rowdy."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "gavelblock"
 	force = 2
 	throwforce = 2

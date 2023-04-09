@@ -3,7 +3,8 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
-	layer = TURF_LAYER
+	layer = OBJ_LAYER
+	plane = GAME_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -54,8 +55,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 // START LANDMARKS FOLLOW. Don't change the names unless
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
-	name = "Assistant"
-	icon_state = "Assistant" //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
+	name = JOB_ASSISTANT
+	icon_state = JOB_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
@@ -166,8 +167,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Roboticist"
 
 /obj/effect/landmark/start/research_director
-	name = "Research Director"
-	icon_state = "Research Director"
+	name = JOB_RESEARCH_DIRECTOR
+	icon_state = JOB_RESEARCH_DIRECTOR
 
 /obj/effect/landmark/start/geneticist
 	name = "Geneticist"
@@ -355,6 +356,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/ert_shuttle_spawn
+	name = "ertshuttlespawn"
+	icon_state = "ert_spawn"
+
+/obj/effect/landmark/ert_shuttle_brief_spawn
+	name = "ertshuttlebriefspawn"
+	icon_state = "ert_brief_spawn"
+
 //ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
@@ -405,8 +414,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"
-	layer = OBJ_LAYER
-
 
 /obj/effect/landmark/event_spawn/Initialize(mapload)
 	. = ..()
@@ -451,23 +458,45 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
 
-	/// A list of everything this hangover spawn created
-	var/list/debris = list()
+	/// A list of everything this hangover spawn created as part of the hangover station trait
+	var/list/hangover_debris = list()
+
+	/// A list of everything this hangover spawn created as part of the birthday station trait
+	var/list/party_debris = list()
 
 /obj/effect/landmark/start/hangover/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/landmark/start/hangover/Destroy()
-	debris = null
+	hangover_debris = null
+	party_debris = null
 	return ..()
 
 /obj/effect/landmark/start/hangover/LateInitialize()
 	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
+		var/list/bonus_confetti = GLOB.alldirs
+		for(var/confettis in bonus_confetti)
+			var/party_turf_to_spawn_on = get_step(src, confettis)
+			if(!isopenturf(party_turf_to_spawn_on))
+				continue
+			var/dense_object = FALSE
+			for(var/atom/content in party_turf_to_spawn_on)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
+				continue
+			if(prob(50))
+				party_debris += new /obj/effect/decal/cleanable/confetti(party_turf_to_spawn_on)
+			if(prob(10))
+				party_debris += new /obj/item/toy/balloon(party_turf_to_spawn_on)
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
-		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		hangover_debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
 	if(prob(70))
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
@@ -481,7 +510,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 					break
 			if(dense_object)
 				continue
-			debris += new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
+			hangover_debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
@@ -490,9 +519,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/mob/living/carbon/spawned_carbon = hangover_mob
 	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(prob(50))
-		spawned_carbon.adjust_drugginess(rand(15, 20))
+		spawned_carbon.adjust_drugginess(rand(30 SECONDS, 40 SECONDS))
 	else
-		spawned_carbon.drunkenness += rand(15, 25)
+		spawned_carbon.adjust_drunk_effect(rand(15, 25))
 	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
 	if(spawned_carbon.head)
 		return
@@ -513,3 +542,152 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		joining_mob.forceMove(closet)
 		return
 	return ..() //Call parent as fallback
+
+//Landmark that creates destinations for the navigate verb to path to
+/obj/effect/landmark/navigate_destination
+	name = "navigate verb destination"
+	icon_state = "navigate"
+	var/location
+
+/obj/effect/landmark/navigate_destination/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/navigate_destination/LateInitialize()
+	. = ..()
+	if(!location)
+		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
+		location = A ? format_text(A.name) : get_area_name(src, format_text = TRUE)
+
+	GLOB.navigate_destinations[loc] = location
+
+	qdel(src)
+
+//Command
+/obj/effect/landmark/navigate_destination/bridge
+	location = "Bridge"
+
+/obj/effect/landmark/navigate_destination/hop
+	location = "Head of Personnel's Office"
+
+/obj/effect/landmark/navigate_destination/vault
+	location = "Vault"
+
+/obj/effect/landmark/navigate_destination/teleporter
+	location = "Teleporter"
+
+/obj/effect/landmark/navigate_destination/gateway
+	location = "Gateway"
+
+/obj/effect/landmark/navigate_destination/eva
+	location = "EVA Storage"
+
+/obj/effect/landmark/navigate_destination/aiupload
+	location = "AI Upload"
+
+/obj/effect/landmark/navigate_destination/minisat_access_ai
+	location = "AI MiniSat Access"
+
+/obj/effect/landmark/navigate_destination/minisat_access_tcomms
+	location = "Telecomms MiniSat Access"
+
+/obj/effect/landmark/navigate_destination/minisat_access_tcomms_ai
+	location = "AI and Telecomms MiniSat Access"
+
+/obj/effect/landmark/navigate_destination/tcomms
+	location = "Telecommunications"
+
+//Departments
+/obj/effect/landmark/navigate_destination/sec
+	location = "Security"
+
+/obj/effect/landmark/navigate_destination/det
+	location = "Detective's Office"
+
+/obj/effect/landmark/navigate_destination/research
+	location = "Research"
+
+/obj/effect/landmark/navigate_destination/engineering
+	location = "Engineering"
+
+/obj/effect/landmark/navigate_destination/techstorage
+	location = "Technical Storage"
+
+/obj/effect/landmark/navigate_destination/atmos
+	location = "Atmospherics"
+
+/obj/effect/landmark/navigate_destination/med
+	location = "Medical"
+
+/obj/effect/landmark/navigate_destination/chemfactory
+	location = "Chemistry Factory"
+
+/obj/effect/landmark/navigate_destination/cargo
+	location = "Cargo"
+
+//Common areas
+/obj/effect/landmark/navigate_destination/bar
+	location = "Bar"
+
+/obj/effect/landmark/navigate_destination/dorms
+	location = "Dormitories"
+
+/obj/effect/landmark/navigate_destination/court
+	location = "Courtroom"
+
+/obj/effect/landmark/navigate_destination/tools
+	location = "Tool Storage"
+
+/obj/effect/landmark/navigate_destination/library
+	location = "Library"
+
+/obj/effect/landmark/navigate_destination/chapel
+	location = "Chapel"
+
+/obj/effect/landmark/navigate_destination/minisat_access_chapel_library
+	location = "Chapel and Library MiniSat Access"
+
+//Service
+/obj/effect/landmark/navigate_destination/kitchen
+	location = "Kitchen"
+
+/obj/effect/landmark/navigate_destination/hydro
+	location = "Hydroponics"
+
+/obj/effect/landmark/navigate_destination/janitor
+	location = "Janitor's Closet"
+
+/obj/effect/landmark/navigate_destination/lawyer
+	location = "Lawyer's Office"
+
+//Shuttle docks
+/obj/effect/landmark/navigate_destination/dockarrival
+	location = "Arrival Shuttle Dock"
+
+/obj/effect/landmark/navigate_destination/dockesc
+	location = "Escape Shuttle Dock"
+
+/obj/effect/landmark/navigate_destination/dockescpod
+	location = "Escape Pod Dock"
+
+/obj/effect/landmark/navigate_destination/dockescpod1
+	location = "Escape Pod 1 Dock"
+
+/obj/effect/landmark/navigate_destination/dockescpod2
+	location = "Escape Pod 2 Dock"
+
+/obj/effect/landmark/navigate_destination/dockescpod3
+	location = "Escape Pod 3 Dock"
+
+/obj/effect/landmark/navigate_destination/dockescpod4
+	location = "Escape Pod 4 Dock"
+
+/obj/effect/landmark/navigate_destination/dockaux
+	location = "Auxiliary Dock"
+
+//Maint
+/obj/effect/landmark/navigate_destination/incinerator
+	location = "Incinerator"
+
+/obj/effect/landmark/navigate_destination/disposals
+	location = "Disposals"

@@ -40,7 +40,7 @@
 	inserted_key = I
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(!inserted_key || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !issilicon(user)))
+	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))
 		return ..()
 	if(!is_occupant(user))
 		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
@@ -58,6 +58,11 @@
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)
 		return FALSE
+
+	var/response = SEND_SIGNAL(M, COMSIG_VEHICLE_RIDDEN, src)
+	if(response & EJECT_FROM_VEHICLE)
+		return FALSE
+
 	return ..()
 
 /obj/vehicle/ridden/zap_act(power, zap_flags)

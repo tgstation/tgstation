@@ -1,18 +1,17 @@
-// Anomaly core types
-/// Bluespace cores
-#define ANOMALY_CORE_BLUESPACE /obj/item/assembly/signaler/anomaly/bluespace
-/// Gravitational cores
-#define ANOMALY_CORE_GRAVITATIONAL /obj/item/assembly/signaler/anomaly/grav
-/// Flux
-#define ANOMALY_CORE_FLUX /obj/item/assembly/signaler/anomaly/flux
-/// Vortex
-#define ANOMALY_CORE_VORTEX /obj/item/assembly/signaler/anomaly/vortex
-/// Pyro
-#define ANOMALY_CORE_PYRO /obj/item/assembly/signaler/anomaly/pyro
-
 // Max amounts of cores you can make
 #define MAX_CORES_BLUESPACE 8
 #define MAX_CORES_GRAVITATIONAL 8
 #define MAX_CORES_FLUX 8
 #define MAX_CORES_VORTEX 8
 #define MAX_CORES_PYRO 8
+#define MAX_CORES_HALLUCINATION 8
+#define MAX_CORES_BIOSCRAMBLER 8
+#define MAX_CORES_DIMENSIONAL 8
+
+///Defines for the different types of explosion a flux anomaly can have
+#define FLUX_NO_EXPLOSION 0
+#define FLUX_EXPLOSIVE 1
+#define FLUX_LOW_EXPLOSIVE 2
+
+/// Chance of anomalies moving every process tick
+#define ANOMALY_MOVECHANCE 45

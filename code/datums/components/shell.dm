@@ -40,17 +40,18 @@
 		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED))
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
-		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_attack_ghost))
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attack_by))
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
+		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_object_deconstruct))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
-	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
-	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
+	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
+	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
 
 /datum/component/shell/proc/set_unremovable_circuit_components(list/components)
 	if(unremovable_circuit_components)
@@ -63,7 +64,7 @@
 			circuit_component = new circuit_component()
 		circuit_component.removable = FALSE
 		circuit_component.set_circuit_size(0)
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
 		unremovable_circuit_components += circuit_component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
@@ -106,8 +107,13 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !attached_circuit?.admin_only)
-		remove_circuit()
+	if(!attached_circuit)
+		return
+	if(attached_circuit.admin_only)
+		return
+	if(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE)
+		return
+	remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
@@ -115,7 +121,7 @@
 		return
 
 	if(attached_circuit)
-		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
+		INVOKE_ASYNC(attached_circuit, TYPE_PROC_REF(/datum, ui_interact), ghost)
 
 /datum/component/shell/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -164,16 +170,16 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, /obj/item.proc/attack_atom, attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
 		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
 			set_locked(!locked)
-			source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+			source.balloon_alert(attacker, "[locked ? "locked" : "unlocked"] [source]")
 			return COMPONENT_NO_AFTERATTACK
 
-		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
+		if(!attached_circuit.owner_id && isidcard(item))
 			source.balloon_alert(attacker, "owner id set for [item]")
 			attached_circuit.owner_id = WEAKREF(item)
 			return COMPONENT_NO_AFTERATTACK
@@ -282,7 +288,8 @@
 
 	if(power_used_in_minute > max_power_use_in_minute)
 		explosion(parent, light_impact_range = 1, explosion_cause = attached_circuit)
-		remove_circuit()
+		if(attached_circuit)
+			remove_circuit()
 		return
 	location.use_power(power_to_use, AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
@@ -298,15 +305,15 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !circuitboard.admin_only)
-		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
+		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, PROC_REF(on_circuit_moved))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
-	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
+		RegisterSignal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
+	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_delete))
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
-	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
+	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, PROC_REF(on_circuit_add_component_manually))
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.set_locked(FALSE)
@@ -314,7 +321,7 @@
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		attached_circuit.on = parent_atom.anchored
 
-	if((shell_flags & SHELL_FLAG_CIRCUIT_FIXED) || circuitboard.admin_only)
+	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)
 		circuitboard.moveToNullspace()
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
@@ -355,6 +362,10 @@
 		source.balloon_alert(user, "no circuit inside")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
+	if(attached_circuit.locked)
+		source.balloon_alert(user, "circuit is locked!")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 
@@ -365,7 +376,7 @@
  * * user - The user to check if they are authorized
  */
 /datum/component/shell/proc/is_authorized(mob/user)
-	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && (shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
 		return FALSE
 
 	if(attached_circuit?.admin_only)

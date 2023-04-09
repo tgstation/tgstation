@@ -12,7 +12,6 @@
 
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
-/// Items will attempt to irradiate whoever is holding them, as well as whatever they are inside.
 /datum/component/irradiated
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -47,11 +46,11 @@
 
 		start_burn_splotch_timer()
 
-		human_parent.throw_alert("irradiated", /atom/movable/screen/alert/irradiated)
+		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
 /datum/component/irradiated/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
-	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, .proc/on_geiger_counter_scan)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
+	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
 
 /datum/component/irradiated/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -66,7 +65,7 @@
 
 	var/mob/living/carbon/human/human_parent = parent
 	if (istype(human_parent))
-		human_parent.clear_alert("irradiated")
+		human_parent.clear_alert(ALERT_IRRADIATED)
 
 	REMOVE_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 
@@ -116,7 +115,7 @@
 	COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 /datum/component/irradiated/proc/start_burn_splotch_timer()
-	addtimer(CALLBACK(src, .proc/give_burn_splotches), rand(RADIATION_BURN_INTERVAL_MIN, RADIATION_BURN_INTERVAL_MAX), TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(give_burn_splotches)), rand(RADIATION_BURN_INTERVAL_MIN, RADIATION_BURN_INTERVAL_MAX), TIMER_STOPPABLE)
 
 /datum/component/irradiated/proc/give_burn_splotches()
 	// This shouldn't be possible, but just in case.
@@ -130,14 +129,14 @@
 	if (should_halt_effects(parent))
 		return
 
-	var/obj/affected_limb = human_parent.get_bodypart(ran_zone())
+	var/obj/item/bodypart/affected_limb = human_parent.get_bodypart(human_parent.get_random_valid_zone())
 	human_parent.visible_message(
-		span_boldwarning("[human_parent]'s [affected_limb.name] bubbles unnaturally, then bursts into blisters!"),
-		span_boldwarning("Your [affected_limb.name] bubbles unnaturally, then bursts into blisters!"),
+		span_boldwarning("[human_parent]'s [affected_limb.plaintext_zone] bubbles unnaturally, then bursts into blisters!"),
+		span_boldwarning("Your [affected_limb.plaintext_zone] bubbles unnaturally, then bursts into blisters!"),
 	)
 
-	if (human_parent.is_blind())
-		to_chat(human_parent, span_boldwarning("Your [affected_limb.name] feels like it's bubbling, then burns like hell!"))
+	if(human_parent.is_blind())
+		to_chat(human_parent, span_boldwarning("Your [affected_limb.plaintext_zone] feels like it's bubbling, then burns like hell!"))
 
 	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb)
 	playsound(
@@ -153,7 +152,7 @@
 		return
 
 	parent_movable.add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
-	addtimer(CALLBACK(src, .proc/start_glow_loop, parent_movable), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
+	addtimer(CALLBACK(src, PROC_REF(start_glow_loop), parent_movable), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
 
 /datum/component/irradiated/proc/start_glow_loop(atom/movable/parent_movable)
 	var/filter = parent_movable.get_filter("rad_glow")
@@ -190,7 +189,7 @@
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"
 	desc = "You're irradiated! Heal your toxins quick, and stand under a shower to halt the incoming damage."
-	icon_state = "irradiated"
+	icon_state = ALERT_IRRADIATED
 
 #undef RADIATION_BURN_SPLOTCH_DAMAGE
 #undef RADIATION_BURN_INTERVAL_MIN

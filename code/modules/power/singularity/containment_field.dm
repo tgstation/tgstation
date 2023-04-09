@@ -3,7 +3,7 @@
 /obj/machinery/field/containment
 	name = "containment field"
 	desc = "An energy field."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "Contain_F"
 	density = FALSE
 	move_resist = INFINITY
@@ -22,9 +22,9 @@
 /obj/machinery/field/containment/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -135,13 +135,13 @@
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
-		user.Paralyze(300)
+		user.Paralyze(10 SECONDS)
 		user.electrocute_act(shock_damage, src, 1)
 
 	else if(issilicon(user))
 		if(prob(20))
 			user.Stun(40)
-		user.take_overall_damage(0, shock_damage)
+		user.take_overall_damage(burn = shock_damage)
 		user.visible_message(span_danger("[user.name] is shocked by the [src.name]!"), \
 		span_userdanger("Energy pulse detected, system damaged!"), \
 		span_hear("You hear an electrical crack."))
@@ -158,5 +158,8 @@
 	has_shocked = TRUE
 	do_sparks(5, TRUE, considered_atom.loc)
 	var/atom/target = get_edge_target_turf(considered_atom, get_dir(src, get_step_away(considered_atom, src)))
+	if(isliving(considered_atom))
+		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
+	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
 	considered_atom.throw_at(target, 200, 4)
-	addtimer(CALLBACK(src, .proc/clear_shock), 5)
+	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 5)

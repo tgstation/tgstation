@@ -5,7 +5,7 @@
  */
 /area
 	name = "Space"
-	icon = 'icons/turf/areas.dmi'
+	icon = 'icons/area/areas_misc.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
 	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
@@ -13,15 +13,32 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
+	/// List of all turfs currently inside this area. Acts as a filtered bersion of area.contents
+	/// For faster lookup (area.contents is actually a filtered loop over world)
+	/// Semi fragile, but it prevents stupid so I think it's worth it
+	var/list/turf/contained_turfs = list()
+	/// Contained turfs is a MASSIVE list, so rather then adding/removing from it each time we have a problem turf
+	/// We should instead store a list of turfs to REMOVE from it, then hook into a getter for it
+	/// There is a risk of this and contained_turfs leaking, so a subsystem will run it down to 0 incrementally if it gets too large
+	var/list/turf/turfs_to_uncontain = list()
+
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
-	///How many fire alarm sources do we have?
-	var/triggered_firealarms = 0
+	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
+	var/fire_detect = TRUE
+	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
+	var/list/firedoors
+	///A list of firelocks currently active. Used by fire alarms when setting their icons.
+	var/list/active_firelocks
+	///A list of all fire alarms in this area. Used by fire locks and burglar alarms to tell the fire alarm to change its icon.
+	var/list/firealarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
-	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing
+	///List of all lights in our area
+	var/list/lights = list()
+	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
@@ -42,7 +59,7 @@
 	/// Bonus mood for being in this area
 	var/mood_bonus = 0
 	/// Mood message for being here, only shows up if mood_bonus != 0
-	var/mood_message = "<span class='nicegreen'>This area is pretty nice!</span>\n"
+	var/mood_message = "This area is pretty nice!"
 	/// Does the mood bonus require a trait?
 	var/mood_trait
 
@@ -62,13 +79,22 @@
 	var/parallax_movedir = 0
 
 	var/ambience_index = AMBIENCE_GENERIC
+	///A list of sounds to pick from every so often to play to clients.
 	var/list/ambientsounds
+	///Does this area immediately play an ambience track upon enter?
+	var/forced_ambience = FALSE
+	///The background droning loop that plays 24/7
+	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	///The volume of the ambient buzz
+	var/ambient_buzz_vol = 35
+	///Used to decide what the minimum time between ambience is
+	var/min_ambience_cooldown = 30 SECONDS
+	///Used to decide what the maximum time between ambience is
+	var/max_ambience_cooldown = 60 SECONDS
+
 	flags_1 = CAN_BE_DIRTY_1
 
-	var/list/firedoors
 	var/list/cameras
-	var/list/firealarms
-	var/firedoors_last_closed_on = 0
 
 	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area/area_limited_icon_smoothing
@@ -89,13 +115,11 @@
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
 
-	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
-	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 90 SECONDS
+	/// List of all air vents in the area
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/air_vents = list()
 
-	var/list/air_vent_info = list()
-	var/list/air_scrub_info = list()
+	/// List of all air scrubbers in the area
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
 /**
  * A list of teleport locations
@@ -115,19 +139,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * The returned list of turfs is sorted by name
  */
 /proc/process_teleport_locs()
-	for(var/V in GLOB.sortedAreas)
-		var/area/AR = V
+	for(var/area/AR as anything in get_sorted_areas())
 		if(istype(AR, /area/shuttle) || AR.area_flags & NOTELEPORT)
 			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
-		if (!AR.contents.len)
+		if (!AR.has_contained_turfs())
 			continue
-		var/turf/picked = AR.contents[1]
-		if (picked && is_station_level(picked.z))
+		if (is_station_level(AR.z))
 			GLOB.teleportlocs[AR.name] = AR
-
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
  * Called when an area loads
@@ -139,6 +159,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// rather than waiting for atoms to initialize.
 	if (area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
+	GLOB.areas += src
 	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
 	return ..()
@@ -156,8 +177,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 
-	if(area_flags & AREA_USES_STARLIGHT)
-		static_lighting = CONFIG_GET(flag/starlight)
+	if(area_flags & AREA_USES_STARLIGHT && CONFIG_GET(flag/starlight))
+		// Areas lit by starlight are not supposed to be fullbright 4head
+		base_lighting_alpha = 0
+		base_lighting_color = null
+		static_lighting = TRUE
 
 	if(requires_power)
 		luminosity = 0
@@ -198,15 +222,33 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
-		map_generator.generate_terrain(turfs)
+		map_generator.generate_terrain(turfs, src)
 
 /area/proc/test_gen()
 	if(map_generator)
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
-		map_generator.generate_terrain(turfs)
+		map_generator.generate_terrain(turfs, src)
 
+/area/proc/get_contained_turfs()
+	if(length(turfs_to_uncontain))
+		cannonize_contained_turfs()
+	return contained_turfs
+
+/// Ensures that the contained_turfs list properly represents the turfs actually inside us
+/area/proc/cannonize_contained_turfs()
+	// This is massively suboptimal for LARGE removal lists
+	// Try and keep the mass removal as low as you can. We'll do this by ensuring
+	// We only actually add to contained turfs after large changes (Also the management subsystem)
+	// Do your damndest to keep turfs out of /area/space as a stepping stone
+	// That sucker gets HUGE and will make this take actual tens of seconds if you stuff turfs_to_uncontain
+	contained_turfs -= turfs_to_uncontain
+	turfs_to_uncontain = list()
+
+/// Returns TRUE if we have contained turfs, FALSE otherwise
+/area/proc/has_contained_turfs()
+	return length(contained_turfs) - length(turfs_to_uncontain) > 0
 
 /**
  * Register this area as belonging to a z level
@@ -214,7 +256,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Ensures the item is added to the SSmapping.areas_in_z list for this z
  */
 /area/proc/reg_in_areas_in_z()
-	if(!length(contents))
+	if(!has_contained_turfs())
 		return
 	var/list/areas_in_z = SSmapping.areas_in_z
 	update_areasize()
@@ -237,87 +279,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
 	GLOB.sortedAreas -= src
+	GLOB.areas -= src
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	air_vents = null
 	return ..()
-
-/**
- * Try to close all the firedoors in the area
- */
-/area/proc/ModifyFiredoors(opening)
-	if(firedoors)
-		firedoors_last_closed_on = world.time
-		for(var/FD in firedoors)
-			var/obj/machinery/door/firedoor/D = FD
-			if (D.being_held_open)
-				continue
-			var/cont = !D.welded
-			if(cont && opening) //don't open if adjacent area is on fire
-				for(var/I in D.affecting_areas)
-					var/area/A = I
-					if(A.fire)
-						cont = FALSE
-						break
-			if(cont && D.is_operational)
-				if(D.operating)
-					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
-				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
-
-/**
- * Generate a firealarm alert for this area
- *
- * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
- *
- * Also starts the area processing on SSobj
- */
-/area/proc/firealert(obj/source)
-	if (!fire)
-		set_fire_alarm_effect()
-		ModifyFiredoors(FALSE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_appearance()
-	alarm_manager.send_alarm(ALARM_FIRE, source)
-	START_PROCESSING(SSobj, src)
-
-/**
- * Reset the firealarm alert for this area
- *
- * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
- * in the world
- *
- * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
- */
-/area/proc/firereset(obj/source)
-	var/should_reset_alarms = fire
-	if(source)
-		if(istype(source, /obj/machinery/firealarm))
-			var/obj/machinery/firealarm/alarm = source
-			if(alarm.triggered)
-				alarm.triggered = FALSE
-				triggered_firealarms -= 1
-		if(triggered_firealarms > 0)
-			should_reset_alarms = FALSE
-		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
-
-	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
-		unset_fire_alarm_effects()
-		ModifyFiredoors(TRUE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_appearance()
-	alarm_manager.clear_alarm(ALARM_FIRE, source)
-	STOP_PROCESSING(SSobj, src)
-
-/**
- * If 100 ticks has elapsed, toggle all the firedoors closed again
- */
-/area/process()
-	if(!triggered_firealarms)
-		firereset() //If there are no breaches or fires, and this alert was caused by a breach or fire, die
-	if(firedoors_last_closed_on + 100 < world.time) //every 10 seconds
-		ModifyFiredoors(FALSE)
 
 /**
  * Close and lock a door passed into this proc
@@ -338,45 +304,23 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Alarm auto resets after 600 ticks
  */
 /area/proc/burglaralert(obj/trigger)
-	if (area_flags & NO_ALERTS)
-		return
 	//Trigger alarm effect
-	set_fire_alarm_effect()
+	set_fire_effect(TRUE)
 	//Lockdown airlocks
 	for(var/obj/machinery/door/door in src)
 		close_and_lock_door(door)
 
-/**
- * Trigger the fire alarm visual affects in an area
- *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
- */
-/area/proc/set_fire_alarm_effect()
-	fire = TRUE
-	if(!triggered_firealarms) //If there aren't any fires/breaches
-		triggered_firealarms = INFINITY //You're not allowed to naturally die
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-	for(var/obj/machinery/light/L in src)
-		L.update()
 
 /**
- * unset the fire alarm visual affects in an area
+ * Set the fire alarm visual affects in an area
  *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
+ * Allows interested parties (lights and fire alarms) to react
  */
-/area/proc/unset_fire_alarm_effects()
-	fire = FALSE
-	triggered_firealarms = 0
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-		F.triggered = FALSE
-	for(var/obj/machinery/light/L in src)
-		L.update()
+/area/proc/set_fire_effect(new_fire)
+	if(new_fire == fire)
+		return
+	fire = new_fire
+	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
 
 /**
  * Update the icon state of the area
@@ -496,7 +440,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
-	if(!LAZYACCESS(arrived.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
+
+	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
@@ -508,11 +453,34 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	//Ship ambience just loops if turned on.
-	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
-		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+	if(ambient_buzz != old_area.ambient_buzz)
+		L.refresh_looping_ambience()
+
+///Tries to play looping ambience to the mobs.
+/mob/proc/refresh_looping_ambience()
+	SIGNAL_HANDLER
+
+	var/area/my_area = get_area(src)
+
+	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		return
+
+	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
 
 
+/**
+ * Called when an atom exits an area
+ *
+ * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
+ */
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+
+	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		return
+	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()
@@ -523,20 +491,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
-
-
-/**
- * Called when an atom exits an area
- *
- * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
- */
-/area/Exited(atom/movable/gone, direction)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
-	if(!LAZYACCESS(gone.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
-		return
-	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
-		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
-
 
 /**
  * Setup an area (with the given name)
@@ -551,7 +505,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	always_unpowered = FALSE
 	area_flags &= ~VALID_TERRITORY
 	area_flags &= ~BLOBS_ALLOWED
-	addSorted()
+	require_area_resort()
 /**
  * Set the area size of the area
  *
@@ -562,7 +516,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(outdoors)
 		return FALSE
 	areasize = 0
-	for(var/turf/open/T in contents)
+	for(var/turf/open/T in get_contained_turfs())
 		areasize++
 
 /**

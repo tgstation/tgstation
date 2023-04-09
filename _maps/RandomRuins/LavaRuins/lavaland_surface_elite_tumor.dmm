@@ -4,10 +4,10 @@
 /area/template_noop)
 "b" = (
 /obj/structure/elite_tumor,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

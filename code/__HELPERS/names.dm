@@ -45,8 +45,9 @@ GLOBAL_VAR(command_name)
 
 	return GLOB.station_name
 
-/proc/set_station_name(newname)
-	GLOB.station_name = newname
+/proc/set_station_name(new_name)
+	var/old_name = GLOB.station_name
+	GLOB.station_name = new_name
 
 	var/config_server_name = CONFIG_GET(string/servername)
 	if(config_server_name)
@@ -54,6 +55,7 @@ GLOBAL_VAR(command_name)
 	else
 		world.name = html_decode(GLOB.station_name)
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_STATION_NAME_CHANGED, new_name, old_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -66,10 +68,13 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
+	if(prob(0.1))
+		random = 999999999 //ridiculously long name in written numbers
+
 	// Prefix
-	var/holiday_name = pick(SSevents.holidays)
+	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
 	if(holiday_name)
-		var/datum/holiday/holiday = SSevents.holidays[holiday_name]
+		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
 		name = holiday.getStationPrefix()
@@ -94,16 +99,18 @@ GLOBAL_VAR(command_name)
 		if(4)
 			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(GLOB.numbers_as_words)
+			new_station_name += convert_integer_to_words(rand(-1,99), capitalise = TRUE)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
+		if(999999999)
+			new_station_name += convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
 	if (prob(80))
@@ -116,11 +123,11 @@ GLOBAL_VAR(command_name)
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
 			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
+			name += pick("Tech", "Co", "Tek", "X", "Inc", "Code")
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick("Tech", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
 	return name
 
@@ -171,23 +178,23 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
-	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
-		names += t.fields["name"]
+	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
+		names += target.name
 
 	var/maxwords = words//Extra var to check for duplicates.
 
 	for(words,words>0,words--)//Randomly picks from one of the choices below.
 
-		if(words==1&&(1 in safety)&&(2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
+		if(words == 1 && (1 in safety) && (2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
 			safety = list(pick(1,2))//Select choice 1 or 2.
-		else if(words==1&&maxwords==2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
+		else if(words == 1 && maxwords == 2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
 			safety = list(3)//Default to list 3
 
 		switch(pick(safety))//Chance based on the safety list.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len&&prob(70))
+						if(names.len && prob(70))
 							. += pick(names)
 						else
 							if(prob(10))
@@ -198,7 +205,12 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 								new_name += pick(GLOB.last_names)
 								. += new_name
 					if(2)
-						. += pick(SSjob.station_jobs)//Returns a job.
+						var/datum/job/job = pick(SSjob.joinable_occupations)
+						if(job)
+							. += job.title //Returns a job.
+						else
+							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
+							. += "Bug"
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
@@ -220,7 +232,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 					if(4)
 						. += lowertext(pick(threats))
 		if(!return_list)
-			if(words==1)
+			if(words == 1)
 				. += "."
 			else
 				. += ", "

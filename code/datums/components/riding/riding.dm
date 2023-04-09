@@ -58,11 +58,12 @@
 
 /datum/component/riding/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
-	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
+	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(vehicle_turned))
+	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(vehicle_mob_unbuckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(vehicle_mob_buckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(vehicle_moved))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(vehicle_bump))
+	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, PROC_REF(riding_can_z_move))
 
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
@@ -82,6 +83,7 @@
 	restore_position(rider)
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
+	UnregisterSignal(rider, COMSIG_LIVING_TRY_PULL)
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
 
@@ -92,6 +94,18 @@
 	var/atom/movable/movable_parent = parent
 	handle_vehicle_layer(movable_parent.dir)
 	handle_vehicle_offsets(movable_parent.dir)
+
+	if(rider.pulling == source)
+		rider.stop_pulling()
+	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+
+/// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
+/datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
+	SIGNAL_HANDLER
+	if(target == parent)
+		var/mob/living/ridden = parent
+		ridden.balloon_alert(rider_pulling, "not while riding it!")
+		return COMSIG_LIVING_CANCEL_PULL
 
 /// Some ridable atoms may want to only show on top of the rider in certain directions, like wheelchairs
 /datum/component/riding/proc/handle_vehicle_layer(dir)
@@ -114,7 +128,6 @@
 	var/atom/movable/movable_parent = parent
 	if (isnull(dir))
 		dir = movable_parent.dir
-	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for (var/m in movable_parent.buckled_mobs)
 		var/mob/buckled_mob = m
 		ride_check(buckled_mob)
@@ -129,9 +142,12 @@
 
 	vehicle_moved(source, null, new_dir)
 
-/// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
-/datum/component/riding/proc/ride_check(mob/living/rider)
-	return
+/**
+ * Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard.
+ * If not and if consequences is TRUE, well, there'll be consequences.
+ */
+/datum/component/riding/proc/ride_check(mob/living/rider, consequences = TRUE)
+	return TRUE
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -218,7 +234,8 @@
 /// Every time the driver tries to move, this is called to see if they can actually drive and move the vehicle (via relaymove)
 /datum/component/riding/proc/driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	SIGNAL_HANDLER
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 
 /// So we can check all occupants when we bump a door to see if anyone has access
 /datum/component/riding/proc/vehicle_bump(atom/movable/movable_parent, obj/machinery/door/possible_bumped_door)
@@ -226,12 +243,12 @@
 	if(!istype(possible_bumped_door))
 		return
 	for(var/occupant in movable_parent.buckled_mobs)
-		INVOKE_ASYNC(possible_bumped_door, /obj/machinery/door/.proc/bumpopen, occupant)
+		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/obj/machinery/door/, bumpopen), occupant)
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
-	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
+	addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom/movable/, unbuckle_mob), M), 0, TIMER_UNIQUE)
 
-/datum/component/riding/proc/Process_Spacemove(direction)
+/datum/component/riding/proc/Process_Spacemove(direction, continuous_move)
 	var/atom/movable/AM = parent
 	return override_allow_spacemove || AM.has_gravity()
 
@@ -246,3 +263,8 @@
 		else
 			qdel(O)
 	return TRUE
+
+/// Extra checks before buckled.can_z_move can be called in mob/living/can_z_move()
+/datum/component/riding/proc/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	SIGNAL_HANDLER
+	return COMPONENT_RIDDEN_ALLOW_Z_MOVE

@@ -15,7 +15,7 @@
 	. = ..()
 	gun = WEAKREF(wh)
 
-/obj/item/ammo_casing/energy/wormhole/throw_proj()
+/obj/item/ammo_casing/energy/wormhole/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	. = ..()
 	if(istype(loaded_projectile, /obj/projectile/beam/wormhole))
 		var/obj/projectile/beam/wormhole/WH = loaded_projectile

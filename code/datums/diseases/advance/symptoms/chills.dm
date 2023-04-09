@@ -1,25 +1,17 @@
 #define CHILLS_CHANGE "chills"
-
-/*
-//////////////////////////////////////
-
-Chills
-
-	No change to hidden.
-	Increases resistance.
-	Increases stage speed.
-	Little transmittable.
-	Low level.
-
-Bonus
-	Cools down your body.
-
-//////////////////////////////////////
-*/
+/** Chills
+ * No change to stealth.
+ * Increases resistance.
+ * Increases stage speed.
+ * Increases transmissibility
+ * Low level
+ * Bonus: Cools down your body.
+ */
 
 /datum/symptom/chills
 	name = "Chills"
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
+	illness = "Cold Shoulder"
 	stealth = 0
 	resistance = 2
 	stage_speed = 3

@@ -28,49 +28,78 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "req_comp0"
+	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
-	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
-	var/list/messages = list() //List of all messages
-	var/departmentType = 0 //bitflag
-		// 0 = none (not listed, can only replied to)
-		// assistance = 1
-		// supplies = 2
-		// info = 4
-		// assistance + supplies = 3
-		// assistance + info = 5
-		// supplies + info = 6
-		// assistance + supplies + info = 7
-	var/newmessagepriority = REQ_NO_NEW_MESSAGE
-	var/screen = REQ_SCREEN_MAIN
-		// 0 = main menu,
-		// 1 = req. assistance,
-		// 2 = req. supplies
-		// 3 = relay information
-		// 4 = write msg - not used
-		// 5 = choose priority - not used
-		// 6 = sent successfully
-		// 7 = sent unsuccessfully
-		// 8 = view messages
-		// 9 = authentication before sending
-		// 10 = send announcement
-	var/silent = FALSE // set to 1 for it not to beep all the time
-	var/hackState = FALSE
-	var/announcementConsole = FALSE // FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
-	var/open = FALSE // TRUE if open
-	var/announceAuth = FALSE //Will be set to 1 when you authenticate yourself for announcements
-	var/msgVerified = "" //Will contain the name of the person who verified it
-	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
-	var/message = ""
-	var/to_department = "" //the department which will be receiving the message
-	var/priority = REQ_NO_NEW_MESSAGE //Priority of the message being sent
-	var/obj/item/radio/Radio
-	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
-	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	max_integrity = 300
-	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor_type = /datum/armor/machinery_requests_console
+	/// Reference to our area
+	var/area/area
+	/// Mapper helper to tie a request console to another area
+	var/areastring = null
+	/// Is autonaming by area on?
+	var/auto_name = FALSE
+	/// Department name (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/department = ""
+	/// List of all messages
+	var/list/messages = list()
+	/// Priority of the latest message
+	var/newmessagepriority = REQ_NO_NEW_MESSAGE
+	/*
+	Define for the currently displayed page
+		0 = main menu,
+		1 = req. assistance,
+		2 = req. supplies
+		3 = relay information
+		4 = write msg - not used
+		5 = choose priority - not used
+		6 = sent successfully
+		7 = sent unsuccessfully
+		8 = view messages
+		9 = authentication before sending
+		10 = send announcement
+	*/
+	var/screen = REQ_SCREEN_MAIN
+	// Is the console silent? Set to TRUE for it not to beep all the time
+	var/silent = FALSE
+	// Is the console hacked? Enables EXTREME priority if TRUE
+	var/hackState = FALSE
+	/// FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
+	var/announcementConsole = FALSE
+	// TRUE if maintenance panel is open
+	var/open = FALSE
+	/// Will be set to TRUE when you authenticate yourself for announcements
+	var/announceAuth = FALSE
+	/// Will contain the name of the person who verified it
+	var/msgVerified = ""
+	/// If a message is stamped, this will contain the stamp name
+	var/msgStamped = ""
+	/// The message to be sent
+	var/message = ""
+	/// The department which will be receiving the message
+	var/to_department = ""
+	/// Priority of the message being sent
+	var/priority = REQ_NO_NEW_MESSAGE
+	/// Reference to the internal radio
+	var/obj/item/radio/Radio
+	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
+	var/emergency
+	/// If ore redemption machines will send an update when it receives new ores.
+	var/receive_ore_updates = FALSE
+	/// Can others request assistance from this terminal?
+	var/assistance_requestable = FALSE
+	/// Can others request supplies from this terminal?
+	var/supplies_requestable = FALSE
+	/// Can you relay information to this console?
+	var/anon_tips_receiver = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
+/datum/armor/machinery_requests_console
+	melee = 70
+	bullet = 30
+	laser = 30
+	energy = 30
+	fire = 90
+	acid = 90
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()
@@ -81,44 +110,65 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/update_icon_state()
 	if(open)
-		icon_state="[base_icon_state]_[hackState ? "rewired" : "open"]"
+		icon_state = "[base_icon_state]_[hackState ? "rewired" : "open"]"
 		return ..()
-	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]_off"
-		return ..()
+	icon_state = "[base_icon_state]_off"
+	return ..()
+
+/obj/machinery/requests_console/update_overlays()
+	. = ..()
+
+	if(open || (machine_stat & NOPOWER))
+		return
+
+	var/screen_state
 
 	if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
-		icon_state = "[base_icon_state]3"
-		return ..()
-	if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
-		icon_state = "[base_icon_state]2"
-		return ..()
-	if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
-		icon_state = "[base_icon_state]1"
-		return ..()
-	icon_state = "[base_icon_state]0"
-	return ..()
+		screen_state = "[base_icon_state]3"
+	else if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
+		screen_state = "[base_icon_state]2"
+	else if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
+		screen_state = "[base_icon_state]1"
+	else
+		screen_state = "[base_icon_state]0"
+
+	. += mutable_appearance(icon, screen_state)
+	. += emissive_appearance(icon, screen_state, src, alpha = src.alpha)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
-	name = "\improper [department] requests console"
+
+	// Init by checking our area, stolen from APC code
+	area = get_area(loc)
+
+	// Naming and department sets
+	if(auto_name) // If autonaming, just pick department and name from the area code.
+		department = "[get_area_name(area, TRUE)]"
+		name = "\improper [department] requests console"
+	else
+		if(!(department) && (name != "requests console")) // if we have a map-set name, let's default that for the department.
+			department = name
+		else if(!(department)) // if we have no department and no name, we'll have to be Unknown.
+			department = "Unknown"
+			name = "\improper [department] requests console"
+		else
+			name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
+
 	GLOB.allConsoles += src
 
-	if(departmentType)
+	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
+		GLOB.req_console_assistance += department
 
-		if((departmentType & REQ_DEP_TYPE_ASSISTANCE) && !(department in GLOB.req_console_assistance))
-			GLOB.req_console_assistance += department
+	if((supplies_requestable) && !(department in GLOB.req_console_supplies)) // supplier list
+		GLOB.req_console_supplies += department
 
-		if((departmentType & REQ_DEP_TYPE_SUPPLIES) && !(department in GLOB.req_console_supplies))
-			GLOB.req_console_supplies += department
+	if((anon_tips_receiver) && !(department in GLOB.req_console_information)) // tips lists
+		GLOB.req_console_information += department
 
-		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !(department in GLOB.req_console_information))
-			GLOB.req_console_information += department
-
-	GLOB.req_console_ckey_departments[ckey(department)] = department
+	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
 
 	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	Radio.set_listening(FALSE)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
@@ -216,11 +266,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 		if(!dat)
 			CRASH("No UI for src. Screen var is: [screen]")
-		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
+		var/datum/browser/popup = new(user, "req_console", "[name]", 450, 440)
 		popup.set_content(dat)
 		popup.open()
 	return
 
+/// Receives a list of department names, filters the request console list, and returns them formatted as a html table
 /obj/machinery/requests_console/proc/departments_table(list/req_consoles)
 	var/dat = ""
 	dat += "<table width='100%'>"
@@ -246,7 +297,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 	if(href_list["write"])
 		to_department = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
 
-		var/new_message = (to_department in GLOB.req_console_ckey_departments) && stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
+		var/new_message = (to_department in GLOB.req_console_ckey_departments) && tgui_input_text(usr, "Write your message", "Awaiting Input")
 		if(new_message)
 			to_department = GLOB.req_console_ckey_departments[to_department]
 			message = new_message
@@ -254,7 +305,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 			priority = clamp(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
+		var/new_message = reject_bad_text(tgui_input_text(usr, "Write your message", "Awaiting Input"))
 		if(new_message)
 			message = new_message
 			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
@@ -272,7 +323,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 			var/mob/living/L = usr
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:", html_encode = FALSE)
-		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
+		GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -297,7 +348,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 				Radio.set_frequency(radio_freq)
 				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_appearance()
-				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 
 	if(href_list["send"] && message && to_department && priority)
 
@@ -313,7 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 				radio_freq = FREQ_ENGINEERING
 			if("security")
 				radio_freq = FREQ_SECURITY
-			if("cargobay" || "mining")
+			if("cargobay", "mining")
 				radio_freq = FREQ_SUPPLY
 
 		var/datum/signal/subspace/messaging/rc/signal = new(src, list(
@@ -357,11 +408,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 	else
 		. = ..()
 
+/// Turns the emergency console back to its normal sprite once the emergency has timed out
 /obj/machinery/requests_console/proc/clear_emergency()
 	emergency = null
 	update_appearance()
 
-//from message_server.dm: Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
+/// From message_server.dm: Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 /obj/machinery/requests_console/proc/createmessage(source, source_department, message, msgVerified, msgStamped, priority, radio_freq)
 	var/linkedsender
 
@@ -409,28 +461,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 		Radio.set_frequency(radio_freq)
 		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
-/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_CROWBAR)
-		if(open)
-			to_chat(user, span_notice("You close the maintenance panel."))
-			open = FALSE
-		else
-			to_chat(user, span_notice("You open the maintenance panel."))
-			open = TRUE
-		update_appearance()
-		return
-	if(O.tool_behaviour == TOOL_SCREWDRIVER)
-		if(open)
-			hackState = !hackState
-			if(hackState)
-				to_chat(user, span_notice("You modify the wiring."))
-			else
-				to_chat(user, span_notice("You reset the wiring."))
-			update_appearance()
-		else
-			to_chat(user, span_warning("You must open the maintenance panel first!"))
-		return
+/obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	if(open)
+		to_chat(user, span_notice("You close the maintenance panel."))
+		open = FALSE
+	else
+		to_chat(user, span_notice("You open the maintenance panel."))
+		open = TRUE
+	update_appearance()
+	return TRUE
 
+/obj/machinery/requests_console/screwdriver_act(mob/living/user, obj/item/tool)
+	if(open)
+		hackState = !hackState
+		if(hackState)
+			to_chat(user, span_notice("You modify the wiring."))
+		else
+			to_chat(user, span_notice("You reset the wiring."))
+		update_appearance()
+		tool.play_tool_sound(src, 50)
+	else
+		to_chat(user, span_warning("You must open the maintenance panel first!"))
+	return TRUE
+
+/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
@@ -451,6 +506,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 			updateUsrDialog()
 		return
 	return ..()
+
+/obj/machinery/requests_console/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/requests_console(loc)
+	qdel(src)
+
+/obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
+	auto_name = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
+
+/obj/item/wallframe/requests_console
+	name = "requests console"
+	desc = "An unmounted requests console. Attach it to a wall to use."
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "req_comp_off"
+	result_path = /obj/machinery/requests_console/auto_name
+	pixel_shift = 30
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

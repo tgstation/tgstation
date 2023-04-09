@@ -47,7 +47,7 @@
 	freq.set_value(sanitize_frequency(freq.value, TRUE))
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
-	INVOKE_ASYNC(src, .proc/handle_radio_input, port)
+	INVOKE_ASYNC(src, PROC_REF(handle_radio_input), port)
 
 /obj/item/circuit_component/radio/proc/handle_radio_input(datum/port/input/port)
 	var/frequency = freq.value

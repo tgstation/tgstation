@@ -36,9 +36,9 @@
 				if(isopenturf(OT))
 					OT.MakeSlippery(TURF_WET_LUBE, 100)
 		if(4)
-			var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes/snail) in affected_mob.internal_organs
+			var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes/snail) in affected_mob.internal_organs
 			if(!eyes && DT_PROB(2.5, delta_time))
-				var/obj/item/organ/eyes/snail/new_eyes = new()
+				var/obj/item/organ/internal/eyes/snail/new_eyes = new()
 				new_eyes.Insert(affected_mob, drop_if_replaced = TRUE)
 				affected_mob.visible_message(span_warning("[affected_mob]'s eyes fall out, with snail eyes taking its place!"), \
 				span_userdanger("You scream in pain as your eyes are pushed out by your new snail eyes!"))
@@ -56,9 +56,9 @@
 					affected_mob.emote("scream")
 					return
 
-			var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue/snail) in affected_mob.internal_organs
+			var/obj/item/organ/internal/tongue/tongue = locate(/obj/item/organ/internal/tongue/snail) in affected_mob.internal_organs
 			if(!tongue && DT_PROB(2.5, delta_time))
-				var/obj/item/organ/tongue/snail/new_tongue = new()
+				var/obj/item/organ/internal/tongue/snail/new_tongue = new()
 				new_tongue.Insert(affected_mob)
 				to_chat(affected_mob, span_userdanger("You feel your speech slow down..."))
 				return
@@ -83,13 +83,13 @@
 	. = ..()
 	if(affected_mob && !is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
 		var/mob/living/carbon/human/H = affected_mob
-		var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue/snail) in H.internal_organs
+		var/obj/item/organ/internal/tongue/tongue = locate(/obj/item/organ/internal/tongue/snail) in H.internal_organs
 		if(tongue)
-			var/obj/item/organ/tongue/new_tongue = new H.dna.species.mutanttongue ()
+			var/obj/item/organ/internal/tongue/new_tongue = new H.dna.species.mutanttongue ()
 			new_tongue.Insert(H)
-		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes/snail) in H.internal_organs
+		var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes/snail) in H.internal_organs
 		if(eyes)
-			var/obj/item/organ/eyes/new_eyes = new H.dna.species.mutanteyes ()
+			var/obj/item/organ/internal/eyes/new_eyes = new H.dna.species.mutanteyes ()
 			new_eyes.Insert(H)
 		var/obj/item/storage/backpack/bag = H.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(bag, /obj/item/storage/backpack/snail))

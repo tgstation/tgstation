@@ -33,15 +33,6 @@ SUBSYSTEM_DEF(job)
 	/// Lazylist of mob:occupation_string pairs.
 	var/list/dynamic_forced_occupations
 
-	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
-	var/list/station_jobs
-	/// A list of all Head of Staff jobs.
-	var/list/head_of_staff_jobs
-	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
-	var/list/additional_jobs_with_icons
-	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
-	var/list/centcom_jobs
-
 	/**
 	 * Keys should be assigned job roles. Values should be >= 1.
 	 * Represents the chain of command on the station. Lower numbers mean higher priority.
@@ -50,13 +41,14 @@ SUBSYSTEM_DEF(job)
 	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
 	 */
 	var/list/chain_of_command = list(
-		"Captain" = 1,
-		"Head of Personnel" = 2,
-		"Research Director" = 3,
-		"Chief Engineer" = 4,
-		"Chief Medical Officer" = 5,
-		"Head of Security" = 6,
-		"Quartermaster" = 7)
+		JOB_CAPTAIN = 1,
+		JOB_HEAD_OF_PERSONNEL = 2,
+		JOB_RESEARCH_DIRECTOR = 3,
+		JOB_CHIEF_ENGINEER = 4,
+		JOB_CHIEF_MEDICAL_OFFICER = 5,
+		JOB_HEAD_OF_SECURITY = 6,
+		JOB_QUARTERMASTER = 7,
+	)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
@@ -70,14 +62,28 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
-/datum/controller/subsystem/job/Initialize(timeofday)
+	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
+	var/legacy_mode = FALSE
+
+	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
+	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
+	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) four different variables in this file.\n\
+	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.\n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
+	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n## As time goes on, more config options may be added to this file.\n\
+	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
+	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
+	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
+	## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:\n## \"# Total Positions\" should always be changed to \"Total Positions\", no additional spacing. \n\
+	## Best of luck editing!\n"
+
+/datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
 	if(!length(all_occupations))
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
-		LoadJobs()
+		load_jobs_from_config()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
@@ -126,7 +132,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config")
+			log_job_debug("Removed [job.title] due to map config")
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
@@ -147,22 +153,22 @@ SUBSYSTEM_DEF(job)
 					new_joinable_departments_by_type[department_type] = department
 				department.add_job(job)
 
-	sortTim(new_all_occupations, /proc/cmp_job_display_asc)
+	sortTim(new_all_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	for(var/datum/job/job as anything in new_all_occupations)
 		if(!job.exp_granted_type)
 			continue
 		new_experience_jobs_map[job.exp_granted_type] += list(job)
 
-	sortTim(new_joinable_departments_by_type, /proc/cmp_department_display_asc, associative = TRUE)
+	sortTim(new_joinable_departments_by_type, GLOBAL_PROC_REF(cmp_department_display_asc), associative = TRUE)
 	for(var/department_type in new_joinable_departments_by_type)
 		var/datum/job_department/department = new_joinable_departments_by_type[department_type]
-		sortTim(department.department_jobs, /proc/cmp_job_display_asc)
+		sortTim(department.department_jobs, GLOBAL_PROC_REF(cmp_job_display_asc))
 		new_joinable_departments += department
 		if(department.department_experience_type)
 			new_experience_jobs_map[department.department_experience_type] = department.department_jobs.Copy()
 
 	all_occupations = new_all_occupations
-	joinable_occupations = sortTim(new_joinable_occupations, /proc/cmp_job_display_asc)
+	joinable_occupations = sortTim(new_joinable_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	joinable_departments = new_joinable_departments
 	joinable_departments_by_type = new_joinable_departments_by_type
 	experience_jobs_map = new_experience_jobs_map
@@ -249,6 +255,7 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			JobDebug("GRJ job lacks spawn positions to be eligible, Player: [player], Job: [job]")
+			continue
 
 		if(istype(job, GetJobType(overflow_role))) // We don't want to give him assistant, that's boring!
 			JobDebug("GRJ skipping overflow role, Player: [player], Job: [job]")
@@ -326,7 +333,7 @@ SUBSYSTEM_DEF(job)
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
-	var/datum/job/ai_job = GetJob("AI")
+	var/datum/job/ai_job = GetJob(JOB_AI)
 	if(!ai_job)
 		return
 	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
@@ -434,7 +441,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				// Filter any job that doesn't fit the current level.
-				var/player_job_level = player.client.prefs.job_preferences[job.title]
+				var/player_job_level = player.client?.prefs.job_preferences[job.title]
 				if(isnull(player_job_level))
 					JobDebug("FOC player job not enabled, Player: [player]")
 					continue
@@ -514,10 +521,7 @@ SUBSYSTEM_DEF(job)
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
-	equipping.mind?.set_assigned_role(job)
-
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>You are the [job.title].</b></span>")
+	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
 
 	equipping.on_job_equipping(job)
 
@@ -536,17 +540,16 @@ SUBSYSTEM_DEF(job)
 
 	if(player_client)
 		if(job.req_admin_notify)
-			to_chat(player_client, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
+			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
+				If you have to disconnect, please notify the admins via adminhelp.</b>"))
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
-
-		var/related_policy = get_policy(job.title)
-		if(related_policy)
-			to_chat(player_client, related_policy)
+			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
+				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+				have been added to your ID card."))
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.mind.add_memory(MEMORY_ACCOUNT, list(DETAIL_ACCOUNT_ID = wageslave.account_id), story_value = STORY_VALUE_SHIT, memory_flags = MEMORY_FLAG_NOLOCATION)
+		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
 
 	job.after_spawn(equipping, player_client)
@@ -573,7 +576,7 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
-	var/datum/job/J = SSjob.GetJob("Security Officer")
+	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
 	if(!J)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
@@ -597,14 +600,203 @@ SUBSYSTEM_DEF(job)
 		else //We ran out of spare locker spawns!
 			break
 
+#define TOTAL_POSITIONS "Total Positions"
+#define SPAWN_POSITIONS "Spawn Positions"
+#define PLAYTIME_REQUIREMENTS "Playtime Requirements"
+#define REQUIRED_ACCOUNT_AGE "Required Account Age"
 
-/datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("[global.config.directory]/jobs.txt")
-	for(var/datum/job/job as anything in joinable_occupations)
-		var/regex/jobs = new("[job.title]=(-1|\\d+),(-1|\\d+)")
-		jobs.Find(jobstext)
-		job.total_positions = text2num(jobs.group[1])
-		job.spawn_positions = text2num(jobs.group[2])
+/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
+/datum/controller/subsystem/job/proc/load_jobs_from_config()
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
+
+	if(!legacy_mode) // this flag is set during the setup of SSconfig, and all warnings were handled there.
+		var/job_config = rustg_read_toml_file(toml_file)
+
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/job_title = occupation.title
+			var/job_key = occupation.config_tag
+			if(!job_config[job_key]) // Job isn't listed, skip it.
+				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults.")) // List both job_title and job_key in case they de-sync over time.
+				continue
+
+			// If the value is commented out, we assume that the server operate did not want to override the codebase default values, so we skip it.
+			var/default_positions = job_config[job_key][TOTAL_POSITIONS]
+			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
+			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+
+			if(default_positions || default_positions == 0) // We need to account for jobs that were intentionally turned off via config too.
+				occupation.total_positions = default_positions
+			if(starting_positions || starting_positions == 0)
+				occupation.spawn_positions = starting_positions
+			if(playtime_requirements || playtime_requirements == 0)
+				occupation.exp_requirements = playtime_requirements
+			if(required_account_age || required_account_age == 0)
+				occupation.minimal_player_age = required_account_age
+
+		return
+
+	else // legacy mode, so just run the old parser.
+		var/jobsfile = file("[global.config.directory]/jobs.txt")
+		if(!fexists(jobsfile)) // sanity with a trace
+			stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
+			return
+		var/jobstext = file2text(jobsfile)
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
+			parser.Find(jobstext)
+			occupation.total_positions = text2num(parser.group[1])
+			occupation.spawn_positions = text2num(parser.group[2])
+
+/// Called from an admin debug verb that generates the jobconfig.toml file and then allows the end user to download it to their machine. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/generate_config(mob/user)
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/jobstext = "[global.config.directory]/jobs.txt"
+	var/list/file_data = list()
+	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
+
+	if(fexists(file(toml_file)))
+		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
+		if(!regenerate_job_config(user))
+			return FALSE
+		return TRUE
+
+	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
+		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/job_key = occupation.config_tag
+			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
+			parser.Find(jobstext)
+
+			var/default_positions = text2num(parser.group[1])
+			var/starting_positions = text2num(parser.group[2])
+
+			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
+			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
+			file_data["[job_key]"] = list(
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				"# [TOTAL_POSITIONS]" = default_positions,
+				"# [SPAWN_POSITIONS]" = starting_positions,
+			)
+
+		if(!export_toml(user, file_data))
+			return FALSE
+		return TRUE
+
+	else // Generate the new TOML format, using codebase defaults.
+		to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
+		for(var/datum/job/occupation as anything in joinable_occupations)
+			var/job_key = occupation.config_tag
+			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
+			// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
+			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
+				file_data["[job_key]"] = list(
+					"# [TOTAL_POSITIONS]" = -1,
+					"# [SPAWN_POSITIONS]" = -1,
+					"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				)
+				continue
+			// Generate new config from codebase defaults.
+			file_data["[job_key]"] = list(
+				"# [TOTAL_POSITIONS]" = occupation.total_positions,
+				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+			)
+		if(!export_toml(user, file_data))
+			return FALSE
+		return TRUE
+
+/// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
+	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/list/file_data = list()
+
+	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
+		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
+		return FALSE
+
+	var/job_config = rustg_read_toml_file(toml_file)
+	for(var/datum/job/occupation as anything in joinable_occupations)
+		var/job_name = occupation.title
+		var/job_key = occupation.config_tag
+
+		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
+		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
+			var/default_positions = job_config[job_key][TOTAL_POSITIONS]
+			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
+			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+
+			if(file_data["[job_key]"]) // Sanity, let's just make sure we don't overwrite anything or add any dupe keys. We also unit test for this, but eh, you never know sometimes.
+				stack_trace("We were about to over-write a job key that already exists in file_data while generating a new jobconfig.toml! This should not happen! Verify you do not have any duplicate job keys in your codebase!")
+				continue
+			if(default_positions) // If the variable exists, we want to ensure it migrated into the new TOML uncommented, to allow for flush migration.
+				file_data["[job_key]"] += list(
+					TOTAL_POSITIONS = default_positions,
+				)
+			else // If we can't find anything for this variable, then we just throw in the codebase default with it commented out.
+				file_data["[job_key]"] += list(
+					"# [TOTAL_POSITIONS]" = occupation.total_positions,
+				)
+
+			if(starting_positions) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					SPAWN_POSITIONS = starting_positions,
+				)
+			else
+				file_data["[job_key]"] += list(
+					"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
+				)
+
+			if(playtime_requirements) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					PLAYTIME_REQUIREMENTS = playtime_requirements,
+				)
+			else
+				file_data["[job_key]"] += list(
+					"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				)
+
+			if(required_account_age) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					REQUIRED_ACCOUNT_AGE = required_account_age,
+				)
+			else
+				file_data["[job_key]"] += list(
+					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				)
+			continue
+		else
+			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
+			// Commented out keys here in case server operators wish to defer to codebase defaults.
+			file_data["[job_key]"] = list(
+				"# [TOTAL_POSITIONS]" = occupation.total_positions,
+				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
+				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
+				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+			)
+
+	if(!export_toml(user, file_data))
+		return FALSE
+	return TRUE
+
+/// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client. Returns TRUE if a file is successfully generated.
+/datum/controller/subsystem/job/proc/export_toml(mob/user, data)
+	var/file_location = "data/jobconfig.toml" // store it in the data folder server-side so we can FTP it to the client.
+	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"
+	rustg_file_write(payload, file_location)
+	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
+	return TRUE
+
+#undef TOTAL_POSITIONS
+#undef SPAWN_POSITIONS
+#undef PLAYTIME_REQUIREMENTS
+#undef REQUIRED_ACCOUNT_AGE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)
@@ -666,9 +858,9 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/Recover()
 	set waitfor = FALSE
 	var/oldjobs = SSjob.all_occupations
-	sleep(20)
+	sleep(2 SECONDS)
 	for (var/datum/job/job as anything in oldjobs)
-		INVOKE_ASYNC(src, .proc/RecoverJob, job)
+		INVOKE_ASYNC(src, PROC_REF(RecoverJob), job)
 
 /datum/controller/subsystem/job/proc/RecoverJob(datum/job/J)
 	var/datum/job/newjob = GetJob(J.title)
@@ -736,7 +928,7 @@ SUBSYSTEM_DEF(job)
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
-	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
+	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
 
 	if(!spawn_turf)
 		SendToLateJoin(living_mob)
@@ -745,62 +937,45 @@ SUBSYSTEM_DEF(job)
 		living_mob.forceMove(toLaunch)
 		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
+/// Returns a list of minds of all heads of staff who are alive
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(!(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		if(isnull(head.current) || head.current.stat == DEAD)
+			continue
+		. += head
 
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
+/// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			. += head
 
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
+/// Returns a list of minds of all security members who are alive
 /datum/controller/subsystem/job/proc/get_living_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(!(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+			continue
+		if(isnull(sec.current) || sec.current.stat == DEAD)
+			continue
+		. += sec
 
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
+/// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			. += sec
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
 
 /// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
 /datum/controller/subsystem/job/proc/setup_job_lists()
-	station_jobs = list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician", \
-		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
-		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
-		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
-
-	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
-
-	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
-		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \
-		"Security Officer (Cargo)", "Security Officer (Medical)", "Security Officer (Science)")
-
-	centcom_jobs = list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer", \
-		"Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
-
 	job_priorities_to_strings = list(
 		"[JP_LOW]" = "Low Priority",
 		"[JP_MEDIUM]" = "Medium Priority",
@@ -812,22 +987,18 @@ SUBSYSTEM_DEF(job)
 	desc = "Proof that you have been approved for Captaincy, with all its glory and all its horror."
 
 /obj/item/paper/fluff/spare_id_safe_code/Initialize(mapload)
-	. = ..()
 	var/safe_code = SSid_access.spare_id_safe_code
-
-	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
-	update_appearance()
+	default_raw_text = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
+	return ..()
 
 /obj/item/paper/fluff/emergency_spare_id_safe_code
 	name = "Emergency Spare ID Safe Code Requisition"
 	desc = "Proof that nobody has been approved for Captaincy. A skeleton key for a skeleton shift."
 
 /obj/item/paper/fluff/emergency_spare_id_safe_code/Initialize(mapload)
-	. = ..()
 	var/safe_code = SSid_access.spare_id_safe_code
-
-	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
-	update_appearance()
+	default_raw_text = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
+	return ..()
 
 /datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
 	var/id_safe_code = SSid_access.spare_id_safe_code
@@ -848,13 +1019,14 @@ SUBSYSTEM_DEF(job)
 		to_chat(new_captain, span_notice("Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where]."))
 	else
 		to_chat(new_captain, span_notice("You can find the code to obtain your spare ID from the secure safe on the Bridge [where]."))
+		new_captain.add_mob_memory(/datum/memory/key/captains_spare_code, safe_code = SSid_access.spare_id_safe_code)
 
 	// Force-give their ID card bridge access.
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)
 		var/obj/item/card/id/id_card = id_slot.GetID()
-		if(!(ACCESS_HEADS in id_card.access))
-			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
+		if(!(ACCESS_COMMAND in id_card.access))
+			id_card.add_wildcards(list(ACCESS_COMMAND), mode=FORCE_ADD_ALL)
 
 	assigned_captain = TRUE
 
@@ -896,24 +1068,24 @@ SUBSYSTEM_DEF(job)
 		return JOB_UNAVAILABLE_GENERIC
 
 	if(possible_job.title in player.mind.restricted_roles)
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_ANTAG_INCOMPAT
 
 	if(!possible_job.player_old_enough(player.client))
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ACCOUNTAGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ACCOUNTAGE, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_ACCOUNTAGE
 
 	var/required_playtime_remaining = possible_job.required_playtime_remaining(player.client)
 	if(required_playtime_remaining)
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
 
 	// Run the banned check last since it should be the rarest check to fail and can access the database.
 	if(is_banned_from(player.ckey, possible_job.title))
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_BANNED
 
-	// Run this check after is_banned_from since it can query the DB which may sleep.
+	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
 	if(QDELETED(player))
 		JobDebug("[debug_prefix] player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC

@@ -6,7 +6,7 @@
 /obj/machinery/power/terminal
 	name = "terminal"
 	icon_state = "term"
-	desc = "It's an underfloor wiring terminal for power equipment."
+	desc = "It's an underfloor wiring terminal, used to draw power from the grid."
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
 	var/obj/machinery/power/master = null
 
@@ -43,14 +43,14 @@
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-			to_chat(user, span_warning("You must first expose the power terminal!"))
+			balloon_alert(user, "must expose the cable terminal!")
 			return
 
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message(span_notice("[user.name] dismantles the power terminal from [master]."),
-		span_notice("You begin to cut the cables..."))
+	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
+	balloon_alert(user, "cutting the cables...")
 
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 50))
@@ -62,7 +62,7 @@
 			return
 
 		new /obj/item/stack/cable_coil(drop_location(), 10)
-		to_chat(user, span_notice("You cut the cables and dismantle the power terminal."))
+		balloon_alert(user, "cable terminal dismantled")
 		qdel(src)
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)

@@ -4,7 +4,9 @@
 	desc = "A cable that can connect integrated circuits to anything with a USB port, such as computers and machines."
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "usb_cable"
-	inhand_icon_state = "coil"
+	inhand_icon_state = "coil_yellow"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	base_icon_state = "coil"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 75)
@@ -19,7 +21,7 @@
 
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/examine(mob/user)
 	. = ..()
@@ -80,14 +82,14 @@
 
 	return FALSE
 
-/obj/item/usb_cable/suicide_act(mob/user)
+/obj/item/usb_cable/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is wrapping [src] around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/usb_cable/proc/register_circuit_signals()
-	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_qdeling)
-	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_qdeling))
+	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
 	UnregisterSignal(attached_circuit, list(

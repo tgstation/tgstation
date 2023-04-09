@@ -1,7 +1,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "s-casing"
 	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1
@@ -55,7 +55,7 @@
 	return ..()
 
 /obj/item/ammo_casing/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ammo)
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ammo))
 
 /**
  *
@@ -65,16 +65,16 @@
  */
 /obj/item/ammo_casing/proc/add_notes_ammo()
 	// Try to get a projectile to derive stats from
-	var/obj/projectile/exam_proj = GLOB.proj_by_path_key[projectile_type]
-	if(!istype(exam_proj) || pellets == 0)
+	var/obj/projectile/exam_proj = projectile_type
+	if(!ispath(exam_proj) || pellets == 0)
 		return
 
 	var/list/readout = list()
 	// No dividing by 0
-	if(exam_proj.damage > 0)
-		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT(exam_proj.damage * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round"
-	if(exam_proj.stamina > 0)
-		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT(exam_proj.stamina * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds"
+	if(initial(exam_proj.damage) > 0)
+		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT(initial(exam_proj.damage) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round"
+	if(initial(exam_proj.stamina) > 0)
+		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT(initial(exam_proj.stamina) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds"
 	if(!readout.len) // Everything else failed, give generic text
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric"
 	return readout.Join("\n") // Sending over a single string, rather than the whole list
@@ -136,6 +136,6 @@
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(T?.bullet_bounce_sound)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

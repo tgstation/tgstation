@@ -4,19 +4,24 @@
  * The temporary equivalent is [/datum/component/light_eater]
  */
 /datum/element/light_eater
-	element_flags = ELEMENT_DETACH
 
 /datum/element/light_eater/Attach(datum/target)
 	if(isatom(target))
 		if(ismovable(target))
-			RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
+			if(ismachinery(target) || isstructure(target))
+				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
+			RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 			if(isitem(target))
-				RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
-				RegisterSignal(target, COMSIG_ITEM_HIT_REACT, .proc/on_hit_reaction)
+				if(isgun(target))
+					RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
+				RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
+				RegisterSignal(target, COMSIG_ITEM_HIT_REACT, PROC_REF(on_hit_reaction))
 			else if(isprojectile(target))
-				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
+				RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_self_hit))
 	else if(istype(target, /datum/reagent))
-		RegisterSignal(target, COMSIG_REAGENT_EXPOSE_ATOM, .proc/on_expose_atom)
+		RegisterSignal(target, COMSIG_REAGENT_EXPOSE_ATOM, PROC_REF(on_expose_atom))
+	else if(isprojectilespell(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -67,8 +72,7 @@
 /datum/element/light_eater/proc/table_buffet(atom/commisary, datum/devourer)
 	. = list()
 	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
-	for(var/nom in commisary.light_sources)
-		var/datum/light_source/morsel = nom
+	for(var/datum/light_source/morsel as anything in commisary.light_sources)
 		.[morsel.source_atom] = TRUE
 
 /**
@@ -119,7 +123,7 @@
 	if(!proximity)
 		return NONE
 	eat_lights(target, source)
-	return NONE
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /**
  * Called when a source object is used to block a thrown object, projectile, or attack
@@ -139,6 +143,20 @@
 	return NONE
 
 /**
+ * Called when a produced projectile strikes a target atom
+ *
+ * Arguments:
+ * - [source][/datum]: The thing that created the projectile
+ * - [firer][/atom/movable]: The movable atom that fired the projectile
+ * - [target][/atom]: The atom that was struck by the projectile
+ * - angle: The angle the target was struck at
+ */
+/datum/element/light_eater/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle)
+	SIGNAL_HANDLER
+	eat_lights(target, source)
+	return NONE
+
+/**
  * Called when a source projectile strikes a target atom
  *
  * Arguments:
@@ -146,8 +164,9 @@
  * - [firer][/atom/movable]: The movable atom that fired the projectile
  * - [target][/atom]: The atom that was struck by the projectile
  * - angle: The angle the target was struck at
+ * - hit_limb: The limb that was hit, if the target was a carbon
  */
-/datum/element/light_eater/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle)
+/datum/element/light_eater/proc/on_projectile_self_hit(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE

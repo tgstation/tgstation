@@ -40,6 +40,13 @@
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
+/// Universal Scanner mode for export scanning.
+#define SCAN_EXPORTS 1
+/// Universal Scanner mode for using the sales tagger.
+#define SCAN_SALES_TAG 2
+/// Universal Scanner mode for using the price tagger.
+#define SCAN_PRICE_TAG 3
+
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 
 GLOBAL_LIST_INIT(podstyles, list(\

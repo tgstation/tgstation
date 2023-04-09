@@ -2,16 +2,23 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	inhand_icon_state = "jetboots"
+	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
-	permeability_coefficient = 0.05
+	armor_type = /datum/armor/shoes_bhop
 	strip_delay = 30
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
+
+/datum/armor/shoes_bhop
+	bio = 90
+
+/obj/item/clothing/shoes/bhop/Initialize(mapload)
+	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -35,7 +42,7 @@
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"
-	inhand_icon_state = "rocketboots"
+	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/bhop/brocket)
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5

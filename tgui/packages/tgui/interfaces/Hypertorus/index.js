@@ -20,26 +20,30 @@ const HypertorusMainControls = (props, context) => {
             icon={data.start_power ? 'power-off' : 'times'}
             content={data.start_power ? 'On' : 'Off'}
             selected={data.start_power}
-            onClick={() => act('start_power')} />
+            onClick={() => act('start_power')}
+          />
         </Stack.Item>
         <Stack.Item color="label">
           {'Start cooling: '}
           <Button
-            disabled={data.start_fuel === 1
-                || data.start_moderator === 1
-                || data.start_power === 0
-                || (data.start_cooling && data.power_level > 0)}
+            disabled={
+              data.start_fuel === 1 ||
+              data.start_moderator === 1 ||
+              data.start_power === 0 ||
+              (data.start_cooling && data.power_level > 0)
+            }
             icon={data.start_cooling ? 'power-off' : 'times'}
             content={data.start_cooling ? 'On' : 'Off'}
             selected={data.start_cooling}
-            onClick={() => act('start_cooling')} />
+            onClick={() => act('start_cooling')}
+          />
         </Stack.Item>
       </Stack>
       <Collapsible title="Recipe selection">
         <HypertorusRecipes
           baseMaximumTemperature={data.base_max_temperature}
           enableRecipeSelection={data.power_level === 0}
-          onRecipe={id => act('fuel', { mode: id })}
+          onRecipe={(id) => act('fuel', { mode: id })}
           selectableFuels={data.selectable_fuel}
           selectedFuelID={data.selected}
         />
@@ -80,7 +84,8 @@ const HypertorusLayout = () => {
 export const Hypertorus = (props, context) => {
   // The HFR has a ridiculous amount of knobs and information.
   // Ideally we'd display a large window for it all...
-  const idealWidth = 850, idealHeight = 980;
+  const idealWidth = 850,
+    idealHeight = 980;
 
   // ...but we should check for small screens, to play nicely with eg laptops.
   const winWidth = window.screen.availWidth;

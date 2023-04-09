@@ -23,7 +23,7 @@
 	if(GLOB.AdminProcCaller)
 		return TRUE
 
-	INVOKE_ASYNC(src, .proc/execute_sdql, port)
+	INVOKE_ASYNC(src, PROC_REF(execute_sdql), port)
 
 /obj/item/circuit_component/sdql_operation/proc/execute_sdql(datum/port/input/port)
 	var/operation = sdql_operation.value
@@ -31,5 +31,6 @@
 	if(!operation)
 		return
 
+	log_admin_circuit("[parent.get_creator()] performed SDQL query [operation].")
 	var/result = HandleUserlessSDQL(parent.get_creator(), operation)
 	results.set_output(result)

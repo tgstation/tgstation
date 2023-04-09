@@ -1,7 +1,7 @@
 //Xenobio control console
 /mob/camera/ai_eye/remote/xenobio
 	visible_icon = TRUE
-	icon = 'icons/mob/cameramob.dmi'
+	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "generic_camera"
 	var/allowed_area = null
 
@@ -10,25 +10,26 @@
 	allowed_area = A.name
 	. = ..()
 
-/mob/camera/ai_eye/remote/xenobio/setLoc(destination)
+/mob/camera/ai_eye/remote/xenobio/setLoc(turf/destination, force_update = FALSE)
 	var/area/new_area = get_area(destination)
 	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return ..()
 	else
 		return
 
+/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	. = ..()
+	if(!.)
+		return
+	var/area/new_area = get_area(.)
+	if(new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return FALSE
+
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
 	networks = list("ss13")
 	circuit = /obj/item/circuitboard/computer/xenobiology
-	var/datum/action/innate/slime_place/slime_place_action
-	var/datum/action/innate/slime_pick_up/slime_up_action
-	var/datum/action/innate/feed_slime/feed_slime_action
-	var/datum/action/innate/monkey_recycle/monkey_recycle_action
-	var/datum/action/innate/slime_scan/scan_action
-	var/datum/action/innate/feed_potion/potion_action
-	var/datum/action/innate/hotkey_help/hotkey_help
 
 	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
@@ -43,13 +44,14 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/Initialize(mapload)
 	. = ..()
-	slime_place_action = new
-	slime_up_action = new
-	feed_slime_action = new
-	monkey_recycle_action = new
-	scan_action = new
-	potion_action = new
-	hotkey_help = new
+	actions += new /datum/action/innate/slime_place(src)
+	actions += new /datum/action/innate/slime_pick_up(src)
+	actions += new /datum/action/innate/feed_slime(src)
+	actions += new /datum/action/innate/monkey_recycle(src)
+	actions += new /datum/action/innate/slime_scan(src)
+	actions += new /datum/action/innate/feed_potion(src)
+	actions += new /datum/action/innate/hotkey_help(src)
+
 	stored_slimes = list()
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler.loc) == get_area(loc))
@@ -78,53 +80,17 @@
 	eyeobj = new /mob/camera/ai_eye/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
-
-	if(slime_up_action)
-		slime_up_action.target = src
-		slime_up_action.Grant(user)
-		actions += slime_up_action
-
-	if(slime_place_action)
-		slime_place_action.target = src
-		slime_place_action.Grant(user)
-		actions += slime_place_action
-
-	if(feed_slime_action)
-		feed_slime_action.target = src
-		feed_slime_action.Grant(user)
-		actions += feed_slime_action
-
-	if(monkey_recycle_action)
-		monkey_recycle_action.target = src
-		monkey_recycle_action.Grant(user)
-		actions += monkey_recycle_action
-
-	if(scan_action)
-		scan_action.target = src
-		scan_action.Grant(user)
-		actions += scan_action
-
-	if(potion_action)
-		potion_action.target = src
-		potion_action.Grant(user)
-		actions += potion_action
-
-	if(hotkey_help)
-		hotkey_help.target = src
-		hotkey_help.Grant(user)
-		actions += hotkey_help
-
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, PROC_REF(XenoSlimeClickCtrl))
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, PROC_REF(XenoTurfClickCtrl))
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, PROC_REF(XenoMonkeyClickCtrl))
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, PROC_REF(XenoSlimeClickAlt))
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, PROC_REF(XenoSlimeClickShift))
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, PROC_REF(XenoTurfClickShift))
 
 	//Checks for recycler on every interact, prevents issues with load order on certain maps.
 	if(!connected_recycler)
@@ -181,7 +147,7 @@
 
 /datum/action/innate/slime_place
 	name = "Place Slimes"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_down"
 
 /datum/action/innate/slime_place/Activate()
@@ -201,7 +167,7 @@
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_up"
 
 /datum/action/innate/slime_pick_up/Activate()
@@ -227,7 +193,7 @@
 
 /datum/action/innate/feed_slime
 	name = "Feed Slimes"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "monkey_down"
 
 /datum/action/innate/feed_slime/Activate()
@@ -253,7 +219,7 @@
 
 /datum/action/innate/monkey_recycle
 	name = "Recycle Monkeys"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "monkey_up"
 
 /datum/action/innate/monkey_recycle/Activate()
@@ -283,7 +249,7 @@
 
 /datum/action/innate/slime_scan
 	name = "Scan Slime"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_scan"
 
 /datum/action/innate/slime_scan/Activate()
@@ -300,7 +266,7 @@
 
 /datum/action/innate/feed_potion
 	name = "Apply Potion"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "slime_potion"
 
 /datum/action/innate/feed_potion/Activate()
@@ -324,7 +290,7 @@
 
 /datum/action/innate/hotkey_help
 	name = "Hotkey Help"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "hotkey_help"
 
 /datum/action/innate/hotkey_help/Activate()
@@ -396,7 +362,7 @@
 		to_chat(C, span_warning("No potion loaded."))
 		return
 	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		INVOKE_ASYNC(X.current_potion, /obj/item/slimepotion/slime.proc/attack, S, C)
+		INVOKE_ASYNC(X.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), S, C)
 
 //Picks up slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/simple_animal/slime/S)

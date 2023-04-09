@@ -3,7 +3,8 @@
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	flag = TOX
+	armor_flag = ENERGY
+	damage_type = TOX
 	damage = 10
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'
@@ -26,7 +27,7 @@
 
 /obj/projectile/energy/nuclear_particle/on_hit(atom/target, blocked, pierce_hit)
 	if (ishuman(target))
-		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
+		SSradiation.irradiate(target)
 
 	..()
 

@@ -1,34 +1,49 @@
 
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/accessor)
-	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
+	var/result_bitflags = SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor)
+	if(result_bitflags & COMPONENT_OBJ_ALLOW)
 		return TRUE
+	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
+		return FALSE
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
+	if(!istype(accessor)) //likely a TK user.
+		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
 			return FALSE
+		if(!(ROLE_SYNDICATE in accessor.faction))
+			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
+				return FALSE
+			if(onSyndieBase() && loc != accessor)
+				return FALSE
 		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE
-	else if(istype(accessor) && SEND_SIGNAL(accessor, COMSIG_MOB_ALLOWED, src))
+	//If the mob has the simple_access component with the requried access, we let them in.
+	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
+	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
+	else if(check_access(accessor.get_active_held_item()))
+		return TRUE
+	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(human_accessor.get_active_held_item()) || src.check_access(human_accessor.wear_id))
+		if(check_access(human_accessor.wear_id))
 			return TRUE
-	else if(isalienadult(accessor))
-		var/mob/living/carbon/george = accessor
-		//they can only hold things :(
-		if(check_access(george.get_active_held_item()))
-			return TRUE
+	//if they have a hacky abstract animal ID with the required access, let them in i guess...
 	else if(isanimal(accessor))
 		var/mob/living/simple_animal/animal = accessor
-		if(check_access(animal.get_active_held_item()) || check_access(animal.access_card))
+		if(check_access(animal.access_card))
 			return TRUE
+	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
+		var/obj/item/mmi/brain_mmi = accessor.loc
+		if(ismecha(brain_mmi.loc))
+			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
+			return check_access_list(big_stompy_robot.operation_req_access)
 	return FALSE
 
 /obj/item/proc/GetAccess()
@@ -43,39 +58,12 @@
 /obj/item/proc/InsertID()
 	return FALSE
 
-/obj/proc/text2access(access_text)
-	. = list()
-	if(!access_text)
-		return
-	var/list/split = splittext(access_text,";")
-	for(var/x in split)
-		var/n = text2num(x)
-		if(n)
-			. += n
-
-//Call this before using req_access or req_one_access directly
-/obj/proc/gen_access()
-	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
-	if(!req_access)
-		req_access = list()
-		for(var/a in text2access(req_access_txt))
-			req_access += a
-	if(!req_one_access)
-		req_one_access = list()
-		for(var/b in text2access(req_one_access_txt))
-			req_one_access += b
-
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_access_list(list/access_list)
-	gen_access()
-
-	if(!islist(req_access)) //something's very wrong
-		return TRUE
-
-	if(!req_access.len && !length(req_one_access))
+	if(!length(req_access) && !length(req_one_access))
 		return TRUE
 
 	if(!length(access_list) || !islist(access_list))
@@ -108,20 +96,4 @@
 /obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()
 
-	if(!id_card)
-		return "hudno_id"
-
-	var/card_assignment = id_card.get_trim_assignment()
-
-	// Is this one of the jobs with dedicated HUD icons?
-	if(card_assignment in SSjob.station_jobs)
-		return "hud[ckey(card_assignment)]"
-	if(card_assignment in SSjob.additional_jobs_with_icons)
-		return "hud[ckey(card_assignment)]"
-
-	// If not, is it one of the jobs that should use the NT logo?
-	if(card_assignment in SSjob.centcom_jobs)
-		return "hudcentcom"
-
-	// If none of the above apply, job name is unknown.
-	return "hudunknown"
+	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID

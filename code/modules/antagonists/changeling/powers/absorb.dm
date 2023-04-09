@@ -4,7 +4,7 @@
 	button_icon_state = "absorb_dna"
 	chemical_cost = 0
 	dna_cost = 0
-	req_human = 1
+	req_human = TRUE
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
 
@@ -13,14 +13,14 @@
 		return
 
 	if(is_absorbing)
-		to_chat(owner, span_warning("We are already absorbing!"))
+		owner.balloon_alert(owner, "already absorbing!")
 		return
 
 	if(!owner.pulling || !iscarbon(owner.pulling))
-		to_chat(owner, span_warning("We must be grabbing a creature to absorb them!"))
+		owner.balloon_alert(owner, "needs grab!")
 		return
 	if(owner.grab_state <= GRAB_NECK)
-		to_chat(owner, span_warning("We must have a tighter grip to absorb this creature!"))
+		owner.balloon_alert(owner, "needs tighter grip!")
 		return
 
 	var/mob/living/carbon/target = owner.pulling
@@ -39,9 +39,9 @@
 	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
-	if(!changeling.has_dna(target.dna))
+	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
-		changeling.trueabsorbs++
+		changeling.true_absorbs++
 
 	if(owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		owner.set_nutrition(min((owner.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
@@ -54,10 +54,12 @@
 
 	is_absorbing = FALSE
 
-	changeling.chem_charges = min(changeling.chem_charges+10, changeling.chem_storage)
-	changeling.canrespec = TRUE
+	changeling.adjust_chemicals(10)
+	changeling.can_respec = TRUE
 
-	target.death(0)
+	if(target.stat != DEAD)
+		target.investigate_log("has died from being changeling absorbed.", INVESTIGATE_DEATHS)
+	target.death(FALSE)
 	target.Drain()
 	return TRUE
 
@@ -68,7 +70,7 @@
 
 	for(var/memory_type in suckedbrain.memories)
 		var/datum/memory/stolen_memory = suckedbrain.memories[memory_type]
-		changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB)
+		changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB, STORY_FLAG_NO_STYLE)
 	suckedbrain.wipe_memory()
 
 	for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
@@ -125,13 +127,21 @@
 	var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 		to_chat(owner, span_boldnotice("[target] was one of us. We have absorbed their power."))
-		changeling.geneticpoints += round(target_ling.geneticpoints/2)
-		changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
-		changeling.chem_storage += round(target_ling.chem_storage/2)
-		changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
-		changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
-		changeling.absorbedcount += (target_ling.absorbedcount)
 
+		// Gain half of their genetic points.
+		var/genetic_points_to_add = round(target_ling.total_genetic_points / 2)
+		changeling.genetic_points += genetic_points_to_add
+		changeling.total_genetic_points += genetic_points_to_add
+
+		// And half of their chemical charges.
+		var/chems_to_add = round(target_ling.total_chem_storage / 2)
+		changeling.adjust_chemicals(chems_to_add)
+		changeling.total_chem_storage += chems_to_add
+
+		// And of course however many they've absorbed, we've absorbed
+		changeling.absorbed_count += target_ling.absorbed_count
+
+		// Lastly, make them not a ling anymore. (But leave their objectives for round-end purposes).
 		var/list/copied_objectives = target_ling.objectives.Copy()
 		target.mind.remove_antag_datum(/datum/antagonist/changeling)
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
@@ -150,8 +160,8 @@
 				target.take_overall_damage(40)
 
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
-		if(!do_mob(owner, target, 15 SECONDS))
-			to_chat(owner, span_warning("Our absorption of [target] has been interrupted!"))
+		if(!do_after(owner, 15 SECONDS, target))
+			owner.balloon_alert(owner, "interrupted!")
 			is_absorbing = FALSE
 			return FALSE
 	return TRUE

@@ -2,4 +2,4 @@
 	for(var/typepath in subtypesof(/datum/species))
 		var/datum/species/S = typepath
 		if(initial(S.changesource_flags) == NONE)
-			Fail("A species type was detected with no changesource flags: [S]")
+			TEST_FAIL("A species type was detected with no changesource flags: [S]")

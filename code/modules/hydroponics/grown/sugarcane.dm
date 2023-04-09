@@ -14,7 +14,7 @@
 	yield = 4
 	instability = 15
 	growthstages = 2
-	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
 
 /obj/item/food/grown/sugarcane
@@ -40,7 +40,7 @@
 	production = 2
 	yield = 5
 	potency = 50
-	growthstages = 2
+	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "bamboo-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

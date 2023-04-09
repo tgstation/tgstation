@@ -11,8 +11,6 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
-	network_id = __NETWORK_CIRCUITS
-
 	/// The list type
 	var/datum/port/input/option/list_options
 
@@ -21,6 +19,10 @@
 
 	/// Encryption key
 	var/datum/port/input/enc_key
+
+/obj/item/circuit_component/ntnet_send/Initialize(mapload)
+	. = ..()
+	init_network_id(__NETWORK_CIRCUITS)
 
 /obj/item/circuit_component/ntnet_send/populate_options()
 	list_options = add_option_port("List Type", GLOB.wiremod_basic_types)

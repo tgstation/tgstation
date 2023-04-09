@@ -12,13 +12,12 @@
 	speak_emote = list("squawks", "gakkers")
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
 	emote_see = list("shakes his beak.", "flaps his wings.","preens himself.")
-	faction = list("penguin")
+	faction = list(FACTION_PENGUIN)
 	minbodytemp = 0
-	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	icon = 'icons/mob/penguins.dmi'
-	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
+	icon = 'icons/mob/simple/penguins.dmi'
+	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
@@ -35,7 +34,7 @@
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
+	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
 
 /mob/living/simple_animal/pet/penguin/emperor/shamebrero
 	name = "Shamebrero penguin"
@@ -56,5 +55,5 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
+	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 

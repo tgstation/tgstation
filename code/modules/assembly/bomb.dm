@@ -1,9 +1,9 @@
 /obj/item/onetankbomb
 	name = "bomb"
-	icon = 'icons/obj/tank.dmi'
+	icon = 'icons/obj/atmospherics/tank.dmi'
 	inhand_icon_state = "assembly"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -12,6 +12,11 @@
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
+
+/obj/item/onetankbomb/Destroy()
+	bombassembly = null
+	bombtank = null
+	return ..()
 
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
@@ -72,7 +77,7 @@
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	if(status)
@@ -110,7 +115,11 @@
 //Bomb assembly proc. This turns assembly+tank into a bomb
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
 	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
-	if(isigniter(assembly.a_left) == isigniter(assembly.a_right))
+	var/igniter_count = 0
+	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
+		if(isigniter(attached_assembly))
+			igniter_count += 1
+	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
 	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
@@ -127,6 +136,7 @@
 
 	bomb.bombassembly = assembly //Tell the bomb about its assembly part
 	assembly.master = bomb //Tell the assembly about its new owner
+	assembly.on_attach()
 
 	bomb.bombtank = src //Same for tank
 	master = bomb
@@ -137,69 +147,6 @@
 	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
 	to_chat(user, span_notice("You attach [assembly] to [src]."))
 	return
-
-/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
-	START_PROCESSING(SSobj, src)
-	var/datum/gas_mixture/our_mix = return_air()
-
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
-	our_mix.garbage_collect()
-	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = 1
-
-	var/turf/ground_zero = get_turf(loc)
-
-	if(bomb_mixture.temperature > (T0C + 400))
-		strength = (fuel_moles/15)
-
-		if(strength >=2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
-		else if(strength >=1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
-		else if(strength >=0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 250))
-		strength = (fuel_moles/20)
-
-		if(strength >=1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else if(strength >=0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 100))
-		strength = (fuel_moles/25)
-
-		if(strength >=1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else
-		ground_zero.assume_air(bomb_mixture)
-		ground_zero.hotspot_expose(1000, 125)
-
-	if(master)
-		qdel(master)
-	qdel(src)
-
-/obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
-	var/datum/gas_mixture/our_mix = return_air()
-	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	T.assume_air(removed)
 
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)

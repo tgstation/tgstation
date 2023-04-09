@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/dark_wizard
 	name = "Dark Wizard"
 	desc = "Killing amateurs since the dawn of times."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"
 	move_to_delay = 10
@@ -33,10 +33,14 @@
 	loot = list(/obj/effect/decal/remains/human)
 	del_on_death = TRUE
 
+/mob/living/simple_animal/hostile/dark_wizard/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/dark, r_hand = /obj/item/staff)
+
 /obj/projectile/temp/earth_bolt
 	name = "earth bolt"
 	icon_state = "declone"
 	damage = 4
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	temperature = -100 // closer to the old temp loss

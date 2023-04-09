@@ -248,7 +248,7 @@ For example, `/datum/preference/numeric/age` contains:
 
 If your preference is `PREFERENCE_CHARACTER`, it MUST override `apply_to_human`, even if just to immediately `return`.
 
-You can also read preferences directly with `preferences.read_preference(/datum/preference/type/here)`, which will return the stored value.
+You can also read preferences directly with `prefs.read_preference(/datum/preference/type/here)`, which will return the stored value.
 
 ## Categories
 Every preference needs to be in a `category`. These can be found in `code/__DEFINES/preferences.dm`.
@@ -350,7 +350,7 @@ Middleware can hijack actions by specifying `action_delegations`:
 ```dm
 /datum/preference_middleware/congratulations
 	action_delegations = list(
-		"congratulate_me" = .proc/congratulate_me,
+		"congratulate_me" = PROC_REF(congratulate_me),
 	)
 
 /datum/preference_middleware/congratulations/proc/congratulate_me(list/params, mob/user)
@@ -360,30 +360,6 @@ Middleware can hijack actions by specifying `action_delegations`:
 ```
 
 Middleware can inject its own data at several points, such as providing new UI assets, compiled data (used by middleware such as quirks to tell the client what quirks exist), etc. Look at `code/modules/client/preferences/middleware/_middleware.dm` for full information.
-
----
-
-## Jobs
-
-Every job must have an associated `.ts` file so that the UI knows where to place it.
-
-Create a file in `tgui/packages/tgui/interfaces/PreferencesMenu/jobs/jobs/`.
-
-This will specify the description and department of the job. Here is the details for the medical doctor:
-
-```ts
-import { Job } from "../base";
-import { Service } from "../departments";
-
-const Cook: Job = {
-  name: "Cook",
-  // If you need more room, use `multiline`
-  description: "Serve food, cook meat, keep the crew fed.",
-  department: Service,
-};
-
-export default Cook;
-```
 
 ---
 

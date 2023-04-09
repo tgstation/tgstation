@@ -18,11 +18,9 @@
 
 	if (outcome.len == expected.len)
 		for (var/index in 1 to outcome.len)
-			if (outcome[index] != expected[index])
-				Fail(failure_message)
-				return
+			TEST_ASSERT_EQUAL(outcome[index], expected[index], failure_message)
 	else
-		Fail(failure_message)
+		TEST_FAIL(failure_message)
 
 /datum/unit_test/security_officer_roundstart_distribution/Run()
 	test_distributions()
@@ -60,7 +58,7 @@
 	var/mob/dead/new_player/new_player = allocate(/mob/dead/new_player)
 	var/datum/client_interface/mock_client = new
 
-	mock_client.prefs = new
+	mock_client.prefs = new(mock_client)
 	var/write_success = mock_client.prefs.write_preference(
 		GLOB.preference_entries[/datum/preference/choiced/security_department],
 		SECURITY_OFFICER_DEPARTMENTS_TO_NAMES[preference],
@@ -68,7 +66,7 @@
 
 	TEST_ASSERT(write_success, "Couldn't write department [SECURITY_OFFICER_DEPARTMENTS_TO_NAMES[preference]]")
 
-	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human/consistent)
 	new_character.mind_initialize()
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/security_officer))
 
@@ -87,7 +85,7 @@
 	var/list/distribution = list()
 
 	for (var/officer_preference in preferences_of_others)
-		var/mob/officer = allocate(/mob/living/carbon/human)
+		var/mob/officer = allocate(/mob/living/carbon/human/consistent)
 		distribution[officer] = officer_preference
 
 	var/result = get_new_officer_distribution_from_late_join(

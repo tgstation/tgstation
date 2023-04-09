@@ -1,3 +1,12 @@
+/// Map of names of clown mask types to clown mask icon states
+GLOBAL_LIST_INIT(clown_mask_options, list(
+	"True Form" = "clown",
+	"The Coquette" = "sexyclown",
+	"The Madman" = "joker",
+	"The Rainbow Color" = "rainbow",
+	"The Jester" = "chaos",
+))
+
 /obj/item/clothing/mask/gas
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
@@ -6,7 +15,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
-	permeability_coefficient = 0.01
+	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	///Max numbers of installable filters
@@ -15,9 +24,15 @@
 	var/list/gas_filters
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
+	///Does the mask have an FOV?
+	var/has_fov = TRUE
+
+/datum/armor/mask_gas
+	bio = 100
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
+	init_fov()
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -75,6 +90,11 @@
 		has_filter = FALSE
 	return filtered_breath
 
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	if (has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /**
  * Getter for overall filter durability, takes into consideration all filters filter_status
  */
@@ -91,17 +111,20 @@
 	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
-	w_class = WEIGHT_CLASS_SMALL
-	permeability_coefficient = 0.001
+	armor_type = /datum/armor/gas_atmos
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
+
+/datum/armor/gas_atmos
+	bio = 100
+	fire = 20
+	acid = 10
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
 	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
 	icon_state = "gas_cap"
-	inhand_icon_state = "gas_cap"
+	inhand_icon_state = "gasmask_captain"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/mask/gas/atmos/centcom
@@ -109,7 +132,7 @@
 	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
 	icon = 'icons/obj/clothing/masks.dmi'
 	worn_icon = 'icons/mob/clothing/mask.dmi'
-	worn_icon_state = "centcomspace"
+	worn_icon_state = "gas_centcom"
 	icon_state = "gas_centcom"
 	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -123,13 +146,19 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 55)
+	armor_type = /datum/armor/gas_welding
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+
+/datum/armor/gas_welding
+	melee = 10
+	bio = 100
+	fire = 100
+	acid = 55
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -147,16 +176,20 @@
 	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 	inhand_icon_state = "gas_mask"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, FIRE = 0, ACID = 0)
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "syndicate"
+	inhand_icon_state = "syndicate_gasmask"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -164,6 +197,8 @@
 	clothing_flags = MASKINTERNALS
 	icon_state = "clown"
 	inhand_icon_state = "clown_hat"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	dye_color = DYE_CLOWN
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
@@ -171,6 +206,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
@@ -180,7 +216,7 @@
 	.=..()
 	clownmask_designs = list(
 		"True Form" = image(icon = src.icon, icon_state = "clown"),
-		"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
+		"The Coquette" = image(icon = src.icon, icon_state = "sexyclown"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
 		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
@@ -191,21 +227,15 @@
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = list()
-	options["True Form"] = "clown"
-	options["The Feminist"] = "sexyclown"
-	options["The Madman"] = "joker"
-	options["The Rainbow Color"] ="rainbow"
-	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
-
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
+		var/list/options = GLOB.clown_mask_options
 		icon_state = options[choice]
-		user.update_inv_wear_mask()
-		update_action_buttons()
+		user.update_worn_mask()
+		update_item_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
@@ -214,22 +244,26 @@
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	clothing_flags = MASKINTERNALS
 	icon_state = "sexyclown"
-	inhand_icon_state = "sexyclown"
+	inhand_icon_state = "sexyclown_hat"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	clothing_flags = MASKINTERNALS
 	icon_state = "mime"
-	inhand_icon_state = "mime"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/plasmaman
@@ -260,8 +294,8 @@
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
-		user.update_inv_wear_mask()
-		update_action_buttons()
+		user.update_worn_mask()
+		update_item_action_buttons()
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
 
@@ -270,46 +304,57 @@
 	desc = "A mask used when acting as a monkey."
 	clothing_flags = MASKINTERNALS
 	icon_state = "monkeymask"
-	inhand_icon_state = "monkeymask"
+	inhand_icon_state = "owl_mask"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	clothing_flags = MASKINTERNALS
 	icon_state = "sexymime"
-	inhand_icon_state = "sexymime"
+	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+	inhand_icon_state = "owl_mask"
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
+	inhand_icon_state = null
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
 	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
-	inhand_icon_state = "tiki_eyebrow"
+	inhand_icon_state = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.25)
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
@@ -339,8 +384,8 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		user.update_inv_wear_mask()
-		update_action_buttons()
+		user.update_worn_mask()
+		update_item_action_buttons()
 		to_chat(M, span_notice("The Tiki Mask has now changed into the [choice] Mask!"))
 		return 1
 
@@ -352,9 +397,31 @@
 	name = "bounty hunting mask"
 	desc = "A custom tactical mask with decals added."
 	icon_state = "hunter"
-	inhand_icon_state = "hunter"
+	inhand_icon_state = "gas_atmos"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
+	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/prop
+	name = "prop gas mask"
+	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
+	icon_state = "gas_prop"
+	inhand_icon_state = "gas_prop"
+	clothing_flags = NONE
+	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/atmosprop
+	name = "prop atmospheric gas mask"
+	desc = "A prop atmospheric gas mask designed for appearance. Unlike a normal atmospheric gas mask this does not filter gasses or protect against pepper spray."
+	worn_icon_state = "gas_prop_atmos"
+	icon_state = "gas_atmos"
+	inhand_icon_state = "gas_atmos"
+	clothing_flags = NONE
+	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/driscoll
 	name = "driscoll mask"
@@ -362,4 +429,4 @@
 	icon_state = "driscoll_mask"
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
-	inhand_icon_state = "driscoll_mask"
+	inhand_icon_state = null

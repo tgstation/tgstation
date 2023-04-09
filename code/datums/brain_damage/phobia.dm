@@ -2,8 +2,8 @@
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
-	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
-	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
+	gain_text = span_warning("You start finding default values very unnerving...")
+	lose_text = span_notice("You no longer feel afraid of default values.")
 	var/phobia_type
 	/// Cooldown for proximity checks so we don't spam a range 7 view every two seconds.
 	COOLDOWN_DECLARE(check_cooldown)
@@ -24,8 +24,8 @@
 	if(!phobia_type)
 		phobia_type = pick(GLOB.phobia_types)
 
-	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
-	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
+	gain_text = span_warning("You start finding [phobia_type] very unnerving...")
+	lose_text = span_notice("You no longer feel afraid of [phobia_type].")
 	scan_desc += " of [phobia_type]"
 	trigger_regex = GLOB.phobia_regexes[phobia_type]
 	trigger_mobs = GLOB.phobia_mobs[phobia_type]
@@ -48,13 +48,13 @@
 	var/list/seen_atoms = view(7, owner)
 	if(LAZYLEN(trigger_objs))
 		for(var/obj/O in seen_atoms)
-			if(is_type_in_typecache(O, trigger_objs))
+			if(is_type_in_typecache(O, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(O)))
 				freak_out(O)
 				return
 		for(var/mob/living/carbon/human/HU in seen_atoms) //check equipment for trigger items
-			for(var/X in HU.get_all_slots() | HU.held_items)
+			for(var/X in HU.get_all_worn_items() | HU.held_items)
 				var/obj/I = X
-				if(!QDELETED(I) && is_type_in_typecache(I, trigger_objs))
+				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(I))))
 					freak_out(I)
 					return
 
@@ -78,14 +78,14 @@
 					return
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || !COOLDOWN_FINISHED(src, scare_cooldown)) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
 		return
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS) || !COOLDOWN_FINISHED(src, scare_cooldown))
 		return
-	if(!owner.has_language(hearing_args[HEARING_LANGUAGE])) //can't be triggered if you don't know the language
-		return
+
 	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
-		addtimer(CALLBACK(src, .proc/freak_out, null, trigger_regex.group[2]), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2]), 10) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
@@ -111,22 +111,22 @@
 		if(1)
 			to_chat(owner, span_warning("You are paralyzed with fear!"))
 			owner.Stun(70)
-			owner.Jitter(8)
+			owner.set_jitter_if_lower(16 SECONDS)
 		if(2)
 			owner.emote("scream")
-			owner.Jitter(5)
+			owner.set_jitter_if_lower(10 SECONDS)
 			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
-				owner.pointed(reason)
+				owner._pointed(reason)
 		if(3)
 			to_chat(owner, span_warning("You shut your eyes in terror!"))
-			owner.Jitter(5)
-			owner.blind_eyes(10)
+			owner.set_jitter_if_lower(10 SECONDS)
+			owner.adjust_temp_blindness(20 SECONDS)
 		if(4)
-			owner.dizziness += 10
-			owner.add_confusion(10)
-			owner.Jitter(10)
-			owner.stuttering += 10
+			owner.adjust_dizzy(20 SECONDS)
+			owner.adjust_confusion(10 SECONDS)
+			owner.set_jitter_if_lower(20 SECONDS)
+			owner.adjust_stutter(20 SECONDS)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
@@ -212,4 +212,8 @@
 
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/blood
+	phobia_type = "blood"
 	random_gain = FALSE

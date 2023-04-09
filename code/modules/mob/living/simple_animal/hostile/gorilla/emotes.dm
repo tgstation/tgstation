@@ -7,6 +7,6 @@
 	key_third_person = "oogas"
 	message = "oogas."
 	message_param = "oogas at %t."
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	sound = 'sound/creatures/gorilla.ogg'
 

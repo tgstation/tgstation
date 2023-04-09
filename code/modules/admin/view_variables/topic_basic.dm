@@ -44,23 +44,27 @@
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
 			usr.client.admin_delete(target)
-			if (isturf(src)) // show the turf that took its place
-				usr.client.debug_variables(src)
+			if (isturf(target)) // show the turf that took its place
+				usr.client.debug_variables(target)
 				return
 
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
+	if(href_list[VV_HK_TAG])
+		usr.client.tag_datum(target)
 	if(href_list[VV_HK_ADDCOMPONENT])
 		if(!check_rights(NONE))
 			return
 		var/list/names = list()
-		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), /proc/cmp_typepaths_asc)
+		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Components---"
 		names += componentsubtypes
 		names += "---Elements---"
-		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		var/result = tgui_input_list(usr, "Choose a component/element to add", "Add Component", names)
-		if(!usr || !result || result == "---Components---" || result == "---Elements---")
+		if(isnull(result))
+			return
+		if(!usr || result == "---Components---" || result == "---Elements---")
 			return
 		if(QDELETED(src))
 			to_chat(usr, "That thing doesn't exist anymore!", confidential = TRUE)
@@ -93,12 +97,14 @@
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
-			names += sort_list(components, /proc/cmp_typepaths_asc)
+			names += sort_list(components, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Elements---"
 		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
-		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
-		if(!usr || !path || path == "---Components---" || path == "---Elements---")
+		if(isnull(path))
+			return
+		if(!usr || path == "---Components---" || path == "---Elements---")
 			return
 		if(QDELETED(src))
 			to_chat(usr, "That thing doesn't exist anymore!")

@@ -1,0 +1,167 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"h" = (
+/obj/structure/rack,
+/obj/structure/window/spawner/east,
+/obj/item/storage/book/bible{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/storage/book/bible,
+/obj/item/storage/book/bible{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/structure/window/spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"o" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/chaplainsuit/bishoprobe,
+/obj/item/clothing/suit/chaplainsuit/clownpriest,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/hooded/chaplain_hoodie,
+/obj/item/clothing/suit/chaplainsuit/shrinehand,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/suit/chaplainsuit/monkrobeeast,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"r" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/structure/rack,
+/obj/structure/window/spawner/east,
+/obj/item/storage/dice,
+/obj/item/storage/dice{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/entertainment/deck,
+/obj/structure/window/spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"u" = (
+/obj/structure/rack,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/machinery/door/window/right/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"N" = (
+/obj/structure/rack,
+/obj/item/camera_film,
+/obj/item/camera_film{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/camera{
+	pixel_y = -2;
+	pixel_x = -7
+	},
+/obj/machinery/door/window/left/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"O" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/obj/item/tape{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/tape{
+	pixel_x = -3;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"P" = (
+/obj/structure/rack,
+/obj/structure/window/spawner/west,
+/obj/item/storage/crayons,
+/obj/structure/window/spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"W" = (
+/obj/structure/rack,
+/obj/structure/window/spawner/west,
+/obj/item/modular_computer/laptop/preset/civilian{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/modular_computer/laptop/preset/civilian,
+/obj/structure/window/spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"X" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Public Services Storage Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+W
+a
+a
+O
+r
+"}
+(2,1,1) = {"
+N
+a
+a
+a
+X
+"}
+(3,1,1) = {"
+s
+a
+a
+a
+r
+"}
+(4,1,1) = {"
+P
+a
+a
+a
+r
+"}
+(5,1,1) = {"
+u
+a
+a
+a
+r
+"}
+(6,1,1) = {"
+h
+a
+a
+o
+r
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+r
+"}

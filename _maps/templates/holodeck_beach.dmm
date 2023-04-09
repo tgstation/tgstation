@@ -19,7 +19,7 @@
 /turf/open/floor/holofloor/beach/coast_b,
 /area/template_noop)
 "q" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "t" = (
@@ -37,9 +37,7 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "Q" = (
-/mob/living/simple_animal/crab{
-	name = "Jon"
-	},
+/obj/effect/holodeck_effect/mobspawner/crab/jon,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "R" = (
@@ -55,7 +53,7 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "W" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "X" = (

@@ -16,14 +16,14 @@
 
 	create_notice()
 
-	RegisterSignal(
+	RegisterSignals(
 		ticket,
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
 			COMSIG_PARENT_QDELETING,
 		),
-		.proc/delete_self,
+		PROC_REF(delete_self),
 	)
 
 /datum/component/admin_popup/Destroy(force, silent)
@@ -49,7 +49,7 @@
 	admin_popup = new
 
 	var/client/parent_client = parent
-	admin_popup.maptext_width = getviewsize(parent_client.view_size.getView())[1] * world.icon_size
+	admin_popup.maptext_width = view_to_pixels(parent_client.view_size.getView())[1]
 	parent_client.screen += admin_popup
 
 /datum/component/admin_popup/proc/delete_self()

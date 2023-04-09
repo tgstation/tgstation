@@ -42,9 +42,15 @@
 		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
+	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
+
 	var/marked_line
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked_line = VV_MSG_MARKED
+	var/tagged_line
+	if(holder && LAZYFIND(holder.tagged_datums, D))
+		var/tag_index = LAZYFIND(holder.tagged_datums, D)
+		tagged_line = VV_MSG_TAGGED(tag_index)
 	var/varedited_line
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = VV_MSG_EDITED
@@ -75,7 +81,7 @@
 	if(!islist)
 		for(var/V in D.vars)
 			names += V
-	sleep(1)
+	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)
@@ -117,8 +123,8 @@
 				var ca = document.cookie.split(';');
 				for(var i=0; i<ca.length; i++) {
 					var c = ca\[i];
-					while (c.charAt(0)==' ') c = c.substring(1,c.length);
-					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+					while (c.charAt(0) == ' ') c = c.substring(1,c.length);
+					if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
 				}
 				return "";
 			}
@@ -211,7 +217,9 @@
 						</table>
 						<div align='center'>
 							<b><font size='1'>[formatted_type]</font></b>
+							<br><b><font size='1'>[ref_line]</font></b>
 							<span id='marked'>[marked_line]</span>
+							<span id='tagged'>[tagged_line]</span>
 							<span id='varedited'>[varedited_line]</span>
 							<span id='deleted'>[deleted_line]</span>
 						</div>

@@ -5,9 +5,15 @@
 
 <!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
 
+### Mapping March
+
+<!-- If your pull request is part of Mapping March and you want to earn an antagonist token for your FIRST mapping pull request submitted this month, please include your ckey. For more information, read about the event here: https://hackmd.io/@EOBGames/BkwuRlxkh -->
+
+Ckey to recieve rewards: N/A
+
 ## Why It's Good For The Game
 
-<!-- Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding. -->
+<!-- Argue for the merits of your changes and how they benefit the game, especially if they are controversial and/or far reaching. If you can't actually explain WHY what you are doing will improve the game, then it probably isn't good for the game in the first place. -->
 
 ## Changelog
 
@@ -16,7 +22,6 @@
 :cl:
 add: Added new mechanics or gameplay changes
 add: Added more things
-expansion: Expands content of an existing feature
 del: Removed old things
 qol: made something easier to use
 balance: rebalanced something

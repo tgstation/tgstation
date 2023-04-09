@@ -5,9 +5,12 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
+	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = INDESTRUCTIBLE
+	// This gives the user an action button that allows them to activate the implant.
+	// If the implant needs no action button, then null this out.
+	// Or, if you want to add a unique action button, then replace this.
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	///true for implant types that can be activated, false for ones that are "always on" like mindshield implants
-	var/activated = TRUE
 	///the mob that's implanted with this
 	var/mob/living/imp_in = null
 	///implant color, used for selecting either the "b" version or the "r" version of the implant case sprite when the implant is in a case.
@@ -16,13 +19,16 @@
 	var/allow_multiple = FALSE
 	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
-	item_flags = DROPDEL
+
 
 /obj/item/implant/proc/activate()
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
 
 /obj/item/implant/ui_action_click()
-	INVOKE_ASYNC(src, .proc/activate, "action_button")
+	INVOKE_ASYNC(src, PROC_REF(activate), "action_button")
+
+/obj/item/implant/item_action_slot_check(slot, mob/user)
+	return user == imp_in
 
 /obj/item/implant/proc/can_be_implanted_in(mob/living/target)
 	if(issilicon(target))
@@ -86,10 +92,8 @@
 	forceMove(target)
 	imp_in = target
 	target.implants += src
-	if(activated)
-		for(var/X in actions)
-			var/datum/action/implant_action = X
-			implant_action.Grant(target)
+	for(var/datum/action/implant_action as anything in actions)
+		implant_action.Grant(target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
 		target_human.sec_hud_set_implants()
@@ -113,8 +117,7 @@
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
-	for(var/X in actions)
-		var/datum/action/implant_action = X
+	for(var/datum/action/implant_action as anything in actions)
 		implant_action.Remove(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source

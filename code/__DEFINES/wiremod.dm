@@ -77,12 +77,12 @@
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
 // Clock component
-#define COMP_CLOCK_DELAY 0.9 SECONDS
+#define COMP_CLOCK_DELAY (0.9 SECONDS)
 
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
-#define SHELL_FLAG_CIRCUIT_FIXED (1<<0)
+#define SHELL_FLAG_CIRCUIT_UNREMOVABLE (1<<0)
 
 /// Whether the shell needs to be anchored for the circuit to be on.
 #define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
@@ -93,7 +93,11 @@
 /// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
+/// Whether a circuit is not able to be modified
+#define SHELL_FLAG_CIRCUIT_UNMODIFIABLE (1<<5)
+
 // Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
 #define SHELL_CAPACITY_LARGE 100
@@ -115,6 +119,8 @@
 #define CIRCUIT_FLAG_INSTANT (1<<4)
 /// This circuit component can't be loaded in module component. Saves us some headaches.
 #define CIRCUIT_FLAG_REFUSE_MODULE (1<<5)
+/// This circuit component cannot be inserted into the same circuit multiple times. Only use this for major headaches.
+#define CIRCUIT_NO_DUPLICATES (1<<6)
 
 // Datatype flags
 /// The datatype supports manual inputs

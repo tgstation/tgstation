@@ -33,22 +33,28 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/datum/element/eletype = arguments[1]
 	var/list/fullid = list("[eletype]")
 	var/list/named_arguments = list()
-	for(var/i in initial(eletype.id_arg_index) to length(arguments))
+
+	for(var/i in initial(eletype.argument_hash_start_idx) to length(arguments))
 		var/key = arguments[i]
-		var/value
+
 		if(istext(key))
-			value = arguments[key]
-		if(!(istext(key) || isnum(key)))
-			key = REF(key)
-		key = "[key]" // Key is stringified so numbers dont break things
-		if(!isnull(value))
-			if(!(istext(value) || isnum(value)))
-				value = REF(value)
-			named_arguments["[key]"] = value
-		else
+			var/value = arguments[key]
+			if (isnull(value))
+				fullid += key
+			else
+				if (!istext(value) && !isnum(value))
+					value = REF(value)
+				named_arguments[key] = value
+
+			continue
+
+		if (isnum(key))
 			fullid += "[key]"
+		else
+			fullid += REF(key)
 
 	if(length(named_arguments))
-		named_arguments = sort_list(named_arguments)
+		named_arguments = sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
 		fullid += named_arguments
+
 	return list2params(fullid)

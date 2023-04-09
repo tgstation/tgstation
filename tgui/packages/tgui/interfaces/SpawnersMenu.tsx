@@ -1,6 +1,7 @@
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { capitalizeAll } from 'common/string';
+import { useBackend } from 'tgui/backend';
+import { Button, LabeledList, Section, Stack } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type SpawnersMenuContext = {
   spawners: spawner[];
@@ -9,9 +10,9 @@ type SpawnersMenuContext = {
 type spawner = {
   name: string;
   amount_left: number;
-  short_desc?: string;
+  you_are_text?: string;
   flavor_text?: string;
-  important_info?: string;
+  important_text?: string;
 };
 
 export const SpawnersMenu = (props, context) => {
@@ -26,7 +27,7 @@ export const SpawnersMenu = (props, context) => {
               <Section
                 fill
                 // Capitalizes the spawner name
-                title={spawner.name.replace(/^\w/, (c) => c.toUpperCase())}
+                title={capitalizeAll(spawner.name)}
                 buttons={
                   <Stack>
                     <Stack.Item fontSize="14px" color="green">
@@ -38,27 +39,29 @@ export const SpawnersMenu = (props, context) => {
                         onClick={() =>
                           act('jump', {
                             name: spawner.name,
-                          })}
+                          })
+                        }
                       />
                       <Button
                         content="Spawn"
                         onClick={() =>
                           act('spawn', {
                             name: spawner.name,
-                          })}
+                          })
+                        }
                       />
                     </Stack.Item>
                   </Stack>
                 }>
                 <LabeledList>
                   <LabeledList.Item label="Origin">
-                    {spawner.short_desc || 'Unknown'}
+                    {spawner.you_are_text || 'Unknown'}
                   </LabeledList.Item>
                   <LabeledList.Item label="Directives">
                     {spawner.flavor_text || 'None'}
                   </LabeledList.Item>
                   <LabeledList.Item color="bad" label="Conditions">
-                    {spawner.important_info || 'None'}
+                    {spawner.important_text || 'None'}
                   </LabeledList.Item>
                 </LabeledList>
               </Section>

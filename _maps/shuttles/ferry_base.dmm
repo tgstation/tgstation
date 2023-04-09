@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -45,12 +45,9 @@
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 12;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 2;
-	width = 5
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)

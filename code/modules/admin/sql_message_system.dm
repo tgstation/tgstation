@@ -102,8 +102,7 @@
 	if(logged)
 		log_admin_private(pm)
 		message_admins("[header]:<br>[text]")
-		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font>")
-		admin_ticket_log(target_ckey, text)
+		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font><br>[text]")
 		if(browse)
 			browse_messages("[type]")
 		else
@@ -254,7 +253,7 @@
 					return
 				new_expiry = query_validate_expire_time_edit.item[1]
 			qdel(query_validate_expire_time_edit)
-		var/edit_text = "Expiration time edited by [editor_key] on [SQLtime()] from [old_expiry] to [new_expiry]<hr>"
+		var/edit_text = "Expiration time edited by [editor_key] on [SQLtime()] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]<hr>"
 		var/datum/db_query/query_edit_message_expiry = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET expire_timestamp = :expire_time, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -265,8 +264,8 @@
 			qdel(query_find_edit_expiry_message)
 			return
 		qdel(query_edit_message_expiry)
-		log_admin_private("[kn] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
-		message_admins("[kna] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
+		log_admin_private("[kn] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]")
+		message_admins("[kna] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]")
 		if(browse)
 			browse_messages("[type]")
 		else
@@ -372,6 +371,10 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
+
+	//Needs to be requested before url retrieval since you can view your notes before SSassets finishes initialization
+	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
+
 	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
 	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>All</a><a href='?_src_=holder;[HrefToken()];nonalpha=2'>#</a>")
@@ -521,7 +524,7 @@
 			if(!linkless)
 				if(type == "note")
 					if(severity)
-						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity=="none" ? "No" : "[capitalize(severity)]"] Severity</a>"
+						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity == "none" ? "No" : "[capitalize(severity)]"] Severity</a>"
 					else
 						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>N/A Severity</a>"
 				data += " <a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>Change Expiry Time</a>"
@@ -622,7 +625,6 @@
 		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>Add message</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>Add note</a></center>"
 		output += ruler
 	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
-	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
 	notes_assets.send(usr.client)
 	browser.set_content(jointext(output, ""))
 	browser.open()
@@ -666,22 +668,13 @@
 		var/editor_key = query_get_message_output.item[5]
 		switch(type)
 			if("message")
-				output += "<font color='red' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
-				var/datum/db_query/query_message_read = SSdbcore.NewQuery(
-					"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = :id",
-					list("id" = message_id)
-				)
-				if(!query_message_read.warn_execute())
-					qdel(query_get_message_output)
-					qdel(query_message_read)
-					return
-				qdel(query_message_read)
+				output += "<font color='[COLOR_RED]' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
 			if("note")
-				output += "<font color='red' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
+				output += "<font color='[COLOR_RED]' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
+				output += "<br><font color='[COLOR_RED]'>[text]</font><br>"
 			if("watchlist entry")
-				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
+				message_admins("<font color='[COLOR_RED]'><B>Notice: </B></font><font color='[COLOR_ADMIN_PINK]'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
 				send2tgs_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "[span_memo("Memo by <span class='prefix'>[admin_key]")] on [timestamp]"

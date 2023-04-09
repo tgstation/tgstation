@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/jungle/mega_arachnid
 	name = "mega arachnid"
 	desc = "Though physically imposing, it prefers to ambush its prey, and it will only engage with an already crippled opponent."
-	icon = 'icons/mob/jungle/arachnid.dmi'
+	icon = 'icons/mob/simple/jungle/arachnid.dmi'
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"

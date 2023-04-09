@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "the double esword sales are now smaller than regular sales"

@@ -9,12 +9,12 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 
-/obj/item/food/dough/MakeBakeable()
+/obj/item/food/dough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 // Dough + rolling pin = flat dough
-/obj/item/food/dough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatdough, 1, 30)
+/obj/item/food/dough/make_processable()
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatdough, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/flatdough
 	name = "flat dough"
@@ -25,12 +25,12 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 
-/obj/item/food/flatdough/MakeBakeable()
+/obj/item/food/flatdough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizzabread, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 // sliceable into 3xdoughslices
-/obj/item/food/flatdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/doughslice, 3, 30)
+/obj/item/food/flatdough/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/doughslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pizzabread
 	name = "pizza bread"
@@ -56,8 +56,11 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 
-/obj/item/food/doughslice/MakeBakeable()
+/obj/item/food/doughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/obj/item/food/doughslice/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/bait/doughball, 5, 3 SECONDS, screentip_verb = "Slice")
 
 /obj/item/food/bun
 	name = "bun"
@@ -83,11 +86,11 @@
 	tastes = list("batter" = 1)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/cakebatter/MakeBakeable()
+/obj/item/food/cakebatter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/cake/plain, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
 
-/obj/item/food/cakebatter/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/piedough, 1, 30)
+/obj/item/food/cakebatter/make_processable()
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/piedough, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/piedough
 	name = "pie dough"
@@ -98,11 +101,11 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/piedough/MakeBakeable()
+/obj/item/food/piedough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
-/obj/item/food/piedough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 3, 30)
+/obj/item/food/piedough/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/rawpastrybase
 	name = "raw pastry base"
@@ -114,7 +117,7 @@
 	tastes = list("raw pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/rawpastrybase/MakeBakeable()
+/obj/item/food/rawpastrybase/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pastrybase, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pastrybase

@@ -6,17 +6,17 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
 /obj/vehicle/sealed/mecha/working/ripley/mining,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/item/clothing/shoes/workboots/mining,
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"

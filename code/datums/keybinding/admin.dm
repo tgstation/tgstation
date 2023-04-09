@@ -7,17 +7,10 @@
 
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
-	name = "admin_say"
+	name = ADMIN_CHANNEL
 	full_name = "Admin say"
 	description = "Talk with other admins."
 	keybind_signal = COMSIG_KB_ADMIN_ASAY_DOWN
-
-/datum/keybinding/admin/admin_say/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.get_admin_say()
-	return TRUE
 
 /datum/keybinding/admin/admin_ghost
 	hotkey_keys = list("F5")
@@ -129,4 +122,18 @@
 	if(.)
 		return
 	user.readmin()
+	return TRUE
+
+/datum/keybinding/admin/view_tags
+	hotkey_keys = list("F9")
+	name = "view_tags"
+	full_name = "View Tags"
+	description = "Open the View-Tags menu"
+	keybind_signal = COMSIG_KB_ADMIN_VIEWTAGS_DOWN
+
+/datum/keybinding/admin/view_tags/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.holder?.display_tags()
 	return TRUE

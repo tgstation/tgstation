@@ -10,3 +10,5 @@
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 
+/datum/idle_behavior/idle_random_walk/less_walking
+	walk_chance = 10

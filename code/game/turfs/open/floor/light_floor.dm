@@ -25,7 +25,7 @@
 	///used for light floors that cycle colours
 	var/cycle = FALSE
 
-/turf/open/floor/light/setup_broken_states()
+/turf/open/floor/light/broken_states()
 	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
@@ -106,7 +106,7 @@
 			icon_state = "light_off"
 	return ..()
 
-/turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/light/ChangeTurf(path, new_baseturfs, flags)
 	set_light(0)
 	return ..()
 
@@ -123,7 +123,7 @@
 		return
 	if(!can_modify_colour)
 		return FALSE
-	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, .proc/check_menu, user, I), radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, I), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	currentcolor = choice

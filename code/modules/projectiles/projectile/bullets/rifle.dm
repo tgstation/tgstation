@@ -6,12 +6,15 @@
 	armour_penetration = 30
 	wound_bonus = -40
 
+/obj/projectile/bullet/a556/weak //centcom
+	damage = 20
+
 /obj/projectile/bullet/a556/phasic
 	name = "5.56mm phasic bullet"
 	icon_state = "gaussphase"
 	damage = 20
 	armour_penetration = 70
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // 7.62 (Nagant Rifle)
 

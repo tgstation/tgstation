@@ -1,6 +1,6 @@
 /// Basic machine used to paint PDAs and re-trim ID cards.
 /obj/machinery/pdapainter
-	name = "\improper PDA & ID Painter"
+	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
@@ -10,16 +10,14 @@
 	/// Current ID card inserted into the machine.
 	var/obj/item/card/id/stored_id_card = null
 	/// Current PDA inserted into the machine.
-	var/obj/item/pda/stored_pda = null
+	var/obj/item/modular_computer/pda/stored_pda = null
 	/// A blacklist of PDA types that we should not be able to paint.
 	var/static/list/pda_type_blacklist = list(
-		/obj/item/pda/ai/pai,
-		/obj/item/pda/ai,
-		/obj/item/pda/heads,
-		/obj/item/pda/clear,
-		/obj/item/pda/syndicate,
-		/obj/item/pda/chameleon,
-		/obj/item/pda/chameleon/broken)
+		/obj/item/modular_computer/pda/heads,
+		/obj/item/modular_computer/pda/clear,
+		/obj/item/modular_computer/pda/syndicate,
+		/obj/item/modular_computer/pda/chameleon,
+		/obj/item/modular_computer/pda/chameleon/broken)
 	/// A list of the PDA types that this machine can currently paint.
 	var/list/pda_types = list()
 	/// A list of the card trims that this machine can currently imprint onto a card.
@@ -103,6 +101,12 @@
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 
+/obj/machinery/pdapainter/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
+		power_change()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
 		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
@@ -121,24 +125,16 @@
 			return
 		return ..()
 
-	if(default_unfasten_wrench(user, O))
-		power_change()
-		return
-
 	// Chameleon checks first so they can exit the logic early if they're detected.
 	if(istype(O, /obj/item/card/id/advanced/chameleon))
 		to_chat(user, span_warning("The machine rejects your [O]. This ID card does not appear to be compatible with the PDA Painter."))
 		return
 
-	if(istype(O, /obj/item/pda/chameleon))
-		to_chat(user, span_warning("The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter."))
-		return
-
-	if(istype(O, /obj/item/pda))
+	if(istype(O, /obj/item/modular_computer/pda))
 		insert_pda(O, user)
 		return
 
-	if(istype(O, /obj/item/card/id))
+	if(isidcard(O))
 		if(stored_id_card)
 			to_chat(user, span_warning("There is already an ID card inside!"))
 			return
@@ -153,6 +149,16 @@
 
 	return ..()
 
+/obj/machinery/pdapainter/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(stored_pda)
+		eject_pda(user)
+	else
+		eject_id_card(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
 	atom_break()
 
@@ -165,7 +171,7 @@
  * * new_pda - The PDA to insert.
  * * user - The user to try and eject the PDA into the hands of.
  */
-/obj/machinery/pdapainter/proc/insert_pda(obj/item/pda/new_pda, mob/living/user)
+/obj/machinery/pdapainter/proc/insert_pda(obj/item/modular_computer/pda/new_pda, mob/living/user)
 	if(!istype(new_pda))
 		return FALSE
 
@@ -284,7 +290,7 @@
 				return TRUE
 
 			var/obj/item/held_item = usr.get_active_held_item()
-			if(istype(held_item, /obj/item/pda))
+			if(istype(held_item, /obj/item/modular_computer/pda))
 				// If we successfully inserted, we've ejected the old item. Return early.
 				if(insert_pda(held_item, usr))
 					return TRUE
@@ -299,7 +305,7 @@
 				return TRUE
 
 			var/obj/item/held_item = usr.get_active_held_item()
-			if(istype(held_item, /obj/item/card/id))
+			if(isidcard(held_item))
 				// If we successfully inserted, we've ejected the old item. Return early.
 				if(insert_id_card(held_item, usr))
 					return TRUE
@@ -314,7 +320,7 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/obj/item/pda/pda_path = /obj/item/pda
+			var/obj/item/modular_computer/pda/pda_path = /obj/item/modular_computer/pda
 
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)
@@ -371,3 +377,8 @@
 /obj/machinery/pdapainter/engineering
 	name = "\improper Engineering PDA & ID Painter"
 	target_dept = REGION_ENGINEERING
+
+/// Supply departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/obj/machinery/pdapainter/supply
+	name = "\improper Supply PDA & ID Painter"
+	target_dept = REGION_SUPPLY

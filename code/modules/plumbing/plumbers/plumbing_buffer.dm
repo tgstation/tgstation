@@ -6,7 +6,10 @@
 	name = "automatic buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
 	icon_state = "buffer"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
+	///category for plumbing RCD
+	category="Synthesizers"
 
 	var/datum/buffer_net/buffer_net
 	var/activation_volume = 100
@@ -19,8 +22,8 @@
 
 /obj/machinery/plumbing/buffer/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/buffer/proc/on_reagents_del(datum/reagents/reagents)
@@ -67,7 +70,7 @@
 					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers
 
 	add_overlay(icon_state + "_alert")
-	addtimer(CALLBACK(src, /atom/.proc/cut_overlay, icon_state + "_alert"), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 20)
 
 /obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
@@ -76,11 +79,10 @@
 
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/new_volume = input(user, "Enter new activation threshold", "Beepityboop", activation_volume) as num|null
-	if(!new_volume)
+	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
+	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-
-	activation_volume = round(clamp(new_volume, 0, buffer))
+	activation_volume = new_volume
 	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
 	return
 

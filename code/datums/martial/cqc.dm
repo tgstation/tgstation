@@ -10,31 +10,59 @@
 	help_verb = /mob/living/proc/CQC_help
 	block_chance = 75
 	smashes_tables = TRUE
-	var/old_grab_state = null
-	var/restraining = FALSE
 	display_combos = TRUE
+	var/old_grab_state = null
+	var/mob/restraining_mob
+
+/datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
+	. = ..()
+	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+
+/datum/martial_art/cqc/on_remove(mob/living/cqc_user)
+	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
+	. = ..()
+
+///Signal from getting attacked with an item, for a special interaction with touch spells
+/datum/martial_art/cqc/proc/on_attackby(mob/living/cqc_user, obj/item/attack_weapon, mob/attacker, params)
+	SIGNAL_HANDLER
+
+	if(!istype(attack_weapon, /obj/item/melee/touch_attack))
+		return
+	if(!can_use(cqc_user))
+		return
+	cqc_user.visible_message(
+		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
+		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+	)
+	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
+	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
+	if(!touch_spell)
+		return
+	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
-	. = ..()
-	restraining = FALSE
+	if(new_target && new_target != restraining_mob)
+		restraining_mob = null
+	return ..()
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	if(findtext(streak,SLAM_COMBO))
-		streak = ""
+		reset_streak()
 		return Slam(A,D)
 	if(findtext(streak,KICK_COMBO))
-		streak = ""
+		reset_streak()
 		return Kick(A,D)
 	if(findtext(streak,RESTRAIN_COMBO))
-		streak = ""
+		reset_streak()
 		return Restrain(A,D)
 	if(findtext(streak,PRESSURE_COMBO))
-		streak = ""
+		reset_streak()
 		return Pressure(A,D)
 	if(findtext(streak,CONSECUTIVE_COMBO))
-		streak = ""
+		reset_streak()
 		return Consecutive(A,D)
 	return FALSE
 
@@ -47,7 +75,7 @@
 		to_chat(A, span_danger("You slam [D] into the ground!"))
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(120)
+		D.Paralyze(12 SECONDS)
 		log_combat(A, D, "slammed (CQC)")
 		return TRUE
 
@@ -70,7 +98,7 @@
 						span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
 		to_chat(A, span_danger("You kick [D]'s head, knocking [D.p_them()] out!"))
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
-		D.SetSleeping(300)
+		D.SetSleeping(30 SECONDS)
 		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 		. = TRUE
 
@@ -86,7 +114,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/A, mob/living/D)
-	if(restraining)
+	if(restraining_mob)
 		return
 	if(!can_use(A))
 		return FALSE
@@ -96,9 +124,9 @@
 						span_userdanger("You're locked into a restraining position by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You lock [D] into a restraining position!"))
 		D.adjustStaminaLoss(20)
-		D.Stun(100)
-		restraining = TRUE
-		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
+		D.Stun(10 SECONDS)
+		restraining_mob = D
+		addtimer(VARSET_CALLBACK(src, restraining_mob, null), 50, TIMER_UNIQUE)
 		return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
@@ -118,7 +146,7 @@
 		return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
-	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
+	if(A != D && can_use(A)) // A != D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
@@ -163,7 +191,7 @@
 		to_chat(A, span_danger("You leg sweep [D]!"))
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(60)
+		D.Paralyze(6 SECONDS)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 
@@ -174,8 +202,19 @@
 	var/obj/item/I = null
 	if(check_streak(A,D))
 		return TRUE
+	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
+	if(restraining_mob && A.pulling == restraining_mob)
+		log_combat(A, D, "knocked out (Chokehold)(CQC)")
+		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
+						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
+		to_chat(A, span_danger("You put [D] into a chokehold!"))
+		D.SetSleeping(40 SECONDS)
+		restraining_mob = null
+		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
+			A.setGrabState(GRAB_NECK)
+		return TRUE
 	if(prob(65))
-		if(!D.stat || !D.IsParalyzed() || !restraining)
+		if(!D.stat || !D.IsParalyzed() || !restraining_mob)
 			I = D.get_active_held_item()
 			D.visible_message(span_danger("[A] strikes [D]'s jaw with their hand!"), \
 							span_userdanger("Your jaw is struck by [A], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
@@ -183,27 +222,15 @@
 			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
-			D.Jitter(2)
+			D.set_jitter_if_lower(4 SECONDS)
 			D.apply_damage(5, A.get_attack_type())
 	else
 		D.visible_message(span_danger("[A] fails to disarm [D]!"), \
 						span_userdanger("You're nearly disarmed by [A]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_warning("You fail to disarm [D]!"))
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
-	if(restraining && A.pulling == D)
-		log_combat(A, D, "knocked out (Chokehold)(CQC)")
-		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
-						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
-		to_chat(A, span_danger("You put [D] into a chokehold!"))
-		D.SetSleeping(400)
-		restraining = FALSE
-		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
-			A.setGrabState(GRAB_NECK)
-	else
-		restraining = FALSE
-		return FALSE
-	return TRUE
+	return FALSE
+
 
 /mob/living/proc/CQC_help()
 	set name = "Remember The Basics"
@@ -222,12 +249,37 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/kitchen_areas
+	///List of all areas that CQC will work in, defaults to Kitchen.
+	var/list/kitchen_areas = list(/area/station/service/kitchen)
 
-/// Refreshes the valid areas from the cook job singleton, otherwise uses the default kitchen area as a fallback option. See also [/datum/job/cook/New].
+/// Refreshes the valid areas from the cook's mapping config, adding areas in config to the list of possible areas.
 /datum/martial_art/cqc/under_siege/proc/refresh_valid_areas()
-	var/datum/job/cook/cook_job = SSjob.GetJobType(/datum/job/cook)
-	kitchen_areas = cook_job.kitchen_areas.Copy()
+	var/list/job_changes = SSmapping.config.job_changes
+
+	if(!length(job_changes))
+		return
+
+	var/list/cook_changes = job_changes[JOB_COOK]
+
+	if(!length(cook_changes))
+		return
+
+	var/list/additional_cqc_areas = cook_changes["additional_cqc_areas"]
+
+	if(!additional_cqc_areas)
+		return
+
+	if(!islist(additional_cqc_areas))
+		stack_trace("Incorrect CQC area format from mapping configs. Expected /list, got: \[[additional_cqc_areas.type]\]")
+		return
+
+	for(var/path_as_text in additional_cqc_areas)
+		var/path = text2path(path_as_text)
+		if(!ispath(path, /area))
+			stack_trace("Invalid path in mapping config for chef CQC: \[[path_as_text]\]")
+			continue
+
+		kitchen_areas |= path
 
 /// Limits where the chef's CQC can be used to only whitelisted areas.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/owner)

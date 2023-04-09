@@ -3,14 +3,14 @@
 /turf/closed/indestructible/rock/snow/ice/ore,
 /area/icemoon/underground/explored)
 "b" = (
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "d" = (
 /turf/template_noop,
 /area/template_noop)
 "j" = (
-/obj/effect/mob_spawn/human/miner/explorer,
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "q" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo,
@@ -30,7 +30,7 @@
 /obj/effect/landmark/portal_exit{
 	id = "wendigo arena exit"
 	},
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "N" = (
 /turf/open/indestructible/necropolis{
@@ -39,15 +39,15 @@
 /area/icemoon/underground/explored)
 "U" = (
 /obj/item/paper/crumpled/bloody{
-	info = "for your own sake, do not enter"
+	default_raw_text = "for your own sake, do not enter"
 	},
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "V" = (
 /obj/effect/portal/permanent/one_way{
 	id = "wendigo arena"
 	},
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 
 (1,1,1) = {"

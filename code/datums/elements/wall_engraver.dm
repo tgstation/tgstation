@@ -1,6 +1,5 @@
 /// An element that lets you engrave walls when right click is used
 /datum/element/wall_engraver
-	element_flags = ELEMENT_DETACH
 
 /datum/element/wall_engraver/Attach(datum/target)
 	. = ..()
@@ -8,8 +7,8 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, .proc/on_item_pre_attack_secondary)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
 
 /datum/element/wall_engraver/Detach(datum/source)
 	. = ..()
@@ -25,7 +24,7 @@
 /datum/element/wall_engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/try_chisel, source, target, user)
+	INVOKE_ASYNC(src, PROC_REF(try_chisel), source, target, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -55,16 +54,13 @@
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
 
-	var/do_persistent_save = TRUE
-	if(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
-		do_persistent_save = FALSE
-
+	var/do_persistent_save = !(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
 	var/engraved_story = memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED)
 
 	if(!engraved_story)
 		CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
 
-	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
+	wall.AddComponent(/datum/component/engraved, engraved_story, persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
 	memory_to_engrave.memory_flags |= MEMORY_FLAG_ALREADY_USED
 	//while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
 
@@ -73,7 +69,7 @@
 
 		var/tattoo_story = memory_to_engrave.generate_story(STORY_TATTOO)
 
-		if(tattoo_story)
+		if(!tattoo_story)
 			CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
 
 		tattoo_entry["story"] = tattoo_story

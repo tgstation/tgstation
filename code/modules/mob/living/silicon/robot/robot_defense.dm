@@ -1,27 +1,10 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/utility/welding,
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && (!user.combat_mode || user == src))
-		user.changeNext_move(CLICK_CD_MELEE)
-		if (!getBruteLoss())
-			to_chat(user, span_warning("[src] is already in good condition!"))
-			return
-		if (!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
-			return
-		if(src == user)
-			to_chat(user, span_notice("You start fixing yourself..."))
-			if(!W.use_tool(src, user, 50))
-				return
-
-		adjustBruteLoss(-30)
-		add_fingerprint(user)
-		visible_message(span_notice("[user] fixes some of the dents on [src]."))
-		return
-
 	if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
@@ -37,20 +20,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				to_chat(user, span_warning("You need more cable to repair [src]!"))
 		else
 			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
-		return
-
-	if(W.tool_behaviour == TOOL_CROWBAR) // crowbar means open or close the cover
-		if(opened)
-			to_chat(user, span_notice("You close the cover."))
-			opened = FALSE
-			update_icons()
-		else
-			if(locked)
-				to_chat(user, span_warning("The cover is locked and cannot be opened!"))
-			else
-				to_chat(user, span_notice("You open the cover."))
-				opened = TRUE
-				update_icons()
 		return
 
 	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
@@ -74,32 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened) // wire hacking or radio management
-		if(!cell) //haxing
-			wiresexposed = !wiresexposed
-			to_chat(user, span_notice("The wires have been [wiresexposed ? "exposed" : "unexposed"]."))
-		else //radio
-			if(shell)
-				to_chat(user, span_warning("You cannot seem to open the radio compartment!")) //Prevent AI radio key theft
-			else if(radio)
-				radio.attackby(W,user)//Push it to the radio to let it handle everything
-			else
-				to_chat(user, span_warning("Unable to locate a radio!"))
-		update_icons()
-		return
-
-	if(W.tool_behaviour == TOOL_WRENCH && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
-		if(!lockcharge)
-			to_chat(user, span_warning("[src]'s bolts spark! Maybe you should lock them down first!"))
-			spark_system.start()
-			return
-		to_chat(user, span_notice("You start to unfasten [src]'s securing bolts..."))
-		if(W.use_tool(src, user, 50, volume=50) && !cell)
-			user.visible_message(span_notice("[user] deconstructs [src]!"), span_notice("You unfasten the securing bolts, and [src] falls to pieces!"))
-			deconstruct()
-		return
-
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
 			return
@@ -112,6 +56,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
 				place_on_head(W)
 		return
+
 	if(istype(W, /obj/item/defibrillator) && !user.combat_mode)
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
@@ -123,7 +68,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
 			return
 		var/obj/item/defibrillator/D = W
-		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
+		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
 			return
 		if(D.cell)
@@ -159,7 +104,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
-	if(istype(W, /obj/item/encryptionkey/) && opened)
+	if(istype(W, /obj/item/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
@@ -183,7 +128,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				to_chat(user, span_danger("Access denied."))
 		return
 
-	if(istype(W, /obj/item/borg/upgrade/))
+	if(istype(W, /obj/item/borg/upgrade))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
@@ -226,19 +171,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		to_chat(user, span_notice("You replace the headlamp bulbs."))
 		return
 
-	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+	if(istype(W, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
-		if(modularInterface.install_component(floppy, user))
-			return
+		var/obj/item/computer_disk/floppy = W
+		floppy.forceMove(modularInterface)
+		modularInterface.inserted_disk = floppy
+		return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -259,7 +205,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		..()
 	return
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime shock
 		flash_act()
 		var/stunprob = M.powerlevel * 7 + 10
@@ -277,20 +223,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	add_fingerprint(user)
-	if(opened && !wiresexposed && !issilicon(user))
-		if(cell)
-			cell.update_appearance()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, span_notice("You remove \the [cell]."))
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
-	else if(!opened)
-		..()
+	if(!opened)
+		return ..()
+	if(!wiresexposed && !issilicon(user))
+		if(!cell)
+			return
+		cell.update_appearance()
+		cell.add_fingerprint(user)
+		user.put_in_active_hand(cell)
+		to_chat(user, span_notice("You remove \the [cell]."))
+		cell = null
+		update_icons()
+		diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -298,11 +244,76 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, get_turf(user), 15), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), src, get_turf(user), 15), 3)
+
+/mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode && usr != src)
+		return FALSE
+	. = TRUE
+	user.changeNext_move(CLICK_CD_MELEE)
+	if (!getBruteLoss())
+		to_chat(user, span_warning("[src] is already in good condition!"))
+		return
+	if (!tool.tool_start_check(user, amount=1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+		return
+	if(src == user)
+		to_chat(user, span_notice("You start fixing yourself..."))
+		if(!tool.use_tool(src, user, 50))
+			return
+
+	adjustBruteLoss(-30)
+	add_fingerprint(user)
+	visible_message(span_notice("[user] fixes some of the dents on [src]."))
+
+/mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(opened)
+		to_chat(user, span_notice("You close the cover."))
+		opened = FALSE
+		update_icons()
+	else
+		if(locked)
+			to_chat(user, span_warning("The cover is locked and cannot be opened!"))
+		else
+			to_chat(user, span_notice("You open the cover."))
+			opened = TRUE
+			update_icons()
+
+	return TRUE
+
+/mob/living/silicon/robot/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!opened)
+		return FALSE
+	. = TRUE
+	if(!cell) // haxing
+		wiresexposed = !wiresexposed
+		to_chat(user, span_notice("The wires have been [wiresexposed ? "exposed" : "unexposed"]."))
+	else // radio
+		if(shell)
+			to_chat(user, span_warning("You cannot seem to open the radio compartment!")) //Prevent AI radio key theft
+		else if(radio)
+			radio.screwdriver_act(user, tool) // Push it to the radio to let it handle everything
+		else
+			to_chat(user, span_warning("Unable to locate a radio!"))
+	update_icons()
+
+/mob/living/silicon/robot/wrench_act(mob/living/user, obj/item/tool)
+	if(!(opened && !cell))	// Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+		return FALSE
+	. = TRUE
+	if(!lockcharge)
+		to_chat(user, span_warning("[src]'s bolts spark! Maybe you should lock them down first!"))
+		spark_system.start()
+		return
+	to_chat(user, span_notice("You start to unfasten [src]'s securing bolts..."))
+	if(tool.use_tool(src, user, 50, volume=50) && !cell)
+		user.visible_message(span_notice("[user] deconstructs [src]!"), span_notice("You unfasten the securing bolts, and [src] falls to pieces!"))
+		deconstruct()
+		return
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
-		IgniteMob()
+		ignite_mob()
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -353,7 +364,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
-	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
@@ -361,20 +372,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	logevent("ALERT: Foreign software detected.")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	to_chat(src, span_danger("Initiating diagnostics..."))
-	sleep(20)
+	sleep(2 SECONDS)
 	to_chat(src, span_danger("SynBorg v1.7 loaded."))
 	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
-	sleep(5)
+	sleep(0.5 SECONDS)
 	to_chat(src, span_danger("LAW SYNCHRONISATION ERROR"))
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(user)
 		logevent("LOG: New user \[[replacetext(user.real_name," ","")]\], groups \[root\]")
 	to_chat(src, span_danger("Would you like to send a report to NanoTraSoft? Y/N"))
-	sleep(10)
+	sleep(1 SECONDS)
 	to_chat(src, span_danger("> N"))
-	sleep(20)
+	sleep(2 SECONDS)
 	to_chat(src, span_danger("ERRORERRORERROR"))
 	laws = new /datum/ai_laws/syndicate_override
 	if(user)
@@ -388,12 +399,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(stat != DEAD)
 		adjustBruteLoss(30)
 	else
+		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
 		gib()
 	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 			return
 		if(EXPLODE_HEAVY)

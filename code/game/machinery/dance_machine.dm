@@ -19,7 +19,7 @@
 	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_ENGINEERING)
 	anchored = FALSE
 	var/list/spotlights = list()
 	var/list/sparkles = list()
@@ -174,6 +174,7 @@
 
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
@@ -198,16 +199,16 @@
 		if(t.x < cen.x && t.y == cen.y)
 			spotlights += new /obj/item/flashlight/spotlight(t, 1 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_GREEN)
 			continue
-		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
+		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2 == cen.x && t.y+2 == cen.y))
 			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_ORANGE)
 			continue
-		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
+		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2 == cen.x && t.y-2 == cen.y))
 			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_CYAN)
 			continue
-		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
+		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2 == cen.x && t.y+2 == cen.y))
 			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_BLUEGREEN)
 			continue
-		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
+		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2 == cen.x && t.y-2 == cen.y))
 			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_BLUE)
 			continue
 		continue
@@ -216,7 +217,7 @@
 /obj/machinery/jukebox/disco/proc/hierofunk()
 	for(var/i in 1 to 10)
 		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 #define DISCO_INFENO_RANGE (rand(85, 115)*0.01)
 
@@ -237,9 +238,9 @@
 			if(25)
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
-		sleep(7)
+		sleep(0.7 SECONDS)
 	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
-		sleep(280)
+		sleep(28 SECONDS)
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255
@@ -310,7 +311,7 @@
 						glow.set_light_color(COLOR_SOFT_RED)
 					glow.even_cycle = !glow.even_cycle
 		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
-			INVOKE_ASYNC(src, .proc/hierofunk)
+			INVOKE_ASYNC(src, PROC_REF(hierofunk))
 		sleep(selection.song_beat)
 		if(QDELETED(src))
 			return
@@ -331,8 +332,8 @@
 
 /obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
 	for(var/i in 0 to 9)
-		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
-		sleep(20)
+		dance_rotate(M, CALLBACK(M, TYPE_PROC_REF(/mob, dance_flip)))
+		sleep(2 SECONDS)
 
 /mob/proc/dance_flip()
 	if(dir == WEST)
@@ -382,7 +383,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	M.lying_fix()
 
 /obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
@@ -429,7 +430,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(1)
+		sleep(1 SECONDS)
 	M.lying_fix()
 
 /mob/living/proc/lying_fix()
@@ -453,19 +454,20 @@
 		var/sound/song_played = sound(selection.song_path)
 
 		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
+				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
+			if(get_dist(src,L) > 10 || !(L.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				rangers -= L
 				if(!L || !L.client)
 					continue
 				L.stop_sound_channel(CHANNEL_JUKEBOX)
 	else if(active)
 		active = FALSE
+		update_use_power(IDLE_POWER_USE)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)

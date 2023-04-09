@@ -7,8 +7,8 @@
 	icon_state = "chasms-255"
 	base_icon_state = "chasms"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_TURF_CHASM)
-	canSmoothWith = list(SMOOTH_GROUP_TURF_CHASM)
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_TURF_CHASM
+	canSmoothWith = SMOOTH_GROUP_TURF_CHASM
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
 
@@ -49,6 +49,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/chasm/rust_heretic_act()
+	return FALSE
+
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "basalt"
@@ -59,29 +62,18 @@
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(!L)
-			if(R.use(1))
-				to_chat(user, span_notice("You construct a lattice."))
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				// Create a lattice, without reverting to our baseturf
-				new /obj/structure/lattice(src)
-			else
-				to_chat(user, span_warning("You need one rod to build a lattice."))
-			return
-	if(istype(C, /obj/item/stack/tile/iron))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/iron/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, span_notice("You build a floor."))
-				// Create a floor, which has this chasm underneath it
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, span_warning("You need one floor tile to build a floor!"))
-		else
-			to_chat(user, span_warning("The plating is going to need some support! Place iron rods first."))
+			return
+		if(!R.use(1))
+			to_chat(user, span_warning("You need one rod to build a lattice."))
+			return
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		// Create a lattice, without reverting to our baseturf
+		new /obj/structure/lattice(src)
+		return
+	else if(istype(C, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(C, user)
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland

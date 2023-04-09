@@ -37,6 +37,9 @@
 
 //Vim defines
 ///cooldown between uses of the sound maker
-#define VIM_SOUND_COOLDOWN 1 SECONDS
+#define VIM_SOUND_COOLDOWN (1 SECONDS)
 ///how much vim heals per weld
 #define VIM_HEAL_AMOUNT 20
+
+/// The vehicle being ridden requires pixel offsets for all directions
+#define RIDING_OFFSET_ALL "ALL"

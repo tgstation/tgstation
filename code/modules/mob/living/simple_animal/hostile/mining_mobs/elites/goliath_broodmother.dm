@@ -39,7 +39,7 @@
 	move_to_delay = 5
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	deathmessage = "explodes into gore!"
+	death_message = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
@@ -139,7 +139,7 @@
 	color = "#FF0000"
 	set_varspeed(0)
 	move_to_delay = 3
-	addtimer(CALLBACK(src, .proc/reset_rage), 65)
+	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 65)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
 	color = "#FFFFFF"
@@ -161,7 +161,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child
 	name = "baby goliath"
 	desc = "A young goliath recently born from it's mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath_baby"
 	icon_living = "goliath_baby"
 	icon_aggro = "goliath_baby"
@@ -181,7 +181,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
-	deathmessage = "falls to the ground."
+	death_message = "falls to the ground."
 	status_flags = CANPUSH
 	var/mob/living/simple_animal/hostile/asteroid/elite/broodmother/mother = null
 
@@ -216,11 +216,11 @@
 		retract()
 	else
 		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, .proc/retract), 10, TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(retract)), 10, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/broodmother/patch/Initialize(mapload, new_spawner)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/createpatch)
+	INVOKE_ASYNC(src, PROC_REF(createpatch))
 
 /obj/effect/temp_visual/goliath_tentacle/broodmother/patch/proc/createpatch()
 	var/tentacle_locs = spiral_range_turfs(1, get_turf(src))
@@ -247,7 +247,7 @@
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
-	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
+	if(prob(bonus_value) && target.stat != DEAD)
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
 
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)

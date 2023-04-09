@@ -7,7 +7,7 @@
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
-	faction = list("Lizard")
+	faction = list(FACTION_LIZARD)
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	melee_damage_lower = 1
@@ -25,6 +25,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	can_be_held = TRUE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/basic/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
 
 /mob/living/simple_animal/hostile/lizard/Initialize(mapload)
@@ -60,3 +61,7 @@
 /mob/living/simple_animal/hostile/lizard/wags_his_tail
 	name = "Wags-His-Tail"
 	desc = "The janitorial department's trusty pet lizard."
+
+/mob/living/simple_animal/hostile/lizard/eats_the_roaches
+	name = "Eats-The-Roaches"
+	desc = "The janitorial department's less trusty pet lizard."

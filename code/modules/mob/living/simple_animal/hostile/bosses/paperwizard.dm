@@ -4,11 +4,11 @@
 	desc = "A wizard with a taste for the arts."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
-	faction = list("hostile","stickman")
+	faction = list(FACTION_HOSTILE,FACTION_STICKMAN)
 	del_on_death = TRUE
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
-	ranged = 1
+	ranged = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
@@ -21,16 +21,22 @@
 	projectiletype = /obj/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	footstep_type = FOOTSTEP_MOB_SHOE
 	var/list/copies = list()
 
-	footstep_type = FOOTSTEP_MOB_SHOE
+/mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
+	QDEL_LIST(copies)
+	return ..()
 
 //Summon Ability
 //Lets the wizard summon his art to fight for him
 /datum/action/boss/wizard_summon_minions
 	name = "Summon Minions"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	usage_probability = 40
 	boss_cost = 30
@@ -44,7 +50,7 @@
 	///How many minions we should spawn
 	var/minions_to_summon = 3
 
-/datum/action/boss/wizard_summon_minions/IsAvailable()
+/datum/action/boss/wizard_summon_minions/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -52,7 +58,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/boss/wizard_summon_minions/Trigger()
+/datum/action/boss/wizard_summon_minions/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -65,7 +71,7 @@
 	for(var/i in 1 to summon_amount)
 		var/atom/chosen_minion = pick_n_take(minions)
 		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
-		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
+		RegisterSignals(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		summoned_minions++
 
 /// Called when a minion is qdeleted or dies, removes it from our minion list
@@ -81,14 +87,14 @@
 //Hitting the wizard himself destroys all decoys
 /datum/action/boss/wizard_mimic
 	name = "Craft Mimicry"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
 	usage_probability = 30
 	boss_cost = 40
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	say_when_triggered = ""
 
-/datum/action/boss/wizard_mimic/Trigger()
+/datum/action/boss/wizard_mimic/Trigger(trigger_flags)
 	if(..())
 		var/mob/living/target
 		if(!boss.client) //AI's target
@@ -126,13 +132,18 @@
 	loot = list()
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/copy/Destroy()
+	if(original)
+		original.copies -= src
+		original = null
+	return ..()
+
 //Hit a fake? eat pain!
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage
 		if(original)
 			original.minimum_distance = 3
 			original.retreat_distance = 3
-			original.copies -= src
 			for(var/c in original.copies)
 				qdel(c)
 		for(var/mob/living/L in range(5,src))
@@ -154,13 +165,17 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	. = ..()
-	qdel(src) //I see through your ruse!
+	if(isobserver(user))
+		. += span_notice("It's an illusion - what is it hiding?")
+	else
+		qdel(src) //I see through your ruse!
 
 //fancy effects
 /obj/effect/temp_visual/paper_scatter
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
 	anchored = TRUE
@@ -170,7 +185,8 @@
 /obj/effect/temp_visual/paperwiz_dying
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
 	anchored = TRUE

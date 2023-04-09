@@ -1,7 +1,7 @@
 /datum/antagonist/disease
 	name = "Sentient Disease"
 	roundend_category = "diseases"
-	antagpanel_category = "Biohazards"
+	antagpanel_category = ANTAG_GROUP_BIOHAZARDS
 	show_to_ghosts = TRUE
 	var/disease_name = ""
 
@@ -19,7 +19,7 @@
 	. = ..()
 
 /datum/antagonist/disease/greet()
-	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
+	. = ..()
 	to_chat(owner.current, span_notice("Infect members of the crew to gain adaptation points, and spread your infection further."))
 	owner.announce_objectives()
 

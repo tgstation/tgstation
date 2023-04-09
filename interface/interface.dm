@@ -109,3 +109,12 @@
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
 		winset(src, "infowindow.changelog", "font-style=;")
+
+/client/verb/hotkeys_help()
+	set name = "Hotkeys Help"
+	set category = "OOC"
+
+	if(!GLOB.hotkeys_tgui)
+		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
+
+	GLOB.hotkeys_tgui.ui_interact(mob)

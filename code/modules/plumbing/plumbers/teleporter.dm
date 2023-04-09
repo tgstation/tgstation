@@ -3,8 +3,9 @@
 	name = "chemical beacon"
 	desc = "A bluespace anchor for chemicals. Does not require power. Use a multitool linked to a Chemical Recipient on this machine to start teleporting reagents."
 	icon_state = "beacon"
-
 	density = FALSE
+	///category for plumbing RCD
+	category="Distribution"
 
 	///whoever we teleport our chems to
 	var/obj/machinery/plumbing/receiver/target = null
@@ -77,7 +78,7 @@
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
-/obj/machinery/plumbing/receiver/process()
+/obj/machinery/plumbing/receiver/process(delta_time)
 	if(machine_stat & NOPOWER || panel_open)
 		return
 
@@ -95,6 +96,8 @@
 		flick(initial(icon_state) + "_flash", src)
 
 		next_index++
+
+		use_power(active_power_usage * delta_time)
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()

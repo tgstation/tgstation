@@ -269,7 +269,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/pink/do_effect(mob/user)
 	user.visible_message(span_notice("[src] cracks like an egg, and an adorable puppy comes tumbling out!"))
-	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(get_turf(user))
+	new /mob/living/basic/pet/dog/corgi/puppy/slime(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/gold
@@ -287,7 +287,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with muted intensity!"))
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
 	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10, explosion_cause = src) //Large radius, but mostly light damage, and no flash.
@@ -295,13 +295,20 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/black
 	colour = "black"
-	effect_desc = "Transforsms the user into a random type of golem."
+	effect_desc = "Transforms the user into a random type of golem."
 
 /obj/item/slimecross/chilling/black/do_effect(mob/user)
 	if(ishuman(user))
 		user.visible_message(span_notice("[src] crystallizes along [user]'s skin, turning into metallic scales!"))
 		var/mob/living/carbon/human/H = user
-		H.set_species(/datum/species/golem/random)
+
+		var/static/list/random_golem_types
+		random_golem_types = subtypesof(/datum/species/golem) - type
+
+		for(var/datum/species/golem/golem as anything in random_golem_types)
+			if(!initial(golem.random_eligible))
+				random_golem_types -= golem
+		H.set_species(pick(random_golem_types))
 	..()
 
 /obj/item/slimecross/chilling/lightpink

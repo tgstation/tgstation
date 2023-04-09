@@ -1,37 +1,45 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
+	plural_form = "Mushroompeople"
 	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
-	nojumpsuit = TRUE
 
-	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		NOEYESPRITES,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
 	)
-	inherent_factions = list("mushroom")
+	inherent_factions = list(FACTION_MUSHROOM)
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
-	punchstunthreshold = 14 //about 44% chance to stun
-
-	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
+	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
 	burnmod = 1.25
 	heatmod = 1.5
 
-	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
+	mutanttongue = /obj/item/organ/internal/tongue/mush
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
+	mutantlungs = null
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/mushroom,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/mushroom,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/mushroom,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/mushroom,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
+	)
 
 /datum/species/mush/check_roundstart_eligible()
 	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.

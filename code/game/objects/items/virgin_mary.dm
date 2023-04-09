@@ -27,7 +27,7 @@
 		return
 
 	to_chat(joe, span_notice("As you burn the picture, a nickname comes to mind..."))
-	var/nickname = stripped_input(joe, "Pick a nickname", "Mafioso Nicknames", null, NICKNAME_CAP, TRUE)
+	var/nickname = tgui_input_text(joe, "Pick a nickname", "Mafioso Nicknames", max_length = NICKNAME_CAP)
 	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
 		return
@@ -48,10 +48,10 @@
 /obj/item/virgin_mary/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!"))
 	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 75)
-	addtimer(CALLBACK(user, /atom/movable/proc/say, "O my Mother, preserve me this day from mortal sin..."), 50)
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 75)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, say), "O my Mother, preserve me this day from mortal sin..."), 50)
 	return MANUAL_SUICIDE
 
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(FALSE)

@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes:
+  - bugfix: "Tiziran lung stirfry now correctly uses a bowl in its construction, and is left over after eating. It also can only be constructed with organic lungs, because cybernetic lungs don't fry as well."

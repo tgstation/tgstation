@@ -12,16 +12,15 @@ export const Limbgrower = (props, context) => {
     busy,
   } = data;
   const [tab, setTab] = useSharedState(
-    context, 'category', categories[0]?.name);
-  const designList = categories
-    .find(category => category.name === tab)
-    ?.designs || [];
+    context,
+    'category',
+    categories[0]?.name
+  );
+  const designList =
+    categories.find((category) => category.name === tab)?.designs || [];
 
   return (
-    <Window
-      title="Limb Grower"
-      width={400}
-      height={550}>
+    <Window title="Limb Grower" width={500} height={550}>
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
@@ -34,20 +33,23 @@ export const Limbgrower = (props, context) => {
             {total_reagents} / {max_reagents} reagent capacity used.
           </Box>
           <LabeledList>
-            {reagents.map(reagent => (
+            {reagents.map((reagent) => (
               <LabeledList.Item
                 key={reagent.reagent_name}
                 label={reagent.reagent_name}
-                buttons={(
+                buttons={
                   <Button.Confirm
                     textAlign="center"
                     width="120px"
                     content="Remove Reagent"
                     color="bad"
-                    onClick={() => act('empty_reagent', {
-                      reagent_type: reagent.reagent_type,
-                    })} />
-                )}>
+                    onClick={() =>
+                      act('empty_reagent', {
+                        reagent_type: reagent.reagent_type,
+                      })
+                    }
+                  />
+                }>
                 {reagent.reagent_amount}u
               </LabeledList.Item>
             ))}
@@ -55,7 +57,7 @@ export const Limbgrower = (props, context) => {
         </Section>
         <Section title="Designs">
           <Tabs>
-            {categories.map(category => (
+            {categories.map((category) => (
               <Tabs.Tab
                 fluid
                 key={category.name}
@@ -66,20 +68,23 @@ export const Limbgrower = (props, context) => {
             ))}
           </Tabs>
           <LabeledList>
-            {designList.map(design => (
+            {designList.map((design) => (
               <LabeledList.Item
                 key={design.name}
                 label={design.name}
-                buttons={(
+                buttons={
                   <Button
                     content="Make"
                     color="good"
-                    onClick={() => act('make_limb', {
-                      design_id: design.id,
-                      active_tab: design.parent_category,
-                    })} />
-                )}>
-                {design.needed_reagents.map(reagent => (
+                    onClick={() =>
+                      act('make_limb', {
+                        design_id: design.id,
+                        active_tab: design.parent_category,
+                      })
+                    }
+                  />
+                }>
+                {design.needed_reagents.map((reagent) => (
                   <Box key={reagent.name}>
                     {reagent.name}: {reagent.amount}u
                   </Box>

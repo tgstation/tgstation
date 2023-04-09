@@ -14,7 +14,7 @@
 		src.message = message
 
 /datum/component/itempicky/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, .proc/particularly)
+	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(particularly))
 
 /datum/component/itempicky/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)

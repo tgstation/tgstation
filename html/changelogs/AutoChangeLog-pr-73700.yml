@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "machine frames not spawning stack components we inserted in them when pried open with a crowbar"

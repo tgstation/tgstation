@@ -13,10 +13,6 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///What gases are we filtering, by typepath
 	var/list/filter_type = list()
-	///Frequency id for connecting to the NTNet
-	var/frequency = 0
-	///Reference to the radio datum
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -31,16 +27,6 @@
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		balloon_alert(user, "volume output set to [transfer_rate] L/s")
 		update_appearance()
-	return ..()
-
-/obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/trinary/filter/Destroy()
-	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_overlays()
@@ -122,10 +108,6 @@
 
 	update_parents()
 
-/obj/machinery/atmospherics/components/trinary/filter/atmos_init()
-	set_frequency(frequency)
-	return ..()
-
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -175,7 +157,7 @@
 			else
 				change = "removed"
 			var/gas_name = GLOB.meta_gas_info[gas_id2path(params["val"])][META_GAS_NAME]
-			investigate_log("[key_name(usr)] [change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
+			usr.investigate_log("[change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 

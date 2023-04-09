@@ -107,7 +107,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/map_generator_module/mod in modules)
-		INVOKE_ASYNC(mod, /datum/map_generator_module.proc/generate)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/map_generator_module, generate))
 
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
@@ -118,7 +118,7 @@
 	if(!modules || !modules.len)
 		return
 	for(var/datum/map_generator_module/mod in modules)
-		INVOKE_ASYNC(mod, /datum/map_generator_module.proc/place, T)
+		INVOKE_ASYNC(mod, TYPE_PROC_REF(/datum/map_generator_module, place), T)
 
 
 //Replaces all paths in the module list with actual module datums

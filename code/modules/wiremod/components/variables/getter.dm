@@ -9,6 +9,7 @@
 
 	/// The value of the variable
 	var/datum/port/output/value
+	should_listen = TRUE
 
 	circuit_size = 0
 

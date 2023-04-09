@@ -4,13 +4,13 @@
 	expected_types = 2
 
 /datum/circuit_composite_template/assoc_list/generate_name(list/composite_datatypes)
-	return "[composite_datatypes[1]], [composite_datatypes[2]] list"
+	return "[composite_datatypes[1]], [composite_datatypes[2]] assoc. list"
 
 /datum/circuit_datatype/composite_instance/assoc_list
 	color = "white"
 	datatype_flags = DATATYPE_FLAG_COMPOSITE
 
-/datum/circuit_datatype/composite_instance/assoc_list/convert_value(datum/port/port, value_to_convert, force)
+/datum/circuit_datatype/composite_instance/assoc_list/convert_value_extensive(datum/port/port, value_to_convert, force)
 	var/datum/circuit_datatype/key_handler = GLOB.circuit_datatypes[composite_datatypes[1]]
 	var/datum/circuit_datatype/value_handler = GLOB.circuit_datatypes[composite_datatypes[2]]
 

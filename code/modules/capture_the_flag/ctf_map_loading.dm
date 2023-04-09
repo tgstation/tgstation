@@ -9,7 +9,6 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	if(GLOB.ctf_spawner)
 		qdel(GLOB.ctf_spawner)
 	GLOB.ctf_spawner = src
-	INVOKE_ASYNC(src, .proc/load_map)
 
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)
@@ -29,13 +28,29 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	GLOB.ctf_spawner = null
 	return ..()
 
-/obj/effect/landmark/ctf/proc/load_map()
+/obj/effect/landmark/ctf/proc/load_map(user)
+	if (map_bounds)
+		return
 
 	var/list/map_options = subtypesof(/datum/map_template/ctf)
 	var/turf/spawn_area = get_turf(src)
 	var/datum/map_template/ctf/current_map
+	var/chosen_map
 
-	current_map = pick(map_options)
+	if(user)
+		var/list/map_choices = list()
+		for(var/datum/map_template/ctf/map as anything in map_options)
+			var/mapname = initial(map.name)
+			map_choices[mapname] = map
+		chosen_map = tgui_input_list(user, "Select a map", "Choose CTF Map",list("Random")|sort_list(map_choices))
+		if (isnull(chosen_map))
+			return FALSE;
+		else
+			current_map = map_choices[chosen_map]
+
+	if(!user || chosen_map == "Random")
+		current_map = pick(map_options)
+
 	current_map = new current_map()
 
 	if(!spawn_area)
@@ -45,6 +60,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	map_bounds = current_map.load(spawn_area, TRUE)
 	if(!map_bounds)
 		CRASH("Loading CTF map failed!")
+	return TRUE
 
 /datum/map_template/ctf
 	var/description = ""
@@ -71,5 +87,5 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 
 /datum/map_template/ctf/cruiser
 	name = "Crusier"
-	description = "A CTF map that takes place across multiple space ships, one carring a powerful device that can accelerate those who obtain it"
+	description = "A CTF map that takes place across multiple space ships, one carrying a powerful device that can accelerate those who obtain it"
 	mappath = "_maps/map_files/CTF/cruiser.dmm"

@@ -44,18 +44,19 @@
 		if(M.id == id)
 			M.open()
 
-	sleep(20)
+	sleep(2 SECONDS)
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
-	sleep(50)
+	sleep(5 SECONDS)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()
 
 /obj/machinery/computer/pod/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MassDriverControl", name)
@@ -140,7 +141,7 @@
 	name = "\improper Mass Driver Controller"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	icon_keyboard = null
+	icon_screen = null
 	density = FALSE
 
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver

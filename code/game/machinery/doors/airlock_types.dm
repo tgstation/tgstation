@@ -73,7 +73,6 @@
 
 /obj/machinery/door/airlock/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
 	req_access = list(ACCESS_SYNDICATE)
 
@@ -116,9 +115,7 @@
 
 /obj/machinery/door/airlock/research/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_access = list(ACCESS_ORDNANCE)
 
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
@@ -165,6 +162,20 @@
 	name = "gold airlock"
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
+
+/obj/machinery/door/airlock/gold/discoinferno
+	heat_proof = TRUE
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/discoinferno_airlock
+
+/datum/armor/discoinferno_airlock
+	melee = 30
+	bullet = 30
+	laser = 20
+	energy = 20
+	bomb = 10
+	fire = 100
+	acid = 100
 
 /obj/machinery/door/airlock/gold/glass
 	opacity = FALSE
@@ -230,43 +241,15 @@
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
+	material_flags = MATERIAL_EFFECTS
+	material_modifier = 0.25
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
+	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
-/obj/machinery/door/airlock/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > 300)
-
-/obj/machinery/door/airlock/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	PlasmaBurn()
-
-/obj/machinery/door/airlock/plasma/proc/PlasmaBurn()
-	atmos_spawn_air("plasma=500;TEMP=1000")
-	var/obj/structure/door_assembly/DA
-	DA = new /obj/structure/door_assembly(loc)
-	if(glass)
-		DA.glass = TRUE
-	if(heat_proof)
-		DA.heat_proof_finished = TRUE
-	DA.update_appearance()
-	DA.update_name()
-	qdel(src)
 
 /obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
 	return 0
-
-/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(C.get_temperature())
-	else
-		return ..()
 
 /obj/machinery/door/airlock/plasma/glass
 	opacity = FALSE
@@ -339,9 +322,7 @@
 
 /obj/machinery/door/airlock/public/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior
 	name = "Turbine Interior Airlock"
@@ -362,14 +343,13 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
-	req_access = list(ACCESS_EXTERNAL_AIRLOCKS)
 
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
 /obj/machinery/door/airlock/external/Initialize(mapload, ...)
 	// default setting is for mapping only, let overrides work
-	if(!mapload || req_access_txt || req_one_access_txt)
+	if(!mapload)
 		req_access = null
 
 	return ..()
@@ -408,7 +388,6 @@
 
 /// Access free external airlock
 /obj/machinery/door/airlock/external/ruin
-	req_access = null
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
@@ -416,7 +395,6 @@
 
 /// Access free external glass airlock
 /obj/machinery/door/airlock/external/glass/ruin
-	req_access = null
 
 //////////////////////////////////
 /*
@@ -539,8 +517,7 @@
 	return (IS_CULTIST(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/cult/on_break()
-	if(!panel_open)
-		panel_open = TRUE
+	set_panel_open(TRUE)
 
 /obj/machinery/door/airlock/cult/isElectrified()
 	return FALSE
@@ -551,7 +528,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return TRUE
-	if(friendly || IS_CULTIST(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
+	if(friendly || IS_CULTIST(L) || isshade(L) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return TRUE
@@ -563,13 +540,13 @@
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
-			L.throw_at(throwtarget, 5, 1,src)
+			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	name = "airlock"
+	name = "Airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
 	update_appearance()
@@ -619,7 +596,35 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
+
+
+//////////////////////////////////
+/*
+	Material Airlocks
+*/
+/obj/machinery/door/airlock/material
+	name = "Airlock"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+	greyscale_config = /datum/greyscale_config/material_airlock
+	assemblytype = /obj/structure/door_assembly/door_assembly_material
+
+/obj/machinery/door/airlock/material/close(forced, force_crush)
+	. = ..()
+	if(!.)
+		return
+	for(var/datum/material/mat in custom_materials)
+		if(mat.alpha < 255)
+			set_opacity(FALSE)
+			break
+
+/obj/machinery/door/airlock/material/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.set_custom_materials(custom_materials)
+	..()
+
+/obj/machinery/door/airlock/material/glass
+	opacity = FALSE
+	glass = TRUE
 
 //////////////////////////////////
 /*
@@ -637,3 +642,22 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+/// Subtype used in unit tests to ensure instant airlock opening/closing. Pretty much just excises everything that would delay the process or is un-needed for the sake of the test (sleeps, icon animations).
+/obj/machinery/door/airlock/instant
+
+// set_density on both open and close procs has a check and return builtin.
+
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
+	operating = TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	set_density(FALSE)
+	operating = FALSE
+	return TRUE
+
+/obj/machinery/door/airlock/instant/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
+	operating = TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
+	set_density(TRUE)
+	operating = FALSE
+	return TRUE

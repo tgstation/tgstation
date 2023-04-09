@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_x = 10;
 	pixel_y = 1
 	},
@@ -54,7 +54,7 @@
 /area/template_noop)
 "i" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -189,10 +189,7 @@
 	},
 /area/template_noop)
 "H" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -246,7 +243,6 @@
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "P" = (
-/obj/structure/table/wood/poker,
 /obj/structure/table/wood/poker,
 /obj/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
@@ -303,9 +299,7 @@
 	},
 /area/template_noop)
 "Z" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 

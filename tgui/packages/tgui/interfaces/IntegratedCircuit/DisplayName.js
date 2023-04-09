@@ -7,17 +7,18 @@ export const DisplayName = (props, context) => {
   const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'unknown'];
   const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || 'unknown'];
 
-  const hasInput = !isOutput
-    && !port.connected_to?.length
-    && (componentId || port.type === "option")
-    && InputComponent;
+  const hasInput =
+    !isOutput &&
+    !port.connected_to?.length &&
+    (componentId || port.type === 'option') &&
+    InputComponent;
 
-  const displayType = TypeDisplayHandler? TypeDisplayHandler(port) : port.type;
+  const displayType = TypeDisplayHandler ? TypeDisplayHandler(port) : port.type;
 
   return (
     <Box {...rest}>
       <Flex direction="column">
-        <Flex.Item textAlign={isOutput? "right" : "left"}>
+        <Flex.Item textAlign={isOutput ? 'right' : 'left'}>
           {(hasInput && (
             <InputComponent
               setValue={(val, extraParams) =>
@@ -26,14 +27,15 @@ export const DisplayName = (props, context) => {
                   port_id: portIndex,
                   input: val,
                   ...extraParams,
-                })}
+                })
+              }
               color={port.color}
               name={port.name}
               value={port.current_data}
               extraData={port.datatype_data}
             />
-          ))
-            || (isOutput && (
+          )) ||
+            (isOutput && (
               <Button
                 compact
                 color="transparent"
@@ -41,11 +43,12 @@ export const DisplayName = (props, context) => {
                   act('get_component_value', {
                     component_id: componentId,
                     port_id: portIndex,
-                  })}>
+                  })
+                }>
                 <Box color="white">{port.name}</Box>
               </Button>
-            ))
-            || port.name}
+            )) ||
+            port.name}
         </Flex.Item>
         <Flex.Item>
           <Box

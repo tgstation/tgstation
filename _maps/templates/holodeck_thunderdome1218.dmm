@@ -22,7 +22,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "n" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	dir = 2
 	},
 /turf/open/floor/holofloor/grass,
@@ -40,7 +40,7 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	dir = 2;
 	icon_state = "right"
 	},
@@ -64,7 +64,7 @@
 /area/template_noop)
 "C" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/head/crown/fancy{
+/obj/item/clothing/head/costume/crown/fancy{
 	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,
@@ -94,7 +94,7 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "R" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	dir = 2
 	},
 /turf/open/floor/holofloor/asteroid,

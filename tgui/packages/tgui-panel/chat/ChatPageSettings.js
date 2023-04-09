@@ -20,54 +20,68 @@ export const ChatPageSettings = (props, context) => {
           <Input
             fluid
             value={page.name}
-            onChange={(e, value) => dispatch(updateChatPage({
-              pageId: page.id,
-              name: value,
-            }))} />
+            onChange={(e, value) =>
+              dispatch(
+                updateChatPage({
+                  pageId: page.id,
+                  name: value,
+                })
+              )
+            }
+          />
         </Stack.Item>
         <Stack.Item>
           <Button
             icon="times"
             color="red"
-            onClick={() => dispatch(removeChatPage({
-              pageId: page.id,
-            }))}>
+            onClick={() =>
+              dispatch(
+                removeChatPage({
+                  pageId: page.id,
+                })
+              )
+            }>
             Remove
           </Button>
         </Stack.Item>
       </Stack>
       <Divider />
       <Section title="Messages to display" level={2}>
-        {MESSAGE_TYPES
-          .filter(typeDef => !typeDef.important && !typeDef.admin)
-          .map(typeDef => (
+        {MESSAGE_TYPES.filter(
+          (typeDef) => !typeDef.important && !typeDef.admin
+        ).map((typeDef) => (
+          <Button.Checkbox
+            key={typeDef.type}
+            checked={page.acceptedTypes[typeDef.type]}
+            onClick={() =>
+              dispatch(
+                toggleAcceptedType({
+                  pageId: page.id,
+                  type: typeDef.type,
+                })
+              )
+            }>
+            {typeDef.name}
+          </Button.Checkbox>
+        ))}
+        <Collapsible mt={1} color="transparent" title="Admin stuff">
+          {MESSAGE_TYPES.filter(
+            (typeDef) => !typeDef.important && typeDef.admin
+          ).map((typeDef) => (
             <Button.Checkbox
               key={typeDef.type}
               checked={page.acceptedTypes[typeDef.type]}
-              onClick={() => dispatch(toggleAcceptedType({
-                pageId: page.id,
-                type: typeDef.type,
-              }))}>
+              onClick={() =>
+                dispatch(
+                  toggleAcceptedType({
+                    pageId: page.id,
+                    type: typeDef.type,
+                  })
+                )
+              }>
               {typeDef.name}
             </Button.Checkbox>
           ))}
-        <Collapsible
-          mt={1}
-          color="transparent"
-          title="Admin stuff">
-          {MESSAGE_TYPES
-            .filter(typeDef => !typeDef.important && typeDef.admin)
-            .map(typeDef => (
-              <Button.Checkbox
-                key={typeDef.type}
-                checked={page.acceptedTypes[typeDef.type]}
-                onClick={() => dispatch(toggleAcceptedType({
-                  pageId: page.id,
-                  type: typeDef.type,
-                }))}>
-                {typeDef.name}
-              </Button.Checkbox>
-            ))}
         </Collapsible>
       </Section>
     </Section>

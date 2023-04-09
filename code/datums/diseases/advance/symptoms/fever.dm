@@ -1,25 +1,17 @@
 #define FEVER_CHANGE "fever"
-
-/*
-//////////////////////////////////////
-
-Fever
-
-	No change to hidden.
-	Increases resistance.
-	Increases stage speed.
-	Little transmittable.
-	Low level.
-
-Bonus
-	Heats up your body.
-
-//////////////////////////////////////
-*/
+/**Fever
+ * No change to stealth
+ * Increases resistance considerably
+ * Increases stage speed considerably
+ * Increases transmissibility
+ * Low level
+ * Bonus: Heats up your body
+ */
 
 /datum/symptom/fever
 	name = "Fever"
 	desc = "The virus causes a febrile response from the host, raising its body temperature."
+	illness = "Burning Desire"
 	stealth = 0
 	resistance = 3
 	stage_speed = 3

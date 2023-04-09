@@ -17,9 +17,9 @@ const NukeKeypad = (props, context) => {
   return (
     <Box width="185px">
       <Grid width="1px">
-        {keypadKeys.map(keyColumn => (
+        {keypadKeys.map((keyColumn) => (
           <Grid.Column key={keyColumn[0]}>
-            {keyColumn.map(key => (
+            {keyColumn.map((key) => (
               <Button
                 fluid
                 bold
@@ -35,7 +35,8 @@ const NukeKeypad = (props, context) => {
                   'NuclearBomb__Button--keypad',
                   'NuclearBomb__Button--' + key,
                 ])}
-                onClick={() => act('keypad', { digit: key })} />
+                onClick={() => act('keypad', { digit: key })}
+              />
             ))}
           </Grid.Column>
         ))}
@@ -46,29 +47,17 @@ const NukeKeypad = (props, context) => {
 
 export const NuclearBomb = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    anchored,
-    disk_present,
-    status1,
-    status2,
-  } = data;
+  const { anchored, disk_present, status1, status2 } = data;
   return (
-    <Window
-      width={350}
-      height={442}
-      theme="retro">
+    <Window width={350} height={442} theme="retro">
       <Window.Content>
         <Box m="6px">
-          <Box
-            mb="6px"
-            className="NuclearBomb__displayBox">
+          <Box mb="6px" className="NuclearBomb__displayBox">
             {status1}
           </Box>
           <Flex mb={1.5}>
             <Flex.Item grow={1}>
-              <Box className="NuclearBomb__displayBox">
-                {status2}
-              </Box>
+              <Box className="NuclearBomb__displayBox">{status2}</Box>
             </Flex.Item>
             <Flex.Item>
               <Button
@@ -81,7 +70,8 @@ export const NuclearBomb = (props, context) => {
                 mr="3px"
                 mt="3px"
                 className="NuclearBomb__Button NuclearBomb__Button--keypad"
-                onClick={() => act('eject_disk')} />
+                onClick={() => act('eject_disk')}
+              />
             </Flex.Item>
           </Flex>
           <Flex ml="3px">
@@ -99,7 +89,8 @@ export const NuclearBomb = (props, context) => {
                   lineHeight={1.1}
                   mb="6px"
                   className="NuclearBomb__Button NuclearBomb__Button--C"
-                  onClick={() => act('arm')} />
+                  onClick={() => act('arm')}
+                />
                 <Button
                   fluid
                   bold
@@ -108,16 +99,12 @@ export const NuclearBomb = (props, context) => {
                   fontSize="28px"
                   lineHeight={1.1}
                   className="NuclearBomb__Button NuclearBomb__Button--E"
-                  onClick={() => act('anchor')} />
-                <Box
-                  textAlign="center"
-                  color="#9C9987"
-                  fontSize="80px">
+                  onClick={() => act('anchor')}
+                />
+                <Box textAlign="center" color="#9C9987" fontSize="80px">
                   <Icon name="radiation" />
                 </Box>
-                <Box
-                  height="80px"
-                  className="NuclearBomb__NTIcon" />
+                <Box height="80px" className="NuclearBomb__NTIcon" />
               </Box>
             </Flex.Item>
           </Flex>

@@ -2,19 +2,17 @@
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "floorbot0"
 	density = FALSE
 	health = 25
 	maxHealth = 25
 
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
-	model = "Floorbot"
-	bot_core = /obj/machinery/bot_core/floorbot
-	window_id = "autofloor"
-	window_name = "Automatic Station Floor Repairer v1.1"
+	hackables = "floor construction protocols"
 	path_image_color = "#FFA500"
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
@@ -25,9 +23,7 @@
 	var/obj/item/stack/tile/tilestack
 	var/fixfloors = TRUE
 	var/autotile = FALSE
-	var/max_targets = 50
 	var/turf/target
-	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
 
@@ -76,14 +72,7 @@
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
 	target = null
-	oldloc = null
-	ignore_list = list()
 	toggle_magnet(FALSE)
-
-/mob/living/simple_animal/bot/floorbot/set_custom_texts()
-	text_hack = "You corrupt [name]'s construction protocols."
-	text_dehack = "You detect errors in [name] and reset his programming."
-	text_dehack_fail = "[name] is not responding to reset commands!"
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
 	if(istype(W, /obj/item/stack/tile/iron))
@@ -113,7 +102,7 @@
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
-	if(!emagged)
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
@@ -134,7 +123,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["tile_hull"] = autotile
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
@@ -151,8 +140,9 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/floorbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("place_custom")
 			replacetiles = !replacetiles
@@ -168,7 +158,9 @@
 			if(tilestack)
 				tilestack.forceMove(drop_location())
 		if("line_mode")
-			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
+			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
+			if(isnull(setdir))
+				return
 			switch(setdir)
 				if("north")
 					targetdirection = 1
@@ -180,7 +172,6 @@
 					targetdirection = 8
 				if("disable")
 					targetdirection = null
-	return
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())
@@ -192,8 +183,9 @@
 	if(prob(5))
 		audible_message("[src] makes an excited booping beeping sound!")
 
+	var/list/tiles_scanned = list()
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && !emagged)
+	if(!target && !(bot_cover_flags & BOT_COVER_EMAGGED))
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
 			if(isspaceturf(T)) //Check for space
@@ -203,62 +195,61 @@
 				target = T
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
-			target = scan(/turf/open/space)
+
+			tiles_scanned += list(/turf/open/space)
 
 		if(!target && placetiles) //Finds a floor without a tile and gives it one.
 			process_type = PLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
-			target = scan(/turf/open/floor)
+			tiles_scanned += list(/turf/open/floor)
 
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
-			target = scan(/turf/open/floor)
+			tiles_scanned += list(/turf/open/floor)
 
 		if(!target && replacetiles && tilestack) //Replace a floor tile with custom tile
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
-			target = scan(/turf/open/floor)
+			tiles_scanned += list(/turf/open/floor)
 
-	if(!target && emagged) //We are emagged! Time to rip up the floors!
+	if(!target && bot_cover_flags & BOT_COVER_EMAGGED) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
-		target = scan(/turf/open/floor)
+		tiles_scanned += list(/turf/open/floor)
 
+	target = scan(tiles_scanned)
 
-	if(!target)
-
-		if(auto_patrol)
-			if(mode == BOT_IDLE || mode == BOT_START_PATROL)
+	if(!target && bot_mode_flags & BOT_MODE_AUTOPATROL)
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
 				start_patrol()
-
-			if(mode == BOT_PATROL)
+			if(BOT_PATROL)
 				bot_patrol()
 
 	if(target)
 		if(loc == target || loc == get_turf(target))
 			if(check_bot(target)) //Target is not defined at the parent
-				shuffle = TRUE
 				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
 					return
-			if(isturf(target) && !emagged)
+			if(isturf(target) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 				repair(target)
-			else if(emagged && isfloorturf(target))
+			else if(bot_cover_flags & BOT_COVER_EMAGGED && isfloorturf(target))
 				var/turf/open/floor/F = target
 				toggle_magnet()
 				mode = BOT_REPAIRING
 				if(isplatingturf(F))
-					F.ReplaceWithLattice()
+					F.attempt_lattice_replacement()
 				else
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 				audible_message(span_danger("[src] makes an excited booping sound."))
-				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(go_idle)), 0.5 SECONDS)
 			path = list()
 			return
-		if(path.len == 0)
+		if(!length(path))
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, max_distance=30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, max_distance=30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -269,10 +260,6 @@
 			target = null
 			mode = BOT_IDLE
 			return
-
-
-
-	oldloc = loc
 
 /mob/living/simple_animal/bot/floorbot/proc/go_idle()
 	toggle_magnet(FALSE)
@@ -340,10 +327,12 @@
 		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
 				if(replacetiles && tilestack)
-					tilestack.place_tile(target_turf)
+					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
+					tilestack.place_tile(target_turf, src)
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
 				else
+					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
 					target_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
@@ -368,12 +357,20 @@
 				success = TRUE
 
 		if(success)
-			F = F.make_plating(TRUE) || F
-			if(was_replacing && tilestack)
-				tilestack.place_tile(F)
+			var/area/is_this_maints = get_area(F)
+			if(was_replacing && tilestack)	//turn the tile into plating (if needed), then replace it
+				F = F.make_plating(TRUE) || F
+				tilestack.place_tile(F, src)
 				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
-			else
+			else if(F.broken || F.burnt)	//repair the tile and reset it to be undamaged (rather than replacing it)
+				F.broken = FALSE
+				F.burnt = FALSE
+				F.update_appearance()
+			else if(istype(is_this_maints, /area/station/maintenance))	//place catwalk if it's plating and we're in maints
+				F.PlaceOnTop(/turf/open/floor/catwalk_floor, flags = CHANGETURF_INHERIT_AIR)
+			else	//place normal tile if it's plating anywhere else
+				F = F.make_plating(TRUE) || F
 				F.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 
 	if(!QDELETED(src))
@@ -381,12 +378,10 @@
 
 /mob/living/simple_animal/bot/floorbot/update_icon_state()
 	. = ..()
-	icon_state = "[toolbox_color]floorbot[on]"
+	icon_state = "[toolbox_color]floorbot[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	on = FALSE
 	target = null
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(toolbox, Tsec)
@@ -396,16 +391,8 @@
 	if(tilestack)
 		tilestack.forceMove(drop_location())
 
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
-
 	new /obj/item/stack/tile/iron/base(Tsec, 1)
-
-	do_sparks(3, TRUE, src)
-	..()
-
-/obj/machinery/bot_core/floorbot
-	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
+	return ..()
 
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))

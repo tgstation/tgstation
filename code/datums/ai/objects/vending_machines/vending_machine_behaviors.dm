@@ -7,7 +7,7 @@
 
 /datum/ai_behavior/vendor_crush/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	set_movement_target(controller, controller.blackboard[target_key])
 
 
 /datum/ai_behavior/vendor_crush/perform(delta_time, datum/ai_controller/controller)
@@ -19,7 +19,7 @@
 	controller.blackboard[BB_VENDING_BUSY_TILTING] = TRUE
 	var/turf/target_turf = get_turf(controller.blackboard[BB_VENDING_CURRENT_TARGET])
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target_turf)
-	addtimer(CALLBACK(src, .proc/tiltonmob, controller, target_turf), time_to_tilt)
+	addtimer(CALLBACK(src, PROC_REF(tiltonmob), controller, target_turf), time_to_tilt)
 
 /datum/ai_behavior/vendor_crush/proc/tiltonmob(datum/ai_controller/controller, turf/target_turf)
 	var/obj/machinery/vending/vendor_pawn = controller.pawn

@@ -8,8 +8,6 @@
 	desc = "Checks if a string contains a word/letter"
 	category = "String"
 
-	input_port_amount = 0
-
 	var/datum/port/input/needle
 	var/datum/port/input/haystack
 
@@ -22,11 +20,7 @@
 	haystack = null
 	return ..()
 
-
-/obj/item/circuit_component/compare/contains/do_comparisons(list/ports)
-	if(length(ports) < input_port_amount)
-		return
-
+/obj/item/circuit_component/compare/contains/do_comparisons()
 	var/to_find = needle.value
 	var/to_search = haystack.value
 

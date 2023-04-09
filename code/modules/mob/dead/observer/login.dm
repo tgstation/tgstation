@@ -21,5 +21,7 @@
 	update_icon(ALL, preferred_form)
 	updateghostimages()
 	client.set_right_click_menu_mode(FALSE)
+	lighting_cutoff = default_lighting_cutoff()
+	update_sight()
 
 

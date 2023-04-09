@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -10,7 +10,7 @@
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
@@ -18,7 +18,7 @@
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
@@ -36,7 +36,7 @@
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
+	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/mmi/update_overlays()
@@ -52,13 +52,25 @@
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O, /obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
-		if(!newbrain.brainmob)
-			to_chat(user, span_warning("You aren't sure where this brain came from, but you're pretty sure it's a useless brain!"))
+		if(newbrain.suicided)
+			to_chat(user, span_warning("[newbrain] is completely useless."))
+			return
+		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			if(install != "Yes")
+				return
+			if(!user.transferItemToLoc(newbrain, src))
+				return
+			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			brain = newbrain
+			brain.organ_flags |= ORGAN_FROZEN
+			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
+			update_appearance()
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -88,14 +100,14 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
-		if(istype(brain, /obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/internal/brain/alien))
 			braintype = "Xenoborg" //HISS....Beep.
 		else
 			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
-		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -104,8 +116,8 @@
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
-		radio.on = !radio.on
-		to_chat(user, span_notice("You toggle [src]'s radio system [radio.on==1 ? "on" : "off"]."))
+		radio.set_on(!radio.is_on())
+		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
 	else
 		eject_brain(user)
 		update_appearance()
@@ -113,14 +125,15 @@
 		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
 
 /obj/item/mmi/proc/eject_brain(mob/user)
-	brainmob.container = null //Reset brainmob mmi var.
-	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.set_stat(DEAD)
-	brainmob.emp_damage = 0
-	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	brain.brainmob = brainmob //Set the brain to use the brainmob
-	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
-	brainmob = null //Set mmi brainmob var to null
+	if(brainmob)
+		brainmob.container = null //Reset brainmob mmi var.
+		brainmob.forceMove(brain) //Throw mob into brain.
+		brainmob.set_stat(DEAD)
+		brainmob.emp_damage = 0
+		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+		brain.brainmob = brainmob //Set the brain to use the brainmob
+		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
+		brainmob = null //Set mmi brainmob var to null
 	brain.forceMove(drop_location())
 	if(Adjacent(user))
 		user.put_in_hands(brain)
@@ -141,7 +154,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -151,7 +164,7 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
-	if(istype(brain, /obj/item/organ/brain/alien))
+	if(istype(brain, /obj/item/organ/internal/brain/alien))
 		braintype = "Xenoborg" //HISS....Beep.
 	else
 		braintype = "Cyborg"
@@ -204,12 +217,12 @@
 
 	if(brainmob.stat)
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
-	if(!radio.on)
+	if(!radio.is_on())
 		to_chat(brainmob, span_warning("Your radio is disabled!"))
 		return
 
-	radio.listening = !radio.listening
-	to_chat(brainmob, span_notice("Radio is [radio.listening ? "now" : "no longer"] receiving broadcast."))
+	radio.set_listening(!radio.get_listening())
+	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
 
 /obj/item/mmi/emp_act(severity)
 	. = ..()
@@ -235,7 +248,7 @@
 /obj/item/mmi/examine(mob/user)
 	. = ..()
 	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
+		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
@@ -252,7 +265,7 @@
 	var/mob/living/brain/B = brainmob
 	if(!B)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that there is no brain present!"))
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
 		return FALSE
 	if(!B.key || !B.mind)
 		if(user)
@@ -284,4 +297,4 @@
 /obj/item/mmi/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
-	radio.on = FALSE
+	radio.set_on(FALSE)

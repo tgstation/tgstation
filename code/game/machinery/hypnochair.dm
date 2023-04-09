@@ -91,7 +91,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 		return
 	victim = C
-	if(!(C.get_eye_protection() > 0))
+	if(C.get_eye_protection() <= 0)
 		to_chat(C, span_warning("Strobing coloured lights assault you relentlessly! You're losing your ability to think straight!"))
 		C.become_blind(HYPNOCHAIR_TRAIT)
 		ADD_TRAIT(C, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
@@ -99,7 +99,7 @@
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
 	update_appearance()
-	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(finish_interrogation)), 450, TIMER_STOPPABLE)
 
 /obj/machinery/hypnochair/process(delta_time)
 	var/mob/living/carbon/C = occupant
@@ -114,6 +114,8 @@
 			"...so peaceful...",\
 			"...an annoying buzz in your ears..."\
 		)]</span>")
+
+	use_power(active_power_usage * delta_time)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
@@ -146,25 +148,25 @@
 	if(QDELETED(victim))
 		victim = null
 		return
-	victim.cure_blind("hypnochair")
-	REMOVE_TRAIT(victim, TRAIT_DEAF, "hypnochair")
+	victim.cure_blind(HYPNOCHAIR_TRAIT)
+	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time
 		switch(time_diff)
 			if(0 to 100)
-				victim.add_confusion(10)
-				victim.Dizzy(100)
-				victim.blur_eyes(5)
+				victim.adjust_confusion(10 SECONDS)
+				victim.set_dizzy_if_lower(200 SECONDS)
+				victim.set_eye_blur_if_lower(10 SECONDS)
 			if(101 to 200)
-				victim.add_confusion(15)
-				victim.Dizzy(200)
-				victim.blur_eyes(10)
+				victim.adjust_confusion(15 SECONDS)
+				victim.set_dizzy_if_lower(400 SECONDS)
+				victim.set_eye_blur_if_lower(20 SECONDS)
 				if(prob(25))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 			if(201 to INFINITY)
-				victim.add_confusion(20)
-				victim.Dizzy(300)
-				victim.blur_eyes(15)
+				victim.adjust_confusion(20 SECONDS)
+				victim.set_dizzy_if_lower(600 SECONDS)
+				victim.set_eye_blur_if_lower(30 SECONDS)
 				if(prob(65))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 	victim = null

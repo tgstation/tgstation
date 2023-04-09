@@ -33,12 +33,9 @@
 	},
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_common";
+	shuttle_id = "mining_common";
 	name = "lavaland shuttle";
-	port_direction = 4;
-	width = 7
+	port_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/mining)
@@ -47,7 +44,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "j" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
@@ -65,7 +62,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "l" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "Q" = (

@@ -5,13 +5,17 @@
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE
-	var/bonespear = FALSE
 	var/obj/item/spear/spear
+	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
-	bonespear = TRUE
+	speartype = /obj/item/spear/bonespear
+
+/obj/structure/headpike/bamboo //for bamboo spears
+	icon_state = "headpike-bamboo"
+	speartype = /obj/item/spear/bamboospear
 
 /obj/structure/headpike/Initialize(mapload)
 	. = ..()
@@ -29,14 +33,14 @@
 	if(!victim) //likely a mapspawned one
 		victim = new(src)
 		victim.real_name = random_unique_name(prob(50))
-	spear = locate(bonespear ? /obj/item/spear/bonespear : /obj/item/spear) in parts_list
+	spear = locate(speartype) in parts_list
 	if(!spear)
-		spear = bonespear ? new/obj/item/spear/bonespear(src) : new/obj/item/spear(src)
+		spear = new speartype(src)
 	update_appearance()
 	return ..()
 
 /obj/structure/headpike/update_name()
-	name = "[victim.real_name] on a [spear]"
+	name = "[victim.real_name] on a [spear.name]"
 	return ..()
 
 /obj/structure/headpike/update_overlays()
@@ -59,11 +63,11 @@
 	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)
-	if(!disassembled)
-		return ..()
-	if(victim)
+	if(victim) //Make sure the head always comes off
 		victim.forceMove(drop_location())
 		victim = null
+	if(!disassembled)
+		return ..()
 	if(spear)
 		spear.forceMove(drop_location())
 		spear = null

@@ -3,13 +3,13 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_mutant_bodypart = "tail_human"
+	relevant_external_organ = /obj/item/organ/external/tail/cat
 
 /datum/preference/choiced/tail_human/init_possible_values()
-	return assoc_to_keys(GLOB.tails_list_human)
+	return assoc_to_keys_features(GLOB.tails_list_human)
 
 /datum/preference/choiced/tail_human/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_human"] = value
+	target.dna.features["tail_cat"] = value
 
 /datum/preference/choiced/tail_human/create_default_value()
 	var/datum/sprite_accessory/tails/human/cat/tail = /datum/sprite_accessory/tails/human/cat
@@ -23,7 +23,7 @@
 	relevant_mutant_bodypart = "ears"
 
 /datum/preference/choiced/ears/init_possible_values()
-	return assoc_to_keys(GLOB.ears_list)
+	return assoc_to_keys_features(GLOB.ears_list)
 
 /datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ears"] = value
