@@ -1019,7 +1019,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		#endif
 
 #if (PRELOAD_RSC == 0)
-/client/preload_vox()
+/client/proc/preload_vox()
 	for (var/name in GLOB.vox_sounds)
 		var/file = GLOB.vox_sounds[name]
 		Export("##action=load_rsc", file)
