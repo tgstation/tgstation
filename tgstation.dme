@@ -4894,6 +4894,7 @@
 #include "code\modules\surgery\bodyparts\parts.dm"
 #include "code\modules\surgery\bodyparts\robot_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\wounds.dm"
+#include "code\modules\surgery\bodyparts\species_parts\android_parts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\ethereal_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\lizard_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\species_parts\misc_bodyparts.dm"
