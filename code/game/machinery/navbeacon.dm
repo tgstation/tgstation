@@ -155,21 +155,30 @@
 
 /obj/machinery/navbeacon/ui_data(mob/user)
 	var/list/data = list()
-	data["location"] = location
+	var/list/controls = list()
+
+	controls["location"] = location
+	controls["patrol_enabled"] = codes[NAVBEACON_PATROL_MODE] ? TRUE : FALSE
+	controls["patrol_next"] = codes[NAVBEACON_PATROL_NEXT]
+	controls["delivery_enabled"] = codes[NAVBEACON_DELIVERY_MODE] ? TRUE : FALSE
+	controls["delivery_direction"] = dir2text(text2num(codes[NAVBEACON_DELIVERY_DIRECTION]))
+	controls["cover_locked"] = cover_locked
+
 	data["locked"] = controls_locked
 	data["siliconUser"] = issilicon(user)
-	data["patrol_enabled"] = codes[NAVBEACON_PATROL_MODE] ? TRUE : FALSE
-	data["patrol_next"] = codes[NAVBEACON_PATROL_NEXT]
-	data["delivery_enabled"] = codes[NAVBEACON_DELIVERY_MODE] ? TRUE : FALSE
-	data["delivery_direction"] = dir2text(text2num(codes[NAVBEACON_DELIVERY_DIRECTION]))
-	data["cover_locked"] = cover_locked
+	data["controls"] = controls
+
 	return data
 
 /obj/machinery/navbeacon/ui_static_data(mob/user)
 	var/list/data = list()
+	var/list/static_controls = list()
 	var/static/list/direction_options = list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST))
-	data["direction_options"] = direction_options
-	data["has_codes"] = codes_txt
+
+	static_controls["direction_options"] = direction_options
+	static_controls["has_codes"] = codes_txt ? TRUE : FALSE
+
+	data["static_controls"] = static_controls
 	return data
 
 /obj/machinery/navbeacon/ui_act(action, params)
