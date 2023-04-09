@@ -2,9 +2,23 @@ import { useBackend } from '../backend';
 import { Box, Button, Dropdown, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { BooleanLike } from 'common/react';
+
+export type Data = {
+  locked: BooleanLike;
+  siliconUser: BooleanLike;
+  location: String;
+  patrol_enabled: BooleanLike;
+  patrol_next: String;
+  delivery_enabled: BooleanLike;
+  delivery_direction: String[];
+  direction_options;
+  has_codes;
+  cover_locked: BooleanLike;
+};
 
 export const NavBeacon = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     location,
     locked,
