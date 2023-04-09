@@ -1144,7 +1144,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "nb" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /obj/structure/sign/poster/contraband/eat{
 	pixel_x = -32
 	},
