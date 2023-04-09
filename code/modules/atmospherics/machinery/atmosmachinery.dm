@@ -370,14 +370,18 @@
 
 	var/unsafe_wrenching = FALSE
 	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+	var/empty_pipe = FALSE
+	if(!(int_air.total_moles() > 0))
+		empty_pipe = TRUE
 
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	if(!empty_pipe)
+		to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
 	if (internal_pressure > 2*ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	var/time_taken = unsafe_wrenching ? 20 : 0
+	var/time_taken = empty_pipe ? 0 : 20
 	if(I.use_tool(src, user, time_taken, volume=50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
