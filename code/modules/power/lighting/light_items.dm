@@ -22,7 +22,7 @@
 /obj/item/light/attack(mob/living/target, mob/living/user, params)
 	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER) || status != LIGHT_OK)
 		return ..()
-	var/obj/item/food/material/snack = new(null, new /datum/golem_food_buff/lightbulb())
+	var/obj/item/food/material/snack = new(null, GLOB.golem_stack_food_types[GOLEM_FOOD_LIGHTBULB])
 	snack.name = name
 	snack.material = WEAKREF(src)
 	snack.attack(target, user, params)

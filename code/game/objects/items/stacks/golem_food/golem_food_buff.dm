@@ -1,28 +1,4 @@
-/// Associated list of stack types to a golem food
-GLOBAL_LIST_INIT(golem_stack_food_directory, list(
-	/obj/item/stack/sheet/iron = new /datum/golem_food_buff/iron(),
-	/obj/item/stack/ore/iron = new /datum/golem_food_buff/iron(),
-	/obj/item/stack/sheet/glass = new /datum/golem_food_buff/glass(),
-	/obj/item/stack/sheet/mineral/uranium = new /datum/golem_food_buff/uranium(),
-	/obj/item/stack/ore/uranium = new /datum/golem_food_buff/uranium(),
-	/obj/item/stack/sheet/mineral/silver = new /datum/golem_food_buff/silver(),
-	/obj/item/stack/ore/silver = new /datum/golem_food_buff/silver(),
-	/obj/item/stack/sheet/mineral/plasma = new /datum/golem_food_buff/plasma(),
-	/obj/item/stack/ore/plasma = new /datum/golem_food_buff/plasma(),
-	/obj/item/stack/sheet/mineral/gold = new /datum/golem_food_buff/gold(),
-	/obj/item/stack/ore/gold = new /datum/golem_food_buff/gold(),
-	/obj/item/stack/sheet/mineral/diamond = new /datum/golem_food_buff/diamond(),
-	/obj/item/stack/ore/diamond = new /datum/golem_food_buff/diamond(),
-	/obj/item/stack/sheet/mineral/titanium = new /datum/golem_food_buff/titanium(),
-	/obj/item/stack/ore/titanium = new /datum/golem_food_buff/titanium(),
-	/obj/item/stack/sheet/plasteel = new /datum/golem_food_buff/plasteel(),
-	/obj/item/stack/ore/bananium = new /datum/golem_food_buff/bananium(),
-	/obj/item/stack/sheet/mineral/bananium = new /datum/golem_food_buff/bananium(),
-	/obj/item/stack/ore/bluespace_crystal = new /datum/golem_food_buff/bluespace(),
-	/obj/item/stack/ore/bluespace_crystal/refined = new /datum/golem_food_buff/bluespace(),
-	/obj/item/stack/ore/bluespace_crystal/artificial = new /datum/golem_food_buff/bluespace(),
-	/obj/item/stack/sheet/bluespace_crystal = new /datum/golem_food_buff/bluespace(),
-))
+
 // TODO: make this a two stage key/value thing so i dont have several instances of the same datum probably
 
 /// An effect you gain from eating minerals

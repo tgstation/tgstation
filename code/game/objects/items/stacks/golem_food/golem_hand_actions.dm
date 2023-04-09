@@ -32,7 +32,7 @@
 		to_chat(user, span_warning("[src] fizzles, it was a dud!"))
 		qdel(src)
 		return TRUE | AFTERATTACK_PROCESSED_ITEM
-	// TODO: sound
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
 	held_gibtonite.GibtoniteReaction(user)

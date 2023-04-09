@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/attack(mob/living/target, mob/living/user, params)
 	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
 		return ..()
-	var/obj/item/food/material/snack = new(null, new /datum/golem_food_buff/gibtonite())
+	var/obj/item/food/material/snack = new(null, GLOB.golem_stack_food_types[GOLEM_FOOD_GIBTONITE])
 	snack.name = name
 	snack.material = WEAKREF(src)
 	snack.consume_food = FALSE
