@@ -25,11 +25,11 @@
 	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
-	for(var/X in GLOB.xeno_spawn)
-		var/turf/T = X
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			spawn_locs += T
+	for(var/spawn_area in GLOB.generic_maintenance_landmarks)
+		var/turf/spawn_turf = get_turf(spawn_area)
+		var/light_amount = spawn_turf.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && is_safe_turf(spawn_turf))
+			spawn_locs += spawn_turf
 
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")

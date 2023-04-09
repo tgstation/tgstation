@@ -749,6 +749,13 @@
 		invisible_man.emote("laugh")
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time, required_organtype = affected_organtype)
 
+/datum/reagent/drug/saturnx/stable
+	name = "Stabilized Saturn-X"
+	description = "A chemical extract originating from the Saturn-X compound, stabilized and safer for tactical use. After the recipe was discovered, it was planned to be put into mass production, but the program fell apart after its lead disappeared and was never seen again."
+	metabolization_rate = 0.15 * REAGENTS_METABOLISM
+	overdose_threshold = 50
+	addiction_types = list(/datum/addiction/maintenance_drugs = 35)
+
 /datum/reagent/drug/kronkaine
 	name = "Kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
