@@ -177,7 +177,7 @@
 /turf/open/floor/engine/air,
 /area/ruin/space/has_grav/atmosasteroid)
 "nB" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
 /turf/open/floor/iron/co2_pressurized,
@@ -256,8 +256,8 @@
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/atmosasteroid)
 "sp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/turf_decal/tile/yellow/half,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "tC" = (
@@ -281,6 +281,7 @@
 	},
 /obj/structure/window,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "tL" = (
@@ -332,6 +333,11 @@
 "zH" = (
 /obj/machinery/power/turbine/core_rotor,
 /turf/open/misc/asteroid,
+/area/ruin/space/has_grav/atmosasteroid)
+"zM" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -392,11 +398,11 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "Dw" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
@@ -501,7 +507,9 @@
 /area/ruin/space/has_grav/atmosasteroid)
 "LI" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/tank_holder/extinguisher/advanced,
+/obj/structure/tank_holder/extinguisher/advanced{
+	anchored = 1
+	},
 /turf/open/floor/iron/dark/side/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "LJ" = (
@@ -543,10 +551,10 @@
 /turf/open/floor/iron/co2_pressurized,
 /area/ruin/space/has_grav/atmosasteroid)
 "Ns" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/green{
+/obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow/half{
+/obj/machinery/atmospherics/pipe/layer_manifold/green/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/co2_pressurized,
@@ -918,7 +926,7 @@ af
 KT
 zD
 Cb
-zd
+zM
 NP
 hj
 gG
@@ -1018,7 +1026,7 @@ tC
 pw
 kB
 Cb
-zd
+zM
 om
 vG
 gG

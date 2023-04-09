@@ -352,7 +352,7 @@
 /area/shuttle/escape)
 "uF" = (
 /obj/structure/rack,
-/obj/item/latexballon{
+/obj/item/latexballoon{
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/titanium,
