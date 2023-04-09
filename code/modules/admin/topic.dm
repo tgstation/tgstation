@@ -1487,7 +1487,7 @@
 	else if(href_list["ctf_toggle"])
 		if(!check_rights(R_ADMIN))
 			return
-		toggle_id_ctf(usr, "centcom")
+		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
 
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))
