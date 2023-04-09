@@ -110,11 +110,11 @@
 	item_path = /obj/item/gun/magic/staff/change
 	category = "Offensive"
 
-/datum/spellbook_entry/item/mjolnir
+/*/datum/spellbook_entry/item/mjolnir //monkestation edit: replaced with the spell summon mjollnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/mjollnir
-	category = "Offensive"
+	category = "Offensive"*/
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"

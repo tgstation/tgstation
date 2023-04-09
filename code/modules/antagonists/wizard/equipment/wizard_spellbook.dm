@@ -247,7 +247,7 @@
 			)
 		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx1>1, Mutate>2, Force Wall>1, Blink>2, tesla>2) = 10
 			wanted_spells = list(
-				/datum/spellbook_entry/item/mjolnir = 1,
+				/datum/spellbook_entry/summon_mjollnir = 1, //monkestation edit: replaced item/mjollnir with summon_mjollnir
 				/datum/spellbook_entry/summonitem = 1,
 				/datum/spellbook_entry/mutate = 1,
 				/datum/spellbook_entry/forcewall = 1,

@@ -143,7 +143,7 @@
 
 /datum/spellbook_entry/item/battlemage_charge
 	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a battlemage shield."
+	desc = "A powerful defensive rune, it will grant twelve additional charges to a battlemage shield." //monkestation edit: reaplced eight with twelve
 	item_path = /obj/item/wizard_armour_charge
 	category = "Defensive"
 	cost = 1
