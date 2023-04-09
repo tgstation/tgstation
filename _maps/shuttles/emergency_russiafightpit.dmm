@@ -124,7 +124,7 @@
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aw" = (
 /obj/machinery/flasher/directional/north{
@@ -168,14 +168,14 @@
 	id = "shuttle_flasher"
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aH" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aI" = (
 /obj/machinery/door/airlock/security/glass{
@@ -222,7 +222,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aQ" = (
 /obj/effect/decal/cleanable/robot_debris/old,
@@ -552,12 +552,12 @@
 	id = "shuttle_flasher";
 	pixel_x = -24
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Jl" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 
 (1,1,1) = {"

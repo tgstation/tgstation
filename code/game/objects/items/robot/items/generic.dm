@@ -322,7 +322,7 @@
 
 	if(safety == TRUE)
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
-			span_userdanger("The siren pierces your hearing and confuses you!"), \
+			span_userdanger("Your siren blares around [iscyborg(user) ? "you" : "and confuses you"]!"), \
 			span_danger("The siren pierces your hearing!"))
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
 			if(carbon.get_ear_protection())

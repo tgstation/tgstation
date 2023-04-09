@@ -90,6 +90,8 @@
 #define FREQ_SIGNALER 1457 // the default for new signalers
 #define FREQ_COMMON 1459 // Common comms frequency, dark green
 
+#define MIN_UNUSED_FREQ 1461 // Prevents rolling AI Private or Common
+
 #define MAX_FREQ 1489 // ------------------------------------------------------
 
 #define MAX_FREE_FREQ 1599 // -------------------------------------------------

@@ -226,6 +226,9 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "as" = (
@@ -555,6 +558,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bt" = (
@@ -562,7 +566,7 @@
 	name = "Holding Area"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bu" = (
 /obj/machinery/door/airlock/command/glass{
@@ -583,16 +587,16 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape/brig)
 "bw" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bz" = (
 /obj/item/kirbyplants{
@@ -639,7 +643,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bF" = (
 /obj/effect/turf_decal/tile/red{
@@ -682,18 +686,18 @@
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -719,6 +723,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bT" = (
@@ -731,13 +738,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bV" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
 /obj/item/radio/intercom/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bW" = (
 /obj/structure/table/reinforced,
@@ -871,7 +878,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "cH" = (
 /obj/effect/turf_decal/bot,
@@ -895,6 +902,17 @@
 "hB" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"ii" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "jU" = (
 /obj/structure/chair/office{
@@ -933,6 +951,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"nJ" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/camera/autoname,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"pd" = (
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "pR" = (
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/regular{
@@ -1137,7 +1166,7 @@ av
 cA
 aE
 af
-bw
+pd
 bE
 bM
 bU
@@ -1259,7 +1288,7 @@ av
 av
 av
 nD
-bo
+nJ
 af
 by
 bw
@@ -1312,7 +1341,7 @@ nD
 aw
 nB
 aw
-hg
+ii
 aw
 nD
 aw

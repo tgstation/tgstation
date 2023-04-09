@@ -327,6 +327,12 @@
 		/turf/closed/mineral/gibtonite/volcanic = 4,
 	)
 
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/random/volcanic/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
 	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
@@ -360,6 +366,12 @@
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
+
+/// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/closed/mineral/random/snow/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -587,6 +599,12 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/// This snowy mountain will never be scraped away for any reason what so ever.
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable
+	turf_flags = IS_SOLID | NO_CLEARING
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+
 /turf/closed/mineral/snowmountain/cavern
 	name = "ice cavern rock"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
@@ -614,14 +632,12 @@
 
 /turf/closed/mineral/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon_state = "redrock"
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 
 /turf/closed/mineral/random/stationside/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 

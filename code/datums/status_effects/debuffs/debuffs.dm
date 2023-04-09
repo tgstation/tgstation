@@ -195,11 +195,12 @@
 			healing += 0.1
 
 		// don't forget the bedsheet
-		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
-				continue
+		if(locate(/obj/item/bedsheet) in owner.loc)
 			healing += 0.1
-			break //Only count the first bedsheet
+
+		// you forgot the pillow
+		if(locate(/obj/item/pillow) in owner.loc)
+			healing += 0.1
 
 		if(healing > 0 && health_ratio > 0.8)
 			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -908,3 +909,13 @@
 /datum/status_effect/discoordinated/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
 	return ..()
+
+///Maddly teleports the victim around all of space for 10 seconds
+/datum/status_effect/teleport_madness
+	id = "teleport_madness"
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 0.1 SECONDS
+
+/datum/status_effect/teleport_madness/tick()
+	dump_in_space(owner)

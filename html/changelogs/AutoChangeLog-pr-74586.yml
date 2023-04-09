@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "You can no longer escape the wrath of the honkmother by climbing onto a cyborg."
+  - bugfix: "Shooting a pair of piggybacked players with a penetrator round will penetrate both players."
