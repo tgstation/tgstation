@@ -68,7 +68,7 @@
 		return
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
-		playsound(turf, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1, vary = sound_vary)
+		playsound(turf, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 		return
 
 	if(iscarbon(source))
@@ -101,7 +101,7 @@
 	if(!source_loc)
 		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source_loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
+		playsound(source_loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 		return
 	var/turf_footstep
 	switch(footstep_type)
@@ -115,7 +115,7 @@
 			turf_footstep = source_loc.footstep
 	if(!turf_footstep)
 		return
-	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
@@ -145,7 +145,7 @@
 		heard_clients = playsound(source_loc, pick(footstep_sounds[source_loc.footstep][1]),
 			footstep_sounds[source_loc.footstep][2] * volume * volume_multiplier,
 			TRUE,
-			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 	else
 		if(source.dna.species.special_step_sounds)
 			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
@@ -155,7 +155,7 @@
 			heard_clients = playsound(source_loc, pick(bare_footstep_sounds[source_loc.barefootstep][1]),
 				bare_footstep_sounds[source_loc.barefootstep][2] * volume * volume_multiplier,
 				TRUE,
-				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
@@ -171,6 +171,6 @@
 	var/turf/open/source_loc = get_turf(source)
 	if(!istype(source_loc))
 		return
-	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
 #undef SHOULD_DISABLE_FOOTSTEPS

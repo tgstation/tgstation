@@ -12,3 +12,10 @@
 
 	///the stored patreon rank of this user
 	var/patreon_rank = NO_RANK
+
+	///sound storage
+	var/datum/ui_module/volume_mixer/pref_mixer
+
+	var/list/channel_volume = list(
+		"1019" = 100,
+	)
