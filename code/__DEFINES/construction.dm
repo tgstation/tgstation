@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(crafting_category, list(
 #define RCD_UPGRADE_FURNISHING (1<<3)
 
 #define RPD_UPGRADE_UNWRENCH (1<<0)
+#define RPD_UPGRADE_INSTANT (1<<1)
 
 #define RCD_WINDOW_FULLTILE "full tile"
 #define RCD_WINDOW_DIRECTIONAL "directional"

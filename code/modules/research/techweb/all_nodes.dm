@@ -1482,6 +1482,7 @@
 		"rcd_upgrade_furnishing",
 		"rcd_upgrade_simple_circuits",
 		"rpd_upgrade_unwrench",
+		"rpd_upgrade_instant"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

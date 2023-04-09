@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
-	name = "Rapid Pipe Dispenser"
+	name = "rapid pipe dispenser"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
@@ -240,8 +240,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/disposal_build_speed = 0.5 SECONDS
 	///Speed of building transit devices
 	var/transit_build_speed = 0.5 SECONDS
-	///Speed of removal of unwrenched devices
-	var/destroy_speed = 0.5 SECONDS
 	///Speed of reprogramming connectable directions of smart pipes
 	var/reprogram_speed = 0.5 SECONDS
 	///Category currently active (Atmos, disposal, transit)
@@ -311,15 +309,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	ui_interact(user)
 
 /obj/item/pipe_dispenser/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rpd_upgrade/unwrench))
+	if(istype(target, /obj/item/rpd_upgrade))
 		install_upgrade(target, user)
 		return TRUE
 	return ..()
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(istype(target, /obj/machinery/air_sensor))
-		if(!do_after(user, destroy_speed, target))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		qdel(target)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -357,6 +353,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		balloon_alert(user, "already installed!")
 		return
 	upgrade_flags |= rpd_up.upgrade_flags
+	if(upgrade_flags & RPD_UPGRADE_INSTANT)
+		atmos_build_speed = 0
+		disposal_build_speed = 0
+		transit_build_speed = 0
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
@@ -511,9 +511,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-		if(do_after(user, destroy_speed, target = attack_target))
-			activate()
-			qdel(attack_target)
+		activate()
+		qdel(attack_target)
 		return
 
 	if(mode & REPROGRAM_MODE)
@@ -736,3 +735,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+
+/obj/item/rpd_upgrade/instant
+	desc = "Upgrades the RPD's processor allowing instant fabrication of pipes and devices."
+	upgrade_flags = RPD_UPGRADE_INSTANT
