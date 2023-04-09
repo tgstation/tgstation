@@ -40,7 +40,7 @@
 
 	if(!length(starting_areas))
 		log_test("No starting areas found, defaulting...")
-		for(var/area/starting_area as anything in starting_areas)
+		for(var/area/starting_area as anything in default_starting_areas)
 			var/area/station_area = GLOB.areas_by_type[starting_area]
 			if(!isnull(station_area))
 				starting_areas += station_area
