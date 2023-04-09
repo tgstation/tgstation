@@ -1139,6 +1139,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
+"sP" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/kitchen)
 "sX" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4744,7 +4748,7 @@ yg
 LE
 Cc
 IN
-do
+sP
 cT
 bG
 ma
