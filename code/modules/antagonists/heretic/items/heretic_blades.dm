@@ -21,6 +21,13 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
 
+/obj/item/melee/sickly_blade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/butchering, \
+	speed = 3 SECONDS, \
+	effectiveness = 95, \
+	)
+
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
