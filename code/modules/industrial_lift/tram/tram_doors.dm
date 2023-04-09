@@ -67,7 +67,7 @@
 		if("close")
 			if((obj_flags & EMAGGED) || malfunctioning)
 				flick("[base_state]spark", src)
-				playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 				sleep(6 DECISECONDS)
 			playsound(src, 'sound/machines/tramclose.ogg', vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			do_animate("closing")
