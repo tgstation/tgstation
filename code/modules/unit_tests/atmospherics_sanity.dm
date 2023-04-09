@@ -34,15 +34,14 @@
 	var/static/list/area/default_starting_areas = list(
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/engineering/atmos,
-		/area/station/hallway/secondary/entry,
-		/area/station/hallway/secondary/exit,
 		/area/station/medical/virology,
 		/area/station/science/xenobiology,
 		)
 
 	if(!length(starting_areas))
+		log_test("No starting areas found, defaulting...")
 		for(var/area/starting_area as anything in starting_areas)
-			var/area/station_area = GLOB.areas_by_type[station_area_type]
+			var/area/station_area = GLOB.areas_by_type[starting_area]
 			if(!isnull(station_area))
 				starting_areas += station_area
 
@@ -52,6 +51,7 @@
 	if(!isnull(mark_all_station_areas_marker))
 		log_world("Marking all station areas as goal areas due to marker at ([mark_all_station_areas_marker.x], [mark_all_station_areas_marker.y], [mark_all_station_areas_marker.z])")
 		mark_station_areas_as_goals()
+
 	else
 		for(var/obj/effect/landmark/atmospheric_sanity/goal_area/goal_marker in GLOB.landmarks_list)
 			var/area/goal_area = get_area(goal_marker)
@@ -65,6 +65,10 @@
 				TEST_FAIL("Atmospherics sanity goal marker in space at ([goal_marker.x], [goal_marker.y], [goal_marker.z])")
 				continue
 			remaining_areas |= get_area(goal_marker)
+
+		if(!length(remaining_areas))
+			log_test("No goal areas found, defaulting...")
+			mark_station_areas_as_goals()
 
 /datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
 	// We don't want to check these areas
