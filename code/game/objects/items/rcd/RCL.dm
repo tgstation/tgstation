@@ -1,3 +1,5 @@
+//RAPID PIPE CLEANER
+
 /obj/item/rcl
 	name = "rapid pipe cleaner layer"
 	desc = "A device used to rapidly deploy pipe cleaners. It has screws on the side which can be removed to slide off the pipe cleaners. Do not use without insulation!"
@@ -80,6 +82,7 @@
 				return
 			else
 				loaded = W //W.loc is src at this point.
+				loaded.set_pipecleaner_color(colors[current_color_index])
 				loaded.max_amount = max_amount //We store a lot.
 				return
 
@@ -107,10 +110,11 @@
 	return ..()
 
 /obj/item/rcl/update_icon_state()
+	. = ..()
 	if(!loaded)
 		icon_state = "rcl-0"
 		inhand_icon_state = "rcl-0"
-		return ..()
+		return
 	switch(loaded.amount)
 		if(61 to INFINITY)
 			icon_state = "rcl-30"
@@ -124,7 +128,6 @@
 		else
 			icon_state = "rcl-0"
 			inhand_icon_state = "rcl-0"
-	return ..()
 
 /obj/item/rcl/proc/is_empty(mob/user, loud = 1)
 	update_appearance()
@@ -182,11 +185,11 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, span_warning("\The [src] is empty!"))
+		balloon_alert(user, "its empty!")
 		return
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
-		to_chat(user, span_warning("[src]'s wires jam!"))
+		balloon_alert(user, "wires jam!")
 		active = FALSE
 		return
 	else
@@ -205,8 +208,6 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.color = GLOB.cable_colors[colors[current_color_index]]
-		loaded.update_appearance()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_appearance()
@@ -278,9 +279,6 @@
 	if(!T.can_have_cabling())
 		return
 
-	loaded.color = GLOB.cable_colors[colors[current_color_index]]
-	loaded.update_appearance()
-
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
 		if(choice != linkingCable.d2)
@@ -312,8 +310,7 @@
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.color = GLOB.cable_colors[colors[current_color_index]]
-			loaded.update_appearance()
+			loaded.set_pipecleaner_color(colors[current_color_index])
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))
