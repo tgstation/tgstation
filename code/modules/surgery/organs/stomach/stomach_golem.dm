@@ -74,8 +74,12 @@
 /// Uh oh, you can't move, yell for help
 /datum/status_effect/golem_statued
 	id = "golem_statued"
-	// TODO: screen alert
-	// TODO: should probably be visible on examine
+	alert_type = /atom/movable/screen/alert/status_effect/golem_statued
+
+/atom/movable/screen/alert/status_effect/golem_statued
+	name = "Statued"
+	desc = "You no longer have the energy to move your body!"
+	icon_state = "golem_statued"
 
 /datum/status_effect/golem_statued/on_apply()
 	. = ..()
@@ -83,9 +87,16 @@
 		return FALSE
 	owner.visible_message(span_warning("[owner] siezes up and becomes as rigid as a statue!"), span_warning("Your limbs fall still. You no longer have enough energy to move!"))
 	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
 	return TRUE
+
+/// Let everyone know you need help
+/datum/status_effect/golem_statued/proc/on_examined(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	examine_text += span_warning("They are as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()
 	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))
 	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	return ..()
