@@ -507,6 +507,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
+"iY" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/cargobay)
 "ja" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -756,6 +760,10 @@
 /obj/structure/sign/warning/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"mV" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation)
 "nc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/tactical,
@@ -1077,6 +1085,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/dorms)
+"rI" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/cargooffice)
 "rK" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1318,6 +1330,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
+"wM" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/dorms)
 "wW" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 8
@@ -1840,6 +1856,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
+"HS" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/qm)
 "Id" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron,
@@ -2238,6 +2258,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
+"NI" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/waystation/securestorage)
 "NK" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/tank/air{
@@ -2245,6 +2269,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
+"NT" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall,
+/area/ruin/space/has_grav/waystation/power)
 "Of" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/light/small/directional/south,
@@ -2876,6 +2904,10 @@
 "Ya" = (
 /turf/template_noop,
 /area/template_noop)
+"Ye" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/mineral/random/low_chance,
+/area/ruin/space)
 "Yj" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 8
@@ -3923,7 +3955,7 @@ QN
 QN
 QN
 QN
-QN
+HS
 QN
 QN
 pK
@@ -4161,7 +4193,7 @@ Ud
 Ls
 Ls
 Ud
-Ls
+wM
 Ls
 Ud
 QN
@@ -4172,7 +4204,7 @@ uF
 TT
 TT
 TT
-TT
+mV
 TT
 pK
 pK
@@ -4299,7 +4331,7 @@ ym
 bN
 TT
 pK
-pK
+Ye
 pK
 iJ
 iJ
@@ -4642,7 +4674,7 @@ iJ
 pK
 pK
 pK
-yg
+NT
 iT
 Wm
 zd
@@ -4974,7 +5006,7 @@ UG
 UG
 UG
 UG
-UG
+rI
 UG
 mr
 mr
@@ -5386,7 +5418,7 @@ pK
 pK
 pK
 pK
-yi
+NI
 Ok
 ub
 er
@@ -5595,7 +5627,7 @@ KW
 BZ
 IQ
 mr
-mr
+iY
 ur
 ur
 ur
