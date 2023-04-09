@@ -77,6 +77,10 @@
 		return FALSE
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
+	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST]
+	if(whitelist && !is_type_in_typecache(object, whitelist))
+		return FALSE
+
 	return TRUE // It's in our way, let's get it out of our way
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target

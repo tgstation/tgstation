@@ -1,0 +1,5 @@
+author: "Somepan"
+delete-after: True
+changes:
+  - rscadd: "Added a message upon being hit by any spectral instruments"
+  - balance: "Reduced the stamina damage dealt by spectral instruments from 25 to 18 making it transform after 6 hits instead of 4"

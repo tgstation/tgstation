@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Carp can't teleport as far, but can do it more frequently. People who piggyback through their rifts will be blocked from attacking for a short duration (the same as the normal attack cooldown)."
+  - balance: "AI controlled carp will now be more selective about which objects they smash. Player controlled carp (or carp directly instructed to attack objects by people who have tamed them) can still attack whatever they like."
