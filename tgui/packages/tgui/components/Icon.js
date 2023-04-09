@@ -37,10 +37,16 @@ export const Icon = (props) => {
     // font awesome icon
     const faRegular = FA_OUTLINE_REGEX.test(name);
     const faName = name.replace(FA_OUTLINE_REGEX, '');
-    // prettier-ignore
-    iconClass = (faRegular ? 'far ' : 'fas ')
-      + 'fa-' + faName
-      + (spin ? ' fa-spin' : '');
+    const preprendFa = !faName.startsWith('fa-');
+
+    iconClass = faRegular ? 'far ' : 'fas ';
+    if (preprendFa) {
+      iconClass += 'fa-';
+    }
+    iconClass += faName;
+    if (spin) {
+      iconClass += ' fa-spin';
+    }
   }
   return (
     <i

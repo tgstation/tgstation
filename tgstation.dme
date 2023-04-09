@@ -101,6 +101,7 @@
 #include "code\__DEFINES\fishing.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\flora.dm"
+#include "code\__DEFINES\font_awesome_icons.dm"
 #include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
