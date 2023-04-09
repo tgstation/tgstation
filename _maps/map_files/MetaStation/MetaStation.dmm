@@ -19141,11 +19141,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
-"haL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/oven,
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "haP" = (
 /obj/structure/chair{
 	dir = 1
@@ -29783,7 +29778,6 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/potty,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -103738,7 +103732,7 @@ qgO
 gwc
 mDg
 rrb
-haL
+bpn
 xGH
 mVc
 rKw
