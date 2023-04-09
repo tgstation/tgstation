@@ -698,18 +698,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
-
-/obj/effect/landmark/atmospheric_sanity
-	name = "Atmospheric Sanity Landmark (broken?)"
-
-/obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal
-	name = "Atmospheric Sanity Mark All Station Areas as a Goal"
-	icon_state = "atmos_sanity_station_goal"
-
-/obj/effect/landmark/atmospheric_sanity/start_area
-	name = "Atmospheric Sanity Start"
-	icon_state = "atmos_sanity_start"
-
-/obj/effect/landmark/atmospheric_sanity/goal_area
-	name = "Atmospheric Sanity Goal"
-	icon_state = "atmos_sanity_goal"

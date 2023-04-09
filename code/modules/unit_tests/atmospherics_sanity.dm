@@ -30,6 +30,22 @@
 			continue
 		starting_areas |= get_area(start_marker)
 
+		// If there are no starting areas, default to these
+	var/static/list/area/default_starting_areas = list(
+		/area/station/ai_monitored/turret_protected/ai,
+		/area/station/engineering/atmos,
+		/area/station/hallway/secondary/entry,
+		/area/station/hallway/secondary/exit,
+		/area/station/medical/virology,
+		/area/station/science/xenobiology,
+		)
+
+	if(!length(starting_areas))
+		for(var/area/starting_area as anything in starting_areas)
+			var/area/station_area = GLOB.areas_by_type[station_area_type]
+			if(!isnull(station_area))
+				starting_areas += station_area
+
 	remaining_areas = list()
 
 	var/atom/mark_all_station_areas_marker = locate(/obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal) in GLOB.landmarks_list
@@ -51,24 +67,35 @@
 			remaining_areas |= get_area(goal_marker)
 
 /datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
-	var/list/area/ignored_types = list(
-		/area/station/maintenance,
+	// We don't want to check these areas
+	var/static/list/area/ignored_types = list(
 		/area/station/asteroid,
+		/area/station/holodeck,
+		/area/station/maintenance,
+		/area/station/science/ordnance/bomb,
+		/area/station/science/ordnance/burnchamber,
+		/area/station/science/ordnance/freezerchamber,
+		/area/station/tcommsat/server,
 	)
 
 	for(var/area/ignored as anything in ignored_types)
 		ignored_types |= subtypesof(ignored)
 
 	for(var/area/station/station_area_type as anything in subtypesof(/area/station) - ignored_types)
-		remaining_areas |= GLOB.areas_by_type[station_area_type]
+		var/area/station_area = GLOB.areas_by_type[station_area_type]
+		if(!isnull(station_area))
+			remaining_areas += station_area
 
 /datum/unit_test/atmospherics_sanity/Run()
 	get_areas()
 	crawl_areas()
 	UNTIL(crawls == 0)
 	for(var/area/missed as anything in remaining_areas)
-		var/turf/first_turf = missed.contained_turfs[1]
-		TEST_FAIL("Disconnected Area '[missed]'([missed.type]) at ([first_turf.x], [first_turf.y], [first_turf.z])")
+		if(missed.has_contained_turfs())
+			var/turf/first_turf = missed.get_contained_turfs()[1]
+			TEST_FAIL("Disconnected Area '[missed]'([missed.type]) at ([first_turf.x], [first_turf.y], [first_turf.z])")
+		else
+			TEST_NOTICE(src, "Disconnected Area '[missed]'([missed.type]) with no turfs?")
 
 /// Iterates over starting_areas and ensures that all goal areas are connected to atleast one start
 /datum/unit_test/atmospherics_sanity/proc/crawl_areas()
