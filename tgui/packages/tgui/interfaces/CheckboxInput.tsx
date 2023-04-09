@@ -65,6 +65,7 @@ export const CheckboxInput = (props, context) => {
                           selections.length >= max_checked &&
                           !selections.includes(item)
                         }
+                        fluid
                         onClick={() => selectItem(item)}>
                         {item}
                       </Button.Checkbox>
