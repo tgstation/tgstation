@@ -81,21 +81,6 @@
 		return FALSE
 	return ..()
 
-
-/obj/structure/closet/crate/necropolis/tendril/stone
-	desc = "An ancient chest made from the same evil stone as the Necropolis. You need a skeleton key to open it."
-	icon_state = "necro_stone"
-
-/obj/structure/closet/crate/necropolis/tendril/stone/closet_update_overlays(list/new_overlays)
-	. = new_overlays
-	if(opened)
-		var/mutable_appearance/lid = mutable_appearance(icon = 'icons/obj/storage/crateslarge.dmi', icon_state = "necro_stone_lid")
-		lid.pixel_x = -16
-		lid.pixel_y = 0
-		lid.layer = layer
-		. += lid
-	. += ..()
-
 //Megafauna chests
 
 /obj/structure/closet/crate/necropolis/dragon
