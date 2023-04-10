@@ -12,7 +12,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	icon_state = "solaire"
-	base_icon_state = "solaire"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/armor/riot/chaplain/solaire
@@ -21,4 +20,3 @@
 	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon = 'monkestation/icons/obj/clothing/suits.dmi'
 	icon_state = "solaire"
-	base_icon_state = "solaire"
