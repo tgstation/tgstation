@@ -45,7 +45,7 @@
 	desc = "One shudders to imagine the inhuman thoughts that lie underneath that mask."
 	icon = 'monkestation/icons/obj/clothing/masks.dmi'
 	icon_state = "ook"
-	worn_icon = "ook"
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternative_screams = list(	'sound/creatures/monkey/monkey_screech_1.ogg',
 								'sound/creatures/monkey/monkey_screech_2.ogg',
