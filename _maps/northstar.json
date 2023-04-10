@@ -10,8 +10,8 @@
 		"cargo": "cargo_northstar",
 		"whiteship": "whiteship_delta"
 	},
-	"space_ruin_levels": 3,
-	"space_empty_levels": 1,
+	"space_ruin_levels": 0,
+	"space_empty_levels": 2,
 	"traits": [
 		{
 			"Up": 1,
