@@ -7448,6 +7448,12 @@
 /obj/effect/mapping_helpers/mail_sorting/science/genetics,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"cST" = (
+/obj/structure/window{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/station/service/theater)
 "cTj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42621,6 +42627,9 @@
 "pFt" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
+/obj/structure/window{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "pFG" = (
@@ -58722,6 +58731,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"vos" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/station/service/theater)
 "vpg" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -103646,8 +103663,8 @@ ydq
 vmE
 unL
 gcW
-yaO
-aON
+vos
+cST
 uLA
 bPd
 wjx
