@@ -37,3 +37,11 @@
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "phantom_jumpsuit"
 	can_adjust = FALSE
+
+
+/obj/item/clothing/under/dress/shrine_priestess
+	name = "shrine priestess kimono"
+	desc = "Ceremonial garb worn by shrine priestesses."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "shrine_priestess"

@@ -453,3 +453,8 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Blood-red pajamas"
 	item_path = /obj/item/clothing/under/bloodred
 	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/shrine
+	name = "Shrine Priestess Kimono"
+	item_path = /obj/item/clothing/under/dress/shrine_priestess
+	item_cost = 5000
