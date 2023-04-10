@@ -1,3 +1,4 @@
+///The amount of vests that you get by default to use, lowers as you use them.
 #define STARTING_VEST_AMOUNT 2
 
 /**
