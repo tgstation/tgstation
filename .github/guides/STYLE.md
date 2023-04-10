@@ -211,7 +211,7 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Use descriptive and obvious names
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
-#### Any time variable or argument that uses a unit of time other than decisecond must include the unit of time in the name.
+#### Any variable or argument that holds time and uses a unit of time other than decisecond must include the unit of time in the name.
 For example, a proc argument named `delta_time` that marks the seconds between fires could confuse somebody who assumes it stores deciseconds. Naming it `delta_time_seconds` makes this clearer, naming it `seconds_per_tick` makes its purpose even clearer.
 
 ### Don't use abbreviations
