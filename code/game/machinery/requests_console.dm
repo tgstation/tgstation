@@ -4,9 +4,8 @@
 GLOBAL_LIST_EMPTY(req_console_assistance)
 GLOBAL_LIST_EMPTY(req_console_supplies)
 GLOBAL_LIST_EMPTY(req_console_information)
-GLOBAL_LIST_EMPTY(allConsoles)
+GLOBAL_LIST_EMPTY(req_console_all)
 GLOBAL_LIST_EMPTY(req_console_ckey_departments)
-
 
 #define REQ_SCREEN_MAIN 0
 #define REQ_SCREEN_REQ_ASSISTANCE 1
@@ -44,7 +43,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	/// List of all messages
 	var/list/messages = list()
 	/// Priority of the latest message
-	var/newmessagepriority = REQ_NO_NEW_MESSAGE
+	var/new_message_priority = REQ_NO_NEW_MESSAGE
 	/*
 	Define for the currently displayed page
 		0 = main menu,
@@ -63,17 +62,17 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	// Is the console silent? Set to TRUE for it not to beep all the time
 	var/silent = FALSE
 	// Is the console hacked? Enables EXTREME priority if TRUE
-	var/hackState = FALSE
+	var/hack_state = FALSE
 	/// FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
-	var/announcementConsole = FALSE
+	var/can_send_announcements = FALSE
 	// TRUE if maintenance panel is open
 	var/open = FALSE
 	/// Will be set to TRUE when you authenticate yourself for announcements
-	var/announceAuth = FALSE
+	var/announcement_authenticated = FALSE
 	/// Will contain the name of the person who verified it
-	var/msgVerified = ""
+	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
-	var/msgStamped = ""
+	var/message_stamped_by = ""
 	/// The message to be sent
 	var/message = ""
 	/// The department which will be receiving the message
@@ -115,7 +114,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	else
 		. += span_warning("The panel was pried open, you can close it with <b>a crowbar</b>.")
 
-	if(hackState)
+	if(hack_state)
 		. += span_warning("The console seems to have been tampered with!")
 
 /obj/machinery/requests_console/update_overlays()
@@ -129,11 +128,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	var/screen_state
 
-	if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
+	if(emergency || (new_message_priority == REQ_EXTREME_MESSAGE_PRIORITY))
 		screen_state = "[base_icon_state]3"
-	else if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
+	else if(new_message_priority == REQ_HIGH_MESSAGE_PRIORITY)
 		screen_state = "[base_icon_state]2"
-	else if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
+	else if(new_message_priority == REQ_NORMAL_MESSAGE_PRIORITY)
 		screen_state = "[base_icon_state]1"
 	else
 		screen_state = "[base_icon_state]0"
@@ -160,7 +159,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		else
 			name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
 
-	GLOB.allConsoles += src
+	GLOB.req_console_all += src
 
 	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
 		GLOB.req_console_assistance += department
@@ -178,7 +177,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
-	GLOB.allConsoles -= src
+	GLOB.req_console_all -= src
+	GLOB.req_console_assistance -= src
+	GLOB.req_console_supplies -= src
+	GLOB.req_console_information -= src
 	return ..()
 
 /obj/machinery/requests_console/ui_interact(mob/user)
@@ -187,12 +189,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(!open)
 		switch(screen)
 			if(REQ_SCREEN_MAIN)
-				announceAuth = FALSE
-				if (newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
+				announcement_authenticated = FALSE
+				if (new_message_priority == REQ_NORMAL_MESSAGE_PRIORITY)
 					dat += "<div class='notice'>There are new messages</div><BR>"
-				else if (newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
+				else if (new_message_priority == REQ_HIGH_MESSAGE_PRIORITY)
 					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
-				else if (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY)
+				else if (new_message_priority == REQ_EXTREME_MESSAGE_PRIORITY)
 					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
 				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_VIEW_MSGS]'>View Messages</A><BR><BR>"
 
@@ -207,7 +209,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				else
 					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
 
-				if(announcementConsole)
+				if(can_send_announcements)
 					dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_ANNOUNCE]'>Send Station-wide Announcement</A><BR><BR>"
 				if (silent)
 					dat += "Speaker <A href='?src=[REF(src)];setSilent=0'>OFF</A>"
@@ -234,12 +236,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
 
 			if(REQ_SCREEN_VIEW_MSGS)
-				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
+				for (var/obj/machinery/requests_console/Console in GLOB.req_console_all)
 					if (Console.department == department)
-						Console.newmessagepriority = REQ_NO_NEW_MESSAGE
+						Console.new_message_priority = REQ_NO_NEW_MESSAGE
 						Console.update_appearance()
 
-				newmessagepriority = REQ_NO_NEW_MESSAGE
+				new_message_priority = REQ_NO_NEW_MESSAGE
 				update_appearance()
 				var/messageComposite = ""
 				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
@@ -251,20 +253,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				dat += "<B>Message Authentication</B><BR><BR>"
 				dat += "<b>Message for [to_department]: </b>[message]<BR><BR>"
 				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
-				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
-				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
+				dat += "<b>Verified by:</b> [message_verified_by ? message_verified_by : "<i>Not Verified</i>"]<br>"
+				dat += "<b>Stamped by:</b> [message_stamped_by ? message_stamped_by : "<i>Not Stamped</i>"]<br><br>"
 				dat += "<A href='?src=[REF(src)];send=[TRUE]'>Send Message</A><BR>"
 				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Discard Message</A><BR>"
 
 			if(REQ_SCREEN_ANNOUNCE)
 				dat += "<h3>Station-wide Announcement</h3>"
-				if(announceAuth)
+				if(announcement_authenticated)
 					dat += "<div class='notice'>Authentication accepted</div><BR>"
 				else
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if ((announceAuth || isAdminGhostAI(user)) && message)
+				if ((announcement_authenticated || isAdminGhostAI(user)) && message)
 					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
@@ -286,7 +288,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			dat += "<tr>"
 			dat += "<td width='55%'>[req_dpt]</td>"
 			dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_NORMAL_MESSAGE_PRIORITY]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
-			if(hackState)
+			if(hack_state)
 				dat += "<A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
 			dat += "</td>"
 			dat += "</tr>"
@@ -317,13 +319,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 		else
 			message = ""
-			announceAuth = FALSE
+			announcement_authenticated = FALSE
 			screen = REQ_SCREEN_MAIN
 
 	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)
+		if(!can_send_announcements)
 			return
-		if(!(announceAuth || isAdminGhostAI(usr)))
+		if(!(announcement_authenticated || isAdminGhostAI(usr)))
 			return
 		if(isliving(usr))
 			var/mob/living/L = usr
@@ -333,7 +335,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
-		announceAuth = FALSE
+		announcement_authenticated = FALSE
 		message = ""
 		screen = REQ_SCREEN_MAIN
 
@@ -378,8 +380,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			"rec_dpt" = to_department,
 			"send_dpt" = department,
 			"message" = message,
-			"verified" = msgVerified,
-			"stamped" = msgStamped,
+			"verified" = message_verified_by,
+			"stamped" = message_stamped_by,
 			"priority" = priority,
 			"notify_freq" = radio_freq
 		))
@@ -393,12 +395,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		switch(set_screen)
 			if(REQ_SCREEN_MAIN)
 				to_department = ""
-				msgVerified = ""
-				msgStamped = ""
+				message_verified_by = ""
+				message_stamped_by = ""
 				message = ""
 				priority = -1
 			if(REQ_SCREEN_ANNOUNCE)
-				if(!announcementConsole)
+				if(!can_send_announcements)
 					return
 		screen = set_screen
 
@@ -419,42 +421,42 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	emergency = null
 	update_appearance()
 
-/// From message_server.dm: Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
-/obj/machinery/requests_console/proc/createmessage(source, source_department, message, msgVerified, msgStamped, priority, radio_freq)
+/// From message_server.dm: Console.create_message(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
+/obj/machinery/requests_console/proc/create_message(source, source_department, message, message_verified_by, message_stamped_by, priority, radio_freq)
 	var/linkedsender
 
 	var/sending = "[message]<br>"
-	if(msgVerified)
-		sending = "[sending][msgVerified]<br>"
-	if(msgStamped)
-		sending = "[sending][msgStamped]<br>"
+	if(message_verified_by)
+		sending = "[sending][message_verified_by]<br>"
+	if(message_stamped_by)
+		sending = "[sending][message_stamped_by]<br>"
 
 	linkedsender = source_department ? "<a href='?src=[REF(src)];write=[ckey(source_department)]'>[source_department]</a>" : (source || "unknown")
 
-	var/authentic = (msgVerified || msgStamped) && " (Authenticated)"
+	var/authentic = (message_verified_by || message_stamped_by) && " (Authenticated)"
 	var/alert = "Message from [source][authentic]"
 	var/silenced = silent
 	var/header = "<b>From:</b> [linkedsender] Received: [station_time_timestamp()]<BR>"
 
 	switch(priority)
 		if(REQ_NORMAL_MESSAGE_PRIORITY)
-			if(newmessagepriority < REQ_NORMAL_MESSAGE_PRIORITY)
-				newmessagepriority = REQ_NORMAL_MESSAGE_PRIORITY
+			if(new_message_priority < REQ_NORMAL_MESSAGE_PRIORITY)
+				new_message_priority = REQ_NORMAL_MESSAGE_PRIORITY
 				update_appearance()
 
 		if(REQ_HIGH_MESSAGE_PRIORITY)
 			header = "<span class='bad'>High Priority</span><BR>[header]"
 			alert = "PRIORITY Alert from [source][authentic]"
-			if(newmessagepriority < REQ_HIGH_MESSAGE_PRIORITY)
-				newmessagepriority = REQ_HIGH_MESSAGE_PRIORITY
+			if(new_message_priority < REQ_HIGH_MESSAGE_PRIORITY)
+				new_message_priority = REQ_HIGH_MESSAGE_PRIORITY
 				update_appearance()
 
 		if(REQ_EXTREME_MESSAGE_PRIORITY)
 			header = "<span class='bad'>!!!Extreme Priority!!!</span><BR>[header]"
 			alert = "EXTREME PRIORITY Alert from [source][authentic]"
 			silenced = FALSE
-			if(newmessagepriority < REQ_EXTREME_MESSAGE_PRIORITY)
-				newmessagepriority = REQ_EXTREME_MESSAGE_PRIORITY
+			if(new_message_priority < REQ_EXTREME_MESSAGE_PRIORITY)
+				new_message_priority = REQ_EXTREME_MESSAGE_PRIORITY
 				update_appearance()
 
 	messages += "[header][sending]"
@@ -480,8 +482,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/screwdriver_act(mob/living/user, obj/item/tool)
 	if(open)
-		hackState = !hackState
-		if(hackState)
+		hack_state = !hack_state
+		if(hack_state)
 			to_chat(user, span_notice("You modify the wiring."))
 		else
 			to_chat(user, span_notice("You reset the wiring."))
@@ -495,20 +497,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
-			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
+			message_verified_by = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == REQ_SCREEN_ANNOUNCE)
 			if (ACCESS_RC_ANNOUNCE in ID.access)
-				announceAuth = TRUE
+				announcement_authenticated = TRUE
 			else
-				announceAuth = FALSE
+				announcement_authenticated = FALSE
 				to_chat(user, span_warning("You are not authorized to send announcements!"))
 			updateUsrDialog()
 		return
 	if (istype(O, /obj/item/stamp))
 		if(screen == REQ_SCREEN_AUTHENTICATE)
 			var/obj/item/stamp/T = O
-			msgStamped = span_boldnotice("Stamped with the [T.name]")
+			message_stamped_by = span_boldnotice("Stamped with the [T.name]")
 			updateUsrDialog()
 		return
 	return ..()

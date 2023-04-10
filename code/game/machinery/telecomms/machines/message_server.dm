@@ -198,9 +198,9 @@
 	if (!logged)  // Like /pda, only if logged
 		return
 	var/rec_dpt = ckey(data["rec_dpt"])
-	for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
+	for (var/obj/machinery/requests_console/Console in GLOB.req_console_all)
 		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
-			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
+			Console.create_message(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
 // Log datums stored by the message server.
 /datum/data_tablet_msg
