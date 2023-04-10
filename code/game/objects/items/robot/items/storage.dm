@@ -233,9 +233,10 @@
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
 	icon_state = "borg_stack_apparatus"
-	storable = list(/obj/item/stack/sheet)
+	storable = list(/obj/item/stack/sheet,
+					/obj/item/stack/tile)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -251,7 +252,7 @@
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		var/underscore = findtext(stored_copy.icon_state, "_")
 		if(underscore)
-			stored_copy.icon_state = copytext(stored_copy.icon_state, 1, underscore) //how we use the icon_state of single sheets, even with full stacks
+			stored_copy.icon_state = initial(stored.icon_state) //how we use the icon_state of single sheets, even with full stacks
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
