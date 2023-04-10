@@ -1,6 +1,6 @@
 /datum/mafia_role/hos
 	name = "Head of Security"
-	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
+	desc = "You can decide to execute at night, killing and revealing their role. If they are innocent, you will die at the start of the next night."
 	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL | ROLE_UNIQUE
 	revealed_outfit = /datum/outfit/mafia/hos
@@ -12,7 +12,7 @@
 
 /datum/mafia_role/warden
 	name = "Warden"
-	desc = "You can lockdown during the night once, killing any visitors. WARNING: This kills fellow town members, too!"
+	desc = "You can lockdown during the night once, killing any visitors, including town members."
 
 	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL

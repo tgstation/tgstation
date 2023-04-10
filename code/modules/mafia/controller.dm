@@ -275,7 +275,6 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
  */
 /datum/mafia_controller/proc/check_victory()
-	return FALSE
 	//needed for achievements
 	var/list/total_town = list()
 	var/list/total_mafia = list()
@@ -425,7 +424,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  */
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
-	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
+	send_message("<b>Night [turn] started! Lockdown will end in 40 seconds.</b>")
 	SEND_SIGNAL(src, COMSIG_MAFIA_SUNDOWN)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(resolve_night)), (NIGHT_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 	SStgui.update_uis(src)

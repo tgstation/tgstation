@@ -1,6 +1,6 @@
 /datum/mafia_role/medical_doctor
 	name = "Medical Doctor"
-	desc = "You can protect a single person each night from killing."
+	desc = "You can protect a single person each night from killing. You can heal yourself once."
 	revealed_outfit = /datum/outfit/mafia/md
 	role_type = TOWN_PROTECT
 	hud_icon = "hudmedicaldoctor"
@@ -11,7 +11,7 @@
 
 /datum/mafia_role/security_officer
 	name = "Security Officer"
-	desc = "You can protect a single person each night. If they are attacked, you will retaliate, killing yourself and the attacker."
+	desc = "You can protect a single person each night. If they are attacked, you will retaliate, killing yourself and the attacker. You can protect yourself once."
 	revealed_outfit = /datum/outfit/mafia/security
 	revealed_icon = "securityofficer"
 	hud_icon = "hudsecurityofficer"
