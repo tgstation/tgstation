@@ -424,7 +424,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-		make_residues(current_location, destination, user)
+		make_bloods(current_location, destination, user)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -460,7 +460,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		make_residues(mobloc, emergency_destination, user)
+		make_bloods(mobloc, emergency_destination, user)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -492,12 +492,12 @@
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
-///Make bluespace residue cleanable decals at the teleport start and end locations, decals have fibers and prints of the teleporting guy
-/obj/item/syndicate_teleporter/proc/make_residues(turf/old_location, turf/new_location, mob/user)
-	var/obj/effect/decal/cleanable/bluespace_residue/entry_residue = new /obj/effect/decal/cleanable/bluespace_residue(old_location)
-	var/obj/effect/decal/cleanable/bluespace_residue/exit_residue = new /obj/effect/decal/cleanable/bluespace_residue(new_location)
-	entry_residue.add_fingerprint(user)
-	exit_residue.add_fingerprint(user)
+///Bleed and make blood splatters at tele start and end points
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+	var/mob/living/carbon/carbon_user = user
+	carbon_user.add_splatter_floor(old_location)
+	carbon_user.add_splatter_floor(new_location)
+	carbon_user.bleed(10)
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
@@ -508,11 +508,11 @@
 		<br>
 		It has 4 charges, and will recharge over time randomly. No, sticking the teleporter into an APC, microwave, or electrified airlock will not make it charge faster.<br>
 		<br>
-		Due to the nature of the bluespace material involved, use of the teleporter will result in jettisoning of bluespace residue from the exhaust port.
-		<br>
 		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
+		<br>
+		Final word of caution: the technology involved is experimental in nature, you may feel lighter after heavy use. Both in weight, and in headedness. This is normal.
 		"}
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
@@ -524,15 +524,6 @@
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5
-
-/obj/effect/decal/cleanable/bluespace_residue
-	name = "bluespace residue"
-	desc = "A liquid-like substance formed when unstable bluespace crystals are subjected to extreme heat and pressure."
-	icon_state = "blueresidue"
-
-/obj/effect/decal/cleanable/bluespace_residue/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	setDir(pick(GLOB.cardinals))
 
 #undef PORTAL_LOCATION_DANGEROUS
 #undef PORTAL_DANGEROUS_EDGE_LIMIT
