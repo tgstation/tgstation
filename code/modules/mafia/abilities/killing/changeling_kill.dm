@@ -15,18 +15,16 @@
 
 /**
  * Attempt to attack a player.
- * First we will check if this changeling player is able to attack
+ * First we will check if this changeling player is able to attack, unless they've alredy attacked.
  * If so, they will select a random Changeling to attack.
  *
  * This makes it impossible for the Lawyer to meta hold up a game by repeatedly roleblocking one Changeling.
  */
 /datum/mafia_ability/changeling_kill/perform_action(datum/mafia_controller/game)
-	if(!using_ability)
+	if(attacked_target)
 		return
 	if(!validate_action_target(game))
 		return ..()
-	if(attacked_target)
-		return
 
 	var/datum/mafia_role/changeling_attacker = game.get_random_voter("Mafia")
 	var/datum/mafia_role/victim = game.get_vote_winner("Mafia")
