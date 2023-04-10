@@ -249,6 +249,13 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
+
+	// MonkeStation Edit Start
+	// Alternative Laugh Hook
+	if(human_user.alternative_laughs.len)
+		return pick(human_user.alternative_laughs)
+	// MonkeStation Edit End
+
 	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_TRAIT(human_user, TRAIT_MIMING))
 		if(human_user.gender == FEMALE)
 			return 'sound/voice/human/womanlaugh.ogg'
