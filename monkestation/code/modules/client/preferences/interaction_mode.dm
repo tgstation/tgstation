@@ -13,7 +13,7 @@
 	var/mob/host = client.mob
 	var/datum/interaction_mode/IM
 	IM = host?.forced_interaction_mode
-	IM ||= available_interaction_modes[value]
+	IM ||= available_interaction_modes[IMODE_INTENTS]
 	if(client.imode)
 		client.imode.replace(IM)
 	else

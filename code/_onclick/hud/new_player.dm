@@ -260,11 +260,45 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 
+/atom/movable/screen/lobby/button/intents
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "intents"
+	base_icon_state = "intents"
+	screen_loc = "TOP:-126,CENTER:62"
+
+/atom/movable/screen/lobby/button/intents/Click(location, control, params)
+	. = ..()
+	to_chat(hud.mymob, span_big("Here on Monkestation you can change between Intents and Combat Mode to do this you need to enter the game preferences by either clicking the cogwheel on the main menu or by opening the Game Preferences via the top bar in the preferences section. From there search for Interaction Style in the Gameplay section of the preferences. You can also revert right click showing your context menu by setting the Context Menu On Shift Click to False."))
+
+/atom/movable/screen/lobby/button/discord
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "discord"
+	base_icon_state = "discord"
+	screen_loc = "TOP:-126,CENTER:38"
+
+/atom/movable/screen/lobby/button/discord/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client << link("https://discord.gg/monkestation")
+
+/atom/movable/screen/lobby/button/monke
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "info"
+	base_icon_state = "info"
+	screen_loc = "TOP:-126,CENTER:14"
+
+/atom/movable/screen/lobby/button/monke/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	hud.mymob.client << link("https://www.twitch.tv/thedukeofook")
+
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "settings"
 	base_icon_state = "settings"
-	screen_loc = "TOP:-126,CENTER:-2"
+	screen_loc = "TOP:-126,CENTER:-10"
 
 /atom/movable/screen/lobby/button/settings/Click(location, control, params)
 	. = ..()
@@ -280,7 +314,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "volume"
 	base_icon_state = "volume"
-	screen_loc = "TOP:-126,CENTER:-26"
+	screen_loc = "TOP:-126,CENTER:-34"
 
 /atom/movable/screen/lobby/button/volume/Click(location, control, params)
 	. = ..()
