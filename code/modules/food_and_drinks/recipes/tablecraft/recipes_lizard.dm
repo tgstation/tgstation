@@ -350,70 +350,6 @@
 	result = /obj/item/food/honey_roll
 	category = CAT_LIZARD
 
-/datum/crafting_recipe/food/atrakor_dumplings
-	name = "Atrakor dumpling soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/meat/rawcutlet = 2,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/lizard_dumplings = 1,
-		/datum/reagent/consumable/soysauce = 5
-	)
-	result = /obj/item/food/soup/atrakor_dumplings
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/meatball_noodles
-	name = "Meatball noodle soup"
-	reqs = list(
-		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/meat/rawcutlet = 2,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/spaghetti/nizaya = 1,
-		/obj/item/food/meatball = 2,
-		/obj/item/food/grown/peanut = 1
-	)
-	result = /obj/item/food/soup/meatball_noodles
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/black_broth
-	name = "Tiziran black broth"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/tiziran_sausage = 1,
-		/obj/item/food/grown/onion = 1,
-		/datum/reagent/consumable/vinegar = 5,
-		/datum/reagent/blood = 5,
-		/datum/reagent/consumable/ice = 2
-	)
-	result = /obj/item/food/soup/black_broth
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/jellyfish_stew
-	name = "Jellyfish stew"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/canned/jellyfish = 1,
-		/obj/item/food/grown/soybeans = 1,
-		/obj/item/food/grown/redbeet = 1,
-		/obj/item/food/grown/potato = 1
-	)
-	result = /obj/item/food/soup/jellyfish
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/rootbread_soup
-	name = "Rootbread soup"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/breadslice/root = 2,
-		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/egg = 1
-	)
-	result = /obj/item/food/soup/rootbread_soup
-	category = CAT_LIZARD
-
 /datum/crafting_recipe/food/black_eggs
 	name = "Black scrambled eggs"
 	reqs = list(
@@ -494,4 +430,26 @@
 		/datum/reagent/lye = 5
 	)
 	result = /obj/item/food/steeped_mushrooms
+	category = CAT_LIZARD
+
+// Soups
+
+/datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
+	reaction = /datum/chemical_reaction/food/soup/atrakor_dumplings
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/meatball_noodles
+	reaction = /datum/chemical_reaction/food/soup/meatball_noodles
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/black_broth
+	reaction = /datum/chemical_reaction/food/soup/black_broth
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/rootbread_soup
+	reaction = /datum/chemical_reaction/food/soup/rootbread_soup
 	category = CAT_LIZARD

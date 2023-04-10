@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "Maps internally had the code for the \"directional\" windows altered a bit. If you see stacked window panes or things look incorrectly, please file a bug report as that isn't intentional!!"
