@@ -29,7 +29,7 @@
  *
  * This makes it impossible for the Lawyer to meta hold up a game by repeatedly roleblocking one Changeling.
  */
-/datum/mafia_role/mafia/proc/send_killer(datum/mafia_controller/game, datum/mafia_role/target)
+/datum/mafia_role/mafia/proc/send_killer(datum/mafia_controller/game)
 	var/datum/mafia_role/victim = game.get_vote_winner("Mafia")
 	if(!victim)
 		return
