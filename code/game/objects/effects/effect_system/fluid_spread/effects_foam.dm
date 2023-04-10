@@ -172,9 +172,9 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null)
+/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
 	. = ..()
-	carry?.copy_to(chemholder, carry.total_volume)
+	carry?.copy_to(chemholder, carry.total_volume, no_react = stop_reactions)
 	if(!isnull(result_type))
 		src.result_type = result_type
 
@@ -439,6 +439,14 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/dirty
+	effect_type = /obj/effect/particle_effect/fluid/foam/dirty
+
+/obj/effect/particle_effect/fluid/foam/dirty
+	name = "dirty foam"
+	allow_duplicate_results = FALSE
+	result_type = /obj/effect/decal/cleanable/dirt
 
 #undef MINIMUM_FOAM_DILUTION_RANGE
 #undef MINIMUM_FOAM_DILUTION
