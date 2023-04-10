@@ -361,7 +361,7 @@
 
 /datum/team/nuclear/proc/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
-	var/shuttle_landed_base = (SSshuttle.emergency.hijack_status == HIJACKED)
+	var/shuttle_landed_base = SSshuttle.emergency.is_hijacked()
 	var/disk_rescued = is_disk_rescued()
 	var/syndies_didnt_escape = !is_infiltrator_docked_at_centcom()
 	var/team_is_dead = are_all_operatives_dead()
