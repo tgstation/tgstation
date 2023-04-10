@@ -10,6 +10,13 @@
 	message_admins("[sender.friendly_name] reloaded admins via chat command.")
 	return new /datum/tgs_message_content("Admins reloaded.")
 
+/datum/tgs_chat_command/ping_aa
+	name = "ping_aa"
+	help_text = "Pings AffectedArc07"
+
+/datum/tgs_chat_command/ping_aa/Run(datum/tgs_chat_user/sender, params)
+	return new /datum/tgs_message_content("<@200631029675982858> test ping")
+
 /datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
 	set waitfor = FALSE
 	load_admins()
