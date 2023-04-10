@@ -31,8 +31,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	armor_type = /datum/armor/machinery_requests_console
 	/// Reference to our area
 	var/area/area
-	/// Mapper helper to tie a request console to another area
-	var/areastring = null
 	/// Is autonaming by area on?
 	var/auto_name = FALSE
 	/// Department name (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
@@ -77,7 +75,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	/// Priority of the message being sent
 	var/priority = REQ_NO_NEW_MESSAGE
 	/// Reference to the internal radio
-	var/obj/item/radio/Radio
+	var/obj/item/radio/radio
 	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
@@ -169,11 +167,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
 
-	Radio = new /obj/item/radio(src)
-	Radio.set_listening(FALSE)
+	radio = new /obj/item/radio(src)
+	radio.set_listening(FALSE)
 
 /obj/machinery/requests_console/Destroy()
-	QDEL_NULL(Radio)
+	QDEL_NULL(radio)
 	GLOB.req_console_all -= src
 	GLOB.req_console_assistance -= src
 	GLOB.req_console_supplies -= src
@@ -350,8 +348,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					radio_freq = FREQ_MEDICAL
 					emergency = "Medical"
 			if(radio_freq)
-				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
+				radio.set_frequency(radio_freq)
+				radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_appearance()
 				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 
@@ -463,8 +461,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		say(alert)
 
 	if(radio_freq)
-		Radio.set_frequency(radio_freq)
-		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
+		radio.set_frequency(radio_freq)
+		radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
