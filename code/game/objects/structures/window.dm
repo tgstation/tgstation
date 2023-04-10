@@ -96,7 +96,6 @@
 /obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the window."))
 			qdel(src)
 			return TRUE
 	return FALSE
@@ -437,14 +436,7 @@
 
 	return TRUE
 
-/obj/structure/window/spawner/east
-	dir = EAST
-
-/obj/structure/window/spawner/west
-	dir = WEST
-
-/obj/structure/window/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 
 /obj/structure/window/unanchored
 	anchored = FALSE
@@ -476,6 +468,12 @@
 	bomb = 25
 	fire = 80
 	acid = 100
+
+/obj/structure/window/reinforced/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 30, "cost" = 15)
+	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
@@ -568,14 +566,7 @@
 		if(RWINDOW_BARS_CUT)
 			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
 
-/obj/structure/window/reinforced/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
@@ -605,14 +596,7 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
-/obj/structure/window/plasma/spawner/east
-	dir = EAST
-
-/obj/structure/window/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/plasma/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
@@ -641,14 +625,7 @@
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
-/obj/structure/window/reinforced/plasma/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/plasma/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 
 /obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
@@ -674,6 +651,12 @@
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+
+/obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 25, "cost" = 10)
+	return FALSE
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
@@ -722,6 +705,12 @@
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+
+/obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 20)
+	return FALSE
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE

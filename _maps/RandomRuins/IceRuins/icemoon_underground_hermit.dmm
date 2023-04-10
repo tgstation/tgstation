@@ -151,7 +151,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "YN" = (
-/turf/closed/mineral/snowmountain/icemoon,
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"
@@ -400,7 +400,7 @@ YN
 YN
 YN
 YN
-aM
+YN
 Rr
 aM
 aM

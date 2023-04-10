@@ -602,9 +602,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Ie" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
