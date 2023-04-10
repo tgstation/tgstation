@@ -14,6 +14,7 @@
 		save_data = list()
 
 	var/list/save_loadout = SANITIZE_LIST(save_data["loadout_list"])
+	var/list/save_channel = SANITIZE_LIST(save_data["channel_list"])
 	for(var/loadout in save_loadout)
 		var/entry = save_loadout[loadout]
 		save_loadout -= loadout
@@ -22,7 +23,7 @@
 			loadout = _text2path(loadout)
 		save_loadout[loadout] = entry
 	loadout_list = sanitize_loadout_list(save_loadout)
-
+	channel_volume = save_channel
 
 	if(needs_update >= 0)
 		update_character_monkestation(needs_update, save_data) // needs_update == savefile_version if we need an update (positive integer)
@@ -37,3 +38,4 @@
 /datum/preferences/proc/save_character_monkestation(list/save_data)
 	save_data["loadout_list"] = loadout_list
 	save_data["modular_version"] = MODULAR_SAVEFILE_VERSION_MAX
+	save_data["channel_volume"] = channel_volume

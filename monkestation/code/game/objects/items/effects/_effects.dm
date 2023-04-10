@@ -5,6 +5,9 @@
 	icon = 'monkestation/icons/obj/effect_granters.dmi'
 	icon_state = "none"
 
+	///can this be done as a silicon or ai?
+	var/human_only = TRUE
+
 
 ///blank grant effect in case this is called just delete ones self
 /obj/item/effect_granter/proc/grant_effect(mob/living/carbon/granter)
