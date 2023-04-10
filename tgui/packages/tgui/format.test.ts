@@ -15,8 +15,8 @@ describe('formatting utilities', () => {
     expect(formatMoney(1234.56)).toBe('1235');
     expect(formatMoney(1234.5678, 2)).toBe('1 234.57');
     expect(formatMoney(-1234.5678, 2)).toBe('-1 234.57');
-    expect(formatMoney(NaN)).toBe(NaN);
-    expect(formatMoney(Infinity)).toBe(Infinity);
+    expect(formatMoney(NaN)).toBe('NaN');
+    expect(formatMoney(Infinity)).toBe('Infinity');
   });
 
   it('formats decibels correctly', () => {
