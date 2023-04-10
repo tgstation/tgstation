@@ -108,7 +108,7 @@
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
-	var/offset_old = FALSE
+	var/offset_old
 	var/cuttedAIwire = FALSE
 	var/unlocked = FALSE
 	var/syndicate_access = FALSE

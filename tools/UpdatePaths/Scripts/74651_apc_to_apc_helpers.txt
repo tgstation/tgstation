@@ -1,0 +1,19 @@
+#comment Repaths subtypes and some commonly used properties of apc to apc helpers.
+
+/obj/machinery/power/apc/unlocked : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/unlocked{@OLD}
+/obj/machinery/power/apc/syndicate : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/syndicate_access{@OLD}
+/obj/machinery/power/apc/away : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/away_general_access{@OLD}
+/obj/machinery/power/apc/highcap/five_k : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/cell_5k{@OLD}
+/obj/machinery/power/apc/highcap/ten_k : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/cell_10k{@OLD}
+/obj/machinery/power/apc/sm_apc : /obj/machinery/power/apc, /obj/effect/mapping_helpers/apc/cell_10k{@OLD}
+/obj/machinery/power/apc/@SUBTYPES{locked = 0} : @OLD{@OLD;locked=@SKIP}, /obj/effect/mapping_helpers/apc/unlocked
+/obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_AWAY_GENERAL)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/away_general_access
+/obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_SYNDICATE)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/syndicate_access
+/obj/machinery/power/apc/@SUBTYPES{cell_type = /obj/item/stock_parts/cell/upgraded/plus} : @OLD{@OLD;cell_type=@SKIP}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/@SUBTYPES{cell_type = /obj/item/stock_parts/cell/high} : @OLD{@OLD;cell_type=@SKIP}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/@SUBTYPES{start_charge = 100} : @OLD{@OLD;start_charge=@SKIP}, /obj/effect/mapping_helpers/apc/full_charge
+/obj/machinery/power/apc/@SUBTYPES{start_charge = 0} : @OLD{@OLD;start_charge=@SKIP}, /obj/effect/mapping_helpers/apc/no_charge
+/obj/machinery/power/apc/auto_name{pixel_y = 25} : @OLD{@OLD;pixel_x=@SKIP}, /obj/machinery/power/apc/auto_name/directional/north
+/obj/machinery/power/apc/auto_name{pixel_y = -25} : @OLD{@OLD;pixel_x=@SKIP}, /obj/machinery/power/apc/auto_name/directional/south
+/obj/machinery/power/apc/auto_name{pixel_x = 25} : @OLD{@OLD;pixel_x=@SKIP}, /obj/machinery/power/apc/auto_name/directional/east
+/obj/machinery/power/apc/auto_name{pixel_x = -25} : @OLD{@OLD;pixel_x=@SKIP}, /obj/machinery/power/apc/auto_name/directional/west
