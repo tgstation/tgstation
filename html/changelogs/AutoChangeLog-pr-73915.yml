@@ -1,0 +1,6 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - rscadd: "Adds new Cosmic Heretic."
+  - soundadd: "Adds Cosmic Heretic sounds."
+  - imageadd: "Adds Cosmic Heretic sprites."

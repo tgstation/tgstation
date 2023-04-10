@@ -813,7 +813,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		return TRUE
 
 /obj/machinery/porta_turret/ai
-	faction = list(FACTION_SILICON)
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
