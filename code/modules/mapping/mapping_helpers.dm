@@ -363,7 +363,7 @@
 
 /obj/effect/mapping_helpers/apc/full_charge
     name = "apc full charge helper"
-    icon_state = "apc_full_charge_helper"
+	icon_state = "apc_full_charge_helper"
 
 /obj/effect/mapping_helpers/apc/full_charge/payload(obj/machinery/power/apc/apc)
 	if(apc.full_charge)
