@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Admin spawned ghost portals no longer make all dead players considered also as observers (they're two different things)"
