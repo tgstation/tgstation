@@ -61,7 +61,7 @@ const defAttr = ['class', 'style'];
  */
 export const sanitizeText = (
   input: string,
-  advHtml: boolean = false,
+  advHtml = false,
   tags = defTag,
   forbidAttr = defAttr,
   advTags = advTag

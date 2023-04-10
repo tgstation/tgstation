@@ -240,6 +240,7 @@ export const resizeStartHandler =
       getWindowPosition()
     );
     initialSize = getWindowSize();
+    // Focus click target
     (event.target as HTMLElement)?.focus();
     document.addEventListener('mousemove', resizeMoveHandler);
     document.addEventListener('mouseup', resizeEndHandler);
