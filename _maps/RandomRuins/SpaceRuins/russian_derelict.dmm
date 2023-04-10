@@ -1281,9 +1281,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "pM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "pN" = (
@@ -2085,7 +2083,7 @@
 /area/ruin/space/ks13/medical/morgue)
 "ub" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -2467,7 +2465,7 @@
 /area/ruin/space/ks13/science/genetics)
 "wz" = (
 /obj/structure/closet/crate/coffin,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/service/chapel_office)
@@ -2688,7 +2686,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/eva)
 "xB" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -3354,7 +3352,7 @@
 /area/ruin/space/ks13/engineering/atmos)
 "AU" = (
 /obj/item/bodypart/chest/monkey,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -3624,7 +3622,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "Co" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "Cp" = (
@@ -4010,7 +4008,7 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "Eq" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
 	dir = 4
@@ -4959,9 +4957,7 @@
 /turf/closed/wall,
 /area/ruin/space/ks13/ai/corridor)
 "Jx" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/shard{
 	icon_state = "small"
 	},
@@ -5448,8 +5444,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
 "Mk" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -5870,7 +5866,7 @@
 /area/ruin/space/ks13/ai/vault)
 "Os" = (
 /obj/machinery/sleeper,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
@@ -5935,7 +5931,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/court_hall)
 "OP" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
 	dir = 1
@@ -6362,7 +6358,7 @@
 /area/ruin/space/ks13/hallway/central)
 "QU" = (
 /obj/structure/closet/crate/coffin,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/service/chapel_office)
 "QY" = (
@@ -7437,7 +7433,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "Wj" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -7501,7 +7497,7 @@
 /area/ruin/space/ks13/security/sec)
 "WA" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/chapel{
 	dir = 1
