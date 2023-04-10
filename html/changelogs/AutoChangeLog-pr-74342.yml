@@ -1,7 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - refactor: "CTF has been entirely refactored."
-  - bugfix: "Respawn times for CTF now work."
-  - qol: "CTF players are alerted during control point games when one team is half way to winning."
-  - admin: "CTF instagib mode can now be toggled from the secrets panel."
