@@ -61,6 +61,11 @@
 ///cannot perform any actions that night, preselected actions fail
 #define ROLE_ROLEBLOCKED (1<<5)
 
+///Flag that decides whether the Mafia ability can be used on other people.
+#define CAN_USE_ON_OTHERS (1<<0)
+///Flag that decides whether the Mafia ability can be used on themselves.
+#define CAN_USE_ON_SELF (1<<1)
+
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
 #define MAFIA_PHASE_VOTING 3

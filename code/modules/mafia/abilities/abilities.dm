@@ -1,6 +1,3 @@
-#define CAN_USE_ON_OTHERS (1<<0)
-#define CAN_USE_ON_SELF (1<<1)
-
 /datum/mafia_ability
 	var/name = "Mafia Ability"
 	var/ability_action = "brutally murder"
@@ -63,7 +60,7 @@
 
 /**
  * Called when using the ability
- * Unsets the target, so it's meant to be called at the end.'
+ * Unsets the target, so it's meant to be called at the end.
  * Args:
  * game - The Mafia controller that holds reference to the game.
  */

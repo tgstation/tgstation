@@ -1,3 +1,5 @@
+#define STARTING_VEST_AMOUNT 2
+
 /**
  * Vest
  *
@@ -8,7 +10,7 @@
 	ability_action = "vest"
 	use_flags = CAN_USE_ON_SELF
 	///Amount of vests that can be used until the power deletes itself.
-	var/charges = 2
+	var/charges = STARTING_VEST_AMOUNT
 
 /datum/mafia_ability/vest/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
 	using_ability = !using_ability
@@ -45,3 +47,5 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(host_role, COMSIG_MAFIA_ON_KILL)
+
+#undef STARTING_VEST_AMOUNT

@@ -1,7 +1,8 @@
 /**
- * Roleblock
+ * Self reveal
  *
- * During the night, prevents a player from using their role abilities.
+ * During the day, reveals your role to everyone and gives you a voting power boost,
+ * however it will additionally make you unable to be protected.
  */
 /datum/mafia_ability/self_reveal
 	name = "Reveal"
