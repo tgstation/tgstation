@@ -7,7 +7,7 @@
 	name = "Kill Vote"
 	ability_action = "attempt to absorb"
 	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
-	///Boolean on whether changelings attempted to attack their target or not.
+	///Static boolean on whether changelings attempted to attack their target or not.
 	var/static/attacked_target = FALSE
 
 /datum/mafia_ability/changeling_kill/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
