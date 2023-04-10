@@ -26,7 +26,7 @@ let windowFocusTimeout: ReturnType<typeof setTimeout> | null;
 let windowFocused = true;
 
 // Pretend to always be in focus.
-const setWindowFocus = (value: boolean, delayed?: boolean): void => {
+const setWindowFocus = (value: boolean, delayed?: boolean) => {
   if (ignoreWindowFocus) {
     windowFocused = true;
     return;
@@ -51,18 +51,18 @@ const setWindowFocus = (value: boolean, delayed?: boolean): void => {
 
 let focusStolenBy: HTMLElement | null = null;
 
-export const canStealFocus = (node: HTMLElement): boolean => {
+export const canStealFocus = (node: HTMLElement) => {
   const tag = String(node.tagName).toLowerCase();
   return tag === 'input' || tag === 'textarea';
 };
 
-const stealFocus = (node: HTMLElement): void => {
+const stealFocus = (node: HTMLElement) => {
   releaseStolenFocus();
   focusStolenBy = node;
   focusStolenBy.addEventListener('blur', releaseStolenFocus);
 };
 
-const releaseStolenFocus = (): void => {
+const releaseStolenFocus = () => {
   if (focusStolenBy) {
     focusStolenBy.removeEventListener('blur', releaseStolenFocus);
     focusStolenBy = null;
@@ -76,18 +76,18 @@ let focusedNode: HTMLElement | null = null;
 let lastVisitedNode: HTMLElement | null = null;
 const trackedNodes: HTMLElement[] = [];
 
-export const addScrollableNode = (node: HTMLElement): void => {
+export const addScrollableNode = (node: HTMLElement) => {
   trackedNodes.push(node);
 };
 
-export const removeScrollableNode = (node: HTMLElement): void => {
+export const removeScrollableNode = (node: HTMLElement) => {
   const index = trackedNodes.indexOf(node);
   if (index >= 0) {
     trackedNodes.splice(index, 1);
   }
 };
 
-const focusNearestTrackedParent = (node: HTMLElement | null): void => {
+const focusNearestTrackedParent = (node: HTMLElement | null) => {
   if (focusStolenBy || !windowFocused) {
     return;
   }
@@ -166,25 +166,25 @@ export class KeyEvent {
     this.repeat = !!repeat;
   }
 
-  hasModifierKeys(): boolean {
+  hasModifierKeys() {
     return this.ctrl || this.alt || this.shift;
   }
 
-  isModifierKey(): boolean {
+  isModifierKey() {
     return (
       this.code === KEY_CTRL || this.code === KEY_SHIFT || this.code === KEY_ALT
     );
   }
 
-  isDown(): boolean {
+  isDown() {
     return this.type === 'keydown';
   }
 
-  isUp(): boolean {
+  isUp() {
     return this.type === 'keyup';
   }
 
-  toString(): string {
+  toString() {
     if (this._str) {
       return this._str;
     }
