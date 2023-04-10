@@ -596,7 +596,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		.["roleinfo"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes, "hud_icon" = user_role.hud_icon, "revealed_icon" = user_role.revealed_icon)
 		var/performed_actions = list()
 		for(var/datum/mafia_ability/action in user_role.role_unique_actions)
-			if(action.validate_action_target(src))
+			if(action.validate_action_target(src, being_used = FALSE))
 				performed_actions += action
 		.["possible_actions"] = performed_actions
 		.["role_theme"] = user_role.special_ui_theme
@@ -617,7 +617,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		var/list/performed_actions = list()
 		if(user_role) //not observer
 			for(var/datum/mafia_ability/action in user_role.role_unique_actions)
-				if(action.validate_action_target(src))
+				if(action.validate_action_target(src, being_used = FALSE))
 					performed_actions += action
 			//Awful snowflake, could use generalizing
 			if(phase == MAFIA_PHASE_VOTING)

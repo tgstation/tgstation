@@ -33,11 +33,12 @@
  * Args:
  * game - The Mafia controller that holds reference to the game.
  * silent - Won't tell the player why it failed.
+ * being_used - Boolean on whether we should check if the ability is being used or not.
  */
-/datum/mafia_ability/proc/validate_action_target(datum/mafia_controller/game, silent)
+/datum/mafia_ability/proc/validate_action_target(datum/mafia_controller/game, silent, being_used = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!using_ability)
+	if(!using_ability && being_used)
 		return FALSE
 	if(game.phase != valid_use_period)
 		return FALSE
