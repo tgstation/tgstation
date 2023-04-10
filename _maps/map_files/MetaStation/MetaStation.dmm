@@ -11897,7 +11897,6 @@
 "esv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
