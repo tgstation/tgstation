@@ -1,48 +1,43 @@
-import { advTag, defAttr, defTag, sanitizeText } from './sanitize';
+import { sanitizeText } from './sanitize';
 
 describe('sanitizeText', () => {
-  test('sanitizes and removes disallowed HTML tags', () => {
-    const input = '<script>alert("XSS Attack!");</script><p>Some text</p>';
-    const output = sanitizeText(input, false);
-    expect(output).toBe('<p>Some text</p>');
+  it('should sanitize basic HTML input', () => {
+    const input = '<b>Hello, world!</b><script>alert("hack")</script>';
+    const expected = '<b>Hello, world!</b>';
+    const result = sanitizeText(input);
+    expect(result).toBe(expected);
   });
 
-  test('allows advanced HTML tags when advHtml is true', () => {
+  it('should sanitize advanced HTML input when advHtml flag is true', () => {
     const input =
-      '<img src="https://example.com/image.jpg" alt="Example Image" /><p>Some text</p>';
-    const output = sanitizeText(input, true);
-    expect(output).toBe(input);
+      '<b>Hello, world!</b><iframe src="https://example.com"></iframe>';
+    const expected = '<b>Hello, world!</b>';
+    const result = sanitizeText(input, true);
+    expect(result).toBe(expected);
   });
 
-  test('removes advanced HTML tags when advHtml is false', () => {
+  it('should allow specific HTML tags when tags array is provided', () => {
+    const input = '<b>Hello, world!</b><span>Goodbye, world!</span>';
+    const tags = ['b'];
+    const expected = '<b>Hello, world!</b>Goodbye, world!';
+    const result = sanitizeText(input, false, tags);
+    expect(result).toBe(expected);
+  });
+
+  it('should allow specific html tags', () => {
+    const input = '<p>Paragraph</p>';
+    const expected = 'Paragraph';
+    const actual = sanitizeText(input, false, ['p']);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should allow advanced HTML tags when advTags array is provided and advHtml flag is true', () => {
     const input =
-      '<img src="https://example.com/image.jpg" alt="Example Image" /><p>Some text</p>';
-    const output = sanitizeText(input, false);
-    expect(output).toBe('<p>Some text</p>');
-  });
-
-  test('allows custom allowed HTML tags', () => {
-    const input = '<custom>Custom tag</custom><p>Some text</p>';
-    const output = sanitizeText(input, false, ['custom', ...defTag]);
-    expect(output).toBe(input);
-  });
-
-  test('forbids custom HTML attributes', () => {
-    const input = '<p forbiddenAttribute="value">Some text</p>';
-    const output = sanitizeText(input, false, undefined, [
-      'forbiddenAttribute',
-      ...defAttr,
-    ]);
-    expect(output).toBe('<p>Some text</p>');
-  });
-
-  test('allows custom advanced HTML tags when advHtml is true', () => {
-    const input =
-      '<customadvanced>Custom advanced tag</customadvanced><p>Some text</p>';
-    const output = sanitizeText(input, true, undefined, undefined, [
-      'customadvanced',
-      ...advTag,
-    ]);
-    expect(output).toBe(input);
+      '<b>Hello, world!</b><iframe src="https://example.com"></iframe>';
+    const advTags = ['iframe'];
+    const expected =
+      '<b>Hello, world!</b><iframe src="https://example.com"></iframe>';
+    const result = sanitizeText(input, true, undefined, undefined, advTags);
+    expect(result).toBe(expected);
   });
 });

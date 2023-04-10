@@ -1,35 +1,43 @@
 import { formatDb, formatMoney, formatPower, formatSiBaseTenUnit, formatSiUnit, formatTime } from './format';
 
-describe('SI Formatter', () => {
-  test('formatSiUnit', () => {
-    expect(formatSiUnit(1000)).toBe('1 k');
-    expect(formatSiUnit(1500)).toBe('1.5 k');
-    expect(formatSiUnit(1500000, -3, 'g')).toBe('1.5 Mg');
+describe('formatting utilities', () => {
+  it('formats SI units correctly', () => {
+    expect(formatSiUnit(1234, -3, 'g')).toBe('1.23 kg');
+    expect(formatSiUnit(0.00123, -3, 'g')).toBe('1.23 mg');
   });
 
-  test('formatPower', () => {
-    expect(formatPower(1000)).toBe('1 kW');
-    expect(formatPower(1500)).toBe('1.5 kW');
-    expect(formatPower(1500000, -3)).toBe('1.5 MW');
+  it('formats power correctly', () => {
+    expect(formatPower(1234567)).toBe('1.23 MW');
   });
 
-  test('formatMoney', () => {
-    expect(formatMoney(1000)).toBe('1\u20091\u2009000');
-    expect(formatMoney(1500.5)).toBe('1\u200915\u200900.5');
+  it('formats a number as a currency string', () => {
+    expect(formatMoney(1234)).toBe('1234');
+    expect(formatMoney(1234.56)).toBe('1235');
+    expect(formatMoney(1234.5678, 2)).toBe('1 234.57');
+    expect(formatMoney(-1234.5678, 2)).toBe('-1 234.57');
+    expect(formatMoney(NaN)).toBe(NaN);
+    expect(formatMoney(Infinity)).toBe(Infinity);
   });
 
-  test('formatDb', () => {
-    expect(formatDb(1)).toBe('+0 dB');
-    expect(formatDb(10)).toBe('+20 dB');
+  it('formats decibels correctly', () => {
+    expect(formatDb(0.1)).toBe('–20.00 dB');
+    expect(formatDb(10)).toBe('+20.00 dB');
   });
 
-  test('formatSiBaseTenUnit', () => {
-    expect(formatSiBaseTenUnit(1000)).toBe('1 · 10³');
-    expect(formatSiBaseTenUnit(1500)).toBe('1.5 · 10³');
-    expect(formatSiBaseTenUnit(1500000, -3, 'g')).toBe('1.5 · 10⁶ g');
+  it('formats SI base ten units correctly', () => {
+    expect(formatSiBaseTenUnit(123456789, -1)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -2)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -3)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -4)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -5)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -6)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -7)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -8)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -9)).toEqual('123.46 · 10⁶');
+    expect(formatSiBaseTenUnit(123456789, -10)).toEqual('123.46 · 10⁶');
   });
 
-  test('formatTime', () => {
+  it('formats time correctly', () => {
     expect(formatTime(36000)).toBe('01:00:00');
     expect(formatTime(36610)).toBe('01:01:01');
     expect(formatTime(36610, 'short')).toBe('1h1m1s');

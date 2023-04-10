@@ -5,7 +5,7 @@
 import DOMPurify from 'dompurify';
 
 // Default values
-export const defTag = [
+const defTag = [
   'b',
   'blockquote',
   'br',
@@ -43,12 +43,12 @@ export const defTag = [
   'tr',
   'u',
   'ul',
-] as const;
+];
 
 // Advanced HTML tags that we can trust admins (but not players) with
-export const advTag = ['img'] as const;
+const advTag = ['img'];
 
-export const defAttr = ['class', 'style'] as const;
+const defAttr = ['class', 'style'];
 
 /**
  * Feed it a string and it should spit out a sanitized version.
@@ -61,11 +61,11 @@ export const defAttr = ['class', 'style'] as const;
  */
 export const sanitizeText = (
   input: string,
-  advHtml: boolean,
-  tags: readonly string[] = defTag,
-  forbidAttr: readonly string[] = defAttr,
-  advTags: readonly string[] = advTag
-): string => {
+  advHtml: boolean = false,
+  tags = defTag,
+  forbidAttr = defAttr,
+  advTags = advTag
+) => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
