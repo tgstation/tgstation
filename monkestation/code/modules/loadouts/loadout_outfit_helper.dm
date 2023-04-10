@@ -66,8 +66,14 @@
 
 
 		equipOutfit(equipped_outfit, visuals_only)
-
+	var/list/effects = list()
 	for(var/datum/loadout_item/item as anything in loadout_datums)
+		if(istype(item, /datum/loadout_item/effects))
+			effects += item
+			continue
+		item.on_equip_item(preference_source, src, visuals_only)
+
+	for(var/datum/loadout_item/item as anything in effects)
 		item.on_equip_item(preference_source, src, visuals_only)
 
 	regenerate_icons()

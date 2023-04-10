@@ -276,6 +276,20 @@
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
 
+/atom/movable/screen/lobby/button/volume
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "volume"
+	base_icon_state = "volume"
+	screen_loc = "TOP:-122,CENTER:-26"
+
+/atom/movable/screen/lobby/button/volume/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/preferences/preferences = hud.mymob.client.prefs
+	preferences.pref_mixer.open_ui(hud.mymob)
+
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "changelog"
@@ -304,7 +318,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "poll"
 	base_icon_state = "poll"
-	screen_loc = "TOP:-122,CENTER:-26"
+	screen_loc = "TOP:-122,CENTER:-54"
 
 	var/new_poll = FALSE
 

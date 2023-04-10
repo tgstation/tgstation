@@ -294,6 +294,7 @@
 	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.loadout_inhand_items)))
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys! ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_toys)))
 	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_pocket_items)))
+	loadout_tabs += list(list("name" = "Effects", "title" = "Unique Effects", "contents" = list_to_data(GLOB.loadout_effects)))
 
 	data["loadout_tabs"] = loadout_tabs
 
