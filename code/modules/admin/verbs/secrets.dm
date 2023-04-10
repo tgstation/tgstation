@@ -124,7 +124,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			holder.list_fingerprints()
 
 		if("ctfbutton")
-			toggle_id_ctf(holder, "centcom")
+			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)
 
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr, "Clear all mobs?", "Thunderdome Reset", list("Yes", "No", "Cancel"))
@@ -578,6 +578,23 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				teamsize--
 
 			return TRUE
+		if("ctf_instagib")
+			if(!is_funmin)
+				return
+			if(GLOB.ctf_games.len <= 0)
+				tgui_alert(usr, "No CTF games are set up.")
+				return
+			var/selected_game = tgui_input_list(usr, "Select a CTF game to ruin.", "Instagib Mode", GLOB.ctf_games)
+			if(isnull(selected_game))
+				return
+			var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[selected_game]
+			var/choice = tgui_alert(usr, "[ctf_controller.instagib_mode ? "Return to standard" : "Enable instagib"] mode?", "Instagib Mode", list("Yes", "No"))
+			if(choice == "No")
+				return
+			ctf_controller.toggle_instagib_mode()
+			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)

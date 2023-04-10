@@ -59,9 +59,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "bN" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -69,9 +67,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "cr" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -99,9 +95,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "hL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east{
 	environ = 0;
@@ -118,9 +112,7 @@
 "iD" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 8
 	},
@@ -152,9 +144,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "jL" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
@@ -178,7 +168,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
@@ -188,9 +178,7 @@
 "sM" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/light/directional/south,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/brigdoor{
 	dir = 8
 	},
@@ -251,7 +239,7 @@
 /turf/open/floor/iron/recharge_floor,
 /area/ruin/space/has_grav/travelers_rest)
 "Dq" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
@@ -265,9 +253,7 @@
 "Dw" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/light/directional/north,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/door/window/brigdoor,
 /obj/effect/turf_decal/trimline/dark_green/filled,
 /turf/open/floor/iron,
@@ -310,9 +296,7 @@
 "FL" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/light/directional/north,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/brigdoor,
 /obj/effect/turf_decal/trimline/blue/filled,
 /turf/open/floor/iron,
@@ -336,9 +320,7 @@
 "HA" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/light/directional/south,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/brigdoor{
 	dir = 4
 	},
@@ -358,9 +340,7 @@
 "KJ" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 10
 	},
@@ -372,9 +352,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "KL" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
 /obj/item/clothing/mask/breath{
 	pixel_x = 6;
@@ -431,9 +409,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Rp" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/toilet,
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_y = -9;
@@ -495,9 +471,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "Xo" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet{
 	anchored = 1
 	},
@@ -523,9 +497,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 9
 	},
@@ -547,9 +519,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "ZE" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},

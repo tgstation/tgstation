@@ -1077,9 +1077,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1098,9 +1096,7 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3224,13 +3220,13 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "is" = (
 /obj/machinery/light/blacklight/directional/west,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "it" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -3246,7 +3242,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
@@ -5011,9 +5007,7 @@
 "mf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -5152,9 +5146,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/gas,
@@ -5811,12 +5803,8 @@
 /area/awaymission/undergroundoutpost45/research)
 "nP" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/folder/white,
 /obj/item/stamp/rd{
 	pixel_x = 3;
@@ -5842,9 +5830,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "nR" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring the research division and the labs within.";
 	name = "research monitor";
@@ -5857,9 +5843,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "nS" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/taperecorder{
 	pixel_x = -3
@@ -6265,9 +6249,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "oy" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/button/door{
 	desc = "A remote control-switch which locks the research division down in the event of a biohazard leak or contamination.";
 	id = "UO45_biohazard";
@@ -7186,8 +7168,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/structure/closet/secure_closet/engineering_personal{
@@ -8612,8 +8593,7 @@
 "tw" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/machinery/portable_atmospherics/scrubber,

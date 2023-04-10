@@ -16,7 +16,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "bO" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced,
 /obj/item/wallframe/button{
 	pixel_x = -8;
@@ -64,8 +64,8 @@
 	},
 /area/ruin/space/has_grav/derelictsulaco)
 "cH" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/circuitboard/machine/telecomms/relay,
 /obj/structure/frame/machine{
 	anchored = 1
@@ -156,7 +156,7 @@
 	},
 /area/ruin/space)
 "fC" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/teleporter_hub,
 /turf/open/floor/circuit,
@@ -191,7 +191,7 @@
 /area/ruin/space/has_grav/derelictsulaco)
 "gD" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/frame/computer{
 	dir = 1;
 	anchored = 1
@@ -244,7 +244,7 @@
 /turf/open/floor/iron/dark/textured_corner/airless,
 /area/ruin/space)
 "ia" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/table/reinforced,
 /turf/open/floor/pod/light,
@@ -264,7 +264,7 @@
 	},
 /area/ruin/space/has_grav/derelictsulaco)
 "iF" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/frame/machine{
 	anchored = 1
 	},
@@ -329,8 +329,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "ld" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/wallframe/button{
 	pixel_x = -8;
@@ -353,8 +353,8 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/derelictsulaco)
 "ln" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/frame/computer{
 	anchored = 1
 	},
@@ -367,7 +367,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/derelictsulaco)
 "lr" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/terminal/sulaco/helm{
 	dir = 4
 	},
@@ -420,7 +420,7 @@
 /turf/open/floor/iron/dark/textured_corner/airless,
 /area/ruin/space)
 "mB" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/rack_parts,
 /turf/open/floor/circuit,
@@ -438,7 +438,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "na" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/computer/terminal/sulaco/map,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -466,13 +466,13 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "ob" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "ol" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
 "oV" = (
@@ -504,8 +504,8 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "qY" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/frame/computer{
 	anchored = 1
 	},
@@ -544,7 +544,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "rW" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/frame/computer{
 	dir = 4;
@@ -633,8 +633,8 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "uS" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/computer/terminal/sulaco/overwatch,
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
@@ -687,7 +687,7 @@
 	},
 /area/ruin/space)
 "vW" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/rack_parts,
 /turf/open/floor/circuit,
 /area/ruin/space/has_grav/derelictsulaco)
@@ -738,8 +738,8 @@
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "yt" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -754,7 +754,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "yS" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner,
 /obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/rack_parts,
@@ -808,7 +808,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "zZ" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/terminal/sulaco/overwatch/main{
 	dir = 4
 	},
@@ -899,8 +899,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictsulaco)
 "Fo" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/circuitboard/machine/telecomms/hub,
 /obj/structure/frame/machine{
 	anchored = 1
@@ -979,8 +979,8 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/derelictsulaco)
 "Hj" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/frame/computer{
 	dir = 4;
 	anchored = 1
@@ -1166,7 +1166,7 @@
 /area/ruin/space)
 "Mi" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/frame/computer{
 	dir = 1;
 	anchored = 1
@@ -1579,8 +1579,8 @@
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/derelictsulaco)
 "Yk" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/computer/terminal/sulaco/map,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth_edge{
