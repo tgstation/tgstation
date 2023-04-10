@@ -288,6 +288,8 @@
 		return
 
 	var/datum/preferences/preferences = hud.mymob.client.prefs
+	if(!preferences.pref_mixer)
+		preferences.pref_mixer = new
 	preferences.pref_mixer.open_ui(hud.mymob)
 
 /atom/movable/screen/lobby/button/changelog_button

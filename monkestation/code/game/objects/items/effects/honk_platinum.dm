@@ -4,7 +4,6 @@
 
 
 /obj/item/effect_granter/honk_platinum/grant_effect(mob/living/carbon/granter)
-	. = ..()
 	var/mob/living/simple_animal/parrot/honk_platinum/new_honk = new(granter.loc)
 	new_honk.mind_initialize()
 
