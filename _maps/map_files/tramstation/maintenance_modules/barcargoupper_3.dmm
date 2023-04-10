@@ -17,6 +17,12 @@
 "cK" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"cO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "da" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
@@ -61,14 +67,6 @@
 /obj/modular_map_root/tramstation{
 	key = "barcargoupper_attachment_a"
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
-"gn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/spawner/west,
-/obj/structure/window/spawner/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "hx" = (
@@ -266,12 +264,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"zy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "An" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -304,7 +296,15 @@
 "Ds" = (
 /turf/open/openspace,
 /area/station/asteroid)
-"DG" = (
+"DS" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"FC" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/cargo)
+"GZ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -320,14 +320,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
 /turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
-"DS" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/structure/steam_vent,
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
-"FC" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/department/cargo)
 "Hu" = (
 /turf/template_noop,
@@ -364,6 +356,14 @@
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"Mi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/obj/structure/grille,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "MH" = (
@@ -612,7 +612,7 @@ Hu
 "}
 (4,1,1) = {"
 FC
-DG
+GZ
 FC
 FC
 tg
@@ -1630,7 +1630,7 @@ cK
 cK
 cK
 SU
-gn
+Mi
 Dm
 Dm
 mh
@@ -1741,7 +1741,7 @@ cK
 cK
 cK
 SU
-gn
+Mi
 Dm
 Dm
 mh
@@ -1817,7 +1817,7 @@ cK
 SU
 SU
 tV
-zy
+cO
 SU
 lM
 lx

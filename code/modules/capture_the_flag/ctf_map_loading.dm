@@ -2,6 +2,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 
 /obj/effect/landmark/ctf
 	name = "CTF Map Spawner"
+	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/list/map_bounds
 
 /obj/effect/landmark/ctf/Initialize(mapload)
@@ -53,6 +54,9 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 
 	current_map = new current_map()
 
+	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[CTF_GHOST_CTF_GAME_ID]
+	ctf_controller.setup_rules(current_map.points_to_win)
+
 	if(!spawn_area)
 		CRASH("No spawn area detected for CTF!")
 	else if(!current_map)
@@ -65,6 +69,8 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 /datum/map_template/ctf
 	should_place_on_top = FALSE
 	var/description = ""
+	///Score required to win CTF on this map.
+	var/points_to_win = 3
 
 /datum/map_template/ctf/classic
 	name = "Classic"
@@ -85,6 +91,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	name = "Limbo"
 	description = "A KOTH map that takes place in a wizard den with looping hallways"
 	mappath = "_maps/map_files/CTF/limbo.dmm"
+	points_to_win = 180
 
 /datum/map_template/ctf/cruiser
 	name = "Crusier"

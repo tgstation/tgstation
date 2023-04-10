@@ -74,6 +74,10 @@
 	SSair.stop_processing_machine(src)
 	return..()
 
+/obj/machinery/space_heater/on_construction()
+	set_panel_open(TRUE)
+	cell = null
+
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
 		LAZYADD(component_parts, cell)
@@ -274,16 +278,9 @@
 					settable_temperature_median + settable_temperature_range)
 		if("eject")
 			if(panel_open && cell)
-				cell.forceMove(drop_location())
+				usr.put_in_hands(cell)
 				cell = null
 				. = TRUE
-
-/obj/machinery/space_heater/constructed
-	cell = null
-
-/obj/machinery/space_heater/constructed/Initialize(mapload)
-	. = ..()
-	set_panel_open(TRUE)
 
 /obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
