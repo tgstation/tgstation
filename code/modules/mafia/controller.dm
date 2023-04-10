@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  */
 /datum/mafia_controller/proc/changeling_kill()
 	var/datum/mafia_role/mafia/killer = get_random_voter("Mafia")
-	killer.send_killer(game, target)
+	killer.send_killer(src, target)
 	reset_votes("Mafia")
 
 /**
