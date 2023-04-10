@@ -5,7 +5,7 @@
 import DOMPurify from 'dompurify';
 
 // Default values
-const defTag = [
+export const defTag = [
   'b',
   'blockquote',
   'br',
@@ -43,33 +43,33 @@ const defTag = [
   'tr',
   'u',
   'ul',
-];
+] as const;
 
 // Advanced HTML tags that we can trust admins (but not players) with
-const advTag = ['img'];
+export const advTag = ['img'] as const;
 
-const defAttr = ['class', 'style'];
+export const defAttr = ['class', 'style'] as const;
 
 /**
  * Feed it a string and it should spit out a sanitized version.
  *
- * @param {string} input
- * @param {boolean} advHtml
- * @param {array} tags
- * @param {array} forbidAttr
- * @param {array} advTags
+ * @param input - Input HTML string to sanitize
+ * @param advHtml - Flag to enable/disable advanced HTML
+ * @param tags - List of allowed HTML tags
+ * @param forbidAttr - List of forbidden HTML attributes
+ * @param advTags - List of advanced HTML tags allowed for trusted sources
  */
 export const sanitizeText = (
-  input,
-  advHtml,
-  tags = defTag,
-  forbidAttr = defAttr,
-  advTags = advTag
-) => {
+  input: string,
+  advHtml: boolean,
+  tags: readonly string[] = defTag,
+  forbidAttr: readonly string[] = defAttr,
+  advTags: readonly string[] = advTag
+): string => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it dosn't
+  // the default DOMPurify kills javascript, it doesn't
   // kill href links or such
   if (advHtml) {
     tags = tags.concat(advTags);
