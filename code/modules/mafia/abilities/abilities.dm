@@ -5,12 +5,11 @@
 	///The priority level this action must be sent at.
 	///(COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE|COMSIG_MAFIA_NIGHT_ACTION_PHASE|COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	var/action_priority = COMSIG_MAFIA_NIGHT_ACTION_PHASE
-
 	///When the ability can be used: (MAFIA_PHASE_DAY | MAFIA_PHASE_NIGHT)
 	var/valid_use_period = MAFIA_PHASE_NIGHT
-
 	///Whether this ability can be used on yourself. Selections: (CAN_USE_ON_OTHERS | CAN_USE_ON_SELF | CAN_USE_ON_DEAD)
 	var/use_flags = CAN_USE_ON_OTHERS
+
 	///Boolean on whether the ability was selected to be used during the proper period.
 	var/using_ability = FALSE
 	///The mafia role that holds this ability.
