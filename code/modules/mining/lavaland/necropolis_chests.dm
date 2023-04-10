@@ -106,7 +106,21 @@
 	new /obj/item/crusher_trophy/tail_spike(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum
-	name = "bubblegum chest"
+	name = "\improper Ancient Sarcophagus"
+	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
+	icon_state = "necro_bubblegum"
+
+/obj/structure/closet/crate/necropolis/bubblegum/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(opened)
+		var/mutable_appearance/lid = mutable_appearance(icon = 'icons/obj/storage/crateslidlarge.dmi', icon_state = "necro_bubblegum_lid")
+		lid.pixel_x = -30
+		lid.pixel_y = 2
+		lid.layer = layer
+		. += lid
+	. += ..()
+
+
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
