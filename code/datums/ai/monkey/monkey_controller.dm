@@ -135,7 +135,7 @@ have ways of interacting with a specific mob and control it.
 	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
 		return FALSE
 
-	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
+	blackboard[BB_MONKEY_PICKUPTARGET] = WEAKREF(weapon)
 	set_movement_target(type, weapon)
 	if(pickpocket)
 		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)

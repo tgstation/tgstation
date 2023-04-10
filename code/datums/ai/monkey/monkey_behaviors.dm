@@ -9,8 +9,10 @@
 
 	if(!success) //Don't try again on this item if we failed
 		var/list/item_blacklist = controller.blackboard[BB_MONKEY_BLACKLISTITEMS]
-		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
-
+		var/datum/weakref/weak_item = controller.blackboard[BB_MONKEY_PICKUPTARGET]
+		var/obj/item/target = weak_item?.resolve()
+		if (isnull(target))
+			return
 		item_blacklist[target] = TRUE
 		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
 			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
@@ -20,14 +22,15 @@
 /datum/ai_behavior/monkey_equip/proc/equip_item(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 
-	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
+	var/datum/weakref/weak_item = controller.blackboard[BB_MONKEY_PICKUPTARGET]
+	var/obj/item/target = weak_item?.resolve()
 	var/best_force = controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND]
 
 	if(!isturf(living_pawn.loc))
 		finish_action(controller, FALSE)
 		return
 
-	if(!target)
+	if(isnull(target))
 		finish_action(controller, FALSE)
 		return
 
@@ -76,7 +79,12 @@
 	INVOKE_ASYNC(src, PROC_REF(attempt_pickpocket), controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket/proc/attempt_pickpocket(datum/ai_controller/controller)
-	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
+	var/datum/weakref/weak_item = controller.blackboard[BB_MONKEY_PICKUPTARGET]
+	var/obj/item/target = weak_item?.resolve()
+
+	if(isnull(target))
+		finish_action(controller, FALSE)
+		return
 
 	var/mob/living/victim = target.loc
 	var/mob/living/living_pawn = controller.pawn
@@ -84,8 +92,6 @@
 	if(!istype(victim) || !living_pawn.CanReach(victim))
 		finish_action(controller, FALSE)
 		return
-
-
 
 	victim.visible_message(span_warning("[living_pawn] starts trying to take [target] from [victim]!"), span_danger("[living_pawn] tries to take [target]!"))
 
