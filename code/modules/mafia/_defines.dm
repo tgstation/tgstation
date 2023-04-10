@@ -1,5 +1,25 @@
+///The amount of players required to start a Mafia game
+#define MAFIA_MIN_PLAYER_COUNT 6
 ///how many people can play mafia without issues (running out of spawns, procs not expecting more than this amount of people, etc)
 #define MAFIA_MAX_PLAYER_COUNT 12
+
+///The time spent during the first day, which is shorter due to not having a voting period.
+#define FIRST_DAY_PERIOD_LENGTH (20 SECONDS)
+///The length of a Day period
+#define DAY_PERIOD_LENGTH (1 MINUTES)
+///The length of a Voting period, when people decide who they want to put up for hanging that day.
+#define VOTING_PERIOD_LENGTH (30 SECONDS)
+///The length of the judgment period, where people vote on whether to lynch the person they voted up.
+#define JUDGEMENT_PERIOD_LENGTH (30 SECONDS)
+///The length of the lynch period, if the judged person is deemed guilty and is sentenced to death.
+#define LYNCH_PERIOD_LENGTH (5 SECONDS)
+///The length of the night period where people can do their night abilities and speak with their mafia team.
+#define NIGHT_PERIOD_LENGTH (40 SECONDS)
+///The length of the roundend report, where people can look over the round and the details.
+#define VICTORY_LAP_PERIOD_LENGTH (20 SECONDS)
+
+///How fast the game will speed up when half the players are gone.
+#define MAFIA_SPEEDUP_INCREASE 2
 
 #define MAFIA_TEAM_TOWN "town"
 #define MAFIA_TEAM_MAFIA "mafia"

@@ -106,7 +106,7 @@
 	if (!MF)
 		return TRUE
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
-	if(!R || R.team != "mafia")
+	if(!R || R.team != MAFIA_TEAM_MAFIA)
 		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"),"mafia")
+	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), MAFIA_TEAM_MAFIA)
 	return FALSE
