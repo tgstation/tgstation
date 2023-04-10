@@ -192,6 +192,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	load_metacoins(parent.ckey)
 	load_inventory(parent.ckey)
 
+	load_preferences_monkestation()
+
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
@@ -261,6 +263,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	save_preferences_monkestation()
 	savefile.save()
 	return TRUE
 
