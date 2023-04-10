@@ -1402,6 +1402,10 @@
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
 
+/area/station/science/robotics/storage
+	name = "\improper Robotics Storage"
+	icon_state = "ass_line"
+
 /area/station/science/research
 	name = "\improper Research Division"
 	icon_state = "science"
