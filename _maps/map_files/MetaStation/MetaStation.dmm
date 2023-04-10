@@ -5875,8 +5875,6 @@
 "cju" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
 	location = "Security"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -15148,8 +15146,6 @@
 "fGS" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
 	location = "Engineering"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -15888,8 +15884,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
 	location = "Research"
 	},
 /turf/open/floor/iron,
@@ -18916,8 +18910,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
 	location = "Service"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -22554,8 +22546,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
 	location = "Kitchen"
 	},
 /obj/structure/disposalpipe/segment{
@@ -28352,7 +28342,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
-	freq = 1400;
 	location = "Atmospherics"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
@@ -44042,8 +44031,6 @@
 "pUd" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
 	location = "Bridge"
 	},
 /obj/structure/plasticflaps/opaque,
@@ -46203,7 +46190,6 @@
 "qKy" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	freq = 1400;
 	location = "Disposals"
 	},
 /obj/structure/plasticflaps,
@@ -50609,8 +50595,6 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
 	location = "Medbay"
 	},
 /turf/open/floor/plating,
@@ -59643,8 +59627,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/delivery,
@@ -60989,8 +60971,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
-	dir = 1;
-	freq = 1400;
 	location = "Hydroponics"
 	},
 /turf/open/floor/iron,
@@ -63359,8 +63339,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
 	location = "QM #2"
 	},
 /turf/open/floor/iron,
