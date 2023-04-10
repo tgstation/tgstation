@@ -1368,7 +1368,7 @@
 "cU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/right/directional/east{
 	name = "First-Aid Supplies"
 	},

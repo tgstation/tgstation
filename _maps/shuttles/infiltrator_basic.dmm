@@ -544,9 +544,7 @@
 "cr" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cs" = (
@@ -556,9 +554,7 @@
 "cu" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cv" = (
@@ -579,9 +575,7 @@
 "cy" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cz" = (
@@ -650,9 +644,7 @@
 "fk" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -684,9 +676,7 @@
 /area/shuttle/syndicate/airlock)
 "jf" = (
 /obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},

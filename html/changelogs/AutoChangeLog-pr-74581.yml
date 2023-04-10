@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "the contents of your pockets no longer drop onto the floor when your body is randomized"
