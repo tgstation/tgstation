@@ -1,4 +1,4 @@
-import { getGasColor, getGasFromId, getGasLabel } from './constants';
+import { getGasColor, getGasFromId, getGasFromPath, getGasLabel } from './constants';
 
 describe('gas helper functions', () => {
   it('should get the proper gas label', () => {
@@ -56,8 +56,8 @@ describe('gas helper functions', () => {
   });
 
   it('should return the gas using a path', () => {
-    const gasId = '/datum/gas/antinoblium';
-    const gas = getGasFromId(gasId);
+    const gasPath = '/datum/gas/antinoblium';
+    const gas = getGasFromPath(gasPath);
 
     expect(gas).toEqual({
       id: 'antinoblium',
