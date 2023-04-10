@@ -386,10 +386,8 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/spawner/random/decoration/paint,
-/obj/machinery/power/apc/unlocked{
-	pixel_y = 25;
-	dir = 1
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
 "xP" = (

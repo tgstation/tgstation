@@ -856,13 +856,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/south{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
+/obj/machinery/power/apc/worn_out/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2388,13 +2386,11 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
+/obj/machinery/power/apc/worn_out/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
@@ -3634,12 +3630,10 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/north{
-	locked = 0;
-	name = "Worn Out APC";
-	start_charge = 100
-	},
+/obj/machinery/power/apc/worn_out/directional/north,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},

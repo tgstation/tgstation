@@ -40,9 +40,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "bV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -363,9 +361,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "lq" = (
 /turf/open/floor/iron/showroomfloor,
@@ -859,11 +855,11 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north{
 	start_charge = 25;
-	locked = 0;
 	equipment = 0;
 	environ = 0;
 	lighting = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictsulaco)
 "DJ" = (
@@ -1199,9 +1195,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "MG" = (
 /obj/structure/alien/weeds,
@@ -1684,9 +1678,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner{
-	dir = 2
-	},
+/turf/open/floor/iron/smooth_corner,
 /area/ruin/space/has_grav/derelictsulaco)
 "ZZ" = (
 /obj/structure/lattice,

@@ -245,6 +245,125 @@
 	else
 		airlock.autoname = TRUE
 
+//apc helpers
+/obj/effect/mapping_helpers/apc
+	desc = "You shouldn't see this. Report it please."
+	layer = DOOR_HELPER_LAYER
+	late = TRUE
+
+/obj/effect/mapping_helpers/apc/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return
+
+	var/obj/machinery/power/apc/apc = locate(/obj/machinery/power/apc) in loc
+	if(!apc)
+		log_mapping("[src] failed to find an apc at [AREACOORD(src)]")
+	else
+		payload(apc)
+
+/obj/effect/mapping_helpers/apc/LateInitialize()
+	. = ..()
+	var/obj/machinery/power/apc/apc = locate(/obj/machinery/power/apc) in loc
+
+	if(!apc)
+		qdel(src)
+		return
+	if(apc.cuttedAIwire)
+		apc.wires.cut(WIRE_AI)
+	if(apc.cell_5k)
+		apc.install_cell_5k()
+	if(apc.cell_10k)
+		apc.install_cell_10k()
+	if(apc.unlocked)
+		apc.unlock()
+	if(apc.syndicate_access)
+		apc.give_syndicate_access()
+	if(apc.away_general_access)
+		apc.give_away_general_access()
+	if(apc.no_charge)
+		apc.set_no_charge()
+	if(apc.full_charge)
+		apc.set_full_charge()
+	apc.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/apc)
+	return
+
+/obj/effect/mapping_helpers/apc/cuttedAIwire
+	name = "apc ai wire disabled helper"
+	icon_state = "apc_cutted_AIwire_helper"
+
+/obj/effect/mapping_helpers/apc/cuttedAIwire/payload(obj/machinery/power/apc/apc)
+	if(apc.cuttedAIwire)
+		log_mapping("[src] at [AREACOORD(src)] tried to mend the ai wire on the [apc] but it's already cut!")
+	apc.cuttedAIwire = TRUE
+
+/obj/effect/mapping_helpers/apc/cell_5k
+    name = "apc 5k cell helper"
+    icon_state = "apc_5k_cell_helper"
+
+/obj/effect/mapping_helpers/apc/cell_5k/payload(obj/machinery/power/apc/apc)
+    if(apc.cell_5k)
+        log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_5k but it's already changed!")
+    apc.cell_5k = TRUE
+
+/obj/effect/mapping_helpers/apc/cell_10k
+    name = "apc 10k cell helper"
+    icon_state = "apc_10k_cell_helper"
+
+/obj/effect/mapping_helpers/apc/cell_10k/payload(obj/machinery/power/apc/apc)
+    if(apc.cell_10k)
+        log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_10k but it's already changed!")
+    apc.cell_10k = TRUE
+
+/obj/effect/mapping_helpers/apc/syndicate_access
+    name = "apc syndicate access helper"
+    icon_state = "apc_syndicate_access_helper"
+
+/obj/effect/mapping_helpers/apc/syndicate_access/payload(obj/machinery/power/apc/apc)
+    if(apc.syndicate_access)
+        log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to syndicate but it's already changed!")
+    apc.syndicate_access = TRUE
+
+/obj/effect/mapping_helpers/apc/away_general_access
+    name = "apc away access helper"
+    icon_state = "apc_away_general_access_helper"
+
+/obj/effect/mapping_helpers/apc/away_general_access/payload(obj/machinery/power/apc/apc)
+    if(apc.away_general_access)
+        log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to away_general but it's already changed!")
+    apc.away_general_access = TRUE
+
+/obj/effect/mapping_helpers/apc/unlocked
+    name = "apc unlocked interface helper"
+    icon_state = "apc_unlocked_interface_helper"
+
+/obj/effect/mapping_helpers/apc/unlocked/payload(obj/machinery/power/apc/apc)
+    if(apc.unlocked)
+        log_mapping("[src] at [AREACOORD(src)] tried to unlock the [apc] but it's already unlocked!")
+    apc.unlocked = TRUE
+
+/obj/effect/mapping_helpers/apc/no_charge
+    name = "apc no charge helper"
+    icon_state = "apc_no_charge_helper"
+
+/obj/effect/mapping_helpers/apc/no_charge/payload(obj/machinery/power/apc/apc)
+	if(apc.no_charge)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [apc]'s charge to 0 but it's already at 0!")
+	apc.no_charge = TRUE
+
+/obj/effect/mapping_helpers/apc/full_charge
+    name = "apc full charge helper"
+    icon_state = "apc_full_charge_helper"
+
+/obj/effect/mapping_helpers/apc/full_charge/payload(obj/machinery/power/apc/apc)
+	if(apc.full_charge)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [apc]'s charge to 100 but it's already at 100!")
+	apc.full_charge = TRUE
+
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
