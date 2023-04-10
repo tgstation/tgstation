@@ -41,7 +41,7 @@ export const formatSiUnit = (
   unit: string = ''
 ) => {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
-    return value;
+    return value.toString();
   }
 
   const realBase10 = Math.floor(Math.log10(value));
@@ -64,7 +64,7 @@ export const formatPower = (value: number, minBase1000 = 0) => {
 // Formats a number as a currency string
 export const formatMoney = (value: number, precision = 0) => {
   if (!Number.isFinite(value)) {
-    return value;
+    return value.toString();
   }
 
   const fixed: string =
