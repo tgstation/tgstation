@@ -1,6 +1,3 @@
-/******************** Requests Console ********************/
-/** Originally written by errorage, updated by: Carn, needs more work though. I just added some security fixes */
-
 GLOBAL_LIST_EMPTY(req_console_assistance)
 GLOBAL_LIST_EMPTY(req_console_supplies)
 GLOBAL_LIST_EMPTY(req_console_information)
