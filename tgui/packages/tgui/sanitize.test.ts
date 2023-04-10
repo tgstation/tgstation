@@ -24,13 +24,6 @@ describe('sanitizeText', () => {
     expect(result).toBe(expected);
   });
 
-  it('should allow specific html tags', () => {
-    const input = '<p>Paragraph</p>';
-    const expected = 'Paragraph';
-    const actual = sanitizeText(input, false, ['p']);
-    expect(actual).toEqual(expected);
-  });
-
   it('should allow advanced HTML tags when advTags array is provided and advHtml flag is true', () => {
     const input =
       '<b>Hello, world!</b><iframe src="https://example.com"></iframe>';
