@@ -201,17 +201,17 @@
 	return data
 
 /obj/item/construction/proc/toggle_silo(mob/user)
-	. = TRUE
-
 	if(!silo_mats)
 		to_chat(user, span_warning("no remote storage connection."))
-		return
+		return FALSE
+
 	if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link.
 		to_chat(user, span_warning("no silo link detected."))
-		return
+		return FALSE
 
 	silo_link = !silo_link
 	to_chat(user, span_notice("silo link state: [silo_link ? "on" : "off"]"))
+	return TRUE
 
 ///shared action for toggling silo link rcd,rld & plumbing
 /obj/item/construction/ui_act(action, list/params)
@@ -220,7 +220,8 @@
 		return
 
 	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
-		return toggle_silo(usr)
+		toggle_silo(usr)
+		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
