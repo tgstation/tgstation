@@ -57,10 +57,28 @@
 /obj/effect/spawner/random/entertainment/plushie_delux,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"eb" = (
+/obj/structure/window/reinforced,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/catwalk_floor/titanium,
+/area/shuttle/escape)
 "eE" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "eN" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"fG" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Emergency Shuttle Medical"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"fM" = (
+/obj/structure/sink/directional/north,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "gc" = (
@@ -125,13 +143,16 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "kZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"nZ" = (
+/obj/structure/table/optable,
+/obj/machinery/status_display/evac/directional/west,
+/obj/item/toy/plush/lizard_plushie{
+	name = "Heals-The-Patients"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/catwalk_floor/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "oo" = (
 /obj/structure/bed{
@@ -144,6 +165,13 @@
 /obj/effect/spawner/random/entertainment/plushie_delux,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"os" = (
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_x = 32
+	},
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "oY" = (
 /obj/item/pillow/random,
 /obj/structure/rack,
@@ -155,10 +183,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "pO" = (
-/obj/structure/window/reinforced,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "pY" = (
 /turf/template_noop,
@@ -180,6 +208,10 @@
 /area/shuttle/escape)
 "sG" = (
 /mob/living/basic/pet/dog/corgi,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"tF" = (
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "up" = (
@@ -235,8 +267,40 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "BW" = (
-/obj/machinery/light/small/directional/east,
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/south,
+/obj/item/storage/pill_bottle/paxpsych,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Dl" = (
+/obj/structure/window/reinforced,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/catwalk_floor/titanium,
+/area/shuttle/escape)
+"FW" = (
+/obj/structure/sign/directions/security/directional/north,
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 40
+	},
+/obj/structure/sign/directions/command/directional/north{
+	pixel_y = 24
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Hf" = (
 /mob/living/simple_animal/pet/cat/kitten,
@@ -250,7 +314,11 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "IW" = (
-/turf/closed/wall,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "JE" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
@@ -263,12 +331,11 @@
 /obj/docking_port/mobile/emergency{
 	name = "Hugcage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/airlock/security/glass{
-	name = "Emergency Shuttle Brig"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Emergency Shuttle Medical"
 	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "KT" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red,
@@ -293,6 +360,10 @@
 "Mu" = (
 /turf/open/floor/catwalk_floor/titanium,
 /area/shuttle/escape)
+"Ns" = (
+/obj/item/radio/intercom/chapel/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Ok" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -305,6 +376,14 @@
 /area/shuttle/escape)
 "QX" = (
 /turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Rg" = (
+/obj/machinery/stasis,
+/obj/machinery/light/dim/directional/south{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Rj" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -329,6 +408,28 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"VD" = (
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/obj/machinery/light/dim/directional/south{
+	brightness = 5;
+	nightshift_brightness = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "Xb" = (
 /obj/structure/window,
 /obj/structure/window{
@@ -340,21 +441,29 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"YQ" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "YW" = (
-/obj/structure/window/reinforced,
-/obj/structure/rack,
-/obj/effect/spawner/random/engineering/toolbox,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 
 (1,1,1) = {"
 cQ
 cQ
+cQ
+cQ
 JE
 cQ
 JF
-cQ
+gc
 pY
 pY
 gc
@@ -371,10 +480,12 @@ pY
 (2,1,1) = {"
 RZ
 KT
-Tw
-Tw
+kZ
+Ns
 Tw
 cQ
+QX
+gc
 pY
 gc
 Ag
@@ -395,7 +506,9 @@ Tw
 Tw
 gj
 cQ
-IW
+fG
+gc
+XN
 gc
 dC
 eN
@@ -414,8 +527,10 @@ KT
 Tw
 Ok
 ax
-ax
-pY
+Ag
+eN
+nZ
+VD
 gc
 iI
 eN
@@ -434,11 +549,13 @@ cQ
 JE
 RZ
 cQ
+Dl
 YW
-pY
+YW
+BW
 Ag
 Ag
-eN
+tF
 jl
 sx
 gq
@@ -455,8 +572,10 @@ eE
 eE
 AM
 Mu
-kZ
-BW
+Mu
+Mu
+Mu
+Mu
 AM
 eN
 hz
@@ -474,11 +593,13 @@ gc
 Vf
 XN
 gc
+eb
 pO
-pY
+pO
+fM
 Ag
 Ag
-eN
+FW
 rj
 Qc
 Xb
@@ -495,7 +616,9 @@ eN
 Aw
 Ag
 Ag
-pY
+eN
+os
+Rg
 gc
 oo
 sG
@@ -515,7 +638,9 @@ eN
 eN
 oY
 gc
-IW
+YQ
+gc
+XN
 gc
 dP
 eN
@@ -534,6 +659,8 @@ Aw
 eN
 eN
 zt
+gc
+QX
 gc
 pY
 gc
@@ -554,6 +681,8 @@ gc
 gc
 gc
 gc
+gc
+IW
 gc
 pY
 pY
