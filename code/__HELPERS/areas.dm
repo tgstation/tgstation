@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		if(!isnull(place.apc))
 			apc_map[place.name] = place.apc
 		if(length(apc_map) > 1) // When merging 2 or more areas make sure we arent merging their apc into 1 area
-			to_chat(creator, span_warning("Multiple APC's detected in the vicinity. only 1 is allowed!"))
+			to_chat(creator, span_warning("Multiple APC's detected in the vicinity. only 1 is allowed."))
 			return
 		areas[place.name] = place
 
