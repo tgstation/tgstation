@@ -185,6 +185,21 @@
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
 
+/obj/item/bodypart/chest/robot/emp_act(severity)
+	. = ..()
+	if(!.) // other emp effects handled in parent
+		return
+	if(owner.incapacitated()) // so it doesn't double up with both legs
+		return
+	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
+	if(severity == EMP_HEAVY)
+		owner.Stun(4 SECONDS)
+		owner.Shake(pixelshiftx = 5, pixelshifty = 2, duration = 4 SECONDS)
+		return
+
+	owner.Stun(2.5 SECONDS)
+	owner.Shake(pixelshiftx = 3, pixelshifty = 0, duration = 2.5 SECONDS)
+
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
 
@@ -297,17 +312,65 @@
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
 
-/obj/item/bodypart/leg/right/robot/emp_act(severity)
+/obj/item/bodypart/head/robot/emp_act(severity)
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
 	if(owner.incapacitated()) // so it doesn't double up with both legs
 		return
-	to_chat(owner, span_danger("Your [src.name] malfunctions and causes you to fall to the ground!"))
-	if(severity == EMP_LIGHT)
-		owner.Knockdown(4 SECONDS)
-	else
-		owner.Knockdown(8 SECONDS)
+	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
+
+	var/rng = rand(1, 3)
+
+	var/green_power = 0
+	var/blue_power = 0
+	var/red_power = 0
+
+	switch(rng)
+		if(1)
+			green_power = 1
+		if(2)
+			blue_power = 1
+		else
+			red_power = 1 // no idea what i'm doing
+
+	var/list/matrix_list_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/list/matrix_list_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, green_power,0,0,0)
+	var/list/matrix_list_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, blue_power,0,0,0)
+	var/list/matrix_list_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, red_power,0,0,0)
+
+	owner.funk_out(matrix_list_identity, matrix_list_green, matrix_list_blue, matrix_list_red)
+
+/mob/proc/funk_out(
+	list/col_filter_identity, \
+	list/col_filter_green, \
+	list/col_filter_blue, \
+	list/col_filter_red, \
+	filter_name = "funkin'", funk_duration = 10 SECONDS
+	)
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.add_filter(filter_name, 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/filter in game_plane_master_controller.get_filters(filter_name))
+		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+	//game_plane_master_controller.add_filter("psilocybin_wave", 1, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
+
+	//for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
+	//	animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(src, PROC_REF(end_funk), filter_name), funk_duration)
+
+/mob/proc/end_funk(filter_name = "funkin'")
+	if(!hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter(filter_name)
+	//game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
