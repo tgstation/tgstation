@@ -6298,7 +6298,9 @@
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -2
+	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/bar,
