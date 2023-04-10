@@ -9,7 +9,7 @@
 	var/mob/living/carbon/human/jailbird = quirk_holder
 	var/quirk_crime	= pick(world.file2list("monkestation/strings/random_crimes.txt"))
 	to_chat(jailbird, "<span class='boldnotice'>You are on the run for your crime of: [quirk_crime]!</span>")
-	addtimer(CALLBACK(src, .proc/apply_arrest, quirk_crime), 5 SECONDS)
+	addtimer(CALLBACK(src, .proc/apply_arrest, quirk_crime), 10 SECONDS)
 
 
 /datum/quirk/jailbird/proc/apply_arrest(crime_name)
@@ -17,7 +17,7 @@
 	jailbird.mind.memories += "You have the law on your back because of your crime of: [crime_name]!"
 	var/crime = "[pick(world.file2list("monkestation/strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
 	var/perpname = jailbird.real_name
-	var/datum/record/crew/jailbird_record = find_record(perpname, GLOB.manifest.locked)
+	var/datum/record/crew/jailbird_record = find_record(perpname, GLOB.manifest.general)
 	var/datum/crime/new_crime = new(name = jailbird, details = crime, author = "Nanotrasen Bounty Department")
 	jailbird_record.crimes += new_crime
 	jailbird_record.wanted_status = WANTED_ARREST

@@ -21,13 +21,12 @@
 
 
 /obj/item/mcobject/messaging/repeater/proc/set_delay(mob/user, obj/item/tool)
-	var/time = tgui_input_number(user, "Enter how many cycles to wait (1 cycle is 2 seconds)", "Configure Component", delay, 100, 1)
+	var/time = tgui_input_number(user, "Enter how many cycles to wait (1 cycle is 2 seconds)", "Configure Component", loops_needed, 100, 1)
 	if(!time)
 		return
 	loops_needed = time
 
 /obj/item/mcobject/messaging/repeater/process(delta_time)
-	. = ..()
 	if(!processing)
 		return
 	if(loops_needed <= loops)

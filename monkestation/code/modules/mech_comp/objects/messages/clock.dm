@@ -9,4 +9,4 @@
 	MC_ADD_INPUT("send", send)
 
 /obj/item/mcobject/messaging/clock/proc/send(datum/mcmessage/input)
-	fire(stationtime2text(), input)
+	fire("[station_time()]", input)

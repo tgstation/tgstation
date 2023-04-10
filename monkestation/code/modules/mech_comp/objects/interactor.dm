@@ -18,8 +18,6 @@
 	var/stored_dir = NORTH
 	///the interaction range defaults to ontop of itself
 	var/range = FALSE
-	///the image of the held item with a low alpha and an cool blue
-	var/image/held_image
 
 /obj/item/mcobject/interactor/Initialize(mapload)
 	. = ..()
@@ -142,14 +140,9 @@
 
 /obj/item/mcobject/interactor/update_overlays()
 	. = ..()
-	if(!held_image)
-		held_image = new(src.loc)
-	if(held_item)
-		held_image = held_item.appearance
-		held_image.alpha = 170
-		held_image.color = LIGHT_COLOR_FAINT_BLUE
-		var/mutable_appearance/new_icon = new(held_image)
-		. += new_icon
+	var/mutable_appearance/held_image = mutable_appearance(held_item.icon, held_item.icon_state, ABOVE_OBJ_LAYER, null, FLOAT_PLANE, 70)
+	held_image.color = LIGHT_COLOR_BLUE
+	. += held_image
 
 /obj/item/mcobject/interactor/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
