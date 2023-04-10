@@ -125,7 +125,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
@@ -135,12 +135,12 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aB" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/kirbyplants{
 	icon_state = "plant-11"
 	},
@@ -151,7 +151,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -182,8 +182,7 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /obj/machinery/light/directional/north,
@@ -246,7 +245,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
@@ -256,7 +255,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -264,7 +263,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -335,8 +334,7 @@
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
 /obj/item/storage/medkit/regular,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/machinery/vending/wallmed/directional/north{
@@ -361,9 +359,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /obj/structure/table,
@@ -381,7 +378,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
 /obj/item/clothing/under/suit/waiter,
@@ -393,7 +390,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/glass,
 /obj/item/defibrillator/loaded,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -402,10 +399,8 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bi" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -438,8 +433,7 @@
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
@@ -506,15 +500,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bB" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bC" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -581,8 +573,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "xt" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -591,9 +582,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "Uu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "XA" = (
