@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-import { clamp, round, toFixed } from 'common/math';
-
 const SI_SYMBOLS = [
   'f', // femto
   'p', // pico
@@ -16,7 +14,7 @@ const SI_SYMBOLS = [
   // in monospace mode, we want to units and numbers stay in their respective
   // columns. If rendering in HTML mode, this space will collapse into
   // a single space anyway.
-  ' ',
+  ' ', // base
   'k', // kilo
   'M', // mega
   'G', // giga
@@ -34,26 +32,32 @@ const SI_SYMBOLS = [
 
 const SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
 
-// Formats a number to a human readable form, by reducing it to SI units
+// Formats a number to a human readable form, with a custom unit
 export const formatSiUnit = (
   value: number,
-  minBase1000: number = -SI_BASE_INDEX,
-  unit: string = ''
-) => {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
+  minBase1000 = -SI_BASE_INDEX,
+  unit = ''
+): string => {
+  if (!isFinite(value)) {
     return value.toString();
   }
 
-  const realBase10 = Math.floor(Math.log10(value));
-  const base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
+  const realBase10 = Math.floor(Math.log10(Math.abs(value)));
+  const base10 = Math.max(minBase1000 * 3, realBase10);
   const base1000 = Math.floor(base10 / 3);
-  const symbolIndex = clamp(SI_BASE_INDEX + base1000, 0, SI_SYMBOLS.length);
-  const symbol = SI_SYMBOLS[symbolIndex];
-  const scaledNumber = value / Math.pow(1000, base1000);
-  const scaledPrecision =
-    realBase10 > minBase1000 * 3 ? 2 + base1000 * 3 - base10 : 0;
+  const symbol =
+    SI_SYMBOLS[Math.min(base1000 + SI_BASE_INDEX, SI_SYMBOLS.length - 1)];
 
-  return `${toFixed(scaledNumber, scaledPrecision)} ${symbol}${unit}`.trim();
+  const scaledValue = value / Math.pow(1000, base1000);
+
+  let formattedValue = scaledValue.toFixed(2);
+  if (formattedValue.endsWith('.00')) {
+    formattedValue = formattedValue.slice(0, -3);
+  } else if (formattedValue.endsWith('.0')) {
+    formattedValue = formattedValue.slice(0, -2);
+  }
+
+  return `${formattedValue} ${symbol.trim()}${unit}`.trim();
 };
 
 // Formats a number to a human readable form, with power (W) as the unit
@@ -64,37 +68,41 @@ export const formatPower = (value: number, minBase1000 = 0) => {
 // Formats a number as a currency string
 export const formatMoney = (value: number, precision = 0) => {
   if (!Number.isFinite(value)) {
-    return value.toString();
+    return String(value);
   }
 
-  const fixed: string =
-    precision > 0
-      ? toFixed(value, precision)
-      : round(value, precision).toString();
-  const indexOfPoint = fixed.indexOf('.');
+  // Round the number and make it fixed precision
+  const roundedValue = Number(value.toFixed(precision));
 
-  // make an array of the letters in fixed
-  return fixed
-    .split('')
-    .map((char, i) =>
-      i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0
-        ? '\u2009' + char
-        : char
-    )
-    .join('');
+  // Handle the negative sign
+  const isNegative = roundedValue < 0;
+  const absoluteValue = Math.abs(roundedValue);
+
+  // Convert to string and place thousand separators
+  const parts = absoluteValue.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009'); // Thin space
+
+  const formattedValue = parts.join('.');
+
+  return isNegative ? `-${formattedValue}` : formattedValue;
 };
 
 // Formats a floating point number as a number on the decibel scale
 export const formatDb = (value: number) => {
-  const db = (20 * Math.log(value)) / Math.log(10);
-  const sign = db >= 0 ? '+' : '–';
-  const absolute = Math.abs(db);
-  const formatted = absolute === Infinity ? 'Inf' : toFixed(absolute, 2);
+  const db = 20 * Math.log10(value);
+  const sign = db >= 0 ? '+' : '-';
+  let formatted: string | number = Math.abs(db);
+
+  if (formatted === Infinity) {
+    formatted = 'Inf';
+  } else {
+    formatted = formatted.toFixed(2);
+  }
 
   return `${sign}${formatted} dB`;
 };
 
-const SI_BASE_TEN_UNIT = [
+const SI_BASE_TEN_UNITS = [
   '',
   '· 10³', // kilo
   '· 10⁶', // mega
@@ -111,35 +119,26 @@ const SI_BASE_TEN_UNIT = [
   '· 10³⁹',
 ] as const;
 
-const SI_BASE_TEN_INDEX = SI_BASE_TEN_UNIT.indexOf('');
-
-// Formats a number to a human readable form, by reducing it to SI units (base 10)
+// Converts a number to a string with SI base 10 units
 export const formatSiBaseTenUnit = (
   value: number,
-  minBase1000: number = -SI_BASE_TEN_INDEX,
-  unit: string = ''
-) => {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
-    return value;
+  minBase1000 = 0,
+  unit = ''
+): string => {
+  if (!isFinite(value)) {
+    return 'NaN';
   }
 
   const realBase10 = Math.floor(Math.log10(value));
-  const base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
+  const base10 = Math.max(minBase1000 * 3, realBase10);
   const base1000 = Math.floor(base10 / 3);
-  const symbolIndex = clamp(
-    SI_BASE_TEN_INDEX + base1000,
-    0,
-    SI_BASE_TEN_UNIT.length
-  );
-  const symbol = SI_BASE_TEN_UNIT[symbolIndex];
-  const scaledNumber = value / Math.pow(1000, base1000);
+  const symbol = SI_BASE_TEN_UNITS[base1000];
 
-  // Convert the scaledNumber to a number and then apply toFixed() on it
-  const scaledNumberFixed = Number(scaledNumber.toFixed(2));
+  const scaledValue = value / Math.pow(1000, base1000);
+  const precision = Math.max(0, 2 - (base10 % 3));
+  const formattedValue = scaledValue.toFixed(precision);
 
-  const finalString = `${scaledNumberFixed} ${symbol} ${unit}`.trim();
-
-  return finalString;
+  return `${formattedValue} ${symbol} ${unit}`.trim();
 };
 
 /**
