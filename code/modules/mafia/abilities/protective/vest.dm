@@ -6,6 +6,7 @@
 /datum/mafia_ability/vest
 	name = "Vest"
 	ability_action = "vest"
+	use_flags = CAN_USE_ON_SELF
 	///Amount of vests that can be used until the power deletes itself.
 	var/charges = 2
 
@@ -19,6 +20,8 @@
 		to_chat(host_role.body, span_warning("You are no longer using a vest tonight."))
 
 /datum/mafia_ability/vest/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		host_role.add_note("N[game.turn] - Unable to vest")
 		return ..()

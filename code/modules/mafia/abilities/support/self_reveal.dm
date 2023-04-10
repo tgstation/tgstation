@@ -10,9 +10,11 @@
 	valid_use_period = MAFIA_PHASE_DAY
 
 /datum/mafia_ability/self_reveal/perform_action(datum/mafia_controller/game)
-	. = ..()
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		return ..()
+	. = ..()
 	host_role.reveal_role(game, TRUE)
 	host_role.role_flags |= ROLE_VULNERABLE
 	host_role.vote_power *= 3

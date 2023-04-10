@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 
 /proc/setup_mafia_roles()
 	var/list/rolelist_dict = list()
-	for(var/datum/mafia_role/mafia_role as anything in subtypesof(/datum/mafia_role))
+	for(var/datum/mafia_role/mafia_role as anything in typesof(/datum/mafia_role))
 		rolelist_dict[initial(mafia_role.name) + " ([uppertext(initial(mafia_role.team))])"] = mafia_role
 	return rolelist_dict
 
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
-/datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
+/datum/mafia_controller/proc/prepare_game(setup_list, ready_players)
 
 	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
@@ -275,6 +275,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
  */
 /datum/mafia_controller/proc/check_victory()
+	return FALSE
 	//needed for achievements
 	var/list/total_town = list()
 	var/list/total_mafia = list()
@@ -460,7 +461,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * vote_type: type of vote submitted (is this the day vote? is this the mafia night vote?)
  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
  */
-/datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vote_type, teams)
+/datum/mafia_controller/proc/vote_for(datum/mafia_role/voter, datum/mafia_role/target, vote_type, teams)
 	if(!votes[vote_type])
 		votes[vote_type] = list()
 	var/old_vote = votes[vote_type][voter]
@@ -593,12 +594,18 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		.["judgement_phase"] = FALSE
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
-		.["roleinfo"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes, "hud_icon" = user_role.hud_icon, "revealed_icon" = user_role.revealed_icon)
-		var/performed_actions = list()
-		for(var/datum/mafia_ability/action in user_role.role_unique_actions)
-			if(action.validate_action_target(src, being_used = FALSE))
-				performed_actions += action
-		.["possible_actions"] = performed_actions
+		.["roleinfo"] = list(
+			"role" = user_role.name,
+			"desc" = user_role.desc,
+			"action_log" = user_role.role_notes,
+			"hud_icon" = user_role.hud_icon,
+			"revealed_icon" = user_role.revealed_icon,
+		)
+		var/ability_options = list()
+		for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
+			if(action.validate_action_target(src))
+				ability_options += list(list("name" = action, "ref" = REF(action)))
+		.["possible_actions"] = ability_options
 		.["role_theme"] = user_role.special_ui_theme
 	else
 		var/list/lobby_data = list()
@@ -614,19 +621,19 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	var/list/player_data = list()
 	for(var/datum/mafia_role/R in all_roles)
 		var/list/player_info = list()
-		var/list/performed_actions = list()
+		var/list/ability_options = list()
 		if(user_role) //not observer
-			for(var/datum/mafia_ability/action in user_role.role_unique_actions)
-				if(action.validate_action_target(src, being_used = FALSE))
-					performed_actions += action
+			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
+				if(action.validate_action_target(src, potential_target = R))
+					ability_options += list(list("name" = action, "ref" = REF(action)))
 			//Awful snowflake, could use generalizing
 			if(phase == MAFIA_PHASE_VOTING)
-				player_info["votes"] = get_vote_count(R,"Day")
+				player_info["votes"] = get_vote_count(R, "Day")
 				if(R.game_status == MAFIA_ALIVE && R != user_role)
-					performed_actions += "Vote"
+					ability_options += list(list("name" = "Vote", "ref" = "Vote"))
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
-		player_info["possible_actions"] = performed_actions
+		player_info["possible_actions"] = ability_options
 		player_info["alive"] = R.game_status == MAFIA_ALIVE
 		player_data += list(player_info)
 	.["players"] = player_data
@@ -675,16 +682,12 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 						to_chat(usr, fail.player_key)
 			if("debug_setup")
 				var/list/debug_setup = list()
-				var/list/rolelist_dict = list()
+				var/list/rolelist_dict = list("CANCEL", "FINISH") + GLOB.mafia_roles_by_name
 				var/done = FALSE
-				for(var/p in typesof(/datum/mafia_role))
-					var/datum/mafia_role/path = p
-					rolelist_dict[initial(path.name) + " ([uppertext(initial(path.team))])"] = path
-				rolelist_dict = list("CANCEL", "FINISH") + rolelist_dict
 
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
-					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict[1])
+					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
 					switch(chosen_role_name)
 						if("CANCEL")
 							return
@@ -692,7 +695,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 							break
 						else
 							var/found_path = rolelist_dict[chosen_role_name]
-							var/role_count = input(usr,"How many? Zero to cancel.","Custom Setup Creation",0) as null|num
+							var/role_count = tgui_input_number(usr, "How many? Zero to cancel.", "Custom Setup Creation", 0, 12)
 							if(role_count > 0)
 								debug_setup[found_path] = role_count
 				custom_setup = debug_setup
@@ -704,13 +707,14 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 
 	switch(action) //both living and dead
 		if("mf_lookup")
-			var/role_lookup = params["atype"]
+			var/role_lookup = params["role_name"]
 			var/datum/mafia_role/helper
 			for(var/datum/mafia_role/role as anything in all_roles)
 				if(role_lookup == role.name)
 					helper = role
 					break
 			helper.show_help(usr)
+
 	if(!user_role)//just the dead
 		var/client/C = ui.user.client
 		switch(action)
@@ -757,30 +761,29 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 
 	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
+
 	//User actions (just living)
 	switch(action)
-		if("mf_action")
-			var/datum/mafia_ability/used_action = user_role.role_unique_actions.Find(params["atype"])
-			if(!used_action)
-				return
-			used_action.using_ability = TRUE
-			used_action.perform_action(src)
-			used_action.using_ability = FALSE
-			return TRUE //vals for self-ui update
-		if("mf_targ_action")
+		if("perform_action")
 			var/datum/mafia_role/target = locate(params["target"]) in all_roles
 			if(!istype(target))
 				return
-			switch(params["atype"])
-				if("Vote")
-					if(phase != MAFIA_PHASE_VOTING)
-						return
-					vote_for(user_role, target, vote_type="Day")
-				var/datum/mafia_ability/used_action = user_role.role_unique_actions.Find(params["atype"])
+			if(params["action_ref"] == "Vote")
+				if(phase != MAFIA_PHASE_VOTING)
+					return
+				vote_for(user_role, target, vote_type = "Day")
+			else
+				var/datum/mafia_ability/used_action = locate(params["action_ref"]) in user_role.role_unique_actions
 				if(!used_action)
 					return
-				used_action.set_target(src, target)
+				switch(phase)
+					if(MAFIA_PHASE_DAY)
+						used_action.using_ability = TRUE
+						used_action.perform_action(src)
+					if(MAFIA_PHASE_NIGHT)
+						used_action.set_target(src, target)
 			return TRUE
+
 	if(user_role != on_trial)
 		switch(action)
 			if("vote_abstain")

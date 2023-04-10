@@ -13,6 +13,8 @@
 	var/honorable = FALSE
 
 /datum/mafia_ability/attack_player/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		return ..()
 

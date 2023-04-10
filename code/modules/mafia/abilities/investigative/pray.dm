@@ -9,6 +9,8 @@
 	ability_action = "commune with the spirit of"
 
 /datum/mafia_ability/seance/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		return ..()
 

@@ -17,6 +17,8 @@
 	RegisterSignal(host_role, COMSIG_MAFIA_ON_KILL, PROC_REF(flickering_immunity))
 
 /datum/mafia_ability/flicker_rampage/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		return ..()
 

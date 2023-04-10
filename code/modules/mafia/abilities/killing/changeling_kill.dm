@@ -9,14 +9,9 @@
 	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
 	///Boolean on whether changelings attempted to attack their target or not.
 	var/static/attacked_target = FALSE
-	var/static/datum/mafia_role/changeling_attacker
 
 /datum/mafia_ability/changeling_kill/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
-	if(target_role)
-		game.votes["Mafia"] += target_role
-	. = ..()
-	if(target_role)
-		game.votes["Mafia"] += target_role
+	game.vote_for(host_role, new_target, "Mafia", MAFIA_TEAM_MAFIA)
 
 /**
  * Attempt to attack a player.
@@ -26,12 +21,14 @@
  * This makes it impossible for the Lawyer to meta hold up a game by repeatedly roleblocking one Changeling.
  */
 /datum/mafia_ability/changeling_kill/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		return ..()
 	if(attacked_target)
 		return
 
-	changeling_attacker = game.get_random_voter("Mafia")
+	var/datum/mafia_role/changeling_attacker = game.get_random_voter("Mafia")
 	var/datum/mafia_role/victim = game.get_vote_winner("Mafia")
 	if(!victim)
 		return ..()

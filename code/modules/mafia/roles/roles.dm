@@ -37,7 +37,8 @@
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions)
-		new abilities(game, src)
+		role_unique_actions += new abilities(game, src)
+		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
 	QDEL_NULL(body)
@@ -90,11 +91,6 @@
 
 /datum/mafia_role/proc/special_reveal_equip(datum/mafia_controller/game)
 	return
-
-/datum/mafia_role/proc/validate_action_target(datum/mafia_controller/game,action,datum/mafia_role/target)
-	if((role_flags & ROLE_ROLEBLOCKED))
-		return FALSE
-	return TRUE
 
 /datum/mafia_role/proc/add_note(note)
 	role_notes += note

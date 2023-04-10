@@ -8,6 +8,8 @@
 	ability_action = "investigate"
 
 /datum/mafia_ability/investigate/perform_action(datum/mafia_controller/game)
+	if(!using_ability)
+		return
 	if(!validate_action_target(game))
 		host_role.add_note("N[game.turn] - [target_role.body.real_name] - Unable to investigate")
 		return ..()
