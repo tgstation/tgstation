@@ -187,7 +187,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/a762surplus
-	name = "7.62 Surplus Bullet Casing"
+	name = "7.62 Surplus Bullet Casing (VERY Lethal)"
 	id = "a762surplus"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
