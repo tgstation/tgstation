@@ -29,7 +29,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "g" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
 /obj/item/book/manual/random,
@@ -42,7 +42,7 @@
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/gps{
 	gpstag = "STV5"
 	},
@@ -106,9 +106,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "t" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
