@@ -1,4 +1,4 @@
-/mob/living/carbon/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 
 	if(notransform)
 		return
@@ -9,21 +9,21 @@
 
 	if(IS_IN_STASIS(src))
 		. = ..()
-		reagents.handle_stasis_chems(src, delta_time, times_fired)
+		reagents.handle_stasis_chems(src, seconds_per_tick, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
-		handle_dead_metabolization(delta_time, times_fired) //Dead metabolization first since it can modify life metabolization.
-		handle_organs(delta_time, times_fired)
+		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
+		handle_organs(seconds_per_tick, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
 			return
 
 		if(.) //not dead
-			handle_blood(delta_time, times_fired)
+			handle_blood(seconds_per_tick, times_fired)
 
 		if(stat != DEAD)
-			handle_brain_damage(delta_time, times_fired)
+			handle_brain_damage(seconds_per_tick, times_fired)
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -31,14 +31,14 @@
 
 		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
 			adjustStaminaLoss(-INFINITY)
-		var/bprv = handle_bodyparts(delta_time, times_fired)
+		var/bprv = handle_bodyparts(seconds_per_tick, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
-			addiction.process_addiction(src, delta_time, times_fired)
+			addiction.process_addiction(src, seconds_per_tick, times_fired)
 	if(stat != DEAD)
 		return 1
 
@@ -47,7 +47,7 @@
 ///////////////
 
 // Start of a breath chain, calls [carbon/proc/breathe()]
-/mob/living/carbon/handle_breathing(delta_time, times_fired)
+/mob/living/carbon/handle_breathing(seconds_per_tick, times_fired)
 	var/next_breath = 4
 	var/obj/item/organ/internal/lungs/L = get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/internal/heart/H = get_organ_slot(ORGAN_SLOT_HEART)
@@ -59,7 +59,7 @@
 			next_breath--
 
 	if((times_fired % next_breath) == 0 || failed_last_breath)
-		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
+		breathe(seconds_per_tick, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
 			add_mood_event("suffocation", /datum/mood_event/suffocation)
 		else
@@ -70,7 +70,7 @@
 			location_as_object.handle_internal_lifeform(src,0)
 
 // Second link in a breath chain, calls [carbon/proc/check_breath()]
-/mob/living/carbon/proc/breathe(delta_time, times_fired)
+/mob/living/carbon/proc/breathe(seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
 		return
@@ -443,20 +443,20 @@
 	// To differentiate between no internals and active, but empty internals.
 	return . || FALSE
 
-/mob/living/carbon/proc/handle_blood(delta_time, times_fired)
+/mob/living/carbon/proc/handle_blood(seconds_per_tick, times_fired)
 	return
 
-/mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
+/mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		. |= limb.on_life(delta_time, times_fired)
+		. |= limb.on_life(seconds_per_tick, times_fired)
 
-/mob/living/carbon/proc/handle_organs(delta_time, times_fired)
+/mob/living/carbon/proc/handle_organs(seconds_per_tick, times_fired)
 	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ in organs)
 			// On-death is where organ decay is handled
-			organ?.on_death(delta_time, times_fired) // organ can be null due to reagent metabolization causing organ shuffling
+			organ?.on_death(seconds_per_tick, times_fired) // organ can be null due to reagent metabolization causing organ shuffling
 			// We need to re-check the stat every organ, as one of our others may have revived us
 			if(stat != DEAD)
 				break
@@ -468,25 +468,25 @@
 		// This code is hot enough that it's just not worth the time
 		var/obj/item/organ/internal/organ = organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
-			organ.on_life(delta_time, times_fired)
+			organ.on_life(seconds_per_tick, times_fired)
 
 
-/mob/living/carbon/handle_diseases(delta_time, times_fired)
+/mob/living/carbon/handle_diseases(seconds_per_tick, times_fired)
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(DT_PROB(D.infectivity, delta_time))
+		if(SPT_PROB(D.infectivity, seconds_per_tick))
 			D.spread()
 
 		if(stat != DEAD || D.process_dead)
-			D.stage_act(delta_time, times_fired)
+			D.stage_act(seconds_per_tick, times_fired)
 
-/mob/living/carbon/handle_wounds(delta_time, times_fired)
+/mob/living/carbon/handle_wounds(seconds_per_tick, times_fired)
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
 		if(W.processes) // meh
-			W.handle_process(delta_time, times_fired)
+			W.handle_process(seconds_per_tick, times_fired)
 
-/mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
+/mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick, times_fired)
 	if(!dna?.temporary_mutations.len)
 		return
 
@@ -528,20 +528,20 @@
  * Due to how reagent metabolization code works this couldn't be done anywhere else.
  *
  * Arguments:
- * - delta_time: The amount of time that has elapsed since the last tick.
+ * - seconds_per_tick: The amount of time that has elapsed since the last tick.
  * - times_fired: The number of times SSmobs has ticked.
  */
-/mob/living/carbon/proc/handle_dead_metabolization(delta_time, times_fired)
+/mob/living/carbon/proc/handle_dead_metabolization(seconds_per_tick, times_fired)
 	if (stat != DEAD)
 		return
-	reagents.metabolize(src, delta_time, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
+	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
 
 /// Base carbon environment handler, adds natural stabilization
-/mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/carbon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/areatemp = get_temperature(environment)
 
 	if(stat != DEAD) // If you are dead your body does not stabilize naturally
-		natural_bodytemperature_stabilization(environment, delta_time, times_fired)
+		natural_bodytemperature_stabilization(environment, seconds_per_tick, times_fired)
 
 	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
 		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
@@ -551,10 +551,10 @@
  *
  * Arguments:
  * - [environemnt][/datum/gas_mixture]: The environment gas mix
- * - delta_time: The amount of time that has elapsed since the last tick
+ * - seconds_per_tick: The amount of time that has elapsed since the last tick
  * - times_fired: The number of times SSmobs has ticked
  */
-/mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/areatemp = get_temperature(environment)
 	var/body_temperature_difference = get_body_temp_normal() - bodytemperature
 	var/natural_change = 0
@@ -600,7 +600,7 @@
 				natural_change = (1 / (thermal_protection + 1)) * natural_change
 
 	// Apply the natural stabilization changes
-	adjust_bodytemperature(natural_change * delta_time)
+	adjust_bodytemperature(natural_change * seconds_per_tick)
 
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
@@ -704,7 +704,7 @@
 
 ///Check to see if we have the liver, if not automatically gives you last-stage effects of lacking a liver.
 
-/mob/living/carbon/proc/handle_liver(delta_time, times_fired)
+/mob/living/carbon/proc/handle_liver(seconds_per_tick, times_fired)
 	if(!dna)
 		return
 
@@ -713,13 +713,13 @@
 		return
 
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, delta_time, times_fired, can_overdose=TRUE, liverless = TRUE)
+	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose=TRUE, liverless = TRUE)
 
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return
 
-	adjustToxLoss(0.6 * delta_time, TRUE,  TRUE)
-	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* delta_time)
+	adjustToxLoss(0.6 * seconds_per_tick, TRUE,  TRUE)
+	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
@@ -730,10 +730,10 @@
 //BRAIN DAMAGE//
 ////////////////
 
-/mob/living/carbon/proc/handle_brain_damage(delta_time, times_fired)
+/mob/living/carbon/proc/handle_brain_damage(seconds_per_tick, times_fired)
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
-		BT.on_life(delta_time, times_fired)
+		BT.on_life(seconds_per_tick, times_fired)
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//

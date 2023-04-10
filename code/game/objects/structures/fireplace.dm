@@ -104,7 +104,7 @@
 		if(2000 to MAXIMUM_BURN_TIMER)
 			set_light(6)
 
-/obj/structure/fireplace/process(delta_time)
+/obj/structure/fireplace/process(seconds_per_tick)
 	if(!lit)
 		return
 	if(world.time > flame_expiry_timer)
@@ -113,7 +113,7 @@
 
 	playsound(src, 'sound/effects/comfyfire.ogg',50,FALSE, FALSE, TRUE)
 	var/turf/T = get_turf(src)
-	T.hotspot_expose(700, 2.5 * delta_time)
+	T.hotspot_expose(700, 2.5 * seconds_per_tick)
 	update_appearance()
 	adjust_light()
 
