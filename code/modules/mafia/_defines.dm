@@ -65,6 +65,8 @@
 #define CAN_USE_ON_OTHERS (1<<0)
 ///Flag that decides whether the Mafia ability can be used on themselves.
 #define CAN_USE_ON_SELF (1<<1)
+///Flag that decides whether the Mafia ability can be used on dead players. This overwrites the first two, and only allows for dead.
+#define CAN_USE_ON_DEAD (1<<2)
 
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2

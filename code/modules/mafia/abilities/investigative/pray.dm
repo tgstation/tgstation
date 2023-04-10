@@ -7,6 +7,7 @@
 /datum/mafia_ability/seance
 	name = "Seance"
 	ability_action = "commune with the spirit of"
+	use_flags = CAN_USE_ON_DEAD
 
 /datum/mafia_ability/seance/perform_action(datum/mafia_controller/game)
 	if(!using_ability)

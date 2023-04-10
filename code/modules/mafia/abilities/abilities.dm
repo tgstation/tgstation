@@ -9,7 +9,7 @@
 	///When the ability can be used: (MAFIA_PHASE_DAY | MAFIA_PHASE_NIGHT)
 	var/valid_use_period = MAFIA_PHASE_NIGHT
 
-	///Whether this ability can be used on yourself.
+	///Whether this ability can be used on yourself. Selections: (CAN_USE_ON_OTHERS | CAN_USE_ON_SELF | CAN_USE_ON_DEAD)
 	var/use_flags = CAN_USE_ON_OTHERS
 	///Boolean on whether the ability was selected to be used during the proper period.
 	var/using_ability = FALSE
@@ -47,6 +47,8 @@
 			to_chat(host_role.body, span_warning("You were roleblocked!"))
 		return FALSE
 	if(potential_target)
+		if((use_flags & CAN_USE_ON_DEAD) && (potential_target.game_status == MAFIA_DEAD))
+			return TRUE
 		if(!(use_flags & CAN_USE_ON_SELF) && (potential_target == host_role))
 			return FALSE
 		if(!(use_flags & CAN_USE_ON_OTHERS) && (potential_target != host_role))
@@ -70,12 +72,13 @@
 	using_ability = initial(using_ability)
 
 /datum/mafia_ability/proc/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
-	if(!(use_flags & CAN_USE_ON_SELF) && (target_role == host_role))
-		to_chat(host_role.body, span_notice("This can only be used on others."))
-		return FALSE
-	if(!(use_flags & CAN_USE_ON_OTHERS) && (target_role != host_role))
-		to_chat(host_role.body, span_notice("This can only be used on yourself."))
-		return FALSE
+	if(!(use_flags & CAN_USE_ON_DEAD))
+		if(!(use_flags & CAN_USE_ON_SELF) && (target_role == host_role))
+			to_chat(host_role.body, span_notice("This can only be used on others."))
+			return FALSE
+		if(!(use_flags & CAN_USE_ON_OTHERS) && (target_role != host_role))
+			to_chat(host_role.body, span_notice("This can only be used on yourself."))
+			return FALSE
 	if(target_role == new_target)
 		target_role = null
 		using_ability = FALSE
