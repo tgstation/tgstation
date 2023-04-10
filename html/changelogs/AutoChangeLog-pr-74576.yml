@@ -1,7 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - rscadd: "latex balloons can now be crafted using a latex glove and some cable. You can fill them with air using a tank. They also have a new sound effect."
-  - imageadd: "light tubes have a new inhand sprite"
-  - bugfix: "broken light tubes now actually have sharpness to them as they are basically spikes of glass."
-  - refactor: "refactored latex balloon code"
