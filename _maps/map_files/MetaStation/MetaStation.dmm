@@ -16399,6 +16399,15 @@
 "ggj" = (
 /turf/closed/wall,
 /area/station/security/evidence)
+"ggF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "ggH" = (
 /obj/effect/spawner/random/structure/chair_maintenance,
 /turf/open/floor/iron/checker,
@@ -19443,6 +19452,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/cigarette,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "hlU" = (
@@ -32071,7 +32081,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "lAA" = (
-/obj/structure/table/wood/poker,
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
@@ -102890,7 +102899,7 @@ pIz
 kdN
 wSs
 lAA
-hlQ
+ggF
 yiX
 vgb
 hyh
