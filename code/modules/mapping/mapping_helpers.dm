@@ -286,6 +286,12 @@
 		apc.set_no_charge()
 	if(apc.full_charge)
 		apc.set_full_charge()
+	if(apc.cell_5k & apc.cell_10k)
+		CRASH("Non-combinable apc helpers!")
+	if(apc.syndicate_access & apc.away_general_access)
+		CRASH("Non-combinable apc helpers!")
+	if(apc.no_charge & apc.full_charge)
+		CRASH("Non-combinable apc helpers!")
 	apc.update_appearance()
 	qdel(src)
 
