@@ -64,6 +64,7 @@
 	inhand_icon_state = "an_tank"
 	tank_holder_icon_state = "holder_anesthetic"
 	force = 10
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/tank/internals/anesthetic/populate_gas()
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
