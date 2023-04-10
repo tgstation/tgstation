@@ -13,7 +13,7 @@
 		var/obj/item/target = weak_item?.resolve()
 		if (isnull(target))
 			return
-		item_blacklist[target] = TRUE
+		item_blacklist[weak_item] = TRUE
 		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
 			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
 
