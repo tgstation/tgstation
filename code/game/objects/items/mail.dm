@@ -226,7 +226,7 @@
 	else
 		icon_state = "[initial(icon_state)]sealed"
 
-obj/structure/closet/crate/mail/closet_update_overlays(list/new_overlays)
+/obj/structure/closet/crate/mail/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(opened)
 		var/mutable_appearance/lid = mutable_appearance(icon = 'icons/obj/storage/crates.dmi', icon_state = "maillid")
