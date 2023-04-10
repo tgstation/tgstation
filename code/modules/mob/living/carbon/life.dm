@@ -356,7 +356,8 @@
 		n2o_euphoria = EUPHORIA_ACTIVE
 		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 		// give them one second of grace to wake up and run away a bit!
-		Unconscious(6 SECONDS)
+		if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
+			Unconscious(6 SECONDS)
 		// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			Sleeping(max(AmountSleeping() + 40, 200))
