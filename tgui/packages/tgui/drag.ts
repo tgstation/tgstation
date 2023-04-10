@@ -119,25 +119,32 @@ export const recallWindowGeometry = async (
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
+  // options.pos is assumed to already be in display-pixels
   let pos = geometry?.pos || options.pos;
   let size = options.size;
+  // Convert size from css-pixels to display-pixels
   if (size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
+  // Wait until screen offset gets resolved
   await screenOffsetPromise;
   const areaAvailable = getScreenSize();
+  // Set window size
   if (size) {
+    // Constraint size to not exceed available screen area
     size = [
       Math.min(areaAvailable[0], size[0]),
       Math.min(areaAvailable[1], size[1]),
     ];
     setWindowSize(size);
   }
+  // Set window position
   if (pos) {
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
     setWindowPosition(pos);
+    // Set window position at the center of the screen.
   } else if (size) {
     pos = vecAdd(
       vecScale(areaAvailable, 0.5),
@@ -150,6 +157,7 @@ export const recallWindowGeometry = async (
 
 // Setup draggable window
 export const setupDrag = async () => {
+  // Calculate screen offset caused by the windows taskbar
   let windowPosition = getWindowPosition();
 
   screenOffsetPromise = Byond.winget(Byond.windowId, 'pos').then((pos) => [
@@ -160,7 +168,10 @@ export const setupDrag = async () => {
   logger.debug('screen offset', screenOffset);
 };
 
-// Constraint window position to safe screen area
+/**
+ * Constraints window position to safe screen area, accounting for safe
+ * margins which could be a system taskbar.
+ */
 const constraintPosition = (
   pos: [number, number],
   size: [number, number]
@@ -184,7 +195,7 @@ const constraintPosition = (
 };
 
 // Start dragging the window
-export const dragStartHandler = (event: MouseEvent): void => {
+export const dragStartHandler = (event: MouseEvent) => {
   logger.log('drag start');
   dragging = true;
   dragPointOffset = vecSubtract(
@@ -198,7 +209,7 @@ export const dragStartHandler = (event: MouseEvent): void => {
 };
 
 // End dragging the window
-const dragEndHandler = (event: MouseEvent): void => {
+const dragEndHandler = (event: MouseEvent) => {
   logger.log('drag end');
   dragMoveHandler(event);
   document.removeEventListener('mousemove', dragMoveHandler);
@@ -208,7 +219,7 @@ const dragEndHandler = (event: MouseEvent): void => {
 };
 
 // Move the window while dragging
-const dragMoveHandler = (event: MouseEvent): void => {
+const dragMoveHandler = (event: MouseEvent) => {
   if (!dragging) {
     return;
   }
@@ -220,8 +231,7 @@ const dragMoveHandler = (event: MouseEvent): void => {
 
 // Start resizing the window
 export const resizeStartHandler =
-  (x: number, y: number) =>
-  (event: MouseEvent): void => {
+  (x: number, y: number) => (event: MouseEvent) => {
     resizeMatrix = [x, y];
     logger.log('resize start', resizeMatrix);
     resizing = true;
@@ -237,7 +247,7 @@ export const resizeStartHandler =
   };
 
 // End resizing the window
-const resizeEndHandler = (event: MouseEvent): void => {
+const resizeEndHandler = (event: MouseEvent) => {
   logger.log('resize end', size);
   resizeMoveHandler(event);
   document.removeEventListener('mousemove', resizeMoveHandler);
@@ -247,7 +257,7 @@ const resizeEndHandler = (event: MouseEvent): void => {
 };
 
 // Move the window while resizing
-const resizeMoveHandler = (event: MouseEvent): void => {
+const resizeMoveHandler = (event: MouseEvent) => {
   if (!resizing) {
     return;
   }
@@ -257,7 +267,9 @@ const resizeMoveHandler = (event: MouseEvent): void => {
     getWindowPosition()
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);
+  // Extra 1x1 area is added to ensure the browser can see the cursor
   size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]);
+  // Sane window size values
   size[0] = Math.max(size[0], 150 * pixelRatio);
   size[1] = Math.max(size[1], 50 * pixelRatio);
   setWindowSize(size);
