@@ -5,6 +5,8 @@
 	var/team = MAFIA_TEAM_TOWN
 	///how the random setup chooses which roles get put in
 	var/role_type = TOWN_OVERFLOW
+	///role flags (special status of roles like detection immune)
+	var/role_flags = NONE
 
 	///List of all mafia abilities this role is able to perform.
 	var/list/datum/mafia_ability/role_unique_actions = list()
@@ -13,9 +15,7 @@
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
-	///role flags (special status of roles like detection immune)
-	var/role_flags = NONE
-	///how many votes submitted when you vote. used in voting, but not victory
+	///how many votes submitted when you vote. used in voting and deciding victory.
 	var/vote_power = 1
 	///what they get equipped with when they are revealed
 	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant
@@ -30,50 +30,19 @@
 	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
 	var/revealed_icon = "assistant"
 	///set this to something cool for antagonists and their window will look different
-	var/special_theme
+	var/special_ui_theme
 
 	var/list/role_notes = list()
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
-	RegisterSignal(game, COMSIG_MAFIA_NIGHT_ACTION_PHASE, PROC_REF(perform_night_ability))
-	if(role_unique_actions.len)
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions)
-		new abilities(src)
+		new abilities(game, src)
 
 /datum/mafia_role/Destroy(force, ...)
 	QDEL_NULL(body)
 	QDEL_NULL(role_unique_actions)
 	return ..()
-
-/**
- * Called when the night period ends.
- * Used for handling night abilities.
- */
-/datum/mafia_role/proc/perform_night_ability(datum/mafia_controller/game_source)
-	SIGNAL_HANDLER
-	if(!role_unique_actions.len)
-		return
-	if(!selected_actions.len)
-		to_chat(body, span_warning("You did not use any night abilities."))
-
-
-/**
- * Tests if a visitor can actually perform an action on this role. Verbose on purpose!
- *
- * Will return false if: Your visit is roleblocked, they have perished, or your visit was interrupted
- */
-/datum/mafia_role/proc/can_action(datum/mafia_controller/game, datum/mafia_role/visitor, action)
-	if(role_flags & ROLE_ROLEBLOCKED)
-		to_chat(visitor,span_danger("Your [action] was blocked!"))
-		return FALSE
-	if(game_status != MAFIA_ALIVE) //They're already dead
-		to_chat(visitor,span_danger("[body.real_name] perished before you could visit!"))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_VISIT, game, visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
-		to_chat(visitor,span_danger("Your [action] was interrupted!"))
-		return FALSE
-	return TRUE
 
 /**
  * Tests kill immunities, if nothing prevents the kill, kills this role.
@@ -82,6 +51,9 @@
  */
 /datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch=FALSE)
 	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_KILL, game, attacker, lynch) & MAFIA_PREVENT_KILL)
+		return FALSE
+	if(game_status == MAFIA_DEAD)
+		to_chat(attacker, span_notice("Your target was already dead when you got there!"))
 		return FALSE
 	game_status = MAFIA_DEAD
 	body.death()
@@ -117,9 +89,6 @@
 	role_flags |= ROLE_REVEALED
 
 /datum/mafia_role/proc/special_reveal_equip(datum/mafia_controller/game)
-	return
-
-/datum/mafia_role/proc/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	return
 
 /datum/mafia_role/proc/validate_action_target(datum/mafia_controller/game,action,datum/mafia_role/target)

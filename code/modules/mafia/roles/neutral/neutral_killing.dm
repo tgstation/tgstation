@@ -9,7 +9,7 @@
 	revealed_outfit = /datum/outfit/mafia/traitor
 	revealed_icon = "traitor"
 	hud_icon = "hudtraitor"
-	special_theme = "neutral"
+	special_ui_theme = "neutral"
 
 	role_unique_actions = list(/datum/mafia_ability/attack_player)
 
@@ -38,16 +38,12 @@
 	role_flags = ROLE_UNDETECTABLE | ROLE_CAN_KILL
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_KILL
-	special_theme = "neutral"
+	special_ui_theme = "neutral"
 	hud_icon = "hudnightmare"
 	revealed_icon = "nightmare"
 	winner_award = /datum/award/achievement/mafia/nightmare
 
 	role_unique_actions = list(/datum/mafia_ability/flicker_rampage)
-
-/datum/mafia_role/nightmare/New(datum/mafia_controller/game)
-	. = ..()
-	RegisterSignal(src,COMSIG_MAFIA_ON_KILL, PROC_REF(flickering_immunity))
 
 /datum/mafia_role/nightmare/check_total_victory(alive_town, alive_mafia) //nightmares just want teams dead
 	return alive_town + alive_mafia <= 1
@@ -58,13 +54,3 @@
 /datum/mafia_role/nightmare/special_reveal_equip()
 	body.set_species(/datum/species/shadow)
 	body.update_body()
-
-/datum/mafia_role/nightmare/proc/flickering_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
-	SIGNAL_HANDLER
-	if(!attacker)
-		return //no chance man, that's a town lynch
-
-	if(attacker in flickering)
-		to_chat(body,span_userdanger("You were attacked by someone in a flickering room. You have danced in the shadows, evading them."))
-		return MAFIA_PREVENT_KILL
-

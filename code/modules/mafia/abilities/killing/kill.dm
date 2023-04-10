@@ -6,6 +6,7 @@
 /datum/mafia_ability/attack_player
 	name = "Attack"
 	ability_action = "attempt to attack"
+	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
 	///The message told to the player when they are killed.
 	var/attack_action = "killed by"
 	///Whether the player will suicide if they hit a Town member.

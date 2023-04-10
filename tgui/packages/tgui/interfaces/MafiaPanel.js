@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { selected_actions, phase, roleinfo, role_theme, admin_controls } = data;
+  const { possible_actions, phase, roleinfo, role_theme, admin_controls } = data;
   return (
     <Window title="Mafia" theme={role_theme} width={650} height={580}>
       <Window.Content>
@@ -21,7 +21,7 @@ export const MafiaPanel = (props, context) => {
               <MafiaRole />
             </Stack.Item>
           )}
-          {selected_actions?.map((action) => (
+          {possible_actions?.map((action) => (
             <Stack.Item key={action}>
               <Button
                 onClick={() =>
@@ -323,7 +323,7 @@ const MafiaPlayers = (props, context) => {
                   `Votes: ${player.votes}`}
               </Stack.Item>
               <Stack.Item shrink={0} minWidth="42px" textAlign="center">
-                {player.selected_actions?.map((action) => (
+                {player.possible_actions?.map((action) => (
                   <Button
                     key={action}
                     fluid

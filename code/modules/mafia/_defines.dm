@@ -79,16 +79,16 @@
 
 //in order of events + game end
 
-/// when the shutters fall, before the 45 second wait and night event resolution
+///Sends all signals that must go immediately as night starts.
 #define COMSIG_MAFIA_SUNDOWN "sundown"
-/// after the 45 second wait, for actions that must go first
-#define COMSIG_MAFIA_NIGHT_START "night_start"
-/// most night actions now resolve
+///Sends all signals that must go first, aka roleblocks.
+#define COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE "night_start"
+///Sends the signal that all regular actions must go, such as
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
 /// now killing happens from the roles that do that. the reason this is post action phase is to ensure doctors can protect and lawyers can block
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
-/// now undoing states like protection, actions that must happen last, etc. right before shutters raise and the day begins
-#define COMSIG_MAFIA_NIGHT_END "night_end"
+/// now undoing states like protection, roleblocks, ect. Do not do any actions here, only undoing.
+#define COMSIG_MAFIA_NIGHT_POST_KILL_PHASE "night_end"
 
 /// signal sent to roles when the game is confirmed ending
 #define COMSIG_MAFIA_GAME_END "game_end"

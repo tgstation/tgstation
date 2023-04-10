@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		else
 			role.player_key = pop(ready_players)
 
-/datum/mafia_controller/proc/send_message(msg,team)
+/datum/mafia_controller/proc/send_message(msg, team)
 	for(var/datum/mafia_role/R in all_roles)
 		if(team && R.team != team)
 			continue
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
-	SEND_SIGNAL(src,COMSIG_MAFIA_SUNDOWN)
+	SEND_SIGNAL(src, COMSIG_MAFIA_SUNDOWN)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(resolve_night)), (NIGHT_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
@@ -441,21 +441,11 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * Finally opens the curtains and calls the start of day phase, completing the cycle until check victory returns TRUE
  */
 /datum/mafia_controller/proc/resolve_night()
-	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_START)
+	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_ACTION_PHASE)
-	//resolve mafia kill, todo unsnowflake this
-	var/datum/mafia_role/victim = get_vote_winner("Mafia")
-	if(victim)
-		var/datum/mafia_role/killer = get_random_voter("Mafia")
-		if(!victim.can_action(src, killer, "changeling murder"))
-			send_message(span_danger("[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!"),MAFIA_TEAM_MAFIA)
-		else
-			send_message(span_danger("[killer.body.real_name] has attacked [victim.body.real_name]!"),MAFIA_TEAM_MAFIA)
-			if(victim.kill(src,killer,lynch=FALSE))
-				to_chat(victim.body, span_userdanger("You have been killed by a Changeling!"))
 	reset_votes("Mafia")
-	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
-	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
+	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_KILL_PHASE)
+	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE)
 	toggle_night_curtains(close=FALSE)
 	start_day()
 	SStgui.update_uis(src)
@@ -605,11 +595,11 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	if(user_role)
 		.["roleinfo"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes, "hud_icon" = user_role.hud_icon, "revealed_icon" = user_role.revealed_icon)
 		var/performed_actions = list()
-		for(var/action in user_role.role_unique_actions)
-			if(user_role.validate_action_target(src,action,null))
+		for(var/datum/mafia_ability/action in user_role.role_unique_actions)
+			if(action.validate_action_target(src))
 				performed_actions += action
-		.["selected_actions"] = performed_actions
-		.["role_theme"] = user_role.special_theme
+		.["possible_actions"] = performed_actions
+		.["role_theme"] = user_role.special_ui_theme
 	else
 		var/list/lobby_data = list()
 		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup)
@@ -626,19 +616,17 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		var/list/player_info = list()
 		var/list/performed_actions = list()
 		if(user_role) //not observer
-			for(var/action in user_role.role_unique_actions)
-				if(user_role.validate_action_target(src,action,R))
+			for(var/datum/mafia_ability/action in user_role.role_unique_actions)
+				if(action.validate_action_target(src))
 					performed_actions += action
 			//Awful snowflake, could use generalizing
 			if(phase == MAFIA_PHASE_VOTING)
 				player_info["votes"] = get_vote_count(R,"Day")
 				if(R.game_status == MAFIA_ALIVE && R != user_role)
 					performed_actions += "Vote"
-			if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_MAFIA && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_MAFIA)
-				performed_actions += "Kill Vote"
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
-		player_info["selected_actions"] = performed_actions
+		player_info["possible_actions"] = performed_actions
 		player_info["alive"] = R.game_status == MAFIA_ALIVE
 		player_data += list(player_info)
 	.["players"] = player_data
@@ -718,7 +706,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		if("mf_lookup")
 			var/role_lookup = params["atype"]
 			var/datum/mafia_role/helper
-			for(var/datum/mafia_role/role in all_roles)
+			for(var/datum/mafia_role/role as anything in all_roles)
 				if(role_lookup == role.name)
 					helper = role
 					break
@@ -772,9 +760,12 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	//User actions (just living)
 	switch(action)
 		if("mf_action")
-			if(!user_role.selected_actions.Find(params["atype"]))
+			var/datum/mafia_ability/used_action = user_role.role_unique_actions.Find(params["atype"])
+			if(!used_action)
 				return
-			user_role.handle_action(src, params["atype"], null)
+			used_action.using_ability = TRUE
+			used_action.perform_action(src)
+			used_action.using_ability = FALSE
 			return TRUE //vals for self-ui update
 		if("mf_targ_action")
 			var/datum/mafia_role/target = locate(params["target"]) in all_roles
@@ -784,18 +775,11 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 				if("Vote")
 					if(phase != MAFIA_PHASE_VOTING)
 						return
-					vote_for(user_role,target,vote_type="Day")
-				if("Kill Vote")
-					if(phase != MAFIA_PHASE_NIGHT || user_role.team != MAFIA_TEAM_MAFIA)
-						return
-					vote_for(user_role,target,"Mafia", MAFIA_TEAM_MAFIA)
-					to_chat(user_role.body,"You will vote for [target.body.real_name] for tonights killing.")
-				else
-					if(!user_role.role_unique_actions.Find(params["atype"]))
-						return
-					if(!user_role.validate_action_target(src,params["atype"],target))
-						return
-					user_role.handle_action(src,params["atype"],target)
+					vote_for(user_role, target, vote_type="Day")
+				var/datum/mafia_ability/used_action = user_role.role_unique_actions.Find(params["atype"])
+				if(!used_action)
+					return
+				used_action.set_target(src, target)
 			return TRUE
 	if(user_role != on_trial)
 		switch(action)

@@ -5,17 +5,17 @@
 	revealed_outfit = /datum/outfit/mafia/obsessed
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
-	special_theme = "neutral"
+	special_ui_theme = "neutral"
 	hud_icon = "hudobsessed"
 	revealed_icon = "obsessed"
 
 	winner_award = /datum/award/achievement/mafia/obsessed
+	///The person the obsessed has to get lynched in order to win.
 	var/datum/mafia_role/obsession
-	var/lynched_target = FALSE
 
 /datum/mafia_role/obsessed/New(datum/mafia_controller/game) //note: obsession is always a townie
 	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_SUNDOWN, PROC_REF(find_obsession))
+	RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(find_obsession))
 
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
 	SIGNAL_HANDLER
@@ -30,14 +30,14 @@
 		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
 	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
 	to_chat(body, span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
-	add_note("N[game.turn] - I vowed to watch my obsession, [obsession.body.real_name], hang!") //it'll always be N1 but whatever
-	RegisterSignal(obsession,COMSIG_MAFIA_ON_KILL, PROC_REF(check_victory))
-	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
+	add_note("I vowed to watch my obsession, [obsession.body.real_name], hang!")
+	RegisterSignal(obsession, COMSIG_MAFIA_ON_KILL, PROC_REF(check_victory))
+	UnregisterSignal(game, COMSIG_MAFIA_SUNDOWN)
 
 /datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
+	UnregisterSignal(source, COMSIG_MAFIA_ON_KILL)
 	if(game_status == MAFIA_DEAD)
 		return
 	if(lynch)
@@ -54,14 +54,14 @@
 	revealed_outfit = /datum/outfit/mafia/clown
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
-	special_theme = "neutral"
+	special_ui_theme = "neutral"
 	hud_icon = "hudclown"
 	revealed_icon = "clown"
 	winner_award = /datum/award/achievement/mafia/clown
 
 /datum/mafia_role/clown/New(datum/mafia_controller/game)
 	. = ..()
-	RegisterSignal(src,COMSIG_MAFIA_ON_KILL, PROC_REF(prank))
+	RegisterSignal(src, COMSIG_MAFIA_ON_KILL, PROC_REF(prank))
 
 /datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
