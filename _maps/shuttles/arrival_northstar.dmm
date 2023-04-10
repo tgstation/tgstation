@@ -156,9 +156,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "M" = (
