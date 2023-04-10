@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Activating arm implant items in hand now automatically retracts and opens the radial menu, unless it's a welding tool."

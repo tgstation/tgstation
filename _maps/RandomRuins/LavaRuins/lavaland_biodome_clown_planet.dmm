@@ -67,7 +67,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "aw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
