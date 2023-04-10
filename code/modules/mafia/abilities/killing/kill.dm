@@ -12,7 +12,7 @@
 	///Whether the player will suicide if they hit a Town member.
 	var/honorable = FALSE
 
-/datum/mafia_ability/attack_player/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/attack_player/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	if(!using_ability)
 		return
 	if(!validate_action_target(game))

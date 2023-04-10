@@ -5,7 +5,7 @@
 	///The priority level this action must be sent at.
 	///(COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE|COMSIG_MAFIA_NIGHT_ACTION_PHASE|COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	var/action_priority = COMSIG_MAFIA_NIGHT_ACTION_PHASE
-	///When the ability can be used: (MAFIA_PHASE_DAY | MAFIA_PHASE_NIGHT)
+	///When the ability can be used: (MAFIA_PHASE_DAY | MAFIA_PHASE_VOTING | MAFIA_PHASE_NIGHT)
 	var/valid_use_period = MAFIA_PHASE_NIGHT
 	///Whether this ability can be used on yourself. Selections: (CAN_USE_ON_OTHERS | CAN_USE_ON_SELF | CAN_USE_ON_DEAD)
 	var/use_flags = CAN_USE_ON_OTHERS
@@ -64,12 +64,20 @@
  * Unsets the target, so it's meant to be called at the end.
  * Args:
  * game - The Mafia controller that holds reference to the game.
+ * day_target - Only set on Day abilities, this is the role the action is being performed on.
  */
-/datum/mafia_ability/proc/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/proc/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	SHOULD_CALL_PARENT(TRUE)
 	target_role = null
 	using_ability = initial(using_ability)
 
+/**
+ * set_target
+ *
+ * Used for Night abilities ONLY
+ * Sets the ability's target, which will cause the action to be performed on them at the end of the night.
+ * Subtypes can override this for things like self-abilities (such as shooting visitors).
+ */
 /datum/mafia_ability/proc/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
 	if(!(use_flags & CAN_USE_ON_DEAD))
 		if(!(use_flags & CAN_USE_ON_SELF) && (target_role == host_role))

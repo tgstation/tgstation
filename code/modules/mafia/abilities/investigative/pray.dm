@@ -9,7 +9,7 @@
 	ability_action = "commune with the spirit of"
 	use_flags = CAN_USE_ON_DEAD
 
-/datum/mafia_ability/seance/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/seance/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	if(!using_ability)
 		return
 	if(!validate_action_target(game))

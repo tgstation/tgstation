@@ -22,7 +22,7 @@
 		UnregisterSignal(host_role, COMSIG_MAFIA_ON_KILL)
 		to_chat(host_role.body, span_warning("You are no longer using a vest tonight."))
 
-/datum/mafia_ability/vest/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/vest/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	if(!using_ability)
 		return
 	if(!validate_action_target(game))

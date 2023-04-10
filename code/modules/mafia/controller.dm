@@ -227,6 +227,15 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	SStgui.update_uis(src)
 
 /**
+ * Sends out a Changeling to kill at the end of the night.
+ * Selected by a random voter of Mafia
+ */
+/datum/mafia_controller/proc/changeling_kill()
+	var/datum/mafia_role/mafia/killer = get_random_voter("Mafia")
+	killer.send_killer(game, target)
+	reset_votes("Mafia")
+
+/**
  * Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.
  *
  * What players do in this phase:
@@ -443,7 +452,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 /datum/mafia_controller/proc/resolve_night()
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_ACTION_PHASE)
-	reset_votes("Mafia")
+	changeling_kill()
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE)
 	toggle_night_curtains(close=FALSE)
@@ -625,11 +634,6 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
 				if(action.validate_action_target(src, potential_target = R))
 					ability_options += list(list("name" = action, "ref" = REF(action)))
-			//Awful snowflake, could use generalizing
-			if(phase == MAFIA_PHASE_VOTING)
-				player_info["votes"] = get_vote_count(R, "Day")
-				if(R.game_status == MAFIA_ALIVE && R != user_role)
-					ability_options += list(list("name" = "Vote", "ref" = "Vote"))
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
 		player_info["possible_actions"] = ability_options
@@ -767,20 +771,15 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 			var/datum/mafia_role/target = locate(params["target"]) in all_roles
 			if(!istype(target))
 				return
-			if(params["action_ref"] == "Vote")
-				if(phase != MAFIA_PHASE_VOTING)
-					return
-				vote_for(user_role, target, vote_type = "Day")
-			else
-				var/datum/mafia_ability/used_action = locate(params["action_ref"]) in user_role.role_unique_actions
-				if(!used_action)
-					return
-				switch(phase)
-					if(MAFIA_PHASE_DAY)
-						used_action.using_ability = TRUE
-						used_action.perform_action(src)
-					if(MAFIA_PHASE_NIGHT)
-						used_action.set_target(src, target)
+			var/datum/mafia_ability/used_action = locate(params["action_ref"]) in user_role.role_unique_actions
+			if(!used_action)
+				return
+			switch(phase)
+				if(MAFIA_PHASE_DAY, MAFIA_PHASE_VOTING)
+					used_action.using_ability = TRUE
+					used_action.perform_action(src, target)
+				if(MAFIA_PHASE_NIGHT)
+					used_action.set_target(src, target)
 			return TRUE
 
 	if(user_role != on_trial)

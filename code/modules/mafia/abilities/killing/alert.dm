@@ -17,7 +17,7 @@
 		UnregisterSignal(host_role, COMSIG_MAFIA_ON_VISIT)
 		to_chat(host_role.body, span_warning("You will now kill visitors."))
 
-/datum/mafia_ability/attack_visitors/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/attack_visitors/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	if(!using_ability)
 		return
 	if(!validate_action_target(game))

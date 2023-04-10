@@ -7,7 +7,7 @@
 /datum/mafia_ability/heal
 	name = "Heal"
 	ability_action = "heal"
-	action_priority = COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE
+	action_priority = COMSIG_MAFIA_NIGHT_ACTION_PHASE
 	use_flags = CAN_USE_ON_OTHERS | CAN_USE_ON_SELF
 
 	///The message sent when you've successfully saved someone.
@@ -19,7 +19,7 @@
 		return FALSE
 	return ..()
 
-/datum/mafia_ability/heal/perform_action(datum/mafia_controller/game)
+/datum/mafia_ability/heal/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
 	if(!using_ability)
 		return
 	if(!validate_action_target(game))
