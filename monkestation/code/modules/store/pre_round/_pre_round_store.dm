@@ -81,8 +81,14 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 		return
 	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost))
 	var/obj/item/created_item = new bought_item.item_path
-	if(!new_player_mob.put_in_hands(created_item, FALSE))
+
+	if(istype(created_item, /obj/item/effect_granter))
+		var/obj/item/effect_granter/granting_time = created_item
+		granting_time.grant_effect(new_player_mob_living)
+
+	else if(!new_player_mob.put_in_hands(created_item, FALSE))
 		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
+
 	ui_close()
 	qdel(new_player_mob.client.readied_store)
