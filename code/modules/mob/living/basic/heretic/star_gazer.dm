@@ -18,7 +18,7 @@
 	obj_damage = 400
 	melee_damage_lower = 35
 	melee_damage_upper = 35
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "ravages"
 	attack_verb_simple = "ravage"

@@ -23,7 +23,7 @@
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 	move_resist = INFINITY // This mob IS the floor
 	/// Action which sends a line of spikes chasing a player
 	var/datum/action/cooldown/chasing_spikes/spikes

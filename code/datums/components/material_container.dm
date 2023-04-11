@@ -470,7 +470,7 @@
 
 	if(isnull(held_item))
 		return NONE
-	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && (user.istate & ISTATE_HARM))
 		return NONE
 	if(held_item.item_flags & ABSTRACT)
 		return NONE

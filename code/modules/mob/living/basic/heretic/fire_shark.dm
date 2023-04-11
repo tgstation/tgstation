@@ -5,7 +5,7 @@
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 0
