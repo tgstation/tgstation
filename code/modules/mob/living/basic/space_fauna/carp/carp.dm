@@ -103,7 +103,7 @@
 
 	teleport = new(src)
 	teleport.Grant(src)
-	ai_controller.blackboard[BB_CARP_RIFT] = WEAKREF(teleport)
+	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
 
 /mob/living/basic/carp/Destroy()
 	QDEL_NULL(teleport)
@@ -113,7 +113,7 @@
 /mob/living/basic/carp/proc/setup_eating()
 	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
 	AddElement(/datum/element/basic_eating, 0, 10, BRUTE, desired_trash) // We are killing our planet
-	ai_controller.blackboard[BB_BASIC_FOODS] = desired_food + desired_trash
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, desired_food + desired_trash)
 
 /// Set a random colour on the carp, override to do something else
 /mob/living/basic/carp/proc/apply_colour()
@@ -137,7 +137,7 @@
 
 /// Gives the carp a list of destinations to try and travel between when it has nothing better to do
 /mob/living/basic/carp/proc/migrate_to(list/migration_points)
-	ai_controller.blackboard[BB_CARP_MIGRATION_PATH] = migration_points
+	ai_controller.set_blackboard_key(BB_CARP_MIGRATION_PATH, migration_points)
 
 /**
  * Holographic carp from the holodeck

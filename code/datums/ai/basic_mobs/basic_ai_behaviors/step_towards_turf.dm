@@ -11,13 +11,12 @@
 	var/step_distance = 3
 
 /datum/ai_behavior/step_towards_turf/setup(datum/ai_controller/controller, turf_key)
-	var/datum/weakref/weak_turf = controller.blackboard[turf_key]
-	var/turf/target_turf = weak_turf?.resolve()
-	if (!target_turf || target_turf.is_blocked_turf(exclude_mobs = TRUE))
+	var/turf/target_turf = controller.blackboard[turf_key]
+	if (QDELETED(target_turf) || target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		target_turf = find_destination_turf(args)
 		if (!target_turf)
 			return FALSE
-		controller.blackboard[turf_key] = WEAKREF(target_turf)
+		controller.set_blackboard_key(turf_key, target_turf)
 
 	if (target_turf.z != controller.pawn.z)
 		return FALSE

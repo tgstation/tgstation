@@ -13,8 +13,8 @@
 
 /datum/ai_controller/robot_customer/Destroy()
 	// clear possible datum refs
-	blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
-	blackboard[BB_CUSTOMER_CUSTOMERINFO] = null
+	clear_blackboard_key(BB_CUSTOMER_CURRENT_ORDER)
+	clear_blackboard_key(BB_CUSTOMER_CUSTOMERINFO)
 	return ..()
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
@@ -47,12 +47,12 @@
 
 /datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, datum/venue/attending_venue)
 	if(!blackboard[BB_CUSTOMER_EATING])
-		blackboard[BB_CUSTOMER_EATING] = TRUE
+		set_blackboard_key(BB_CUSTOMER_EATING, TRUE)
 		attending_venue.on_get_order(pawn, order_item)
 		var/our_order = blackboard[BB_CUSTOMER_CURRENT_ORDER]
 		if(isdatum(our_order))
 			qdel(our_order)
-		blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
+		clear_blackboard_key(BB_CUSTOMER_CURRENT_ORDER)
 
 
 ///Called when
@@ -94,7 +94,7 @@
 			return
 		if(3)
 			customer.say(customer_data.self_defense_line)
-	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
+	set_blackboard_key(BB_CUSTOMER_CURRENT_TARGET, greytider)
 
 	CancelActions()
 

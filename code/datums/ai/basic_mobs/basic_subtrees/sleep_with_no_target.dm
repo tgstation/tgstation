@@ -15,16 +15,15 @@
 	var/time_to_wait = 10
 
 /datum/ai_behavior/sleep_after_targetless_time/perform(delta_time, datum/ai_controller/controller, target_key)
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	finish_action(controller, succeeded = !target, delta_time = delta_time)
 
 /datum/ai_behavior/sleep_after_targetless_time/finish_action(datum/ai_controller/controller, succeeded, delta_time)
 	. = ..()
 	if (!succeeded)
-		controller.blackboard[BB_TARGETLESS_TIME] = 0
+		controller.set_blackboard_key(BB_TARGETLESS_TIME, 0)
 		return
-	controller.blackboard[BB_TARGETLESS_TIME] += delta_time
+	controller.add_blackboard_key(BB_TARGETLESS_TIME, delta_time)
 	if (controller.blackboard[BB_TARGETLESS_TIME] > time_to_wait)
 		enter_sleep(controller)
 

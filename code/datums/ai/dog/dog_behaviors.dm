@@ -16,8 +16,7 @@
 		return
 
 	// Unfortunately going to repeat this check in parent call but what can you do
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if (!targetting_datum.can_attack(living_pawn, target))
 		finish_action(controller, FALSE, target_key, targetting_datum_key, hiding_location_key)
