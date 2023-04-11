@@ -229,9 +229,12 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 /**
  * Sends out a Changeling to kill at the end of the night.
  * Selected by a random voter of Mafia
+ * Early returns if no one voted, as it means they did not want to kill, or all Changelings are dead.
  */
 /datum/mafia_controller/proc/changeling_kill()
 	var/datum/mafia_role/mafia/killer = get_random_voter("Mafia")
+	if(!killer)
+		return
 	killer.send_killer(src)
 	reset_votes("Mafia")
 
