@@ -310,7 +310,7 @@
 					return
 				F.PlaceOnTop(/turf/closed/wall)
 			else if(isopenturf(target))
-				var/turf/open/space/S = target
+				var/turf/open/S = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
 				if(!do_after_cooldown(S, source))
 					return
