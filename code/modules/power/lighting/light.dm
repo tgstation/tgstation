@@ -587,7 +587,7 @@
 	light_object.switchcount = switchcount
 	switchcount = 0
 
-	light_object.update()
+	light_object.update_appearance()
 	light_object.forceMove(loc)
 
 	if(user) //puts it in our active hand

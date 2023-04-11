@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - code_imp: "Vareditting a light replacer's emagged status will now properly update the item's name / appearance."
