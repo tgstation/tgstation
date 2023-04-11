@@ -136,7 +136,7 @@
 			toggle_lock(user)
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(tool.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && !broken)
 		if(atom_integrity < max_integrity)
 			if(!tool.tool_start_check(user, amount=5))
 				return
@@ -212,7 +212,7 @@
 		//prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (!user.combat_mode)
+		if (!(user.istate & ISTATE_HARM))
 			if(!open && !autoexamine_while_closed)
 				return
 			if(!user.is_blind())
@@ -414,7 +414,7 @@
 		return
 	if(isliving(usr))
 		var/mob/living/living_usr = usr
-		if(living_usr.combat_mode)
+		if((living_usr.istate & ISTATE_HARM))
 			return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -607,7 +607,7 @@
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(open && !user.combat_mode)
+	if(open && !(user.istate & ISTATE_HARM))
 		if(anchored)
 			to_chat(user, span_notice("You start unsecuring [src]..."))
 		else
@@ -621,7 +621,7 @@
 				to_chat(user, span_notice("You secure [src]."))
 			set_anchored(!anchored)
 			return TRUE
-	else if(!open && !user.combat_mode)
+	else if(!open && !(user.istate & ISTATE_HARM))
 		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 

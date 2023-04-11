@@ -303,7 +303,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(feeder.combat_mode)
+	if((feeder.istate & ISTATE_HARM))
 		return
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
@@ -456,7 +456,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(!C.has_mouth())
 		return FALSE
-		
+
 	var/covered = ""
 	if(C.is_mouth_covered(ITEM_SLOT_HEAD))
 		covered = "headgear"

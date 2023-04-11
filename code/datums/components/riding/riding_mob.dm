@@ -134,7 +134,7 @@
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
-		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
+		force_dismount(yeet_mob, (!(user.istate & ISTATE_HARM))) // gentle on help, byeeee if not
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
@@ -217,7 +217,7 @@
 /datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && (target in human_parent.buckled_mobs))
+	if((human_parent.istate & ISTATE_SECONDARY) && (target in human_parent.buckled_mobs))
 		force_dismount(target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 

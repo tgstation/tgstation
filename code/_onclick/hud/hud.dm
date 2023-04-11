@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Operative" = 'icons/hud/screen_operative.dmi',
 	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
 	"Glass" = 'icons/hud/screen_glass.dmi',
-	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi'
+	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
+	"Detective" = 'icons/hud/screen_detective.dmi',
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -26,6 +27,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/has_interaction_ui = FALSE
 
 	var/atom/movable/screen/blobpwrdisplay
 

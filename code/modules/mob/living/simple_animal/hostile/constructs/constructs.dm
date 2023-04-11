@@ -14,7 +14,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	speed = 0
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'

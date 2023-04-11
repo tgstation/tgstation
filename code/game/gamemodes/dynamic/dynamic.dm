@@ -1,5 +1,3 @@
-#define RULESET_STOP_PROCESSING 1
-
 #define FAKE_GREENSHIFT_FORM_CHANCE 15
 #define FAKE_REPORT_CHANCE 8
 #define REPORT_NEG_DIVERGENCE -15
@@ -395,7 +393,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 	else
 		generate_threat()
-		threat_level = clamp(threat_level,roundstart_pop_ready, roundstart_pop_ready*4)
 	generate_budgets()
 	set_cooldowns()
 	log_dynamic("Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")

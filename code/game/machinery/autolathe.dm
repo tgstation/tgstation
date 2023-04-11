@@ -244,7 +244,7 @@
 		wires.interact(user)
 		return TRUE
 
-	if(user.combat_mode) //so we can hit the machine
+	if((user.istate & ISTATE_HARM)) //so we can hit the machine
 		return ..()
 
 	if(machine_stat)

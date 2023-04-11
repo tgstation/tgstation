@@ -27,7 +27,7 @@
 	return TRUE
 
 /obj/item/multitool/circuit/melee_attack_chain(mob/user, atom/target, params)
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
 	if(marked_atom || !user.Adjacent(target) || is_right_clicking)
 		return ..()

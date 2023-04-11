@@ -184,7 +184,7 @@
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)
-		if(user.combat_mode)
+		if((user.istate & ISTATE_HARM))
 			return ..()
 		else
 			to_chat(user, span_warning("You cannot grind [I] into reagents!"))
@@ -361,3 +361,5 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
+
+#undef MILK_TO_BUTTER_COEFF

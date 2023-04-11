@@ -83,6 +83,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -107,7 +108,7 @@
 		ui.open()
 
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 	else
 		return ..()
@@ -649,8 +650,6 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
-	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

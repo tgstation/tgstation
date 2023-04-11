@@ -2,7 +2,7 @@
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +26,6 @@
 	inhand_icon_state = "lipstick[open ? "open" : null]"
 	return ..()
 
-
 /obj/item/lipstick/update_overlays()
 	. = ..()
 	if(!open)
@@ -34,7 +33,6 @@
 	var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
 	colored_overlay.color = colour
 	. += colored_overlay
-
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
@@ -44,7 +42,7 @@
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
 	colour = "lime"
-	
+
 /obj/item/lipstick/blue
 	name = "blue lipstick"
 	colour = "blue"
@@ -135,7 +133,7 @@
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "razor"
 	inhand_icon_state = "razor"
 	flags_1 = CONDUCT_1
@@ -156,7 +154,6 @@
 	H.update_body_parts()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
-
 /obj/item/razor/attack(mob/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -165,7 +162,7 @@
 			to_chat(user, span_warning("[H] doesn't have a head!"))
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH)
-			if(!user.combat_mode)
+			if(!(user.istate & ISTATE_HARM))
 				if(H.gender == MALE)
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
@@ -217,7 +214,7 @@
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
-			if(!user.combat_mode)
+			if(!(user.istate & ISTATE_HARM))
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return

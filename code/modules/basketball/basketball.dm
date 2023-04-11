@@ -1,13 +1,6 @@
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
 
-/// You hit exhaustion when you use 100 stamina
-#define STAMINA_COST_SHOOTING 10 // shooting with RMB drains stamina (but LMB does not)
-#define STAMINA_COST_DUNKING 20 // dunking is more strenous than shooting
-#define STAMINA_COST_DUNKING_MOB 30 // dunking another person is harder
-#define STAMINA_COST_SPINNING 15 // spin emote uses stamina while holding ball
-#define STAMINA_COST_DISARMING 10 // getting shoved or disarmed while holding ball drains stamina
-
 /obj/item/toy/basketball
 	name = "basketball"
 	icon = 'icons/obj/toys/balls.dmi'
@@ -103,7 +96,7 @@
 	for(var/i in 1 to 6)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
 	user.stamina.adjust(-STAMINA_COST_SPINNING)
-	
+
 /// Used to calculate our disarm chance based on stamina, direction, and spinning
 /// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
 /obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone)
@@ -161,7 +154,7 @@
 	user.balloon_alert_to_viewers("fumbles the ball")
 
 /obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, params)
-	if(!iscarbon(target) || user.combat_mode)
+	if(!iscarbon(target) || (user.istate & ISTATE_HARM))
 		return ..()
 
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
@@ -185,7 +178,7 @@
 
 /obj/item/toy/basketball/afterattack(atom/target, mob/living/user)
 	. = ..()
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		user.throw_item(target)
 
 /obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
@@ -216,3 +209,6 @@
 		return ..()
 
 	target.put_in_hands(src)
+
+#undef MAX_DISARM_CHANCE
+#undef MIN_DISARM_CHANCE

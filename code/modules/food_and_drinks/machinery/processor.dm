@@ -115,7 +115,7 @@
 		user.transferItemToLoc(attacking_item, src, TRUE)
 		LAZYADD(processor_contents, attacking_item)
 		return TRUE
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		to_chat(user, span_warning("That probably won't blend!"))
 		return TRUE
 	else

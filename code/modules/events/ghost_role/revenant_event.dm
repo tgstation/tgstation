@@ -62,3 +62,5 @@
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN
+
+#undef REVENANT_SPAWN_THRESHOLD

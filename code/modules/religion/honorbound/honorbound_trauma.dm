@@ -60,7 +60,7 @@
 		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+	if(!(honorbound.istate & ISTATE_HARM) && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !(honorbound.istate & ISTATE_SECONDARY))))
 		return
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
@@ -132,7 +132,7 @@
 
 /datum/brain_trauma/special/honorbound/proc/hand_guilt(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
-	if(attacker.combat_mode)
+	if((attacker.istate & ISTATE_HARM))
 		guilty(attacker)
 
 /datum/brain_trauma/special/honorbound/proc/paw_guilt(datum/source, mob/living/attacker)

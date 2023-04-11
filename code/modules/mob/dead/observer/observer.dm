@@ -20,7 +20,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_range = 1
 	light_power = 2
 	light_on = FALSE
-	shift_to_open_context_menu = FALSE
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -303,6 +302,7 @@ Works together with spawning an observer, noted above.
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
 /mob/living/ghostize(can_reenter_corpse = TRUE)

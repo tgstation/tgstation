@@ -14,7 +14,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		if(user == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
@@ -51,8 +51,8 @@ In all, this is a lot like the monkey code. /N
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
 
-	if(user.combat_mode)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_HARM))
+		if((user.istate & ISTATE_SECONDARY))
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)

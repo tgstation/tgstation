@@ -233,6 +233,10 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
+	
+/datum/greyscale_config/sneakers_marisa/worn
+	name = "Worn Marisa Sneakers"
+	icon_file = 'icons/mob/clothing/feet.dmi'
 
 /datum/greyscale_config/circuit
 	name = "Circuit Board"
@@ -1091,3 +1095,35 @@
 /datum/greyscale_config/simian/hardsuit
 	name = "simian Hardsuit"
 	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/hardsuit.json'
+
+
+/datum/greyscale_config/polycloak
+	name = "cloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/polycloak.json'
+
+/datum/greyscale_config/polycloak_worn
+	name = "Wcloak"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/polycloakworn.json'
+
+/datum/greyscale_config/polycowhat
+	name = "polycowhat_poly"
+	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/polycowhat.json'
+
+/datum/greyscale_config/polycowhat_worn
+	name = "wpolycowhat_poly"
+	icon_file = 'monkestation/icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/polycowhatworn.json'
+
+/datum/greyscale_config/boatcloak
+	name = "boatcloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/boatcloak.json'
+
+/datum/greyscale_config/boatcloak_worn
+	name = "wboatcloak"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
+

@@ -149,7 +149,7 @@
 
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return ..()
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))

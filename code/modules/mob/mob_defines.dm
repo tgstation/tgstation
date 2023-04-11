@@ -27,8 +27,6 @@
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
 
-	var/shift_to_open_context_menu = TRUE
-
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
 	/// Scale from 0-100, reset off update_sight()

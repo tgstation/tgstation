@@ -193,7 +193,7 @@
 	return data
 
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
+	if(istype(weapon, /obj/item/integrated_circuit) && !(user.istate & ISTATE_HARM))
 		var/obj/item/integrated_circuit/circuit = weapon
 		circuit.linked_component_printer = WEAKREF(src)
 		balloon_alert(user, "successfully linked to the integrated circuit")

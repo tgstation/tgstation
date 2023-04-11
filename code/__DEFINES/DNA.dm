@@ -77,24 +77,25 @@
 #define NO_DNA_COPY 10
 #define DRINKSBLOOD 11
 #define SKINTONES 12
+#define ANIME 13
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 12
-#define AGENDER 13
+#define DYNCOLORS 14
+#define AGENDER 15
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 14
+#define NOEYESPRITES 16
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 15
+#define HAS_MARKINGS 17
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 16
+#define NOBLOODOVERLAY 18
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 17
+#define NOAUGMENTS 19
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 18
+#define BLOOD_CLANS 20
 
-#define REVIVESBYHEALING 19
-#define NOHUSK 20
-#define NOMOUTH 21
+#define REVIVESBYHEALING 21
+#define NOHUSK 22
+#define NOMOUTH 23
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -132,6 +133,8 @@
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
 #define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
 #define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
+#define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"

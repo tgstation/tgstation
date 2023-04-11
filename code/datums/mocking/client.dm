@@ -26,6 +26,8 @@
 	var/hotkeys
 	var/tgui_say
 	var/typing_indicators
+	var/datum/interaction_mode/imode
+	var/context_menu_requires_shift = FALSE
 
 /datum/client_interface/proc/IsByondMember()
 	return FALSE
@@ -37,4 +39,7 @@
 		ckey = ckey(key)
 
 /datum/client_interface/proc/set_macros()
+	return
+
+/datum/client_interface/proc/set_right_click_menu_mode()
 	return

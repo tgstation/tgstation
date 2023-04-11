@@ -239,7 +239,7 @@
 	if(IS_DEAD_OR_INCAP(owner) || !isliving(crossed))
 		return
 	var/mob/living/in_the_way_mob = crossed
-	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
+	if(iscarbon(in_the_way_mob) && !(in_the_way_mob.istate & ISTATE_HARM))
 		return
 	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return

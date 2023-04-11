@@ -1,5 +1,3 @@
-/// How many tiles around the target the shooter can roam without losing their shot
-#define GUNPOINT_SHOOTER_STRAY_RANGE 2
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define GUNPOINT_DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
@@ -92,7 +90,7 @@
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(T != target || (shooter.istate & ISTATE_SECONDARY))
 		return
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)

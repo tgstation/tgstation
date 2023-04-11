@@ -32,6 +32,8 @@
 	usesound = 'sound/weapons/empty.ogg'
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	var/mode = 0
+	///the component buffer
+	var/obj/item/mcobject/component_buffer
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
@@ -140,3 +142,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "multitool_cyborg"
 	toolspeed = 0.5
+
+#undef PROXIMITY_NEAR
+#undef PROXIMITY_NONE
+#undef PROXIMITY_ON_SCREEN

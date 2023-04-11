@@ -64,7 +64,7 @@
 	if(grill)
 		if(istype(used_item, /obj/item/melee/roastingstick))
 			return FALSE
-		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
+		if(!(user.istate & ISTATE_HARM) && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))
 				var/list/modifiers = params2list(params)
@@ -193,3 +193,5 @@
 	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
 	rotation = 30
 	spin = generator(GEN_NUM, -20, 20)
+
+#undef BONFIRE_FIRE_STACK_STRENGTH

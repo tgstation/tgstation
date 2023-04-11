@@ -1,3 +1,47 @@
+GLOBAL_LIST_INIT(used_sound_channels, list(
+	CHANNEL_LOBBYMUSIC,
+	CHANNEL_ADMIN,
+	CHANNEL_VOX,
+	CHANNEL_JUKEBOX,
+	CHANNEL_HEARTBEAT,
+	CHANNEL_AMBIENCE,
+	CHANNEL_BUZZ,
+	CHANNEL_SOUND_EFFECTS,
+	CHANNEL_SOUND_FOOTSTEPS,
+	CHANNEL_WEATHER,
+	CHANNEL_MACHINERY,
+	CHANNEL_INSTRUMENTS,
+	CHANNEL_INSTRUMENTS_ROBOT,
+	CHANNEL_MOB_SOUNDS,
+))
+
+GLOBAL_LIST_INIT(proxy_sound_channels, list(
+	CHANNEL_SOUND_EFFECTS,
+	CHANNEL_SOUND_FOOTSTEPS,
+	CHANNEL_WEATHER,
+	CHANNEL_MACHINERY,
+	CHANNEL_INSTRUMENTS,
+	CHANNEL_INSTRUMENTS_ROBOT,
+	CHANNEL_MOB_SOUNDS,
+))
+
+/proc/guess_mixer_channel(soundin)
+	var/sound_text_string = "[soundin]"
+	if(findtext(sound_text_string, "effects/"))
+		return CHANNEL_SOUND_EFFECTS
+	if(findtext(sound_text_string, "machines/"))
+		return CHANNEL_MACHINERY
+	if(findtext(sound_text_string, "creatures/"))
+		return CHANNEL_MOB_SOUNDS
+	if(findtext(sound_text_string, "/ai/"))
+		return CHANNEL_VOX
+	if(findtext(sound_text_string, "chatter/"))
+		return CHANNEL_MOB_SOUNDS
+	if(findtext(sound_text_string, "items/"))
+		return CHANNEL_SOUND_EFFECTS
+	if(findtext(sound_text_string, "weapons/"))
+		return CHANNEL_SOUND_EFFECTS
+	return FALSE
 
 ///Default override for echo
 /sound
@@ -38,7 +82,7 @@
  * ignore_walls - Whether or not the sound can pass through walls.
  * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
  */
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, mixer_channel)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
@@ -46,6 +90,9 @@
 
 	if (!turf_source || !soundin || !vol)
 		return
+
+	if(!mixer_channel)
+		mixer_channel = guess_mixer_channel(soundin)
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -79,10 +126,10 @@
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
 		if(get_dist(listening_mob, turf_source) <= maxdistance)
-			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
+			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
 			. += listening_mob
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, mixer_channel = 0)
 	if(!client || !can_hear())
 		return
 
@@ -127,6 +174,21 @@
 
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
+
+		if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
+			var/used_channel = 0
+			if(channel in GLOB.used_sound_channels)
+				used_channel = channel
+				mixer_channel = channel
+			else
+				used_channel = mixer_channel
+			if("[used_channel]" in client.prefs.channel_volume)
+				sound_to_use.volume *= (client.prefs.channel_volume["[used_channel]"] * 0.01)
+
+		else if(!mixer_channel)
+			mixer_channel = guess_mixer_channel(soundin)
+			if("[mixer_channel]" in client.prefs.channel_volume)
+				sound_to_use.volume *= (client.prefs.channel_volume["[mixer_channel]"] * 0.01)
 
 		if(sound_to_use.volume <= 0)
 			return //No sound
@@ -174,6 +236,11 @@
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
+
+	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
+		vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
+	else
+		return
 
 	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS

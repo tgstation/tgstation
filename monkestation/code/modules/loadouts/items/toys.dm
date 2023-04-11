@@ -175,3 +175,19 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/foam_sword
 	name = "Foam Sword"
 	item_path = /obj/item/toy/sword
+
+/datum/loadout_item/toys/tyria
+	name = "Tryia Plush"
+	item_path = /obj/item/toy/plush/moth/tyriaplush
+
+/datum/loadout_item/toys/ook
+	name = "Ook Plush"
+	item_path = /obj/item/toy/plush/moth/ookplush
+
+/datum/loadout_item/toys/ducky_plush
+	name = "Ducky Plush"
+	item_path = /obj/item/toy/plush/duckyplush
+
+/datum/loadout_item/toys/sammi_plush
+	name = "Sammi Plush"
+	item_path = /obj/item/toy/plush/sammiplush

@@ -187,6 +187,11 @@
 				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8)
 	qdel(src)
 
+/obj/structure/reagent_dispensers/relaymove(mob/living/user, direction)
+	. = ..()
+	if(buckled_mobs)
+		relaydrive(user, direction)
+
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
@@ -220,7 +225,18 @@
 	desc = "A water tank."
 	icon_state = "water"
 	openable = TRUE
+	can_buckle = TRUE //Monkestation edit start
+	buckle_lying = 0
 
+/obj/structure/reagent_dispensers/watertank/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ridable, /datum/component/riding/structure/tank)
+
+/obj/structure/reagent_dispensers/watertank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)//Monkestation edit end
+		
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
 	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
@@ -234,6 +250,17 @@
 	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
 	openable = TRUE
+	can_buckle = TRUE //Monkestation edit start
+	buckle_lying = 0
+
+/obj/structure/reagent_dispensers/foamtank/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ridable, /datum/component/riding/structure/tank)
+
+/obj/structure/reagent_dispensers/foamtank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)//Monkestation edit end
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
@@ -242,10 +269,17 @@
 	reagent_id = /datum/reagent/fuel
 	openable = TRUE
 	accepts_rig = TRUE
+	can_buckle = TRUE //Monkestation edit start
+	buckle_lying = 0
+
+/obj/structure/reagent_dispensers/fueltank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)//Monkestation edit end
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
-
+	AddElement(/datum/element/ridable, /datum/component/riding/structure/tank)
 	if(check_holidays(APRIL_FOOLS))
 		icon_state = "fuel_fools"
 

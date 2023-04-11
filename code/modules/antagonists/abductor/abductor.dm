@@ -1,5 +1,3 @@
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"

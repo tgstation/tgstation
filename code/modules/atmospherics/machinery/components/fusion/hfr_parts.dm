@@ -47,7 +47,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
 		return FALSE
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return FALSE
 	balloon_alert(user, "repairing...")
 	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))

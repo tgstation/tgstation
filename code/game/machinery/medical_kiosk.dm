@@ -373,3 +373,9 @@
 			patient_ref = null
 			clearScans()
 			. = TRUE
+
+
+#undef KIOSK_SCANNING_GENERAL
+#undef KIOSK_SCANNING_NEURORAD
+#undef KIOSK_SCANNING_REAGENTS
+#undef KIOSK_SCANNING_SYMPTOMS

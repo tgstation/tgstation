@@ -14,7 +14,6 @@
 	return 0
 
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -27,6 +26,7 @@
 		S.duration = max(world.time + amount, S.duration)
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	return S
 
 /mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -48,7 +48,6 @@
 	return S
 
 /mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -61,6 +60,7 @@
 		S.duration += amount
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
 	return S
 
 /* KNOCKDOWN */
@@ -74,7 +74,6 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -87,6 +86,7 @@
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	return K
 
 /mob/living/proc/SetKnockdown(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -108,7 +108,6 @@
 	return K
 
 /mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -121,6 +120,7 @@
 		K.duration += amount
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
 	return K
 
 /* IMMOBILIZED */
@@ -190,7 +190,6 @@
 	return 0
 
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -203,6 +202,7 @@
 		P.duration = max(world.time + amount, P.duration)
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	return P
 
 /mob/living/proc/SetParalyzed(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -224,7 +224,6 @@
 	return P
 
 /mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -237,6 +236,7 @@
 		P.duration += amount
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
 	return P
 
 /* INCAPACITATED */
@@ -535,7 +535,7 @@
  * Arguments:
  * * quirktype - the type of the quirk to acquire e.g. /datum/quirk/some_quirk
  *
- * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure 
+ * Returns the mob's quirk datum if the mob this is called on has the quirk, null on failure
  */
 /mob/living/proc/get_quirk(quirktype)
 	for(var/datum/quirk/quirk in quirks)
@@ -771,3 +771,5 @@
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
 	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+
+#undef IS_STUN_IMMUNE

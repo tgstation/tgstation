@@ -1,3 +1,11 @@
+#define HULL_BREACH 1
+#define LINE_SPACE_MODE 2
+#define FIX_TILE 3
+#define AUTO_TILE 4
+#define PLACE_TILE 5
+#define REPLACE_TILE 6
+#define TILE_EMAG 7
+
 //Floorbot
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
@@ -26,14 +34,6 @@
 	var/turf/target
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
-
-	#define HULL_BREACH 1
-	#define LINE_SPACE_MODE 2
-	#define FIX_TILE 3
-	#define AUTO_TILE 4
-	#define PLACE_TILE 5
-	#define REPLACE_TILE 6
-	#define TILE_EMAG 7
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
@@ -394,7 +394,7 @@
 	new /obj/item/stack/tile/iron/base(Tsec, 1)
 	return ..()
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A))
@@ -411,3 +411,11 @@
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
+
+#undef HULL_BREACH
+#undef LINE_SPACE_MODE
+#undef FIX_TILE
+#undef AUTO_TILE
+#undef PLACE_TILE
+#undef REPLACE_TILE
+#undef TILE_EMAG

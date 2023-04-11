@@ -38,7 +38,7 @@
 
 	if(!proximity)
 		return
-	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!(source.istate & ISTATE_HARM) || (source.istate & ISTATE_SECONDARY))
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))

@@ -21,6 +21,9 @@
 /proc/log_lua(text)
 	WRITE_LOG(GLOB.lua_log, text)
 
+/proc/log_mechcomp(text)
+	WRITE_LOG(GLOB.mechcomp_log, "MECHCOMP: [text]")
+
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS

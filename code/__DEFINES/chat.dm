@@ -13,12 +13,15 @@
 #define MESSAGE_TYPE_ADMINPM "adminpm"
 #define MESSAGE_TYPE_COMBAT "combat"
 #define MESSAGE_TYPE_ADMINCHAT "adminchat"
+#define MESSAGE_TYPE_MENTORCHAT "mentorchat"
 #define MESSAGE_TYPE_PRAYER "prayer"
-#define MESSAGE_TYPE_MODCHAT "modchat"
 #define MESSAGE_TYPE_EVENTCHAT "eventchat"
 #define MESSAGE_TYPE_ADMINLOG "adminlog"
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"
+
+/// Max length of chat message in characters
+#define CHAT_MESSAGE_MAX_LENGTH 110
 
 //debug printing macros (for development and testing)
 /// Used for debug messages to the world

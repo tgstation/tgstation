@@ -143,9 +143,22 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	//  - [contents.item_cost], the total cost of this item
 
 	var/list/loadout_tabs = list()
-	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!", "contents" = list_to_data(GLOB.store_toys)))
-	loadout_tabs += list(list("name" = "Shoes", "title" = "Shoes!", "contents" = list_to_data(GLOB.store_shoes)))
-	loadout_tabs += list(list("name" = "Suits", "title" = "Suits!", "contents" = list_to_data(GLOB.store_suits)))
+	loadout_tabs += list(list("name" = "Belt", "title" = "Belt Slot Items", "contents" = list_to_data(GLOB.store_belts)))
+	loadout_tabs += list(list("name" = "Ears", "title" = "Ear Slot Items", "contents" = list_to_data(GLOB.store_ears)))
+	loadout_tabs += list(list("name" = "Glasses", "title" = "Glasses Slot Items", "contents" = list_to_data(GLOB.store_glasses)))
+	loadout_tabs += list(list("name" = "Gloves", "title" = "Glove Slot Items", "contents" = list_to_data(GLOB.store_gloves)))
+	loadout_tabs += list(list("name" = "Head", "title" = "Head Slot Items", "contents" = list_to_data(GLOB.store_head)))
+	loadout_tabs += list(list("name" = "Mask", "title" = "Mask Slot Items", "contents" = list_to_data(GLOB.store_masks)))
+	loadout_tabs += list(list("name" = "Neck", "title" = "Neck Slot Items", "contents" = list_to_data(GLOB.store_neck)))
+	loadout_tabs += list(list("name" = "Shoes", "title" = "Shoe Slot Items", "contents" = list_to_data(GLOB.store_shoes)))
+	loadout_tabs += list(list("name" = "Suit", "title" = "Suit Slot Items", "contents" = list_to_data(GLOB.store_suits)))
+	loadout_tabs += list(list("name" = "Jumpsuit", "title" = "Uniform Slot Items", "contents" = list_to_data(GLOB.store_jumpsuits)))
+	loadout_tabs += list(list("name" = "Formal", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.store_undersuits)))
+	loadout_tabs += list(list("name" = "Misc. Under", "title" = "Uniform Slot Items (cont)", "contents" = list_to_data(GLOB.store_miscunders)))
+	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.store_accessory)))
+	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.store_inhand_items)))
+	loadout_tabs += list(list("name" = "Toys", "title" = "Toys!)", "contents" = list_to_data(GLOB.store_toys)))
+	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items)", "contents" = list_to_data(GLOB.store_pockets)))
 
 	data["loadout_tabs"] = loadout_tabs
 

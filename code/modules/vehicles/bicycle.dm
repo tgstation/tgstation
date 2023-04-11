@@ -22,7 +22,7 @@
 		unbuckle_mob(m,1)
 
 /obj/vehicle/ridden/bicycle/welder_act(mob/living/user, obj/item/W)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	. = TRUE
 	if(fried)

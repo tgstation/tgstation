@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "soap"
 	inhand_icon_state = "soap"
 	worn_icon_state = "soap"
@@ -151,7 +151,7 @@
 	return ..() | .
 
 /obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !user?.combat_mode  // only cleans a storage item if on combat
+	return !(user?.istate & ISTATE_HARM)  // only cleans a storage item if on combat
 
 /*
  * Bike Horns
@@ -160,7 +160,7 @@
 /obj/item/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/horn.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
 	worn_icon_state = "horn"

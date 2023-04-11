@@ -1,7 +1,7 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/extinguisher.dmi'
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
@@ -138,7 +138,7 @@
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
-	if(!user.combat_mode && !safety) //If we're on help intent and going to spray people, don't bash them.
+	if(!(user.istate & ISTATE_HARM) && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()

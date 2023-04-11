@@ -198,9 +198,6 @@
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
-	///If combat mode is on or not
-	var/combat_mode = FALSE
-
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
@@ -226,4 +223,4 @@
 	///The holder for stamina handling
 	var/datum/stamina_container/stamina
 	/// What our current gravity state is. Used to avoid duplicate animates and such
-	var/gravity_state = 0
+	var/gravity_state = null

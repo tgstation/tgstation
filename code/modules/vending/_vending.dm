@@ -591,7 +591,7 @@
 				else
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
-	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
+	if(compartmentLoadAccessCheck(user) && !(user.istate & ISTATE_HARM))
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 
@@ -1447,3 +1447,5 @@
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+
+#undef MAX_VENDING_INPUT_AMOUNT

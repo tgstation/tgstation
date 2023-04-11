@@ -1,4 +1,3 @@
-#define GORILLA_HANDS_LAYER 1
 #define GORILLA_TOTAL_LAYERS 1
 
 /mob/living/simple_animal/hostile/gorilla
@@ -183,3 +182,5 @@
 	name = "cargorilla ID"
 	desc = "A card used to provide ID and determine access across the station. A gorilla-sized ID for a gorilla-sized cargo technician."
 	trim = /datum/id_trim/job/cargo_technician
+
+#undef GORILLA_TOTAL_LAYERS

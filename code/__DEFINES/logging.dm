@@ -42,6 +42,7 @@
 #define LOG_RADIO_EMOTE (1 << 20)
 #define LOG_SPEECH_INDICATORS (1 << 21)
 #define LOG_CLONING (1 << 22)
+#define LOG_MECHCOMP (1 <<23)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)

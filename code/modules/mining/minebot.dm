@@ -12,7 +12,7 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list(FACTION_NEUTRAL)
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	move_to_delay = 10
@@ -127,7 +127,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)

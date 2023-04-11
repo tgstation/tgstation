@@ -69,6 +69,7 @@
 	R.uneq_active()
 
 /datum/hud/robot
+	has_interaction_ui = TRUE
 	ui_style = 'icons/hud/screen_cyborg.dmi'
 
 /datum/hud/robot/New(mob/owner)
@@ -147,13 +148,6 @@
 	using.screen_loc = ui_borg_alerts
 	using.hud = src
 	static_inventory += using
-
-	//Combat Mode
-	action_intent = new /atom/movable/screen/combattoggle/robot()
-	action_intent.hud = src
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
-	static_inventory += action_intent
 
 //Health
 	healths = new /atom/movable/screen/healths/robot()

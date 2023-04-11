@@ -7,7 +7,7 @@
 	turns_per_move = 5
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	maxHealth = 40
 	health = 40
 	speed = 1

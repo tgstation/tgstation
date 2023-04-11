@@ -18,7 +18,7 @@
 	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -123,7 +123,7 @@
 	log_combat(src, victim, "slaughter slammed")
 
 /mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((istate & ISTATE_SECONDARY))
 		bodyslam(attack_target)
 		return
 

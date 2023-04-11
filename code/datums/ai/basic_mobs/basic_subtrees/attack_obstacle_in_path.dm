@@ -25,8 +25,8 @@
 	action_cooldown = 2 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
-	/// Tries to bump open airlocks with an attack
-	var/bump_open_airlock = FALSE
+	/// For if you want your mob to be able to attack dense objects
+	var/can_attack_dense_objects = FALSE
 
 /datum/ai_behavior/attack_obstructions/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -71,13 +71,20 @@
 	return FALSE
 
 /datum/ai_behavior/attack_obstructions/proc/can_smash_object(mob/living/basic/basic_mob, obj/object)
-	if (!object.density)
+	if (!object.density && !can_attack_dense_objects)
 		return FALSE
 	if (object.IsObscured())
 		return FALSE
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
+	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST]
+	if(whitelist && !is_type_in_typecache(object, whitelist))
+		return FALSE
+
 	return TRUE // It's in our way, let's get it out of our way
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target
+	target_key = BB_CURRENT_PET_TARGET

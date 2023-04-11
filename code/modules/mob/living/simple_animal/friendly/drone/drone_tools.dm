@@ -21,11 +21,11 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 	)
-	atom_storage.max_total_storage = 40
+	atom_storage.max_total_storage = 80
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 9
+	atom_storage.max_slots = 18
 	atom_storage.rustle_sound = FALSE
-	atom_storage.set_holdable(drone_builtins)
+	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat))
 
 
 /obj/item/storage/drone_tools/PopulateContents()

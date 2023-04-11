@@ -90,7 +90,7 @@
 	. += "clipboard_over"
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 		remove_paper(toppaper, user)
 		return TRUE

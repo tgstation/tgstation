@@ -77,6 +77,18 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/buckshot_shell
+	name = "Buckshot Shell"
+	id = "buckshot_shell"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -94,6 +106,32 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
+
+/datum/design/mag_autorifle
+	name = "WT-550 Autorifle Magazine (4.6x30mm)"
+	desc = "A 20 round magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9
+	category = list("Ammo")
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/mag_autorifle/ap_mag
+	name = "WT-550 Autorifle Armour Piercing Magazine (4.6x30mm AP)"
+	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_ap"
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/mag_autorifle/ic_mag
+	name = "WT-550 Autorifle Incendiary Magazine (4.6x30mm IC)"
+	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_ic"
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"

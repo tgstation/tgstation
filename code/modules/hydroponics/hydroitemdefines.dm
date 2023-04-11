@@ -51,14 +51,14 @@
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	if(user.combat_mode || !user.can_read(src))
+	if((user.istate & ISTATE_HARM) || !user.can_read(src))
 		return
 
 	return do_plant_stats_scan(target, user)
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	if(user.combat_mode || !user.can_read(src))
+	if((user.istate & ISTATE_HARM) || !user.can_read(src))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -181,7 +181,7 @@
 	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
 	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
 	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
-	returned_message += "\nNutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]"
+	returned_message += "\nNutrition level: [span_notice("[scanned_tray.nutrilevel] / [scanned_tray.maxnutri]")]"
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "\nYield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]"
 
@@ -415,7 +415,7 @@
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -466,7 +466,7 @@
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -503,12 +503,13 @@
 	flags_1 = NONE
 
 /obj/item/scythe
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "scythe"
-	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	force = 13
 	throwforce = 5
 	throw_speed = 2
@@ -583,7 +584,7 @@
 
 ///Catch right clicks so we can stylize!
 /obj/item/secateurs/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return ..()
 	restyle(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

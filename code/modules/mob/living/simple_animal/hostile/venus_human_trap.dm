@@ -143,7 +143,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	minbodytemp = 100
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	ranged_cooldown_time = 4 SECONDS
 	del_on_death = TRUE
 	death_message = "collapses into bits of plant matter."

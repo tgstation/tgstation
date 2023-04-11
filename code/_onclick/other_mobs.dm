@@ -1,8 +1,8 @@
 /// Checks for RIGHT_CLICK in modifiers and runs resolve_right_click_attack if so. Returns TRUE if normal chain blocked.
-/mob/living/proc/right_click_attack_chain(atom/target, list/modifiers)
-	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
+/mob/living/proc/right_click_attack_chain(atom/target)
+	if (!(istate & ISTATE_SECONDARY))
 		return
-	var/secondary_result = resolve_right_click_attack(target, modifiers)
+	var/secondary_result = resolve_right_click_attack(target)
 
 	if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 		return TRUE
@@ -15,7 +15,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(src == A)
 			check_self_for_injuries()
@@ -30,22 +30,22 @@
 		return
 
 	//This signal is needed to prevent gloves of the north star + hulk.
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag, modifiers)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag)
 
-	if(!right_click_attack_chain(A, modifiers) && !dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
-		A.attack_hand(src, modifiers)
+	if(!right_click_attack_chain(A) && !dna?.species?.spec_unarmedattack(src, A)) //Because species like monkeys dont use attack hand
+		A.attack_hand(src)
 
 /mob/living/carbon/human/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_hand_secondary(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
-/atom/proc/attack_hand(mob/user, list/modifiers)
+/atom/proc/attack_hand(mob/user)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
@@ -292,14 +292,14 @@
 */
 
 /mob/living/simple_animal/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	if(dextrous && (isitem(attack_target) || !combat_mode))
+	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
 		attack_target.attack_hand(src, modifiers)
 		update_held_items()
 	else
 		return ..()
 
 /mob/living/simple_animal/resolve_right_click_attack(atom/target, list/modifiers)
-	if(dextrous && (isitem(target) || !combat_mode))
+	if(dextrous && (isitem(target) || !(istate & ISTATE_HARM)))
 		. = target.attack_hand_secondary(src, modifiers)
 		update_held_items()
 	else
@@ -311,7 +311,7 @@
 
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	GiveTarget(attack_target)
-	if(dextrous && (isitem(attack_target) || !combat_mode))
+	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
 		return ..()
 	else
 		AttackingTarget(attack_target)

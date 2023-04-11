@@ -308,7 +308,7 @@
 
 /obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
 	var/mob/living/living_user = user
-	if(istype(living_user) && attacking_item.get_sharpness() && living_user.combat_mode)
+	if(istype(living_user) && attacking_item.get_sharpness() && (living_user.istate & ISTATE_HARM))
 		if(!isturf(loc))
 			balloon_alert(user, "can't butcher here!")
 			return

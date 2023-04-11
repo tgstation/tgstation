@@ -11,6 +11,8 @@
 	var/hidden = FALSE
 	///is this a one time purchase for a roundstart?
 	var/one_time_buy = FALSE
+	///the description shown in the store if we show descriptions
+	var/store_desc = ""
 
 
 /datum/store_item/proc/attempt_purchase(client/buyer)

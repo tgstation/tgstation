@@ -40,7 +40,7 @@
 			Paralyze(200)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
 		return
 	user.do_attack_animation(src)

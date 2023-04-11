@@ -110,3 +110,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/balaclava
 	name = "Balaclava"
 	item_path = /obj/item/clothing/mask/balaclava
+
+/datum/loadout_item/mask/kitsunewhite
+	name = "White Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsunewhite
+
+/datum/loadout_item/mask/kitsuneblack
+	name = "Black Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsuneblack

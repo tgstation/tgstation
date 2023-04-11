@@ -51,6 +51,13 @@
 	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
+
+	//MonkeStation Edit Start
+	//Alternative Scream/Laugh Vars
+	var/list/alternative_screams = list()
+	var/list/alternative_laughs = list()
+	//MonkeStation Edit End
+
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += /datum/action/item_action/toggle_voice_box
@@ -100,7 +107,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, params)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if((user.istate & ISTATE_HARM) || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
@@ -236,6 +243,17 @@
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
+	//MonkeStation Edit Start
+	//Alternative Scream
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/wearer = user
+	if(alternative_screams.len)
+		wearer.alternative_screams -= alternative_screams
+	if(alternative_laughs.len)
+		wearer.alternative_laughs -= alternative_laughs
+	//MonkeStation Edit End
+
 /obj/item/clothing/equipped(mob/living/user, slot)
 	. = ..()
 	if (!istype(user))
@@ -250,6 +268,17 @@
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
+
+		//MonkeStation Edit Start
+		//Alternative Scream
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/wearer = user
+		if(alternative_screams.len)
+			wearer.alternative_screams.Add(alternative_screams)
+		if(alternative_laughs.len)
+			wearer.alternative_laughs.Add(alternative_laughs)
+		//MonkeStation Edit End
 
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list

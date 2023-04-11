@@ -33,9 +33,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 
-/client/Topic(href, href_list, hsrc)
+//the undocumented 4th argument is for ?[0x\ref] style topic links. hsrc is set to the reference and anything after the ] gets put into hsrc_command
+/client/Topic(href, href_list, hsrc, hsrc_command)
 	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
+
+#ifndef TESTING
+	if (lowertext(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
+		return
+#endif
 
 	// asset_cache
 	var/asset_cache_job
@@ -230,7 +236,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	tgui_say = new(src, "tgui_say")
 
-	set_right_click_menu_mode(TRUE)
+	set_right_click_menu_mode()
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	GLOB.interviews.client_login(src)
@@ -999,7 +1005,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
-	spawn (10) //removing this spawn causes all clients to not get verbs.
+	spawn (10) //removing this spawn causes all clients to not get verbs. (this can't be addtimer because these assets may be needed before the mc inits)
 
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
@@ -1009,12 +1015,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
-		for (var/name in GLOB.vox_sounds)
-			var/file = GLOB.vox_sounds[name]
-			Export("##action=load_rsc", file)
-			stoplag()
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/client, preload_vox)), 1 MINUTES)
 		#endif
 
+#if (PRELOAD_RSC == 0)
+/client/proc/preload_vox()
+	for (var/name in GLOB.vox_sounds)
+		var/file = GLOB.vox_sounds[name]
+		Export("##action=load_rsc", file)
+		stoplag()
+#endif
 
 //Hook, override it to run code when dir changes
 //Like for /atoms, but clients are their own snowflake FUCK
@@ -1084,6 +1094,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					if(holder)
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[asay]")
+					else
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
+				if(MENTOR_CHANNEL)
+					if(mentor_datum)
+						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
+						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 
@@ -1195,15 +1211,27 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.particle_test = new /datum/particle_editor(in_atom)
 		holder.particle_test.ui_interact(mob)
 
-/client/proc/set_right_click_menu_mode(shift_only)
-	if(shift_only)
-		winset(src, "mapwindow.map", "right-click=true")
-		winset(src, "ShiftUp", "is-disabled=false")
-		winset(src, "Shift", "is-disabled=false")
+///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
+/client/proc/set_right_click_menu_mode()
+	var/rclick_type
+	if(mob?.rclick_always_context_menu)
+		rclick_type = RIGHTCLICK_BOTH
 	else
-		winset(src, "mapwindow.map", "right-click=false")
-		winset(src, "default.Shift", "is-disabled=true")
-		winset(src, "default.ShiftUp", "is-disabled=true")
+		rclick_type = context_menu_requires_shift
+
+	switch(rclick_type)
+		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
+			winset(src, "mapwindow.map", "right-click=false")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=true\"")
+		if(RIGHTCLICK_SHIFT) //Shift right click opens context menu
+			winset(src, "mapwindow.map", "right-click=true")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=true\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
+		if(RIGHTCLICK_BOTH) //Both open context menu
+			winset(src, "mapwindow.map", "right-click=false")
+			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
+			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
 
 /client/proc/update_ambience_pref()
 	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
@@ -1307,3 +1335,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				continue
 
 		screen -= object
+
+#undef ADMINSWARNED_AT
+#undef CURRENT_MINUTE
+#undef CURRENT_SECOND
+#undef LIMITER_SIZE
+#undef MINUTE_COUNT
+#undef SECOND_COUNT
+#undef UPLOAD_LIMIT_ADMIN

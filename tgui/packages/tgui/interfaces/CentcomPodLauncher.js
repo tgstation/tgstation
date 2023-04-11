@@ -216,6 +216,8 @@ const STYLES = [
   { title: 'Invisible' },
   { title: 'Gondola' },
   { title: 'Seethrough' },
+  { title: 'Washer' },
+  { title: 'Beat car' },
 ];
 
 const BAYS = [

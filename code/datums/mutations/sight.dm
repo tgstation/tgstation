@@ -161,7 +161,7 @@
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 
-	if(!source.combat_mode)
+	if(!(source.istate & ISTATE_HARM))
 		return
 	to_chat(source, span_warning("You shoot with your laser eyes!"))
 	source.changeNext_move(CLICK_CD_RANGE)

@@ -4,7 +4,7 @@
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery/repair_bone_hairline
 	name = "Repair bone fracture (hairline)"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/blunt/severe
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -30,7 +30,7 @@
 ///// Repair Compound Fracture (Critical)
 /datum/surgery/repair_bone_compound
 	name = "Repair Compound Fracture"
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/blunt/critical
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -93,7 +93,7 @@
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!"),
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!"),
 		)
-		log_combat(user, target, "repaired a hairline fracture in", addition="COMBAT_MODE: [uppertext(user.combat_mode)]")
+		log_combat(user, target, "repaired a hairline fracture in", addition="COMBAT_MODE: [uppertext((user.istate & ISTATE_HARM))]")
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, span_warning("[target] has no hairline fracture there!"))
@@ -142,7 +142,7 @@
 			span_notice("[user] successfully resets the bone in [target]'s [parse_zone(target_zone)] with [tool]!"),
 			span_notice("[user] successfully resets the bone in [target]'s [parse_zone(target_zone)]!"),
 		)
-		log_combat(user, target, "reset a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+		log_combat(user, target, "reset a compound fracture in", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 	else
 		to_chat(user, span_warning("[target] has no compound fracture there!"))
 	return ..()
@@ -189,7 +189,7 @@
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!"),
 			span_notice("[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!"),
 		)
-		log_combat(user, target, "repaired a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+		log_combat(user, target, "repaired a compound fracture in", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, span_warning("[target] has no compound fracture there!"))

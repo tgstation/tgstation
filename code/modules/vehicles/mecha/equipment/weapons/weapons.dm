@@ -61,7 +61,7 @@
 		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
-			projectile_obj.hit_prone_targets = shooter.combat_mode
+			projectile_obj.hit_prone_targets = (shooter.istate & ISTATE_HARM)
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
@@ -485,6 +485,7 @@
 	name = "punching glove"
 	desc = "INCOMING HONKS"
 	throwforce = 35
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "punching_glove"
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

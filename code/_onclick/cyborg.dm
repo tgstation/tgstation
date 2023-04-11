@@ -18,6 +18,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if (client)
+		client.imode.update_istate(src, modifiers)
+
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
@@ -36,7 +39,7 @@
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+	if((istate & ISTATE_SECONDARY) && !module_active)
 		var/secondary_result = A.attack_robot_secondary(src, modifiers)
 		if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return
@@ -169,7 +172,7 @@
 	clicks, you can do so here, but you will have to
 	change attack_robot() above to the proper function
 */
-/mob/living/silicon/robot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/silicon/robot/UnarmedAttack(atom/A, proximity_flag)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	A.attack_robot(src)

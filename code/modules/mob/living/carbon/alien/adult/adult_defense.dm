@@ -15,9 +15,9 @@
 	to_chat(user, span_danger("You [hitverb] [src]!"))
 
 /mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!..() || !user.combat_mode)
+	if(!..() || !(user.istate & ISTATE_HARM))
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((istate & ISTATE_SECONDARY))
 		if (body_position == STANDING_UP)
 			if (prob(5))
 				Unconscious(40)

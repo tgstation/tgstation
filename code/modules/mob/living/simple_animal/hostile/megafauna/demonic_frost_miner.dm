@@ -404,3 +404,5 @@ Difficulty: Extremely Hard
 	color = new_color
 	set_light_color(new_color)
 	set_light(new_range)
+
+#undef FROST_MINER_SHOULD_ENRAGE

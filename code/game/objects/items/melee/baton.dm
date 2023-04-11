@@ -2,7 +2,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	desc_controls = "Left click to stun, right click to harm."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
@@ -27,6 +27,8 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
+	/// Chance of causing force_say() when stunning a human mob
+	var/force_say_chance = 33
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// The path of the default sound to play when we stun something.
@@ -62,7 +64,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
+		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -103,14 +105,14 @@
 		if (active)
 			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
 
-			if (user.combat_mode)
+			if ((user.istate & ISTATE_HARM))
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
 			else
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
 		else
 			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
 
-			if (user.combat_mode)
+			if ((user.istate & ISTATE_HARM))
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
 			else
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
@@ -129,7 +131,7 @@
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
-	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
 	if(cooldown_check > world.time)
@@ -139,10 +141,6 @@
 		return BATON_ATTACK_DONE
 
 	if(check_parried(target, user))
-		return BATON_ATTACK_DONE
-
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
-		to_chat(user, span_danger("You fumble and miss [target]!"))
 		return BATON_ATTACK_DONE
 
 	if(stun_animation)
@@ -173,7 +171,7 @@
 		return TRUE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
-	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+	if(!in_attack_chain)
 		return BATON_ATTACK_DONE
 
 	cooldown_check = world.time + cooldown
@@ -245,9 +243,6 @@
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
 	if(!cooldown)
 		return
-	var/user_ref = REF(user) // avoids harddels.
-	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
@@ -264,6 +259,10 @@
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
+		//straight up always force say for clumsy humans
+		if(ishuman(user))
+			var/mob/living/carbon/human/human_user = user
+			human_user.force_say()
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
@@ -287,6 +286,7 @@
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -357,7 +357,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -367,6 +367,7 @@
 	item_flags = NONE
 	force = 5
 	cooldown = 2.5 SECONDS
+	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
@@ -387,18 +388,17 @@
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
-
 	force = 10
 	wound_bonus = 0
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
-
 	armor_type = /datum/armor/baton_security
-
 	throwforce = 7
+	force_say_chance = 50
 	stamina_damage = 60
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
@@ -406,7 +406,6 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
-
 	context_living_rmb_active = "Harmful Stun"
 
 	var/throw_stun_chance = 35
@@ -554,10 +553,10 @@
 	. = ..()
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))
 		return BATON_ATTACK_DONE
@@ -578,7 +577,7 @@
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-	
+
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 
 /obj/item/melee/baton/security/get_wait_description()
@@ -629,6 +628,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	desc_controls = "Left click to stun, right click to harm."
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -695,6 +695,7 @@
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5

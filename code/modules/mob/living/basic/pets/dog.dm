@@ -834,7 +834,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/breaddog/attack_hand(mob/living/user, list/modifiers)
 	..()
-	if(user.combat_mode && user.reagents && !stat)
+	if((user.istate & ISTATE_HARM) && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
 
@@ -852,7 +852,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 
 /obj/item/dog_bone/pre_attack(atom/target, mob/living/user, params)
-	if (!isdog(target) || user.combat_mode)
+	if (!isdog(target) || (user.istate & ISTATE_HARM))
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target
 	if (dog_target.stat != CONSCIOUS)

@@ -37,7 +37,7 @@
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
-	client.set_right_click_menu_mode(shift_to_open_context_menu)
+	client.set_right_click_menu_mode()
 
 	if(!hud_used)
 		create_mob_hud() // creating a hud will add it to the client's screen, which can process a disconnect
@@ -45,6 +45,10 @@
 			return FALSE
 
 	if(hud_used)
+		if (forced_interaction_mode)
+			client.imode.replace(forced_interaction_mode)
+		else
+			client.imode.reload_hud(src)
 		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
 		if(!client)
 			return FALSE

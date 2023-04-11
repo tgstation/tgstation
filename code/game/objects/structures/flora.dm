@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	uprooting_tools = GLOB.flora_uprooting_tools_typepaths[type]
 
 /obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return ..()
 	if(flags_1 & HOLOGRAM_1)
 		balloon_alert(user, "it goes right through!")

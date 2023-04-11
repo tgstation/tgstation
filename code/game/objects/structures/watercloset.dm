@@ -108,7 +108,7 @@
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
-	else if(cistern && !user.combat_mode)
+	else if(cistern && !(user.istate & ISTATE_HARM))
 		if(I.w_class > WEIGHT_CLASS_NORMAL)
 			to_chat(user, span_warning("[I] does not fit!"))
 			return
@@ -121,7 +121,7 @@
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
 
-	else if(is_reagent_container(I) && !user.combat_mode)
+	else if(is_reagent_container(I) && !(user.istate & ISTATE_HARM))
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -240,7 +240,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(
@@ -475,7 +475,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
@@ -681,7 +681,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))

@@ -227,3 +227,7 @@ SUBSYSTEM_DEF(economy)
 		"cost" = price_to_use,
 		"vendor" = vendor,
 	))
+
+#undef ECON_DEPARTMENT_STEP
+#undef ECON_ACCOUNT_STEP
+#undef ECON_PRICE_UPDATE_STEP

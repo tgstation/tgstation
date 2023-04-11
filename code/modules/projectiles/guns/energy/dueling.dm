@@ -386,3 +386,12 @@
 	var/obj/item/gun/energy/dueling/gun_A = new(src)
 	var/obj/item/gun/energy/dueling/gun_B = new(src)
 	new /datum/duel(gun_A, gun_B)
+
+#undef DUEL_IDLE
+#undef DUEL_PREPARATION
+#undef DUEL_READY
+#undef DUEL_COUNTDOWN
+#undef DUEL_FIRING
+#undef DUEL_SETTING_A
+#undef DUEL_SETTING_B
+#undef DUEL_SETTING_C

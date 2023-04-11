@@ -624,7 +624,7 @@
 
 	//now we touch the thing we're examining
 	/// our current intent, so we can go back to it after touching
-	var/previous_combat_mode = combat_mode
+	var/previous_combat_mode = (istate & ISTATE_HARM)
 	set_combat_mode(FALSE)
 	INVOKE_ASYNC(examined_thing, TYPE_PROC_REF(/atom, attack_hand), src)
 	set_combat_mode(previous_combat_mode)
@@ -1164,7 +1164,7 @@
 		return
 	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
 		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
+	if(examine_cursor_icon && client.keys_held["Shift"] && client.context_menu_requires_shift) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
 	if(istype(loc, /obj/vehicle/sealed))
 		var/obj/vehicle/sealed/E = loc
