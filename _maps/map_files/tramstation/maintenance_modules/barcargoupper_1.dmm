@@ -145,11 +145,11 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"sf" = (
+"sk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
@@ -262,6 +262,23 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"Ko" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Hydroponics";
+	name = "navigation beacon (Hydroponics Delivery)"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "hydrodropoff"
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "Mc" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
@@ -311,25 +328,6 @@
 /obj/structure/flora/bush/grassy,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"QV" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
-	freq = 1400;
-	location = "Hydroponics";
-	name = "navigation beacon (Hydroponics Delivery)"
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "hydrodropoff"
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
 "RX" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
@@ -541,7 +539,7 @@ eJ
 "}
 (4,1,1) = {"
 Dm
-QV
+Ko
 Dm
 Dm
 hM
@@ -1343,7 +1341,7 @@ Yk
 Yk
 Yk
 ZS
-sf
+sk
 nb
 iX
 HP

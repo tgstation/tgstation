@@ -73,6 +73,7 @@ jobs:
   compile_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
+    needs: [collect_data]
     runs-on: ubuntu-20.04
     concurrency:
       group: compile_all_maps-${{ github.head_ref || github.run_id }}
@@ -89,14 +90,20 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+      - name: Check client Compatibility
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
-  find_all_maps:
+  collect_data:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Find Maps to Test
+    name: Collect data for other tasks
     runs-on: ubuntu-20.04
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
+      max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
     concurrency:
       group: find_all_maps-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -114,28 +121,36 @@ jobs:
         run: |
           ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+      - name: Collect byond client version configuration
+        id: max_required_byond_client
+        #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
+        run: |
+          echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
-    needs: [find_all_maps]
+    needs: [collect_data]
     strategy:
       fail-fast: false
       matrix:
-        map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
+        map: ${{ fromJSON(needs.collect_data.outputs.maps).paths }}
     concurrency:
       group: run_all_tests-${{ github.head_ref || github.run_id }}-${{ matrix.map }}
       cancel-in-progress: true
     uses: ./.github/workflows/run_integration_tests.yml
     with:
       map: ${{ matrix.map }}
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+
   run_alternate_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
     name: Alternate Tests
-    needs: [find_all_maps]
+    needs: [collect_data]
     strategy:
       fail-fast: false
       matrix:
-        setup: ${{ fromJSON(needs.find_all_maps.outputs.alternate_tests) }}
+        setup: ${{ fromJSON(needs.collect_data.outputs.alternate_tests) }}
     concurrency:
       group: run_all_tests-${{ github.head_ref || github.run_id }}-${{ matrix.setup.major }}.${{ matrix.setup.minor }}-${{ matrix.setup.map }}
       cancel-in-progress: true
@@ -144,6 +159,8 @@ jobs:
       map: ${{ matrix.setup.map }}
       major: ${{ matrix.setup.major }}
       minor: ${{ matrix.setup.minor }}
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+
   check_alternate_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
     name: Check Alternate Tests
@@ -151,6 +168,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - run: echo Alternate tests passed.
+
   compare_screenshots:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && (success() || failure())"
     needs: [run_all_tests, run_alternate_tests]
@@ -189,6 +207,7 @@ jobs:
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
+    needs: [collect_data]
     runs-on: windows-latest
     concurrency:
       group: test_windows-${{ github.head_ref || github.run_id }}
@@ -207,3 +226,8 @@ jobs:
         run: pwsh tools/ci/build.ps1
         env:
           DM_EXE: "C:\\byond\\bin\\dm.exe"
+      - name: Check client Compatibility
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}

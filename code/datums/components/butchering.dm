@@ -52,7 +52,7 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				return 
+				return
 
 			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN

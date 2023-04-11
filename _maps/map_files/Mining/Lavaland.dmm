@@ -769,10 +769,8 @@
 /area/mine/laborcamp)
 "fo" = (
 /obj/structure/closet/crate,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
@@ -2262,9 +2260,7 @@
 /area/mine/medical)
 "mP" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -4604,7 +4600,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "BH" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
@@ -4796,7 +4792,7 @@
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -7646,9 +7642,7 @@
 /area/mine/laborcamp)
 "Vm" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -8043,9 +8037,7 @@
 /area/lavaland/surface/outdoors)
 "XJ" = (
 /obj/machinery/hydroponics/constructable,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -8310,7 +8302,7 @@
 /area/mine/living_quarters)
 "Zw" = (
 /obj/structure/curtain,
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/machinery/shower/directional/south,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,

@@ -48,7 +48,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset temperature"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Cycle temperature"
 	if(!held_item)
 		return CONTEXTUAL_SCREENTIP_SET
 	switch(held_item.tool_behaviour)
@@ -137,6 +137,8 @@
 	. += span_notice("With the panel open:")
 	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
 	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
+	. += span_notice(" -[EXAMINE_HINT("AltClick")] to cycle between temperaure ranges.")
+	. += span_notice(" -[EXAMINE_HINT("CtrlClick")] to toggle on/off.")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(in_range(user, src) || isobserver(user))
@@ -149,7 +151,14 @@
 		return
 	if(!can_interact(user))
 		return
-	target_temperature = T20C
+
+	if(target_temperature == T20C)
+		target_temperature = max_temperature
+	else if(target_temperature == max_temperature)
+		target_temperature = min_temperature
+	else
+		target_temperature = T20C
+
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
@@ -309,17 +318,18 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
+	if(!anchored)
+		return ..()
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return
-	if(!panel_open)
-		if(!can_interact(user))
-			return
-		on = !on
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+	if(!can_interact(user))
 		return
-	. = ..()
+
+	on = !on
+	balloon_alert(user, "turned [on ? "on" : "off"]")
+	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
