@@ -518,9 +518,10 @@
 	if(QDELETED(new_target))
 		CRASH("A null or invalid target was passed to set_blood_target.")
 
-	if(blood_target_reset_timer)
+	if(duration != INFINITY && blood_target_reset_timer)
 		return FALSE
 
+	deltimer(blood_target_reset_timer)
 	blood_target = new_target
 	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, PROC_REF(unset_blood_target_and_timer))
 	var/area/target_area = get_area(new_target)
@@ -540,7 +541,8 @@
 		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
-	blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
+	if(duration != INFINITY)
+		blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
 	return TRUE
 
 /// Unsets out blood target, clearing the images from all the cultists.
