@@ -90,6 +90,9 @@ multiple modular subtrees with behaviors
 		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
 		temp_subtree_list += subtree_instance
 	planning_subtrees = temp_subtree_list
+	for(var/subtree in planning_subtrees)
+		var/datum/ai_planning_subtree/casted_subtree = subtree
+		casted_subtree.Setup(src)
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)

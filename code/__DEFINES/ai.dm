@@ -145,6 +145,9 @@
 #define BB_FOLLOW_TARGET "BB_FOLLOW_TARGET"
 #define BB_ATTACK_TARGET "BB_ATTACK_TARGET"
 #define BB_VISION_RANGE "BB_VISION_RANGE"
+#define BB_VISION_RANGE_AGGRO "BB_VISION_RANGE_AGGRO"
+#define BB_VISION_RANGE_SLEEP "BB_VISION_RANGE_SLEEP"
+#define BB_AGGRO_SOUND_FILE "BB_AGGRO_SOUND_FILE"
 
 /// Basically, what is our vision/hearing range.
 #define BB_HOSTILE_VISION_RANGE 10
@@ -220,6 +223,8 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///How far the basic mob can see when trying to find targets
+#define DEFAULT_BASIC_AI_VISION_RANGE 9
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"

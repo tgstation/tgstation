@@ -744,6 +744,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_attack_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_nearest_target_to_flee.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_target.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\sleeping.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\speech_subtree.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\target_retaliate.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\targetted_mob_ability.dm"

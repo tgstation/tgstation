@@ -1,11 +1,10 @@
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
 	/// How far can we see stuff?
-	var/vision_range = 9
 	/// Static typecache list of potentially dangerous objs
 	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
-/datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, vision_range_key = BB_VISION_RANGE)
 	. = ..()
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
@@ -20,10 +19,12 @@
 		return
 
 	controller.blackboard[target_key] = null
+	if(!controller.blackboard[vision_range_key])
+		controller.blackboard[vision_range_key] = DEFAULT_BASIC_AI_VISION_RANGE
 	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
 
-	for(var/HM in typecache_filter_list(range(vision_range, living_mob), hostile_machines)) //Can we see any hostile machines?
-		if(can_see(living_mob, HM, vision_range))
+	for(var/HM in typecache_filter_list(range(controller.blackboard[vision_range_key], living_mob), hostile_machines)) //Can we see any hostile machines?
+		if(can_see(living_mob, HM, controller.blackboard[vision_range_key]))
 			potential_targets += HM
 
 	if(!potential_targets.len)
