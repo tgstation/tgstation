@@ -11,5 +11,5 @@
 
 /datum/unit_test/human_default_traits/Run()
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
-	TEST_ASSERT(!HAS_TRIAT(dummy, TRAIT_AGEUSIA), "Dummy has ageusia on init")
-	TEST_ASSERT(!dummy.is_blind(), "Dummy is blind on init")
+	TEST_ASSERT(!HAS_TRIAT(dummy, TRAIT_AGEUSIA), "Dummy has ageusia on init, when it should've been removed by its default tongue.")
+	TEST_ASSERT(!dummy.is_blind(), "Dummy is blind on init,  when it should've been removed by its default eyes.")
