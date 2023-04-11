@@ -6,13 +6,13 @@ import { getGasLabel } from '../constants';
 import { useBackend } from '../backend';
 
 type Data = {
-  filter_types: Filter[];
+  filter_types: FilterGas[];
   on: BooleanLike;
   rate: number;
   max_rate: number;
 };
 
-type Filter = {
+type FilterGas = {
   id: number;
   enabled: BooleanLike;
   gas_id: string;
@@ -63,15 +63,15 @@ export const AtmosFilter = (props, context) => {
               />
             </LabeledList.Item>
             <LabeledList.Item label="Filters">
-              {filter_types.map((filter) => (
+              {filter_types.map(({ id, enabled, gas_id, gas_name }) => (
                 <Button
-                  key={filter.id}
-                  icon={filter.enabled ? 'check-square-o' : 'square-o'}
-                  content={getGasLabel(filter.gas_id, filter.gas_name)}
-                  selected={filter.enabled}
+                  key={id}
+                  icon={enabled ? 'check-square-o' : 'square-o'}
+                  content={getGasLabel(gas_id, gas_name)}
+                  selected={enabled}
                   onClick={() =>
                     act('toggle_filter', {
-                      val: filter.gas_id,
+                      val: gas_id,
                     })
                   }
                 />

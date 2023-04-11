@@ -1,38 +1,51 @@
 import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
+import { FilterGas, getGasLabel } from 'tgui/constants';
 import { HelpDummy, HoverHelp } from './helpers';
 
 import { BooleanLike } from 'common/react';
-import { getGasLabel } from 'tgui/constants';
 import { useBackend } from 'tgui/backend';
+
+type ComboProps = {
+  color?: string | BooleanLike;
+  defaultValue: number;
+  flipIcon?: BooleanLike;
+  help?: string;
+  icon?: string;
+  maxValue: number;
+  minValue: number;
+  parameter: string;
+  step?: number;
+  unit: string;
+  value: number;
+};
+
+type ControlsData = {
+  cooling_volume: number;
+  current_damper: number;
+  heat_output: number;
+  heating_conductor: number;
+  magnetic_constrictor: number;
+};
+
+type WasteData = {
+  filter_types: FilterGas[];
+  mod_filtering_rate: number;
+  waste_remove: boolean;
+};
 
 /*
  * This module holds user interactable controls. Some may be good candidates
  * for generalizing and refactoring.
  */
-
-type ComboProps = {
-  color?: string | BooleanLike;
-  defaultValue: number;
-  icon?: string;
-  flipIcon?: BooleanLike;
-  help?: string;
-  minValue: number;
-  maxValue: number;
-  parameter: string;
-  step?: number;
-  value: number;
-  unit: string;
-};
-
 const ComboKnob = (props: ComboProps, context) => {
   const {
     color = false,
     defaultValue,
-    icon,
     flipIcon,
     help,
-    minValue,
+    icon,
     maxValue,
+    minValue,
     parameter,
     step = 5,
     value,
@@ -105,22 +118,14 @@ const ComboKnob = (props: ComboProps, context) => {
   );
 };
 
-type ControlsData = {
-  current_damper: number;
-  cooling_volume: number;
-  heat_output: number;
-  heating_conductor: number;
-  magnetic_constrictor: number;
-};
-
 export const HypertorusSecondaryControls = (props, context) => {
   const { data } = useBackend<ControlsData>(context);
   const {
-    heating_conductor,
-    heat_output,
     cooling_volume,
-    magnetic_constrictor,
     current_damper,
+    heat_output,
+    heating_conductor,
+    magnetic_constrictor,
   } = data;
 
   return (
@@ -183,18 +188,6 @@ export const HypertorusSecondaryControls = (props, context) => {
   );
 };
 
-type WasteData = {
-  filter_types: FilterGas[];
-  waste_remove: boolean;
-  mod_filtering_rate: number;
-};
-
-type FilterGas = {
-  gas_id: string;
-  gas_name: string;
-  enabled: BooleanLike;
-};
-
 export const HypertorusWasteRemove = (props, context) => {
   const { act, data } = useBackend<WasteData>(context);
   const { filter_types = [], waste_remove, mod_filtering_rate } = data;
@@ -248,15 +241,15 @@ export const HypertorusWasteRemove = (props, context) => {
               Filter from moderator mix:
             </>
           }>
-          {filter_types.map(({ gas_id, gas_name, enabled }) => (
+          {filter_types?.map(({ gasId, gasName, enabled }) => (
             <Button
-              key={gas_id}
+              key={gasId}
               icon={enabled ? 'check-square-o' : 'square-o'}
               selected={enabled}
-              content={getGasLabel(gas_id, gas_name)}
+              content={getGasLabel(gasId, gasName)}
               onClick={() =>
                 act('filter', {
-                  mode: gas_id,
+                  mode: gasId,
                 })
               }
             />

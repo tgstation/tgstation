@@ -4,6 +4,22 @@ import { HypertorusGas } from '.';
 import { to_exponential_if_big } from './helpers';
 import { useBackend } from 'tgui/backend';
 
+type Data = {
+  base_max_temperature: number;
+  internal_coolant_temperature_archived: number;
+  internal_coolant_temperature: number;
+  internal_fusion_temperature_archived: number;
+  internal_fusion_temperature: number;
+  internal_output_temperature_archived: number;
+  internal_output_temperature: number;
+  moderator_internal_temperature_archived: number;
+  moderator_internal_temperature: number;
+  power_level: number;
+  selectable_fuel: HypertorusGas[];
+  selected: string;
+  temperature_period: number;
+};
+
 /*
  * Shows a set of temperatures on a unified temperature scale.
  *
@@ -60,39 +76,23 @@ const BarLabel = (props) => {
   );
 };
 
-type Data = {
-  power_level: number;
-  base_max_temperature: number;
-  internal_fusion_temperature: number;
-  moderator_internal_temperature: number;
-  internal_output_temperature: number;
-  internal_coolant_temperature: number;
-  temperature_period: number;
-  internal_coolant_temperature_archived: number;
-  moderator_internal_temperature_archived: number;
-  internal_output_temperature_archived: number;
-  internal_fusion_temperature_archived: number;
-  selectable_fuel: HypertorusGas[];
-  selected: string;
-};
-
 export const HypertorusTemperatures = (props, context) => {
   const { data } = useBackend<Data>(context);
 
   const {
-    power_level,
     base_max_temperature,
-    internal_fusion_temperature,
-    moderator_internal_temperature,
-    internal_output_temperature,
-    internal_coolant_temperature,
-    temperature_period,
     internal_coolant_temperature_archived,
-    moderator_internal_temperature_archived,
-    internal_output_temperature_archived,
+    internal_coolant_temperature,
     internal_fusion_temperature_archived,
+    internal_fusion_temperature,
+    internal_output_temperature_archived,
+    internal_output_temperature,
+    moderator_internal_temperature_archived,
+    moderator_internal_temperature,
+    power_level,
     selectable_fuel = [],
     selected,
+    temperature_period,
   } = data;
 
   const internal_fusion_temperature_delta =

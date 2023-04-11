@@ -1,6 +1,19 @@
 import { Box, Button, Icon, Table, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 
+type Recipe = {
+  param: string;
+  label: string;
+  icon: string | string[];
+  scale: number;
+  override_base?: number;
+  tooltip?: (value: number, data: any) => string;
+};
+
+type GasCellProps = {
+  gasid: string;
+};
+
 /*
  * Recipe selection interface
  *
@@ -10,15 +23,6 @@ import { getGasColor, getGasLabel } from '../../constants';
  *
  * Frankly, rather ugly and a good candidate for future improvements.
  */
-
-type Recipe = {
-  param: string;
-  label: string;
-  icon: string | string[];
-  scale: number;
-  override_base?: number;
-  tooltip?: (value: number, data: any) => string;
-};
 
 /**
  * The list of recipe effects to list, in order.
@@ -121,8 +125,9 @@ const MemoRow = (props) => {
 
 MemoRow.defaultHooks = activeChange;
 
-const GasCellItem = (props) => {
+const GasCellItem = (props: GasCellProps) => {
   const { gasid, ...rest } = props;
+
   return (
     <Table.Cell key={gasid} label={getGasLabel(gasid)} {...rest}>
       <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>

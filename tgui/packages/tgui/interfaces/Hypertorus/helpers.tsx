@@ -11,9 +11,7 @@ export const to_exponential_if_big = (value: number) => {
 };
 
 // Simple question mark icon with a hover tooltip
-export const HoverHelp = (props) => {
-  const { content } = props;
-
+export const HoverHelp = ({ content }: { content: string }) => {
   return (
     <Tooltip content={content}>
       <Icon name="question-circle" width="12px" mr="6px" />

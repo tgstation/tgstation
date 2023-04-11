@@ -4,6 +4,19 @@ import { formatSiUnit } from 'tgui/format';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
 
+type Data = {
+  apc_energy: number;
+  energy_level: number;
+  heat_output_max: number;
+  heat_output_min: number;
+  heat_output: number;
+  instability: number;
+  integrity: number;
+  iron_content: number;
+  power_level: number;
+  start_power: number;
+};
+
 /*
  * Parameter display
  *
@@ -13,33 +26,19 @@ import { useBackend } from 'tgui/backend';
  * Parameters with dangerous thresholds also display warnings at the
  * relevant levels.
  */
-
-type Data = {
-  heat_output: number;
-  heat_output_min: number;
-  heat_output_max: number;
-  integrity: number;
-  iron_content: number;
-  apc_energy: number;
-  power_level: number;
-  energy_level: number;
-  start_power: number;
-  instability: number;
-};
-
 export const HypertorusParameters = (props, context) => {
   const { data } = useBackend<Data>(context);
   const {
-    heat_output,
-    heat_output_min,
+    apc_energy,
+    energy_level,
     heat_output_max,
+    heat_output_min,
+    heat_output,
+    instability,
     integrity,
     iron_content,
-    apc_energy,
     power_level,
-    energy_level,
     start_power,
-    instability,
   } = data;
 
   const energy_minimum_exponent = 12;

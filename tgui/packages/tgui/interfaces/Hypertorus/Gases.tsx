@@ -8,6 +8,30 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
 
+type GasListProps = {
+  input_max: number;
+  input_min: number;
+  input_rate: string;
+  input_switch: string;
+  raw_gases: HypertorusGas[];
+  minimumScale: number;
+  prepend?: (gas: HypertorusGas) => void;
+  rateHelp?: string;
+  stickyGases?: readonly string[];
+};
+
+type GasListData = {
+  start_power: number;
+  start_cooling: number;
+};
+
+type HypertorusData = {
+  fusion_gases: HypertorusGas[];
+  moderator_gases: HypertorusGas[];
+  selectable_fuel: HypertorusGas[];
+  selected: string;
+};
+
 /*
  * Displays contents of gas mixtures, along with help text for gases with
  * special text when present. Some gas bars are always visible, even when
@@ -31,7 +55,7 @@ const moderator_gases_help = {
 
 const moderator_gases_sticky_order = ['plasma', 'bz', 'proto_nitrate'] as const;
 
-const ensure_gases = (gas_array: HypertorusGas[], gasids) => {
+const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
   const gases_by_id = {};
   gas_array.forEach((gas) => {
     gases_by_id[gas.id] = true;
@@ -44,23 +68,6 @@ const ensure_gases = (gas_array: HypertorusGas[], gasids) => {
   }
 };
 
-type GasListProps = {
-  input_max: number;
-  input_min: number;
-  input_rate: string;
-  input_switch: string;
-  raw_gases: HypertorusGas[];
-  minimumScale: number;
-  prepend?: (gas: HypertorusGas) => void;
-  rateHelp?: string;
-  stickyGases?: readonly string[];
-};
-
-type GasListData = {
-  start_power: number;
-  start_cooling: number;
-};
-
 const GasList = (props: GasListProps, context) => {
   const { act, data } = useBackend<GasListData>(context);
   const {
@@ -71,7 +78,7 @@ const GasList = (props: GasListProps, context) => {
     raw_gases = [],
     minimumScale,
     prepend,
-    rateHelp,
+    rateHelp = '',
     stickyGases,
   } = props;
   const { start_power, start_cooling } = data;
@@ -136,13 +143,6 @@ const GasList = (props: GasListProps, context) => {
       })}
     </LabeledList>
   );
-};
-
-type HypertorusData = {
-  fusion_gases: HypertorusGas[];
-  moderator_gases: HypertorusGas[];
-  selectable_fuel: HypertorusGas[];
-  selected: string;
 };
 
 export const HypertorusGases = (props, context) => {
