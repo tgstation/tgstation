@@ -188,7 +188,7 @@
 /obj/machinery/power/apc/auto_name/directional/south{
 	area = "/area/shuttle/syndicate/bridge"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
@@ -334,7 +334,7 @@
 /obj/machinery/power/apc/auto_name/directional/east{
 	area = "/area/shuttle/syndicate/airlock"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
@@ -403,7 +403,7 @@
 /obj/machinery/power/apc/auto_name/directional/north{
 	area = "/area/shuttle/syndicate/hallway"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
@@ -867,7 +867,7 @@
 /obj/machinery/power/apc/auto_name/directional/north{
 	area = "/area/shuttle/syndicate/eva"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -1716,7 +1716,7 @@
 /obj/machinery/power/apc/auto_name/directional/west{
 	area = "/area/shuttle/syndicate/medical"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1776,7 +1776,7 @@
 /obj/machinery/power/apc/auto_name/directional/east{
 	area = "/area/shuttle/syndicate/armory"
 	},
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/cutted_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,

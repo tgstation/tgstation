@@ -27,7 +27,7 @@
 /obj/machinery/power/apc/auto_name/directional/south : /obj/machinery/power/apc/auto_name/directional/south{@OLD;name=@SKIP}
 /obj/machinery/power/apc/auto_name/directional/east : /obj/machinery/power/apc/auto_name/directional/east{@OLD;name=@SKIP}
 /obj/machinery/power/apc/auto_name/directional/west : /obj/machinery/power/apc/auto_name/directional/west{@OLD;name=@SKIP}
-/obj/machinery/power/apc/@SUBTYPES{aidisabled = 1} : @OLD{@OLD;aidisabled=@SKIP}, /obj/effect/mapping_helpers/apc/cuttedAIwire
+/obj/machinery/power/apc/@SUBTYPES{aidisabled = 1} : @OLD{@OLD;aidisabled=@SKIP}, /obj/effect/mapping_helpers/apc/cutted_AI_wire
 /obj/machinery/power/apc/@SUBTYPES{locked = 0} : @OLD{@OLD;locked=@SKIP}, /obj/effect/mapping_helpers/apc/unlocked
 /obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_AWAY_GENERAL)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/away_general_access
 /obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_SYNDICATE)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/syndicate_access
