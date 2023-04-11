@@ -39910,6 +39910,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"mOz" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/machinery/stove,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/station/service/kitchen)
 "mOA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52191,6 +52196,8 @@
 	},
 /obj/effect/spawner/random/food_or_drink/cake_ingredients,
 /obj/item/food/piedough,
+/obj/item/kitchen/spoon/soup_ladle,
+/obj/item/reagent_containers/cup/soup_pot,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "qEa" = (
@@ -246542,7 +246549,7 @@ xlv
 iXH
 qZB
 oEh
-kpf
+mOz
 kvs
 qfe
 ecZ

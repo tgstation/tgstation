@@ -23679,6 +23679,8 @@
 	},
 /obj/structure/table,
 /obj/structure/sign/poster/random/directional/east,
+/obj/item/kitchen/spoon/soup_ladle,
+/obj/item/reagent_containers/cup/soup_pot,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "iHn" = (
@@ -44880,8 +44882,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "qdI" = (
-/obj/structure/table,
-/obj/machinery/microwave,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 5
 	},
@@ -44892,6 +44892,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "qdT" = (
@@ -50949,11 +50950,11 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/machinery/stove,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sfF" = (

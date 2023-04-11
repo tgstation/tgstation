@@ -57942,6 +57942,11 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
+"ogy" = (
+/obj/machinery/duct,
+/obj/machinery/stove,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "ogA" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
@@ -78836,6 +78841,8 @@
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
+/obj/item/reagent_containers/cup/soup_pot,
+/obj/item/kitchen/spoon/soup_ladle,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "trR" = (
@@ -129947,7 +129954,7 @@ cbB
 vyY
 xtp
 pwA
-dyb
+ogy
 eTy
 trC
 lZa

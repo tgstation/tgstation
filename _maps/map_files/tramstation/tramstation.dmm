@@ -20320,6 +20320,10 @@
 /obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"fOA" = (
+/obj/machinery/stove,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
 "fOG" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -34036,6 +34040,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"kXs" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/soup_pot,
+/obj/item/kitchen/spoon/soup_ladle,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
 "kXz" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -167483,7 +167493,7 @@ qfs
 tRX
 vuD
 guL
-tJg
+fOA
 guL
 vbb
 mUL
@@ -167999,7 +168009,7 @@ sfv
 guL
 tJg
 lJA
-mdp
+kXs
 mUL
 oCx
 vJt
