@@ -19,11 +19,14 @@
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
-	/// Gives a crate a lid sprite if it has one. Leave Blank if it doesn't.
+	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
+	/// Gives a crate a lid sprite if it has one. Leave Blank if it doesn't.
 	var/lid_icon_state
-	var/lid_x = 0 //X moves the lid left or right.
-	var/lid_y = 0 //Y raises it up and down.
+	/// Controls the X value, allowing left and right pixel movement.
+	var/lid_x = 0
+	/// Controls the Y value, allowing up and down pixel movement.
+	var/lid_y = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
