@@ -512,7 +512,7 @@
 		<br>
 		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
 		<br>
-		Final word of caution: the technology involved is experimental in nature, you may feel lighter after heavy use. Both in weight, and in headedness. This is normal.
+		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
 
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
