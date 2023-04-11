@@ -49,8 +49,6 @@
 
 	living_pawn.face_atom(target)
 
-	living_pawn.combat_mode = TRUE
-
 	// check for projectile and roll a dice, than fire that bad boy
 	if(controller.blackboard[BB_CHICKEN_PROJECTILE] && DT_PROB(5, delta_time))
 		shoot(target, controller)
@@ -58,8 +56,6 @@
 	// attack with weapon if we have one (we don't as of now as sword chickens are frauds)
 	if(living_pawn.CanReach(target))
 		living_pawn.UnarmedAttack(target)
-
-	living_pawn.combat_mode = FALSE
 
 	// no de-aggro
 	if(controller.blackboard[BB_CHICKEN_AGGRESSIVE])

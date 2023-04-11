@@ -44,7 +44,7 @@
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
 	colour = "lime"
-	
+
 /obj/item/lipstick/blue
 	name = "blue lipstick"
 	colour = "blue"
@@ -165,7 +165,7 @@
 			to_chat(user, span_warning("[H] doesn't have a head!"))
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH)
-			if(!user.combat_mode)
+			if(!(user.istate & ISTATE_HARM))
 				if(H.gender == MALE)
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
@@ -217,7 +217,7 @@
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
-			if(!user.combat_mode)
+			if(!(user.istate & ISTATE_HARM))
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return

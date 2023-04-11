@@ -45,7 +45,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(iscyborg(user) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
-	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	else if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && !broken)
 		if(atom_integrity < max_integrity)
 			if(!attacking_item.tool_start_check(user, amount = 2))
 				return

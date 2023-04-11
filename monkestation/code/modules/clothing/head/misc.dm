@@ -116,3 +116,50 @@
 #undef HAT_CAP
 #undef ADD_HAT
 #undef REMOVE_HAT
+
+
+/obj/item/clothing/head/polycowboyhat
+	name = "Poly Cowboy Hat"
+	desc = "A Cowboy hat, made out of a special polychromatic material allowing it to be colored"
+	icon_state = "cowboyhat_poly"
+	worn_icon_state = "wcowboyhat_poly"
+	greyscale_config = /datum/greyscale_config/polycowhat
+	greyscale_config_worn = /datum/greyscale_config/polycowhat_worn
+	greyscale_colors = "#FFFFFF#AAAAAA"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/head/morningstar
+	name = "Morningstar beret"
+	desc = "This hat is definitely worth more than your head is."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "morningstar_hat"
+
+/obj/item/clothing/head/saints
+	name = "Saints hat"
+	desc = "A hat to go with the best coats in the cosmos."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "saints_hat"
+
+/obj/item/clothing/head/widered
+	name = "Wide red hat"
+	desc = "It is both wide, and red. Stylish!"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "widehat_red"
+
+/obj/item/clothing/head/ushanka
+	alternative_screams = list('monkestation/sound/misc/cheekibreeki.ogg', 'monkestation/sound/misc/cyka1.ogg')
+
+/obj/item/clothing/head/cardborg
+	alternative_screams = list('monkestation/sound/voice/screams/silicon/scream_silicon.ogg')
+
+/obj/item/clothing/head/kitty
+	alternative_screams = list('monkestation/sound/voice/screams/felinid/scream_cat.ogg')
+
+/obj/item/clothing/head/foilhat
+	alternative_screams = list(	'monkestation/sound/misc/jones/jones0.ogg',
+								'monkestation/sound/misc/jones/jones1.ogg',
+								'monkestation/sound/misc/jones/jones2.ogg',
+								'monkestation/sound/misc/jones/jones3.ogg')

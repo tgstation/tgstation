@@ -9,7 +9,7 @@
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	status_flags = NONE
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	// Let's do a blue, since they'll be on green turfs if this shit is ever finished
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20

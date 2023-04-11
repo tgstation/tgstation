@@ -15,10 +15,17 @@
 	. = get_image(layer, limb)
 	color_image(., layer, limb)
 
+///Wrapper for getting the proper image, colored and everything
+/datum/bodypart_overlay/proc/get_secondary_overlay(layer, obj/item/bodypart/limb)
+	layer = bitflag_to_layer(layer)
+	. = get_image_inner(layer, limb)
+
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
 
+/datum/bodypart_overlay/proc/get_image_inner(layer, obj/item/bodypart/limb)
+	return FALSE
 ///Color the image
 /datum/bodypart_overlay/proc/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return

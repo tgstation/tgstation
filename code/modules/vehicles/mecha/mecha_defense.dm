@@ -205,7 +205,7 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return ..()
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
@@ -327,7 +327,7 @@
 		to_chat(user, span_notice("You close the hatch to the power unit."))
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	. = TRUE
 	if(DOING_INTERACTION(user, src))

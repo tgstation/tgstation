@@ -72,7 +72,7 @@
 
 /mob/living/silicon/ai/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
 	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
@@ -85,7 +85,7 @@
 
 /mob/living/silicon/ai/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	if(!is_anchored)
 		balloon_alert(user, "bolt it down first!")
@@ -138,7 +138,7 @@
 
 /mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	if(!is_anchored)
 		balloon_alert(user, "bolt it down first!")

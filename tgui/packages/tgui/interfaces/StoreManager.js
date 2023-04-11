@@ -25,7 +25,7 @@ export const StoreManager = (props, context) => {
               align="center"
               buttons={
                 <Button
-                  icon="coin"
+                  icon="fa-solid fa-coins"
                   align="center"
                   content={total_coins}
                   tooltip="This is your total Monkecoin amount."

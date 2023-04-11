@@ -299,6 +299,38 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "Yuri Coat"
 	item_path = /obj/item/clothing/suit/costume/yuri
 
+/datum/loadout_item/suit/winter_coat/cosmic
+	name = "Cosmic Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/cosmic
+
+/datum/loadout_item/suit/winter_coat/ratvar
+	name = "Ratvar Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/ratvar
+
+/datum/loadout_item/suit/winter_coat/narsie
+	name = "Narsie Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
+
+/datum/loadout_item/suit/saints
+	name = "Third Street Saints fur coat"
+	item_path = /obj/item/clothing/suit/saints
+
+/datum/loadout_item/suit/heartcoat
+	name = "Heart coat"
+	item_path = /obj/item/clothing/suit/heartcoat
+
+/datum/loadout_item/suit/phantom
+	name = "Phantom Thief Coat"
+	item_path = /obj/item/clothing/suit/phantom
+
+/datum/loadout_item/suit/morningstar
+	name = "Morning Star Coat"
+	item_path = /obj/item/clothing/suit/morningstar
+
+/datum/loadout_item/suit/driscoll
+	name = "driscoll poncho"
+	item_path = /obj/item/clothing/suit/driscoll
+
 /*
 *	DONATOR
 */

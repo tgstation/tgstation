@@ -139,7 +139,7 @@
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !proximity)
+	if(!(source.istate & ISTATE_SECONDARY) || !proximity)
 		return NONE
 	target.add_fingerprint(mod.wearer)
 	return target.ninjadrain_act(mod.wearer, src)

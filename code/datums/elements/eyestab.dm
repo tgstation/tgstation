@@ -87,7 +87,7 @@
 
 	target.add_mood_event("eye_stab", /datum/mood_event/eye_stab)
 
-	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [(user.istate & ISTATE_HARM) ? "On" : "Off"])")
 
 	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!eyes)

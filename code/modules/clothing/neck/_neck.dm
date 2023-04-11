@@ -180,7 +180,7 @@
 /obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
 	if(!ishuman(M) || !isliving(user))
 		return ..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 
 	var/mob/living/carbon/carbon_patient = M

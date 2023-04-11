@@ -1002,7 +1002,7 @@
 		return
 	drew_blood = TRUE
 	var/list/modifiers = params2list(click_parameters)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		input_list += RIGHT_SLASH
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		input_list += LEFT_SLASH

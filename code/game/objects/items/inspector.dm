@@ -59,7 +59,7 @@
 
 /obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		return
 	cell_cover_open = !cell_cover_open
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")

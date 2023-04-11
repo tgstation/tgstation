@@ -423,7 +423,7 @@
 	custom_premium_price = PAYCHECK_CREW * 14
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
-	if(!iscarbon(amputee) || user.combat_mode)
+	if(!iscarbon(amputee) || (user.istate & ISTATE_HARM))
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)

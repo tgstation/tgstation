@@ -31,7 +31,7 @@
 /datum/element/can_barricade/proc/on_start_barricade(atom/source, obj/item/stack/sheet/mineral/wood/plank, mob/living/user, params)
 	SIGNAL_HANDLER
 
-	if(user.combat_mode || !istype(plank) || !istype(user))
+	if((user.istate & ISTATE_HARM) || !istype(plank) || !istype(user))
 		return
 
 	if(plank.get_amount() < PLANK_BARRICADE_AMOUNT)

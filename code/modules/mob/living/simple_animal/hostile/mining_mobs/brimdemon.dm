@@ -12,7 +12,7 @@
 	speak_emote = list("cackles")
 	emote_taunt = list("screeches")
 	emote_hear = list("cackles","screeches")
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	stat_attack = HARD_CRIT
 	ranged_cooldown_time = 5 SECONDS
 	vision_range = 9

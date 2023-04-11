@@ -103,14 +103,14 @@
 		if (active)
 			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
 
-			if (user.combat_mode)
+			if ((user.istate & ISTATE_HARM))
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
 			else
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
 		else
 			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
 
-			if (user.combat_mode)
+			if ((user.istate & ISTATE_HARM))
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
 			else
 				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
@@ -129,7 +129,7 @@
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
-	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
 	if(cooldown_check > world.time)
@@ -139,10 +139,6 @@
 		return BATON_ATTACK_DONE
 
 	if(check_parried(target, user))
-		return BATON_ATTACK_DONE
-
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
-		to_chat(user, span_danger("You fumble and miss [target]!"))
 		return BATON_ATTACK_DONE
 
 	if(stun_animation)
@@ -173,7 +169,7 @@
 		return TRUE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
-	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+	if(!in_attack_chain)
 		return BATON_ATTACK_DONE
 
 	cooldown_check = world.time + cooldown
@@ -245,9 +241,6 @@
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
 	if(!cooldown)
 		return
-	var/user_ref = REF(user) // avoids harddels.
-	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
@@ -554,10 +547,10 @@
 	. = ..()
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if((user.istate & ISTATE_SECONDARY))
 		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))
 		return BATON_ATTACK_DONE
@@ -578,7 +571,7 @@
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-	
+
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 
 /obj/item/melee/baton/security/get_wait_description()

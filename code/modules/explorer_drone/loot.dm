@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	AddComponent(/datum/component/two_handed)
 
 /obj/item/firelance/attack(mob/living/M, mob/living/user, params)
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return
 	. = ..()
 

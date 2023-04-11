@@ -439,7 +439,7 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
-		if (user.combat_mode)
+		if ((user.istate & ISTATE_HARM))
 			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
@@ -501,7 +501,7 @@
 			electronics_ref.forceMove(drop_location())
 		secure = FALSE
 		update_appearance()
-	else if(!user.combat_mode)
+	else if(!(user.istate & ISTATE_HARM))
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE

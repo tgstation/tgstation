@@ -214,7 +214,7 @@
 			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	return ..()
-
+	
 /datum/component/riding/vehicle/speedbike
 	vehicle_move_delay = 0
 	override_allow_spacemove = TRUE

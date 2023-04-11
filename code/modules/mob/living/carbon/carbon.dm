@@ -72,7 +72,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
 	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
+		if((user.istate & ISTATE_HARM))
 			break
 		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
 			continue
@@ -82,7 +82,7 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	if(!all_wounds || !(!user.combat_mode || user == src))
+	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
@@ -419,7 +419,7 @@
 
 	if(!has_mouth())
 		return TRUE
-		
+
 	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
 	var/starting_dir = dir
 	if(nutrition < 100 && !blood && !force)
@@ -549,7 +549,7 @@
 		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
 	update_stamina_hud()
-	
+
 /mob/living/carbon/update_sight()
 	if(!client)
 		return

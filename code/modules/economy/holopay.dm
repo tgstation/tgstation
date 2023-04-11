@@ -51,7 +51,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 		return .
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
@@ -130,7 +130,7 @@
 	if(.)
 		return FALSE
 	var/mob/living/interactor = user
-	if(isliving(interactor) && interactor.combat_mode)
+	if(isliving(interactor) && (interactor.istate & ISTATE_HARM))
 		return FALSE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

@@ -68,6 +68,12 @@
 	if(!istype(user))
 		return
 
+	// MonkeStation Edit Start
+	// Alternative Scream Hook
+	if(user.alternative_screams.len)
+		return pick(user.alternative_screams)
+	// MonkeStation Edit End
+
 	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.

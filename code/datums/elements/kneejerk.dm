@@ -17,9 +17,7 @@
 /datum/element/kneejerk/proc/on_item_attack(datum/source, mob/living/target, mob/living/user, params)
 	SIGNAL_HANDLER
 
-	var/list/modifiers = params2list(params)
-
-	if((user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && LAZYACCESS(modifiers, RIGHT_CLICK) && target.buckled)
+	if((user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && (user.istate & ISTATE_SECONDARY) && target.buckled)
 		tap_knee(source, target, user)
 
 		return COMPONENT_SKIP_ATTACK

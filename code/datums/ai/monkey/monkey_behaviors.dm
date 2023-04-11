@@ -200,7 +200,10 @@
 		if(weapon)
 			weapon.melee_attack_chain(living_pawn, target)
 		else
-			living_pawn.UnarmedAttack(target, null, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarmin
+			if(disarm)
+				living_pawn.istate |= ISTATE_SECONDARY
+			living_pawn.UnarmedAttack(target, null) //Fake a right click if we're disarmin
+			living_pawn.istate &= ~ISTATE_SECONDARY
 		controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // We reset their memory of the gun being 'broken' if they accomplish some other attack
 	else if(weapon)
 		var/atom/real_target = target
@@ -232,6 +235,7 @@
 	if(controller.blackboard[BB_MONKEY_ENEMIES][target_ref] <= 0 || (HAS_TRAIT(target, TRAIT_MONKEYFRIEND)))
 		var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 		enemies.Remove(target_ref)
+		living_pawn.set_combat_mode(FALSE)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == WEAKREF(target))
 			finish_action(controller, TRUE)
 

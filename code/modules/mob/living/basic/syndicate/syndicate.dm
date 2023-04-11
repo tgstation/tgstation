@@ -15,7 +15,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
 	unsuitable_heat_damage = 7.5
@@ -226,7 +226,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	mob_biotypes = MOB_ROBOTIC
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 0

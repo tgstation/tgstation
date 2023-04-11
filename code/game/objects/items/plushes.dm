@@ -711,16 +711,23 @@
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 ///Used to track how many people killed themselves with item/toy/plush/moth
 	var/suicide_count = 0
+	var/suicide_text = "stares deeply into the eyes of" //for modularizing creepy toys
+	var/creepy_plush_type = "mothperson" //for modularizing creepy toys
+	var/has_creepy_icons = FALSE //for updating icons
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
 	suicide_count++
 	if(suicide_count < 3)
-		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+		desc = "An unsettling [creepy_plush_type] plushy. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+		if(has_creepy_icons)
+			icon_state = "[initial(icon_state)]_1"
 	else
-		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		desc = "A creepy [creepy_plush_type] plushy. It has killed [suicide_count] people! I don't think I want to hug it any more!"
 		divine = TRUE
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+		if(has_creepy_icons)
+			icon_state = "[initial(icon_state)]_2"
 	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
 	var/list/available_spots = get_adjacent_open_turfs(loc)
 	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam

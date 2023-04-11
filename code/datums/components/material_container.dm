@@ -112,7 +112,7 @@
 	SIGNAL_HANDLER
 
 	var/list/tc = allowed_item_typecache
-	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && (user.istate & ISTATE_HARM))
 		return
 	if(I.item_flags & ABSTRACT)
 		return

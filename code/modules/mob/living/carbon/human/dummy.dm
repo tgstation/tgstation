@@ -102,6 +102,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["ipc_screen"] = "BSOD"
 	target.dna.features["ipc_chassis"] = "Bishop Cyberkinetics"
 	target.dna.features["ipc_antenna"] = "None"
+	target.dna.features["anime_top"] = "None"
+	target.dna.features["anime_middle"] = "None"
+	target.dna.features["anime_bottom"] = "None"
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent

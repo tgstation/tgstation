@@ -112,11 +112,11 @@
 			M.throw_at(throw_target_mob, 20, 3, force = 0)
 
 	var/they_can_move = TRUE
-	var/their_combat_mode = FALSE
+	var/theyre_blocking = FALSE
 
 	if(isliving(M))
 		var/mob/living/L = M
-		their_combat_mode = L.combat_mode
+		theyre_blocking = L.istate & ISTATE_BLOCKING
 		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
@@ -158,8 +158,8 @@
 				mob_swap = TRUE
 			else if(
 				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) &&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
-				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
+				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !theyre_blocking) &&\
+				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !(istate & ISTATE_HARM))
 			)
 				mob_swap = TRUE
 		if(mob_swap)
@@ -202,12 +202,12 @@
 	//If they're a human, and they're not in help intent, block pushing
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
-		if(human.combat_mode)
+		if((human.istate & ISTATE_HARM))
 			return TRUE
 	//if they are a cyborg, and they're alive and in combat mode, block pushing
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/borg = M
-		if(borg.combat_mode && borg.stat != DEAD)
+		if((borg.istate & ISTATE_HARM) && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
@@ -438,7 +438,7 @@
 
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
-	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
+	else if(!(istate & ISTATE_HARM)) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
 /mob/living/stop_pulling()
@@ -2325,18 +2325,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
 	if (!style)
 		return MARTIAL_ATTACK_INVALID
 	// will return boolean below since it's not invalid
-	if (is_grab)
+	if ((istate & ISTATE_CONTROL))
 		return style.grab_act(src, target)
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+	if ((istate & ISTATE_SECONDARY))
 		return style.disarm_act(src, target)
-	if(combat_mode)
+	if((istate & ISTATE_HARM))
 		if (HAS_TRAIT(src, TRAIT_PACIFISM))
 			return FALSE
 		return style.harm_act(src, target)

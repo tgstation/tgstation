@@ -23,7 +23,6 @@
 		save_loadout[loadout] = entry
 	loadout_list = sanitize_loadout_list(save_loadout)
 
-
 	if(needs_update >= 0)
 		update_character_monkestation(needs_update, save_data) // needs_update == savefile_version if we need an update (positive integer)
 
@@ -37,3 +36,11 @@
 /datum/preferences/proc/save_character_monkestation(list/save_data)
 	save_data["loadout_list"] = loadout_list
 	save_data["modular_version"] = MODULAR_SAVEFILE_VERSION_MAX
+
+/datum/preferences/proc/save_preferences_monkestation()
+	savefile.set_entry("channel_volume", channel_volume)
+
+/datum/preferences/proc/load_preferences_monkestation()
+	channel_volume = savefile.get_entry("channel_volume", channel_volume)
+	channel_volume = SANITIZE_LIST(channel_volume)
+

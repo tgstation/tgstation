@@ -122,6 +122,7 @@
 	/// Do not directly set, use update_sustain()
 	var/cached_exponential_dropoff = 1.045
 	/////////////////////////////////////////////////////////////////////////
+	var/mixing_channel = CHANNEL_INSTRUMENTS
 
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
 	SSinstruments.on_song_new(src)

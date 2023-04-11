@@ -492,6 +492,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
 	if(C.hud_used)
@@ -852,6 +853,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
 							accessory_overlay.color = source.eye_color_left
+						if(ANIME)
+							accessory_overlay.color = source.dna.features["animecolor"]
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -1315,7 +1318,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	if(owner.mind)
 		attacker_style = owner.mind.martial_art
-	if((owner != target) && owner.combat_mode && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+	if((owner != target) && (owner.istate & ISTATE_HARM) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
@@ -1324,11 +1327,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	SEND_SIGNAL(owner, COMSIG_MOB_ATTACK_HAND, owner, target, attacker_style)
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(owner.istate & ISTATE_SECONDARY)
+		if(istype(owner.client?.imode, /datum/interaction_mode/intents3))
+			return // early end because of intent type
 		disarm(owner, target, attacker_style)
 		return // dont attack after
-	if(owner.combat_mode)
+	if((owner.istate & ISTATE_HARM))
 		harm(owner, target, attacker_style)
+	else if ((owner.istate & ISTATE_CONTROL))
+		grab(owner, target, attacker_style)
 	else
 		help(owner, target, attacker_style)
 
@@ -1354,7 +1361,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/Iwound_bonus = weapon.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((weapon.item_flags & SURGICAL_TOOL) && !user.combat_mode && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
+	if((weapon.item_flags & SURGICAL_TOOL) && !(user.istate & ISTATE_HARM) && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
 	var/weakness = check_species_weakness(weapon, user)

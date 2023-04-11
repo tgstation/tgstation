@@ -63,8 +63,6 @@
 	// forcing the move here because we aren't in hostile mode so we don't manually trigger hostile_jps
 	SSmove_manager.jps_move(living_pawn, target, 2, minimum_distance = 1)
 
-	living_pawn.combat_mode = TRUE // not really lol but i wanna attach a slip to it
-
 	// honk the bastard
 	if(living_pawn.CanReach(target))
 		living_pawn.UnarmedAttack(target)
@@ -72,8 +70,6 @@
 
 		if(controller.blackboard[BB_CHICKEN_HONKS_SORROW])
 			living_pawn.emote("cries")
-
-		living_pawn.combat_mode = FALSE
 
 		SSmove_manager.stop_looping(living_pawn) // since we added gotta also remove
 

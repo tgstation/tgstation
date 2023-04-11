@@ -16,7 +16,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks", "squeaks")
 	speak_chance = 1
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	maxHealth = 75
 	health = 75
 	speed = 1
@@ -416,7 +416,7 @@
 		return ..()
 	eat_atom(attacked_target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A, proximity_flag)
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)

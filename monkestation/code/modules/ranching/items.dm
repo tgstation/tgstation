@@ -326,7 +326,7 @@
 			user.visible_message(span_notice("[user] empties [I] on [src]."))
 			return
 
-	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
+	if(!(user.istate & ISTATE_HARM) && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.

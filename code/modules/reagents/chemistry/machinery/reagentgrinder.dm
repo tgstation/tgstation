@@ -184,7 +184,7 @@
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)
-		if(user.combat_mode)
+		if((user.istate & ISTATE_HARM))
 			return ..()
 		else
 			to_chat(user, span_warning("You cannot grind [I] into reagents!"))

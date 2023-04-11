@@ -450,8 +450,27 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "TMC Uniform"
 	item_path = /obj/item/clothing/under/costume/tmc
 
+/datum/loadout_item/under/formal/driscoll
+	name = "O'Driscoll outfit"
+	item_path = /obj/item/clothing/under/driscoll
+
+/datum/loadout_item/under/formal/morningstar
+	name = "Morningstar suit"
+	item_path = /obj/item/clothing/under/morningstar
+
+/datum/loadout_item/under/formal/saints
+	name = "Saints outfit"
+	item_path = /obj/item/clothing/under/saints
+
+/datum/loadout_item/under/formal/phantom
+	name = "Phantom Thief outfit"
+	item_path = /obj/item/clothing/under/phantom
+
+/datum/loadout_item/under/miscellaneous/bloodred
+	name = "Blood-red pajamas"
+	item_path = /obj/item/clothing/under/bloodred
 
 /// DONATOR
 /datum/loadout_item/under/donator
 	donator_only = TRUE
-
+	requires_purchase = FALSE

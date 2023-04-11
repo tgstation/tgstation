@@ -14,10 +14,14 @@
 	/// How far away our song datum can be heard.
 	var/instrument_range = 15
 
+	/// The mixing channel this will play on needs to be set like this because DONGLE
+	var/mixing_channel = CHANNEL_INSTRUMENTS
+
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
 	song = new(src, allowed_instrument_ids, instrument_range)
 	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
+	song.mixing_channel = src.mixing_channel
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
@@ -282,3 +286,7 @@
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
 	custom_price = PAYCHECK_COMMAND * 2.37
 	custom_premium_price = PAYCHECK_COMMAND * 2.37
+
+
+/obj/item/instrument/piano_synth/robot
+	mixing_channel = CHANNEL_INSTRUMENTS_ROBOT

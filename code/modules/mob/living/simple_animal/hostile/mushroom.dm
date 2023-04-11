@@ -177,7 +177,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
-	if(user.combat_mode)
+	if((user.istate & ISTATE_HARM))
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

@@ -13,6 +13,11 @@
 #define STYLE_GONDOLA 13
 #define STYLE_SEETHROUGH 14
 
+//Monkestation Edit: Two new drop pods, the beater car and the washing machine
+#define STYLE_WASHER 15
+#define STYLE_CAR 16
+//Monkestation Edit End
+
 #define POD_SHAPE 1
 #define POD_BASE 2
 #define POD_DOOR 3
@@ -63,5 +68,11 @@ GLOBAL_LIST_INIT(podstyles, list(\
 	list(POD_SHAPE_OTHER, "orange",      TRUE, FALSE, FALSE,   RUBBLE_NONE,     "\improper Orange", "An angry orange."),\
 	list(POD_SHAPE_OTHER, FALSE,         FALSE,    FALSE,            FALSE,   RUBBLE_NONE,     "\improper S.T.E.A.L.T.H. pod MKVII", "A supply pod that, under normal circumstances, is completely invisible to conventional methods of detection. How are you even seeing this?"),\
 	list(POD_SHAPE_OTHER, "gondola",     FALSE, FALSE, FALSE,   RUBBLE_NONE,     "gondola",     "The silent walker. This one seems to be part of a delivery agency."),\
-	list(POD_SHAPE_OTHER, FALSE,         FALSE,    FALSE,            FALSE,   RUBBLE_NONE,         FALSE,      FALSE,      "rl_click", "give_po")\
+	list(POD_SHAPE_OTHER, FALSE,         FALSE,    FALSE,            FALSE,   RUBBLE_NONE,         FALSE,      FALSE,      "rl_click", "give_po"),\
+	list(POD_SHAPE_OTHER, "washer",      TRUE, FALSE, FALSE,   RUBBLE_NONE, "washing machine",     "A washing machine rigged to fly straight for the target."),\
+	list(POD_SHAPE_OTHER, "beat_car",    	TRUE, FALSE, FALSE,   RUBBLE_NONE, "beat up car",     "An ancient car, you have no idea how it got here.")\
 ))
+//Monkestation Edit: Two new drop pods, the beater car and the washing machine
+//Nearby reference because nobody else did this:
+//The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
+

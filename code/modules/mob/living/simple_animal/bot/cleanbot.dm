@@ -214,7 +214,7 @@
 	stabbed_carbon.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/knife) && !user.combat_mode)
+	if(istype(attacking_item, /obj/item/knife) && !(user.istate & ISTATE_HARM))
 		balloon_alert(user, "attaching knife...")
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return

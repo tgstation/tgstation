@@ -24,7 +24,7 @@
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200
-	combat_mode = TRUE
+	istate = ISTATE_HARM|ISTATE_BLOCKING
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
