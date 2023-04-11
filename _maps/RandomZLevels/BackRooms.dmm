@@ -6,6 +6,11 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"aB" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/mapping_helpers/airlock/welded,
+/turf/open/floor/iron,
+/area/space)
 "aM" = (
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "rightsecurityshutters"
@@ -54,11 +59,17 @@
 	},
 /turf/open/floor/carpet,
 /area/space)
-"gB" = (
-/obj/structure/chair/sofa/bench{
-	dir = 1
+"fE" = (
+/obj/structure/table,
+/obj/item/food/burger/chicken{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/cafeteria,
+/area/space)
+"gj" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron,
 /area/space)
 "gG" = (
 /obj/structure/pipe_cleaner{
@@ -66,8 +77,19 @@
 	},
 /turf/open/floor/carpet,
 /area/space)
-"hb" = (
-/obj/structure/chair/sofa/bench/left,
+"gO" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/iron,
+/area/space)
+"he" = (
+/obj/machinery/door/airlock/hatch,
+/turf/closed/wall,
+/area/space)
+"hV" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/space)
 "iH" = (
@@ -90,23 +112,12 @@
 	},
 /turf/open/floor/plating,
 /area/space)
-"kx" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 1
-	},
+"jE" = (
+/obj/structure/chair/sofa/bench/left,
 /turf/open/floor/iron/cafeteria,
 /area/space)
 "lD" = (
 /turf/open/floor/carpet,
-/area/space)
-"lQ" = (
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/iron,
-/area/space)
-"lX" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/iron,
 /area/space)
 "mn" = (
 /obj/structure/window,
@@ -114,6 +125,17 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/space)
+"mv" = (
+/obj/structure/table,
+/obj/item/food/burger/cheese{
+	pixel_y = 6
+	},
+/obj/item/food/burger/cheese{
+	pixel_y = 1;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/cafeteria,
 /area/space)
 "mA" = (
 /obj/structure/table,
@@ -137,7 +159,7 @@
 	},
 /turf/open/floor/iron,
 /area/space)
-"ny" = (
+"nZ" = (
 /obj/structure/table,
 /obj/item/food/burger/cheese{
 	pixel_y = 5
@@ -166,13 +188,6 @@
 	},
 /turf/open/floor/carpet,
 /area/space)
-"ra" = (
-/obj/structure/table,
-/obj/item/food/burger/superbite{
-	pixel_y = 5
-	},
-/turf/open/floor/iron,
-/area/space)
 "ro" = (
 /obj/structure/pipe_cleaner{
 	icon_state = "2-9"
@@ -192,10 +207,9 @@
 "sI" = (
 /turf/closed/wall/mineral/wood,
 /area/space)
-"tZ" = (
-/obj/structure/table,
-/obj/item/food/burger/chicken{
-	pixel_y = 5
+"sM" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
 /area/space)
@@ -206,6 +220,12 @@
 /obj/structure/table,
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/plating,
+/area/space)
+"uZ" = (
+/obj/structure/chair/sofa/bench{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
 /area/space)
 "vG" = (
 /obj/effect/step_trigger/teleporter{
@@ -263,9 +283,9 @@
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/carpet,
 /area/space)
-"zB" = (
-/obj/machinery/door/airlock/hatch,
-/turf/closed/wall,
+"Aa" = (
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron/cafeteria,
 /area/space)
 "Aq" = (
 /obj/effect/step_trigger/teleporter{
@@ -287,6 +307,10 @@
 "Ba" = (
 /obj/effect/baseturf_helper/reinforced_plating,
 /turf/open/floor/carpet,
+/area/space)
+"Bh" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plating,
 /area/space)
 "Bk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -335,17 +359,6 @@
 	},
 /turf/open/floor/iron,
 /area/space)
-"CF" = (
-/obj/structure/table,
-/obj/item/food/burger/cheese{
-	pixel_y = 6
-	},
-/obj/item/food/burger/cheese{
-	pixel_y = 1;
-	pixel_x = 2
-	},
-/turf/open/floor/iron/cafeteria,
-/area/space)
 "Db" = (
 /obj/structure/pipe_cleaner{
 	icon_state = "5-8"
@@ -359,10 +372,6 @@
 "DF" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/space)
-"DO" = (
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/plating,
 /area/space)
 "Et" = (
 /obj/structure/table,
@@ -406,11 +415,6 @@
 	name = "Portal Access"
 	},
 /turf/open/floor/iron/dark,
-/area/space)
-"Hx" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/iron,
 /area/space)
 "Hy" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
@@ -460,9 +464,6 @@
 /obj/structure/frame/computer,
 /turf/open/floor/iron,
 /area/space)
-"Lq" = (
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/space)
 "LO" = (
 /obj/structure/table,
 /obj/structure/window{
@@ -470,12 +471,6 @@
 	},
 /obj/structure/window,
 /turf/open/floor/iron,
-/area/space)
-"Nq" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
 /area/space)
 "Nu" = (
 /obj/structure/table,
@@ -499,10 +494,6 @@
 /obj/effect/baseturf_helper/reinforced_plating,
 /turf/open/floor/iron/dark,
 /area/space)
-"OS" = (
-/obj/structure/chair/sofa/bench,
-/turf/open/floor/iron/cafeteria,
-/area/space)
 "Pp" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
@@ -513,10 +504,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
-"PQ" = (
-/obj/structure/chair/sofa/bench/right,
-/turf/open/floor/iron/cafeteria,
 /area/space)
 "PX" = (
 /obj/structure/table,
@@ -571,6 +558,9 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"Rd" = (
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/space)
 "Rs" = (
 /obj/structure/pipe_cleaner{
 	icon_state = "4-10"
@@ -583,6 +573,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/space)
+"Ry" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/iron/cafeteria,
 /area/space)
 "Sf" = (
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -621,6 +615,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/space)
+"Vs" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron,
+/area/space)
 "VI" = (
 /turf/open/space/basic,
 /area/space)
@@ -639,11 +637,6 @@
 "VT" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/iron/dark,
-/area/space)
-"Wv" = (
-/obj/machinery/door/firedoor/closed,
-/obj/effect/mapping_helpers/airlock/welded,
-/turf/open/floor/iron,
 /area/space)
 "Xq" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -696,6 +689,13 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/carpet,
+/area/space)
+"YS" = (
+/obj/structure/table,
+/obj/item/food/burger/superbite{
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
 /area/space)
 "Zk" = (
 /obj/machinery/gateway/away{
@@ -9506,7 +9506,7 @@ ut
 cM
 ut
 cM
-zB
+he
 cM
 cM
 cM
@@ -10544,7 +10544,7 @@ Ds
 Ds
 XG
 XG
-Hx
+gj
 XG
 XG
 cM
@@ -14141,10 +14141,10 @@ cM
 ut
 cM
 cM
-lQ
+Vs
 cM
-Wv
-Wv
+aB
+aB
 cM
 cM
 cM
@@ -15398,7 +15398,7 @@ VI
 cM
 cM
 cM
-DO
+Bh
 cM
 cM
 cM
@@ -15653,11 +15653,11 @@ VI
 VI
 VI
 cM
-Lq
-Lq
-Lq
-Lq
-Lq
+Rd
+Rd
+Rd
+Rd
+Rd
 cM
 ut
 cM
@@ -15910,11 +15910,11 @@ VI
 VI
 VI
 cM
-Lq
-Lq
-Lq
-Lq
-Lq
+Rd
+Rd
+Rd
+Rd
+Rd
 cM
 ut
 cM
@@ -16167,11 +16167,11 @@ VI
 VI
 VI
 cM
-Lq
-Lq
-Lq
-Lq
-Lq
+Rd
+Rd
+Rd
+Rd
+Rd
 cM
 ut
 cM
@@ -16424,11 +16424,11 @@ VI
 VI
 VI
 cM
-Lq
-Lq
-Lq
-Lq
-Lq
+Rd
+Rd
+Rd
+Rd
+Rd
 cM
 ut
 ut
@@ -16683,7 +16683,7 @@ VI
 cM
 cM
 cM
-Lq
+Rd
 cM
 cM
 cM
@@ -17197,7 +17197,7 @@ VI
 cM
 XG
 XG
-ra
+YS
 XG
 XG
 cM
@@ -18225,7 +18225,7 @@ VI
 cM
 xH
 XG
-lX
+gO
 xn
 xn
 XN
@@ -18741,10 +18741,10 @@ xH
 XG
 xH
 xn
-PQ
+Aa
 XN
-tZ
-kx
+fE
+hV
 VI
 VI
 VI
@@ -18998,10 +18998,10 @@ xH
 XG
 xH
 xn
-OS
-ny
+Ry
+nZ
 XN
-gB
+uZ
 VI
 VI
 VI
@@ -19255,10 +19255,10 @@ xH
 XG
 xH
 xn
-hb
+jE
 XN
 XN
-Nq
+sM
 VI
 VI
 VI
@@ -19769,7 +19769,7 @@ xH
 XG
 XG
 xn
-CF
+mv
 xn
 xn
 xn
