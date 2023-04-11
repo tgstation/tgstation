@@ -114,9 +114,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ax" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
@@ -131,9 +129,7 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "aA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
@@ -195,18 +191,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aM" = (
@@ -363,9 +355,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -374,22 +364,18 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)

@@ -133,7 +133,11 @@
 			var/result = HandleCustomCommand(topic_parameters[DMAPI5_TOPIC_PARAMETER_CHAT_COMMAND])
 			if(!result)
 				result = TopicResponse("Error running chat command!")
-			result[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+			//TODO: make this not need the decode/encode.
+			if (length(intercepted_message_queue))
+				var/list/result_array = json_decode(result)
+				result_array[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+				result = json_encode(result_array)
 			intercepted_message_queue = null
 			return result
 		if(DMAPI5_TOPIC_COMMAND_EVENT_NOTIFICATION)
