@@ -1,5 +1,5 @@
-/datum/action/cooldown/spell/pointed/mind_transfer
-	name = "Mind Swap"
+/datum/action/cooldown/spell/pointed/mind_transfer //monkestation edit: replaced in-game with an AOE spell
+	name = "Single Target Mind Swap" //monkestation edit: added single target
 	desc = "This spell allows the user to switch bodies with a target next to him."
 	button_icon_state = "mindswap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'

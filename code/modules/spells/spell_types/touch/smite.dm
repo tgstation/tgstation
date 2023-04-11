@@ -1,5 +1,5 @@
-/datum/action/cooldown/spell/touch/smite
-	name = "Smite"
+/datum/action/cooldown/spell/touch/smite //monkestation note: this has been replaced in-game with a pointed spell of the same name
+	name = "Gibbing Smite" //monkestation edit: added gibbing to the name
 	desc = "This spell charges your hand with an unholy energy \
 		that can be used to cause a touched victim to violently explode."
 	button_icon_state = "gib"

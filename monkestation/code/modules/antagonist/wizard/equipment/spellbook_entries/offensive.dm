@@ -4,3 +4,15 @@
 	spell_type = /datum/action/cooldown/spell/conjure_item/summon_mjollnir
 	category = "Offensive"
 	cost = 2
+
+/datum/spellbook_entry/smite
+	name = "Smite"
+	desc = "Allows you to call in a favor from the gods upon your foe."
+	spell_type = /datum/action/cooldown/spell/pointed/smite
+	category = "Offensive"
+
+/datum/spellbook_entry/smite //make this clown cast only
+	name = "Smite"
+	desc = "Allows you to call in a harmless favor from the honkmother upon your prankee."
+	spell_type = /datum/action/cooldown/spell/pointed/smite/light
+	category = "Offensive"

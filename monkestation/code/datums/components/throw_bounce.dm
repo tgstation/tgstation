@@ -114,6 +114,8 @@
 
 #define MOVING_TO_THROWER "thrower"
 #define MOVING_TO_TARGET "target"
+#define START_PHASING_TIME 2 SECONDS
+#define FORCED_MOVE_TO_OWNER_TIME 8 SECONDS
 //the visual created of the item bouncing between mobs, also handles impacting and targeting
 /obj/effect/throw_bounce_visual
 	movement_type = FLYING
@@ -147,7 +149,7 @@
 	src.icon = owning_component_parent.icon
 	src.icon_state = owning_component_parent.icon_state
 
-	move_to_timer = world.time + 8 SECONDS
+	move_to_timer = world.time + FORCED_MOVE_TO_OWNER_TIME
 
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(handle_hit))
 	START_PROCESSING(SSfastprocess, src)
@@ -162,7 +164,7 @@
 		return qdel(src)
 
 	if(!last_hit_timer)
-		last_hit_timer = world.time + 2 SECONDS //this moves pretty fast, so if we have not hit something for this long there is most likely something blocking
+		last_hit_timer = world.time + START_PHASING_TIME //this moves pretty fast, so if we have not hit something for this long there is most likely something blocking
 	if(world.time >= last_hit_timer)
 		movement_type = PHASING
 
@@ -234,3 +236,5 @@
 		owning_ref.finish_bounce(src, TRUE)
 #undef MOVING_TO_THROWER
 #undef MOVING_TO_TARGET
+#undef START_PHASING_TIME
+#undef FORCED_MOVE_TO_OWNER_TIME

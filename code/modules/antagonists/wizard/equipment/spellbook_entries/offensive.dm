@@ -17,11 +17,11 @@
 	spell_type = /datum/action/cooldown/spell/rod_form
 	category = "Offensive"
 
-/datum/spellbook_entry/disintegrate
+/*/datum/spellbook_entry/disintegrate //monkestation edit: replaced with a pointed version with a different effect
 	name = "Smite"
 	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	spell_type = /datum/action/cooldown/spell/touch/smite
-	category = "Offensive"
+	category = "Offensive"*/
 
 /datum/spellbook_entry/blind
 	name = "Blind"

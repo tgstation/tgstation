@@ -242,7 +242,7 @@
 			wanted_spells = list(
 				/datum/spellbook_entry/fireball = 1,
 				/datum/spellbook_entry/magicm = 1,
-				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/smite = 1, //monkestation edit: replaced /datum/spellbook_entry/disintegrate
 				/datum/spellbook_entry/jaunt = 2,
 			)
 		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx1>1, Mutate>2, Force Wall>1, Blink>2, tesla>2) = 10
@@ -265,7 +265,7 @@
 		if(WIZARD_LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
 			wanted_spells = list(
 				/datum/spellbook_entry/tap = 1,
-				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/smite = 1, //monkestation edit: replaced /datum/spellbook_entry/disintegrate, also its funny how bad this loadout is, most likely gonna change it
 				/datum/spellbook_entry/fleshtostone = 1,
 				/datum/spellbook_entry/mindswap = 1,
 				/datum/spellbook_entry/knock = 1,

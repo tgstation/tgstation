@@ -86,7 +86,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
-	throwforce = 20 //monkestation edit: from 30 to 20
+	throwforce = 15 //monkestation edit: from 30 to 15
 	throw_speed = 1 //monkestation edit
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
