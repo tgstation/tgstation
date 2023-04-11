@@ -37,7 +37,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "ax" = (
 /obj/machinery/suit_storage_unit/open,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/purple/diagonal_edge,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
@@ -76,7 +76,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "aW" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -154,9 +154,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "cl" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -291,10 +289,8 @@
 /area/ruin/space/has_grav/dangerous_research/maint)
 "ec" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/reagent_containers/blood/b_minus,
 /obj/item/reagent_containers/blood/b_minus,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -342,7 +338,7 @@
 	dir = 8
 	},
 /obj/item/organ/internal/liver,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "fg" = (
@@ -397,15 +393,13 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "fE" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_2,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -501,12 +495,8 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "gH" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/trash/can,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -551,7 +541,7 @@
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/item/organ/internal/appendix,
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -616,9 +606,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "iD" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/paper/fluff/ruins/dangerous_research/armstrong_memo_1,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -639,12 +627,8 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "iR" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -904,7 +888,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/bubblegum,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -947,9 +931,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "nl" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/modular_computer/laptop/buildable,
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/dark,
@@ -1088,7 +1070,7 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/item/organ/internal/lungs,
 /obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "oJ" = (
@@ -1237,9 +1219,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "qp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/clock/directional/south,
@@ -1286,9 +1266,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "qE" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -1330,9 +1308,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rc" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/microscope{
 	pixel_x = -3;
 	pixel_y = -2
@@ -1366,7 +1342,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "ri" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/pen/blue,
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 8
@@ -1575,8 +1551,8 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "tI" = (
@@ -2214,7 +2190,7 @@
 /obj/effect/turf_decal/stripes/asteroid,
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "BG" = (
@@ -2250,7 +2226,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "BY" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
@@ -2278,7 +2254,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "Cq" = (
 /obj/machinery/suit_storage_unit/open,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/purple/diagonal_edge,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/diagonal,
@@ -2437,9 +2413,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "DY" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/trash/chips,
 /obj/item/trash/cnds,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2742,7 +2716,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Ja" = (
@@ -2751,7 +2725,7 @@
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -2798,7 +2772,7 @@
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/bubblegum,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "JW" = (
@@ -3242,7 +3216,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "PL" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/purple/diagonal_edge,
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/diagonal,
@@ -3285,9 +3259,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "Qn" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/modular_computer/laptop/preset/civilian,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -3533,9 +3505,7 @@
 /area/ruin/space/has_grav/dangerous_research/medical)
 "SS" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/petri_dish/random,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -3585,9 +3555,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "TW" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/iv_drip/saline,
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/dark,
@@ -3707,8 +3675,8 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "VP" = (
@@ -3917,7 +3885,7 @@
 /obj/structure/closet{
 	name = "Smith's Locker"
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/east,
 /obj/item/paper/fluff/ruins/dangerous_research/smith,
 /obj/item/clothing/suit/toggle/labcoat/chemist,
@@ -3976,7 +3944,7 @@
 	pixel_y = 5
 	},
 /obj/item/pen,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 8
