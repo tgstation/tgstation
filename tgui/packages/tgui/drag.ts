@@ -65,7 +65,14 @@ const getScreenSize = (): [number, number] => [
   window.screen.availHeight * pixelRatio,
 ];
 
-// Update recent items, keeping array length limited
+/**
+ * Moves an item to the top of the recents array, and keeps its length
+ * limited to the number in `limit` argument.
+ *
+ * Uses a strict equality check for comparisons.
+ *
+ * Returns new recents and an item which was trimmed.
+ */
 export const touchRecents = (
   recents: string[],
   touchedItem: string,
@@ -140,6 +147,7 @@ export const recallWindowGeometry = async (
   }
   // Set window position
   if (pos) {
+    // Constraint window position if monitor lock was set in preferences.
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
@@ -202,6 +210,7 @@ export const dragStartHandler = (event: MouseEvent) => {
     [event.screenX, event.screenY],
     getWindowPosition()
   );
+  // Focus click target
   (event.target as HTMLElement)?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);

@@ -5,12 +5,12 @@ describe('focusEvents', () => {
     jest.restoreAllMocks();
   });
 
-  test('setupGlobalEvents sets the ignoreWindowFocus flag correctly', () => {
+  it('setupGlobalEvents sets the ignoreWindowFocus flag correctly', () => {
     setupGlobalEvents({ ignoreWindowFocus: true });
     // Test other functionality that depends on the ignoreWindowFocus flag
   });
 
-  test('canStealFocus returns true for input and textarea elements', () => {
+  it('canStealFocus returns true for input and textarea elements', () => {
     const inputElement = document.createElement('input');
     const textareaElement = document.createElement('textarea');
     const divElement = document.createElement('div');
@@ -20,7 +20,7 @@ describe('focusEvents', () => {
     expect(canStealFocus(divElement)).toBe(false);
   });
 
-  test('addScrollableNode and removeScrollableNode manage the list of scrollable nodes correctly', () => {
+  it('addScrollableNode and removeScrollableNode manage the list of scrollable nodes correctly', () => {
     const divElement1 = document.createElement('div');
     const divElement2 = document.createElement('div');
 
@@ -33,7 +33,7 @@ describe('focusEvents', () => {
     // Test other functionality that depends on the list of scrollable nodes
   });
 
-  test('KeyEvent class works correctly', () => {
+  it('KeyEvent class works correctly', () => {
     const keyboardEvent = new KeyboardEvent('keydown', {
       key: 'a',
       keyCode: 65,
