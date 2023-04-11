@@ -109,17 +109,9 @@
 	name = "\improper Ancient Sarcophagus"
 	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
 	icon_state = "necro_bubblegum"
-
-/obj/structure/closet/crate/necropolis/bubblegum/closet_update_overlays(list/new_overlays)
-	. = new_overlays
-	if(opened)
-		var/mutable_appearance/lid = mutable_appearance(icon = 'icons/obj/storage/crates.dmi', icon_state = "necro_bubblegum_lid")
-		lid.pixel_x = -26
-		lid.pixel_y = 2
-		lid.layer = layer
-		. += lid
-	. += ..()
-
+	lid_icon_state = "necro_bubblegum_lid"
+	lid_x = -26
+	lid_y = 2
 
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()

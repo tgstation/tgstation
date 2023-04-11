@@ -19,6 +19,11 @@
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	/// Gives a crate a lid sprite if it has one. Leave Blank if it doesn't.
+	var/lid_icon = 'icons/obj/storage/crates.dmi'
+	var/lid_icon_state
+	var/lid_x = 0 //X moves the lid left or right.
+	var/lid_y = 0 //Y raises it up and down.
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
@@ -94,6 +99,18 @@
 		user.put_in_hands(manifest)
 	manifest = null
 	update_appearance()
+
+
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(opened && lid_icon_state)
+		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
+		lid.layer = layer
+		. += lid
+	. += ..()
+
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"

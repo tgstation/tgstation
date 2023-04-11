@@ -216,6 +216,9 @@
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
 	can_install_electronics = FALSE
+	lid_icon_state = "maillid"
+	lid_x = -26
+	lid_y = 2
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -226,15 +229,6 @@
 	else
 		icon_state = "[initial(icon_state)]sealed"
 
-/obj/structure/closet/crate/mail/closet_update_overlays(list/new_overlays)
-	. = new_overlays
-	if(opened)
-		var/mutable_appearance/lid = mutable_appearance(icon = 'icons/obj/storage/crates.dmi', icon_state = "maillid")
-		lid.pixel_x = -26
-		lid.pixel_y = 2
-		lid.layer = layer
-		. += lid
-	. += ..()
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
