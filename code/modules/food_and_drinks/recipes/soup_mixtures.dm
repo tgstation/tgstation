@@ -35,6 +35,7 @@
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+	reaction_flags = REACTION_NON_INSTANT
 
 	// General soup guideline:
 	// - Soups should produce 60-90 units (3-4 servings)
