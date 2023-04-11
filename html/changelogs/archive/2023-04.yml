@@ -391,3 +391,24 @@
   - bugfix: broken light tubes now actually have sharpness to them as they are basically
       spikes of glass.
   - refactor: refactored latex balloon code
+2023-04-11:
+  Comxy:
+  - bugfix: Sergeant Araneus cannot spawn from gold slimes anymore.
+  Jolly:
+  - bugfix: Maps internally had the code for the "directional" windows altered a bit.
+      If you see stacked window panes or things look incorrectly, please file a bug
+      report as that isn't intentional!!
+  Moth-lantern:
+  - imageadd: Nanotransen has made uniform changes to the robotics lab, modernizing
+      their wardrobe.
+  Profakos:
+  - refactor: Refactored navigational beacons, making them constructable, deconstructable,
+      and generally easier to use
+  Singul0:
+  - bugfix: asteroid-based space ruins (waystation, the outlet) now has asteroids
+      below their plating!
+  flowercuco:
+  - qol: material components (such as autolathes) have contextual screentips if you
+      can put an item inside of it
+  kinneb:
+  - imageadd: Recolours the Wirebrush (Again)
