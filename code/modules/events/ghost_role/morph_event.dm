@@ -23,7 +23,7 @@
 	player_mind.active = TRUE
 
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
-	if(!spawn_loc)
+	if(isnull(spawn_loc))
 		return MAP_ERROR
 
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(spawn_loc)

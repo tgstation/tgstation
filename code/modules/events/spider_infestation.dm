@@ -26,7 +26,7 @@
 /proc/create_midwife_eggs(amount)
 	while(amount > 0)
 		var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE)
-		if(!spawn_loc)
+		if(isnull(spawn_loc))
 			return //Admins will have already been notified of the spawning failure at this point
 		var/obj/effect/mob_spawn/ghost_role/spider/midwife/new_eggs = new (spawn_loc)
 		new_eggs.amount_grown = 98

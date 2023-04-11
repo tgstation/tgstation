@@ -17,7 +17,7 @@
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/turf/landing_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
-	if(!landing_turf)
+	if(isnull(landing_turf))
 		return MAP_ERROR
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)

@@ -15,7 +15,7 @@
 
 /datum/round_event/ghost_role/space_ninja/spawn_role()
 	var/spawn_location = find_space_spawn()
-	if(!spawn_location)
+	if(isnull(spawn_location))
 		return MAP_ERROR
 
 	//selecting a candidate player

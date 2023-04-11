@@ -28,7 +28,7 @@
 	var/key = selected.key
 
 	var/spawn_location = find_space_spawn()
-	if(!spawn_location)
+	if(isnull(spawn_location))
 		return MAP_ERROR
 
 	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)

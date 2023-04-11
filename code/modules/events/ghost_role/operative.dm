@@ -19,7 +19,7 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/spawn_location = find_space_spawn()
-	if(!spawn_location)
+	if(isnull(spawn_location))
 		return MAP_ERROR
 
 	var/mob/living/carbon/human/operative = new(spawn_location)

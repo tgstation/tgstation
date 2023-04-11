@@ -25,7 +25,7 @@
 	player_mind.active = TRUE
 
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE)
-	if(!spawn_loc)
+	if(isnull(spawn_loc))
 		return MAP_ERROR
 
 	var/mob/living/carbon/human/S = new (spawn_loc)
