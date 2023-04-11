@@ -352,6 +352,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	series = "coreset2020"
 	contains_coin = 10
 
+/obj/item/cardpack/series_one/mega
+	card_count = 25
+
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
