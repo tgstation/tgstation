@@ -393,7 +393,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
-	target.adjust_stutter(40 SECONDS)
+	target.set_stutter_if_lower(40 SECONDS)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
