@@ -1433,3 +1433,9 @@
 		/datum/stock_part/capacitor/tier2 = 1,
 		/datum/stock_part/micro_laser/tier2 = 2,
 	)
+
+/obj/item/circuitboard/machine/navbeacon
+	name = "Bot Navigational Beacon"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/navbeacon
+	req_components = list()
