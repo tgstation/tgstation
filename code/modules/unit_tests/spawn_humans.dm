@@ -5,3 +5,11 @@
 		new /mob/living/carbon/human/consistent(pick(locs))
 
 	sleep(5 SECONDS)
+
+/// Tests [/mob/living/carbon/human/proc/setup_no_organ_effects], specifically that they aren't applied when init is done
+/datum/unit_test/human_default_traits
+
+/datum/unit_test/human_default_traits/Run()
+	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
+	TEST_ASSERT(!HAS_TRIAT(dummy, TRAIT_AGEUSIA), "Dummy has ageusia on init")
+	TEST_ASSERT(!dummy.is_blind(), "Dummy is blind on init")
