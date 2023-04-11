@@ -28940,7 +28940,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "jhV" = (
-/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -28949,6 +28948,7 @@
 	dir = 9;
 	network = list("ss13","engineering")
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "jil" = (
@@ -39638,8 +39638,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage{
-	spawn_loot_count = 3;
-	
+	spawn_loot_count = 3
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -43201,8 +43200,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage{
-	spawn_loot_count = 3;
-	
+	spawn_loot_count = 3
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -59392,8 +59390,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage{
-	spawn_loot_count = 3;
-	
+	spawn_loot_count = 3
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -63743,7 +63740,6 @@
 	dir = 5
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vIg" = (
