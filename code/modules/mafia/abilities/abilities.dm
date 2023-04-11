@@ -2,7 +2,7 @@
 	var/name = "Mafia Ability"
 	var/ability_action = "brutally murder"
 
-	///The priority level this action must be sent at.
+	///The priority level this action must be sent at. Setting this to null will prevent it from being triggered automatically.
 	///(COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE|COMSIG_MAFIA_NIGHT_ACTION_PHASE|COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	var/action_priority = COMSIG_MAFIA_NIGHT_ACTION_PHASE
 	///When the ability can be used: (MAFIA_PHASE_DAY | MAFIA_PHASE_VOTING | MAFIA_PHASE_NIGHT)
