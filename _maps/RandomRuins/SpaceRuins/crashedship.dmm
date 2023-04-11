@@ -239,8 +239,7 @@
 "lx" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north{
-	environ = 0;
-	
+	environ = 0
 	},
 /obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron/airless,
