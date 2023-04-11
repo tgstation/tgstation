@@ -589,6 +589,10 @@
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
 
+// Botnanical Haven
+/area/ruin/space/has_grav/powered/botanical_haven
+	name = "\improper Botanical Haven"
+
 // Ruin of Derelict Construction
 /area/ruin/space/has_grav/derelictconstruction
 	name = "\improper Derelict Construction Site"
@@ -631,3 +635,20 @@
 	icon_state = "ruins"
 	requires_power = FALSE
 	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+
+// the outlet
+/area/ruin/space/has_grav/the_outlet/storefront
+	name = "\improper outlet storefront"
+
+/area/ruin/space/has_grav/the_outlet/employeesection
+	name = "\improper outlet employees only"
+
+/area/ruin/space/has_grav/the_outlet/researchrooms
+	name = "\improper outlet research rooms"
+
+/area/ruin/space/has_grav/the_outlet/cultinfluence
+	name = "\improper outlet cult corruption"
+
+//SYN-C Brutus, derelict frigate
+/area/ruin/space/has_grav/infested_frigate
+	name = "SYN-C Brutus"

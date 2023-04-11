@@ -115,6 +115,7 @@
 #include "egg_glands.dm"
 #include "emoting.dm"
 #include "focus_only_tests.dm"
+#include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
 #include "full_heal.dm"
 #include "gas_transfer.dm"

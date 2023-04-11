@@ -70,3 +70,17 @@
 	mappath = "_maps/map_files/basketball/greytide_worldwide.dmm"
 	team_name = "Greytide Worldwide"
 	home_team_uniform = /datum/outfit/basketball/greytide_worldwide
+
+/datum/map_template/basketball/ass_blast_usa
+	name = "Ass Blast USA Stadium"
+	description = "The homecourt of the Ass Blast USA."
+	mappath = "_maps/map_files/basketball/ass_blast_usa.dmm"
+	team_name = "Ass Blast USA"
+	home_team_uniform = /datum/outfit/basketball/ass_blast_usa
+
+/datum/map_template/basketball/soviet_bears
+	name = "Soviet Bears Stadium"
+	description = "The homecourt of the Soviet Bears."
+	mappath = "_maps/map_files/basketball/soviet_bears.dmm"
+	team_name = "Soviet Bears"
+	home_team_uniform = /datum/outfit/basketball/soviet_bears
