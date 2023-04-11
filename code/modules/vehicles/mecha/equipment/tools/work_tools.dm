@@ -310,11 +310,11 @@
 					return
 				F.PlaceOnTop(/turf/closed/wall)
 			else if(isopenturf(target))
-				var/turf/open/S = target
+				var/turf/open/open_turf = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
-				if(!do_after_cooldown(S, source))
+				if(!do_after_cooldown(open_turf, source))
 					return
-				S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				open_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		if(MODE_AIRLOCK)
 			if(isfloorturf(target))
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")
