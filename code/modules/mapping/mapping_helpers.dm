@@ -308,53 +308,53 @@
 	apc.cuttedAIwire = TRUE
 
 /obj/effect/mapping_helpers/apc/cell_5k
-    name = "apc 5k cell helper"
-    icon_state = "apc_5k_cell_helper"
+	name = "apc 5k cell helper"
+	icon_state = "apc_5k_cell_helper"
 
 /obj/effect/mapping_helpers/apc/cell_5k/payload(obj/machinery/power/apc/apc)
-    if(apc.cell_5k)
-        log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_5k but it's already changed!")
-    apc.cell_5k = TRUE
+	if(apc.cell_5k)
+		log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_5k but it's already changed!")
+	apc.cell_5k = TRUE
 
 /obj/effect/mapping_helpers/apc/cell_10k
-    name = "apc 10k cell helper"
-    icon_state = "apc_10k_cell_helper"
+	name = "apc 10k cell helper"
+	icon_state = "apc_10k_cell_helper"
 
 /obj/effect/mapping_helpers/apc/cell_10k/payload(obj/machinery/power/apc/apc)
-    if(apc.cell_10k)
-        log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_10k but it's already changed!")
-    apc.cell_10k = TRUE
+	if(apc.cell_10k)
+		log_mapping("[src] at [AREACOORD(src)] tried to change [apc]'s cell to cell_10k but it's already changed!")
+	apc.cell_10k = TRUE
 
 /obj/effect/mapping_helpers/apc/syndicate_access
-    name = "apc syndicate access helper"
-    icon_state = "apc_syndicate_access_helper"
+	name = "apc syndicate access helper"
+	icon_state = "apc_syndicate_access_helper"
 
 /obj/effect/mapping_helpers/apc/syndicate_access/payload(obj/machinery/power/apc/apc)
-    if(apc.syndicate_access)
-        log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to syndicate but it's already changed!")
-    apc.syndicate_access = TRUE
+	if(apc.syndicate_access)
+		log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to syndicate but it's already changed!")
+	apc.syndicate_access = TRUE
 
 /obj/effect/mapping_helpers/apc/away_general_access
-    name = "apc away access helper"
-    icon_state = "apc_away_general_access_helper"
+	name = "apc away access helper"
+	icon_state = "apc_away_general_access_helper"
 
 /obj/effect/mapping_helpers/apc/away_general_access/payload(obj/machinery/power/apc/apc)
-    if(apc.away_general_access)
-        log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to away_general but it's already changed!")
-    apc.away_general_access = TRUE
+	if(apc.away_general_access)
+		log_mapping("[src] at [AREACOORD(src)] tried to adjust [apc]'s access to away_general but it's already changed!")
+	apc.away_general_access = TRUE
 
 /obj/effect/mapping_helpers/apc/unlocked
-    name = "apc unlocked interface helper"
-    icon_state = "apc_unlocked_interface_helper"
+	name = "apc unlocked interface helper"
+	icon_state = "apc_unlocked_interface_helper"
 
 /obj/effect/mapping_helpers/apc/unlocked/payload(obj/machinery/power/apc/apc)
-    if(apc.unlocked)
-        log_mapping("[src] at [AREACOORD(src)] tried to unlock the [apc] but it's already unlocked!")
-    apc.unlocked = TRUE
+	if(apc.unlocked)
+		log_mapping("[src] at [AREACOORD(src)] tried to unlock the [apc] but it's already unlocked!")
+	apc.unlocked = TRUE
 
 /obj/effect/mapping_helpers/apc/no_charge
-    name = "apc no charge helper"
-    icon_state = "apc_no_charge_helper"
+	name = "apc no charge helper"
+	icon_state = "apc_no_charge_helper"
 
 /obj/effect/mapping_helpers/apc/no_charge/payload(obj/machinery/power/apc/apc)
 	if(apc.no_charge)
