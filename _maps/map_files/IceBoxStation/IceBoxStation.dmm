@@ -25589,7 +25589,7 @@
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/plating,
 /area/mine/storage)
 "ijp" = (

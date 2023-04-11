@@ -275,8 +275,8 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bs" = (
@@ -473,8 +473,8 @@
 /area/awaymission/research/interior/gateway)
 "cb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cf" = (
@@ -1191,8 +1191,8 @@
 /area/awaymission/research/interior/secure)
 "fy" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_10k,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "fz" = (
@@ -2175,8 +2175,8 @@
 /area/awaymission/research/interior/medbay)
 "kp" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "kq" = (
@@ -3380,7 +3380,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Dl" = (
@@ -3675,7 +3674,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "Le" = (
@@ -3980,7 +3978,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "UO" = (

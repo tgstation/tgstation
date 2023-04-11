@@ -174,6 +174,7 @@
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
+	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -322,6 +323,8 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bf" = (
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -337,8 +340,6 @@
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/beakers,
-/obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
@@ -436,9 +437,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bw" = (

@@ -40,7 +40,9 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner,
+/turf/open/floor/iron/smooth_corner{
+	dir = 2
+	},
 /area/ruin/space/has_grav/derelictsulaco)
 "bV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -361,7 +363,9 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner,
+/turf/open/floor/iron/smooth_corner{
+	dir = 2
+	},
 /area/ruin/space/has_grav/derelictsulaco)
 "lq" = (
 /turf/open/floor/iron/showroomfloor,
@@ -1195,7 +1199,9 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner,
+/turf/open/floor/iron/smooth_corner{
+	dir = 2
+	},
 /area/ruin/space/has_grav/derelictsulaco)
 "MG" = (
 /obj/structure/alien/weeds,
@@ -1678,7 +1684,9 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_corner,
+/turf/open/floor/iron/smooth_corner{
+	dir = 2
+	},
 /area/ruin/space/has_grav/derelictsulaco)
 "ZZ" = (
 /obj/structure/lattice,

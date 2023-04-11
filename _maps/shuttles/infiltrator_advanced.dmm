@@ -185,10 +185,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/machinery/power/apc/auto_name/directional/south{
+	area = "/area/shuttle/syndicate/bridge"
+	},
 /obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
 "av" = (
@@ -329,10 +331,12 @@
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/machinery/power/apc/auto_name/directional/east{
+	area = "/area/shuttle/syndicate/airlock"
+	},
 /obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aL" = (
@@ -396,14 +400,16 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	area = "/area/shuttle/syndicate/hallway"
+	},
+/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
 	pixel_x = 25
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "aU" = (
@@ -858,10 +864,12 @@
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/machinery/power/apc/auto_name/directional/north{
+	area = "/area/shuttle/syndicate/eva"
+	},
 /obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "bT" = (
@@ -1705,11 +1713,13 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west{
+	area = "/area/shuttle/syndicate/medical"
+	},
+/obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/effect/mapping_helpers/apc/cuttedAIwire,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dI" = (
@@ -1763,10 +1773,12 @@
 /obj/item/flashlight/seclite,
 /obj/item/flashlight/seclite,
 /obj/item/extinguisher/mini,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/machinery/power/apc/auto_name/directional/east{
+	area = "/area/shuttle/syndicate/armory"
+	},
 /obj/effect/mapping_helpers/apc/cuttedAIwire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dN" = (

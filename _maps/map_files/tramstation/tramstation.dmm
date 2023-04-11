@@ -4019,7 +4019,6 @@
 	areastring = "/area/station/engineering/supermatter"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "aum" = (
@@ -67388,6 +67387,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)

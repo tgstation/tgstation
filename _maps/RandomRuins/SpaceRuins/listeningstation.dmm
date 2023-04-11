@@ -262,6 +262,7 @@
 	anchored = 1
 	},
 /obj/machinery/door/window/brigdoor{
+	dir = 2;
 	req_access = list("syndicate");
 	name = "Self Destruct Option"
 	},
@@ -415,6 +416,7 @@
 /area/ruin/space)
 "xh" = (
 /obj/machinery/computer/records/medical/syndie{
+	dir = 2;
 	req_access = list("syndicate")
 	},
 /obj/machinery/light/small/directional/north,
@@ -462,8 +464,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "yH" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "yK" = (
