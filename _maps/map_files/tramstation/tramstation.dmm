@@ -3286,8 +3286,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "alP" = (
-/obj/effect/spawner/random/trash/soap{
-	},
+/obj/effect/spawner/random/trash/soap,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)

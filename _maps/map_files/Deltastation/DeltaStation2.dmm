@@ -55138,8 +55138,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nuz" = (
-/obj/effect/spawner/random/trash/garbage{
-	},
+/obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/iron/white/side,
 /area/station/service/kitchen/abandoned)
 "nuC" = (
