@@ -6,24 +6,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
-"db" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	dir = 1;
-	freq = 1400;
-	location = "Law Office";
-	name = "navigation beacon (Law Office Delivery)"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "lawyerdropoff"
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "dz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
@@ -60,6 +42,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"eq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/cardboard,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "fK" = (
 /obj/machinery/door/airlock/external{
@@ -262,13 +251,6 @@
 "DA" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
-"DI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/cardboard,
-/obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "GQ" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -461,6 +443,22 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"YO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	location = "Law Office";
+	name = "navigation beacon (Law Office Delivery)"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "lawyerdropoff"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -1657,7 +1655,7 @@ xX
 xX
 xX
 xX
-DI
+eq
 sW
 xX
 HD
@@ -1898,7 +1896,7 @@ DA
 DA
 sK
 Oo
-db
+YO
 QZ
 Oy
 sV

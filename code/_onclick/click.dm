@@ -582,3 +582,6 @@
 			return TRUE
 
 	return FALSE
+
+#undef MAX_SAFE_BYOND_ICON_SCALE_TILES
+#undef MAX_SAFE_BYOND_ICON_SCALE_PX

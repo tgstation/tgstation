@@ -10,10 +10,10 @@
 /area/station/maintenance/department/medical)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table,
 /obj/effect/spawner/random/medical/surgery_tool,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/department/medical)

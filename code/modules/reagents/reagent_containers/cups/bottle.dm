@@ -434,7 +434,7 @@
 /obj/item/reagent_containers/cup/bottle/clownstears
 	name = "bottle of distilled clown misery"
 	desc = "A small bottle. Contains a mythical liquid used by sublime bartenders; made from the unhappiness of clowns."
-	list_reagents = list(/datum/reagent/consumable/clownstears = 30)
+	list_reagents = list(/datum/reagent/consumable/nutriment/soup/clown_tears = 30)
 
 /obj/item/reagent_containers/cup/bottle/saltpetre
 	name = "saltpetre bottle"

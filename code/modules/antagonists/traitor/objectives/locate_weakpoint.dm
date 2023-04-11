@@ -245,7 +245,7 @@
 	if(!user.mind)
 		return
 
-	if(!user.mind.has_antag_datum(/datum/antagonist/traitor))
+	if(!IS_TRAITOR(user))
 		to_chat(user, span_warning("You can't seem to find a way to detonate the charge."))
 		return
 

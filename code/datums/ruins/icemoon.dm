@@ -7,8 +7,8 @@
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
 	has_ceiling = TRUE
-	ceiling_turf = /turf/closed/mineral/random/snow
-	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon)
+	ceiling_turf = /turf/closed/mineral/random/snow/do_not_chasm
+	ceiling_baseturfs = list(/turf/open/misc/asteroid/snow/icemoon/do_not_chasm)
 
 // above ground only
 
@@ -32,7 +32,7 @@
 
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
-	id = "fountain"
+	id = "ice_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"

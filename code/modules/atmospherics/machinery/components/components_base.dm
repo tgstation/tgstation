@@ -130,6 +130,8 @@
 			parents[i] = null // Disconnects from the machinery side.
 
 	reference.other_atmos_machines -= src
+	if(custom_reconcilation)
+		reference.require_custom_reconcilation -= src
 
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline

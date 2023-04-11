@@ -322,7 +322,7 @@
 
 	if(safety == TRUE)
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
-			span_userdanger("The siren pierces your hearing and confuses you!"), \
+			span_userdanger("Your siren blares around [iscyborg(user) ? "you" : "and confuses you"]!"), \
 			span_danger("The siren pierces your hearing!"))
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
 			if(carbon.get_ear_protection())
@@ -353,3 +353,14 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
+
+#undef HUG_MODE_NICE
+#undef HUG_MODE_HUG
+#undef HUG_MODE_SHOCK
+#undef HUG_MODE_CRUSH
+
+#undef HUG_SHOCK_COOLDOWN
+#undef HUG_CRUSH_COOLDOWN
+
+#undef HARM_ALARM_NO_SAFETY_COOLDOWN
+#undef HARM_ALARM_SAFETY_COOLDOWN

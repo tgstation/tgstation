@@ -1487,7 +1487,7 @@
 	else if(href_list["ctf_toggle"])
 		if(!check_rights(R_ADMIN))
 			return
-		toggle_id_ctf(usr, "centcom")
+		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
 
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))
@@ -1748,3 +1748,13 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+	else if(href_list["play_internet"])
+		if(!check_rights(R_SOUND))
+			return
+
+		var/link_url = href_list["play_internet"]
+		if(!link_url)
+			return
+
+		web_sound(usr, link_url)
+

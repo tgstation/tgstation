@@ -33,6 +33,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			stamina.adjust(-damage_amount, forced = forced)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
 	return TRUE
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
@@ -289,7 +290,7 @@
 
 /mob/living/proc/pre_stamina_change(diff as num, forced)
 	return diff
-	
+
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	return
 

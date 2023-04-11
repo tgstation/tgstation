@@ -172,12 +172,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 
-	if(area_flags & AREA_USES_STARLIGHT && CONFIG_GET(flag/starlight))
-		// Areas lit by starlight are not supposed to be fullbright 4head
-		base_lighting_alpha = 0
-		base_lighting_color = null
-		static_lighting = TRUE
-
 	if(requires_power)
 		luminosity = 0
 	else
