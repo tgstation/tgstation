@@ -38,22 +38,19 @@
 		cell = new cell(src)
 	SSair.start_processing_machine(src)
 	update_appearance()
+	register_context()
 
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		rmb_text = "Toggle power", \
-	)
-
-	var/static/list/tool_behaviors = list(
-		TOOL_SCREWDRIVER = list(
-			SCREENTIP_CONTEXT_LMB = "Open hatch",
-		),
-
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_LMB = "Anchor",
-		),
-	)
-	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+/obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [on ? "off" : "on"]"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
@@ -68,14 +65,15 @@
 
 /obj/machinery/electrolyzer/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	. += "\The [src] is [on ? "on" : "off"], and the panel is [panel_open ? "open" : "closed"]."
 
 	if(cell)
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
 
@@ -158,7 +156,7 @@
 /obj/machinery/electrolyzer/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
-	user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
+	balloon_alert(user, "[panel_open ? "opened" : "closed"] panel")
 	update_appearance()
 	return TRUE
 
@@ -174,34 +172,38 @@
 	add_fingerprint(user)
 	if(istype(I, /obj/item/stock_parts/cell))
 		if(!panel_open)
-			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
+			balloon_alert(user, "open panel!")
 			return
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			balloon_alert(user, "cell inside!")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
 		I.add_fingerprint(usr)
-
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+		balloon_alert(user, "inserted cell")
 		SStgui.update_uis(src)
 
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/electrolyzer/AltClick(mob/user)
+	. = ..()
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return
 	if(!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	toggle_power(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/electrolyzer/proc/toggle_power(user)
+	if(!anchored && !cell)
+		balloon_alert(user, "insert cell or anchor!")
+		return
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-	if(!isnull(user))
-		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
+	balloon_alert(user, "turned [on ? "on" : "off"]")
 	if(on)
 		SSair.start_processing_machine(src)
 

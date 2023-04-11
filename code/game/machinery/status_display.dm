@@ -6,12 +6,6 @@
 #define SCROLL_RATE (0.04 SECONDS) // time per pixel
 #define LINE1_Y -8
 #define LINE2_Y -15
-
-#define SD_BLANK 0  // 0 = Blank
-#define SD_EMERGENCY 1  // 1 = Emergency Shuttle timer
-#define SD_MESSAGE 2  // 2 = Arbitrary message(s)
-#define SD_PICTURE 3  // 3 = alert picture
-
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"

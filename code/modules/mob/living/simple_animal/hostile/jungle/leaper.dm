@@ -133,7 +133,7 @@
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(volume >= 10)
-		M.adjustToxLoss(5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		M.adjustToxLoss(5 * REM * delta_time, 0)
 	..()
 
 /obj/effect/temp_visual/leaper_crush

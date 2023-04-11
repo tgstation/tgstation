@@ -1,8 +1,3 @@
-/// The duration of the fakedeath coma.
-#define LING_FAKEDEATH_TIME (40 SECONDS)
-/// The number of recent spoken lines to gain on absorbing a mob
-#define LING_ABSORB_RECENT_SPEECH 8
-
 /// Helper to format the text that gets thrown onto the chem hud element.
 #define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
@@ -1047,3 +1042,5 @@
 	head = /obj/item/clothing/head/helmet/space/changeling
 	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade
+
+#undef FORMAT_CHEM_CHARGES_TEXT

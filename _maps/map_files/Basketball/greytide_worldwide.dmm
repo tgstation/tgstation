@@ -623,12 +623,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/basketball)
-"Sv" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/basketball)
 "SF" = (
 /mob/living/basic/cockroach,
 /turf/open/floor/plating,
@@ -1165,7 +1159,7 @@ Hu
 WM
 WM
 at
-Sv
+uW
 Vr
 lh
 Ev

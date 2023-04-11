@@ -153,44 +153,39 @@
 /proc/init_crafting_recipes_atoms()
 	var/list/recipe_lists = list(
 		GLOB.crafting_recipes,
-		GLOB.cooking_recipes
+		GLOB.cooking_recipes,
 	)
 	var/list/atom_lists = list(
 		GLOB.crafting_recipes_atoms,
-		GLOB.cooking_recipes_atoms
+		GLOB.cooking_recipes_atoms,
 	)
 
-	for(var/recipe_list in recipe_lists)
+	for(var/list_index in 1 to length(recipe_lists))
+		var/list/recipe_list = recipe_lists[list_index]
+		var/list/atom_list = atom_lists[list_index]
 		for(var/datum/crafting_recipe/recipe as anything in recipe_list)
-			var/list_index = recipe_lists.Find(recipe_list)
 			// Result
-			if(!(recipe.result in atom_lists[list_index]))
-				atom_lists[list_index] += recipe.result
+			atom_list |= recipe.result
 			// Ingredients
 			for(var/atom/req_atom as anything in recipe.reqs)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Catalysts
 			for(var/atom/req_atom as anything in recipe.chem_catalysts)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Reaction data - required container
 			if(recipe.reaction)
 				var/required_container = initial(recipe.reaction.required_container)
-				if(required_container && !(required_container in atom_lists[list_index]))
-					atom_lists[list_index] += required_container
+				if(required_container)
+					atom_list |= required_container
 			// Tools
 			for(var/atom/req_atom as anything in recipe.tool_paths)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Machinery
 			for(var/atom/req_atom as anything in recipe.machinery)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Structures
 			for(var/atom/req_atom as anything in recipe.structures)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.

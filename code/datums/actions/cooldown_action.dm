@@ -335,3 +335,5 @@
 	SEND_SIGNAL(src, COMSIG_ACTION_SET_STATPANEL, stat_panel_data)
 
 	return stat_panel_data
+
+#undef COOLDOWN_NO_DISPLAY_TIME

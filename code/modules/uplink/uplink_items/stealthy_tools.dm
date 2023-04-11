@@ -1,5 +1,3 @@
-// File ordered based on progression
-
 /datum/uplink_category/stealthy_tools
 	name = "Stealth Gadgets"
 	weight = 4
@@ -7,7 +5,6 @@
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
 
-// No progression cost
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -95,14 +92,12 @@
 	surplus = 30
 	illegal_tech = FALSE
 
-// High progression cost
-
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 30 MINUTES
+	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 4
 	restricted = TRUE
@@ -118,7 +113,7 @@
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
 	item = /obj/effect/gibspawner/generic
 	surplus = 0
-	progression_minimum = 40 MINUTES
+	progression_minimum = 20 MINUTES
 	limited_stock = 1
 	cost = 6
 	restricted = TRUE

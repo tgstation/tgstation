@@ -44,8 +44,10 @@
 	var/assigned_role
 	/// The species this uplink handler is associated to.
 	var/assigned_species
-	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
+	/// Whether this is in debug mode or not. If in debug mode, allows all purchases. Bypasses the shop lock.
 	var/debug_mode = FALSE
+	/// Whether the shop is locked or not. If set to true, nothing can be purchased.
+	var/shop_locked = FALSE
 
 /datum/uplink_handler/New()
 	. = ..()
@@ -75,6 +77,14 @@
 /datum/uplink_handler/proc/can_purchase_item(mob/user, datum/uplink_item/to_purchase)
 	if(debug_mode)
 		return TRUE
+
+	if(shop_locked)
+		return FALSE
+
+	if(to_purchase.lock_other_purchases)
+		// Can't purchase an uplink item that locks other purchases if you've already purchased something
+		if(length(purchase_log.purchase_log) > 0)
+			return FALSE
 
 	if(!check_if_restricted(to_purchase))
 		return FALSE

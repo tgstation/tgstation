@@ -99,8 +99,7 @@
 /datum/ai_behavior/make_carp_rift/away
 
 /datum/ai_behavior/make_carp_rift/away/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
-	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
-	return get_ranged_target_turf(controller.pawn, run_direction, ability.max_range)
+	return get_ranged_target_turf_direct(controller.pawn, target, range = ability.max_range, offset = 180)
 
 /**
  * # Make carp rift forwards
@@ -161,7 +160,7 @@
  * Make a rift towards your target if you are blocked from moving or if it is far away
  */
 /datum/ai_behavior/make_carp_rift/towards/aggressive
-	teleport_buffer_distance = 2 // Don't aggressively drop carps directly on top of a target mob
+	teleport_buffer_distance = 1 // Don't aggressively drop carps directly on top of a target mob
 
 /**
  * # Make carp rift forwards (unvalidated)
@@ -183,9 +182,9 @@
  */
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift
 	/// How far away do we look for rifts?
-	var/search_distance = 2
+	var/search_distance = 3
 	/// Minimum distance we should be from the target before we bother performing this action
-	var/minimum_distance = 3
+	var/minimum_distance = 2
 
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]

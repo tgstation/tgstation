@@ -223,4 +223,4 @@
 	///The holder for stamina handling
 	var/datum/stamina_container/stamina
 	/// What our current gravity state is. Used to avoid duplicate animates and such
-	var/gravity_state = 0
+	var/gravity_state = null

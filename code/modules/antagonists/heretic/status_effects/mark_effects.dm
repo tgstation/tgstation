@@ -219,3 +219,31 @@
 
 	source.Stun(1 SECONDS)
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
+
+/datum/status_effect/eldritch/cosmic
+	effect_icon_state = "emark6"
+	/// For storing the location when the mark got applied.
+	var/obj/effect/cosmic_diamond/cosmic_diamond
+	/// Effect when triggering mark.
+	var/obj/effect/teleport_effect = /obj/effect/temp_visual/cosmic_cloud
+
+/datum/status_effect/eldritch/cosmic/on_creation(mob/living/new_owner)
+	. = ..()
+	cosmic_diamond = new(get_turf(owner))
+
+/datum/status_effect/eldritch/cosmic/Destroy()
+	QDEL_NULL(cosmic_diamond)
+	return ..()
+
+/datum/status_effect/eldritch/cosmic/on_effect()
+	new teleport_effect(get_turf(owner))
+	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
+	do_teleport(
+		owner,
+		get_turf(cosmic_diamond),
+		no_effects = TRUE,
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
+	new teleport_effect(get_turf(owner))
+	owner.Paralyze(2 SECONDS)
+	return ..()

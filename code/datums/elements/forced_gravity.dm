@@ -13,11 +13,12 @@
 
 	src.gravity = gravity
 	src.ignore_turf_gravity = ignore_turf_gravity
-	ADD_TRAIT(target, TRAIT_FORCED_GRAVITY, REF(src))
 
 	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(gravity_check))
 	if(isturf(target))
 		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, PROC_REF(turf_gravity_check))
+
+	ADD_TRAIT(target, TRAIT_FORCED_GRAVITY, REF(src))
 
 /datum/element/forced_gravity/Detach(datum/source)
 	. = ..()

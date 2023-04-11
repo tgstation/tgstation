@@ -73,7 +73,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
-	custom_price = PAYCHECK_LOWER * 2
+	custom_price = PAYCHECK_LOWER * 1
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
@@ -139,6 +139,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
+	base_icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	force = 2
@@ -148,17 +149,109 @@
 	attack_verb_continuous = list("whacks", "spoons", "taps")
 	armor_type = /datum/armor/kitchen_spoon
 	custom_materials = list(/datum/material/iron=120)
-	custom_price = PAYCHECK_LOWER * 5
+	custom_price = PAYCHECK_LOWER * 2
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
+
+	var/spoon_sip_size = 5
+
+/obj/item/kitchen/spoon/Initialize(mapload)
+	. = ..()
+	create_reagents(5, INJECTABLE|OPENCONTAINER|DUNKABLE)
+	register_item_context()
+
+/obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(target.is_open_container())
+		context[SCREENTIP_CONTEXT_LMB] = "Empty spoonful"
+		context[SCREENTIP_CONTEXT_RMB] = "Grab spoonful"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(isliving(target))
+		context[SCREENTIP_CONTEXT_LMB] = target == user ? "[spoon_sip_size >= reagents.maximum_volume ? "Swallow" : "Taste"] spoonful" : "Give spoonful"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/kitchen/spoon/update_overlays()
+	. = ..()
+	if(reagents.total_volume <= 0)
+		return
+	var/mutable_appearance/filled_overlay = mutable_appearance(icon, "[base_icon_state]_filled")
+	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filled_overlay
+
+/obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
+	if(!target_mob.reagents || reagents.total_volume <= 0)
+		return  ..()
+
+	if(target_mob == user)
+		user.visible_message(
+			span_notice("[user] scoops a spoonful into [user.p_their()] mouth."),
+			span_notice("You scoop a spoonful into your mouth.")
+		)
+
+	else
+		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "Someone" : "[user]"] forces a spoon into your face!"))
+		target_mob.balloon_alert(user, "feeding spoonful...")
+		if(!do_after(user, 3 SECONDS, target_mob))
+			target_mob.balloon_alert(user, "interrupted!")
+			return TRUE
+
+		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "You are forced to" : "[user] forces you to"] swallow a spoonful of something!"))
+		user.visible_message(
+			span_danger("[user] scoops a spoonful into [target_mob]'s mouth."),
+			span_notice("You scoop a spoonful into [target_mob]'s mouth.")
+		)
+
+	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
+	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
+	return TRUE
+
+/obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+	if(isliving(attacked_atom))
+		return
+	if(!attacked_atom.is_open_container())
+		return
+	if(reagents.total_volume <= 0)
+		return
+
+	var/amount_given = reagents.trans_to(attacked_atom, reagents.maximum_volume)
+	if(amount_given >= reagents.total_volume)
+		attacked_atom.balloon_alert(user, "spoon emptied")
+	else if(amount_given > 0)
+		attacked_atom.balloon_alert(user, "spoon partially emptied")
+	else
+		attacked_atom.balloon_alert(user, "it's full!")
+	update_appearance(UPDATE_OVERLAYS)
+	return TRUE
+
+/obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(isliving(attacked_atom))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!attacked_atom.is_open_container())
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(reagents.total_volume >= reagents.maximum_volume || attacked_atom.reagents.total_volume <= 0)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(attacked_atom.reagents.trans_to(src, reagents.maximum_volume))
+		attacked_atom.balloon_alert(user, "grabbed spoonful")
+	else
+		attacked_atom.balloon_alert(user, "spoon is full!")
+	update_appearance(UPDATE_OVERLAYS)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic=120)
-	custom_price = PAYCHECK_LOWER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
+	custom_price = PAYCHECK_LOWER * 1
 
 /datum/armor/kitchen_spoon
 	fire = 50
@@ -167,5 +260,18 @@
 /obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
+
+/obj/item/kitchen/spoon/soup_ladle
+	name = "ladle"
+	desc = "What is a ladle but a comically large spoon?"
+	icon_state = "ladle"
+	base_icon_state = "ladle"
+	inhand_icon_state = "spoon"
+	custom_price = PAYCHECK_LOWER * 4
+	spoon_sip_size = 3 // just a taste
+
+/obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
+	. = ..()
+	create_reagents(SOUP_SERVING_SIZE + 5, INJECTABLE|OPENCONTAINER)
 
 #undef PLASTIC_BREAK_PROBABILITY

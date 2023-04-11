@@ -594,3 +594,5 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+#undef FREQ_LISTENING

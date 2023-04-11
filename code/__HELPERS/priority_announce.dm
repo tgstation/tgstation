@@ -79,38 +79,6 @@
 			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 				SEND_SOUND(target, sound_to_play)
 
-/**
- * Summon the crew for an emergency meeting
- *
- * Teleports the crew to a specified area, and tells everyone (via an announcement) who called the meeting. Should only be used during april fools!
- * Arguments:
- * * user - Mob who called the meeting
- * * button_zone - Area where the meeting was called and where everyone will get teleported to
- */
-/proc/call_emergency_meeting(mob/living/user, area/button_zone)
-	var/meeting_sound = sound('sound/misc/emergency_meeting.ogg')
-	var/announcement
-	announcement += "<h1 class='alert'>Captain Alert</h1>"
-	announcement += "<br>[span_alert("[user] has called an Emergency Meeting!")]<br><br>"
-
-	for(var/mob/mob_to_teleport in GLOB.player_list) //gotta make sure the whole crew's here!
-		if(isnewplayer(mob_to_teleport) || iscameramob(mob_to_teleport))
-			continue
-		to_chat(mob_to_teleport, announcement)
-		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
-		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
-		addtimer(CALLBACK(mob_to_teleport, TYPE_PROC_REF(/mob/, clear_fullscreen), "emergency_meeting"), 3 SECONDS)
-
-		if (is_station_level(mob_to_teleport.z)) //teleport the mob to the crew meeting
-			var/turf/target
-			var/list/turf_list = get_area_turfs(button_zone)
-			while (!target && turf_list.len)
-				target = pick_n_take(turf_list)
-				if (isclosedturf(target))
-					target = null
-					continue
-				mob_to_teleport.forceMove(target)
-
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
 		title = "Classified [command_name()] Update"

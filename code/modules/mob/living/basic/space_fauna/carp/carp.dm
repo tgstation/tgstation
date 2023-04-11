@@ -63,6 +63,21 @@
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
 	/// Carp want to eat delicious six pack plastic rings
 	var/static/list/desired_trash = list(/obj/item/storage/cans)
+	/// Structures that AI carp are willing to attack. This prevents them from deconstructing supermatter cooling equipment.
+	var/static/list/allowed_obstacle_targets = typecacheof(list(
+		/obj/structure/closet,
+		/obj/machinery/door,
+		/obj/structure/door_assembly,
+		/obj/structure/filingcabinet,
+		/obj/structure/frame,
+		/obj/structure/grille,
+		/obj/structure/plasticflaps,
+		/obj/structure/rack,
+		/obj/structure/reagent_dispensers, // Carp can have a little welding fuel, as a treat
+		/obj/structure/table,
+		/obj/machinery/vending,
+		/obj/structure/window,
+	))
 	/// Weighted list of colours a carp can be
 	/// Weighted list of usual carp colors
 	var/static/list/carp_colors = list(
@@ -104,6 +119,7 @@
 	teleport = new(src)
 	teleport.Grant(src)
 	ai_controller.blackboard[BB_CARP_RIFT] = WEAKREF(teleport)
+	ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST] = allowed_obstacle_targets
 
 /mob/living/basic/carp/Destroy()
 	QDEL_NULL(teleport)
