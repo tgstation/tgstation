@@ -357,3 +357,8 @@
 /datum/sprite_accessory/anime_bottom/wolf
 	name = "Wolf Tail"
 	icon_state = "wolf"
+
+/datum/sprite_accessory/anime_bottom/nine_tails
+	name = "Nine Tailed Fox"
+	icon_state = "nine_tails"
+	hasinner = TRUE

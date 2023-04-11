@@ -211,8 +211,8 @@
 		if(!action.show_to_observers)
 			continue
 		action.GiveAction(src)
-	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
-	RegisterSignal(take_from, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed))
+	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted), TRUE)
+	RegisterSignal(take_from, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed), TRUE)
 
 /**
  * Hide another mob's action buttons from this mob
