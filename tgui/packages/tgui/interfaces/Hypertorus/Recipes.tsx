@@ -11,6 +11,15 @@ import { getGasColor, getGasLabel } from '../../constants';
  * Frankly, rather ugly and a good candidate for future improvements.
  */
 
+type Recipe = {
+  param: string;
+  label: string;
+  icon: string | string[];
+  scale: number;
+  override_base?: number;
+  tooltip?: (value: number, data: any) => string;
+};
+
 /**
  * The list of recipe effects to list, in order.
  * Parameters:
@@ -28,7 +37,7 @@ import { getGasColor, getGasLabel } from '../../constants';
  *             If omitted, the default of "x{value}" is used.
  *
  */
-const recipe_effect_structure = [
+const recipe_effect_structure: Recipe[] = [
   {
     param: 'recipe_cooling_multiplier',
     label: 'Cooling',
@@ -125,10 +134,11 @@ export const HypertorusRecipes = (props) => {
   const {
     enableRecipeSelection: enable_recipe_selection,
     onRecipe,
-    selectableFuels: selectable_fuels,
-    selectedFuelID: selected_fuel_id,
+    selectable_fuels,
+    selected_fuel_id,
     ...rest
   } = props;
+
   return (
     <Box overflowX="auto">
       <Table>
@@ -152,17 +162,14 @@ export const HypertorusRecipes = (props) => {
           <Table.Cell>Tier 6</Table.Cell>
           {
             // Lay out our pictographic headers for effects.
-            recipe_effect_structure.map((item) => (
-              <Table.Cell key={item.param} color="label">
-                <Tooltip content={item.label}>
-                  {typeof item.icon === 'string' ? (
-                    <Icon
-                      className="hypertorus-recipes__icon"
-                      name={item.icon}
-                    />
+            recipe_effect_structure.map(({ param, label, icon }) => (
+              <Table.Cell key={param} color="label">
+                <Tooltip content={label}>
+                  {typeof icon === 'string' ? (
+                    <Icon className="hypertorus-recipes__icon" name={icon} />
                   ) : (
                     <Icon.Stack className="hypertorus-recipes__icon">
-                      {item.icon.map((icon) => (
+                      {icon.map((icon) => (
                         <Icon key={icon} name={icon} />
                       ))}
                     </Icon.Stack>
@@ -196,29 +203,28 @@ export const HypertorusRecipes = (props) => {
                 {recipe.product_gases.map((gasid) => (
                   <GasCellItem key={gasid} gasid={gasid} />
                 ))}
-                {recipe_effect_structure.map((item) => {
-                  const value = recipe[item.param];
-                  // Note that the minus icon is wider than the arrow icons,
-                  // so we set the width to work with both without jumping.
-                  return (
-                    <Table.Cell key={item.param}>
-                      <Tooltip
-                        content={(item.tooltip || ((v) => 'x' + v))(
-                          value,
-                          rest
-                        )}>
-                        <Icon
-                          className="hypertorus-recipes__icon"
-                          name={effect_to_icon(
-                            value,
-                            item.scale,
-                            item.override_base || 1
-                          )}
-                        />
-                      </Tooltip>
-                    </Table.Cell>
-                  );
-                })}
+                {recipe_effect_structure.map(
+                  ({ param, tooltip, scale, override_base }) => {
+                    const value = recipe[param];
+                    // Note that the minus icon is wider than the arrow icons,
+                    // so we set the width to work with both without jumping.
+                    return (
+                      <Table.Cell key={param}>
+                        <Tooltip
+                          content={(tooltip || ((v) => 'x' + v))(value, rest)}>
+                          <Icon
+                            className="hypertorus-recipes__icon"
+                            name={effect_to_icon(
+                              value,
+                              scale,
+                              override_base || 1
+                            )}
+                          />
+                        </Tooltip>
+                      </Table.Cell>
+                    );
+                  }
+                )}
               </MemoRow>
             );
           })}

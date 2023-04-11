@@ -1,6 +1,8 @@
-import { useBackend } from '../../backend';
-import { Box, Flex, Icon, Section, Stack, Tooltip } from '../../components';
+import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
+
+import { HypertorusGas } from '.';
 import { to_exponential_if_big } from './helpers';
+import { useBackend } from 'tgui/backend';
 
 /*
  * Shows a set of temperatures on a unified temperature scale.
@@ -19,6 +21,7 @@ const height = 200;
 const VerticalBar = (props) => {
   const { color, value, progressHeight } = props;
   let y = height - progressHeight;
+
   return (
     <div className="hypertorus-temperatures__vertical-bar">
       {!!value && <Box backgroundColor={color} top={`${y}px`} />}
@@ -57,8 +60,24 @@ const BarLabel = (props) => {
   );
 };
 
+type Data = {
+  power_level: number;
+  base_max_temperature: number;
+  internal_fusion_temperature: number;
+  moderator_internal_temperature: number;
+  internal_output_temperature: number;
+  internal_coolant_temperature: number;
+  temperature_period: number;
+  internal_coolant_temperature_archived: number;
+  moderator_internal_temperature_archived: number;
+  internal_output_temperature_archived: number;
+  internal_fusion_temperature_archived: number;
+  selectable_fuel: HypertorusGas[];
+  selected: string;
+};
+
 export const HypertorusTemperatures = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<Data>(context);
 
   const {
     power_level,
@@ -68,26 +87,28 @@ export const HypertorusTemperatures = (props, context) => {
     internal_output_temperature,
     internal_coolant_temperature,
     temperature_period,
+    internal_coolant_temperature_archived,
+    moderator_internal_temperature_archived,
+    internal_output_temperature_archived,
+    internal_fusion_temperature_archived,
+    selectable_fuel = [],
+    selected,
   } = data;
 
   const internal_fusion_temperature_delta =
-    (internal_fusion_temperature - data.internal_fusion_temperature_archived) /
+    (internal_fusion_temperature - internal_fusion_temperature_archived) /
     temperature_period;
   const internal_output_temperature_delta =
-    (internal_output_temperature - data.internal_output_temperature_archived) /
+    (internal_output_temperature - internal_output_temperature_archived) /
     temperature_period;
   const internal_coolant_temperature_delta =
-    (internal_coolant_temperature -
-      data.internal_coolant_temperature_archived) /
+    (internal_coolant_temperature - internal_coolant_temperature_archived) /
     temperature_period;
   const moderator_internal_temperature_delta =
-    (moderator_internal_temperature -
-      data.moderator_internal_temperature_archived) /
+    (moderator_internal_temperature - moderator_internal_temperature_archived) /
     temperature_period;
 
-  const selected_fuel = (data.selectable_fuel || []).filter(
-    (d) => d.id === data.selected
-  )[0];
+  const selected_fuel = selectable_fuel.filter((d) => d.id === selected)[0];
 
   let prev_power_level_temperature = 10 ** (1 + power_level);
   let next_power_level_temperature = 10 ** (2 + power_level);
@@ -99,8 +120,7 @@ export const HypertorusTemperatures = (props, context) => {
     prev_power_level_temperature = 500;
   } else if (power_level === 6) {
     next_power_level_temperature =
-      base_max_temperature *
-      (selected_fuel ? selected_fuel.temperature_multiplier : 1);
+      base_max_temperature * (selected_fuel?.temperature_multiplier ?? 1);
   }
 
   const temperatures = [
@@ -112,7 +132,7 @@ export const HypertorusTemperatures = (props, context) => {
       internal_output_temperature,
       internal_coolant_temperature,
     ].filter((d) => d),
-  ].map((d) => parseFloat(d));
+  ].map((d) => d);
 
   const maxTemperature = Math.max(...temperatures);
   const minTemperature = Math.max(

@@ -1,7 +1,8 @@
+import { Flex, LabeledControls, RoundGauge, Section } from 'tgui/components';
+
+import { formatSiUnit } from 'tgui/format';
 import { toFixed } from 'common/math';
-import { useBackend } from '../../backend';
-import { Flex, LabeledControls, RoundGauge, Section } from '../../components';
-import { formatSiUnit } from '../../format';
+import { useBackend } from 'tgui/backend';
 
 /*
  * Parameter display
@@ -13,10 +14,33 @@ import { formatSiUnit } from '../../format';
  * relevant levels.
  */
 
-export const HypertorusParameters = (props, context) => {
-  const { data } = useBackend(context);
+type Data = {
+  heat_output: number;
+  heat_output_min: number;
+  heat_output_max: number;
+  integrity: number;
+  iron_content: number;
+  apc_energy: number;
+  power_level: number;
+  energy_level: number;
+  start_power: number;
+  instability: number;
+};
 
-  const { heat_output, heat_output_min, heat_output_max } = data;
+export const HypertorusParameters = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const {
+    heat_output,
+    heat_output_min,
+    heat_output_max,
+    integrity,
+    iron_content,
+    apc_energy,
+    power_level,
+    energy_level,
+    start_power,
+    instability,
+  } = data;
 
   const energy_minimum_exponent = 12;
   const energy_minimum_suffix = energy_minimum_exponent / 3;
@@ -35,7 +59,7 @@ export const HypertorusParameters = (props, context) => {
             <LabeledControls.Item label="Reactor Integrity">
               <RoundGauge
                 size={1.75}
-                value={data.integrity}
+                value={integrity}
                 minValue={0}
                 maxValue={100}
                 alertBefore={95}
@@ -50,7 +74,7 @@ export const HypertorusParameters = (props, context) => {
             <LabeledControls.Item label="Iron Content">
               <RoundGauge
                 size={1.75}
-                value={data.iron_content}
+                value={iron_content}
                 minValue={0}
                 maxValue={1}
                 alertAfter={0.25}
@@ -65,7 +89,7 @@ export const HypertorusParameters = (props, context) => {
             <LabeledControls.Item label="Area Power">
               <RoundGauge
                 size={1.75}
-                value={data.apc_energy}
+                value={apc_energy}
                 minValue={0}
                 maxValue={100}
                 alertBefore={30}
@@ -87,7 +111,7 @@ export const HypertorusParameters = (props, context) => {
                 size={3}
                 minValue={0}
                 maxValue={6}
-                value={data.power_level}
+                value={power_level}
                 alertAfter={4.5}
                 ranges={{
                   grey: [0, 1],
@@ -104,7 +128,7 @@ export const HypertorusParameters = (props, context) => {
             <LabeledControls.Item label="Energy">
               <RoundGauge
                 size={1.75}
-                value={Math.max(0, Math.log10(data.energy_level))}
+                value={Math.max(0, Math.log10(energy_level))}
                 minValue={energy_minimum_exponent}
                 maxValue={30}
                 format={(v) =>
@@ -124,7 +148,7 @@ export const HypertorusParameters = (props, context) => {
                 value={activity * 100}
                 minValue={0}
                 maxValue={130} // Proto-nitrate lets us exceed 100%
-                format={(v) => `${data.start_power ? toFixed(v, 1) : 0}%`}
+                format={(v) => `${start_power ? toFixed(v, 1) : 0}%`}
                 ranges={{
                   grey: [0, 70],
                   blue: [70, 100],
@@ -135,11 +159,11 @@ export const HypertorusParameters = (props, context) => {
             <LabeledControls.Item label="Instability">
               <RoundGauge
                 size={1.75}
-                value={Math.max(data.instability, 0)}
+                value={Math.max(instability, 0)}
                 minValue={0}
                 maxValue={10}
                 format={(v) =>
-                  `${data.start_power ? toFixed((v / 8) * 100, 1) : 0}%`
+                  `${start_power ? toFixed((v / 8) * 100, 1) : 0}%`
                 }
                 ranges={{
                   orange: [0, 8], // exothermic
