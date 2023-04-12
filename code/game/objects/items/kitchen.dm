@@ -203,6 +203,7 @@
 
 	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
 	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, params)
