@@ -31,11 +31,9 @@
 
 	var/mob/dead/selected = pick_n_take(candidates)
 	var/mob/living/carbon/human/floridan = new(spawn_loc) //This is to catch errors by just giving them a location in general.
-	var/datum/preferences/A = new
 
 	equip_floridan(floridan)
 
-	A.copy_to(floridan)
 	floridan.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Florida Man"
@@ -71,3 +69,17 @@
 	log_game("[key_name(floridan)] was spawned as Florida Man by an event.")
 	spawned_mobs += floridan
 	return SUCCESSFUL_SPAWN
+
+/obj/effect/holy
+	name = "holy"
+	icon = 'monkestation/icons/obj/effects/96x96.dmi'
+	icon_state = "beamin"
+	layer = ABOVE_MOB_LAYER
+	mouse_opacity = 0
+	pixel_x = -32
+	pixel_y = 0
+
+/obj/effect/holy/Initialize()
+	playsound(src,'monkestation/sound/misc/adminspawn.ogg',50,1)
+	QDEL_IN(src, 20)
+	..()
