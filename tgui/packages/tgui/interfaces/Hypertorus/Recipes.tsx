@@ -1,6 +1,8 @@
 import { Box, Button, Icon, Table, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 
+import { HypertorusFuel } from '.';
+
 type Recipe = {
   param: string;
   label: string;
@@ -12,6 +14,14 @@ type Recipe = {
 
 type GasCellProps = {
   gasid: string;
+};
+
+type RecipeProps = {
+  baseMaxTemperature: number;
+  enableRecipeSelection: boolean;
+  onRecipe: (recipe: string) => void;
+  selectableFuels: HypertorusFuel[];
+  selectedFuelId: string;
 };
 
 /*
@@ -135,12 +145,12 @@ const GasCellItem = (props: GasCellProps) => {
   );
 };
 
-export const HypertorusRecipes = (props) => {
+export const HypertorusRecipes = (props: RecipeProps) => {
   const {
-    enableRecipeSelection: enable_recipe_selection,
+    enableRecipeSelection,
     onRecipe,
-    selectable_fuels,
-    selected_fuel_id,
+    selectableFuels,
+    selectedFuelId,
     ...rest
   } = props;
 
@@ -184,20 +194,22 @@ export const HypertorusRecipes = (props) => {
             ))
           }
         </MemoRow>
-        {selectable_fuels
+        {selectableFuels
           .filter((d) => d.id)
-          .map((recipe, index) => {
-            const active = recipe.id === selected_fuel_id;
+          .map((recipe) => {
+            const active = recipe.id === selectedFuelId;
+            const requirements = recipe.requirements || [];
+            const fusion_byproducts = recipe.fusion_byproducts || [];
+            const product_gases = recipe.product_gases || [];
+
             return (
               <MemoRow key={recipe.id} active={active}>
                 <Table.Cell>
                   <Button
-                    icon={
-                      recipe.id === selected_fuel_id ? 'times' : 'power-off'
-                    }
-                    disabled={!enable_recipe_selection}
+                    icon={recipe.id === selectedFuelId ? 'times' : 'power-off'}
+                    disabled={!enableRecipeSelection}
                     key={recipe.id}
-                    selected={recipe.id === selected_fuel_id}
+                    selected={recipe.id === selectedFuelId}
                     onClick={onRecipe.bind(null, recipe.id)}
                   />
                 </Table.Cell>

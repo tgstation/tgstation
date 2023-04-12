@@ -15,15 +15,21 @@ type Data = {
   start_moderator: number;
   power_level: number;
   selected: string;
-  selectable_fuel: HypertorusGas[];
+  selectable_fuel: HypertorusFuel[];
   base_max_temperature: number;
 };
 
 export type HypertorusGas = {
   id: string;
   amount: number;
-  temperature_multiplier?: number;
-  requirements?: string[];
+};
+
+export type HypertorusFuel = {
+  id: string;
+  requirements: string[];
+  temperature_multiplier: number;
+  fusion_byproducts: string[];
+  product_gases: string[];
 };
 
 const HypertorusMainControls = (props, context) => {
@@ -70,11 +76,11 @@ const HypertorusMainControls = (props, context) => {
       </Stack>
       <Collapsible title="Recipe selection">
         <HypertorusRecipes
-          baseMaximumTemperature={base_max_temperature}
+          baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
           onRecipe={(id) => act('fuel', { mode: id })}
           selectableFuels={selectable_fuel}
-          selectedFuelID={selected}
+          selectedFuelId={selected}
         />
       </Collapsible>
     </Section>

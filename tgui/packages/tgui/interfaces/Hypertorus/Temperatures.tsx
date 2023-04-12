@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
+import { HypertorusFuel } from '.';
 
-import { HypertorusGas } from '.';
 import { to_exponential_if_big } from './helpers';
 import { useBackend } from 'tgui/backend';
 
@@ -15,7 +15,7 @@ type Data = {
   moderator_internal_temperature_archived: number;
   moderator_internal_temperature: number;
   power_level: number;
-  selectable_fuel: HypertorusGas[];
+  selectable_fuel: HypertorusFuel[];
   selected: string;
   temperature_period: number;
 };

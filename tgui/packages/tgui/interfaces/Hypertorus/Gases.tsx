@@ -1,9 +1,9 @@
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
 import { HelpDummy, HoverHelp } from './helpers';
+import { HypertorusFuel, HypertorusGas } from '.';
 import { filter, sortBy } from 'common/collections';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 
-import { HypertorusGas } from '.';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
@@ -28,7 +28,7 @@ type GasListData = {
 type HypertorusData = {
   fusion_gases: HypertorusGas[];
   moderator_gases: HypertorusGas[];
-  selectable_fuel: HypertorusGas[];
+  selectable_fuel: HypertorusFuel[];
   selected: string;
 };
 
