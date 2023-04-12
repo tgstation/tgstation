@@ -97,6 +97,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_RUST (1<<5)
 /// Is this turf is "solid". Space and lava aren't for instance
 #define IS_SOLID (1<<6)
+/// This turf will never be cleared away by other objects on Initialize.
+#define NO_CLEARING (1<<7)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -125,7 +127,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
 #define CULT_PERMITTED (1<<12)
-///Whther this area is iluminated by starlight
+///Whther this area is iluminated by starlight. Used by the aurora_caelus event
 #define AREA_USES_STARLIGHT (1<<13)
 /// If engravings are persistent in this area
 #define PERSISTENT_ENGRAVINGS (1<<14)

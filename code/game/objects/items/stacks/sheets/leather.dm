@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, category = CAT_CLOTHING), \

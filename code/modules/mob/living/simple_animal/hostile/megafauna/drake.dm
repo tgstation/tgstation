@@ -371,5 +371,9 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
 
+#undef DRAKE_ENRAGED
+#undef DRAKE_FIRE_EXPOSURE
+#undef DRAKE_FIRE_TEMP
+
 #undef SWOOP_DAMAGEABLE
 #undef SWOOP_INVULNERABLE

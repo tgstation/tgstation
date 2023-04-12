@@ -44,6 +44,18 @@
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
 	colour = "lime"
+	
+/obj/item/lipstick/blue
+	name = "blue lipstick"
+	colour = "blue"
+
+/obj/item/lipstick/green
+	name = "green lipstick"
+	colour = "green"
+
+/obj/item/lipstick/white
+	name = "white lipstick"
+	colour = "white"
 
 /obj/item/lipstick/black
 	name = "black lipstick"

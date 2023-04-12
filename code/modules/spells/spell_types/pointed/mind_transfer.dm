@@ -41,7 +41,7 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
-	if(owner.suiciding)
+	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
 		return FALSE

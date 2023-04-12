@@ -393,3 +393,6 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu_choice/Destroy(force, ...)
 	. = ..()
 	QDEL_NULL(image)
+
+#undef NEXT_PAGE_ID
+#undef DEFAULT_CHECK_DELAY

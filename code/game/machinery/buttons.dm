@@ -11,6 +11,11 @@
 	var/id = null
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
+	///The light mask used in the icon file for emissive layer
+	var/light_mask = null
+	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
+	light_range = 1.5
+	light_color = LIGHT_COLOR_DARK_BLUE
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -66,6 +71,8 @@
 
 /obj/machinery/button/update_overlays()
 	. = ..()
+	if(light_mask && !(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
+		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 	if(!panel_open)
 		return
 	if(device)

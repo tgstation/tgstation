@@ -168,35 +168,34 @@
 	updatehealth()
 
 /mob/living/simple_animal/slime/proc/handle_feeding(delta_time, times_fired)
-	var/mob/M = buckled
+	var/mob/living/prey = buckled
 
 	if(stat)
 		Feedstop(silent = TRUE)
 
-	if(M.stat == DEAD) // our victim died
+	if(prey.stat == DEAD) // our victim died
 		if(!client)
 			if(!rabid && !attacked)
-				var/mob/last_to_hurt = M.LAssailant?.resolve()
-				if(last_to_hurt && last_to_hurt != M)
+				var/mob/last_to_hurt = prey.LAssailant?.resolve()
+				if(last_to_hurt && last_to_hurt != prey)
 					if(DT_PROB(30, delta_time))
 						add_friendship(last_to_hurt, 1)
 		else
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
-		if(M.client && ishuman(M))
+		if(prey.client && ishuman(prey))
 			if(DT_PROB(61, delta_time))
 				rabid = 1 //we go rabid after finishing to feed on a human with a client.
 
 		Feedstop()
 		return
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
-		C.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
+	if(iscarbon(prey))
+		prey.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		prey.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
-		if(DT_PROB(5, delta_time) && C.client)
-			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+		if(DT_PROB(5, delta_time) && prey.client)
+			to_chat(prey, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
 			"A low, rolling pain passes through your body!", \
@@ -204,12 +203,12 @@
 			"You feel extremely weak!", \
 			"A sharp, deep pain bathes every inch of your body!")]</span>")
 
-	else if(isanimal(M))
-		var/mob/living/simple_animal/SA = M
+	else if(isanimal_or_basicmob(prey))
+		var/mob/living/animal_victim = prey
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += SA.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
-		totaldamage += SA.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
+		totaldamage += animal_victim.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
 			Feedstop(0, 0)

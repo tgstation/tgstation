@@ -37,8 +37,8 @@
 	repairs = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_speed += capacitor.tier * 100
-	for(var/datum/stock_part/manipulator/matter_bin in component_parts)
-		repairs += matter_bin.tier - 1
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		repairs += manipulator.tier - 1
 	for(var/obj/item/stock_parts/cell/cell in component_parts)
 		recharge_speed *= cell.maxcharge / 10000
 
@@ -80,7 +80,7 @@
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
 
-	if(default_pry_open(P))
+	if(default_pry_open(P, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(P))
@@ -93,15 +93,15 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
-		close_machine()
+		close_machine(density_to_set = TRUE)
 	else
 		open_machine()
 
-/obj/machinery/recharge_station/open_machine()
+/obj/machinery/recharge_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 
-/obj/machinery/recharge_station/close_machine()
+/obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
 		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.

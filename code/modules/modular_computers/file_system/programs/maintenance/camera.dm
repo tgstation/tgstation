@@ -38,7 +38,7 @@
 	computer.save_photo(internal_picture.picture_image)
 
 /datum/computer_file/program/maintenance/camera/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	if(!isnull(internal_picture))
 		user << browse_rsc(internal_picture.picture_image, "tmp_photo[picture_number].png")
@@ -52,7 +52,6 @@
 	. = ..()
 	if(.)
 		return
-
 	var/mob/living/user = usr
 	switch(action)
 		if("print_photo")

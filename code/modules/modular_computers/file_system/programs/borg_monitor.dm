@@ -69,7 +69,7 @@
 	DL_progress += 25
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["card"] = FALSE
 	if(checkID())
@@ -112,20 +112,19 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("messagebot")
 			var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 			if(!istype(R))
-				return
+				return TRUE
 			var/ID = checkID()
 			if(!ID)
-				return
+				return TRUE
 			if(R.stat == DEAD) //Dead borgs will listen to you no longer
 				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
 			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
 			if(!message)
-				return
+				return TRUE
 			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
 			to_chat(usr, "Message sent to [R]: [message]")
 			R.logevent("Message from [ID] -- \"[message]\"")
@@ -134,6 +133,7 @@
 				to_chat(R.connected_ai, "<br><br>[span_notice("Message from [ID] to [R] -- \"[message]\"")]<br>")
 				SEND_SOUND(R.connected_ai, 'sound/machines/twobeep_high.ogg')
 			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[ID]\" to [R]")
+			return TRUE
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)

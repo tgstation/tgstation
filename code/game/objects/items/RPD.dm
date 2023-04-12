@@ -1,8 +1,3 @@
-/*
-CONTAINS:
-RPD
-*/
-
 #define ATMOS_CATEGORY 0
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
@@ -210,7 +205,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
-	name = "Rapid Pipe Dispenser (RPD)"
+	name = "Rapid Pipe Dispenser"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
@@ -283,6 +278,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
 
 	recipe = first_atmos
+	register_item_context()
 
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
@@ -338,6 +334,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		install_upgrade(W, user)
 		return TRUE
 	return ..()
+
+/obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(istype(target, /obj/machinery/atmospherics))
+		var/obj/machinery/atmospherics/atmos_target = target
+		if(atmos_target.pipe_color && atmos_target.piping_layer)
+			context[SCREENTIP_CONTEXT_RMB] = "Copy piping color and layer"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Installs an upgrade into the RPD

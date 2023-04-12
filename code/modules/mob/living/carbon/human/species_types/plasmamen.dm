@@ -121,7 +121,7 @@
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job?.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
-	else 
+	else
 		give_important_for_life(equipping)
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
@@ -140,12 +140,12 @@
 	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
 		for(var/i in H.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
+			iter_wound.on_xadone(4 * REM * delta_time) // plasmamen use plasma to reform their bones or whatever
 		return FALSE // do normal metabolism
 
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		H.adjustStaminaLoss(7.5 * REM * delta_time, 0)
+		H.adjustBruteLoss(0.5 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
 			switch(rand(1, 3))
 				if(1)
@@ -175,6 +175,13 @@
 			H.adjust_hallucinations(2.5 SECONDS * delta_time)
 		// Do normal metabolism
 		return FALSE
+
+/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
+	return pick(
+		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
+		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+	)
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

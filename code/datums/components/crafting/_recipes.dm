@@ -1,12 +1,3 @@
-///If the machine is used/deleted in the crafting process
-#define CRAFTING_MACHINERY_CONSUME 1
-///If the structure is used/deleted in the crafting process
-#define CRAFTING_STRUCTURE_CONSUME 1
-///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
-#define CRAFTING_MACHINERY_USE 0
-///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
-#define CRAFTING_STRUCTURE_USE 0
-
 /datum/crafting_recipe
 	///in-game display name
 	var/name
@@ -44,6 +35,8 @@
 	var/datum/chemical_reaction/reaction
 	/// Resulting amount (for stacks only)
 	var/result_amount
+	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
+	var/delete_contents = TRUE
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))

@@ -21,6 +21,9 @@
 	#define COMPONENT_FORCE_PLACEMENT (1<<0)
 	#define COMPONENT_FORCE_FAIL_PLACEMENT (1<<1)
 
+/// Called when a machine a traitor has booby trapped triggers its payload
+#define COMSIG_TRAITOR_MACHINE_TRAP_TRIGGERED "traitor_machine_trap_triggered"
+
 /// Called when a device a traitor has planted effects someone's mood. Pass the mind of the viewer.
 #define COMSIG_DEMORALISING_EVENT "traitor_demoralise_event"
 /// Called when you finish drawing some graffiti so we can register more signals on it. Pass the graffiti effect.

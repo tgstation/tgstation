@@ -135,7 +135,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	update_appearance()
 	register_context()
-	init_network_id(NETWORK_TABLETS)
 	Add_Messenger()
 	install_default_programs()
 
@@ -420,13 +419,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		update_appearance(UPDATE_ICON)
 	return ..()
 
-// On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/item/modular_computer/interact(mob/user)
-	if(enabled)
-		ui_interact(user)
-	else
-		turn_on(user)
-
 /obj/item/modular_computer/CtrlShiftClick(mob/user)
 	. = ..()
 	if(.)
@@ -475,7 +467,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		shutdown_computer()
 		return
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
+	if(active_program && active_program.requires_ntnet && !get_ntnet_status())
 		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
@@ -483,7 +475,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			idle_threads.Remove(idle_programs)
 			continue
 		idle_programs.process_tick(delta_time)
-		idle_programs.ntnet_status = get_ntnet_status(idle_programs.requires_ntnet_feature)
+		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
@@ -605,7 +597,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
 		update_appearance()
-		updateUsrDialog()
 		return TRUE
 
 	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
@@ -615,7 +606,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
-	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+	if(program.requires_ntnet && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
 		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
@@ -625,18 +616,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	active_program = program
 	program.alert_pending = FALSE
 	update_appearance()
-	updateUsrDialog()
+	ui_interact(user)
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	// NTNet is down and we are not connected via wired connection. No signal.
-	if(!SSmodular_computers.check_function(specific_action))
-		return NTNET_NO_SIGNAL
-
+/obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
+
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!find_functional_ntnet_relay())
+		return NTNET_NO_SIGNAL
 
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf || !istype(current_turf))
@@ -655,7 +646,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSnetworks.add_log(text, network_id)
+	return SSmodular_computers.add_log("[src]: [text]", network_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

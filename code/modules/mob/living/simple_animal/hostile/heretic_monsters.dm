@@ -322,7 +322,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-			return
+			return ..()
+
 		var/list/parts_to_remove = list()
 		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
 			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)

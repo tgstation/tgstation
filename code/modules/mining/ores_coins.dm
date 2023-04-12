@@ -523,4 +523,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/adamantine/doubloon
 	name = "doubloon"
 
+#undef GIBTONITE_QUALITY_HIGH
+#undef GIBTONITE_QUALITY_LOW
+#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

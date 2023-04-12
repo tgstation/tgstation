@@ -14,7 +14,7 @@
 	hud_type = /datum/hud/ooze
 	minbodytemp = 250
 	maxbodytemp = INFINITY
-	faction = list("slime")
+	faction = list(FACTION_SLIME)
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	health = 200
@@ -373,7 +373,6 @@
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
-	nodamage = TRUE
 	damage = 0
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules

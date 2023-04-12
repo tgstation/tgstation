@@ -630,11 +630,6 @@
 	result = /obj/item/food/spaghetti/boiledspaghetti
 	category = CAT_SPAGHETTI
 
-/datum/crafting_recipe/food/microwave/khinkali
-	reqs = list(/obj/item/food/rawkhinkali = 1)
-	result = /obj/item/food/khinkali
-	category = CAT_BREAD
-
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)
 	result = /obj/item/food/onionrings

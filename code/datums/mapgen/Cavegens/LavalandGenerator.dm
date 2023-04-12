@@ -39,3 +39,6 @@
 	smoothing_iterations = 50
 	birth_limit = 4
 	death_limit = 3
+
+/datum/map_generator/cave_generator/lavaland/ruin_version
+	weighted_open_turf_types = list(/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins = 1)

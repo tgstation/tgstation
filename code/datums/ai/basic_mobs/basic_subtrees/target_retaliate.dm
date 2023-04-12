@@ -1,9 +1,23 @@
 /// Sets the BB target to a mob which you can see and who has recently attacked you
 /datum/ai_planning_subtree/target_retaliate
+	/// Blackboard key which tells us how to select valid targets
+	var/targetting_datum_key = BB_TARGETTING_DATUM
+	/// Blackboard key in which to store selected target
+	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	/// Blackboard key in which to store selected target's hiding place
+	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targetting_datum_key, hiding_place_key)
+
+/// Places a mob which you can see and who has recently attacked you into some 'run away from this' AI keys
+/// Can use a different targetting datum than you use to select attack targets
+/// Not required if fleeing is the only target behaviour or uses the same target datum
+/datum/ai_planning_subtree/target_retaliate/to_flee
+	targetting_datum_key = BB_FLEE_TARGETTING_DATUM
+	target_key = BB_BASIC_MOB_FLEE_TARGET
+	hiding_place_key = BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION
 
 /**
  * Picks a target from a provided list of atoms who have been pissing you off

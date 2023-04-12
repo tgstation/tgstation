@@ -47,7 +47,7 @@
 	for(var/player in GLOB.player_list)
 		if(iscarbon(player))
 			var/mob/living/carbon/speaker = player
-			if(speaker.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
+			if(speaker.get_organ_slot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
 				to_chat(speaker, msg)
 		if(isobserver(player))
 			var/link = FOLLOW_LINK(player, owner)

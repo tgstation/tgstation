@@ -13,7 +13,7 @@
 	/// reference to the destination landmark we consider ourselves "at". since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/tram/from_where
+	var/obj/effect/landmark/tram/idle_platform
 
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
 	///this var is poorly named its actually horizontal movement delay but whatever.
@@ -59,10 +59,10 @@
 		var/obj/effect/landmark/tram/initial_destination = locate() in platform_loc
 
 		if(initial_destination)
-			from_where = initial_destination
+			idle_platform = initial_destination
 
 /datum/lift_master/tram/proc/check_starting_landmark()
-	if(!from_where)
+	if(!idle_platform)
 		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
 
 	SStramprocess.can_fire = TRUE
@@ -109,20 +109,20 @@
  * incase multiple inputs get through, preventing conflicting directions and the tram
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
  */
-/datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/to_where)
-	if(to_where == from_where)
+/datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform)
+	if(destination_platform == idle_platform)
 		return
 
 	update_tram_doors(CLOSE_DOORS)
-	travel_direction = get_dir(from_where, to_where)
-	travel_distance = get_dist(from_where, to_where)
-	from_where = to_where
+	travel_direction = get_dir(idle_platform, destination_platform)
+	travel_distance = get_dist(idle_platform, destination_platform)
+	idle_platform = destination_platform
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
-	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
 
-/datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
-	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
+/datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
+	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 	update_tram_doors(UNLOCK_DOORS)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.

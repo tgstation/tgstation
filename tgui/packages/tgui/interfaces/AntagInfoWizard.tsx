@@ -159,17 +159,28 @@ const ObjectivePrintout = (props, context) => {
             </Stack.Item>
           ))}
       </Stack.Item>
-      <Stack.Item>
-        Alternately, complete the{' '}
-        <span style={grandritualstyle}>Grand Ritual </span>
-        by invoking a ritual circle at several nexuses of power.
-        <br />
-        You must complete the ritual
-        <span style={grandritualstyle}> {ritual.remaining}</span> more times.
-        <br />
-        Your next ritual location is the
-        <span style={grandritualstyle}> {ritual.next_area}</span>.
-      </Stack.Item>
+      <RitualPrintout />
     </Stack>
+  );
+};
+
+const RitualPrintout = (props, context) => {
+  const { data } = useBackend<Info>(context);
+  const { objectives, ritual } = data;
+  if (!ritual.next_area) {
+    return <Stack.Item />;
+  }
+  return (
+    <Stack.Item>
+      Alternately, complete the{' '}
+      <span style={grandritualstyle}>Grand Ritual </span>
+      by invoking a ritual circle at several nexuses of power.
+      <br />
+      You must complete the ritual
+      <span style={grandritualstyle}> {ritual.remaining}</span> more times.
+      <br />
+      Your next ritual location is the
+      <span style={grandritualstyle}> {ritual.next_area}</span>.
+    </Stack.Item>
   );
 };

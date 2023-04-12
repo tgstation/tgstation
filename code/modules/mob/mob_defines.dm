@@ -65,9 +65,6 @@
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
-	///Whether this mob has or is in the middle of committing suicide.
-	var/suiciding = FALSE
-
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
 
@@ -232,6 +229,3 @@
 	var/active_thinking_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
-
-	///how much gravity is slowing us down
-	var/gravity_slowdown = 0

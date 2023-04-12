@@ -221,6 +221,14 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 
+///Targetting keys for something to run away from, if you need to store this separately from current target
+#define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
+#define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
+#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+
+///How long have we spent with no target?
+#define BB_TARGETLESS_TIME "BB_targetless_time"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
@@ -238,12 +246,24 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
-///Bileworm AI keys
+// Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
-/// Fugu AI Keys
+// Meteor Heart AI keys
+/// Key where we keep the spike trail ability
+#define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
+/// Key where we keep the spine traps ability
+#define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
 
+// Spider AI keys
+/// Key where we store a turf to put webs on
+#define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
+/// Key where we store the web-spinning ability
+#define BB_SPIDER_WEB_ACTION "BB_spider_web_action"
+
+// Fugu AI keys
+/// Key where we store the inflating ability
 #define BB_FUGU_INFLATE "BB_fugu_inflate"

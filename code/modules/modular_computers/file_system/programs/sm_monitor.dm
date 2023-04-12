@@ -31,7 +31,7 @@
 /datum/computer_file/program/supermatter_monitor/proc/refresh()
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
-	var/turf/user_turf = get_turf(ui_host())
+	var/turf/user_turf = get_turf(computer.ui_host())
 	if(!user_turf)
 		return
 	for(var/obj/machinery/power/supermatter_crystal/sm in GLOB.machines)
@@ -47,7 +47,7 @@
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["sm_data"] = list()
 	for (var/obj/machinery/power/supermatter_crystal/sm as anything in supermatters)
 		data["sm_data"] += list(sm.sm_ui_data())
@@ -58,7 +58,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("PRG_refresh")
 			refresh()

@@ -435,11 +435,11 @@
 /datum/component/overlay_lighting/proc/turn_on()
 	if(overlay_lighting_flags & LIGHTING_ON)
 		return
+	overlay_lighting_flags |= LIGHTING_ON
 	if(current_holder)
+		add_dynamic_lumi()
 		if(directional)
 			cast_directional_light()
-		add_dynamic_lumi()
-	overlay_lighting_flags |= LIGHTING_ON
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 	get_new_turfs()

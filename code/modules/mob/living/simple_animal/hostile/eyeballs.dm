@@ -29,7 +29,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list("spooky")
+	faction = list(FACTION_SPOOKY)
 	del_on_death = 1
 	// Redish ethereal glow. These lads live on the cult ship
 	lighting_cutoff_red = 40

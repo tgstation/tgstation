@@ -33,6 +33,9 @@
 	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/cloneloss = 0
 
+	/// Rate at which fire stacks should decay from this mob
+	var/fire_stack_decay_rate = -0.05
+
 	/// when the mob goes from "normal" to crit
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT
 	///When the mob enters hard critical state and is fully incapacitated.
@@ -66,7 +69,6 @@
 	var/death_message = ""
 	///A sound sent when the mob dies, with the *deathgasp emote
 	var/death_sound
-
 
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/on_fire = FALSE
@@ -220,3 +222,6 @@
 	// Multiple imaginary friends!
 	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
 	var/list/imaginary_group = null
+
+	/// What our current gravity state is. Used to avoid duplicate animates and such
+	var/gravity_state = null

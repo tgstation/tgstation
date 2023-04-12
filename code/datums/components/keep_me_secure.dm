@@ -24,7 +24,8 @@
 
 /datum/component/keep_me_secure/RegisterWithParent()
 	last_move = world.time
-	START_PROCESSING(SSobj, src)
+	if (secured_callback || unsecured_callback)
+		START_PROCESSING(SSobj, src)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
 

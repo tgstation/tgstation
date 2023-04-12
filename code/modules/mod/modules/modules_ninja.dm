@@ -57,7 +57,7 @@
 /obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
-	if(projectile.nodamage)
+	if(!projectile.is_hostile_projectile())
 		return
 	unstealth(source)
 

@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - config: "Added a warning build config setting, you can now lightly repremand but not block clients with older builds but fine major versions"

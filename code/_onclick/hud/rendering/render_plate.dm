@@ -240,8 +240,8 @@
 		<br>This avoids dumb seethrough without breaking stuff like thermals."
 	plane = LIGHT_MASK_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	// Fullwhite where there's any color, no alpha otherwise
-	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0, 0,0,0,0)
+	// Fullwhite where there's anything, no color otherwise
+	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = LIGHT_MASK_RENDER_TARGET
 	// We blend against the game plane, so she's gotta multiply!
