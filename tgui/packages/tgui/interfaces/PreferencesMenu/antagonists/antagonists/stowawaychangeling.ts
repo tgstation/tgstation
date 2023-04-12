@@ -8,7 +8,7 @@ const Stowaway_Changeling: Antagonist = {
   description: [
     multiline`
       A Changeling that found its way onto the shuttle
-      unbeknowst to the crewmembers on board.
+      unbeknownst to the crewmembers on board.
     `,
     CHANGELING_MECHANICAL_DESCRIPTION,
   ],
