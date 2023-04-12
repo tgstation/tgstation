@@ -128,6 +128,8 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
 
+	client.patreon = new(client)
+
 	return TRUE
 
 

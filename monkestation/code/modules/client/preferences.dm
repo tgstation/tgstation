@@ -10,9 +10,6 @@
 	///the amount of metacoins currently possessed
 	var/metacoins
 
-	///the stored patreon rank of this user
-	var/patreon_rank = NO_RANK
-
 	///sound storage
 	var/datum/ui_module/volume_mixer/pref_mixer
 
