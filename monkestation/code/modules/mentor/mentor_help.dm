@@ -30,7 +30,7 @@
 	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
 	if(regular_webhook_url)
 		var/extra_message = CONFIG_GET(string/mhelp_message)
-		var/datum/discord_embed/embed = format_mhelp_embed(mentor_msg)
+		var/datum/discord_embed/embed = format_mhelp_embed(msg)
 		embed.content = extra_message
 		send2mentorchat_webhook(embed, key)
 
@@ -129,7 +129,7 @@
 	var/mentor_count = get_mentor_counts()
 	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
 	if(mentor_count)
-		admin_text = "**Mentors**:[mentor_count]"
+		admin_text = "**Mentors**:[mentor_count.len]"
 	embed.fields = list(
 		"CKEY" = ckey,
 		"PLAYERS" = player_count,
