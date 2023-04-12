@@ -709,14 +709,15 @@
 		if(allowed(user))
 			if(iscarbon(user))
 				add_fingerprint(user)
+			balloon_alert_to_viewers(locked ? "unlocked" : "locked")
 			locked = !locked
 			user.visible_message(span_notice("[user] [locked ? null : "un"]locks [src]."),
 							span_notice("You [locked ? null : "un"]lock [src]."))
 			update_appearance()
 		else if(!silent)
-			to_chat(user, span_alert("Access Denied."))
+			balloon_alert(user, "access denied!")
 	else if(secure && broken)
-		to_chat(user, span_warning("\The [src] is broken!"))
+		balloon_alert(user, "broken!")
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
