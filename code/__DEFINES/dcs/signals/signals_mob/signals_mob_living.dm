@@ -139,3 +139,18 @@
 
 /// From /mob/living/unfriend() : (mob/living/old_friend)
 #define COMSIG_LIVING_UNFRIENDED "living_unfriended"
+
+/// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
+#define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
+
+/// From /obj/projectile/on_parry() : ()
+#define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
+
+/// From /turf/closed/mineral/gibtonite/defuse() : (det_time)
+#define COMSIG_LIVING_DEFUSED_GIBTONITE "living_defused_gibtonite"
+
+/// From /obj/item/kinetic_crusher/afterattack() : (mob/living/target, obj/item/kinetic_crusher/crusher)
+#define COMSIG_LIVING_CRUSHER_DETONATE "living_crusher_detonate"
+
+/// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
+#define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"

@@ -199,6 +199,8 @@
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
+	/// If this projectile has been parried before
+	var/parried = FALSE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -206,6 +208,7 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -375,6 +378,36 @@
 	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
+
+
+/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
+
+	if(isturf(loc))
+		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
+
+
+/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(user, PROJECTILE_PARRY_TRAIT) && isliving(user) && !parried)
+		on_parry(user, modifiers)
+
+
+/obj/projectile/proc/on_parry(mob/user, list/modifiers)
+	parried = TRUE
+	set_angle(dir2angle(user.dir) + rand(-8, 8))
+	speed *= 0.8 // Go 20% faster when parried
+	damage *= 1.15 // And do 15% more damage
+	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+	SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src)
+	user.playsound_local(get_turf(src), 'sound/machines/clockcult/ark_damage.ogg', 50, TRUE)
+	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
+	user.visible_message(span_warning("[user] expertly parries [src] with [user.p_their()] bare hand!"), span_warning("You parry [src] with your hand!"))
+
 
 /**
  * Called when the projectile hits something
@@ -740,6 +773,7 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
