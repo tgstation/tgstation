@@ -412,3 +412,41 @@
       can put an item inside of it
   kinneb:
   - imageadd: Recolours the Wirebrush (Again)
+2023-04-12:
+  13spacemen:
+  - qol: Unwrenching empty atmos pipes/devices is now INSTANT
+  - balance: Experimental syndicate teleporter's teleportation is no longer perfect,
+      it will cause the user to bleed a little. Luckily the detective can scan the
+      blood and find out who the big bad is, as long as he's quick.
+  DrDiasyl aka DrTuxedo#0931:
+  - imageadd: Judge robe and powdered wig got new sprites!
+  Hatterhat:
+  - rscadd: The Regal Condor can now have its name and description changed via pen,
+      like the detective's revolver.
+  - bugfix: The Regal Condor's magazines are actually visible, and therefore useful
+      for their intended purpose.
+  - bugfix: The contractor baton now only gives you up to 40 seconds of stuttering,
+      instead of making you stutter for 40 seconds more after every hit.
+  Helg2:
+  - qol: installed upgrades on cameras now show as blue text instead of plain white
+      text on examine.
+  - bugfix: You can now uproot and dig out plants with any shovel and not just spade.
+  JohnFulpWillard:
+  - bugfix: People immune to sleep will not fall asleep from N2O
+  LT3:
+  - bugfix: Tram doors no longer play 8 variations of the same sound simultaneously
+  ShizCalev:
+  - code_imp: Vareditting a light replacer's emagged status will now properly update
+      the item's name / appearance.
+  SyncIt21:
+  - refactor: remove unused turf var inside wallmount procs
+  - bugfix: broken rack sprite inside RCD UI
+  - bugfix: mounted RCD now lays plating over chasms and open turfs
+  - bugfix: station blueprints no longer expands & detects areas of non atmos adjacent
+      turfs.
+  Thunder12345:
+  - bugfix: The action button description for malf AI hostile station lockdown now
+      makes it clear that doors will be electrified.
+  necromanceranne:
+  - qol: Clarifies in various names and descriptions whether security equipment is
+      lethal, nonlethal, less-than-lethal or destructive.

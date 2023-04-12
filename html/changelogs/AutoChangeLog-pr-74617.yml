@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - qol: "Unwrenching empty atmos pipes/devices is now INSTANT"

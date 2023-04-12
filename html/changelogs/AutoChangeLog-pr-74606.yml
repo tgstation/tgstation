@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - balance: "Experimental syndicate teleporter's teleportation is no longer perfect, it will cause the user to bleed a little. Luckily the detective can scan the blood and find out who the big bad is, as long as he's quick."

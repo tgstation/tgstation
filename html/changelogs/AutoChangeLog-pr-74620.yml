@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "station blueprints no longer expands & detects areas of non atmos adjacent turfs."
