@@ -94,9 +94,9 @@
 	return ..()
 
 
-/datum/component/style/process(delta_time)
-	point_multiplier = round(max(point_multiplier - 0.2 * delta_time, 1), 0.1)
-	change_points(-5 * delta_time * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
+/datum/component/style/process(seconds_per_tick)
+	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
+	change_points(-5 * seconds_per_tick * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
 	update_screen()
 
 
