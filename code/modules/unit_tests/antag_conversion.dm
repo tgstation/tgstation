@@ -63,7 +63,7 @@
 
 	// Fail case
 	cult_a.ClickOn(convert_rune)
-	TEST_ASSERT(!IS_CULTIST(new_cultist), "New cultist became a cultist with only 1 person covnerting them.")
+	TEST_ASSERT(!IS_CULTIST(new_cultist), "New cultist became a cultist with only 1 person converting them.")
 	TEST_ASSERT_EQUAL(length(cult_team.members), 1, "Expected cult to have 1 member after the cultist failed to convert anyone.")
 	cult_a.next_move = 0
 	cult_a.next_click = 0
