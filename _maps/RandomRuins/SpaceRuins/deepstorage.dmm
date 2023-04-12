@@ -132,9 +132,8 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aE" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aG" = (
@@ -636,9 +635,8 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
@@ -779,9 +777,8 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cg" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "ch" = (
@@ -1062,10 +1059,9 @@
 /area/ruin/space/has_grav/deepstorage)
 "cQ" = (
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cS" = (
@@ -1432,11 +1428,10 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dW" = (
@@ -1487,9 +1482,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ei" = (
@@ -1716,10 +1710,9 @@
 	dir = 10
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eO" = (
@@ -1970,10 +1963,9 @@
 "fx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fy" = (
@@ -2019,10 +2011,9 @@
 "fE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/away_general_access,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fF" = (
@@ -2745,7 +2736,6 @@
 "Az" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
