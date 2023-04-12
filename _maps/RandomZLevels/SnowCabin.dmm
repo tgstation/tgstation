@@ -394,9 +394,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bo" = (
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bp" = (
@@ -3459,9 +3457,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nT" = (
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/cabin)

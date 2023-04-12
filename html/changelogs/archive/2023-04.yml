@@ -333,3 +333,120 @@
   - code_imp: Removes the brand new mosin subtype as it is now defunct.
   - bugfix: Fixes potentially exploitative code in the jamming proc. Cleans up that
       code while I'm at it.
+2023-04-10:
+  ChungusGamer666:
+  - rscadd: Being electrocuted will most of the time make you blurt out whatever you
+      were typing. This includes batons. Be careful.
+  - bugfix: Transforming into an android and then back into another species will no
+      longer leave you with permanent robotic limbs
+  FernandoJ8:
+  - bugfix: the contents of your pockets no longer drop onto the floor when your body
+      is randomized
+  Helg2:
+  - rscadd: Plasmamen will now spawn with proper masks depending on the job.
+  - qol: bsa parts can now be rotated.
+  - bugfix: fixed that you couldn't make improvised chem heater from constructed space
+      heater.
+  Jacquerel:
+  - balance: Carp can't teleport as far, but can do it more frequently. People who
+      piggyback through their rifts will be blocked from attacking for a short duration
+      (the same as the normal attack cooldown).
+  - balance: AI controlled carp will now be more selective about which objects they
+      smash. Player controlled carp (or carp directly instructed to attack objects
+      by people who have tamed them) can still attack whatever they like.
+  - bugfix: You can no longer escape the wrath of the honkmother by climbing onto
+      a cyborg.
+  - bugfix: Shooting a pair of piggybacked players with a penetrator round will penetrate
+      both players.
+  LT3:
+  - bugfix: Fixed tram malfunction event from using the wrong sprites
+  Melbert:
+  - bugfix: Admin spawned ghost portals no longer make all dead players considered
+      also as observers (they're two different things)
+  NamelessFairy:
+  - refactor: CTF has been entirely refactored.
+  - bugfix: Respawn times for CTF now work.
+  - qol: CTF players are alerted during control point games when one team is half
+      way to winning.
+  - admin: CTF instagib mode can now be toggled from the secrets panel.
+  - bugfix: TGC decks will no longer allow you to insert an illegal 31st card.
+  Somepan:
+  - rscadd: Added a message upon being hit by any spectral instruments
+  - balance: Reduced the stamina damage dealt by spectral instruments from 25 to 18
+      making it transform after 6 hits instead of 4
+  VileBeggar:
+  - balance: PKAs can now be attached to mining MODsuits.
+  Wallem:
+  - imageadd: Updates navbeacon sprite
+  Z Man Wit Z Plan:
+  - bugfix: fixed a couple things in the atmos asteroid ruin
+  jlsnow301:
+  - refactor: Tgui's state manager is in typescript now, huzzah
+  tf-4:
+  - spellcheck: The examine text for the carp tongue and gondola heart is more correct.
+  vinylspiders:
+  - rscadd: latex balloons can now be crafted using a latex glove and some cable.
+      You can fill them with air using a tank. They also have a new sound effect.
+  - imageadd: light tubes have a new inhand sprite
+  - bugfix: broken light tubes now actually have sharpness to them as they are basically
+      spikes of glass.
+  - refactor: refactored latex balloon code
+2023-04-11:
+  Comxy:
+  - bugfix: Sergeant Araneus cannot spawn from gold slimes anymore.
+  Jolly:
+  - bugfix: Maps internally had the code for the "directional" windows altered a bit.
+      If you see stacked window panes or things look incorrectly, please file a bug
+      report as that isn't intentional!!
+  Moth-lantern:
+  - imageadd: Nanotransen has made uniform changes to the robotics lab, modernizing
+      their wardrobe.
+  Profakos:
+  - refactor: Refactored navigational beacons, making them constructable, deconstructable,
+      and generally easier to use
+  Singul0:
+  - bugfix: asteroid-based space ruins (waystation, the outlet) now has asteroids
+      below their plating!
+  flowercuco:
+  - qol: material components (such as autolathes) have contextual screentips if you
+      can put an item inside of it
+  kinneb:
+  - imageadd: Recolours the Wirebrush (Again)
+2023-04-12:
+  13spacemen:
+  - qol: Unwrenching empty atmos pipes/devices is now INSTANT
+  - balance: Experimental syndicate teleporter's teleportation is no longer perfect,
+      it will cause the user to bleed a little. Luckily the detective can scan the
+      blood and find out who the big bad is, as long as he's quick.
+  DrDiasyl aka DrTuxedo#0931:
+  - imageadd: Judge robe and powdered wig got new sprites!
+  Hatterhat:
+  - rscadd: The Regal Condor can now have its name and description changed via pen,
+      like the detective's revolver.
+  - bugfix: The Regal Condor's magazines are actually visible, and therefore useful
+      for their intended purpose.
+  - bugfix: The contractor baton now only gives you up to 40 seconds of stuttering,
+      instead of making you stutter for 40 seconds more after every hit.
+  Helg2:
+  - qol: installed upgrades on cameras now show as blue text instead of plain white
+      text on examine.
+  - bugfix: You can now uproot and dig out plants with any shovel and not just spade.
+  JohnFulpWillard:
+  - bugfix: People immune to sleep will not fall asleep from N2O
+  LT3:
+  - bugfix: Tram doors no longer play 8 variations of the same sound simultaneously
+  ShizCalev:
+  - code_imp: Vareditting a light replacer's emagged status will now properly update
+      the item's name / appearance.
+  SyncIt21:
+  - refactor: remove unused turf var inside wallmount procs
+  - bugfix: broken rack sprite inside RCD UI
+  - bugfix: mounted RCD now lays plating over chasms and open turfs
+  - bugfix: station blueprints no longer expands & detects areas of non atmos adjacent
+      turfs.
+  Thunder12345:
+  - bugfix: The action button description for malf AI hostile station lockdown now
+      makes it clear that doors will be electrified.
+  necromanceranne:
+  - qol: Clarifies in various names and descriptions whether security equipment is
+      lethal, nonlethal, less-than-lethal or destructive.

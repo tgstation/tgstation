@@ -9,9 +9,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space,
 /area/shuttle/escape)
 "ap" = (
@@ -28,7 +26,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "as" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space,
 /area/shuttle/escape)
 "aF" = (
@@ -43,9 +41,8 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/space/basic,
@@ -69,15 +66,13 @@
 /turf/closed/wall,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/space/basic,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/structure/lattice,
@@ -109,9 +104,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/space/basic,
@@ -150,15 +144,12 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bx" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -173,15 +164,11 @@
 /area/shuttle/escape)
 "bC" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -199,10 +186,8 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "bT" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
 /turf/open/space,
 /area/shuttle/escape)
@@ -260,9 +245,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /turf/open/space,
 /area/shuttle/escape)
@@ -290,12 +273,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dX" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
 /area/shuttle/escape)
 "dY" = (
@@ -366,10 +345,8 @@
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "fm" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space,
 /area/shuttle/escape)
 "fn" = (
@@ -406,18 +383,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space,
 /area/shuttle/escape)
 "fL" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space,
 /area/shuttle/escape)
 "fT" = (
@@ -436,10 +409,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "gl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "gp" = (
@@ -458,15 +429,12 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "hq" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hC" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -500,12 +468,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "hV" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/space/basic,
@@ -675,11 +641,8 @@
 /area/shuttle/escape)
 "jt" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -689,12 +652,8 @@
 /area/shuttle/escape)
 "jG" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jR" = (
@@ -702,10 +661,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "jS" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "jU" = (
@@ -714,7 +671,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "jW" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/chair/wood{
 	dir = 4
 	},
@@ -784,9 +741,7 @@
 /area/shuttle/escape)
 "kJ" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space,
 /area/shuttle/escape)
 "kM" = (
@@ -965,8 +920,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nQ" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/space/basic,
@@ -988,8 +942,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "om" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/space,
@@ -1080,12 +1033,8 @@
 /area/shuttle/escape)
 "pr" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "pv" = (
@@ -1187,7 +1136,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "qA" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "qC" = (
@@ -2478,9 +2427,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "IR" = (
@@ -2513,9 +2460,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jl" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space,
 /area/shuttle/escape)
 "Jp" = (
@@ -2773,8 +2718,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ms" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/space,
@@ -2821,12 +2765,10 @@
 /area/shuttle/escape)
 "Nb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -2943,9 +2885,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ov" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "OB" = (
@@ -2978,16 +2918,13 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "OY" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Pb" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -3019,14 +2956,11 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Pz" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "PA" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
@@ -3364,8 +3298,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SU" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -3413,7 +3346,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ti" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
 	},
@@ -3434,7 +3367,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Tp" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -3481,9 +3414,7 @@
 /area/shuttle/escape)
 "Ua" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Ud" = (
@@ -3606,9 +3537,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "VF" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
@@ -3618,8 +3548,7 @@
 /area/shuttle/escape)
 "VM" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3732,9 +3661,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Xs" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -3747,8 +3674,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xx" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -3834,14 +3760,11 @@
 /area/shuttle/escape)
 "Ye" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Ym" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
 /turf/open/space/basic,
@@ -3866,12 +3789,10 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "YU" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/space/basic,
@@ -3918,9 +3839,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Zn" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red,

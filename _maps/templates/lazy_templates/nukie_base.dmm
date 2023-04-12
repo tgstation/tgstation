@@ -233,7 +233,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
 "do" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -982,7 +982,7 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "lH" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -1417,9 +1417,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "pY" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
@@ -1785,7 +1783,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "ts" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -2144,7 +2142,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "yy" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -2242,7 +2240,7 @@
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "zJ" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -2460,9 +2458,7 @@
 /turf/closed/wall/mineral/wood,
 /area/centcom/syndicate_mothership/control)
 "Ce" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
@@ -3383,8 +3379,7 @@
 	name = "Toilet Door";
 	opacity = 1
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1;
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north{
 	name = "Frosted Window";
 	opacity = 1
 	},
@@ -4033,7 +4028,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "VA" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Tinted Window";
 	opacity = 1
 	},
@@ -4226,7 +4221,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "XD" = (
-/obj/structure/window/reinforced/survival_pod{
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
 	name = "Frosted Window";
 	opacity = 1
 	},

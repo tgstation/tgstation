@@ -838,6 +838,24 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
+/**
+ * Checks the atom's loc and calls update_held_items on it if it is a mob.
+ *
+ * This should only be used in situations when you are unable to use /datum/element/update_icon_updates_onmob for whatever reason.
+ * Check code/datums/elements/update_icon_updates_onmob.dm before using this. Adding that to the atom and calling update_appearance will work for most cases.
+ *
+ * Arguments:
+ * * mob/target - The mob to update the icons of. Optional argument, use if the atom's loc is not the mob you want to update.
+ */
+/atom/proc/update_inhand_icon(mob/target = loc)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!istype(target))
+		return
+	
+	target.update_held_items()
+	
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
+
 /// Handles updates to greyscale value updates.
 /// The colors argument can be either a list or the full color string.
 /// Child procs should call parent last so the update happens after all changes.
