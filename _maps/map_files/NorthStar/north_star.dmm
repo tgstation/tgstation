@@ -50747,7 +50747,6 @@
 	name = "Maintenance Hatch"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
