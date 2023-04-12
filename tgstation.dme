@@ -543,6 +543,7 @@
 #include "code\controllers\configuration\entries\general.dm"
 #include "code\controllers\configuration\entries\interview.dm"
 #include "code\controllers\configuration\entries\lua.dm"
+#include "code\controllers\configuration\entries\monkestation.dm"
 #include "code\controllers\configuration\entries\resources.dm"
 #include "code\controllers\subsystem\achievements.dm"
 #include "code\controllers\subsystem\addiction.dm"

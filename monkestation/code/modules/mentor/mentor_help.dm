@@ -1,4 +1,5 @@
 
+
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
@@ -24,6 +25,15 @@
 		to_chat(X, mentor_msg)
 
 	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
+
+
+	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+	if(regular_webhook_url)
+		var/extra_message = CONFIG_GET(string/mhelp_message)
+		var/datum/discord_embed/embed = format_mhelp_embed(mentor_msg)
+		embed.content = extra_message
+		send2mentorchat_webhook(embed, key)
+
 	return
 
 /proc/get_mentor_counts()
@@ -97,3 +107,63 @@
 		. += " (<a href='?_src_=mentor;mentor_follow=[REF(M)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .
+
+/proc/format_mhelp_embed(message, ckey)
+	var/datum/discord_embed/embed = new()
+	embed.title = "Mentor Help"
+	embed.description = "<byond://[world.internet_address]:[world.port]>"
+	embed.author = key_name(ckey)
+	var/round_state
+	var/admin_text
+	switch(SSticker.current_state)
+		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
+			round_state = "Round has not started"
+		if(GAME_STATE_PLAYING)
+			round_state = "Round is ongoing."
+			if(SSshuttle.emergency.getModeStr())
+				round_state += "\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
+				if(SSticker.emergency_reason)
+					round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
+		if(GAME_STATE_FINISHED)
+			round_state = "Round has ended"
+	var/mentor_count = get_mentor_counts()
+	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
+	if(mentor_count)
+		admin_text = "**Mentors**:[mentor_count]"
+	embed.fields = list(
+		"CKEY" = ckey,
+		"PLAYERS" = player_count,
+		"ROUND STATE" = round_state,
+		"ROUND ID" = GLOB.round_id,
+		"ROUND TIME" = ROUND_TIME(),
+		"MESSAGE" = message,
+		"ADMINS" = admin_text,
+	)
+	return embed
+
+/proc/send2mentorchat_webhook(message_or_embed, urgent)
+	var/webhook = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+
+	if(!webhook)
+		return
+	var/list/webhook_info = list()
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
+	if(CONFIG_GET(string/mentorhelp_webhook_name))
+		webhook_info["username"] = CONFIG_GET(string/mentorhelp_webhook_name)
+	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
+		webhook_info["avatar_url"] = CONFIG_GET(string/mentorhelp_webhook_pfp)
+	// Uncomment when servers are moved to TGS4
+	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
+	request.begin_async()
