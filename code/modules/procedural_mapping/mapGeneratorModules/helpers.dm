@@ -10,12 +10,12 @@
 	if(!mother)
 		return
 	var/list/map = mother.map
-	for(var/turf/T in map)
-		SSair.remove_from_active(T)
-	for(var/turf/open/T in map)
-		if(T.air)
-			T.air = T.create_gas_mixture()
-		SSair.add_to_active(T, TRUE)
+	for(var/turf/open/target_turf in map)
+		if(target_turf.blocks_air)
+			continue
+		var/datum/gas_mixture/initial_mixture = SSair.parse_gas_string(target_turf.initial_gas_mix, /datum/gas_mixture/turf)
+		target_turf.copy_air(initial_mixture)
+		target_turf.update_visuals()
 
 /datum/map_generator_module/bottom_layer/massdelete
 	spawnableAtoms = list()
