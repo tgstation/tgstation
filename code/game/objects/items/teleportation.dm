@@ -358,7 +358,7 @@
 	return TRUE
 
 /obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
-	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
+	if(SPT_PROB((7 + charges), seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
@@ -366,8 +366,10 @@
 		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
-	if(!prob(50/severity))
-		return
+	if(severity == EMP_HEAVY)
+		visible_message(span_danger("A shower of sparks fly out of [src]!"))
+		do_sparks(5, 1, src)
+		parallel_teleport_distance = max(parallel_teleport_distance - 1, 0)
 	var/teleported_something = FALSE
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
@@ -460,12 +462,25 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		make_bloods(mobloc, emergency_destination, user)
+		make_bloods(mobloc, emergency_destination, user, bleed_amount = 5)
+		apply_panic_punishment(user, destination, emergency_destination)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
+
+///Apply punishment based on how far the panic teleport loc is from the original destination
+/obj/item/syndicate_teleporter/proc/apply_panic_punishment(mob/living/carbon/user, turf/target_destination, turf/panic_destination)
+	switch(abs(target_destination.x - panic_destination.x))
+		if(1)
+			user.bleed(5)
+		if(2)
+			user.bleed(10)
+			user.Knockdown(3 SECONDS)
+		if(3)
+			user.bleed(15)
+			user.Paralyze(3 SECONDS)
 
 ///Force move victim to destination, explode destination, drop all victim's items, gib them
 /obj/item/syndicate_teleporter/proc/get_fragged(mob/living/victim, turf/destination, not_holding_tele = FALSE)
@@ -493,11 +508,11 @@
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 ///Bleed and make blood splatters at tele start and end points
-/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user, bleed_amount = 10)
 	var/mob/living/carbon/carbon_user = user
 	carbon_user.add_splatter_floor(old_location)
 	carbon_user.add_splatter_floor(new_location)
-	carbon_user.bleed(10)
+	carbon_user.bleed(bleed_amount)
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
