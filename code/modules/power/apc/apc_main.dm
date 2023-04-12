@@ -109,7 +109,7 @@
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
-	/// Used for apc helper called cutted_AI_wire to make apc's wore responsible for ai connectione mended.
+	/// Used for apc helper called cut_AI_wire to make apc's wore responsible for ai connectione mended.
 	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
 	var/unlocked = FALSE
