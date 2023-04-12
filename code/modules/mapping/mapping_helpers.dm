@@ -255,13 +255,16 @@
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
-		return
+		return INITIALIZE_HINT_QDEL
 
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
 	if(isnull(target))
-		log_mapping("[src] failed to find an apc at [AREACOORD(src)]")
+		var/area/target_area = get_area(target)
+		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
+	
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/apc/LateInitialize()
 	. = ..()
