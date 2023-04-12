@@ -32,7 +32,7 @@
 	next_midround_injection = null
 	forced_injection = FALSE
 
-	if(GLOB.alive_player_list.len * 0.5 <= GLOB.antagonists.len)
+	if(GLOB.player_list.len * 0.5 <= GLOB.antagonists.len)
 		log_dynamic_and_announce("A midround ruleset tried to roll, but over half the players have antag status.")
 		return
 
