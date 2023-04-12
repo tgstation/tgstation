@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "The contractor baton now only gives you up to 40 seconds of stuttering, instead of making you stutter for 40 seconds more after every hit."
