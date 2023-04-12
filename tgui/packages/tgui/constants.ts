@@ -300,7 +300,7 @@ const GASES = [
 
 // Returns gas label based on gasId
 export const getGasLabel = (gasId: string, fallbackValue?: string) => {
-  const gasSearchString = gasId?.toLowerCase();
+  const gasSearchString = gasId.toLowerCase();
   const gas = GASES.find(
     (gas) =>
       gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString
@@ -310,8 +310,7 @@ export const getGasLabel = (gasId: string, fallbackValue?: string) => {
 
 // Returns gas color based on gasId
 export const getGasColor = (gasId: string) => {
-  console.log(!gasId && 'no gasId, fallbackValue:');
-  const gasSearchString = gasId?.toLowerCase();
+  const gasSearchString = gasId.toLowerCase();
   const gas = GASES.find(
     (gas) =>
       gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString
@@ -321,7 +320,7 @@ export const getGasColor = (gasId: string) => {
 
 // Returns gas object based on gasId
 export const getGasFromId = (gasId: string): Gas | undefined => {
-  const gasSearchString = gasId?.toLowerCase();
+  const gasSearchString = gasId.toLowerCase();
   const gas = GASES.find(
     (gas) =>
       gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString

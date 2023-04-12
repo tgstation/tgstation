@@ -9,7 +9,7 @@ import { HypertorusTemperatures } from './Temperatures';
 import { Window } from 'tgui/layouts';
 import { useBackend } from 'tgui/backend';
 
-type Data = {
+export type HypertorusData = {
   start_power: number;
   start_cooling: number;
   start_fuel: number;
@@ -45,15 +45,13 @@ export type HypertorusFuel = {
 };
 
 const HypertorusMainControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<HypertorusData>(context);
   const {
     start_power,
     start_cooling,
     start_fuel,
     start_moderator,
     power_level,
-    selected,
-    selectable_fuel,
     base_max_temperature,
   } = data;
 
@@ -91,8 +89,6 @@ const HypertorusMainControls = (props, context) => {
           baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
           onRecipe={(id) => act('fuel', { mode: id })}
-          selectableFuels={selectable_fuel}
-          selectedFuelId={selected}
         />
       </Collapsible>
     </Section>
