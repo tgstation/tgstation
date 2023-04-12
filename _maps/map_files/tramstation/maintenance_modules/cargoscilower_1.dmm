@@ -361,8 +361,8 @@
 "EL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
-/obj/structure/window/spawner/east,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "Fj" = (

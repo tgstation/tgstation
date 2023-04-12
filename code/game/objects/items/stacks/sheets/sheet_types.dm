@@ -510,9 +510,13 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	var/pull_effort = 10
+	var/pull_effort = 1 SECONDS
 	var/loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list(/datum/reagent/cellulose = 20)
+
+/obj/item/stack/sheet/cotton/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/loomable, resulting_item = loom_result, loom_time = pull_effort)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"

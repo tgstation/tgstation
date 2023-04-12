@@ -8,7 +8,7 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
 
-/datum/ai_behavior/basic_melee_attack/dog/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/dog/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	var/mob/living/living_pawn = controller.pawn
 	if(!(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK))) // Void puppies can attack from inside bags
@@ -24,11 +24,11 @@
 		return
 
 	if (!in_range(living_pawn, target))
-		growl_at(living_pawn, target, delta_time)
+		growl_at(living_pawn, target, seconds_per_tick)
 		return
 
 	if(!controller.blackboard[BB_DOG_HARASS_HARM])
-		paw_harmlessly(living_pawn, target, delta_time)
+		paw_harmlessly(living_pawn, target, seconds_per_tick)
 		return
 
 	// Give Ian some teeth
@@ -43,18 +43,18 @@
 	living_pawn.melee_damage_upper = old_melee_upper
 
 /// Swat at someone we don't like but won't hurt
-/datum/ai_behavior/basic_melee_attack/dog/proc/paw_harmlessly(mob/living/living_pawn, atom/target, delta_time)
-	if(!DT_PROB(20, delta_time))
+/datum/ai_behavior/basic_melee_attack/dog/proc/paw_harmlessly(mob/living/living_pawn, atom/target, seconds_per_tick)
+	if(!SPT_PROB(20, seconds_per_tick))
 		return
 	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
 
 /// Let them know we mean business
-/datum/ai_behavior/basic_melee_attack/dog/proc/growl_at(mob/living/living_pawn, atom/target, delta_time)
-	if(!DT_PROB(15, delta_time))
+/datum/ai_behavior/basic_melee_attack/dog/proc/growl_at(mob/living/living_pawn, atom/target, seconds_per_tick)
+	if(!SPT_PROB(15, seconds_per_tick))
 		return
 	living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [target]!")
-	if(!DT_PROB(40, delta_time))
+	if(!SPT_PROB(40, seconds_per_tick))
 		return
 	playsound(living_pawn, pick('sound/creatures/dog/growl1.ogg', 'sound/creatures/dog/growl2.ogg'), 50, TRUE, -1)

@@ -83,7 +83,7 @@
 	return TRUE
 
 //BYPASS CHECKS ALSO PREVENTS BURNOUT!
-/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, targeted = FALSE, mob/user)
+/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
@@ -91,7 +91,7 @@
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
 	for(var/mob/living/carbon/nearby_carbon in targets)
-		flash_carbon(nearby_carbon, user, confusion_duration = confusion_duration, targeted = targeted, generic_message = TRUE)
+		flash_carbon(nearby_carbon, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -149,7 +149,7 @@
 	var/deviation = calculate_deviation(flashed, user || src)
 
 	if(user)
-		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_FLASHED_CARBON, flashed, src, deviation)
+		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_PRE_FLASHED_CARBON, flashed, src, deviation)
 		if(sigreturn & STOP_FLASH)
 			return
 
@@ -171,6 +171,8 @@
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
+
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 		else

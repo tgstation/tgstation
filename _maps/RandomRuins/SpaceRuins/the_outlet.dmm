@@ -195,6 +195,10 @@
 /obj/item/pen,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"fa" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/the_outlet/employeesection)
 "fk" = (
 /obj/structure/cable,
 /obj/structure/sink/directional/west,
@@ -501,13 +505,9 @@
 /obj/item/clothing/shoes/cowboy/black,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/gloves/fingerless,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "mE" = (
@@ -532,13 +532,9 @@
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/shoes/sneakers/blue,
 /obj/item/clothing/glasses/regular,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "nD" = (
@@ -580,13 +576,9 @@
 /obj/item/clothing/under/costume/dutch,
 /obj/item/clothing/suit/costume/poncho,
 /obj/item/clothing/mask/cigarette/cigar,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "ps" = (
@@ -594,13 +586,9 @@
 /obj/item/clothing/under/misc/bouncer,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/shoes/laceup,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "pt" = (
@@ -1020,6 +1008,10 @@
 	},
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
+"yv" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
 "yx" = (
 /obj/item/toy/plush/narplush,
 /obj/effect/decal/cleanable/crayon,
@@ -1548,13 +1540,9 @@
 /obj/item/clothing/gloves/color/brown,
 /obj/item/clothing/head/beret,
 /obj/item/clothing/suit/costume/gothcoat,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "KV" = (
@@ -1716,6 +1704,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"NU" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/mineral/random,
+/area/ruin/space)
 "NY" = (
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-143"
@@ -1723,6 +1715,10 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"Od" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "Oy" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/iron/white,
@@ -1838,19 +1834,19 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
+"Rs" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "Rx" = (
 /obj/structure/rack,
 /obj/item/clothing/head/costume/papersack,
 /obj/item/clothing/under/rank/medical/scrubs/blue,
 /obj/item/scalpel,
 /obj/item/clothing/shoes/sneakers/yellow,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "RB" = (
@@ -2641,7 +2637,7 @@ DC
 Nb
 Ra
 Ef
-UF
+Rs
 sF
 OL
 Ps
@@ -2655,7 +2651,7 @@ yg
 jg
 Ts
 Ts
-uE
+fa
 Ts
 Ts
 uE
@@ -3388,7 +3384,7 @@ od
 zS
 FG
 od
-od
+yv
 od
 AV
 Sv
@@ -3519,7 +3515,7 @@ qy
 Aa
 Gu
 re
-Gu
+Od
 Gu
 RN
 UY
@@ -3847,7 +3843,7 @@ RN
 Er
 Er
 Er
-Er
+NU
 Er
 Er
 Er

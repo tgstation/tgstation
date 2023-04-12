@@ -30,8 +30,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
 
-/obj/item/match/process(delta_time)
-	smoketime -= delta_time * (1 SECONDS)
+/obj/item/match/process(seconds_per_tick)
+	smoketime -= seconds_per_tick * (1 SECONDS)
 	if(smoketime <= 0)
 		matchburnout()
 	else
@@ -331,7 +331,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
 
-/obj/item/clothing/mask/cigarette/process(delta_time)
+/obj/item/clothing/mask/cigarette/process(seconds_per_tick)
 	var/mob/living/user = isliving(loc) ? loc : null
 	user?.ignite_mob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
@@ -340,7 +340,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			extinguish()
 			return
 
-	smoketime -= delta_time * (1 SECONDS)
+	smoketime -= seconds_per_tick * (1 SECONDS)
 	if(smoketime <= 0)
 		put_out(user)
 		return
@@ -1120,7 +1120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/clothing/mask/vape/process(delta_time)
+/obj/item/clothing/mask/vape/process(seconds_per_tick)
 	var/mob/living/M = loc
 
 	if(isliving(loc))
