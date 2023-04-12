@@ -149,7 +149,7 @@ export const HypertorusRecipes = (props: RecipeProps) => {
   const {
     enableRecipeSelection,
     onRecipe,
-    selectableFuels,
+    selectableFuels = [],
     selectedFuelId,
     ...rest
   } = props;
@@ -198,9 +198,6 @@ export const HypertorusRecipes = (props: RecipeProps) => {
           .filter((d) => d.id)
           .map((recipe) => {
             const active = recipe.id === selectedFuelId;
-            const requirements = recipe.requirements || [];
-            const fusion_byproducts = recipe.fusion_byproducts || [];
-            const product_gases = recipe.product_gases || [];
 
             return (
               <MemoRow key={recipe.id} active={active}>

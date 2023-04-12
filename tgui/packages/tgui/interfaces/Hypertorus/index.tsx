@@ -1,6 +1,7 @@
 import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
 import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 
+import { BooleanLike } from 'common/react';
 import { HypertorusGases } from './Gases';
 import { HypertorusParameters } from './Parameters';
 import { HypertorusRecipes } from './Recipes';
@@ -24,12 +25,23 @@ export type HypertorusGas = {
   amount: number;
 };
 
+export type HypertorusFilter = {
+  gas_id: string;
+  gas_name: string;
+  enabled: BooleanLike;
+};
+
 export type HypertorusFuel = {
-  id: string;
+  id: string | null;
   requirements: string[];
-  temperature_multiplier: number;
   fusion_byproducts: string[];
   product_gases: string[];
+  recipe_cooling_multiplier: number;
+  recipe_heating_multiplier: number;
+  energy_loss_multiplier: number;
+  fuel_consumption_multiplier: number;
+  gas_production_multiplier: number;
+  temperature_multiplier: number;
 };
 
 const HypertorusMainControls = (props, context) => {
@@ -46,9 +58,9 @@ const HypertorusMainControls = (props, context) => {
   } = data;
 
   return (
-    <Section title="Startup">
+    <Section>
       <Stack>
-        <Stack.Item color="label">
+        <Stack.Item color="label" mb={1}>
           {'Start power: '}
           <Button
             disabled={power_level > 0}

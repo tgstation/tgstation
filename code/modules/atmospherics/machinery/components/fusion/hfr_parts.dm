@@ -209,8 +209,6 @@
 		gasid_list += initial(gas.id)
 	return gasid_list
 
-
-
 /obj/machinery/hypertorus/interface/ui_static_data()
 	var/data = list()
 	data["base_max_temperature"] = FUSION_MAXIMUM_TEMPERATURE
@@ -322,10 +320,11 @@
 
 	return data
 
-/obj/machinery/hypertorus/interface/ui_act(action, params)
+/obj/machinery/hypertorus/interface/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("start_power")
 			connected_core.start_power = !connected_core.start_power
@@ -392,6 +391,7 @@
 			connected_core.linked_output.update_parents()
 			connected_core.linked_moderator.update_parents()
 			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			ui.send_update()
 			. = TRUE
 		if("cooling_volume")
 			var/cooling_volume = text2num(params["cooling_volume"])

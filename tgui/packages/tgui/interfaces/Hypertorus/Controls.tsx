@@ -1,8 +1,8 @@
 import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
-import { FilterGas, getGasLabel } from 'tgui/constants';
 import { HelpDummy, HoverHelp } from './helpers';
 
 import { BooleanLike } from 'common/react';
+import { HypertorusFilter } from '.';
 import { useBackend } from 'tgui/backend';
 
 type ComboProps = {
@@ -28,9 +28,9 @@ type ControlsData = {
 };
 
 type WasteData = {
-  filter_types: FilterGas[];
+  filter_types: HypertorusFilter[];
   mod_filtering_rate: number;
-  waste_remove: boolean;
+  waste_remove: BooleanLike;
 };
 
 /*
@@ -241,18 +241,17 @@ export const HypertorusWasteRemove = (props, context) => {
               Filter from moderator mix:
             </>
           }>
-          {filter_types?.map(({ gasId, gasName, enabled }) => (
-            <Button
-              key={gasId}
-              icon={enabled ? 'check-square-o' : 'square-o'}
-              selected={enabled}
-              content={getGasLabel(gasId, gasName)}
+          {filter_types.map(({ gas_id, gas_name, enabled }) => (
+            <Button.Checkbox
+              key={gas_id}
+              checked={enabled}
               onClick={() =>
                 act('filter', {
-                  mode: gasId,
+                  mode: gas_id,
                 })
-              }
-            />
+              }>
+              {gas_name}
+            </Button.Checkbox>
           ))}
         </LabeledList.Item>
       </LabeledList>
