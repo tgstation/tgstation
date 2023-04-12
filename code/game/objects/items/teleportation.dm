@@ -477,10 +477,10 @@
 			user.bleed(5)
 		if(2)
 			user.bleed(10)
-			user.Knockdown(3 SECONDS)
+			user.Knockdown(1 SECONDS)
 		if(3)
 			user.bleed(15)
-			user.Paralyze(3 SECONDS)
+			user.Paralyze(2 SECONDS)
 
 ///Force move victim to destination, explode destination, drop all victim's items, gib them
 /obj/item/syndicate_teleporter/proc/get_fragged(mob/living/victim, turf/destination, not_holding_tele = FALSE)
