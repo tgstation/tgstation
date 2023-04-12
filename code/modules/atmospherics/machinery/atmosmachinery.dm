@@ -371,6 +371,15 @@
 	var/unsafe_wrenching = FALSE
 	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 	var/empty_pipe = FALSE
+	if(istype(src, /obj/machinery/atmospherics/components))
+		var/list/datum/gas_mixture/all_gas_mixes = return_analyzable_air()
+		var/empty_mixes = 0
+		for(var/gas_mix_number in 1 to device_type)
+			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
+			if(!(gas_mix.total_moles() > 0))
+				empty_mixes++
+		if(empty_mixes == device_type)
+			empty_pipe = TRUE
 	if(!(int_air.total_moles() > 0))
 		empty_pipe = TRUE
 
