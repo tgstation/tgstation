@@ -103,7 +103,6 @@
 	manifest = null
 	update_appearance()
 
-
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(opened && lid_icon_state)
