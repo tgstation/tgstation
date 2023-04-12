@@ -258,7 +258,7 @@
 		return
 
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
-	if(isnull(!target))
+	if(isnull(target))
 		log_mapping("[src] failed to find an apc at [AREACOORD(src)]")
 	else
 		payload(target)
@@ -270,7 +270,7 @@
 	if(isnull(target))
 		qdel(src)
 		return
-	if(target.cutted_AI_wire)
+	if(target.cut_AI_wire)
 		target.wires.cut(WIRE_AI)
 	if(target.cell_5k)
 		target.install_cell_5k()
@@ -287,26 +287,26 @@
 	if(target.full_charge)
 		target.set_full_charge()
 	if(target.cell_5k && target.cell_10k)
-		CRASH("Tried to combine non-combinale cell_5k and cell_10k apc helpers!")
+		CRASH("Tried to combine non-combinable cell_5k and cell_10k APC helpers!")
 	if(target.syndicate_access && target.away_general_access)
-		CRASH("Tried to combine non-combinale syndicate_access and away_general_access apc helpers!")
+		CRASH("Tried to combine non-combinable syndicate_access and away_general_access APC helpers!")
 	if(target.no_charge && target.full_charge)
-		CRASH("Tried to combine non-combinale no_charge and full_charge apc helpers!")
+		CRASH("Tried to combine non-combinable no_charge and full_charge APC helpers!")
 	target.update_appearance()
 	qdel(src)
 
 /obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/target)
 	return
 
-/obj/effect/mapping_helpers/apc/cutted_AI_wire
-	name = "apc ai wire disabled helper"
-	icon_state = "apc_cutted_AIwire_helper"
+/obj/effect/mapping_helpers/apc/cut_AI_wire
+	name = "apc AI wire mended helper"
+	icon_state = "apc_cut_AIwire_helper"
 
-/obj/effect/mapping_helpers/apc/cutted_AI_wire/payload(obj/machinery/power/apc/target)
-	if(target.cutted_AI_wire)
+/obj/effect/mapping_helpers/apc/cut_AI_wire/payload(obj/machinery/power/apc/target)
+	if(target.cut_AI_wire)
 		var/area/apc_area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to mend the AI wire on the [target] but it's already cut!")
-	target.cutted_AI_wire = TRUE
+	target.cut_AI_wire = TRUE
 
 /obj/effect/mapping_helpers/apc/cell_5k
 	name = "apc 5k cell helper"

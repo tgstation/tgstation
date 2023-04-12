@@ -110,7 +110,7 @@
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
 	/// Used for apc helper called cutted_AI_wire to make apc's wore responsible for ai connectione mended.
-	var/cutted_AI_wire = FALSE
+	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
 	var/unlocked = FALSE
 	/// Used for apc helper called syndicate_access to make apc's required access syndicate_access.
@@ -671,47 +671,33 @@
 		update_appearance(UPDATE_ICON)
 		update()
 
-/**
- * Used for cell_5k apc helper, which installs 5k cell into apc.
- */
+///Used for cell_5k apc helper, which installs 5k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_5k()
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
 	cell = new cell_type(src)
 
-/**
- * Used for cell_10k apc helper, which installs 10k cell into apc.
- */
+/// Used for cell_10k apc helper, which installs 10k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_10k()
 	cell_type = /obj/item/stock_parts/cell/high
 	cell = new cell_type(src)
 
-/**
- * Used for unlocked apc helper, which unlocks the apc.
- */
+/// Used for unlocked apc helper, which unlocks the apc.
 /obj/machinery/power/apc/proc/unlock()
 	locked = FALSE
 
-/**
- * Used for syndicate_access apc helper, which sets apc's required access to syndicate_access.
- */
+/// Used for syndicate_access apc helper, which sets apc's required access to syndicate_access.
 /obj/machinery/power/apc/proc/give_syndicate_access()
 	req_access = list(ACCESS_SYNDICATE)
 
-/**
- * Used for away_general_access apc helper, which set apc's required access to away_general_access.
- */
+///Used for away_general_access apc helper, which set apc's required access to away_general_access.
 /obj/machinery/power/apc/proc/give_away_general_access()
 	req_access = list(ACCESS_AWAY_GENERAL)
 
-/**
- * Used for no_charge apc helper, which sets apc charge to 0%.
- */
+/// Used for no_charge apc helper, which sets apc charge to 0%.
 /obj/machinery/power/apc/proc/set_no_charge()
 	cell.charge = 0
 
-/**
- * Used for full_charge apc helper, which sets apc charge to 100%.
- */
+/// Used for full_charge apc helper, which sets apc charge to 100%.
 /obj/machinery/power/apc/proc/set_full_charge()
 	cell.charge = 100
 
