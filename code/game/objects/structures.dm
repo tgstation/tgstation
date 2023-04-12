@@ -10,7 +10,7 @@
 	pass_flags_self = PASSSTRUCTURE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	armor_type = /datum/armor/obj_structure
-	burning_particles = /particles/smoke
+	burning_particles = /particles/smoke/burning
 	var/broken = FALSE
 
 /datum/armor/obj_structure
