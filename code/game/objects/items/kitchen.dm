@@ -160,6 +160,21 @@
 	create_reagents(5, INJECTABLE|OPENCONTAINER|DUNKABLE)
 	register_item_context()
 
+/obj/item/kitchen/spoon/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+
+/obj/item/kitchen/spoon/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
+
+/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents, ...)
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_OVERLAYS)
+	return NONE
+
 /obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(target.is_open_container())
 		context[SCREENTIP_CONTEXT_LMB] = "Empty spoonful"
@@ -203,7 +218,6 @@
 
 	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
 	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
-	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, params)
@@ -224,7 +238,6 @@
 		attacked_atom.balloon_alert(user, "spoon partially emptied")
 	else
 		attacked_atom.balloon_alert(user, "it's full!")
-	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
@@ -243,7 +256,6 @@
 		attacked_atom.balloon_alert(user, "grabbed spoonful")
 	else
 		attacked_atom.balloon_alert(user, "spoon is full!")
-	update_appearance(UPDATE_OVERLAYS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic
