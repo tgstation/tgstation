@@ -80,6 +80,7 @@
 	pixel_y = 0
 
 /obj/effect/holy/Initialize()
+	. = ..()
 	playsound(src,'monkestation/sound/misc/adminspawn.ogg',50,1)
 	QDEL_IN(src, 20)
-	..()
+	return INITIALIZE_HINT_NORMAL
