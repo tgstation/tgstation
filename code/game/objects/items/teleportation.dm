@@ -357,8 +357,8 @@
 	attempt_teleport(user = user, triggered_by_emp = FALSE)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && charges < max_charges)
+/obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
+	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
