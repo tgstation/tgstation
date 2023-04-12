@@ -29,6 +29,7 @@ GLOBAL_PROTECT(mentors)
             GLOB.mentors |= src // don't add admins to this list too.
         mentor_datum.owner = src
         add_mentor_verbs()
+
 /proc/log_mentor(text)
     GLOB.mentorlog.Add(text)
     WRITE_LOG(GLOB.world_game_log, "MENTOR: [text]")
