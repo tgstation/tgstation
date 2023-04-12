@@ -217,12 +217,7 @@
 
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//           LATEJOIN CHANGELING            //
-//                                          //
-//////////////////////////////////////////////
-
+/// Ruleset for latejoin changelings
 /datum/dynamic_ruleset/latejoin/stowaway_changeling
 	name = "Stowaway Changeling"
 	antag_datum = /datum/antagonist/changeling
