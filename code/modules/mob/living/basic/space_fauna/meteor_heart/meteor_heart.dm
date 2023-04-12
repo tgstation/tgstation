@@ -8,7 +8,9 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	icon_state = "heart"
 	icon_living = "heart"
-	mob_biotypes = MOB_ORGANIC
+	sentience_type = SENTIENCE_BOSS
+	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	faction = list(FACTION_BOSS)
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_HUGE
 	health = 600 // 15 PKA shots
@@ -18,7 +20,6 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes"
 	response_disarm_simple = "gently push"
-	faction = list()
 	ai_controller = /datum/ai_controller/basic_controller/meteor_heart
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
@@ -35,6 +36,7 @@
 /mob/living/basic/meteor_heart/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
 	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/meteor_heart_death))
 	AddElement(/datum/element/relay_attackers)
 
