@@ -4,21 +4,12 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
-
 type Gas = {
   id: string;
   path: string;
   name: string;
   label: string;
   color: string;
-};
-
-export type FilterGas = {
-  id: string;
-  enabled: BooleanLike;
-  gasId: string;
-  gasName: string;
 };
 
 // UI states, which are mirrored from the BYOND code.
