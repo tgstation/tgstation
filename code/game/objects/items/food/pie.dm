@@ -400,6 +400,6 @@
 		/datum/reagent/consumable/nutriment = 16,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
-	tastes = list("pie" = 1, "the far off year of 2011" = 1)
+	tastes = list("pie" = 1, "the far off year of 2010" = 1)
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
