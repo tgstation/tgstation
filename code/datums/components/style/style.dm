@@ -3,7 +3,6 @@
 #define STYLE_BRUTAL 3
 #define STYLE_ABSOLUTE 4
 #define STYLE_SPACED 5
-#define STYLE_ROBUST 6
 
 #define ACTION_KILL "KILL"
 #define ACTION_MINOR_KILL "MINOR KILL"
@@ -98,6 +97,7 @@
 /datum/component/style/process(delta_time)
 	point_multiplier = round(max(point_multiplier - 0.2 * delta_time, 1), 0.1)
 	change_points(-5 * delta_time * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
+	update_screen()
 
 
 
@@ -170,8 +170,6 @@
 		if(STYLE_ABSOLUTE)
 			return "#66ffff"
 		if(STYLE_SPACED)
-			return "#29e6e6"
-		if(STYLE_ROBUST)
 			return "#ffaa00"
 
 /datum/component/style/proc/point_to_rank()
@@ -184,10 +182,9 @@
 			return STYLE_BRUTAL
 		if(300 to 399)
 			return STYLE_ABSOLUTE
-		if(400 to 549)
+		if(400 to INFINITY)
 			return STYLE_SPACED
-		if(550 to INFINITY)
-			return STYLE_ROBUST
+
 
 /datum/component/style/proc/rank_to_string(new_rank)
 	switch(new_rank)
@@ -200,9 +197,7 @@
 		if(STYLE_ABSOLUTE)
 			return "ABSOLUTE"
 		if(STYLE_SPACED)
-			return "SPACED"
-		if(STYLE_ROBUST)
-			return "ROBUST!"
+			return "SPACED!"
 
 /datum/component/style/proc/format_rank_string(new_rank)
 	var/rank_string = rank_to_string(new_rank)
@@ -300,7 +295,7 @@
 	if(rock.mineralType)
 		if(give_exp)
 			add_action(ACTION_ORE_MINED, 40)
-		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.3) - 0.5))) // You start out getting 20% less ore, but it goes up to 130% more at robust-tier
+		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.3) - 0.5))) // You start out getting 20% less ore, but it goes up to 100% more at S-tier
 
 	else if(give_exp)
 		add_action(ACTION_ROCK_MINED, 25)
