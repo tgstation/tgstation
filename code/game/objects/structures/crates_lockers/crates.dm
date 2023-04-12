@@ -113,7 +113,6 @@
 		. += lid
 	. += ..()
 
-
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
