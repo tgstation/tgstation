@@ -66,14 +66,14 @@
 	// Doing this with relative changes. This way we don't override any existing pixel_x/y values
 	// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
 	// Relative animations are weird, so we do actually need this
-	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 	delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
 
 	x_diff = amplitude * sin(next_amount * (time + delay))
 	y_diff = amplitude * cos(next_amount * (time + delay))
 	pixel_x_diff += x_diff
 	pixel_y_diff += y_diff
-	animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 
 	// Now we reset back to our old pixel_x/y, since these animates are relative
-	animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)

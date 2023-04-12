@@ -126,7 +126,7 @@
 					round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
 		if(GAME_STATE_FINISHED)
 			round_state = "Round has ended"
-	var/mentor_count = get_mentor_counts()
+	var/list/mentor_count = get_mentor_counts()
 	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
 	if(mentor_count)
 		admin_text = "**Mentors**:[mentor_count.len]"
