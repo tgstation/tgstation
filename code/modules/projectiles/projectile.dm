@@ -379,7 +379,7 @@
 		return
 	Impact(A)
 
-
+/// Signal proc for when a projectile enters a turf.
 /obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
@@ -388,7 +388,7 @@
 	if(isturf(loc))
 		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 
-
+/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
 /obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
@@ -396,6 +396,7 @@
 		on_parry(user, modifiers)
 
 
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 17 degrees and increasing the bullet's stats.
 /obj/projectile/proc/on_parry(mob/user, list/modifiers)
 	parried = TRUE
 	set_angle(dir2angle(user.dir) + rand(-8, 8))

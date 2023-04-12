@@ -2,7 +2,8 @@
 	name = "style meter attachment"
 	desc = "Attach this to a pair of glasses to install a style meter system in them. \
 		You get style points from performing stylish acts and lose them for breaking your style. \
-		The style affects the quality of your mining, with you being able to mine ore better during a good chain."
+		The style affects the quality of your mining, with you being able to mine ore better during a good chain. \
+		A responsive data HUD gives you the ability to reflect projectiles by punching them with an empty hand."
 	icon_state = "style_meter"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	/// The style meter component we give.
