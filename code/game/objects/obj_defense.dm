@@ -122,6 +122,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
+		AddComponent(/datum/component/burning, custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay, burning_particles)
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
 		update_appearance()
@@ -131,15 +132,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 ///called when the obj is destroyed by fire
 /obj/proc/burn()
 	if(resistance_flags & ON_FIRE)
-		SSfire_burning.processing -= src
+		qdel(GetComponent(/datum/component/burning))
 	deconstruct(FALSE)
-
-///Called when the obj is no longer on fire.
-/obj/proc/extinguish()
-	if(resistance_flags & ON_FIRE)
-		resistance_flags &= ~ON_FIRE
-		update_appearance()
-		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
 /obj/zap_act(power, zap_flags)
