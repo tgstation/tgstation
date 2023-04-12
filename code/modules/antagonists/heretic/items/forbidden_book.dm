@@ -35,7 +35,11 @@
 	if(.)
 		return
 
-	open_animation()
+	switch(book_open)
+		if(FALSE)
+			open_animation()
+		if(TRUE)
+			close_animation()
 
 /obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
