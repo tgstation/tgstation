@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed Hydrogen Peroxide and Acetone Oxide not dealing damage until you take damage again"

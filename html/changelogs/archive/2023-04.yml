@@ -450,3 +450,12 @@
   necromanceranne:
   - qol: Clarifies in various names and descriptions whether security equipment is
       lethal, nonlethal, less-than-lethal or destructive.
+2023-04-13:
+  13spacemen:
+  - bugfix: You can instantly unwrench empty atmos devices now
+  Melbert:
+  - bugfix: Fixed Hydrogen Peroxide and Acetone Oxide not dealing damage until you
+      take damage again
+  Mey-Ha-Zah:
+  - rscadd: New Lids for several crates.
+  - imageadd: Several new Crate Visuals.
