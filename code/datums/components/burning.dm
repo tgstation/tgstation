@@ -18,7 +18,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		stack_trace("Tried to add /datum/component/burning to an atom ([atom_parent]) that does not use atom_integrity!")
 		return COMPONENT_INCOMPATIBLE
 	// only flammable atoms should have this component, but it's not really an error if we try to apply this to a non flammable one
-	if(!(atom_parent.resistance_flags & FLAMMABLE))
+	if(!(atom_parent.resistance_flags & FLAMMABLE) || (atom_parent.resistance_flags & FIRE_PROOF))
 		qdel(src)
 		return
 	src.fire_overlay = fire_overlay
