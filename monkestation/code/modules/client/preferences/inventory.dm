@@ -38,8 +38,10 @@
 
 	if(amount > 0 && donator_multipler)
 		switch(parent.patreon.access_rank)
-			if(ACCESS_TRAITOR_RANK)
+			if(ACCESS_COMMAND_RANK)
 				amount *= 1.5
+			if(ACCESS_TRAITOR_RANK)
+				amount *= 1.75
 			if(ACCESS_NUKIE_RANK)
 				amount *= 2
 
