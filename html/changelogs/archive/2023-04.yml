@@ -391,3 +391,71 @@
   - bugfix: broken light tubes now actually have sharpness to them as they are basically
       spikes of glass.
   - refactor: refactored latex balloon code
+2023-04-11:
+  Comxy:
+  - bugfix: Sergeant Araneus cannot spawn from gold slimes anymore.
+  Jolly:
+  - bugfix: Maps internally had the code for the "directional" windows altered a bit.
+      If you see stacked window panes or things look incorrectly, please file a bug
+      report as that isn't intentional!!
+  Moth-lantern:
+  - imageadd: Nanotransen has made uniform changes to the robotics lab, modernizing
+      their wardrobe.
+  Profakos:
+  - refactor: Refactored navigational beacons, making them constructable, deconstructable,
+      and generally easier to use
+  Singul0:
+  - bugfix: asteroid-based space ruins (waystation, the outlet) now has asteroids
+      below their plating!
+  flowercuco:
+  - qol: material components (such as autolathes) have contextual screentips if you
+      can put an item inside of it
+  kinneb:
+  - imageadd: Recolours the Wirebrush (Again)
+2023-04-12:
+  13spacemen:
+  - qol: Unwrenching empty atmos pipes/devices is now INSTANT
+  - balance: Experimental syndicate teleporter's teleportation is no longer perfect,
+      it will cause the user to bleed a little. Luckily the detective can scan the
+      blood and find out who the big bad is, as long as he's quick.
+  DrDiasyl aka DrTuxedo#0931:
+  - imageadd: Judge robe and powdered wig got new sprites!
+  Hatterhat:
+  - rscadd: The Regal Condor can now have its name and description changed via pen,
+      like the detective's revolver.
+  - bugfix: The Regal Condor's magazines are actually visible, and therefore useful
+      for their intended purpose.
+  - bugfix: The contractor baton now only gives you up to 40 seconds of stuttering,
+      instead of making you stutter for 40 seconds more after every hit.
+  Helg2:
+  - qol: installed upgrades on cameras now show as blue text instead of plain white
+      text on examine.
+  - bugfix: You can now uproot and dig out plants with any shovel and not just spade.
+  JohnFulpWillard:
+  - bugfix: People immune to sleep will not fall asleep from N2O
+  LT3:
+  - bugfix: Tram doors no longer play 8 variations of the same sound simultaneously
+  ShizCalev:
+  - code_imp: Vareditting a light replacer's emagged status will now properly update
+      the item's name / appearance.
+  SyncIt21:
+  - refactor: remove unused turf var inside wallmount procs
+  - bugfix: broken rack sprite inside RCD UI
+  - bugfix: mounted RCD now lays plating over chasms and open turfs
+  - bugfix: station blueprints no longer expands & detects areas of non atmos adjacent
+      turfs.
+  Thunder12345:
+  - bugfix: The action button description for malf AI hostile station lockdown now
+      makes it clear that doors will be electrified.
+  necromanceranne:
+  - qol: Clarifies in various names and descriptions whether security equipment is
+      lethal, nonlethal, less-than-lethal or destructive.
+2023-04-13:
+  13spacemen:
+  - bugfix: You can instantly unwrench empty atmos devices now
+  Melbert:
+  - bugfix: Fixed Hydrogen Peroxide and Acetone Oxide not dealing damage until you
+      take damage again
+  Mey-Ha-Zah:
+  - rscadd: New Lids for several crates.
+  - imageadd: Several new Crate Visuals.

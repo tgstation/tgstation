@@ -103,7 +103,7 @@
 	linked_song = null
 	qdel(src)
 
-/datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
+/datum/component/smooth_tunes/process(seconds_per_tick = SSOBJ_DT)
 	if(linked_songtuner_rite && linked_song)
 		for(var/mob/living/carbon/human/listener in linked_song.hearing_mobs)
 			if(listener == parent || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
