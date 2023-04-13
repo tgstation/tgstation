@@ -6,3 +6,5 @@
 
 /datum/config_entry/string/mhelp_message
 	default = ""
+
+/datum/config_entry/string/patreon_link_website

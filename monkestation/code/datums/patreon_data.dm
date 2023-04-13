@@ -1,6 +1,5 @@
 /client
 	var/datum/patreon_data/patreon
-
 /datum/patreon_data
 	///the client that owns this data
 	var/client/owner
@@ -8,6 +7,8 @@
 	var/client_key
 	///the stored patreon rank collected from the server
 	var/owned_rank = NO_RANK
+	///access rank in numbers
+	var/access_rank = 0
 
 
 /datum/patreon_data/New(client/created_client)
@@ -20,6 +21,8 @@
 
 	fetch_key(owner.ckey)
 	fetch_rank(owner.ckey)
+
+	assign_access_rank()
 
 
 /datum/patreon_data/proc/fetch_key(ckey)
@@ -39,3 +42,26 @@
 				owned_rank = NO_RANK
 	qdel(query_get_rank)
 
+
+/datum/patreon_data/proc/assign_access_rank()
+	switch(owned_rank)
+		if(THANKS_RANK)
+			access_rank =  ACCESS_THANKS_RANK
+		if(ASSISTANT_RANK)
+			access_rank =  ACCESS_ASSISTANT_RANK
+		if(COMMAND_RANK)
+			access_rank =  ACCESS_COMMAND_RANK
+		if(TRAITOR_RANK)
+			access_rank =  ACCESS_TRAITOR_RANK
+		if(NUKIE_RANK)
+			access_rank =  ACCESS_NUKIE_RANK
+
+/datum/patreon_data/proc/has_access(rank)
+	if(rank <= access_rank)
+		return TRUE
+	return FALSE
+
+/datum/patreon_data/proc/is_donator()
+	if(owned_rank != NO_RANK)
+		return TRUE
+	return FALSE
