@@ -159,3 +159,18 @@
 			chosen = FALSE
 		else
 			return ADMIN_CANCEL_EVENT
+
+/datum/event_admin_setup/multiple_choice
+	var/input_text
+	var/max_choices
+	var/list/choices = list()
+
+/datum/event_admin_setup/multiple_choice/proc/get_options()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented get_options() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/multiple_choice/prompt_admins()
+	var/list/options = get_options()
+	choices = tgui_input_checkboxes(usr, input_text, event_control.name, options, max_choices)
+	if(!choices.len)
+		return ADMIN_CANCEL_EVENT
