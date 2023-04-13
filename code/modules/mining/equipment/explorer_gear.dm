@@ -134,7 +134,6 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/matrix/widen = matrix()
 		if((C.get_item_by_slot(ITEM_SLOT_NECK) == src))
 			to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
 			return
