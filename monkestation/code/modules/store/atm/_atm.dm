@@ -148,7 +148,7 @@
 
 	if(!withdraw_amount)
 		return
-	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount))
+	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount, donator_multipler = FALSE))
 		return
 
 	var/obj/item/stack/monkecoin/coin_stack = new(living_user.loc)
@@ -161,7 +161,7 @@
 	. = ..()
 	if(istype(attacking_item, /obj/item/stack/monkecoin))
 		var/obj/item/stack/monkecoin/attacked_coins = attacking_item
-		if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount))
+		if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount, donator_multipler = FALSE))
 			say("Error acceptings coins, please try again later.")
 		qdel(attacked_coins)
 		say("Coins deposited to your account, have a nice day.")
