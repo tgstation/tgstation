@@ -38,7 +38,17 @@
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/proc/get_turfs(turf/target_turf)
 	return list(
-		get_step(get_step(target_turf, NORTH), NORTH),
-		get_step(get_step(target_turf, SOUTH), SOUTH),
-		get_step(get_step(target_turf, EAST), EAST),
-		get_step(get_step(target_turf, WEST), WEST))
+		get_far_step(target_turf, NORTH),
+		get_further_step(target_turf, NORTH),
+		get_far_step(target_turf, SOUTH),
+		get_further_step(target_turf, SOUTH),
+		get_far_step(target_turf, EAST),
+		get_further_step(target_turf, EAST),
+		get_far_step(target_turf, WEST),
+		get_further_step(target_turf, WEST))
+
+/datum/action/cooldown/spell/conjure/cosmic_expansion/proc/get_far_step(turf/target_turf, direction)
+	return get_step(get_step(target_turf, direction), direction)
+
+/datum/action/cooldown/spell/conjure/cosmic_expansion/proc/get_further_step(turf/target_turf, direction)
+	return get_step(get_step(get_step(target_turf, direction), direction), direction)
