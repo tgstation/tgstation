@@ -75,6 +75,7 @@
 #define PLATE_SHARD_PIECES 5
 
 /obj/item/plate/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
 	if(.)
 		return
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)

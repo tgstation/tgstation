@@ -65,3 +65,8 @@
 		particle_mob.vis_contents += src
 	//readd to ourselves
 	attached_to.vis_contents |= src
+
+/// Sets the particles position to the passed coordinate list (X, Y, Z)
+/// See [https://www.byond.com/docs/ref/#/{notes}/particles] for position documentation
+/obj/effect/abstract/particle_holder/proc/set_particle_position(list/pos)
+	particles.position = pos

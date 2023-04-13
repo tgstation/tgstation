@@ -72,7 +72,7 @@ In TGS3 it will always be sent to all connected designated game chats.
 	message = replacetext(replacetext(message, "\proper", ""), "\improper", "")
 	if(!embed_links)
 		message = GLOB.has_discord_embeddable_links.Replace(replacetext(message, "`", ""), " ```$1``` ")
-	world.TgsTargetedChatBroadcast("[category] | [message]", TRUE)
+	world.TgsTargetedChatBroadcast(new /datum/tgs_message_content("[category] | [message]"), TRUE)
 
 /// Handles text formatting for item use hints in examine text
 #define EXAMINE_HINT(text) ("<b>" + text + "</b>")
