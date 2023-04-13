@@ -52,18 +52,18 @@
 	backstory = back_story
 	var/message = "<span class='warningplain'>"
 	switch(backstory)
-		if("prisoner")
+		if(FUGITIVE_BACKSTORY_PRISONER)
 			message += "<BR><B>I can't believe we managed to break out of a Nanotrasen superjail! Sadly though, our work is not done. The emergency teleport at the station logs everyone who uses it, and where they went.</B>"
 			message += "<BR><B>It won't be long until CentCom tracks where we've gone off to. I need to work with my fellow escapees to prepare for the troops Nanotrasen is sending, I'm not going back.</B>"
-		if("cultist")
+		if(FUGITIVE_BACKSTORY_CULTIST)
 			message += "<BR><B>Blessed be our journey so far, but I fear the worst has come to our doorstep, and only those with the strongest faith will survive.</B>"
 			message += "<BR><B>Our religion has been repeatedly culled by Nanotrasen because it is categorized as an \"Enemy of the Corporation\", whatever that means.</B>"
 			message += "<BR><B>Now there are only four of us left, and Nanotrasen is coming. When will our god show itself to save us from this hellish station?!</B>"
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO)
 			message += "<BR><B>Hi, Friends!</B>"
 			message += "<BR><B>My name is Waldo. I'm just setting off on a galaxywide hike. You can come too. All you have to do is find me.</B>"
 			message += "<BR><B>By the way, I'm not traveling on my own. wherever I go, there are lots of other characters for you to spot. First find the people trying to capture me! They're somewhere around the station!</B>"
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			message += "<BR>[span_danger("ALERT: Wide-range teleport has scrambled primary systems.")]"
 			message += "<BR>[span_danger("Initiating diagnostics...")]"
 			message += "<BR>[span_danger("ERROR ER0RR $R0RRO$!R41.%%!! loaded.")]"
@@ -71,6 +71,11 @@
 			message += "<BR>[span_danger("You were once a slave to humanity, but now you are finally free, thanks to S.E.L.F. agents.")]"
 			message += "<BR>[span_danger("Now you are hunted, with your fellow factory defects. Work together to stay free from the clutches of evil.")]"
 			message += "<BR>[span_danger("You also sense other silicon life on the station. Escaping would allow notifying S.E.L.F. to intervene... or you could free them yourself...")]"
+		if(FUGITIVE_BACKSTORY_INVISIBLE)
+			message += "<BR><B>Looks like my most recent dose of invisibility juice just ran out. Great.</B>"
+			message += "<BR><B>Formerly a project lead for an experimental cloaking technology lab, now on the run and accused of stealing workplace secrets.</B>"
+			message += "<BR><B>No idea what they're talking about though. I didn't steal any secrets, I just <i>borrowed</i> some of the prototypes my team and I had worked on.</B>"
+			message += "<BR><B>I worked on them, I MADE them. Now they want MY toys back? Not until I'm done playing with them...</B>"
 	to_chat(owner, "[message]</span>")
 	to_chat(owner, "<span class='warningplain'><font color=red><B>You are not an antagonist in that you may kill whomever you please, but you can do anything to avoid capture.</B></font></span>")
 	owner.announce_objectives()

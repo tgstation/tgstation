@@ -274,7 +274,7 @@
 		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
 		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
 
-/datum/action/innate/bci_charge_action/process(delta_time)
+/datum/action/innate/bci_charge_action/process(seconds_per_tick)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
