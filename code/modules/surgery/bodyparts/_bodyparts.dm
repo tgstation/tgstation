@@ -102,9 +102,6 @@
 	///An "override" color that can be applied to ANY limb, greyscale or not.
 	var/variable_color = ""
 
-	///whether the limb can be mutilated, including dismemberment for appendages and heads, and disembowelment for chests. TRUE means it can be subjected to these effects.
-	var/dismemberable = TRUE
-
 	var/px_x = 0
 	var/px_y = 0
 
