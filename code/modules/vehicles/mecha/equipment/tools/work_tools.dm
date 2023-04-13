@@ -303,18 +303,18 @@
 					return
 				qdel(target)
 		if(MODE_WALL)
-			if(isspaceturf(target))
-				var/turf/open/space/S = target
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
-				if(!do_after_cooldown(S, source))
-					return
-				S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else if(isfloorturf(target))
+			if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
 				if(!do_after_cooldown(F, source))
 					return
 				F.PlaceOnTop(/turf/closed/wall)
+			else if(isopenturf(target))
+				var/turf/open/space/S = target
+				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
+				if(!do_after_cooldown(S, source))
+					return
+				S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		if(MODE_AIRLOCK)
 			if(isfloorturf(target))
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")

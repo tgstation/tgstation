@@ -303,7 +303,7 @@
 	QDEL_NULL(radio)
 	return COMPONENT_STOP_EXPORT // stops the radio from exporting, not the cube
 
-/obj/item/bounty_cube/process(delta_time)
+/obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
 	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
 		//set up our nag message

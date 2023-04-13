@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Removing cards from TGC decks by pouring them on the floor/into binders should now function correctly."

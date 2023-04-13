@@ -62,7 +62,7 @@
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
-/datum/wound/blunt/handle_process(delta_time, times_fired)
+/datum/wound/blunt/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
@@ -77,12 +77,12 @@
 
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
-		if(DT_PROB(30, delta_time))
+		if(SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
-		if(victim.IsSleeping() && DT_PROB(30, delta_time))
+		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
 			regen_ticks_current += 1
 
-	if(!is_bone_limb && DT_PROB(severity * 1.5, delta_time))
+	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
 		victim.adjustStaminaLoss(rand(2, severity * 2.5))
 		if(prob(33))
