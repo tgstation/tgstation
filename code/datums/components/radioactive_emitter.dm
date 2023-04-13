@@ -69,7 +69,7 @@
 	src.threshold = threshold
 	// Don't touch examine text or whatever else.
 
-/datum/component/radioactive_emitter/process(delta_time)
+/datum/component/radioactive_emitter/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, rad_pulse_cooldown))
 		return
 

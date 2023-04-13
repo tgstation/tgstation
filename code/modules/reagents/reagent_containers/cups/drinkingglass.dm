@@ -26,8 +26,8 @@
 	. = ..()
 	AddComponent( \
 		/datum/component/takes_reagent_appearance, \
-		CALLBACK(src, PROC_REF(on_glass_change)), \
-		CALLBACK(src, PROC_REF(on_glass_reset)), \
+		CALLBACK(src, PROC_REF(on_cup_change)), \
+		CALLBACK(src, PROC_REF(on_cup_reset)), \
 		base_container_type = base_container_type, \
 	)
 
@@ -36,12 +36,14 @@
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
 
-/// Having our icon state change removes fill thresholds
-/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_change(datum/glass_style/style)
+// Having our icon state change removes fill thresholds
+/obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
+	. = ..()
 	fill_icon_thresholds = null
 
-/// And having our icon reset restores our fill thresholds
-/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_reset()
+// And having our icon reset restores our fill thresholds
+/obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
+	. = ..()
 	fill_icon_thresholds ||= list(0)
 
 //Shot glasses!//

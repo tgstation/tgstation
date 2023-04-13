@@ -1,8 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - balance: "Random Disease: Fluids transmission frequency reduced"
-  - balance: "Random Disease: Respiration transmission frequency increased"
-  - balance: "Random Disease: Low severity frequency increased"
-  - balance: "Random Disease: Cures list removes dispenser reagents and food products"
-  - balance: "Random Disease: Minimum pop and minimum round timer added to event check"

@@ -294,7 +294,7 @@
  * The processing of our trait. Heats up the mob ([held_mob]) currently holding the source plant ([our_chili]).
  * Stops processing if we're no longer being held by [held mob].
  */
-/datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
+/datum/plant_gene/trait/backfire/chili_heat/process(seconds_per_tick)
 	var/mob/living/carbon/our_mob = held_mob?.resolve()
 	var/obj/item/our_plant = our_chili?.resolve()
 
@@ -303,8 +303,8 @@
 		stop_backfire_effect()
 		return
 
-	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
-	if(DT_PROB(5, delta_time))
+	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
+	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(our_mob, span_warning("Your hand holding [our_plant] burns!"))
 
 /// Bluespace Tomato squashing on the user on backfire
@@ -664,7 +664,7 @@
 /*
  * If the conditions are acceptable and the potency is high enough, release miasma into the air.
  */
-/datum/plant_gene/trait/gas_production/process(delta_time)
+/datum/plant_gene/trait/gas_production/process(seconds_per_tick)
 	var/obj/item/seeds/seed = stinky_seed?.resolve()
 	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
 
@@ -679,7 +679,7 @@
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * seconds_per_tick // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
 

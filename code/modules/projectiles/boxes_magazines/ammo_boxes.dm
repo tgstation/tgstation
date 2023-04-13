@@ -87,6 +87,10 @@
 	caliber = CALIBER_A762
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
+/obj/item/ammo_box/a762/surplus
+	name = "stripper clip (7.62mm Surplus)"
+	ammo_type = /obj/item/ammo_casing/a762/surplus
+
 /obj/item/ammo_box/n762
 	name = "ammo box (7.62x38mmR)"
 	icon_state = "10mmbox"
