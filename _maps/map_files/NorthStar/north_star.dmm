@@ -4209,8 +4209,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet{
-	name = "Contraband Locker"
+/obj/structure/closet/secure_closet/brig{
+	name = "Prisoner Locker"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
@@ -4844,15 +4844,6 @@
 "biu" = (
 /obj/effect/turf_decal/trimline/red,
 /obj/effect/turf_decal/trimline/white/mid_joiner,
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
@@ -9899,6 +9890,11 @@
 /area/station/maintenance/floor1/starboard/fore)
 "cuL" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "surg_a_privacy";
+	name = "Surgery Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/medical/surgery/aft)
 "cuR" = (
@@ -14956,9 +14952,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -19295,6 +19288,11 @@
 /area/station/security/courtroom)
 "fdW" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "surg_b_privacy";
+	name = "Surgery Privacy Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/medical/surgery/fore)
 "fdX" = (
@@ -20654,9 +20652,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
@@ -20682,9 +20677,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -32165,9 +32157,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
@@ -44252,9 +44241,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
@@ -45417,9 +45403,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
@@ -47540,9 +47523,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Public Airlock"
 	},
@@ -47557,9 +47537,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
 "mGd" = (
@@ -50383,9 +50360,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -53232,7 +53206,6 @@
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -57846,9 +57819,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "ppi" = (
@@ -63233,9 +63203,6 @@
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 8
-	},
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
 	},
@@ -66421,9 +66388,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -67817,9 +67781,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -78406,6 +78367,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/machinery/button/door/directional/west{
+	id = "surg_a_shutters";
+	name = "Surgery Privacy Shutters";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "uZF" = (
@@ -79970,9 +79936,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -83860,9 +83823,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Public Airlock"
 	},
@@ -85458,6 +85418,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/machinery/button/door/directional/west{
+	id = "surg_b_shutters";
+	name = "Surgery Privacy Shutters";
+	req_access = list("medical")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "wPw" = (
