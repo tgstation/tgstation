@@ -8,7 +8,7 @@
 	/// If true we finish planning after this
 	var/finish_planning = FALSE
 
-/datum/ai_planning_subtree/make_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/make_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!rift_behaviour)
 		CRASH("Forgot to specify rift behaviour for [src]")
 
@@ -34,7 +34,7 @@
 	rift_behaviour = /datum/ai_behavior/make_carp_rift/away
 	finish_planning = TRUE
 
-/datum/ai_planning_subtree/make_carp_rift/panic_teleport/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/make_carp_rift/panic_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
 		return
 	return ..()
@@ -61,7 +61,7 @@
 	var/atom/target = weak_target?.resolve()
 	return target
 
-/datum/ai_behavior/make_carp_rift/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
+/datum/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
 	var/datum/weakref/weak_action = controller.blackboard[ability_key]
 	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = weak_action?.resolve()
@@ -186,7 +186,7 @@
 	/// Minimum distance we should be from the target before we bother performing this action
 	var/minimum_distance = 2
 
-/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target?.resolve()
 	if (isnull(target))

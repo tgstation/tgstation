@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - balance: "Engineers can override elevator door safety"
+  - bugfix: "emag action linked between elevator panel and doors"
+  - bugfix: "Cargo elevator has the correct access requirement again"
+  - code_imp: "All door types can now be linked to elevators"

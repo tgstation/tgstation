@@ -41,7 +41,7 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/goliath/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	handle_preattack()
 
@@ -159,7 +159,7 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) // dead
 		return
