@@ -581,16 +581,16 @@
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(list/possible_targets)
 	if(QDELETED(src))
-		return 0
+		return FALSE
 	switch(AIStatus)
 		if(AI_ON)
-			. = 1
+			. = TRUE
 		if(AI_IDLE)
 			if(FindTarget(possible_targets))
-				. = 1
+				. =  TRUE
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
-				. = 0
+				. = FALSE
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
 	return !FindTarget(possible_targets)
