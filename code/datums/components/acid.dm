@@ -95,25 +95,25 @@
 
 
 /// Handles the slow corrosion of the parent [/atom].
-/datum/component/acid/process(delta_time)
-	process_effect?.InvokeAsync(delta_time)
+/datum/component/acid/process(seconds_per_tick)
+	process_effect?.InvokeAsync(seconds_per_tick)
 	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
-	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * delta_time)
+	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * seconds_per_tick)
 
 /// Handles processing on a [/obj].
-/datum/component/acid/proc/process_obj(obj/target, delta_time)
+/datum/component/acid/proc/process_obj(obj/target, seconds_per_tick)
 	if(target.resistance_flags & ACID_PROOF)
 		return
-	target.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX) * delta_time, BURN, ACID, 0)
+	target.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX) * seconds_per_tick, BURN, ACID, 0)
 
 /// Handles processing on a [/mob/living].
-/datum/component/acid/proc/process_mob(mob/living/target, delta_time)
-	target.acid_act(acid_power, acid_volume * delta_time)
+/datum/component/acid/proc/process_mob(mob/living/target, seconds_per_tick)
+	target.acid_act(acid_power, acid_volume * seconds_per_tick)
 
 /// Handles processing on a [/turf].
-/datum/component/acid/proc/process_turf(turf/target_turf, delta_time)
-	var/acid_used = min(acid_volume * 0.05, 20) * delta_time
+/datum/component/acid/proc/process_turf(turf/target_turf, seconds_per_tick)
+	var/acid_used = min(acid_volume * 0.05, 20) * seconds_per_tick
 	var/applied_targets = 0
 	for(var/am in target_turf)
 		var/atom/movable/target_movable = am
@@ -127,7 +127,7 @@
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
-	parent_integrity -= delta_time
+	parent_integrity -= seconds_per_tick
 	if(parent_integrity <= 0)
 		target_turf.visible_message(span_warning("[target_turf] collapses under its own weight into a puddle of goop and undigested debris!"))
 		target_turf.acid_melt()

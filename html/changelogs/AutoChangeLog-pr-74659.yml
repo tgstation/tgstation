@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - bugfix: "You can instantly unwrench empty atmos devices now"
