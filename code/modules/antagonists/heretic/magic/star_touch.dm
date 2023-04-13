@@ -20,6 +20,8 @@
 	hand_path = /obj/item/melee/touch_attack/star_touch
 	/// Stores the weakref for the Star Gazer after ascending
 	var/datum/weakref/star_gazer
+	/// If the heretic is ascended or not
+	var/ascended = FALSE
 
 /datum/action/cooldown/spell/touch/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -43,6 +45,13 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
+	if (ascended)
+		return list(
+			get_turf(owner),
+			get_step(owner, turn(owner.dir, 90)),
+			get_step(get_step(owner, turn(owner.dir, 90)), turn(owner.dir, 90)),
+			get_step(owner, turn(owner.dir, 270)),
+			get_step(get_step(owner, turn(owner.dir, 270)), turn(owner.dir, 270)))
 	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
 
 /// To set the star gazer
