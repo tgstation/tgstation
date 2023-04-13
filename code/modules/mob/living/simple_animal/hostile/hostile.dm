@@ -224,6 +224,8 @@
 
 
 /mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
+	if(QDELETED(A))
+		return FALSE
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
@@ -243,6 +245,9 @@
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(isturf(the_target) || !the_target) // bail out on invalids
+		return FALSE
+
+	if(QDELETED(the_target))
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -293,7 +298,7 @@
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	add_target(new_target)
 	LosePatience()
-	if(target != null)
+	if(!QDELETED(target) && target != null)
 		GainPatience()
 		Aggro()
 		return TRUE
