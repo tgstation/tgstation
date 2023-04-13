@@ -188,6 +188,8 @@
 		. = oview(vision_range, target_from)
 
 /mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets)//Step 2, filter down possible targets to things we actually care about
+	if(QDELETED(src))
+		return
 	var/list/all_potential_targets = list()
 
 	if(isnull(possible_targets))
@@ -247,7 +249,7 @@
 	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
-	if(QDELETED(the_target))
+	if(QDELETED(the_target) || QDELETED(src))
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -578,6 +580,8 @@
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(list/possible_targets)
+	if(QDELETED(src))
+		return 0
 	switch(AIStatus)
 		if(AI_ON)
 			. = 1
@@ -597,7 +601,8 @@
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
-		lose_patience_timer_id = addtimer(CALLBACK(src, PROC_REF(LoseTarget)), lose_patience_timeout, TIMER_STOPPABLE)
+		if(!QDELETED(src))
+			lose_patience_timer_id = addtimer(CALLBACK(src, PROC_REF(LoseTarget)), lose_patience_timeout, TIMER_STOPPABLE)
 
 
 /mob/living/simple_animal/hostile/proc/LosePatience()
