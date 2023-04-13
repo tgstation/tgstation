@@ -444,9 +444,7 @@
 /turf/open/floor/iron/white/small,
 /area/shuttle/abandoned/crew)
 "oe" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
@@ -1364,9 +1362,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/pod)
 "Vp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},

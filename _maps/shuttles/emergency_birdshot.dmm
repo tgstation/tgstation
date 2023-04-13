@@ -21,7 +21,7 @@
 /area/shuttle/escape)
 "aQ" = (
 /obj/effect/decal/cleanable/insectguts,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bo" = (
 /obj/structure/girder,
@@ -30,7 +30,7 @@
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/generic,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "by" = (
@@ -88,7 +88,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "eH" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "eM" = (
 /obj/machinery/door/airlock/public{
@@ -139,9 +139,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "fv" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
@@ -265,7 +263,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "mp" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/item/bikehorn/rubberducky{
 	pixel_x = 10;
@@ -312,7 +310,7 @@
 /obj/machinery/computer/records/security{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "oZ" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -361,7 +359,7 @@
 /area/shuttle/escape)
 "pI" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "pK" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -396,9 +394,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/trash/can,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -421,7 +417,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "tH" = (
 /obj/item/trash/pistachios,
@@ -525,9 +521,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "zq" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -661,14 +655,14 @@
 /area/shuttle/escape)
 "Gp" = (
 /obj/effect/decal/cleanable/leaper_sludge,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "GH" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "GI" = (
 /obj/effect/spawner/random/trash/soap,
@@ -687,9 +681,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -712,7 +704,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "HS" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell,
@@ -722,7 +714,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Il" = (
 /obj/effect/turf_decal/stripes/line{
@@ -744,7 +736,7 @@
 /area/shuttle/escape)
 "IN" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Jc" = (
@@ -790,7 +782,7 @@
 /area/shuttle/escape)
 "Ly" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "LG" = (
 /obj/machinery/computer/emergency_shuttle,
@@ -800,9 +792,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "LX" = (
@@ -822,7 +812,7 @@
 	dir = 1;
 	pixel_y = -2
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Oz" = (
 /obj/structure/chair/comfy/shuttle{
@@ -834,9 +824,7 @@
 /area/shuttle/escape)
 "OK" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "ON" = (
@@ -854,9 +842,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -867,9 +853,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "RW" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass/titanium,
 /obj/effect/decal/cleanable/molten_object,
@@ -879,9 +863,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Sm" = (
@@ -943,7 +925,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Vo" = (
-/obj/structure/window/reinforced/survival_pod/spawner/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/item/food/pizzaslice/mothic_five_cheese{
 	pixel_x = -7;
