@@ -232,7 +232,7 @@
 	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
-	..()
+	. = ..()
 	if(overmind)
 		overmind.blobstrain.extinguish_reaction(src)
 

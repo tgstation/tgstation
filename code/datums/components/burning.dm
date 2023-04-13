@@ -28,12 +28,13 @@
 /datum/component/burning/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	RegisterSignal(parent, COMSIG_ATOM_EXTINGUISH, PROC_REF(on_extinguish))
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/burning/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
 
 /datum/component/burning/Destroy(force, silent)
 	STOP_PROCESSING(SSfire_burning, src)
@@ -41,7 +42,6 @@
 		QDEL_NULL(particle_effect)
 	var/atom/atom_parent = parent
 	if(!QDELING(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
-		atom_parent.extinguish()
 		atom_parent.resistance_flags &= ~ON_FIRE
 		atom_parent.update_appearance(UPDATE_ICON)
 	return ..()
@@ -50,13 +50,19 @@
 	var/atom/atom_parent = parent
 	// Check if the parent somehow became fireproof
 	if(atom_parent.resistance_flags & FIRE_PROOF)
-		qdel(src)
+		atom_parent.extinguish()
 		return
 	atom_parent.take_damage(10 * seconds_per_tick, BURN, FIRE, FALSE)
 
 /// Maintains the burning overlay on the parent atom
-/datum/component/burning/proc/on_update_overlays(atom/parent_atom, list/overlays)
+/datum/component/burning/proc/on_update_overlays(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
 	if(fire_overlay)
 		overlays += fire_overlay
+
+/// Deletes the component when the atom gets extinguished
+/datum/component/burning/proc/on_extinguish(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	qdel(src)

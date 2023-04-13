@@ -140,6 +140,10 @@
 /atom/proc/burn()
 	return
 
-/// Called when the atom is no longer on fire (/datum/component/burning got removed)
+/**
+ * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
+ * Can be hooked onto for extra behavior.
+ */
 /atom/proc/extinguish()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)
