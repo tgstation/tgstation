@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		"medium_threat" = total_medium_threat_tokens,
 		"high_threat" = total_high_threat_tokens,
 	)
-	owner.prefs.save_preferences_monkestation()
+	owner.prefs.save_preferences()
 
 /datum/antag_token_holder/proc/check_for_donator_token()
 	if(!owner.patreon)
@@ -78,6 +78,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		if(LOW_THREAT)
 			total_low_threat_tokens--
 
+	convert_tokens_to_list()
+
 ///adjusts the users tokens, yes they can be in antag token debt
 /datum/antag_token_holder/proc/adjust_tokens(tier, amount)
 	switch(tier)
@@ -88,7 +90,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		if(LOW_THREAT)
 			total_low_threat_tokens += amount
 
-
+	convert_tokens_to_list()
 
 
 /datum/antag_token_holder/proc/approve_token()
@@ -97,6 +99,9 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
 
 	spend_token(in_queued_tier, queued_donor)
+	in_queue.antag_token(owner.mob.mind)
+
+	qdel(in_queue)
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE

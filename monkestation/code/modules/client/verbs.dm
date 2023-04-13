@@ -26,6 +26,11 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	set name = "Spend Antag Tokens"
 	set desc = "Opens a ui to spend antag tokens on"
 
+
+	if(!isobserver(mob) && !isliving(mob))
+		to_chat(src, "For this to work you need to either be observing or playing.")
+		return
+
 	if(!saved_tokens)
 		saved_tokens = new(src)
 
@@ -64,7 +69,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 
 	saved_tokens.queued_donor = using_donor
 	saved_tokens.in_queued_tier = tier
-	saved_tokens.in_queue = chosen_antagonist
+	saved_tokens.in_queue = new chosen_antagonist
 
 	wait_for_approval(src, chosen_antagonist)
 
