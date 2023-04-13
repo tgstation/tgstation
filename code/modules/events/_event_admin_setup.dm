@@ -162,7 +162,8 @@
 
 /datum/event_admin_setup/multiple_choice
 	var/input_text
-	var/max_choices
+	var/min_choices = 0
+	var/max_choices = 50
 	var/list/choices = list()
 
 /datum/event_admin_setup/multiple_choice/proc/get_options()
@@ -171,6 +172,6 @@
 
 /datum/event_admin_setup/multiple_choice/prompt_admins()
 	var/list/options = get_options()
-	choices = tgui_input_checkboxes(usr, input_text, event_control.name, options, max_choices)
-	if(!choices.len)
+	choices = tgui_input_checkboxes(usr, input_text, event_control.name, options, min_choices, max_choices)
+	if(isnull(choices))
 		return ADMIN_CANCEL_EVENT

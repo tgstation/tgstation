@@ -33,7 +33,14 @@
 
 	if(length(turfs)) //Pick a turf to spawn at if we can
 		var/turf/floor = pick(turfs)
-		new /datum/spacevine_controller(floor, list(pick(subtypesof(/datum/spacevine_mutation))), rand(50,100), rand(1,4), src) //spawn a controller at turf with randomized stats and a single random mutation
+		var/list/selected_mutations = list()
+
+		if(override_mutations.len == 0)
+			selected_mutations = list(pick(subtypesof(/datum/spacevine_mutation)))
+		else
+			selected_mutations = override_mutations
+
+		new /datum/spacevine_controller(floor, selected_mutations, rand(50,100), rand(1,4), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 /datum/event_admin_setup/set_location/spacevine
 	input_text = "Spawn vines at current location?"
