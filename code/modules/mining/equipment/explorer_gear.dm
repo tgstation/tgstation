@@ -146,13 +146,10 @@
 			return
 		if(slot_flags & ITEM_SLOT_OCLOTHING)
 			slot_flags = ITEM_SLOT_NECK
-			widen.Scale(1.10, 1)
-			transform = widen
 			set_armor(/datum/armor/none)
 			to_chat(user,span_notice("You adjust [src] to fit around your neck."))
 		else
 			slot_flags = initial(slot_flags)			
-			transform = initial(transform)
 			set_armor(initial(armor_type))
 			to_chat(user,span_notice("You re-adjust the Goliath Cloak."))
 			
