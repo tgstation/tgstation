@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Adds two new super-duper helpful helper procs for finding a maintenance/space spawn location, for all of your event/midround/whatever needs!"
+  - code_imp: "Moves all midrounds/ghost_role events that hinged on maintenance/space carp spawns to the aforementioned helpers."
+  - code_imp: "The ghost_role event module file is now autodoced."
