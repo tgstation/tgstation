@@ -16,3 +16,9 @@
 	var/list/channel_volume = list(
 		"1019" = 100,
 	)
+
+	var/list/saved_tokens = list(
+		"high_threat" = 0,
+		"medium_threat" = 0,
+		"low_threat" = 0,
+	)

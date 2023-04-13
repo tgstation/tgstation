@@ -102,6 +102,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 // Client procs
 	/client/proc/admin_away,
 	/client/proc/add_mob_ability,
+	/client/proc/adjust_players_antag_tokens,
 	/client/proc/adjust_players_metacoins,
 	/client/proc/admin_change_sec_level,
 	/client/proc/cinematic,

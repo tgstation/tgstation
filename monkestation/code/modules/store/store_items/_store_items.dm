@@ -68,7 +68,7 @@
 	var/mob/buyer_mob = get_mob_by_ckey(buyer.ckey)
 
 	if(!isliving(buyer_mob))
-		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, reason = "Spawned as Non-Living, Unable to utilize items", TRUE, FALSE)
+		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", TRUE, FALSE)
 		return
 
 	var/obj/item/created_item = new item_path
