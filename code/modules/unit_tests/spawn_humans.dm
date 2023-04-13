@@ -6,7 +6,7 @@
 
 	sleep(5 SECONDS)
 
-/// Tests [/mob/living/carbon/human/proc/setup_no_organ_effects], specifically that they aren't applied when init is done
+/// Tests [/mob/living/carbon/human/proc/setup_organless_effects], specifically that they aren't applied when init is done
 /datum/unit_test/human_default_traits
 
 /datum/unit_test/human_default_traits/Run()

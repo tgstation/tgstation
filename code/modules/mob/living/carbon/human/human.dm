@@ -6,7 +6,7 @@
 
 	setup_mood()
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
-	setup_no_organ_effects()
+	setup_organless_effects()
 
 	create_dna()
 	dna.species.create_fresh_body(src)
@@ -43,7 +43,7 @@
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
 /// Gaining said organs removes these effects
-/mob/living/carbon/human/proc/setup_no_organ_effects()
+/mob/living/carbon/human/proc/setup_organless_effects()
 	// All start without eyes, and get them via set species
 	become_blind(NO_EYES)
 	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
