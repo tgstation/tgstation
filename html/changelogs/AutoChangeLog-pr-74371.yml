@@ -1,0 +1,7 @@
+author: "Cheshify, Fikou, Blue-Berry, Zytolg, InfiniteGalaxies, Striders, Sylphet, Riggle, Soal, Andry, Crit, Deranging, and Pumpkin0."
+delete-after: True
+changes:
+  - rscadd: "Nanotrasen's Newest Exploratory Vessel is now available! Meet the North Star!"
+  - rscadd: "More landmines, and a landmine random spawner."
+  - rscadd: "energy barriers now have a regenerative subtype, fit for permanent installations."
+  - code_imp: "Raised the number of possible level render to 4, check your preferences if needed to be reduced."
