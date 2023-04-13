@@ -136,7 +136,11 @@
 /atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0
 
-/// Should be called when the atom is destroyed by fire
+/**
+ * Should be called when the atom is destroyed by fire
+ * This proc is terrible. I do not know why it exists.
+ * Please remove it at some point.
+ */
 /atom/proc/burn()
 	return
 
