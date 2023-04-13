@@ -36,6 +36,9 @@ alien_explode.ogg is adapted from zimbot's Frozen Lettuce upload https://freesou
 
 alien_organ_cut.ogg is adapted from some CC 0 flesh sound, lesaucisson's swoosh https://freesound.org/people/lesaucisson/sounds/585256/, and a snippet of EminYILDIRIM's tree cutting clip https://freesound.org/people/EminYILDIRIM/sounds/608343/
 
+basketball_bounce.ogg is adapted from dj997 on freesound.org:
+https://freesound.org/people/dj997/sounds/493747/
+
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
 
 

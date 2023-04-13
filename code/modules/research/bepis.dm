@@ -268,7 +268,7 @@
 	if((gauss_real >= gauss_major)) //Major Success.
 		if(SSresearch.techweb_nodes_experimental.len > 0)
 			say("Experiment concluded with major success. New technology node discovered on technology disc.")
-			new /obj/item/disk/tech_disk/major(dropturf,1)
+			new /obj/item/disk/design_disk/bepis/remove_tech(dropturf,1)
 			return
 		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
@@ -285,3 +285,11 @@
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
 	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
+
+
+#undef MACHINE_OPERATION
+#undef MACHINE_OVERLOAD
+#undef MAJOR_THRESHOLD
+#undef MINOR_THRESHOLD
+#undef STANDARD_DEVIATION
+#undef PART_CASH_OFFSET_AMOUNT

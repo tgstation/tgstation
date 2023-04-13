@@ -106,8 +106,8 @@
 	if(mmi)
 		if(mmi.brain)
 			mmi.brain.suicided = suicide_state
-		if(mmi.brainmob)
-			mmi.brainmob.suiciding = suicide_state
+		if(suicide_state && mmi.brainmob)
+			ADD_TRAIT(mmi.brainmob, TRAIT_SUICIDED, REF(src))
 
 /**
  * Sets the tablet theme and icon

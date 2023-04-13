@@ -362,6 +362,12 @@
 
 	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
 
+/obj/item/clothing/accessory/pocketprotector/detach(obj/item/clothing/under/U, user)
+	var/drop_loc = drop_location()
+	for(var/atom/movable/held as anything in src)
+		held.forceMove(drop_loc)
+	return ..()
+
 /obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 

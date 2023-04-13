@@ -57,9 +57,9 @@
 		begin_processing()
 
 
-/obj/machinery/recharge_station/process(delta_time)
+/obj/machinery/recharge_station/process(seconds_per_tick)
 	if(occupant)
-		process_occupant(delta_time)
+		process_occupant(seconds_per_tick)
 	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
@@ -80,7 +80,7 @@
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
 
-	if(default_pry_open(P))
+	if(default_pry_open(P, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(P))
@@ -93,15 +93,15 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
-		close_machine()
+		close_machine(density_to_set = TRUE)
 	else
 		open_machine()
 
-/obj/machinery/recharge_station/open_machine()
+/obj/machinery/recharge_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
 	update_use_power(IDLE_POWER_USE)
 
-/obj/machinery/recharge_station/close_machine()
+/obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
 	if(occupant)
 		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.
@@ -114,7 +114,7 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(delta_time)
+/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * seconds_per_tick / 2, repairs)

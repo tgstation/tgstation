@@ -46,13 +46,15 @@
 
 	name = initial(name)
 
-	if(brain_owner.mind && brain_owner.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
+	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
+	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
 		return
 
+	// Not a ling? Now you get to assume direct control.
 	if(brainmob)
 		if(brain_owner.key)
 			brain_owner.ghostize()
@@ -62,10 +64,9 @@
 		else
 			brain_owner.key = brainmob.key
 
-		brain_owner.set_suicide(brainmob.suiciding)
+		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
 		QDEL_NULL(brainmob)
-
 	else
 		brain_owner.set_suicide(suicided)
 
@@ -86,6 +87,20 @@
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	brain_owner.update_body_parts()
+
+/obj/item/organ/internal/brain/on_insert(mob/living/carbon/organ_owner, special)
+	// Are we inserting into a new mob from a head?
+	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
+	// This is usually stuff like reattaching dismembered/amputated heads.
+	if(istype(loc, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/brain_holder = loc
+		if(brain_holder.brainmob)
+			brainmob = brain_holder.brainmob
+			brain_holder.brainmob = null
+			brainmob.container = null
+			brainmob.forceMove(src)
+
+	return ..()
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
@@ -119,7 +134,10 @@
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
-	brainmob.suiciding = suicided
+
+	if(suicided)
+		ADD_TRAIT(brainmob, TRAIT_SUICIDED, REF(src))
+
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		if(!brainmob.stored_dna)
@@ -152,7 +170,7 @@
 		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		O.reagents.remove_all(ROUND_UP(O.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
-		setOrganDamage(healto) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
+		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
 		return
 
 	// Cutting out skill chips.
@@ -184,7 +202,7 @@
 	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
 		user.do_attack_animation(src)
 		playsound(loc, 'sound/effects/meatslap.ogg', 50)
-		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+		set_organ_damage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message(span_danger("[user] hits [src] with [O]!"))
 		to_chat(user, span_danger("You hit [src] with [O]!"))
 
@@ -214,7 +232,7 @@
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	var/target_has_brain = C.getorgan(/obj/item/organ/internal/brain)
+	var/target_has_brain = C.get_organ_by_type(/obj/item/organ/internal/brain)
 
 	if(!target_has_brain && C.is_eyes_covered())
 		to_chat(user, span_warning("You're going to need to remove [C.p_their()] head cover first!"))
@@ -252,7 +270,7 @@
 		owner.mind.set_current(null)
 	return ..()
 
-/obj/item/organ/internal/brain/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/on_life(seconds_per_tick, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
@@ -333,10 +351,10 @@
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
-		setOrganDamage(0)
+		set_organ_damage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	else
-		setOrganDamage(BRAIN_DAMAGE_DEATH)
+		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
@@ -480,7 +498,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
@@ -496,3 +514,10 @@
 		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
 	return active_hand
+
+/// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+/obj/item/organ/internal/brain/replace_into(mob/living/carbon/new_owner)
+	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
+	qdel(old_brain)
+	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)

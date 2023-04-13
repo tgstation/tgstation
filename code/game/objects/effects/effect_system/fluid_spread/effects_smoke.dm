@@ -70,7 +70,7 @@
 	animate(src, time = frames, alpha = 0)
 
 
-/obj/effect/particle_effect/fluid/smoke/spread(delta_time = 0.1 SECONDS)
+/obj/effect/particle_effect/fluid/smoke/spread(seconds_per_tick = 0.1 SECONDS)
 	if(group.total_size > group.target_size)
 		return
 	var/turf/t_loc = get_turf(src)
@@ -83,7 +83,7 @@
 		if(locate(type) in spread_turf)
 			continue // Don't spread smoke where there's already smoke!
 		for(var/mob/living/smoker in spread_turf)
-			smoke_mob(smoker, delta_time)
+			smoke_mob(smoker, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
@@ -94,13 +94,13 @@
 		SSfoam.queue_spread(spread_smoke)
 
 
-/obj/effect/particle_effect/fluid/smoke/process(delta_time)
-	lifetime -= delta_time SECONDS
+/obj/effect/particle_effect/fluid/smoke/process(seconds_per_tick)
+	lifetime -= seconds_per_tick SECONDS
 	if(lifetime <= 0)
 		kill_smoke()
 		return FALSE
 	for(var/mob/living/smoker in loc) // In case smoke somehow winds up in a locker or something this should still behave sanely.
-		smoke_mob(smoker, delta_time)
+		smoke_mob(smoker, seconds_per_tick)
 	return TRUE
 
 /**
@@ -108,11 +108,11 @@
  *
  * Arguments:
  * - [smoker][/mob/living/carbon]: The mob that is being exposed to this smoke.
- * - delta_time: A scaling factor for the effects this has. Primarily based off of tick rate to normalize effects to units of rate/sec.
+ * - seconds_per_tick: A scaling factor for the effects this has. Primarily based off of tick rate to normalize effects to units of rate/sec.
  *
  * Returns whether the smoke effect was applied to the mob.
  */
-/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(!istype(smoker))
 		return FALSE
 	if(lifetime < 1)
@@ -344,7 +344,7 @@
 	color = "#9C3636"
 	lifetime = 20 SECONDS
 
-/obj/effect/particle_effect/fluid/smoke/sleeping/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/sleeping/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(..())
 		smoker.Sleeping(20 SECONDS)
 		smoker.emote("cough")
@@ -364,13 +364,13 @@
 /obj/effect/particle_effect/fluid/smoke/chem
 	lifetime = 20 SECONDS
 
-/obj/effect/particle_effect/fluid/smoke/chem/process(delta_time)
+/obj/effect/particle_effect/fluid/smoke/chem/process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
 
 	var/turf/location = get_turf(src)
-	var/fraction = (delta_time SECONDS) / initial(lifetime)
+	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	for(var/atom/movable/thing as anything in location)
 		if(thing == src)
 			continue
@@ -381,7 +381,7 @@
 	reagents.expose(location, TOUCH, fraction)
 	return TRUE
 
-/obj/effect/particle_effect/fluid/smoke/chem/smoke_mob(mob/living/carbon/smoker, delta_time)
+/obj/effect/particle_effect/fluid/smoke/chem/smoke_mob(mob/living/carbon/smoker, seconds_per_tick)
 	if(lifetime < 1)
 		return FALSE
 	if(!istype(smoker))
@@ -389,7 +389,7 @@
 	if(smoker.internal != null || smoker.has_smoke_protection())
 		return FALSE
 
-	var/fraction = (delta_time SECONDS) / initial(lifetime)
+	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	reagents.copy_to(smoker, reagents.total_volume, fraction)
 	reagents.expose(smoker, INGEST, fraction)
 	return TRUE

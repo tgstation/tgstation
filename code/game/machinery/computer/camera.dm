@@ -169,6 +169,7 @@
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
+		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		use_power(0)
 

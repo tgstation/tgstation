@@ -169,7 +169,7 @@
 	var/mob/living/carbon/human/lich = new(parent_turf)
 	ADD_TRAIT(lich, TRAIT_NO_SOUL, LICH_TRAIT)
 
-	var/obj/item/organ/internal/brain/new_lich_brain = lich.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/new_lich_brain = lich.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(new_lich_brain) // Prevent MMI cheese
 		new_lich_brain.organ_flags &= ~ORGAN_VITAL
 		new_lich_brain.decoy_override = TRUE

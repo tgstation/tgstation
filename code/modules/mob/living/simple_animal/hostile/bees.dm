@@ -389,4 +389,13 @@
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
 	. += body_overlay
 
+#undef BEE_DEFAULT_COLOUR
 #undef BEE_FOODGROUPS
+#undef BEE_IDLE_GOHOME
+#undef BEE_IDLE_ROAMING
+#undef BEE_POLLINATE_PEST_CHANCE
+#undef BEE_POLLINATE_POTENCY_CHANCE
+#undef BEE_POLLINATE_YIELD_CHANCE
+#undef BEE_PROB_GOHOME
+#undef BEE_PROB_GOROAM
+#undef BEE_TRAY_RECENT_VISIT

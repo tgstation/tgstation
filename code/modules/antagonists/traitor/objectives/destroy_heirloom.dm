@@ -30,6 +30,8 @@
 	/// The maximum number of objectives that can be taken in this period.
 	var/maximum_objectives_in_period = 2
 
+	duplicate_type = /datum/traitor_objective/destroy_heirloom
+
 /datum/traitor_objective/destroy_heirloom/common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
 	progression_minimum = 0 MINUTES

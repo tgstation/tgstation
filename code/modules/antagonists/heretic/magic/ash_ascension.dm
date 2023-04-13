@@ -44,7 +44,7 @@
 	src.ring_radius = radius
 	return ..()
 
-/datum/status_effect/fire_ring/tick(delta_time, times_fired)
+/datum/status_effect/fire_ring/tick(seconds_per_tick, times_fired)
 	if(QDELETED(owner) || owner.stat == DEAD)
 		qdel(src)
 		return
@@ -54,9 +54,9 @@
 
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
 		new /obj/effect/hotspot(nearby_turf)
-		nearby_turf.hotspot_expose(750, 25 * delta_time, 1)
+		nearby_turf.hotspot_expose(750, 25 * seconds_per_tick, 1)
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
-			fried_living.apply_damage(2.5 * delta_time, BURN)
+			fried_living.apply_damage(2.5 * seconds_per_tick, BURN)
 
 /// Creates one, large, expanding ring of fire around the caster, which does not follow them.
 /datum/action/cooldown/spell/fire_cascade

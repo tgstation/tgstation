@@ -1,7 +1,7 @@
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
 // Multiply factor is used with efficiency to multiply Tx quantity
-// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by delta_time
+// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by seconds_per_tick
 // Throttle Counter Max is how many calls of process() between ones that inject reagents.
 // These three defines control how fast and efficient cryo is
 #define CRYO_MULTIPLY_FACTOR 25
@@ -134,6 +134,7 @@
 	vis_contents += occupant_vis
 	if(airs[1])
 		airs[1].volume = CELL_VOLUME * 0.5
+	register_context()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -164,6 +165,20 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	vis_contents.Cut()
@@ -251,7 +266,7 @@
 		begin_processing()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/process(delta_time)
+/obj/machinery/atmospherics/components/unary/cryo_cell/process(seconds_per_tick)
 	..()
 
 	if(!on)
@@ -292,7 +307,7 @@
 
 	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
 	return TRUE
 
@@ -356,16 +371,16 @@
 		message_cooldown = world.time + 50
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		set_on(FALSE)
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	..()
+	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
@@ -417,7 +432,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
-	if(on || occupant || state_open)
+	if(on || state_open)
 		return FALSE
 	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -534,11 +549,13 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		set_on(!on)
+		if(set_on(!on))
+			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(can_interact(user))
+		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
 		if(state_open)
 			close_machine()
 		else

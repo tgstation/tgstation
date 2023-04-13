@@ -262,7 +262,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
-	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
+	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
@@ -283,10 +283,10 @@
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
 
-/obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
+/obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
-	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
+	if(istype(wearer) && SPT_PROB(1, seconds_per_tick)) //cursed by bubblegum
 		if(prob(7.5))
 			wearer.cause_hallucination(/datum/hallucination/oh_yeah, "H.E.C.K suit", haunt_them = TRUE)
 		else
@@ -592,10 +592,10 @@
 	. = ..()
 	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
 
-/mob/living/simple_animal/soulscythe/Life(delta_time, times_fired)
+/mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!stat)
-		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * delta_time))
+		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * seconds_per_tick))
 
 /obj/projectile/soulscythe
 	name = "soulslash"
@@ -618,6 +618,7 @@
 /obj/item/melee/ghost_sword
 	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "spectral"
 	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

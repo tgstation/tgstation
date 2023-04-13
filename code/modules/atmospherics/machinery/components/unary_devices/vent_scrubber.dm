@@ -35,7 +35,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	if(!id_tag)
-		id_tag = SSnetworks.assign_random_name()
+		id_tag = assign_random_name()
 	. = ..()
 
 	for(var/to_filter in filter_types)

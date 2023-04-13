@@ -282,7 +282,7 @@
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/pacoca
-	name = "Pacoca"
+	name = "Paçoca"
 	reqs = list(
 		/obj/item/food/grown/peanut = 2,
 		/datum/reagent/consumable/sugar = 5,
@@ -319,6 +319,26 @@
 		/datum/reagent/consumable/salt = 3,
 	)
 	result = /obj/item/food/popcorn/salty
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/spacylibertyduff
+	name = "Spacy liberty duff"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/vodka = 5,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/mushroom/libertycap = 3
+	)
+	result = /obj/item/food/bowled/spacylibertyduff
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/amanitajelly
+	name = "Amanita jelly"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/vodka = 5,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/mushroom/amanita = 3
+	)
+	result = /obj/item/food/bowled/amanitajelly
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/buttered_baked_potato

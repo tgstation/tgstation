@@ -59,7 +59,7 @@
 	beating = FALSE
 	update_appearance()
 
-/obj/item/organ/internal/heart/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -150,7 +150,7 @@
 	accursed.adjustFireLoss(-heal_burn)
 	accursed.adjustOxyLoss(-heal_oxy)
 
-/obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/cursed/on_life(seconds_per_tick, times_fired)
 	if(!owner.client || !ishuman(owner)) // Let's be fair, if you're not here to pump, you're not here to suffer.
 		last_pump = world.time
 		return
@@ -247,7 +247,7 @@
 						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
 
-/obj/item/organ/internal/heart/cybernetic/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		used_dose()
@@ -267,7 +267,7 @@
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/internal/heart/freedom/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/freedom/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
@@ -349,7 +349,7 @@
 		return
 
 
-	if(QDELETED(victim) || victim.suiciding)
+	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))

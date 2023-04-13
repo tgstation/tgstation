@@ -294,10 +294,12 @@
 		/obj/item/borg/lollipop,
 		/obj/item/picket_sign/cyborg,
 		/obj/item/reagent_containers/borghypo/clown,
-		/obj/item/extinguisher/mini)
+		/obj/item/extinguisher/mini,
+	)
 	emag_modules = list(
 		/obj/item/reagent_containers/borghypo/clown/hacked,
-		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked,
+	)
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
@@ -334,9 +336,12 @@
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
-		/obj/item/stack/cable_coil)
+		/obj/item/stack/cable_coil,
+	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(
+		/obj/item/borg/stun,
+	)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
@@ -358,9 +363,13 @@
 		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator,
-		/obj/item/reagent_containers/spray/cyborg_drying)
+		/obj/item/reagent_containers/spray/cyborg_drying,
+		/obj/item/wirebrush,
+	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
-	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
+	emag_modules = list(
+		/obj/item/reagent_containers/spray/cyborg_lube,
+	)
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
@@ -622,9 +631,12 @@
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+	)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/medical/hacked)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/medical/hacked,
+	)
 	cyborg_base_icon = "medical"
 	model_select_icon = "medical"
 	model_traits = list(TRAIT_PUSHIMMUNE)
@@ -648,9 +660,12 @@
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
-		/obj/item/stack/marker_beacon)
+		/obj/item/stack/marker_beacon,
+	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(
+		/obj/item/borg/stun,
+	)
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
 	hat_offset = 0
@@ -680,8 +695,11 @@
 		/obj/item/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
 		/obj/item/extinguisher,
-		/obj/item/borg/projectile_dampen)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
+		/obj/item/borg/projectile_dampen,
+	)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/peace/hacked,
+	)
 	cyborg_base_icon = "peace"
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
@@ -700,9 +718,12 @@
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/extinguisher/mini)
+		/obj/item/extinguisher/mini,
+	)
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
+	emag_modules = list(
+		/obj/item/gun/energy/laser/cyborg,
+	)
 	cyborg_base_icon = "sec"
 	model_select_icon = "security"
 	model_traits = list(TRAIT_PUSHIMMUNE)
@@ -748,7 +769,9 @@
 		/obj/item/chisel,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/borgshaker/hacked,
+	)
 	cyborg_base_icon = "service_m" // display as butlerborg for radial model selection
 	model_select_icon = "service"
 	special_light_key = "service"
@@ -777,8 +800,8 @@
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
-		/obj/item/pinpointer/syndicate_cyborg)
-
+		/obj/item/pinpointer/syndicate_cyborg,
+	)
 	cyborg_base_icon = "synd_sec"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
@@ -814,8 +837,8 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
 		/obj/item/gun/medbeam,
-		/obj/item/borg/apparatus/organ_storage)
-
+		/obj/item/borg/apparatus/organ_storage,
+	)
 	cyborg_base_icon = "synd_medical"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
@@ -847,8 +870,7 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		/obj/item/card/emag,
-		)
-
+	)
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
@@ -859,7 +881,8 @@
 	name = "Highlander"
 	basic_modules = list(
 		/obj/item/claymore/highlander/robot,
-		/obj/item/pinpointer/nuke,)
+		/obj/item/pinpointer/nuke,
+	)
 	model_select_icon = "kilt"
 	cyborg_base_icon = "kilt"
 	hat_offset = -2

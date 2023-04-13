@@ -286,3 +286,9 @@
 	if(!is_type_in_list(get_area(owner), kitchen_areas))
 		return FALSE
 	return ..()
+
+#undef SLAM_COMBO
+#undef KICK_COMBO
+#undef RESTRAIN_COMBO
+#undef PRESSURE_COMBO
+#undef CONSECUTIVE_COMBO

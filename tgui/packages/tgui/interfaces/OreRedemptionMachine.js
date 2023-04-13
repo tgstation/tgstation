@@ -165,6 +165,7 @@ const MaterialRow = (props, context) => {
     (mat_icon) => mat_icon.id === material.id
   );
 
+  const sheet_amounts = Math.floor(material.amount);
   const print_amount = 5;
   const max_sheets = 50;
 
@@ -188,7 +189,7 @@ const MaterialRow = (props, context) => {
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Box color="label">
-          {formatSiUnit(material.amount, 0)}{' '}
+          {formatSiUnit(sheet_amounts, 0)}{' '}
           {material.amount === 1 ? 'sheet' : 'sheets'}
         </Box>
       </Table.Cell>
@@ -210,7 +211,7 @@ const MaterialRow = (props, context) => {
         <Button.Input
           content={
             '[Max: ' +
-            (material.amount < max_sheets ? material.amount : max_sheets) +
+            (sheet_amounts < max_sheets ? sheet_amounts : max_sheets) +
             ']'
           }
           color={'transparent'}

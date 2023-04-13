@@ -42,7 +42,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
@@ -56,8 +56,8 @@
 	speed = 5
 	move_to_delay = 5
 	ranged = TRUE
-	pixel_x = -16
-	base_pixel_x = -16
+	pixel_x = -32
+	base_pixel_x = -32
 	maptext_height = 64
 	maptext_width = 64
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
@@ -145,7 +145,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
 	if(activated == lava_swoop)
-		icon_state = "shadow"
+		icon_state = "dragon_shadow"
 		swooping = SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
@@ -370,6 +370,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
+
+#undef DRAKE_ENRAGED
+#undef DRAKE_FIRE_EXPOSURE
+#undef DRAKE_FIRE_TEMP
 
 #undef SWOOP_DAMAGEABLE
 #undef SWOOP_INVULNERABLE

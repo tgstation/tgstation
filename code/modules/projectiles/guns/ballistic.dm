@@ -550,7 +550,7 @@
 #define BRAINS_BLOWN_THROW_SPEED 1
 
 /obj/item/gun/ballistic/suicide_act(mob/living/user)
-	var/obj/item/organ/internal/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && chambered.loaded_projectile.damage > 0)
 		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
 		sleep(2.5 SECONDS)
@@ -701,8 +701,3 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
-
-
-/obj/item/suppressor/specialoffer
-	name = "cheap suppressor"
-	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits most weapons."
