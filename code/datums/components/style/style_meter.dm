@@ -8,6 +8,12 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	/// The style meter component we give.
 	var/datum/component/style/style_meter
+	/// Mutable appearance added to the attached glasses
+	var/mutable_appearance/meter_appearance
+
+/obj/item/style_meter/Initialize(mapload)
+	. = ..()
+	meter_appearance = mutable_appearance(icon, icon_state)
 
 /obj/item/style_meter/afterattack(atom/movable/attacked_atom, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -15,7 +21,7 @@
 		return
 
 	forceMove(attacked_atom)
-	attacked_atom.vis_contents += src
+	attacked_atom.add_overlay(meter_appearance)
 	RegisterSignal(attacked_atom, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
 	RegisterSignal(attacked_atom, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(attacked_atom, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
@@ -75,7 +81,7 @@
 	return COMPONENT_CANCEL_CLICK_ALT
 
 /obj/item/style_meter/proc/clean_up(atom/movable/old_location)
-	old_location.vis_contents -= src
+	old_location.cut_overlay(meter_appearance)
 	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
 	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
 	UnregisterSignal(old_location, COMSIG_PARENT_EXAMINE)
