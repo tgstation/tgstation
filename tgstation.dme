@@ -359,6 +359,7 @@
 #include "code\__HELPERS\dna.dm"
 #include "code\__HELPERS\duplicating.dm"
 #include "code\__HELPERS\dynamic_human_icon_gen.dm"
+#include "code\__HELPERS\events.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\filters.dm"
 #include "code\__HELPERS\forensics.dm"
