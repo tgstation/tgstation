@@ -306,8 +306,8 @@
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
 	if(!istype(monster))
 		return FALSE
-	var/obj/item/bodypart/original_type = human_target.dna.species.bodypart_overrides[limb_to_attach.body_zone]
-	if(!original_type || (limb_to_attach.limb_id != initial(original_type.limb_id)))
+	var/obj/item/bodypart/original_type = monster.dna.species.bodypart_overrides[body_zone]
+	if(!original_type || (limb_id != initial(original_type.limb_id)))
 		return TRUE
 	return FALSE
 
