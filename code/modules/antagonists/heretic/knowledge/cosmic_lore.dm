@@ -260,6 +260,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
+	blade_upgrade.combo_duration = 10 SECONDS
 	blade_upgrade.combo_duration_amount = 10 SECONDS
 	blade_upgrade.max_combo_duration = 30 SECONDS
 	blade_upgrade.increase_amount = 2 SECONDS
