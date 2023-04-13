@@ -149,9 +149,9 @@
 	update_appearance()
 	QDEL_LIST(deployed_shields)
 
-/obj/machinery/shieldgen/process(delta_time)
+/obj/machinery/shieldgen/process(seconds_per_tick)
 	if((machine_stat & BROKEN) && active)
-		if(deployed_shields.len && DT_PROB(2.5, delta_time))
+		if(deployed_shields.len && SPT_PROB(2.5, seconds_per_tick))
 			qdel(pick(deployed_shields))
 
 
