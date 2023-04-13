@@ -437,6 +437,12 @@
 	name = "The All-American Diner"
 	description = "A mothballed \"Restaurant\" station of the popular \"The All-American Diner\" franchise."
 
+/datum/map_template/ruin/space/mimesvclowns
+	id = "mimesvclowns"
+	suffix = "mimesvclowns.dmm"
+	name = "Abandoned Mime Outpost"
+	description = "When you fight mimes, you better bring more than slips."
+
 /datum/map_template/ruin/space/transit_booth
 	id = "transit_booth"
 	suffix = "transit_booth.dmm"
