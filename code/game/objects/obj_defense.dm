@@ -123,8 +123,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
-		update_appearance()
-		return 1
+		return TRUE
 	return ..()
 
 ///called when the obj is destroyed by fire
