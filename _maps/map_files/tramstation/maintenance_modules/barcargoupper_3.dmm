@@ -69,14 +69,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"gn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/obj/structure/grille,
-/obj/structure/window/spawner/directional/west,
-/obj/structure/window/spawner/directional/east,
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
 "hx" = (
 /obj/structure/plasticflaps,
 /obj/effect/turf_decal/sand/plating,
@@ -312,6 +304,23 @@
 "FC" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/maintenance/department/cargo)
+"GZ" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Hydroponics";
+	name = "navigation beacon (Hydroponics Delivery)"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "hydrodropoff"
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "Hu" = (
 /turf/template_noop,
 /area/template_noop)
@@ -349,6 +358,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"Mi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/obj/structure/grille,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "MH" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/grass,
@@ -377,25 +394,6 @@
 	key = "barcargoupper_cave"
 	},
 /turf/open/misc/asteroid,
-/area/station/maintenance/department/cargo)
-"Sy" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
-	freq = 1400;
-	location = "Hydroponics";
-	name = "navigation beacon (Hydroponics Delivery)"
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "hydrodropoff"
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "SA" = (
 /obj/effect/turf_decal/sand/plating,
@@ -614,7 +612,7 @@ Hu
 "}
 (4,1,1) = {"
 FC
-Sy
+GZ
 FC
 FC
 tg
@@ -1632,7 +1630,7 @@ cK
 cK
 cK
 SU
-gn
+Mi
 Dm
 Dm
 mh
@@ -1743,7 +1741,7 @@ cK
 cK
 cK
 SU
-gn
+Mi
 Dm
 Dm
 mh

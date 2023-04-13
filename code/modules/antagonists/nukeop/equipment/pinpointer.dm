@@ -19,7 +19,7 @@
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
-/obj/item/pinpointer/nuke/process(delta_time)
+/obj/item/pinpointer/nuke/process(seconds_per_tick)
 	..()
 	if(!active || alert)
 		return

@@ -94,6 +94,7 @@
 	projectile_damage_multiplier = 1.25
 	mag_type = /obj/item/ammo_box/magazine/r10mm
 	actions_types = list(/datum/action/item_action/toggle_firemode)
+	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
 	spawnwithmagazine = FALSE
