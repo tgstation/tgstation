@@ -363,7 +363,7 @@
 		mob_underlay.icon_state = "frame[RPpos]"
 		underlays += mob_underlay
 
-/obj/structure/chrono_field/process(seconds_per_tick)
+/obj/structure/chrono_field/process(delta_time)
 	if(!captured)
 		qdel(src)
 		return
@@ -387,14 +387,14 @@
 		update_appearance()
 		if(tem)
 			if(tem.field_check(src))
-				timetokill -= seconds_per_tick
+				timetokill -= delta_time
 			else
 				tem = null
 				return
 		else if(!attached)
-			timetokill -= seconds_per_tick
+			timetokill -= delta_time
 		else
-			timetokill += seconds_per_tick
+			timetokill += delta_time
 
 
 /obj/structure/chrono_field/bullet_act(obj/projectile/projectile)

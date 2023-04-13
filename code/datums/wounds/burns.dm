@@ -32,11 +32,11 @@
 	var/strikes_to_lose_limb = 3
 
 
-/datum/wound/burn/handle_process(seconds_per_tick, times_fired)
+/datum/wound/burn/handle_process(delta_time, times_fired)
 	. = ..()
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
-		victim.adjustToxLoss(0.25 * seconds_per_tick)
-		if(SPT_PROB(0.5, seconds_per_tick))
+		victim.adjustToxLoss(0.25 * delta_time)
+		if(DT_PROB(0.5, delta_time))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
@@ -50,12 +50,12 @@
 			flesh_healing += 0.5
 
 	if(limb.current_gauze)
-		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)
+		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * delta_time)
 
 	if(flesh_healing > 0) // good bandages multiply the length of flesh healing
 		var/bandage_factor = limb.current_gauze?.burn_cleanliness_bonus || 1
-		flesh_damage = max(flesh_damage - (0.5 * seconds_per_tick), 0)
-		flesh_healing = max(flesh_healing - (0.5 * bandage_factor * seconds_per_tick), 0) // good bandages multiply the length of flesh healing
+		flesh_damage = max(flesh_damage - (0.5 * delta_time), 0)
+		flesh_healing = max(flesh_healing - (0.5 * bandage_factor * delta_time), 0) // good bandages multiply the length of flesh healing
 
 	// if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
 	if(infestation <= WOUND_INFECTION_MODERATE && (limb.burn_dam < 5) && (victim.nutrition >= NUTRITION_LEVEL_FED))
@@ -70,44 +70,44 @@
 	// sanitization is checked after the clearing check but before the actual ill-effects, because we freeze the effects of infection while we have sanitization
 	if(sanitization > 0)
 		var/bandage_factor = limb.current_gauze?.burn_cleanliness_bonus || 1
-		infestation = max(infestation - (WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
-		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * seconds_per_tick), 0)
+		infestation = max(infestation - (WOUND_BURN_SANITIZATION_RATE * delta_time), 0)
+		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * delta_time), 0)
 		return
 
-	infestation += infestation_rate * seconds_per_tick
+	infestation += infestation_rate * delta_time
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			if(SPT_PROB(15, seconds_per_tick))
+			if(DT_PROB(15, delta_time))
 				victim.adjustToxLoss(0.2)
 				if(prob(6))
 					to_chat(victim, span_warning("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling)
-				if(SPT_PROB(1, seconds_per_tick))
+				if(DT_PROB(1, delta_time))
 					to_chat(victim, span_warning("<b>Your [limb.plaintext_zone] completely locks up, as you struggle for control against the infection!</b>"))
 					set_disabling(TRUE)
 					return
-			else if(SPT_PROB(4, seconds_per_tick))
+			else if(DT_PROB(4, delta_time))
 				to_chat(victim, span_notice("You regain sensation in your [limb.plaintext_zone], but it's still in terrible shape!"))
 				set_disabling(FALSE)
 				return
 
-			if(SPT_PROB(10, seconds_per_tick))
+			if(DT_PROB(10, delta_time))
 				victim.adjustToxLoss(0.5)
 
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
 			if(!disabling)
-				if(SPT_PROB(1.5, seconds_per_tick))
+				if(DT_PROB(1.5, delta_time))
 					to_chat(victim, span_warning("<b>You suddenly lose all sensation of the festering infection in your [limb.plaintext_zone]!</b>"))
 					set_disabling(TRUE)
 					return
-			else if(SPT_PROB(1.5, seconds_per_tick))
+			else if(DT_PROB(1.5, delta_time))
 				to_chat(victim, span_notice("You can barely feel your [limb.plaintext_zone] again, and you have to strain to retain motor control!"))
 				set_disabling(FALSE)
 				return
 
-			if(SPT_PROB(2.48, seconds_per_tick))
+			if(DT_PROB(2.48, delta_time))
 				if(prob(20))
 					to_chat(victim, span_warning("You contemplate life without your [limb.plaintext_zone]..."))
 					victim.adjustToxLoss(0.75)
@@ -115,7 +115,7 @@
 					victim.adjustToxLoss(1)
 
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			if(SPT_PROB(0.5 * infestation, seconds_per_tick))
+			if(DT_PROB(0.5 * infestation, delta_time))
 				strikes_to_lose_limb--
 				switch(strikes_to_lose_limb)
 					if(2 to INFINITY)
@@ -238,20 +238,20 @@
 		uv(I, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
-/datum/wound/burn/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/burn/on_stasis(delta_time, times_fired)
 	. = ..()
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
-		if(SPT_PROB(0.5, seconds_per_tick))
+		if(DT_PROB(0.5, delta_time))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	if(flesh_healing > 0)
-		flesh_damage = max(flesh_damage - (0.1 * seconds_per_tick), 0)
+		flesh_damage = max(flesh_damage - (0.1 * delta_time), 0)
 	if((flesh_damage <= 0) && (infestation <= 1))
 		to_chat(victim, span_green("The burns on your [limb.plaintext_zone] have cleared up!"))
 		qdel(src)
 		return
 	if(sanitization > 0)
-		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
+		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * delta_time), 0)
 
 /datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard

@@ -28,7 +28,7 @@
 		COMSIG_PARENT_EXAMINE,
 	))
 
-/datum/component/scope/process(seconds_per_tick)
+/datum/component/scope/process(delta_time)
 	var/mob/user_mob = tracker.owner
 	var/client/user_client = user_mob.client
 	if(!user_client)

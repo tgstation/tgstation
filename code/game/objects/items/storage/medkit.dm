@@ -593,7 +593,7 @@
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process(seconds_per_tick)
+/obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/using_coolant = coolant_to_spend()
 	if (isnull(using_coolant))
@@ -604,7 +604,7 @@
 				stored.unfreeze()
 		return
 
-	var/amount_used = 0.05 * seconds_per_tick
+	var/amount_used = 0.05 * delta_time
 	if (using_coolant != /datum/reagent/cryostylane)
 		amount_used *= 2
 	reagents.remove_reagent(using_coolant, amount_used)

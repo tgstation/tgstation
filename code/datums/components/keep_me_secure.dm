@@ -46,7 +46,7 @@
 
 	return TRUE
 
-/datum/component/keep_me_secure/process(seconds_per_tick)
+/datum/component/keep_me_secure/process(delta_time)
 	if(is_secured())
 		last_secured_location = get_turf(parent)
 		last_move = world.time

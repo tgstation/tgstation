@@ -102,18 +102,16 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	var/list/apc_map = list()
 	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turf_count)
-		var/turf/the_turf = turfs[i]
-		var/area/place = get_area(the_turf)
+		var/area/place = get_area(turfs[i])
 		if(blacklisted_areas[place.type])
 			continue
 		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
 			continue // No expanding powerless rooms etc
-		if(!TURF_SHARES(the_turf)) // No expanding areas of walls/something blocking this turf because that defeats the whole point of them used to separate areas
-			continue
 		if(!isnull(place.apc))
 			apc_map[place.name] = place.apc
-		if(length(apc_map) > 1) // When merging 2 or more areas make sure we arent merging their apc into 1 area
-			to_chat(creator, span_warning("Multiple APC's detected in the vicinity. only 1 is allowed."))
+		//If we found just one apc we can just convert that to work for our new area. But 2 or more!! nope
+		if(length(apc_map) > 1)
+			creator.balloon_alert(creator, "too many conflicting APCs, only one allowed!")
 			return
 		areas[place.name] = place
 
@@ -138,7 +136,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	//we haven't done anything. let's get outta here
 	if(newA == oldA)
-		to_chat(creator, span_warning("Selected choice is same as the area your standing in. No area changes were requested."))
+		creator.balloon_alert(creator, "no area change!")
 		return
 
 	/**

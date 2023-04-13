@@ -71,7 +71,7 @@
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/melee/energy/process(seconds_per_tick)
+/obj/item/melee/energy/process(delta_time)
 	if(heat)
 		open_flame()
 

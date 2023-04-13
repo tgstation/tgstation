@@ -78,7 +78,7 @@
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
-/obj/machinery/plumbing/receiver/process(seconds_per_tick)
+/obj/machinery/plumbing/receiver/process(delta_time)
 	if(machine_stat & NOPOWER || panel_open)
 		return
 
@@ -97,7 +97,7 @@
 
 		next_index++
 
-		use_power(active_power_usage * seconds_per_tick)
+		use_power(active_power_usage * delta_time)
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()

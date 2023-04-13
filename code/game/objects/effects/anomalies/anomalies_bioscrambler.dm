@@ -11,7 +11,7 @@
 	/// Range of the anomaly pulse
 	var/range = 5
 
-/obj/effect/anomaly/bioscrambler/anomalyEffect(seconds_per_tick)
+/obj/effect/anomaly/bioscrambler/anomalyEffect(delta_time)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return

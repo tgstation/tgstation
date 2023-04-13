@@ -232,10 +232,10 @@
 			wires.interact(user)
 	..()
 
-/obj/item/pizzabox/process(seconds_per_tick)
+/obj/item/pizzabox/process(delta_time)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
 		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
-		bomb_timer -= seconds_per_tick
+		bomb_timer -= delta_time
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
 			bomb.detonate()

@@ -34,7 +34,7 @@
 	stop_process()
 	return ..()
 
-/obj/item/circuit_component/clock/process(seconds_per_tick)
+/obj/item/circuit_component/clock/process(delta_time)
 	signal.set_output(COMPONENT_SIGNAL)
 
 /**

@@ -71,7 +71,8 @@
 
 	for (var/_cult_team in all_cults)
 		var/datum/team/cult/cult_team = _cult_team
-		cult_team.set_blood_target(src, duration = INFINITY)
+		deltimer(cult_team.blood_target_reset_timer)
+		cult_team.blood_target = src
 		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
 		if(summon_objective)
 			summon_objective.summoned = TRUE

@@ -132,7 +132,7 @@
 	soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/fermenting_barrel/process(seconds_per_tick)
+/obj/structure/fermenting_barrel/process(delta_time)
 	process_fermentation()
 
 /// Lil gunpowder barrel fer pirates since it's a nice reagent holder

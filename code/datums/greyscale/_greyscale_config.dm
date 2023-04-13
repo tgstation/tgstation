@@ -70,7 +70,7 @@
 		return QDEL_HINT_LETMELIVE
 	return ..()
 
-/datum/greyscale_config/process(seconds_per_tick)
+/datum/greyscale_config/process(delta_time)
 	if(!Refresh(loadFromDisk=TRUE))
 		return
 	if(!live_edit_types)

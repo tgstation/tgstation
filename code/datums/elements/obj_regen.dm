@@ -45,7 +45,7 @@
 
 
 /// Handle regenerating attached objects.
-/datum/element/obj_regen/process(seconds_per_tick)
+/datum/element/obj_regen/process(delta_time)
 	set waitfor = FALSE
 
 	if(!resumed)

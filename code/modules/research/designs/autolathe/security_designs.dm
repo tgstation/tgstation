@@ -1,5 +1,5 @@
 /datum/design/beanbag_slug
-	name = "Beanbag Slug (Less Lethal)"
+	name = "Beanbag Slug"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000)
@@ -11,7 +11,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/rubbershot
-	name = "Rubber Shot (Less Lethal)"
+	name = "Rubber Shot"
 	id = "rubber_shot"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000)
@@ -23,7 +23,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38
-	name = "Speed Loader (.38) (Lethal)"
+	name = "Speed Loader (.38)"
 	id = "c38"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20000)
@@ -59,7 +59,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/foam_dart
-	name = "Box of Foam Darts (Harmless)"
+	name = "Box of Foam Darts"
 	id = "foam_dart"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 500)
@@ -71,7 +71,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/flamethrower
-	name = "Flamethrower (Lethal/Highly Destructive)"
+	name = "Flamethrower"
 	id = "flamethrower"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 500)
@@ -127,7 +127,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/shotgun_dart
-	name = "Shotgun Dart (Lethal)"
+	name = "Shotgun Dart"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -139,7 +139,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/incendiary_slug
-	name = "Incendiary Slug (Lethal)"
+	name = "Incendiary Slug"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -151,7 +151,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/riot_dart
-	name = "Foam Riot Dart (Nonlethal)"
+	name = "Foam Riot Dart"
 	id = "riot_dart"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less iron!
@@ -163,7 +163,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/riot_darts
-	name = "Foam Riot Dart Box (Nonlethal)"
+	name = "Foam Riot Dart Box"
 	id = "riot_darts"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
@@ -175,7 +175,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/a357
-	name = ".357 Casing (VERY Lethal)"
+	name = ".357 Bullet Casing"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -187,7 +187,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/a762surplus
-	name = "7.62 Surplus Bullet Casing (VERY Lethal)"
+	name = "7.62 Surplus Bullet Casing"
 	id = "a762surplus"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -199,7 +199,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c10mm
-	name = "Ammo Box (10mm) (Lethal)"
+	name = "Ammo Box (10mm)"
 	id = "c10mm"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)
@@ -211,7 +211,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c45
-	name = "Ammo Box (.45) (Lethal)"
+	name = "Ammo Box (.45)"
 	id = "c45"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)
@@ -223,7 +223,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c9mm
-	name = "Ammo Box (9mm) (Lethal)"
+	name = "Ammo Box (9mm)"
 	id = "c9mm"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 30000)

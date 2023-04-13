@@ -27,7 +27,7 @@
 	RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
 	return ..() //Run parent at end
 
-/datum/ai_controller/vending_machine/SelectBehaviors(seconds_per_tick)
+/datum/ai_controller/vending_machine/SelectBehaviors(delta_time)
 	current_behaviors = list()
 	var/obj/machinery/vending/vendor_pawn = pawn
 

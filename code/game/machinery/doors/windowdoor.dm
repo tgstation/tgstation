@@ -127,9 +127,6 @@
 			var/obj/vehicle/sealed/mecha/mecha = AM
 			for(var/O in mecha.occupants)
 				var/mob/living/occupant = O
-				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
-					open()
-					return
 				if(allowed(occupant))
 					open_and_close()
 					return
@@ -145,20 +142,14 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if(operating || !density)
 		return
-
 	add_fingerprint(user)
 	if(!requiresID())
 		user = null
 
-	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
-		open()
-
-	else if(allowed(user))
+	if(allowed(user))
 		open_and_close()
-
 	else
 		do_animate("deny")
-
 	return
 
 /obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
@@ -204,10 +195,7 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
-	if(!density)
-		return TRUE
-
-	if(operating) //doors can still open when emag-disabled
+	if (operating) //doors can still open when emag-disabled
 		return FALSE
 
 	if(!try_to_force_door_open(forced))
@@ -252,9 +240,6 @@
 	return ..()
 
 /obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
-	if(density)
-		return TRUE
-
 	if(operating || !try_to_force_door_shut(forced))
 		return FALSE
 
@@ -445,6 +430,7 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

@@ -55,7 +55,7 @@
 		return
 	return ..()
 
-/obj/machinery/computer/bank_machine/process(seconds_per_tick)
+/obj/machinery/computer/bank_machine/process(delta_time)
 	. = ..()
 	if(!siphoning || !synced_bank_account)
 		return
@@ -63,7 +63,7 @@
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
-	var/siphon_am = 100 * seconds_per_tick
+	var/siphon_am = 100 * delta_time
 	if(!synced_bank_account.has_money(siphon_am))
 		say("[synced_bank_account.account_holder] depleted. Halting siphon.")
 		end_siphon()

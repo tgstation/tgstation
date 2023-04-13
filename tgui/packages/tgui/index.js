@@ -26,14 +26,13 @@ import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
-import { StoreProvider, configureStore } from './store';
-
+import { perf } from 'common/perf';
+import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotKeys } from './hotkeys';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
-import { perf } from 'common/perf';
+import { configureStore, StoreProvider } from './store';
 import { setupGlobalEvents } from './events';
-import { setupHotKeys } from './hotkeys';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');

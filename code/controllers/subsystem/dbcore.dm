@@ -519,7 +519,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	while(status < DB_QUERY_FINISHED)
 		stoplag()
 
-/datum/db_query/process(seconds_per_tick)
+/datum/db_query/process(delta_time)
 	if(status >= DB_QUERY_FINISHED)
 		return
 

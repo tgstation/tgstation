@@ -195,10 +195,6 @@
 /obj/item/pen,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"fa" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/rust,
-/area/ruin/space/has_grav/the_outlet/employeesection)
 "fk" = (
 /obj/structure/cable,
 /obj/structure/sink/directional/west,
@@ -1008,10 +1004,6 @@
 	},
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
-"yv" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/the_outlet/storefront)
 "yx" = (
 /obj/item/toy/plush/narplush,
 /obj/effect/decal/cleanable/crayon,
@@ -1704,10 +1696,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"NU" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/mineral/random,
-/area/ruin/space)
 "NY" = (
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-143"
@@ -1715,10 +1703,6 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"Od" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/open/floor/cult,
-/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "Oy" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/iron/white,
@@ -1834,10 +1818,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
-"Rs" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/r_wall/rust,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
 "Rx" = (
 /obj/structure/rack,
 /obj/item/clothing/head/costume/papersack,
@@ -2637,7 +2617,7 @@ DC
 Nb
 Ra
 Ef
-Rs
+UF
 sF
 OL
 Ps
@@ -2651,7 +2631,7 @@ yg
 jg
 Ts
 Ts
-fa
+uE
 Ts
 Ts
 uE
@@ -3384,7 +3364,7 @@ od
 zS
 FG
 od
-yv
+od
 od
 AV
 Sv
@@ -3515,7 +3495,7 @@ qy
 Aa
 Gu
 re
-Od
+Gu
 Gu
 RN
 UY
@@ -3843,7 +3823,7 @@ RN
 Er
 Er
 Er
-NU
+Er
 Er
 Er
 Er

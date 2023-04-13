@@ -83,6 +83,7 @@
 	inhand_icon_state = "judge"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes, /obj/item/stack/spacecash)
+	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"

@@ -63,9 +63,9 @@
 	var/datum/mind/origin
 	var/time = 0
 
-/obj/item/organ/internal/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
+/obj/item/organ/internal/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time += seconds_per_tick * 10
+	time += delta_time * 10
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)

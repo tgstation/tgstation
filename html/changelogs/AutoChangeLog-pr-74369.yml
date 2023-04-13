@@ -1,5 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "AI's now can see into the HoP Office and Pod bay."
-  - bugfix: "Vault piping and wiring is now connected to the station."

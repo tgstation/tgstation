@@ -9,9 +9,9 @@
 	basic_pawn.emote("deathgasp", intentional=FALSE)
 	basic_pawn.look_dead()
 
-/datum/ai_behavior/play_dead/perform(seconds_per_tick, datum/ai_controller/controller)
+/datum/ai_behavior/play_dead/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	if(SPT_PROB(10, seconds_per_tick))
+	if(DT_PROB(10, delta_time))
 		finish_action(controller, TRUE)
 
 /datum/ai_behavior/play_dead/finish_action(datum/ai_controller/controller, succeeded)

@@ -139,7 +139,7 @@
 	return TRUE
 
 ///where the guinea pig is actually shocked if possible
-/datum/component/electrified_buckle/process(seconds_per_tick)
+/datum/component/electrified_buckle/process(delta_time)
 	var/atom/movable/parent_as_movable = parent
 	if(QDELETED(parent_as_movable) || !parent_as_movable.has_buckled_mobs())
 		return PROCESS_KILL

@@ -57,9 +57,9 @@
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/hypnotized)
 
-/datum/brain_trauma/hypnosis/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/hypnosis/on_life(delta_time, times_fired)
 	..()
-	if(SPT_PROB(1, seconds_per_tick))
+	if(DT_PROB(1, delta_time))
 		if(prob(50))
 			to_chat(owner, span_hypnophrase("<i>...[lowertext(hypnotic_phrase)]...</i>"))
 		else

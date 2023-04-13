@@ -4,36 +4,32 @@
  * @license MIT
  */
 
-import { Icon, Section, Stack } from './components';
-
-import { Store } from 'common/redux';
-import { Window } from './layouts';
 import { selectBackend } from './backend';
+import { Icon, Section, Stack } from './components';
 import { selectDebug } from './debug/selectors';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
-const routingError =
-  (type: 'notFound' | 'missingExport', name: string) => () => {
-    return (
-      <Window>
-        <Window.Content scrollable>
-          {type === 'notFound' && (
-            <div>
-              Interface <b>{name}</b> was not found.
-            </div>
-          )}
-          {type === 'missingExport' && (
-            <div>
-              Interface <b>{name}</b> is missing an export.
-            </div>
-          )}
-        </Window.Content>
-      </Window>
-    );
-  };
+const routingError = (type, name) => () => {
+  return (
+    <Window>
+      <Window.Content scrollable>
+        {type === 'notFound' && (
+          <div>
+            Interface <b>{name}</b> was not found.
+          </div>
+        )}
+        {type === 'missingExport' && (
+          <div>
+            Interface <b>{name}</b> is missing an export.
+          </div>
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
 
-// Displays an empty Window with scrollable content
 const SuspendedWindow = () => {
   return (
     <Window>
@@ -42,7 +38,6 @@ const SuspendedWindow = () => {
   );
 };
 
-// Displays a loading screen with a spinning icon
 const RefreshingWindow = () => {
   return (
     <Window title="Loading">
@@ -60,8 +55,7 @@ const RefreshingWindow = () => {
   );
 };
 
-// Get the component for the current route
-export const getRoutedComponent = (store: Store) => {
+export const getRoutedComponent = (store) => {
   const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
@@ -79,14 +73,14 @@ export const getRoutedComponent = (store: Store) => {
   }
   const name = config?.interface;
   const interfacePathBuilders = [
-    (name: string) => `./${name}.tsx`,
-    (name: string) => `./${name}.js`,
-    (name: string) => `./${name}/index.tsx`,
-    (name: string) => `./${name}/index.js`,
+    (name) => `./${name}.tsx`,
+    (name) => `./${name}.js`,
+    (name) => `./${name}/index.tsx`,
+    (name) => `./${name}/index.js`,
   ];
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
-    const interfacePathBuilder = interfacePathBuilders.shift()!;
+    const interfacePathBuilder = interfacePathBuilders.shift();
     const interfacePath = interfacePathBuilder(name);
     try {
       esModule = requireInterface(interfacePath);

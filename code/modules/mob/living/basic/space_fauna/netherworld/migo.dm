@@ -49,11 +49,11 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 50, TRUE)
 
-/mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/migo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
-	if(SPT_PROB(5, seconds_per_tick))
+	if(DT_PROB(5, delta_time))
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 50, TRUE)
 

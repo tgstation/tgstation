@@ -1,3 +1,4 @@
+
 /**
  * A lift indicator aka an elevator hall lantern w/ floor number
  */
@@ -26,8 +27,10 @@
 
 	/// What specific_lift_id do we link with?
 	var/linked_elevator_id
-	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
+
+	// = (real lowest floor's z-level) - (what we want to display)
 	var/lowest_floor_offset = 1
+
 	/// Weakref to the lift.
 	var/datum/weakref/lift_ref
 	/// The lowest floor number. Determined by lift init.
@@ -97,9 +100,8 @@
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
 		begin_processing()
-		return TRUE
+		return
 	end_processing()
-	return FALSE
 
 /obj/machinery/lift_indicator/process()
 	var/datum/lift_master/lift = lift_ref?.resolve()
