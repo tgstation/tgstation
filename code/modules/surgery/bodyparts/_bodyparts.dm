@@ -329,6 +329,9 @@
 				if(!try_attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
 					forceMove(human_victim.loc)
+					return
+				if(check_for_frankenstein(victim))
+					bodypart_flags |= BODYPART_IMPLANTED
 				if(human_victim == user)
 					human_victim.visible_message(span_warning("[human_victim] jams [src] into [human_victim.p_their()] empty socket!"),\
 					span_notice("You force [src] into your empty socket, and it locks into place!"))
@@ -336,7 +339,7 @@
 					human_victim.visible_message(span_warning("[user] jams [src] into [human_victim]'s empty socket!"),\
 					span_notice("[user] forces [src] into your empty socket, and it locks into place!"))
 				return
-	..()
+	return ..()
 
 /obj/item/bodypart/attackby(obj/item/weapon, mob/user, params)
 	SHOULD_CALL_PARENT(TRUE)

@@ -80,12 +80,8 @@
 				)
 				tool.forceMove(target.loc)
 				return
-		if(ishuman(target))
-			var/mob/living/carbon/human/human_target = target
-			var/obj/item/bodypart/original_type = human_target.dna.species.bodypart_overrides[limb_to_attach.body_zone]
-			//frankenstein's monster confirmed
-			if(!original_type || (limb_to_attach.limb_id != initial(original_type.limb_id)))
-				tool.bodypart_flags |= BODYPART_IMPLANTED
+		if(tool.check_for_frankenstein(target))
+			tool.bodypart_flags |= BODYPART_IMPLANTED
 		display_results(
 			user,
 			target,

@@ -56,9 +56,7 @@
 				if(!(bodypart_to_attach.bodytype & target_chest.acceptable_bodytype))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
 					return SURGERY_STEP_FAIL
-				var/obj/item/bodypart/original_type = human_target.dna.species.bodypart_overrides[limb_to_attach.body_zone]
-				//frankenstein's monster confirmed
-				if(!original_type || (limb_to_attach.limb_id != initial(original_type.limb_id)))
+				if(bodypart_to_attach.check_for_frankenstein(target))
 					organ_rejection_dam = 30
 
 			if(!bodypart_to_attach.can_attach_limb(target))
@@ -96,14 +94,10 @@
 		tool.cut_overlays()
 		tool = tool.contents[1]
 	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
-		var/obj/item/bodypart/limb_to_attach = tool
-		limb_to_attach.try_attach_limb(target)
-		if(ishuman(target))
-			var/mob/living/carbon/human/human_target = target
-			var/obj/item/bodypart/original_type = human_target.dna.species.bodypart_overrides[limb_to_attach.body_zone]
-			//frankenstein's monster confirmed
-			if(!original_type || (limb_to_attach.limb_id != initial(original_type.limb_id)))
-				limb_to_attach.bodypart_flags |= BODYPART_IMPLANTED
+		var/obj/item/bodypart/bodypart_to_attach = tool
+		bodypart_to_attach.try_attach_limb(target)
+		if(bodypart_to_attach.check_for_frankenstein(target))
+			bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 		display_results(
@@ -116,9 +110,9 @@
 		display_pain(target, "You feel synthetic sensation wash from your [parse_zone(target_zone)], which you can feel again!", TRUE)
 		return
 	else
-		var/obj/item/bodypart/limb_to_attach = target.newBodyPart(target_zone, FALSE, FALSE)
-		limb_to_attach.try_attach_limb(target)
-		limb_to_attach.bodypart_flags |= BODYPART_PSEUDOPART | BODYPART_IMPLANTED
+		var/obj/item/bodypart/bodypart_to_attach = target.newBodyPart(target_zone, FALSE, FALSE)
+		bodypart_to_attach.try_attach_limb(target)
+		bodypart_to_attach.bodypart_flags |= BODYPART_PSEUDOPART | BODYPART_IMPLANTED
 		user.visible_message(span_notice("[user] finishes attaching [tool]!"), span_notice("You attach [tool]."))
 		display_results(
 			user,

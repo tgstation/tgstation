@@ -19,7 +19,7 @@
 #define BODYPART_UNREMOVABLE (1<<0)
 /// Bodypart is a pseudopart (like a chainsaw arm)
 #define BODYPART_PSEUDOPART (1<<1)
-/// Bodypart did not match the owner's default bodypart type when surgically implanted
+/// Bodypart did not match the owner's default bodypart limb_id when surgically implanted
 #define BODYPART_IMPLANTED (1<<2)
 
 // Bodypart change blocking flags

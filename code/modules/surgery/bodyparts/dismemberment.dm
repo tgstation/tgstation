@@ -302,6 +302,15 @@
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.try_attach_limb(limb_owner, TRUE)
 
+///Checks if a limb qualifies as a BODYPART_IMPLANTED
+/obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
+	if(!istype(monster))
+		return FALSE
+	var/obj/item/bodypart/original_type = human_target.dna.species.bodypart_overrides[limb_to_attach.body_zone]
+	if(!original_type || (limb_to_attach.limb_id != initial(original_type.limb_id)))
+		return TRUE
+	return FALSE
+
 ///Checks if you can attach a limb, returns TRUE if you can.
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
