@@ -196,7 +196,7 @@
 		return
 	toggle_power(user)
 
-/obj/machinery/electrolyzer/proc/toggle_power(user)
+/obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)
 		balloon_alert(user, "insert cell or anchor!")
 		return
@@ -232,7 +232,7 @@
 		return
 	switch(action)
 		if("power")
-			toggle_power()
+			toggle_power(usr)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)
