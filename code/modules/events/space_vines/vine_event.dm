@@ -52,8 +52,11 @@
 	input_text = "Select starting mutations."
 
 /datum/event_admin_setup/multiple_choice/spacevine/get_options()
-	return subtypesof(/datum/spacevine_mutation)
+	return subtypesof(/datum/spacevine_mutation/)
 
 /datum/event_admin_setup/multiple_choice/spacevine/apply_to_event(datum/round_event/spacevine/event)
-	event.override_mutations = choices
+	var/list/type_choices = list()
+	for(var/choice in choices)
+		type_choices += text2path(choice)
+	event.override_mutations = type_choices
 	
