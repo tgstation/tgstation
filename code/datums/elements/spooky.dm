@@ -63,8 +63,7 @@
 				new instrument(T)
 			else
 				to_chat(H, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
-		to_chat(H, span_boldnotice("You are the spooky skeleton!"))
-		to_chat(H, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
+		to_chat(C, "<span class='robot'><font size='4'>You're feeling more bony.</font></span>")
 		change_name(H) //time for a new name!
 
 /datum/element/spooky/proc/change_name(mob/living/carbon/human/spooked)
