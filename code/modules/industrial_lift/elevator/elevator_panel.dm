@@ -111,6 +111,8 @@
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
+		if(elevator_door.obj_flags & EMAGGED)
+			continue			
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
@@ -142,7 +144,8 @@
 		for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
 			if(elevator_door.elevator_linked_id != linked_elevator_id)
 				continue
-
+			if(!(elevator_door.obj_flags & EMAGGED))
+				continue
 			elevator_door.obj_flags &= ~EMAGGED
 			INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 
