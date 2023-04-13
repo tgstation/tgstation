@@ -360,13 +360,12 @@
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
 
-/datum/mood_event/basketball
-	description = "Ballin on the court feels natural."
+/datum/mood_event/basketball_score
+	description = "Swish! Nothing but net."
 	mood_change = 2
-	timeout = 1 MINUTES
+	timeout = 5 MINUTES
 	
-/datum/mood_event/basketball/add_effects(goal_type)
-	if(goal_type == BASKETBALL_DUNK)
-		mood_change = 3
-		description = "
-	return ..()
+/datum/mood_event/basketball_dunk
+	description = "Slam dunk! Boom, shakalaka!"
+	mood_change = 2
+	timeout = 5 MINUTES
