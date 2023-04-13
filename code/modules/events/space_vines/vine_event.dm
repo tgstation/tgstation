@@ -17,9 +17,15 @@
 
 /datum/round_event/spacevine
 	fakeable = FALSE
+	///Override location the vines will spawn in.
 	var/turf/override_turf
+	///used to confirm if admin selected mutations should be used or not.
+	var/mutations_overridden = FALSE
+	///Admin selected mutations that the kudzu will spawn with, can be set to none to act as mutationless kudzu.
 	var/list/override_mutations = list()
+	///Potency of the spawned kudzu.
 	var/potency
+	///Production value of the spawned kuduz.
 	var/production
 
 /datum/round_event/spacevine/start()
@@ -42,7 +48,7 @@
 		var/turf/floor = pick(turfs)
 		var/list/selected_mutations = list()
 
-		if(override_mutations.len == 0)
+		if(mutations_overridden == FALSE)
 			selected_mutations = list(pick(subtypesof(/datum/spacevine_mutation)))
 		else
 			selected_mutations = override_mutations
@@ -79,6 +85,7 @@
 	var/list/type_choices = list()
 	for(var/choice in choices)
 		type_choices += text2path(choice)
+	event.mutations_overridden = TRUE
 	event.override_mutations = type_choices
 	
 /datum/event_admin_setup/input_number/spacevine_potency
