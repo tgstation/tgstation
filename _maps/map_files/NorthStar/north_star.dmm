@@ -26314,7 +26314,6 @@
 	},
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
-/obj/item/pai_card,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "haK" = (
@@ -47813,6 +47812,17 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/construction)
+"mJy" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/pai_card,
+/turf/open/floor/wood/tile,
+/area/station/service/library)
 "mJH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -263973,7 +263983,7 @@ kgK
 mAJ
 fll
 hav
-fll
+mJy
 kKE
 baa
 fio
