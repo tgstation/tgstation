@@ -115,7 +115,7 @@
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
-
+									// old nitrous oxide would simply remove 10 volume of blood per tick, rather than interact with bleed at all
 	//gauze always reduces blood flow, even for non bleeders
 	if(limb.current_gauze)
 		if(clot_rate > 0)
