@@ -333,7 +333,7 @@
 			ripped_clothing[clothing] = shared_flags
 			clothing.body_parts_covered &= ~shared_flags
 
-/obj/item/mod/module/thread_ripper/on_process(delta_time)
+/obj/item/mod/module/thread_ripper/on_process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

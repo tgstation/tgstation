@@ -34,7 +34,7 @@
 	try_eject(forced = TRUE)
 	return ..()
 
-/datum/computer_file/program/ai_restorer/process_tick(delta_time)
+/datum/computer_file/program/ai_restorer/process_tick(seconds_per_tick)
 	. = ..()
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return

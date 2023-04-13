@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram doors no longer play 8 variations of the same sound simultaneously"

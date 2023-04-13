@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "The action button description for malf AI hostile station lockdown now makes it clear that doors will be electrified."
