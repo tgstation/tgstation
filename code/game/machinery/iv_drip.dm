@@ -223,7 +223,7 @@
 		new /obj/item/stack/sheet/iron(loc)
 	qdel(src)
 
-/obj/machinery/iv_drip/process(delta_time)
+/obj/machinery/iv_drip/process(seconds_per_tick)
 	if(!attached)
 		return PROCESS_KILL
 
@@ -250,13 +250,13 @@
 	// Give reagents
 	if(mode)
 		if(drip_reagents.total_volume)
-			drip_reagents.trans_to(attached, transfer_rate * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+			drip_reagents.trans_to(attached, transfer_rate * seconds_per_tick, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 			update_appearance(UPDATE_ICON)
 
 	// Take blood
 	else if (isliving(attached))
 		var/mob/living/attached_mob = attached
-		var/amount = min(transfer_rate * delta_time, drip_reagents.maximum_volume - drip_reagents.total_volume)
+		var/amount = min(transfer_rate * seconds_per_tick, drip_reagents.maximum_volume - drip_reagents.total_volume)
 		// If the beaker is full, ping
 		if(!amount)
 			set_transfer_rate(MIN_IV_TRANSFER_RATE)

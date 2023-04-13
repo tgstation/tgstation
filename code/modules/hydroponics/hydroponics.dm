@@ -299,14 +299,14 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
-/obj/machinery/hydroponics/process(delta_time)
+/obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(self_sustaining)
 		if(powered())
-			adjust_waterlevel(rand(1,2) * delta_time * 0.5)
-			adjust_weedlevel(-0.5 * delta_time)
-			adjust_pestlevel(-0.5 * delta_time)
+			adjust_waterlevel(rand(1,2) * seconds_per_tick * 0.5)
+			adjust_weedlevel(-0.5 * seconds_per_tick)
+			adjust_pestlevel(-0.5 * seconds_per_tick)
 		else
 			set_self_sustaining(FALSE)
 			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
@@ -977,7 +977,7 @@
 			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
-	else if(istype(O, /obj/item/shovel/spade))
+	else if(O.tool_behaviour == TOOL_SHOVEL)
 		if(!myseed && !weedlevel)
 			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
 			return

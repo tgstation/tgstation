@@ -97,6 +97,8 @@
 	if(obj_flags & EMAGGED)
 		return
 
+	obj_flags |= EMAGGED
+
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift)
 		return
@@ -106,9 +108,17 @@
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
+	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+		if(elevator_door.elevator_linked_id != linked_elevator_id)
+			continue
+		if(elevator_door.obj_flags & EMAGGED)
+			continue			
+		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
+		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
+		elevator_door.obj_flags |= EMAGGED
+
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
-	obj_flags |= EMAGGED
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()
@@ -130,6 +140,14 @@
 			lift_platform.violent_landing = initial(lift_platform.violent_landing)
 			lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
+
+		for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+			if(elevator_door.elevator_linked_id != linked_elevator_id)
+				continue
+			if(!(elevator_door.obj_flags & EMAGGED))
+				continue
+			elevator_door.obj_flags &= ~EMAGGED
+			INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 
 		obj_flags &= ~EMAGGED
 

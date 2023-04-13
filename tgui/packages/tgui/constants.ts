@@ -4,6 +4,14 @@
  * @license MIT
  */
 
+type Gas = {
+  id: string;
+  path: string;
+  name: string;
+  label: string;
+  color: string;
+};
+
 // UI states, which are mirrored from the BYOND code.
 export const UI_INTERACTIVE = 2;
 export const UI_UPDATE = 1;
@@ -35,7 +43,7 @@ export const COLORS = {
     acidicbuffer: '#fbc314',
     basicbuffer: '#3853a4',
   },
-};
+} as const;
 
 // Colors defined in CSS
 export const CSS_COLORS = [
@@ -136,7 +144,7 @@ export const RADIO_CHANNELS = [
     freq: 1459,
     color: '#1ecc43',
   },
-];
+] as const;
 
 const GASES = [
   {
@@ -279,39 +287,39 @@ const GASES = [
     label: 'Anti-Noblium',
     color: 'maroon',
   },
-];
+] as const;
 
-export const getGasLabel = (gasId, fallbackValue) => {
-  const gasSearchString = String(gasId).toLowerCase();
-  // prettier-ignore
-  const gas = GASES.find((gas) => (
-    gas.id === gasSearchString
-      || gas.name.toLowerCase() === gasSearchString
-  ));
-  return (gas && gas.label) || fallbackValue || gasId;
+// Returns gas label based on gasId
+export const getGasLabel = (gasId: string, fallbackValue?: string) => {
+  const gasSearchString = gasId.toLowerCase();
+  const gas = GASES.find(
+    (gas) =>
+      gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString
+  );
+  return gas?.label || fallbackValue || gasId;
 };
 
-export const getGasColor = (gasId) => {
-  const gasSearchString = String(gasId).toLowerCase();
-  // prettier-ignore
-  const gas = GASES.find((gas) => (
-    gas.id === gasSearchString
-      || gas.name.toLowerCase() === gasSearchString
-  ));
-  return gas && gas.color;
+// Returns gas color based on gasId
+export const getGasColor = (gasId: string) => {
+  const gasSearchString = gasId.toLowerCase();
+  const gas = GASES.find(
+    (gas) =>
+      gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString
+  );
+  return gas?.color;
 };
 
-export const getGasFromId = (gasId) => {
-  const gasSearchString = String(gasId).toLowerCase();
-  // prettier-ignore
-  const gas = GASES.find((gas) => (
-    gas.id === gasSearchString
-      || gas.name.toLowerCase() === gasSearchString
-  ));
+// Returns gas object based on gasId
+export const getGasFromId = (gasId: string): Gas | undefined => {
+  const gasSearchString = gasId.toLowerCase();
+  const gas = GASES.find(
+    (gas) =>
+      gas.id === gasSearchString || gas.name.toLowerCase() === gasSearchString
+  );
   return gas;
 };
 
-// Paths need to be exact matches so we dont need to lowercase stuffs.
-export const getGasFromPath = (gasPath) => {
-  return GASES.find((gas) => gasPath === gas.path);
+// Returns gas object based on gasPath
+export const getGasFromPath = (gasPath: string): Gas | undefined => {
+  return GASES.find((gas) => gas.path === gasPath);
 };

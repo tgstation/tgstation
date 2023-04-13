@@ -42,8 +42,8 @@
 /datum/component/genetic_damage/InheritComponent(datum/component/genetic_damage/old_component)
 	total_damage += old_component.total_damage
 
-/datum/component/genetic_damage/process(delta_time)
-	if (ismonkey(parent) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && DT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, delta_time))
+/datum/component/genetic_damage/process(seconds_per_tick)
+	if (ismonkey(parent) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && SPT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, seconds_per_tick))
 		var/mob/living/carbon/carbon_parent = parent
 		carbon_parent.gorillize()
 		qdel(src)
@@ -51,9 +51,9 @@
 
 	if (total_damage >= minimum_before_damage)
 		var/mob/living/living_mob = parent
-		living_mob.adjustToxLoss(toxin_damage_per_second * delta_time)
+		living_mob.adjustToxLoss(toxin_damage_per_second * seconds_per_tick)
 
-	total_damage -= remove_per_second * delta_time
+	total_damage -= remove_per_second * seconds_per_tick
 	if (total_damage <= 0)
 		qdel(src)
 		return PROCESS_KILL

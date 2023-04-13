@@ -337,9 +337,9 @@
 	ctf_game.control_points.Remove(src)
 	return ..()
 
-/obj/machinery/ctf/control_point/process(delta_time)
+/obj/machinery/ctf/control_point/process(seconds_per_tick)
 	if(controlling_team)
-		ctf_game.control_point_scoring(controlling_team, point_rate * delta_time)
+		ctf_game.control_point_scoring(controlling_team, point_rate * seconds_per_tick)
 	
 	var/scores
 
