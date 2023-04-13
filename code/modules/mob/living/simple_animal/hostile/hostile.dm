@@ -587,7 +587,7 @@
 			. = TRUE
 		if(AI_IDLE)
 			if(FindTarget(possible_targets))
-				. =  TRUE
+				. = TRUE
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = FALSE
