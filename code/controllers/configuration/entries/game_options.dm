@@ -381,7 +381,7 @@
 /datum/config_entry/flag/shift_time_realtime
 
 /datum/config_entry/number/shift_time_start_hour
-	default = 7
+	default = 12
 	min_val = 0
 	max_val = 23
 
