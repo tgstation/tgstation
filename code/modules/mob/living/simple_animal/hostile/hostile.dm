@@ -107,7 +107,7 @@
 		SSmove_manager.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
-	if(AIStatus == AI_OFF)
+	if(AIStatus == AI_OFF || QDELETED(src))
 		return FALSE
 	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
 
