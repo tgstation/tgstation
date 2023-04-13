@@ -9,9 +9,8 @@
  */
 export const captureExternalLinks = () => {
   // Subscribe to all document clicks
-  document.addEventListener('click', (e) => {
-    /** @type {HTMLElement} */
-    let target = e.target;
+  document.addEventListener('click', (evt: MouseEvent) => {
+    let target = evt.target as HTMLElement;
     // Recurse down the tree to find a valid link
     while (true) {
       // Reached the end, bail.
@@ -22,18 +21,17 @@ export const captureExternalLinks = () => {
       if (tagName === 'a') {
         break;
       }
-      target = target.parentElement;
+      target = target.parentElement as HTMLElement;
     }
     const hrefAttr = target.getAttribute('href') || '';
     // Leave BYOND links alone
-    // prettier-ignore
-    const isByondLink = hrefAttr.charAt(0) === '?'
-      || hrefAttr.startsWith('byond://');
+    const isByondLink =
+      hrefAttr.charAt(0) === '?' || hrefAttr.startsWith('byond://');
     if (isByondLink) {
       return;
     }
     // Prevent default action
-    e.preventDefault();
+    evt.preventDefault();
     // Normalize the URL
     let url = hrefAttr;
     if (url.toLowerCase().startsWith('www')) {

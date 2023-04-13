@@ -313,15 +313,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"Ah" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/closet/firecloset,
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "AS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -370,6 +361,15 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"DZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/closet/firecloset,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "Ek" = (
@@ -490,6 +490,22 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
+"Ss" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Hydroponics";
+	name = "navigation beacon (Hydroponics Delivery)"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "hydrodropoff"
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_cw,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "TN" = (
 /obj/structure/railing{
 	dir = 10
@@ -545,24 +561,6 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"XO" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 1;
-	freq = 1400;
-	location = "Hydroponics";
-	name = "navigation beacon (Hydroponics Delivery)"
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "hydrodropoff"
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
 "Zd" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
@@ -700,7 +698,7 @@ dx
 "}
 (4,1,1) = {"
 Fz
-XO
+Ss
 Fz
 Fz
 Fz
@@ -1944,7 +1942,7 @@ se
 se
 Fz
 GM
-Ah
+DZ
 Fz
 yM
 Fz

@@ -540,7 +540,7 @@
 	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/sphere_transform/on_active_process(delta_time)
+/obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
 	animate(mod.wearer) //stop the animation
 	mod.wearer.SpinAnimation(1.5) //start it back again
 	if(!mod.wearer.has_gravity())

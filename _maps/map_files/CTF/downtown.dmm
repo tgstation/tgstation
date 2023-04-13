@@ -205,7 +205,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
 "eA" = (
-/obj/machinery/capture_the_flag/blue,
+/obj/machinery/ctf/spawner/blue,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "eC" = (
@@ -467,7 +467,7 @@
 	},
 /area/centcom/ctf)
 "jk" = (
-/obj/item/ctf/red,
+/obj/item/ctf_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "jl" = (
@@ -590,7 +590,7 @@
 /turf/open/floor/carpet/red,
 /area/centcom/ctf)
 "lK" = (
-/obj/item/ctf/blue,
+/obj/item/ctf_flag/blue,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "lL" = (
@@ -1825,7 +1825,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Oi" = (
-/obj/machinery/capture_the_flag/red,
+/obj/machinery/ctf/spawner/red,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "Ok" = (

@@ -105,7 +105,7 @@
 	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
 
-/datum/component/curse_of_hunger/process(delta_time)
+/datum/component/curse_of_hunger/process(seconds_per_tick)
 	var/obj/item/cursed_item = parent
 	var/mob/living/carbon/cursed = cursed_item.loc
 	///check hp
@@ -113,7 +113,7 @@
 		the_curse_ends(cursed)
 		return
 
-	hunger += delta_time
+	hunger += seconds_per_tick
 	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) || prob(80))
 		return
 

@@ -5,7 +5,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "h" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/item/storage/book/bible{
 	pixel_x = -4;
 	pixel_y = -4
@@ -36,7 +36,7 @@
 /area/template_noop)
 "s" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/item/storage/dice,
 /obj/item/storage/dice{
 	pixel_x = 4;
@@ -89,7 +89,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "P" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/item/storage/crayons,
 /obj/structure/window/spawner,
 /obj/effect/decal/cleanable/dirt,
@@ -97,7 +97,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "W" = (
 /obj/structure/rack,
-/obj/structure/window/spawner/west,
+/obj/structure/window/spawner/directional/west,
 /obj/item/modular_computer/laptop/preset/civilian{
 	pixel_y = 4;
 	pixel_x = 4
