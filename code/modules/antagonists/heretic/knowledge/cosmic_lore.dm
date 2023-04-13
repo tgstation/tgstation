@@ -147,7 +147,7 @@
 	var/combo_duration_amount = 3 SECONDS
 	/// The maximum duration of the combo.
 	var/max_combo_duration = 10 SECONDS
-	/// The hits we have on a mob with a mind.
+	/// The amount the combo duration increases.
 	var/increase_amount = 0.5 SECONDS
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
