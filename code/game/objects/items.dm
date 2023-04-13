@@ -1,5 +1,3 @@
-GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire", appearance_flags = RESET_COLOR))
-
 /// Anything you can pick up and hold.
 /obj/item
 	name = "item"
