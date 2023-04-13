@@ -8,12 +8,19 @@
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 7
-	admin_setup = list(/datum/event_admin_setup/set_location/spacevine, /datum/event_admin_setup/multiple_choice/spacevine)
+	admin_setup = list(
+		/datum/event_admin_setup/set_location/spacevine,
+		/datum/event_admin_setup/multiple_choice/spacevine,
+		/datum/event_admin_setup/input_number/spacevine_potency,
+		/datum/event_admin_setup/input_number/spacevine_production,
+	)
 
 /datum/round_event/spacevine
 	fakeable = FALSE
 	var/turf/override_turf
 	var/list/override_mutations = list()
+	var/potency
+	var/production
 
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
@@ -39,8 +46,12 @@
 			selected_mutations = list(pick(subtypesof(/datum/spacevine_mutation)))
 		else
 			selected_mutations = override_mutations
+		if(isnull(potency))
+			potency = rand(50,100)
+		if(isnull(production))
+			production = rand(1, 4)
 
-		new /datum/spacevine_controller(floor, selected_mutations, rand(50,100), rand(1,4), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(floor, selected_mutations, potency, production, src) //spawn a controller at turf with randomized stats and a single random mutation
 
 /datum/event_admin_setup/set_location/spacevine
 	input_text = "Spawn vines at current location?"
@@ -70,3 +81,25 @@
 		type_choices += text2path(choice)
 	event.override_mutations = type_choices
 	
+/datum/event_admin_setup/input_number/spacevine_potency
+	input_text = "Set vine's potency (effects mutation frequency + max severity)"
+	max_value = 100
+
+/datum/event_admin_setup/input_number/spacevine_potency/prompt_admins()
+	default_value = rand(50, 100)
+	. = ..()
+
+/datum/event_admin_setup/input_number/spacevine_potency/apply_to_event(datum/round_event/spacevine/event)
+	event.potency = chosen_value
+
+/datum/event_admin_setup/input_number/spacevine_production
+	input_text = "Set vine's production (effects spreading cap + speed) (lower is faster)"
+	min_value = 1
+	max_value = 10
+
+/datum/event_admin_setup/input_number/spacevine_production/prompt_admins()
+	default_value = rand(1, 4)
+	. = ..()
+
+/datum/event_admin_setup/input_number/spacevine_production/apply_to_event(datum/round_event/spacevine/event)
+	event.production = chosen_value
