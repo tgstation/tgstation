@@ -26314,6 +26314,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
+/obj/item/pai_card,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "haK" = (
@@ -74532,6 +74533,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
+/obj/item/pai_card,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "tVC" = (
@@ -75512,6 +75514,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
+"uko" = (
+/obj/structure/table,
+/obj/item/pai_card,
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
 "ukr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -255504,7 +255511,7 @@ cdF
 sbq
 jiL
 qbz
-hRH
+uko
 qxy
 qnw
 vcg
