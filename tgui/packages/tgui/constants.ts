@@ -296,8 +296,9 @@ export const getGasLabel = (gasId: string, fallbackValue?: string) => {
   const gasSearchString = gasId.toLowerCase();
 
   for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id !== gasSearchString) continue;
-    return GASES[idx].label;
+    if (GASES[idx].id === gasSearchString) {
+      return GASES[idx].label;
+    }
   }
 
   return fallbackValue || 'None';
@@ -310,8 +311,9 @@ export const getGasColor = (gasId: string) => {
   const gasSearchString = gasId.toLowerCase();
 
   for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id !== gasSearchString) continue;
-    return GASES[idx].color;
+    if (GASES[idx].id === gasSearchString) {
+      return GASES[idx].color;
+    }
   }
 
   return 'black';
@@ -324,8 +326,9 @@ export const getGasFromId = (gasId: string): Gas | undefined => {
   const gasSearchString = gasId.toLowerCase();
 
   for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id !== gasSearchString) continue;
-    return GASES[idx];
+    if (GASES[idx].id === gasSearchString) {
+      return GASES[idx];
+    }
   }
 };
 
@@ -334,7 +337,8 @@ export const getGasFromPath = (gasPath: string): Gas | undefined => {
   if (!gasPath) return;
 
   for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].path !== gasPath) continue;
-    return GASES[idx];
+    if (GASES[idx].path === gasPath) {
+      return GASES[idx];
+    }
   }
 };
