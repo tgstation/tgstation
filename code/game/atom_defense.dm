@@ -136,6 +136,10 @@
 /atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0
 
-/// Called when the atom is no longer on fire
+/// Should be called when the atom is destroyed by fire
+/atom/proc/burn()
+	return
+
+/// Called when the atom is no longer on fire (/datum/component/burning got removed)
 /atom/proc/extinguish()
 	return
