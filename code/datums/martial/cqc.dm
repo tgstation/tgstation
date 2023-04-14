@@ -46,189 +46,189 @@
 		restraining_mob = null
 	return ..()
 
-/datum/martial_art/cqc/proc/check_streak(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/proc/check_streak(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
 	if(findtext(streak,SLAM_COMBO))
 		reset_streak()
-		return Slam(A,D)
+		return Slam(user, target)
 	if(findtext(streak,KICK_COMBO))
 		reset_streak()
-		return Kick(A,D)
+		return Kick(user, target)
 	if(findtext(streak,RESTRAIN_COMBO))
 		reset_streak()
-		return Restrain(A,D)
+		return Restrain(user, target)
 	if(findtext(streak,PRESSURE_COMBO))
 		reset_streak()
-		return Pressure(A,D)
+		return Pressure(user, target)
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		reset_streak()
-		return Consecutive(A,D)
+		return Consecutive(user, target)
 	return FALSE
 
-/datum/martial_art/cqc/proc/Slam(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/proc/Slam(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	if(D.body_position == STANDING_UP)
-		D.visible_message(span_danger("[A] slams [D] into the ground!"), \
-						span_userdanger("You're slammed into the ground by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-		to_chat(A, span_danger("You slam [D] into the ground!"))
-		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, TRUE, -1)
-		D.apply_damage(10, BRUTE)
-		D.Paralyze(12 SECONDS)
-		log_combat(A, D, "slammed (CQC)")
+	if(target.body_position == STANDING_UP)
+		target.visible_message(span_danger("[user] slams [target] into the ground!"), \
+						span_userdanger("You're slammed into the ground by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+		to_chat(user, span_danger("You slam [target] into the ground!"))
+		playsound(get_turf(user), 'sound/weapons/slam.ogg', 50, TRUE, -1)
+		target.apply_damage(10, BRUTE)
+		target.Paralyze(12 SECONDS)
+		log_combat(user, target, "slammed (CQC)")
 		return TRUE
 
-/datum/martial_art/cqc/proc/Kick(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/proc/Kick(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	if(!D.stat || !D.IsParalyzed())
-		D.visible_message(span_danger("[A] kicks [D] back!"), \
-						span_userdanger("You're kicked back by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, span_danger("You kick [D] back!"))
-		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
-		var/atom/throw_target = get_edge_target_turf(D, A.dir)
-		D.throw_at(throw_target, 1, 14, A)
-		D.apply_damage(10, A.get_attack_type())
-		log_combat(A, D, "kicked (CQC)")
+	if(!target.stat || !target.IsParalyzed())
+		target.visible_message(span_danger("[user] kicks [target] back!"), \
+						span_userdanger("You're kicked back by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You kick [target] back!"))
+		playsound(get_turf(user), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+		var/atom/throw_target = get_edge_target_turf(target, user.dir)
+		target.throw_at(throw_target, 1, 14, user)
+		target.apply_damage(10, user.get_attack_type())
+		log_combat(user, target, "kicked (CQC)")
 		. = TRUE
-	if(D.IsParalyzed() && !D.stat)
-		log_combat(A, D, "knocked out (Head kick)(CQC)")
-		D.visible_message(span_danger("[A] kicks [D]'s head, knocking [D.p_them()] out!"), \
-						span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-		to_chat(A, span_danger("You kick [D]'s head, knocking [D.p_them()] out!"))
-		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
-		D.SetSleeping(30 SECONDS)
-		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+	if(target.IsParalyzed() && !target.stat)
+		log_combat(user, target, "knocked out (Head kick)(CQC)")
+		target.visible_message(span_danger("[user] kicks [target]'s head, knocking [target.p_them()] out!"), \
+						span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+		to_chat(user, span_danger("You kick [target]'s head, knocking [target.p_them()] out!"))
+		playsound(get_turf(user), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
+		target.SetSleeping(30 SECONDS)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 		. = TRUE
 
-/datum/martial_art/cqc/proc/Pressure(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/proc/Pressure(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	log_combat(A, D, "pressured (CQC)")
-	D.visible_message(span_danger("[A] punches [D]'s neck!"), \
-					span_userdanger("Your neck is punched by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-	to_chat(A, span_danger("You punch [D]'s neck!"))
-	D.adjustStaminaLoss(60)
-	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	log_combat(user, target, "pressured (CQC)")
+	target.visible_message(span_danger("[user] punches [target]'s neck!"), \
+					span_userdanger("Your neck is punched by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You punch [target]'s neck!"))
+	target.adjustStaminaLoss(60)
+	playsound(get_turf(user), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
-/datum/martial_art/cqc/proc/Restrain(mob/living/A, mob/living/D)
+/datum/martial_art/cqc/proc/Restrain(mob/living/user, mob/living/target)
 	if(restraining_mob)
 		return
-	if(!can_use(A))
+	if(!can_use(user))
 		return FALSE
-	if(!D.stat)
-		log_combat(A, D, "restrained (CQC)")
-		D.visible_message(span_warning("[A] locks [D] into a restraining position!"), \
-						span_userdanger("You're locked into a restraining position by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
-		to_chat(A, span_danger("You lock [D] into a restraining position!"))
-		D.adjustStaminaLoss(20)
-		D.Stun(10 SECONDS)
-		restraining_mob = D
+	if(!target.stat)
+		log_combat(user, target, "restrained (CQC)")
+		target.visible_message(span_warning("[user] locks [target] into a restraining position!"), \
+						span_userdanger("You're locked into a restraining position by [user]!"), span_hear("You hear shuffling and a muffled groan!"), null, user)
+		to_chat(user, span_danger("You lock [target] into a restraining position!"))
+		target.adjustStaminaLoss(20)
+		target.Stun(10 SECONDS)
+		restraining_mob = target
 		addtimer(VARSET_CALLBACK(src, restraining_mob, null), 50, TIMER_UNIQUE)
 		return TRUE
 
-/datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/proc/Consecutive(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	if(!D.stat)
-		log_combat(A, D, "consecutive CQC'd (CQC)")
-		D.visible_message(span_danger("[A] strikes [D]'s abdomen, neck and back consecutively"), \
-						span_userdanger("Your abdomen, neck and back are struck consecutively by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, span_danger("You strike [D]'s abdomen, neck and back consecutively!"))
-		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
-		var/obj/item/I = D.get_active_held_item()
-		if(I && D.temporarilyRemoveItemFromInventory(I))
-			A.put_in_hands(I)
-		D.adjustStaminaLoss(50)
-		D.apply_damage(25, A.get_attack_type())
+	if(!target.stat)
+		log_combat(user, target, "consecutive CQC'd (CQC)")
+		target.visible_message(span_danger("[user] strikes [target]'s abdomen, neck and back consecutively"), \
+						span_userdanger("Your abdomen, neck and back are struck consecutively by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You strike [target]'s abdomen, neck and back consecutively!"))
+		playsound(get_turf(target), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
+		var/obj/item/held_item = target.get_active_held_item()
+		if(held_item && target.temporarilyRemoveItemFromInventory(held_item))
+			user.put_in_hands(held_item)
+		target.adjustStaminaLoss(50)
+		target.apply_damage(25, user.get_attack_type())
 		return TRUE
 
-/datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
-	if(A != D && can_use(A)) // A != D prevents grabbing yourself
-		add_to_streak("G",D)
-		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
+/datum/martial_art/cqc/grab_act(mob/living/user, mob/living/target)
+	if(user != target && can_use(user)) // user != target prevents grabbing yourself
+		add_to_streak("G", target)
+		if(check_streak(user, target)) //if a combo is made no grab upgrade is done
 			return TRUE
-		old_grab_state = A.grab_state
-		D.grabbedby(A, 1)
+		old_grab_state = user.grab_state
+		target.grabbedby(user, 1)
 		if(old_grab_state == GRAB_PASSIVE)
-			D.drop_all_held_items()
-			A.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab if on grab intent
-			log_combat(A, D, "grabbed", addition="aggressively")
-			D.visible_message(span_warning("[A] violently grabs [D]!"), \
-							span_userdanger("You're grabbed violently by [A]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, span_danger("You violently grab [D]!"))
+			target.drop_all_held_items()
+			user.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab if on grab intent
+			log_combat(user, target, "grabbed", addition="aggressively")
+			target.visible_message(span_warning("[user] violently grabs [target]!"), \
+							span_userdanger("You're grabbed violently by [user]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_danger("You violently grab [target]!"))
 		return TRUE
 	else
 		return FALSE
 
-/datum/martial_art/cqc/harm_act(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/harm_act(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	add_to_streak("H",D)
-	if(check_streak(A,D))
+	add_to_streak("H", target)
+	if(check_streak(user, target))
 		return TRUE
-	log_combat(A, D, "attacked (CQC)")
-	A.do_attack_animation(D)
+	log_combat(user, target, "attacked (CQC)")
+	user.do_attack_animation(target)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13
-	if(D.body_position == LYING_DOWN)
+	if(target.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
-	D.apply_damage(bonus_damage, BRUTE)
+	target.apply_damage(bonus_damage, BRUTE)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
-		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
+		playsound(get_turf(target), 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
 	else
-		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
-	D.visible_message(span_danger("[A] [picked_hit_type]ed [D]!"), \
-					span_userdanger("You're [picked_hit_type]ed by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-	to_chat(A, span_danger("You [picked_hit_type] [D]!"))
-	log_combat(A, D, "[picked_hit_type]s (CQC)")
-	if(A.resting && !D.stat && !D.IsParalyzed())
-		D.visible_message(span_danger("[A] leg sweeps [D]!"), \
-						span_userdanger("Your legs are sweeped by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
-		to_chat(A, span_danger("You leg sweep [D]!"))
-		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-		D.apply_damage(10, BRUTE)
-		D.Paralyze(6 SECONDS)
-		log_combat(A, D, "sweeped (CQC)")
+		playsound(get_turf(target), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	target.visible_message(span_danger("[user] [picked_hit_type]ed [target]!"), \
+					span_userdanger("You're [picked_hit_type]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [picked_hit_type] [target]!"))
+	log_combat(user, target, "[picked_hit_type]s (CQC)")
+	if(user.resting && !target.stat && !target.IsParalyzed())
+		target.visible_message(span_danger("[user] leg sweeps [target]!"), \
+						span_userdanger("Your legs are sweeped by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+		to_chat(user, span_danger("You leg sweep [target]!"))
+		playsound(get_turf(user), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+		target.apply_damage(10, BRUTE)
+		target.Paralyze(6 SECONDS)
+		log_combat(user, target, "sweeped (CQC)")
 	return TRUE
 
-/datum/martial_art/cqc/disarm_act(mob/living/A, mob/living/D)
-	if(!can_use(A))
+/datum/martial_art/cqc/disarm_act(mob/living/user, mob/living/target)
+	if(!can_use(user))
 		return FALSE
-	add_to_streak("D",D)
-	var/obj/item/I = null
-	if(check_streak(A,D))
+	add_to_streak("D", target)
+	var/obj/item/held_item = null
+	if(check_streak(user, target))
 		return TRUE
-	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
-	if(restraining_mob && A.pulling == restraining_mob)
-		log_combat(A, D, "knocked out (Chokehold)(CQC)")
-		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
-						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
-		to_chat(A, span_danger("You put [D] into a chokehold!"))
-		D.SetSleeping(40 SECONDS)
+	log_combat(user, target, "disarmed (CQC)", "[held_item ? " grabbing \the [held_item]" : ""]")
+	if(restraining_mob && user.pulling == restraining_mob)
+		log_combat(user, target, "knocked out (Chokehold)(CQC)")
+		target.visible_message(span_danger("[user] puts [target] into a chokehold!"), \
+						span_userdanger("You're put into a chokehold by [user]!"), span_hear("You hear shuffling and a muffled groan!"), null, user)
+		to_chat(user, span_danger("You put [target] into a chokehold!"))
+		target.SetSleeping(40 SECONDS)
 		restraining_mob = null
-		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
-			A.setGrabState(GRAB_NECK)
+		if(user.grab_state < GRAB_NECK && !HAS_TRAIT(user, TRAIT_PACIFISM))
+			user.setGrabState(GRAB_NECK)
 		return TRUE
 	if(prob(65))
-		if(!D.stat || !D.IsParalyzed() || !restraining_mob)
-			I = D.get_active_held_item()
-			D.visible_message(span_danger("[A] strikes [D]'s jaw with their hand!"), \
-							span_userdanger("Your jaw is struck by [A], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, span_danger("You strike [D]'s jaw, leaving [D.p_them()] disoriented!"))
-			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
-			if(I && D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
-			D.set_jitter_if_lower(4 SECONDS)
-			D.apply_damage(5, A.get_attack_type())
+		if(!target.stat || !target.IsParalyzed() || !restraining_mob)
+			held_item = target.get_active_held_item()
+			target.visible_message(span_danger("[user] strikes [target]'s jaw with their hand!"), \
+							span_userdanger("Your jaw is struck by [user], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_danger("You strike [target]'s jaw, leaving [target.p_them()] disoriented!"))
+			playsound(get_turf(target), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+			if(held_item && target.temporarilyRemoveItemFromInventory(held_item))
+				user.put_in_hands(held_item)
+			target.set_jitter_if_lower(4 SECONDS)
+			target.apply_damage(5, user.get_attack_type())
 	else
-		D.visible_message(span_danger("[A] fails to disarm [D]!"), \
-						span_userdanger("You're nearly disarmed by [A]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, span_warning("You fail to disarm [D]!"))
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		target.visible_message(span_danger("[user] fails to disarm [target]!"), \
+						span_userdanger("You're nearly disarmed by [user]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning("You fail to disarm [target]!"))
+		playsound(target, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return FALSE
 
 
