@@ -67,7 +67,8 @@
 	var/area/from_area = get_area(curturf)
 	var/area/to_area = get_area(destturf)
 	if(!forced)
-		check_teleport_valid(teleatom, destination, from_area, to_area, curturf, destturf, channel)
+		if(!check_teleport_valid(teleatom, destination, from_area, to_area, curturf, destturf, channel))
+			return FALSE		
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
