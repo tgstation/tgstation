@@ -6,7 +6,7 @@
  * message - The message inside the window
  * title - The title of the window
  * list/items - The list of items to display
- * min_checked - The minimum number of checkboxxes that must be checked (defaults to 1)
+ * min_checked - The minimum number of checkboxes that must be checked (defaults to 1)
  * max_checked - The maximum number of checkboxes that can be checked (optional)
  * timeout - The timeout for the input (optional)
  */

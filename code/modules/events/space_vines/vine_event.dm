@@ -94,7 +94,7 @@
 
 /datum/event_admin_setup/input_number/spacevine_potency/prompt_admins()
 	default_value = rand(50, 100)
-	. = ..()
+	return ..()
 
 /datum/event_admin_setup/input_number/spacevine_potency/apply_to_event(datum/round_event/spacevine/event)
 	event.potency = chosen_value
@@ -106,7 +106,7 @@
 
 /datum/event_admin_setup/input_number/spacevine_production/prompt_admins()
 	default_value = rand(1, 4)
-	. = ..()
+	return ..()
 
 /datum/event_admin_setup/input_number/spacevine_production/apply_to_event(datum/round_event/spacevine/event)
 	event.production = chosen_value
