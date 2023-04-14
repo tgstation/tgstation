@@ -581,13 +581,13 @@
 		return FALSE
 	switch(AIStatus)
 		if(AI_ON)
-			. = TRUE
+			return TRUE
 		if(AI_IDLE)
 			if(FindTarget(possible_targets))
-				. = TRUE
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
+				return TRUE
 			else
-				. = FALSE
+				return FALSE
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
 	return !FindTarget(possible_targets)
