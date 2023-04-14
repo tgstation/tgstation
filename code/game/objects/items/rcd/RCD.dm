@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return data
 
-/obj/item/construction/rcd/ui_act(action, params)
+/obj/item/construction/rcd/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
