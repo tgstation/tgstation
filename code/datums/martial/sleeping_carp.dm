@@ -15,7 +15,7 @@
 		return
 	target.add_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
 	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-	target.faction |= FACTION_CARP //:defender
+	target.faction |= FACTION_CARP //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
 	target.remove_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
@@ -106,7 +106,7 @@
 	return TRUE
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/attacker, mob/living/defender)
-	add_to_streak("defender", defender)
+	add_to_streak("D", defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
@@ -169,7 +169,7 @@
 
 /obj/item/staff/bostaff
 	name = "bo staff"
-	desc = "attacker long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
+	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
