@@ -118,12 +118,12 @@
 	adjust_light()
 
 /obj/structure/fireplace/extinguish()
+	. = ..()
 	if(lit)
 		var/fuel = burn_time_remaining()
 		flame_expiry_timer = 0
 		put_out()
 		adjust_fuel_timer(fuel)
-	. = ..()
 
 /obj/structure/fireplace/proc/adjust_fuel_timer(amount)
 	if(lit)
