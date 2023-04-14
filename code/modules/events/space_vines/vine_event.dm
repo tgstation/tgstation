@@ -67,6 +67,7 @@
 	
 /datum/event_admin_setup/multiple_choice/spacevine
 	input_text = "Select starting mutations."
+	min_choices = 0
 
 /datum/event_admin_setup/multiple_choice/spacevine/prompt_admins()
 	var/customize_mutations = tgui_alert(usr, "Select mutations?", event_control.name, list("Custom", "Random", "Cancel"))
