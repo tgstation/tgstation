@@ -101,7 +101,11 @@ SUBSYSTEM_DEF(eigenstates)
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
-	thing_to_send.forceMove(get_turf(eigen_target))
+	if(check_teleport_valid(thing_to_send, eigen_target, get_area(thing_to_send), get_area(eigen_target), get_turf(thing_to_send), get_turf(eigen_target), TELEPORT_CHANNEL_EIGENSTATE))
+		thing_to_send.forceMove(get_turf(eigen_target))
+	else
+		to_chat(thing_to_send, span_warning("You close the locker on yourself, only for nothing to happen."))
+		return FALSE
 	//Create ONE set of sparks for ALL times in iteration
 	if(spark_time != world.time)
 		do_sparks(5, FALSE, eigen_target)
