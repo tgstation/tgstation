@@ -367,7 +367,6 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
-	particle_type = /particles/lava/plasma
 
 	light_range = 3
 	light_power = 0.75
@@ -443,10 +442,6 @@
 		burn_human.set_species(/datum/species/plasmaman)
 		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
 			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
-
-/particles/lava/plasma
-	icon_state = "plasma"
-	count = 20
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
