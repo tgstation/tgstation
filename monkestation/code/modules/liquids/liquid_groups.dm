@@ -816,7 +816,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/datum/gas_mixture/gas = member_open.air
 	if(!gas)
 		return
+
 	gas.temperature = cached_temperature_shift
+	if(group_temperature != cached_temperature_shift)
+		group_temperature = cached_temperature_shift
+		reagents.chem_temp = cached_temperature_shift
 
 	current_temperature_queue -= member
 	if(!length(current_temperature_queue))

@@ -581,3 +581,10 @@
 #undef CULT_NARSIE_KILLED
 #undef CULT_VICTORY
 #undef SUMMON_POSSIBILITIES
+
+/datum/antagonist/cult/antag_token(datum/mind/hosts_mind)
+	. = ..()
+	var/datum/antagonist/cult/new_cultist = new()
+	new_cultist.cult_team = get_team()
+	new_cultist.give_equipment = TRUE
+	hosts_mind.add_antag_datum(new_cultist)

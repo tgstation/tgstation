@@ -5236,6 +5236,8 @@
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
+#include "monkestation\code\datums\random_engines\_base.dm"
+#include "monkestation\code\datums\random_engines\metastation.dm"
 #include "monkestation\code\datums\status_effects\disorient.dm"
 #include "monkestation\code\datums\traits\negative.dm"
 #include "monkestation\code\datums\wires\particle_accelerator.dm"
