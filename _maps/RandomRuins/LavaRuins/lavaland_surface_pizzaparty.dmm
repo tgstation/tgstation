@@ -15,7 +15,8 @@
 "ah" = (
 /obj/structure/sink/directional/north,
 /obj/structure/mirror/directional/south,
-/obj/item/instrument/saxophone/spectral,
+/obj/item/instrument/saxophone,
+/obj/item/clothing/head/helmet/skull,
 /turf/open/floor/iron/freezer/lavaland,
 /area/ruin/unpowered)
 "aq" = (

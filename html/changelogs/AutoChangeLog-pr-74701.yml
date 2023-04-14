@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - refactor: "Implanted foreign limbs will no longer be wiped by species change."
