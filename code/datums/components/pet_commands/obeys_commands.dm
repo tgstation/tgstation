@@ -30,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_BEFRIENDED, PROC_REF(add_friend))
 	RegisterSignal(parent, COMSIG_LIVING_UNFRIENDED, PROC_REF(remove_friend))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(display_menu))
+	RegisterSignal(parent, COMSIG_MOB_ALTCLICKON, PROC_REF(display_menu))
 
 /datum/component/obeys_commands/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT))
