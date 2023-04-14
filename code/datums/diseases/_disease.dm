@@ -63,17 +63,17 @@
 
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act(delta_time, times_fired)
+/datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(has_cure())
-		if(DT_PROB(cure_chance, delta_time))
+		if(SPT_PROB(cure_chance, seconds_per_tick))
 			update_stage(max(stage - 1, 1))
 
-		if(disease_flags & CURABLE && DT_PROB(cure_chance, delta_time))
+		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
 			cure()
 			return FALSE
-	else if(DT_PROB(stage_prob*slowdown, delta_time))
+	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier

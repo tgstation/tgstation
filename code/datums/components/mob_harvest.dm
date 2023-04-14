@@ -60,13 +60,13 @@
 		var/mob/living/living_parent = parent
 		living_parent.update_appearance(UPDATE_ICON_STATE)
 
-/datum/component/mob_harvest/process(delta_time)
+/datum/component/mob_harvest/process(seconds_per_tick)
 	///only track time if we aren't dead and have room for more items
 	var/mob/living/harvest_mob = parent
 	if(harvest_mob.stat == DEAD || amount_ready >= max_ready)
 		return
 
-	item_generation_time -= delta_time
+	item_generation_time -= seconds_per_tick
 	if(item_generation_time > 0)
 		return
 

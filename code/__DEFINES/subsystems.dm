@@ -210,7 +210,7 @@
 #define FIRE_PRIOTITY_SMOOTHING 35
 #define FIRE_PRIORITY_OBJ 40
 #define FIRE_PRIORITY_ACID 40
-#define FIRE_PRIOTITY_BURNING 40
+#define FIRE_PRIORITY_BURNING 40
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
@@ -302,7 +302,7 @@
 #define WARDROBE_CALLBACK_REMOVE 2
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
-// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+// Only use these defines if you want to access some other objects processing seconds_per_tick, otherwise use the seconds_per_tick that is sent as a parameter to process()
 #define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)

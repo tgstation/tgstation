@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - refactor: "Refactored navigational beacons, making them constructable, deconstructable, and generally easier to use"

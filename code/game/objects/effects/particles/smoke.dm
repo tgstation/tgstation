@@ -14,6 +14,9 @@
 	gravity = list(0, 0.95)
 	grow = 0.05
 
+/particles/smoke/burning
+	position = list(0, 0, 0)
+
 /particles/smoke/steam
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	fade = 1.5 SECONDS
