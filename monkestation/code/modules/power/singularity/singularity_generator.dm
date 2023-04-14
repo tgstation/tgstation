@@ -33,3 +33,8 @@
 			qdel(src)
 		else
 			energy -= 1
+
+
+/obj/machinery/the_singularitygen/tesla
+	name = "Tesla Singularity Generator"
+	creation_type = /obj/energy_ball
