@@ -1155,7 +1155,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						span_userdanger("You block [user]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your grab at [target] was blocked!"))
 		return FALSE
-	if(attacker_style?.grab_act(user,target) == MARTIAL_ATTACK_SUCCESS)
+	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
 		target.grabbedby(user)
