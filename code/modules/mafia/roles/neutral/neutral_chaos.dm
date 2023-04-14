@@ -63,7 +63,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MAFIA_ON_KILL, PROC_REF(prank))
 
-/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
+/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game, datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	if(lynch)
@@ -71,4 +71,4 @@
 		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
 		game.send_message("<span class='big clown'>!! CLOWN VICTORY !!</span>")
 		game.award_role(winner_award, src)
-		victim.kill(game,FALSE)
+		victim.kill(game, FALSE)

@@ -8,7 +8,7 @@
 	hud_icon = "hudheadofsecurity"
 	winner_award = /datum/award/achievement/mafia/hos
 
-	role_unique_actions = list(/datum/mafia_ability/attack_player/honorable)
+	role_unique_actions = list(/datum/mafia_ability/attack_player/execution)
 
 /datum/mafia_role/warden
 	name = "Warden"

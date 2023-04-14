@@ -227,18 +227,6 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	SStgui.update_uis(src)
 
 /**
- * Sends out a Changeling to kill at the end of the night.
- * Selected by a random voter of Mafia
- * Early returns if no one voted, as it means they did not want to kill, or all Changelings are dead.
- */
-/datum/mafia_controller/proc/changeling_kill()
-	var/datum/mafia_role/mafia/killer = get_random_voter("Mafia")
-	if(!killer)
-		return
-	killer.send_killer(src)
-	reset_votes("Mafia")
-
-/**
  * Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.
  *
  * What players do in this phase:
@@ -257,7 +245,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		send_message(span_red("[role.body.real_name] voted guilty."))
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
-		on_trial.kill(src,lynch = TRUE)
+		on_trial.kill(src, lynch = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup))
 	else
 		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
@@ -455,9 +443,9 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 /datum/mafia_controller/proc/resolve_night()
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_ACTION_PHASE)
-	changeling_kill()
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE)
+	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_END)
 	toggle_night_curtains(close=FALSE)
 	start_day()
 	SStgui.update_uis(src)
@@ -614,7 +602,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		)
 		var/ability_options = list()
 		for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-			if(action.validate_action_target(src))
+			if(action.validate_action_target(src, silent = TRUE))
 				ability_options += list(list("name" = action, "ref" = REF(action)))
 		.["possible_actions"] = ability_options
 		.["role_theme"] = user_role.special_ui_theme
@@ -635,7 +623,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		var/list/ability_options = list()
 		if(user_role) //not observer
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-				if(action.validate_action_target(src, potential_target = R))
+				if(action.validate_action_target(src, potential_target = R, silent = TRUE))
 					ability_options += list(list("name" = action, "ref" = REF(action)))
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
@@ -780,7 +768,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 			switch(phase)
 				if(MAFIA_PHASE_DAY, MAFIA_PHASE_VOTING)
 					used_action.using_ability = TRUE
-					used_action.perform_action(src, target)
+					used_action.perform_action_target(src, target)
 				if(MAFIA_PHASE_NIGHT)
 					used_action.set_target(src, target)
 			return TRUE

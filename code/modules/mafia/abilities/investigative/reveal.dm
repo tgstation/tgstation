@@ -8,16 +8,17 @@
 	name = "Reveal"
 	ability_action = "psychologically evaluate"
 
-/datum/mafia_ability/reaveal_role/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
-	if(!using_ability)
-		return
-	if(!validate_action_target(game))
-		host_role.add_note("N[game.turn] - [target_role.body.real_name] - Unable to reveal")
-		return ..()
+/datum/mafia_ability/reaveal_role/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
+	. = ..()
+	if(!.)
+		return .
 
 	host_role.add_note("N[game.turn] - [target_role.body.real_name] - Revealed true identity")
 	to_chat(host_role.body, span_warning("You have revealed the true nature of the [target_role]!"))
 	target_role.reveal_role(game, verbose = TRUE)
-	. = ..()
-	host_role.role_unique_actions -= src
-	qdel(src)
+
+/datum/mafia_ability/vest/clean_action_refs(datum/mafia_controller/game)
+	if(using_ability)
+		host_role.role_unique_actions -= src
+		qdel(src)
+	return ..()

@@ -22,23 +22,6 @@
 
 	to_chat(body, "<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>")
 
-/**
- * Attempt to attack a player.
- * First we will check if this changeling player is able to attack, unless they've alredy attacked.
- * If so, they will select a random Changeling to attack.
- *
- * This makes it impossible for the Lawyer to meta hold up a game by repeatedly roleblocking one Changeling.
- */
-/datum/mafia_role/mafia/proc/send_killer(datum/mafia_controller/game)
-	var/datum/mafia_role/victim = game.get_vote_winner("Mafia")
-	if(!victim)
-		return
-	if(!victim.kill(game, src, FALSE))
-		game.send_message(span_danger("[body.real_name] was unable to attack [victim.body.real_name] tonight!"), MAFIA_TEAM_MAFIA)
-	else
-		game.send_message(span_danger("[body.real_name] has attacked [victim.body.real_name]!"), MAFIA_TEAM_MAFIA)
-		to_chat(victim.body, span_userdanger("You have been killed by a Changeling!"))
-
 /datum/mafia_role/mafia/thoughtfeeder
 	name = "Thoughtfeeder"
 	desc = "You're a changeling variant that feeds on the memories of others. Use ':j' talk prefix to talk to your fellow lings, and visit people at night to learn their role."

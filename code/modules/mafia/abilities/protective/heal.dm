@@ -14,24 +14,23 @@
 	var/saving_message = "someone nursed you back to health"
 
 /datum/mafia_ability/heal/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
+	. = ..()
+	if(!.)
+		return .
 	if(new_target.role_flags & ROLE_VULNERABLE)
 		to_chat(host_role.body, span_notice("[new_target] can't be protected."))
 		return FALSE
-	return ..()
 
-/datum/mafia_ability/heal/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
-	if(!using_ability)
-		return
-	if(!validate_action_target(game))
-		host_role.add_note("N[game.turn] - [target_role.body.real_name] - Unable to protect")
-		return ..()
+/datum/mafia_ability/heal/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
+	. = ..()
+	if(!.)
+		return .
 
 	if(target_role == host_role)
 		use_flags &= ~CAN_USE_ON_SELF
 	host_role.add_note("N[game.turn] - Protected [target_role.body.real_name]")
 	RegisterSignal(target_role, COMSIG_MAFIA_ON_KILL, PROC_REF(prevent_kill))
 	RegisterSignal(game, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE, PROC_REF(end_protection))
-	return ..()
 
 /datum/mafia_ability/heal/proc/prevent_kill(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	SIGNAL_HANDLER
@@ -55,7 +54,7 @@
 
 /datum/mafia_ability/heal/defend/prevent_kill(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	. = ..()
-	if(attacker.kill(game, src, FALSE)) //you attack the attacker
+	if(attacker.kill(game, host_role, FALSE)) //you attack the attacker
 		to_chat(attacker.body, span_userdanger("You have been ambushed by Security!"))
 	host_role.kill(game, attacker, FALSE) //the attacker attacks you, they were able to attack the target so they can attack you.
 	return .

@@ -9,9 +9,8 @@
 	valid_use_period = MAFIA_PHASE_VOTING
 	action_priority = null
 
-/datum/mafia_ability/voting/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
-	if(!validate_action_target(game))
-		return ..()
+/datum/mafia_ability/voting/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
+	. = ..()
+	if(!.)
+		return .
 	game.vote_for(host_role, day_target, vote_type = "Day")
-
-	return ..()

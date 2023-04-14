@@ -6,17 +6,16 @@
  */
 /datum/mafia_ability/roleblock
 	name = "Advise"
-	ability_action = "give legal counsel"
+	ability_action = "give legal counsel to"
 	action_priority = COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE
 
-/datum/mafia_ability/roleblock/perform_action(datum/mafia_controller/game, datum/mafia_role/day_target)
-	if(!using_ability)
-		return
-	if(!validate_action_target(game))
-		return ..()
+/datum/mafia_ability/roleblock/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
+	. = ..()
+	if(!.)
+		return .
+
 	target_role.role_flags |= ROLE_ROLEBLOCKED
 	RegisterSignal(game, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE, PROC_REF(end_block))
-	return ..()
 
 /**
  * Ends the roleblock on the player.
