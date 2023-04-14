@@ -1,0 +1,4 @@
+author: "Sneeker134"
+delete-after: True
+changes:
+  - bugfix: "Monkeys and some other mobs no longer drop items they've grabbed from storage onto the ground."

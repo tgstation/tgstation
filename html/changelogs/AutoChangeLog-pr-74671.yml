@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed an annoying gravity runtime that occurred if a player was connected before mapping finished initialization."
