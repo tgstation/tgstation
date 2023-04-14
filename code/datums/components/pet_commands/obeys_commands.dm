@@ -33,7 +33,7 @@
 	RegisterSignal(parent, COMSIG_MOB_ALTCLICKON, PROC_REF(display_menu))
 
 /datum/component/obeys_commands/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT))
+	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_PARENT_EXAMINE, COMSIG_MOB_ALTCLICKON))
 
 /// Add someone to our friends list
 /datum/component/obeys_commands/proc/add_friend(datum/source, mob/living/new_friend)
