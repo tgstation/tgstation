@@ -17,21 +17,6 @@
 /mob/living/basic/pet/Initialize(mapload)
 	. = ..()
 
-	// String assoc list returns a cached list, so this is like a static list to pass into the element below.
-	var/static/list/habitable_atmos = list(
-		"min_oxy" = 5,
-		"max_oxy" = 0,
-		"min_plas" = 0,
-		"max_plas" = 1,
-		"min_co2" = 0,
-		"max_co2" = 5,
-		"min_n2" = 0,
-		"max_n2" = 0,
-	)
-
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 1)
-	AddElement(/datum/element/basic_body_temp_sensitive)
-
 	/// Can set the collar var beforehand to start the pet with a collar.
 	if(collar)
 		collar = new(src)
@@ -83,7 +68,7 @@
 
 /mob/living/basic/pet/death(gibbed)
 	. = ..()
-	add_memory_in_range(src, 7, MEMORY_PET_DEAD, list(DETAIL_DEUTERAGONIST = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF) //Protagonist is the person memorizing it
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
 
 /mob/living/basic/pet/handle_atom_del(atom/deleting_atom)
 	. = ..()

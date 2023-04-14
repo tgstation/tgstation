@@ -28,7 +28,7 @@
 	attack_sound = "goose"
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("honks")
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	attack_same = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/random_retaliate = TRUE
@@ -88,7 +88,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("neutral", FACTION_MAINT_CREATURES)
+	faction = list(FACTION_NEUTRAL, FACTION_MAINT_CREATURES)
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
@@ -156,11 +156,11 @@
 	else
 		addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goose/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(choking && !stat)
 		do_jitter_animation(50)
-		if(DT_PROB(10, delta_time))
+		if(SPT_PROB(10, seconds_per_tick))
 			emote("gasp")
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
@@ -246,7 +246,7 @@
 
 /datum/action/cooldown/vomit
 	name = "Vomit"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	button_icon_state = "vomit"
 	button_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250
@@ -264,3 +264,5 @@
 
 	StartCooldown()
 	return TRUE
+
+#undef GOOSE_SATIATED

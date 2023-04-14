@@ -46,6 +46,8 @@
 
 	target.stat_panel.send_message("add_verb_list", output_list)
 
+	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_ADDED, verbs_list)
+
 /**
  * handles removing verb and sending it to browser to update, use this for removing verbs
  *
@@ -92,3 +94,5 @@
 		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
 
 	target.stat_panel.send_message("remove_verb_list", output_list)
+
+	SEND_SIGNAL(target, COMSIG_CLIENT_VERB_REMOVED, verbs_list)

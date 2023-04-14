@@ -338,6 +338,12 @@
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/energy/temperature/freeze
+	name = "cryogenic temperature gun"
+	desc = "A gun that reduces temperatures. Only for those with ice in their veins."
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/temp)
+
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
@@ -405,7 +411,7 @@
 	else
 		. += "It has infinite coins available for use."
 
-/obj/item/gun/energy/marksman_revolver/process(delta_time)
+/obj/item/gun/energy/marksman_revolver/process(seconds_per_tick)
 	if(!max_coins || coin_count >= max_coins)
 		STOP_PROCESSING(SSobj, src)
 		return

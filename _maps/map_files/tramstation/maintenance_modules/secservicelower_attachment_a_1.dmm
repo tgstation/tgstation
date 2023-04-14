@@ -1,0 +1,155 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/deck,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"n" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"q" = (
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/dice,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"G" = (
+/turf/closed/wall,
+/area/station/maintenance/central/greater)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+
+(1,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+"}
+(2,1,1) = {"
+q
+q
+q
+q
+t
+t
+t
+t
+t
+q
+q
+"}
+(3,1,1) = {"
+q
+q
+q
+G
+t
+p
+a
+B
+n
+q
+q
+"}
+(4,1,1) = {"
+q
+q
+q
+G
+u
+b
+s
+b
+t
+q
+q
+"}
+(5,1,1) = {"
+q
+q
+q
+G
+G
+G
+A
+B
+t
+q
+q
+"}
+(6,1,1) = {"
+q
+q
+q
+q
+q
+G
+G
+X
+t
+q
+q
+"}
+(7,1,1) = {"
+q
+q
+q
+q
+q
+q
+G
+G
+G
+q
+q
+"}

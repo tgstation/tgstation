@@ -64,8 +64,8 @@
 	/// The STRIPPABLE_ITEM_* key
 	var/key
 
-	/// Should we warn about dangerous clothing?
-	var/warn_dangerous_clothing = TRUE
+	/// Should we give feedback messages?
+	var/show_visible_message = TRUE
 
 /// Gets the item from the given source.
 /datum/strippable_item/proc/get_item(atom/source)
@@ -88,7 +88,7 @@
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 
-	equipping.item_start_equip(source, equipping, user, warn_dangerous_clothing)
+	equipping.item_start_equip(source, equipping, user, show_visible_message)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.
@@ -132,7 +132,7 @@
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
+	to_chat(user, span_danger("You try to remove [source]'s [item.name]..."))
 	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)
@@ -210,7 +210,7 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!do_mob(user, source, get_equip_delay(equipping)))
+	if (!do_after(user, get_equip_delay(equipping), source))
 		return FALSE
 
 	if (!equipping.mob_can_equip(source, item_slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
@@ -267,7 +267,7 @@
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	if (!do_mob(user, source, strip_delay || item.strip_delay, interaction_key = REF(item)))
+	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item)))
 		return FALSE
 
 	return TRUE

@@ -5,7 +5,7 @@
 	base_icon_state = "reticence"
 	movedelay = 2
 	max_integrity = 100
-	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_reticence
 	max_temperature = 15000
 	force = 30
 	destruction_sleep_duration = 40
@@ -23,6 +23,14 @@
 	step_energy_drain = 3
 	color = "#87878715"
 
+/datum/armor/mecha_reticence
+	melee = 25
+	bullet = 20
+	laser = 30
+	energy = 15
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/reticence/loaded
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced,
@@ -31,3 +39,12 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+
+/obj/vehicle/sealed/mecha/reticence/add_cell()
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+/obj/vehicle/sealed/mecha/reticence/add_scanmod()
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+
+/obj/vehicle/sealed/mecha/reticence/add_capacitor()
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

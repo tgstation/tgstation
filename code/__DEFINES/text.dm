@@ -4,6 +4,9 @@
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
+/// Prepares a text to be used for maptext, using a font that can handle larger text better.
+#define MAPTEXT_VCR_OSD_MONO(text) {"<span style='font-family: \"VCR OSD Mono\"'>[##text]</span>"}
+
 /// Macro from Lummox used to get height from a MeasureText proc.
 /// resolves the MeasureText() return value once, then resolves the height, then sets return_var to that.
 #define WXH_TO_HEIGHT(measurement, return_var) \
@@ -17,6 +20,9 @@
 
 /// Simply removes the < and > characters, and limits the length of the message.
 #define STRIP_HTML_SIMPLE(text, limit) (GLOB.angular_brackets.Replace(copytext(text, 1, limit), ""))
+
+/// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
+#define STRIP_HTML_FULL(text, limit) (GLOB.html_tags.Replace(copytext(text, 1, limit), ""))
 
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"

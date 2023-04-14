@@ -4,10 +4,18 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
 	max_integrity = 150
-	armor = list(MELEE = 50, BULLET = 25, LASER = 20, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/ridden_atv
 	key_type = /obj/item/key/atv
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
+
+/datum/armor/ridden_atv
+	melee = 50
+	bullet = 25
+	laser = 20
+	bomb = 50
+	fire = 60
+	acid = 60
 
 /obj/vehicle/ridden/atv/Initialize(mapload)
 	. = ..()
@@ -99,10 +107,10 @@
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/atv/process(delta_time)
+/obj/vehicle/ridden/atv/process(seconds_per_tick)
 	if(atom_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(DT_PROB(10, delta_time))
+	if(SPT_PROB(10, seconds_per_tick))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = src)

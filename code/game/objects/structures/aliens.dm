@@ -59,8 +59,8 @@
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -86,8 +86,8 @@
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	resintype = "wall"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -111,8 +111,8 @@
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -142,8 +142,8 @@
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
-	canSmoothWith = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ALIEN_WEEDS)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
 	///the parent node that will determine if we grow or die
@@ -323,14 +323,15 @@
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
+#define FAKE "fake"
 #define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
 	name = "egg"
 	desc = "A large mottled egg."
-	var/base_icon = "egg"
 	icon_state = "egg_growing"
+	base_icon_state = "egg"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 100
@@ -358,11 +359,13 @@
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
-			icon_state = "[base_icon]_growing"
+			icon_state = "[base_icon_state]_growing"
 		if(GROWN)
-			icon_state = "[base_icon]"
+			icon_state = "[base_icon_state]"
 		if(BURST)
-			icon_state = "[base_icon]_hatched"
+			icon_state = "[base_icon_state]_hatched"
+		if(FAKE)
+			icon_state = "[base_icon_state]_growing"
 	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
@@ -375,7 +378,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
@@ -443,7 +446,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)
@@ -456,6 +459,12 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+/obj/structure/alien/egg/fake
+	status = FAKE
+	icon_state = "egg_growing"
+	layer = LOW_ITEM_LAYER
+
+#undef FAKE
 #undef BURSTING
 #undef BURST
 #undef GROWING

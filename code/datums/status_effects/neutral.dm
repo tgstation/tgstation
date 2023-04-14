@@ -171,12 +171,13 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	if(offered && owner.CanReach(offered) && !IS_DEAD_OR_INCAP(offered) && offered.can_hold_items())
+	if(offered && is_taker_elligible(offered))
 		register_candidate(offered)
 	else
 		for(var/mob/living/carbon/possible_taker in orange(1, owner))
-			if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
+			if(!is_taker_elligible(possible_taker))
 				continue
+
 			register_candidate(possible_taker)
 
 	if(!possible_takers) // no one around
@@ -233,6 +234,87 @@
 /datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/**
+ * Is our taker valid as a target for the offering? Meant to be used when registering
+ * takers in `on_creation()`. You should override `additional_taker_check()` instead of this.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering.
+ */
+/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
+	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+
+
+/**
+ * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
+ * taker can hold items.
+ *
+ * Returns `TRUE` if the taker is valid as a target for the offering based on these
+ * additional checks.
+ */
+/datum/status_effect/offering/proc/additional_taker_check(mob/living/carbon/taker)
+	return taker.can_hold_items()
+
+
+/**
+ * This status effect is meant only for items that you don't actually receive
+ * when offered, mostly useful for `/obj/item/hand_item` subtypes.
+ */
+/datum/status_effect/offering/no_item_received
+
+
+/datum/status_effect/offering/no_item_received/additional_taker_check(mob/living/carbon/taker)
+	return TRUE
+
+
+/**
+ * This status effect is meant only to be used for offerings that require the target to
+ * be resting (like when you're trying to give them a hand to help them up).
+ * Also doesn't require them to have their hands free (since you're not giving them
+ * anything).
+ */
+/datum/status_effect/offering/no_item_received/needs_resting
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/additional_taker_check(mob/living/carbon/taker)
+	return taker.body_position == LYING_DOWN
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_owner_standing))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/register_candidate(mob/living/carbon/possible_candidate)
+	. = ..()
+	RegisterSignal(possible_candidate, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_candidate_resting))
+
+
+/datum/status_effect/offering/no_item_received/needs_resting/remove_candidate(mob/living/carbon/removed_candidate)
+	UnregisterSignal(removed_candidate, COMSIG_LIVING_SET_BODY_POSITION)
+	return ..()
+
+
+/// Simple signal handler that ensures that, if the owner stops standing, the offer no longer stands either!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_owner_standing(mob/living/carbon/owner)
+	if(src.owner.body_position == STANDING_UP)
+		return
+
+	// This doesn't work anymore if the owner is no longer standing up, sorry!
+	qdel(src)
+
+
+/// Simple signal handler that ensures that, should a candidate now be standing up, the offer won't be standing for them anymore!
+/datum/status_effect/offering/no_item_received/needs_resting/proc/check_candidate_resting(mob/living/carbon/candidate)
+	SIGNAL_HANDLER
+
+	if(candidate.body_position == LYING_DOWN)
+		return
+
+	// No longer lying down? You're no longer eligible to take the offer, sorry!
+	remove_candidate(candidate)
+
 
 /datum/status_effect/offering/secret_handshake
 	id = "secret_handshake"

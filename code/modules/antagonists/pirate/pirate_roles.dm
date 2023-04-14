@@ -103,7 +103,7 @@
 	mob_species = /datum/species/human
 	outfit = /datum/outfit/pirate/psyker
 	rank = "Racketeer"
-	fluff_spawn = /obj/structure/showcase/machinery/oldpod/used
+	fluff_spawn = /obj/structure/showcase/machinery/oldpod/used/psyker
 	name_beginnings = "psyker_beginnings"
 	name_endings = "psyker_endings"
 

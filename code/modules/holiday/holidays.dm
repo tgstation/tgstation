@@ -22,6 +22,9 @@
 	var/obj/item/drone_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
+	var/poster_name = "generic celebration poster"
+	var/poster_desc = "A poster for celebrating some holiday. Unfortunately, its unfinished, so you can't see what the holiday is."
+	var/poster_icon = "holiday_unfinished"
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -116,6 +119,9 @@
 	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
+	poster_name = "lovey poster"
+	poster_desc = "A poster celebrating all the relationships built today. Of course, you probably don't have one."
+	poster_icon = "holiday_love"
 
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
@@ -125,6 +131,9 @@
 	begin_day = 16
 	begin_month = FEBRUARY
 	drone_hat = /obj/item/clothing/head/costume/festive
+	poster_name = "station birthday poster"
+	poster_desc = "A poster celebrating another year of the station's operation. Why anyone would be happy to be here is byond you."
+	poster_icon = "holiday_cake" // is a lie
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -157,6 +166,9 @@
 	name = "Random Acts of Kindness Day"
 	begin_day = 17
 	begin_month = FEBRUARY
+	poster_name = "act of kindness poster"
+	poster_desc = "A poster notifying the reader today is 'Act of Kindness' day. What a nice thing to do."
+	poster_icon = "holiday_kind"
 
 /datum/holiday/random_kindness/greet()
 	return "Go do some random acts of kindness for a stranger!" //haha yeah right
@@ -172,6 +184,9 @@
 	name = "Pi Day"
 	begin_day = 14
 	begin_month = MARCH
+	poster_name = "pi day poster"
+	poster_desc = "A poster celebrating the 3.141529th day of the year. At least theres free pie."
+	poster_icon = "holiday_pi"
 
 /datum/holiday/pi/getStationPrefix()
 	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")

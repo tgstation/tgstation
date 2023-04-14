@@ -69,12 +69,14 @@
 	SIGNAL_HANDLER
 	if(!proximity_flag)
 		return
+	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
 	var/clean_target
 	if(pre_clean_callback)
 		clean_target = pre_clean_callback?.Invoke(source, target, user)
 		if(clean_target == DO_NOT_CLEAN)
-			return
+			return .
 	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
+	return .
 
 /**
  * Cleans something using this cleaner.

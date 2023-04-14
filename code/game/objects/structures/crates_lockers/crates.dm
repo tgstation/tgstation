@@ -19,6 +19,14 @@
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	/// Where the Icons for lids are located.
+	var/lid_icon = 'icons/obj/storage/crates.dmi'
+	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
+	var/lid_icon_state
+	/// Controls the X value of the lid, allowing left and right pixel movement.
+	var/lid_x = 0
+	/// Controls the Y value of the lid, allowing up and down pixel movement.
+	var/lid_y = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
@@ -95,6 +103,16 @@
 	manifest = null
 	update_appearance()
 
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(opened && lid_icon_state)
+		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
+		lid.layer = layer
+		. += lid
+	. += ..()
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
@@ -138,13 +156,17 @@
 
 /obj/structure/closet/crate/trashcart/filled
 
+/obj/structure/closet/crate/trashcart/filled/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		new /obj/effect/spawner/random/trash/grime(loc) //needs to be done before the trashcart is opened because it spawns things in a range outside of the trashcart
+
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -284,7 +306,6 @@
 /obj/structure/closet/crate/goldcrate/populate_contents_immediate()
 	. = ..()
 
-	// /datum/objective_item/stack/gold
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
 

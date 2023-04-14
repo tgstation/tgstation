@@ -17,6 +17,9 @@
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	pass_flags_self = PASSMOB
+	// we never want to hide a turf because it's not lit
+	// We can rely on the lighting plane to handle that for us
+	see_in_dark = 1e6
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
@@ -26,7 +29,19 @@
 
 	var/shift_to_open_context_menu = TRUE
 
-	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+	/// Percentage of how much rgb to max the lighting plane at
+	/// This lets us brighten it without washing out color
+	/// Scale from 0-100, reset off update_sight()
+	var/lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	// Individual color max for red, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_red = 0
+	// Individual color max for green, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_green = 0
+	// Individual color max for blue, we can use this to color darkness without tinting the light
+	var/lighting_cutoff_blue = 0
+	/// A list of red, green and blue cutoffs
+	/// This is what actually gets applied to the mob, it's modified by things like glasses
+	var/list/lighting_color_cutoffs = null
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
 
@@ -49,9 +64,6 @@
 	var/list/datum/action/item_action/chameleon/chameleon_item_actions
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
-
-	///Whether this mob has or is in the middle of committing suicide.
-	var/suiciding = FALSE
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
@@ -83,10 +95,6 @@
 	  */
 	var/notransform = null //Carbon
 
-	/// Is the mob blind
-	var/eye_blind = 0 //Carbon
-	/// Does the mob have blurry sight
-	var/eye_blurry = 0 //Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -103,8 +111,7 @@
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
 	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
 	var/old_bodytemperature = 0
-	/// Drowsyness level of the mob
-	var/drowsyness = 0//Carbon
+
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
@@ -152,7 +159,7 @@
 	var/job = null//Living
 
 	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction = list("neutral")
+	var/list/faction = list(FACTION_NEUTRAL)
 
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
@@ -222,6 +229,3 @@
 	var/active_thinking_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
-
-	///how much gravity is slowing us down
-	var/gravity_slowdown = 0

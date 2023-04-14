@@ -132,15 +132,8 @@
 	soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/structure/fermenting_barrel/process(delta_time)
+/obj/structure/fermenting_barrel/process(seconds_per_tick)
 	process_fermentation()
-
-/datum/crafting_recipe/fermenting_barrel
-	name = "Wooden Barrel"
-	result = /obj/structure/fermenting_barrel
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 8)
-	time = 50
-	category = CAT_PRIMAL
 
 /// Lil gunpowder barrel fer pirates since it's a nice reagent holder
 /obj/structure/fermenting_barrel/gunpowder

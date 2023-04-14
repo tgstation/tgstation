@@ -7,6 +7,7 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
+	base_lighting_color = COLOR_STARLIGHT
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -20,6 +21,9 @@
 /area/space/nearstation
 	icon_state = "space_near"
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	static_lighting = TRUE
+	base_lighting_alpha = 0
+	base_lighting_color = COLOR_WHITE
 
 /area/misc/start
 	name = "start area"
@@ -32,5 +36,8 @@
 /area/misc/testroom
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
+	// Mobs should be able to see inside the testroom
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 	name = "Test Room"
 	icon_state = "test_room"

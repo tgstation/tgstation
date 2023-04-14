@@ -26,7 +26,10 @@
 #define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
+/// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
+/// Continue processing even if dead
+#define CAN_ACT_WHILE_DEAD	(1<<1)
 
 //Base Subtree defines
 
@@ -48,6 +51,8 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
+///Path we should use next time we use the JPS movement datum
+#define BB_PATH_TO_USE "BB_path_to_use"
 
 //for songs
 
@@ -120,13 +125,19 @@
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
 
-///Robot customer AI controller blackboard keys
+//Robot customer AI controller blackboard keys
+/// Corresponds to the customer's order.
+/// This can be a an item typepath or an instance of a custom order datum
 #define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
 #define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
 #define BB_CUSTOMER_PATIENCE "BB_customer_patience"
+/// A reference to a customer data datum, containing stuff like saylines and food desires
 #define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
+/// Whether we're busy eating something already
 #define BB_CUSTOMER_EATING "BB_customer_eating"
+/// A reference to the venue being attended
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
+/// Whether we're leaving the venue entirely, either happily or forced out
 #define BB_CUSTOMER_LEAVING "BB_customer_leaving"
 #define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 /// Robot customer has said their can't find seat line at least once. Used to rate limit how often they'll complain after the first time.
@@ -157,14 +168,10 @@
 ///Dog AI controller blackboard keys
 
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
-#define BB_FETCH_TARGET "BB_FETCH_TARGET"
 #define BB_FETCH_IGNORE_LIST "BB_FETCH_IGNORE_LISTlist"
 #define BB_FETCH_DELIVER_TO "BB_FETCH_DELIVER_TO"
-#define BB_DOG_FRIENDS "BB_DOG_FRIENDS"
-#define BB_DOG_ORDER_MODE "BB_DOG_ORDER_MODE"
-#define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
-#define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
+#define BB_DOG_HARASS_HARM "BB_DOG_HARASS_HARM"
 #define BB_DOG_IS_SLOW "BB_DOG_IS_SLOW"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
@@ -219,6 +226,22 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///Blackboard key for a whitelist typecache of "things we can target while trying to move"
+#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+
+///Targetting keys for something to run away from, if you need to store this separately from current target
+#define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
+#define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
+#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+
+///How long have we spent with no target?
+#define BB_TARGETLESS_TIME "BB_targetless_time"
+
+///List of mobs who have damaged us
+#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+
+/// Flag to set on or off if you want your mob to prioritise running away
+#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
@@ -231,8 +254,24 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
-///Bileworm AI keys
+// Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+
+// Meteor Heart AI keys
+/// Key where we keep the spike trail ability
+#define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
+/// Key where we keep the spine traps ability
+#define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
+
+// Spider AI keys
+/// Key where we store a turf to put webs on
+#define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
+/// Key where we store the web-spinning ability
+#define BB_SPIDER_WEB_ACTION "BB_spider_web_action"
+
+// Fugu AI keys
+/// Key where we store the inflating ability
+#define BB_FUGU_INFLATE "BB_fugu_inflate"

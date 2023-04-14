@@ -32,6 +32,7 @@
 	if(!proximity_flag)
 		return
 	do_lifesteal(user, target)
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/element/lifesteal/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER

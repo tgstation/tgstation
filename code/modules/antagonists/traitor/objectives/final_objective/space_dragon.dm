@@ -18,7 +18,7 @@
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
-		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security))
+		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security))
 			possible_areas -= possible_area
 	if(length(possible_areas) == 0)
 		return FALSE

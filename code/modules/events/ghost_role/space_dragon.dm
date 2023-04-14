@@ -7,6 +7,8 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a space dragon, which will try to take over the station."
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
@@ -17,15 +19,6 @@
 	priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
-	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
-		if(!isturf(carp_spawn.loc))
-			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
-			continue
-		spawn_locs += carp_spawn.loc
-	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found, aborting...")
-		return MAP_ERROR
 
 	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
 	if(!candidates.len)
@@ -34,7 +27,11 @@
 	var/mob/dead/selected = pick(candidates)
 	var/key = selected.key
 
-	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (pick(spawn_locs))
+	var/spawn_location = find_space_spawn()
+	if(isnull(spawn_location))
+		return MAP_ERROR
+
+	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
 	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
 	dragon.mind.special_role = ROLE_SPACE_DRAGON

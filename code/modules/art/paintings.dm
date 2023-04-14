@@ -70,10 +70,7 @@
 	 */
 	var/pixels_per_unit = 24
 
-	pixel_x = 11
-	pixel_y = 10
-	base_pixel_x = 11
-	base_pixel_y = 10
+	SET_BASE_PIXEL(11, 10)
 
 	custom_price = PAYCHECK_CREW
 
@@ -86,6 +83,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -182,13 +180,17 @@
 /obj/item/canvas/proc/finalize(mob/user)
 	if(painting_metadata.loaded_from_json || finalized)
 		return
-	finalized = TRUE
+	if(!try_rename(user))
+		return
+
 	painting_metadata.creator_ckey = user.ckey
 	painting_metadata.creator_name = user.real_name
 	painting_metadata.creation_date = time2text(world.realtime)
 	painting_metadata.creation_round_id = GLOB.round_id
 	generate_proper_overlay()
-	try_rename(user)
+	finalized = TRUE
+
+	SStgui.update_uis(src)
 
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
@@ -210,7 +212,7 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
@@ -325,25 +327,27 @@
 
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
-		return
+		return TRUE
 	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
-	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src, be_close = TRUE))
+	if(isnull(new_name))
+		return FALSE
+	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
-	if(sign_choice != "Yes")
-		painting_metadata.creator_name = "Anonymous"
-	SStgui.update_uis(src)
+	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+		if("Yes")
+			return TRUE
+		if("No")
+			painting_metadata.creator_name = "Anonymous"
+			return TRUE
 
+	return FALSE
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	pixel_x = 7
-	pixel_y = 7
-	base_pixel_x = 7
-	base_pixel_y = 7
+	SET_BASE_PIXEL(7, 7)
 	framed_offset_x = 7
 	framed_offset_y = 7
 
@@ -352,10 +356,7 @@
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	pixel_x = 5
-	pixel_y = 7
-	base_pixel_x = 5
-	base_pixel_y = 7
+	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
 
@@ -364,10 +365,7 @@
 	icon_state = "23x23"
 	width = 23
 	height = 23
-	pixel_x = 5
-	pixel_y = 5
-	base_pixel_x = 5
-	base_pixel_y = 5
+	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
 
@@ -377,10 +375,7 @@
 	icon_state = "24x24"
 	width = 24
 	height = 24
-	pixel_x = 4
-	pixel_y = 4
-	base_pixel_x = 4
-	base_pixel_y = 4
+	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
 	framed_offset_y = 4
 
@@ -390,10 +385,7 @@
 	icon_state = "24x24" //The vending spritesheet needs the icons to be 32x32. We'll set the actual icon on Initialize.
 	width = 36
 	height = 24
-	pixel_x = -4
-	pixel_y = 4
-	base_pixel_x = -4
-	base_pixel_y = 4
+	SET_BASE_PIXEL(-4, 4)
 	framed_offset_x = 14
 	framed_offset_y = 4
 	pixels_per_unit = 20
@@ -413,10 +405,7 @@
 	icon_state = "24x24" //Ditto
 	width = 45
 	height = 27
-	pixel_x = -8
-	pixel_y = 2
-	base_pixel_x = -8
-	base_pixel_y = 2
+	SET_BASE_PIXEL(-8, 2)
 	framed_offset_x = 9
 	framed_offset_y = 4
 	pixels_per_unit = 18
@@ -476,7 +465,8 @@
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user,I)
 	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
-		try_rename(user)
+		if(try_rename(user))
+			SStgui.update_uis(src)
 	else
 		return ..()
 
@@ -522,8 +512,11 @@
 	return FALSE
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
-	if(current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title))
-		current_canvas.try_rename(user)
+	if(current_canvas.painting_metadata.title != initial(current_canvas.painting_metadata.title))
+		return
+	if(!current_canvas.try_rename(user))
+		return
+	SStgui.update_uis(current_canvas)
 
 /obj/structure/sign/painting/update_icon_state(updates=ALL)
 	. = ..()
@@ -657,8 +650,6 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
-	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

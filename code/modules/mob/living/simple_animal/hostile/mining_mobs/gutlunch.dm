@@ -11,7 +11,7 @@
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
-	faction = list("mining", "ashwalker")
+	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	density = FALSE
 	speak_chance = 1
 	turns_per_move = 8
@@ -110,7 +110,7 @@
 	resize = 0.45
 	update_transform()
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	growth++
 	if(growth > 50) //originally used a timer for this but it was more of a problem than it was worth.

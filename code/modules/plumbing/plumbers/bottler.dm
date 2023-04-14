@@ -66,12 +66,12 @@
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
 	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
-	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return .
 	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
-/obj/machinery/plumbing/bottler/process(delta_time)
+/obj/machinery/plumbing/bottler/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 	// Sanity check the result locations and stop processing if they don't exist
@@ -81,7 +81,7 @@
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
-		use_power(active_power_usage * delta_time)
+		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM

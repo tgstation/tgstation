@@ -5,12 +5,23 @@
 	worn_icon = 'icons/mob/clothing/head/wizard.dmi'
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
-	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100,  WOUND = 20)
+	armor_type = /datum/armor/head_wizard
 	strip_delay = 50
 	equip_delay_other = 50
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+
+/datum/armor/head_wizard
+	melee = 30
+	bullet = 20
+	laser = 20
+	energy = 30
+	bomb = 20
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 20
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -34,15 +45,29 @@
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
 	icon_state = "wizard-fake"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
-	icon_state = "marisa"
+	icon_state = "witch_hat"
+	greyscale_colors = "#343640#e0cab8#e0cab8"
+	greyscale_config = /datum/greyscale_config/witch_hat
+	greyscale_config_worn = /datum/greyscale_config/witch_hat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 	dog_fashion = null
+
+/obj/item/clothing/head/wizard/tape
+	name = "tape hat"
+	desc = "A magically attuned hat made exclusively from duct tape. You can barely see."
+	icon_state = "tapehat"
+	inhand_icon_state = "tapehat"
+	dog_fashion = null
+	worn_y_offset = 6
+	body_parts_covered = HEAD|HAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
@@ -59,6 +84,10 @@
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
 
+/obj/item/clothing/head/wizard/hood
+	name = "wizard hood"
+	icon_state = "wizhood"
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
@@ -67,13 +96,24 @@
 	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(MELEE = 30, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
+	armor_type = /datum/armor/suit_wizrobe
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
 	equip_delay_other = 50
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/datum/armor/suit_wizrobe
+	melee = 30
+	bullet = 20
+	laser = 20
+	energy = 30
+	bomb = 20
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 20
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -99,6 +139,12 @@
 	icon_state = "marisa"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/wizrobe/tape
+	name = "tape robe"
+	desc = "A fine robe made from magically attuned duct tape."
+	icon_state = "taperobe"
+	inhand_icon_state = "taperobe"
+
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
@@ -122,14 +168,18 @@
 	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
 	inhand_icon_state = "wizrobe"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/wizard/tape/fake
+	name = "tape hat"
+	desc = "A hat designed exclusively from duct tape. You can barely see."
+	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
@@ -137,7 +187,13 @@
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	inhand_icon_state = null
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/tape/fake
+	name = "tape robe"
+	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
+	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper

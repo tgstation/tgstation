@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list("boss")
+	faction = list(FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -123,7 +123,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/structure_elite_tumor
 	resistance_flags = INDESTRUCTIBLE
 	icon = 'icons/obj/lavaland/tumor.dmi'
 	icon_state = "tumor"
@@ -145,6 +145,16 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 		/mob/living/simple_animal/hostile/asteroid/elite/herald,
 	)
+
+/datum/armor/structure_elite_tumor
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	bio = 100
+	fire = 100
+	acid = 100
 
 /obj/structure/elite_tumor/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -247,13 +257,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	REMOVE_TRAIT(source, TRAIT_ELITE_CHALLENGER, REF(src))
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
-/obj/structure/elite_tumor/process(delta_time)
+/obj/structure/elite_tumor/process(seconds_per_tick)
 	if(!isturf(loc))
 		return
 
 	for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 		if(elitehere == mychild && activity == TUMOR_PASSIVE)
-			mychild.adjustHealth(-mychild.maxHealth * 0.025*delta_time)
+			mychild.adjustHealth(-mychild.maxHealth * 0.025*seconds_per_tick)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = "#FF0000"
 
@@ -380,8 +390,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
-	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
+	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
+	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 	duration = 50
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -406,3 +416,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef TUMOR_ACTIVE
+#undef TUMOR_INACTIVE
+#undef TUMOR_PASSIVE
