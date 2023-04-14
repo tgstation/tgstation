@@ -136,6 +136,10 @@
 	AddComponent(/datum/component/traitor_objective_register, target_liver, fail_signals = list(COMSIG_PARENT_QDELETING))
 	return TRUE
 
+/datum/traitor_objective/target_player/harvest_liver/ungenerate_objective()
+	target = null
+	target_liver = null
+
 /datum/traitor_objective/target_player/harvest_liver/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!spawned_container)
