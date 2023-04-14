@@ -143,9 +143,9 @@
 	start()
 
 /obj/structure/chem_separator/extinguish()
+	. = ..()
 	if(burning)
 		stop()
-	return ..()
 
 /// Ignite the burner to start the separation process
 /obj/structure/chem_separator/proc/start()

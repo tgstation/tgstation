@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "The HFR screen should be fixed, let me know if you see glitches"
+  - bugfix: "The HFR screen should now also select recipes properly"
