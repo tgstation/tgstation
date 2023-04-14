@@ -1497,7 +1497,7 @@
 		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
 
 	else if(HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //if we find they now have a coagulant, we remove the trait
-		REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/nitrous_oxide)
+		REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
 
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 2
