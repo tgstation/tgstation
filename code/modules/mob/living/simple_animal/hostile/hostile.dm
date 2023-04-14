@@ -297,7 +297,7 @@
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	add_target(new_target)
 	LosePatience()
-	if(!QDELETED(target) && target != null)
+	if(!QDELETED(target))
 		GainPatience()
 		Aggro()
 		return TRUE
