@@ -1,3 +1,5 @@
+GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
+
 /** Component representing acid applied to an object.
  *
  * Must be attached to an atom.
