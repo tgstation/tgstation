@@ -8,13 +8,11 @@ GLOBAL_LIST_INIT(high_threat_antags, list(
 GLOBAL_LIST_INIT(medium_threat_antags, list(
 	/datum/antagonist/ninja,
 	/datum/antagonist/wizard,
-	/datum/antagonist/fugitive,
 ))
 
 GLOBAL_LIST_INIT(low_threat_antags, list(
 	/datum/antagonist/florida_man,
 	/datum/antagonist/traitor,
-	/datum/antagonist/abductor,
 	/datum/antagonist/revenant,
 	/datum/antagonist/paradox_clone,
 ))
