@@ -280,8 +280,11 @@
 
 	if (!string_targets.len)
 		return FALSE
-
-	if (prob(1))
+	var/sent_prob = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/old_person = user
+		sent_prob = old_person.age > 60 ? 25 : 1
+	if (prob(sent_prob))
 		message += " Sent from my PDA"
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
