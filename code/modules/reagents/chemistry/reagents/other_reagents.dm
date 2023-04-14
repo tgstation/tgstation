@@ -1494,7 +1494,7 @@
 	affected_mob.adjust_drowsiness(4 SECONDS * REM * seconds_per_tick)
 
 	if(!HAS_TRAIT(affected_mob, TRAIT_BLOODY_MESS) && !HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //So long as they do not have a coagulant, if they did not have the bloody mess trait, they do now
-		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/nitrous_oxide)
+		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
 
 	else if(HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //if we find they now have a coagulant, we remove the trait
 		REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/nitrous_oxide)
