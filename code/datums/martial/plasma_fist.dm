@@ -129,7 +129,7 @@
 	return FALSE
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/attacker, mob/living/defender)
-	add_to_streak("defender", defender)
+	add_to_streak("D", defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 	if(attacker == defender)//there is no disarming yourself, so we need to let plasma fist user know
