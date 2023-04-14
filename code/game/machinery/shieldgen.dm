@@ -47,6 +47,17 @@
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
+/obj/structure/emergency_shield/regenerating
+	name = "energy shield"
+	desc = "An energy shield used to let ships through, but keep out the void of space."
+	max_integrity = 400
+
+/obj/structure/emergency_shield/regenerating/emp_act(severity)
+	return
+
+/obj/structure/emergency_shield/regenerating/process(delta_time)
+	if(get_integrity() < max_integrity) 
+		repair_damage(5 * delta_time)
 
 /obj/structure/emergency_shield/cult
 	name = "cult barrier"

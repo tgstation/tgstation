@@ -161,12 +161,14 @@
 	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()
-	if(burning)
-		icon_state = "bonfire"
-		burning = FALSE
-		set_light(0)
-		QDEL_NULL(particles)
-		STOP_PROCESSING(SSobj, src)
+	. = ..()
+	if(!burning)
+		return
+	icon_state = "bonfire"
+	burning = FALSE
+	set_light(0)
+	QDEL_NULL(particles)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)
 	if(..())

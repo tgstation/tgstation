@@ -512,14 +512,10 @@
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
-	for(var/X in GLOB.generic_maintenance_landmarks)
-		var/turf/T = X
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			spawn_locs += T
-	if(!spawn_locs.len)
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
+	if(!spawn_loc)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
@@ -850,11 +846,8 @@
 	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
-		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
-			possible_spawns += warp_point
+	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
 	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found for Paradox Clone event, aborting...")
 		return MAP_ERROR
 	return ..()
 

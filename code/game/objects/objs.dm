@@ -35,8 +35,10 @@
 	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
 	var/list/req_one_access
 
-	/// Custom fire overlay icon
+	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
+	/// Particles this obj uses when burning, if any
+	var/burning_particles
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
