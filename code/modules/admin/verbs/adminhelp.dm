@@ -302,8 +302,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-	if(admin_number_present <= 0)
-		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
+	if(admin_number_present <= 3)
 		heard_by_no_admins = TRUE
 		var/regular_webhook_url = CONFIG_GET(string/regular_adminhelp_webhook_url)
 		if(regular_webhook_url && (!urgent || regular_webhook_url != CONFIG_GET(string/urgent_adminhelp_webhook_url)))
