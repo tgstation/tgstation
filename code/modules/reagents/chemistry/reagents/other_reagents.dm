@@ -1487,7 +1487,7 @@
 	return ..()
 
 /datum/reagent/nitrous_oxide/on_mob_end_metabolize(mob/living/affected_mob)
-	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, /datum/reagent/nitrous_oxide)
+	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
 	return ..()
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
