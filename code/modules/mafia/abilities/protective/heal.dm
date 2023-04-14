@@ -34,6 +34,9 @@
 
 /datum/mafia_ability/heal/proc/prevent_kill(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	SIGNAL_HANDLER
+	if(host_role == target_role)
+		to_chat(host_role.body, span_warning("You were attacked last night!"))
+		return MAFIA_PREVENT_KILL
 	to_chat(host_role.body, span_warning("The person you protected tonight was attacked!"))
 	to_chat(target_role.body, span_greentext("You were attacked last night, but [saving_message]!"))
 	return MAFIA_PREVENT_KILL
@@ -54,6 +57,9 @@
 
 /datum/mafia_ability/heal/defend/prevent_kill(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	. = ..()
+	if(host_role == target_role)
+		return .
+
 	if(attacker.kill(game, host_role, FALSE)) //you attack the attacker
 		to_chat(attacker.body, span_userdanger("You have been ambushed by Security!"))
 	host_role.kill(game, attacker, FALSE) //the attacker attacks you, they were able to attack the target so they can attack you.
