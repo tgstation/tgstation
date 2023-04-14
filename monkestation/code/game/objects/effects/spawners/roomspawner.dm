@@ -108,14 +108,15 @@
 	return INITIALIZE_HINT_QDEL
 
 
-/// Box Station Engine Area Spawner
-/obj/effect/spawner/random_engines/box
-	name = "box engine spawner"
-	room_width = 32
-	room_height = 27
 
-/// MetaStation Bar Area Spawner
+/// MetaStation Engine Area Spawner
 /obj/effect/spawner/random_engines/meta
 	name = "meta engine spawner"
 	room_width = 33
 	room_height = 25
+
+/// TramStation Engine Area Spawner
+/obj/effect/spawner/random_engines/tram
+	name = "tram engine spawner"
+	room_width = 24
+	room_height = 20
