@@ -71,7 +71,7 @@ If you make a derivative work from this code, you must include this notification
 	owner.mind.martial_art.streak = "throw"
 
 /datum/action/kick
-	name = "Kick - attacker powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
+	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	button_icon_state = "wrassle_kick"
 
 /datum/action/kick/Trigger(trigger_flags)
@@ -105,7 +105,7 @@ If you make a derivative work from this code, you must include this notification
 
 /datum/martial_art/wrestling/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
-		to_chat(owner, span_userdanger("SNAP INTO attacker THIN TIM!"))
+		to_chat(owner, span_userdanger("SNAP INTO A THIN TIM!"))
 		to_chat(owner, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
 		drop.Grant(owner)
 		kick.Grant(owner)
