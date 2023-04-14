@@ -42,7 +42,7 @@
 
 	var/obj/item/organ/target_liver
 
-/datum/traitor_objective/target_player/harvest_liver/everyone
+/datum/traitor_objective/target_player/harvest_liver/everybody
 	progression_minimum = 30 MINUTES
 
 	inverted_limitation = TRUE
