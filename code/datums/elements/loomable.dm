@@ -23,7 +23,7 @@
 	process_completion_verb = "spun",
 	target_needs_anchoring = TRUE,
 	loom_time = 1 SECONDS
-	)
+)
 	. = ..()
 	//currently this element only works for items as we need to call /obj/item/attack_atom()
 	if(!isitem(target))
