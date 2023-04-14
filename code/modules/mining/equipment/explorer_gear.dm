@@ -150,7 +150,7 @@
 		else
 			slot_flags = initial(slot_flags)			
 			set_armor(initial(armor_type))
-			user.visible_message(span_notice("[user] adjusts their [src] for defensive use"),span_notice("You adjust the [src] for defensive use"))
+			user.visible_message(span_notice("[user] adjusts their [src] for defensive use"),span_notice("You adjust your [src] for defensive use"))
 			
 /datum/armor/cloak_goliath
 	melee = 35
