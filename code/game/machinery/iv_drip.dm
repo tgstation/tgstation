@@ -5,7 +5,7 @@
 ///What the transfer rate value is rounded to
 #define IV_TRANSFER_RATE_STEP 0.01
 ///Minimum possible IV drip transfer rate in units per second
-#define MIN_IV_TRANSFER_RATE IV_TRANSFER_RATE_STEP
+#define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
 
