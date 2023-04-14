@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Omen Component door crush works"
+  - bugfix: "Omen Component vendors will no longer double dip (double tip)"
