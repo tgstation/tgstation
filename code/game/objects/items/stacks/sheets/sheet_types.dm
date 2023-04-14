@@ -516,7 +516,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/loomable, resulting_atom = src.loom_result, loom_time = src.loom_time)
+	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
