@@ -297,7 +297,7 @@
 	var/sent_prob = 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/old_person = user
-		sent_prob = old_person.age >= 30 ? 25 : 1
+		sent_prob = old_person.age >= 30 ? 25 : sent_prob
 	if (prob(sent_prob))
 		message += " Sent from my PDA"
 
