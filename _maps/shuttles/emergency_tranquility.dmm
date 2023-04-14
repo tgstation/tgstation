@@ -260,12 +260,8 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ge" = (
@@ -764,7 +760,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "oe" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/escape)
@@ -805,7 +801,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "oy" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -841,7 +837,7 @@
 /turf/open/floor/glass,
 /area/shuttle/escape)
 "pe" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -1071,7 +1067,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "sW" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/sign/poster/official/jim_nortons{
 	pixel_y = 32
@@ -1376,7 +1372,7 @@
 /turf/open/water/jungle,
 /area/shuttle/escape)
 "yV" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/shuttle/escape)
@@ -2183,7 +2179,7 @@
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
 "NC" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -2540,7 +2536,7 @@
 /turf/open/floor/glass,
 /area/shuttle/escape)
 "UF" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,

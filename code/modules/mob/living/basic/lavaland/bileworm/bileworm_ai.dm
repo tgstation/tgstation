@@ -11,7 +11,7 @@
 
 /datum/ai_planning_subtree/bileworm_attack
 
-/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target?.resolve()
@@ -31,7 +31,7 @@
 
 /datum/ai_planning_subtree/bileworm_execute
 
-/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
 	var/mob/living/target = weak_target?.resolve()

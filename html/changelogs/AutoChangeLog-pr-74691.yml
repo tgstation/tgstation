@@ -1,0 +1,5 @@
+author: "Sneeker134"
+delete-after: True
+changes:
+  - admin: "Added clever DNA injector to admin spawn options."
+  - bugfix: "Added clever DNA injector."

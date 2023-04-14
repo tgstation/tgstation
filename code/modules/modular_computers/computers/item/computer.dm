@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process(delta_time)
+/obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(idle_programs.program_state == PROGRAM_STATE_KILLED)
 			idle_threads.Remove(idle_programs)
 			continue
-		idle_programs.process_tick(delta_time)
+		idle_programs.process_tick(seconds_per_tick)
 		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
@@ -488,10 +488,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(active_program.program_state == PROGRAM_STATE_KILLED)
 			active_program = null
 		else
-			active_program.process_tick(delta_time)
+			active_program.process_tick(seconds_per_tick)
 			active_program.ntnet_status = get_ntnet_status()
 
-	handle_power(delta_time) // Handles all computer power interaction
+	handle_power(seconds_per_tick) // Handles all computer power interaction
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
