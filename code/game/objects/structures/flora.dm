@@ -921,7 +921,7 @@
 /obj/structure/flora/lunar_plant
 	name = "lunar plant"
 	desc= "This seemingly dead plant is actually quite alive, hibernating until sensing living things."
-	icon_state = "cave_plant"
+	icon_state = "lunar_plant"
 	icon = 'icons/obj/flora/xenoflora.dmi'
 	density = FALSE
 	light_color = COLOR_WHITE
@@ -929,7 +929,7 @@
 
 /obj/structure/flora/lunar_plant/Initialize(mapload)
 	. = ..()
-	icon_state = "cave_plant[rand(1,3)]"
+	icon_state = "lunar_plant[rand(1,3)]"
 
 /obj/structure/flora/lunar_plant/style_1
 	icon_state = "lunar_plant1"
