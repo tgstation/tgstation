@@ -488,8 +488,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		to_chat(user, span_warning("You must open the maintenance panel first!"))
 	return TRUE
 
-/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	var/obj/item/card/id/ID = O.GetID()
+/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, params)
+	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
 			message_verified_by = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
@@ -502,10 +502,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				to_chat(user, span_warning("You are not authorized to send announcements!"))
 			updateUsrDialog()
 		return
-	if (istype(O, /obj/item/stamp))
+	if (istype(attacking_item, /obj/item/stamp))
 		if(screen == REQ_SCREEN_AUTHENTICATE)
-			var/obj/item/stamp/T = O
-			message_stamped_by = span_boldnotice("Stamped with the [T.name]")
+			var/obj/item/stamp/attacking_stamp = attacking_item
+			message_stamped_by = span_boldnotice("Stamped with the [attacking_stamp.name]")
 			updateUsrDialog()
 		return
 	return ..()
