@@ -61,7 +61,7 @@
 	. = ..()
 	if(ispickedupmob(to_insert))
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
-		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
+		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
 		return FALSE
 
@@ -76,10 +76,12 @@
 	set_holdable(list(
 		/obj/item/knife,
 		/obj/item/switchblade,
+		/obj/item/boxcutter,
 		/obj/item/pen,
 		/obj/item/scalpel,
-		/obj/item/reagent_containers/syringe,
 		/obj/item/dnainjector,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
@@ -90,13 +92,15 @@
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/ammo_casing,
 		/obj/item/lipstick,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/lighter,
 		/obj/item/match,
 		/obj/item/holochip,
-		/obj/item/toy/crayon),
+		/obj/item/toy/crayon,
+		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
 		/obj/item/ammo_casing/caseless/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
@@ -129,7 +133,8 @@
 		/obj/item/match,
 		/obj/item/holochip,
 		/obj/item/toy/crayon,
-		/obj/item/bikehorn),
+		/obj/item/bikehorn,
+		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
 		/obj/item/ammo_casing/caseless/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
