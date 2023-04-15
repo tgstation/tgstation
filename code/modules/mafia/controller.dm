@@ -768,7 +768,7 @@
 					to_chat(usr, span_notice("You are no longer voting to start the game early."))
 				else
 					GLOB.mafia_early_votes[C.ckey] = C
-					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [FLOOR(round(length(GLOB.mafia_signup) / 2), MINIMUM_MAFIA_PLAYERS)])."))
+					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [clamp(round(length(GLOB.mafia_signup) / 2), MAFIA_MIN_PLAYER_COUNT, MAFIA_MAX_PLAYER_COUNT)])."))
 					if(check_start_votes()) //See if we have enough votes to start
 						forced_setup()
 				return TRUE
