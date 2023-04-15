@@ -9,6 +9,7 @@
 	ability_action = "reveal your role"
 	action_priority = null
 	valid_use_period = MAFIA_PHASE_DAY
+	use_flags = CAN_USE_ON_SELF
 
 /datum/mafia_ability/self_reveal/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
