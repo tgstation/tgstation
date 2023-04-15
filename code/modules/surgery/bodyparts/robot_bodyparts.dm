@@ -106,7 +106,7 @@
 		return
 	if(owner.incapacitated()) // so it doesn't double up with both legs
 		return
-	to_chat(owner, span_danger("Your [src]'s malfunction causes you to fall to the ground!"))
+	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
 	var/timer = 4 SECONDS
 	if(severity == EMP_HEAVY)
 		timer = 8 SECONDS
@@ -148,11 +148,11 @@
 		return
 	if(owner.incapacitated()) // so it doesn't double up with both legs
 		return
-	to_chat(owner, span_danger("Your [src.name] malfunctions and causes you to fall to the ground!"))
-	if(severity == EMP_LIGHT)
-		owner.Knockdown(4 SECONDS)
-	else
-		owner.Knockdown(8 SECONDS)
+	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	var/timer = 4 SECONDS
+	if(severity == EMP_HEAVY)
+		timer = 8 SECONDS
+	owner.Knockdown(timer)
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -320,44 +320,28 @@
 		return
 	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
 
-	var/rng = rand(1, 3)
+	var/list/matrix_list_identity =	list(/*R*/ 1,0,0, /*G*/ 0,1,0, /*B*/ 0,0,1)//, 0,0,0,1, /*A*/0,0,0,0)
+	var/list/matrix_list_red =		list(/*R*/ 1,0,0, /*G*/ 0,0.5,0.5, /*B*/ 0,0.5,0.5)// /*A*/0,0,0,1, 0,0,0,0)
+	var/list/matrix_list_green =	list(/*R*/ 0.5,0,0.5, /*G*/ 0,1,0, /*B*/ 0.5,0,0.5)// 0,0,0,1, /*A*/0,0,0,0)
+	var/list/matrix_list_blue =		list(/*R*/ 0.5,0,0.5, /*G*/ 0.5,0,0.5, /*B*/ 0,0,1)//, 0,0,0,1)// /*A*/0,0,0,0)
 
-	var/green_power = 0
-	var/blue_power = 0
-	var/red_power = 0
+	var/glitch_duration = 10 SECONDS
+	if(severity == EMP_LIGHT)
+		glitch_duration = 5 SECONDS
 
-	switch(rng)
-		if(1)
-			green_power = 1
-		if(2)
-			blue_power = 1
-		else
-			red_power = 1 // no idea what i'm doing
+	owner.funk_out(matrix_list_identity, matrix_list_red, matrix_list_green, matrix_list_blue, FILTER_COLOR_HSL, "EMP Glitch", glitch_duration)
 
-	var/list/matrix_list_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-	var/list/matrix_list_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, green_power,0,0,0)
-	var/list/matrix_list_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, blue_power,0,0,0)
-	var/list/matrix_list_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, red_power,0,0,0)
-
-	owner.funk_out(matrix_list_identity, matrix_list_green, matrix_list_blue, matrix_list_red)
-
-/mob/proc/funk_out(
-	list/col_filter_identity, \
-	list/col_filter_green, \
-	list/col_filter_blue, \
-	list/col_filter_red, \
-	filter_name = "funkin'", funk_duration = 10 SECONDS
-	)
+/mob/proc/funk_out(list/matrix_list_identity, list/matrix_list_red, list/matrix_list_green, list/matrix_list_blue, filter_color = FILTER_COLOR_HSL, filter_name = "funkin'", funk_duration = 10 SECONDS)
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
-	game_plane_master_controller.add_filter(filter_name, 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+	game_plane_master_controller.add_filter(filter_name, 10, color_matrix_filter(matrix_list_red, filter_color))
 
 	for(var/filter in game_plane_master_controller.get_filters(filter_name))
-		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
-		animate(color = col_filter_green, time = 4 SECONDS)
-		animate(color = col_filter_blue, time = 4 SECONDS)
-		animate(color = col_filter_red, time = 4 SECONDS)
+		animate(filter, color = matrix_list_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(color = matrix_list_green, time = 4 SECONDS)
+		animate(color = matrix_list_blue, time = 4 SECONDS)
+		animate(color = matrix_list_red, time = 4 SECONDS)
 
 	//game_plane_master_controller.add_filter("psilocybin_wave", 1, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
 
