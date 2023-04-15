@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
-	var/loser_votes = get_vote_count(loser,"Day")
+	var/loser_votes = get_vote_count(loser, "Day")
 	if(loser)
 		if(loser_votes > 12)
 			award_role(/datum/award/achievement/mafia/universally_hated, loser)
@@ -277,9 +277,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		judgement_abstain_votes = list()
 		judgement_innocent_votes = list()
 		judgement_guilty_votes = list()
-		for(var/i in all_roles)
-			var/datum/mafia_role/abstainee = i
-			if(abstainee.game_status == MAFIA_ALIVE && abstainee != loser)
+		for(var/datum/mafia_role/abstainee as anything in all_roles)
+			if(abstainee.game_status == MAFIA_ALIVE && (abstainee != loser))
 				judgement_abstain_votes += abstainee
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
@@ -301,16 +300,20 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * If the accused is killed, their true role is revealed to the rest of the players.
  */
 /datum/mafia_controller/proc/lynch()
-	for(var/i in judgement_innocent_votes)
-		var/datum/mafia_role/role = i
-		send_message(span_green("[role.body.real_name] voted innocent."))
-	for(var/ii in judgement_abstain_votes)
-		var/datum/mafia_role/role = ii
+	for(var/datum/mafia_role/role as anything in judgement_abstain_votes)
 		send_message(span_comradio("[role.body.real_name] abstained."))
-	for(var/iii in judgement_guilty_votes)
-		var/datum/mafia_role/role = iii
+
+	var/total_innocent_votes
+	for(var/datum/mafia_role/role as anything in judgement_innocent_votes)
+		send_message(span_green("[role.body.real_name] voted innocent."))
+		total_innocent_votes += role.vote_power
+
+	var/total_guilty_votes
+	for(var/datum/mafia_role/role as anyhting in judgement_guilty_votes)
 		send_message(span_red("[role.body.real_name] voted guilty."))
-	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
+		total_guilty_votes += role.vote_power
+
+	if(total_guilty_votes > total_innocent_votes) //strictly need majority guilty to lynch
 		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
 		on_trial.kill(src, lynch = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup))
@@ -579,11 +582,12 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/get_vote_winner(vote_type)
 	var/list/tally = list()
 	for(var/votee in votes[vote_type])
+		var/datum/mafia_role/votee = v
 		if(!tally[votes[vote_type][votee]])
-			tally[votes[vote_type][votee]] = 1
+			tally[votes[vote_type][votee]] = votee.vote_power
 		else
-			tally[votes[vote_type][votee]] += 1
-	sortTim(tally, GLOBAL_PROC_REF(cmp_numeric_dsc),associative=TRUE)
+			tally[votes[vote_type][votee]] += votee.vote_power
+	sortTim(tally, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
 	return length(tally) ? tally[1] : null
 
 /**
