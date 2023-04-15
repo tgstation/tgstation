@@ -335,6 +335,9 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
+	if(length(game_plane_master_controller.get_filters(filter_name)))
+		return // already's got it
+
 	game_plane_master_controller.add_filter(filter_name, 10, color_matrix_filter(matrix_list_red, filter_color))
 
 	for(var/filter in game_plane_master_controller.get_filters(filter_name))
