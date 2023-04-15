@@ -712,7 +712,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "dO" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/basic/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},
@@ -1670,7 +1670,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "CB" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/basic/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},
@@ -1888,7 +1888,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "OJ" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/basic/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},

@@ -1,38 +1,53 @@
-/mob/living/simple_animal/hostile/retaliate/bat
+/mob/living/basic/bat
 	name = "Space Bat"
 	desc = "A rare breed of bat which roosts in spaceships, probably not vampiric."
 	icon_state = "bat"
 	icon_living = "bat"
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
-	turns_per_move = 1
+	faction = list(FACTION_HOSTILE)
 	response_help_continuous = "brushes aside"
 	response_help_simple = "brush aside"
 	response_disarm_continuous = "flails at"
 	response_disarm_simple = "flail at"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak_chance = 0
-	maxHealth = 15
-	health = 15
-	harm_intent_damage = 6
-	melee_damage_lower = 5
-	melee_damage_upper = 6
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	maxHealth = 15
+	health = 15
+	melee_damage_lower = 5
+	melee_damage_upper = 6
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
-	faction = list(FACTION_HOSTILE)
+
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("squeaks")
-	//Space bats need no air to fly in.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
 
-/mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
+	unsuitable_atmos_damage = 0
+
+	ai_controller = /datum/ai_controller/basic_controller/space_bat
+
+/mob/living/basic/bat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/ai_retaliate)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+
+///Controller for space bats, has nothing unique, just retaliation.
+/datum/ai_controller/basic_controller/space_bat
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
