@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/get_vote_winner(vote_type)
 	var/list/tally = list()
 	for(var/votee in votes[vote_type])
-		var/datum/mafia_role/votee = v
+		var/datum/mafia_role/votee = votee
 		if(!tally[votes[vote_type][votee]])
 			tally[votes[vote_type][votee]] = votee.vote_power
 		else
