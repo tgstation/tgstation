@@ -3264,7 +3264,8 @@
 "aOQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	id = "aft_vator"
+	elevator_linked_id = "aft_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/aft)
@@ -4712,7 +4713,8 @@
 	id = "com_vator"
 	},
 /obj/machinery/lift_indicator/directional/south{
-	linked_elevator_id = "com_vator"
+	linked_elevator_id = "com_vator";
+	pixel_y = -36
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -10994,7 +10996,8 @@
 	id = "com_vator"
 	},
 /obj/machinery/lift_indicator/directional/south{
-	linked_elevator_id = "com_vator"
+	linked_elevator_id = "com_vator";
+	pixel_y = -36
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -16194,13 +16197,15 @@
 /area/station/security/checkpoint/escape)
 "ehT" = (
 /obj/structure/industrial_lift/public,
-/obj/machinery/lift_indicator/directional/west{
-	linked_elevator_id = "fore_vator"
-	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
 	preset_destination_names = list("2"="Supply-Engi Floor","3"="Med-Sci Floor","4"="Service Floor")
+	},
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "fore_vator";
+	pixel_x = -38;
+	pixel_y = -7
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
@@ -16438,7 +16443,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor{
-	id = "com_vator"
+	elevator_linked_id = "com_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
@@ -16536,7 +16542,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/preopen{
-	id = "com_vator"
+	elevator_linked_id = "com_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
@@ -19316,13 +19323,11 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/machinery/button/elevator/directional/west{
 	id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = -5
+	pixel_y = 0
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = 5
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/fore)
@@ -20910,14 +20915,11 @@
 "fBf" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/machinery/button/elevator/directional/east{
-	id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = -5
+	id = "aft_vator"
 	},
 /obj/machinery/lift_indicator/directional/east{
 	linked_elevator_id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = 5
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/aft)
@@ -27323,7 +27325,8 @@
 "hoc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "aft_vator"
+	elevator_linked_id = "aft_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
@@ -27401,7 +27404,8 @@
 "hpd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	id = "fore_vator"
+	elevator_linked_id = "fore_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
@@ -40218,15 +40222,12 @@
 /area/station/security/prison/work)
 "kNR" = (
 /obj/effect/turf_decal/trimline/green/warning,
-/obj/machinery/button/elevator/directional/east{
-	id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = -5
-	},
 /obj/machinery/lift_indicator/directional/east{
 	linked_elevator_id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = 5
+	pixel_y = -4
+	},
+/obj/machinery/button/elevator/directional/east{
+	id = "aft_vator"
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/aft)
@@ -40727,7 +40728,9 @@
 "kVd" = (
 /obj/structure/industrial_lift/public,
 /obj/machinery/lift_indicator/directional/east{
-	linked_elevator_id = "com_vator"
+	linked_elevator_id = "com_vator";
+	pixel_x = 38;
+	pixel_y = -7
 	},
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "com_vator";
@@ -44413,15 +44416,13 @@
 "lQY" = (
 /obj/machinery/button/elevator/directional/west{
 	id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = -5
-	},
-/obj/machinery/lift_indicator/directional/west{
-	linked_elevator_id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = 5
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/trimline/purple/warning,
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "fore_vator";
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/fore)
 "lRb" = (
@@ -47724,7 +47725,8 @@
 "mIA" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	id = "aft_vator"
+	elevator_linked_id = "aft_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/aft)
@@ -48238,7 +48240,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/preopen{
-	id = "com_vator"
+	elevator_linked_id = "com_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
@@ -52862,7 +52865,9 @@
 "nUI" = (
 /obj/structure/industrial_lift/public,
 /obj/machinery/lift_indicator/directional/east{
-	linked_elevator_id = "aft_vator"
+	linked_elevator_id = "aft_vator";
+	pixel_x = 38;
+	pixel_y = -7
 	},
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
@@ -56251,9 +56256,10 @@
 "oQx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "fore_vator"
+	elevator_linked_id = "fore_vator";
+	elevator_mode = 1
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/catwalk_floor,
 /area/station/hallway/floor1/fore)
 "oQy" = (
 /obj/machinery/newscaster/directional/west,
@@ -59994,15 +60000,13 @@
 "pUD" = (
 /obj/machinery/button/elevator/directional/west{
 	id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = -5
-	},
-/obj/machinery/lift_indicator/directional/west{
-	linked_elevator_id = "fore_vator";
-	pixel_x = -32;
-	pixel_y = 5
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/trimline/green/warning,
+/obj/machinery/lift_indicator/directional/west{
+	linked_elevator_id = "fore_vator";
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/fore)
 "pUI" = (
@@ -60422,7 +60426,8 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
-	id = "com_vator"
+	elevator_linked_id = "com_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
@@ -61599,13 +61604,10 @@
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/lift_indicator/directional/east{
 	linked_elevator_id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = 5
+	pixel_y = -4
 	},
 /obj/machinery/button/elevator/directional/east{
-	id = "aft_vator";
-	pixel_x = 32;
-	pixel_y = -5
+	id = "aft_vator"
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/aft)
@@ -83245,7 +83247,8 @@
 "woV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	id = "fore_vator"
+	elevator_linked_id = "fore_vator";
+	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)

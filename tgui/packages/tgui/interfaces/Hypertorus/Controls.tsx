@@ -1,31 +1,62 @@
-import { useBackend } from '../../backend';
-import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
-import { getGasLabel } from '../../constants';
+import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
 import { HelpDummy, HoverHelp } from './helpers';
+
+import { BooleanLike } from 'common/react';
+import { HypertorusFilter } from '.';
+import { useBackend } from 'tgui/backend';
+
+type ComboProps = {
+  color?: string | BooleanLike;
+  defaultValue: number;
+  flipIcon?: BooleanLike;
+  help?: string;
+  icon?: string;
+  maxValue: number;
+  minValue: number;
+  parameter: string;
+  step?: number;
+  unit: string;
+  value: number;
+};
+
+type ControlsData = {
+  cooling_volume: number;
+  current_damper: number;
+  heat_output: number;
+  heating_conductor: number;
+  magnetic_constrictor: number;
+};
+
+type WasteData = {
+  filter_types: HypertorusFilter[];
+  mod_filtering_rate: number;
+  waste_remove: BooleanLike;
+};
 
 /*
  * This module holds user interactable controls. Some may be good candidates
  * for generalizing and refactoring.
  */
-
-const ComboKnob = (props, context) => {
+const ComboKnob = (props: ComboProps, context) => {
   const {
     color = false,
     defaultValue,
-    icon,
     flipIcon,
     help,
-    minValue,
+    icon,
     maxValue,
+    minValue,
     parameter,
     step = 5,
     value,
     ...rest
   } = props;
 
-  const { act, data } = useBackend(context);
+  const { act } = useBackend(context);
 
-  const iconProps = {};
+  const iconProps = {
+    rotation: 0,
+  };
   if (flipIcon) {
     iconProps.rotation = 180;
   }
@@ -88,16 +119,22 @@ const ComboKnob = (props, context) => {
 };
 
 export const HypertorusSecondaryControls = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend<ControlsData>(context);
+  const {
+    cooling_volume,
+    current_damper,
+    heat_output,
+    heating_conductor,
+    magnetic_constrictor,
+  } = data;
+
   return (
     <Section title="Reactor Control">
       <LabeledControls justify="space-around" wrap>
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
-            color={
-              data.heating_conductor > 50 && data.heat_output > 0 && 'yellow'
-            }
-            value={parseFloat(data.heating_conductor)}
+            color={heating_conductor > 50 && heat_output > 0 && 'yellow'}
+            value={heating_conductor}
             unit="J/cm"
             minValue={50}
             defaultValue={100}
@@ -109,7 +146,7 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Cooling Volume">
           <ComboKnob
-            value={parseFloat(data.cooling_volume)}
+            value={cooling_volume}
             unit="L"
             minValue={50}
             defaultValue={100}
@@ -122,7 +159,7 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Magnetic Constrictor">
           <ComboKnob
-            value={parseFloat(data.magnetic_constrictor)}
+            value={magnetic_constrictor}
             unit="m³/T"
             minValue={50}
             defaultValue={100}
@@ -135,8 +172,8 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Current Damper">
           <ComboKnob
-            color={data.current_damper && 'yellow'}
-            value={parseFloat(data.current_damper)}
+            color={current_damper && 'yellow'}
+            value={current_damper}
             unit="W"
             minValue={0}
             defaultValue={0}
@@ -152,8 +189,9 @@ export const HypertorusSecondaryControls = (props, context) => {
 };
 
 export const HypertorusWasteRemove = (props, context) => {
-  const { act, data } = useBackend(context);
-  const filterTypes = data.filter_types || [];
+  const { act, data } = useBackend<WasteData>(context);
+  const { filter_types = [], waste_remove, mod_filtering_rate } = data;
+
   return (
     <Section title="Output Control">
       <LabeledList>
@@ -170,9 +208,9 @@ export const HypertorusWasteRemove = (props, context) => {
             </>
           }>
           <Button
-            icon={data.waste_remove ? 'power-off' : 'times'}
-            content={data.waste_remove ? 'On' : 'Off'}
-            selected={data.waste_remove}
+            icon={waste_remove ? 'power-off' : 'times'}
+            content={waste_remove ? 'On' : 'Off'}
+            selected={waste_remove}
             onClick={() => act('waste_remove')}
           />
         </LabeledList.Item>
@@ -185,7 +223,7 @@ export const HypertorusWasteRemove = (props, context) => {
           }>
           <NumberInput
             animated
-            value={parseFloat(data.mod_filtering_rate)}
+            value={mod_filtering_rate}
             unit="mol/s"
             minValue={5}
             maxValue={200}
@@ -203,18 +241,17 @@ export const HypertorusWasteRemove = (props, context) => {
               Filter from moderator mix:
             </>
           }>
-          {filterTypes.map((filter) => (
-            <Button
-              key={filter.gas_id}
-              icon={filter.enabled ? 'check-square-o' : 'square-o'}
-              selected={filter.enabled}
-              content={getGasLabel(filter.gas_id, filter.gas_name)}
+          {filter_types.map(({ gas_id, gas_name, enabled }) => (
+            <Button.Checkbox
+              key={gas_id}
+              checked={enabled}
               onClick={() =>
                 act('filter', {
-                  mode: filter.gas_id,
+                  mode: gas_id,
                 })
-              }
-            />
+              }>
+              {gas_name}
+            </Button.Checkbox>
           ))}
         </LabeledList.Item>
       </LabeledList>

@@ -493,3 +493,40 @@
   - bugfix: Vault piping and wiring is now connected to the station.
   kinneb:
   - rscadd: Added the Abandoned Mime outpost as space ruin!
+2023-04-15:
+  ChungusGamer666:
+  - refactor: Implanted foreign limbs will no longer be wiped by species change.
+  - rscadd: Burning structures spawn smoke particles. Sick.
+  Helg2:
+  - bugfix: Deltastation supermatter windows now properly rotated.
+  Jacquerel:
+  - bugfix: Removes the spectral trombone from the lavaland pizza party ruin.
+  LT3:
+  - bugfix: Fixed forcing night shift lighting on/off
+  - config: Station shift start time can now be set in the server config
+  Melbert:
+  - bugfix: Omen Component door crush works
+  - bugfix: Omen Component vendors will no longer double dip (double tip)
+  Sneeker134:
+  - bugfix: Monkeys and some other mobs no longer drop items they've grabbed from
+      storage onto the ground.
+  - admin: Added clever DNA injector to admin spawn options.
+  - bugfix: Added clever DNA injector.
+  carlarctg:
+  - qol: Gives nuke ops three free health analyzers in their shuttle, advanced health
+      analyzers in both medic kits, and a bonus health analyzer MODule in the premium
+      medical kit.
+  jimmyoofsalot:
+  - rscadd: adds pie-flavored pie
+  jlsnow301:
+  - bugfix: The HFR screen should be fixed, let me know if you see glitches
+  - bugfix: The HFR screen should now also select recipes properly
+  necromanceranne:
+  - balance: Returns the anomaly detonation timer from 75 seconds (40 seconds from
+      announcement for dangerous anomalies) back to 99 seconds (75 seconds from announcement
+      for dangerous).
+  timothymtorres:
+  - qol: Add contextual screentips, balloon alerts, and examine hints to lockers
+  vinylspiders:
+  - bugfix: fixes a runtime that can occur if a circuit floor gets changed into something
+      else.
