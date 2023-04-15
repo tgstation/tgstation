@@ -40,9 +40,9 @@
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
+		var/mob/living/carbon/char = user
 		var/matrix/widen = matrix()
-		if((C.get_item_by_slot(ITEM_SLOT_NECK) == src) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src) || (C.get_item_by_slot(ITEM_SLOT_HEAD) == src))
+		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
 			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
 			return
 		else if(slot_flags & ITEM_SLOT_HEAD)
