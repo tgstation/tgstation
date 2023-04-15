@@ -1115,7 +1115,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
-		particles = NULL
+		particles = null
 		if(self_sustaining) //No reason to pay for an empty tray.
 			set_self_sustaining(FALSE)
 	else
