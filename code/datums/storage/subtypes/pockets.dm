@@ -92,6 +92,7 @@
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/ammo_box/magazine/m10mm,
 		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/ammo_casing,
 		/obj/item/lipstick,
 		/obj/item/clothing/mask/cigarette,
