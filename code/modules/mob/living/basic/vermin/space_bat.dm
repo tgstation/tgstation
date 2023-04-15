@@ -5,28 +5,30 @@
 	icon_living = "bat"
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
-	faction = list(FACTION_HOSTILE)
+
+	maxHealth = 15
+	health = 15
+	melee_damage_lower = 5
+	melee_damage_upper = 6
+
 	response_help_continuous = "brushes aside"
 	response_help_simple = "brush aside"
 	response_disarm_continuous = "flails at"
 	response_disarm_simple = "flail at"
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	verb_say = "squeaks"
+
+	faction = list(FACTION_HOSTILE)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 15
-	health = 15
-	melee_damage_lower = 5
-	melee_damage_upper = 6
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
 
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_size = MOB_SIZE_TINY
-	speak_emote = list("squeaks")
-
+	obj_damage = 0
 	unsuitable_atmos_damage = 0
 
 	ai_controller = /datum/ai_controller/basic_controller/space_bat
