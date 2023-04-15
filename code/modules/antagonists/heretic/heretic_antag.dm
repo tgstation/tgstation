@@ -761,3 +761,12 @@
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
+
+/datum/antagonist/heretic/antag_token(datum/mind/hosts_mind)
+	. = ..()
+	var/datum/antagonist/heretic/new_heretic = new()
+	hosts_mind.add_antag_datum(new_heretic)
+
+	if(!new_heretic.has_living_heart)
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = new_heretic.get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(hosts_mind.current)

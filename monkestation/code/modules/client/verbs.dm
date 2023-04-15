@@ -1,19 +1,17 @@
 GLOBAL_LIST_INIT(high_threat_antags, list(
-	/datum/antagonist/blob,
 	/datum/antagonist/cult,
 	/datum/antagonist/rev/head,
-	/datum/antagonist/nukeop/lone,
 ))
 
 GLOBAL_LIST_INIT(medium_threat_antags, list(
 	/datum/antagonist/ninja,
 	/datum/antagonist/wizard,
+	/datum/antagonist/heretic,
 ))
 
 GLOBAL_LIST_INIT(low_threat_antags, list(
 	/datum/antagonist/florida_man,
 	/datum/antagonist/traitor,
-	/datum/antagonist/revenant,
 	/datum/antagonist/paradox_clone,
 ))
 
