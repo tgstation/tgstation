@@ -1,3 +1,4 @@
+// Fire related particles.
 /particles/embers
 	icon = 'icons/effects/particles/generic.dmi'
 	icon_state = list("dot"=4,"cross"=1,"curl"=1)

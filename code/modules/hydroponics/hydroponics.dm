@@ -999,6 +999,8 @@
 				name = initial(name)
 				desc = initial(desc)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
+			if(particles)
+				particles = null
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
