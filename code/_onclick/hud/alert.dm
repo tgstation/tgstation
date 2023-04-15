@@ -535,7 +535,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	if(antag.cult_team.blood_target)
 		if(!get_turf(antag.cult_team.blood_target))
-			antag.cult_team.blood_target = null
+			antag.cult_team.unset_blood_target()
 		else
 			blood_target = antag.cult_team.blood_target
 	if(Cviewer?.seeking && Cviewer.master)

@@ -40,7 +40,7 @@
 	borgo.logevent("File request by [username]: /var/logs/syslog")
 	return TRUE
 
-/datum/computer_file/program/borg_monitor/process_tick(delta_time)
+/datum/computer_file/program/borg_monitor/process_tick(seconds_per_tick)
 	if(!DL_source)
 		DL_progress = -1
 		return

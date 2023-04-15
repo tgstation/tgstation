@@ -1,14 +1,14 @@
-/datum/ai_planning_subtree/haunted/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/haunted/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/obj/item/item_pawn = controller.pawn
 
 	if(ismob(item_pawn.loc)) //We're being held, maybe escape?
 		if(controller.blackboard[BB_LIKES_EQUIPPER])//don't unequip from people it's okay with
 			return
-		if(DT_PROB(HAUNTED_ITEM_ESCAPE_GRASP_CHANCE, delta_time))
+		if(SPT_PROB(HAUNTED_ITEM_ESCAPE_GRASP_CHANCE, seconds_per_tick))
 			controller.queue_behavior(/datum/ai_behavior/item_escape_grasp)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	if(!DT_PROB(HAUNTED_ITEM_ATTACK_HAUNT_CHANCE, delta_time))
+	if(!SPT_PROB(HAUNTED_ITEM_ATTACK_HAUNT_CHANCE, seconds_per_tick))
 		return
 
 	var/list/to_haunt_list = controller.blackboard[BB_TO_HAUNT_LIST]

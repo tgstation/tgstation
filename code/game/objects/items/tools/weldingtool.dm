@@ -84,11 +84,11 @@
 		. += "[initial(icon_state)]-on"
 
 
-/obj/item/weldingtool/process(delta_time)
+/obj/item/weldingtool/process(seconds_per_tick)
 	if(welding)
 		force = 15
 		damtype = BURN
-		burned_fuel_for += delta_time
+		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 			use(TRUE)
 		update_appearance()
