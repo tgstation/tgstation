@@ -47,6 +47,17 @@
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
+/obj/structure/emergency_shield/regenerating
+	name = "energy shield"
+	desc = "An energy shield used to let ships through, but keep out the void of space."
+	max_integrity = 400
+
+/obj/structure/emergency_shield/regenerating/emp_act(severity)
+	return
+
+/obj/structure/emergency_shield/regenerating/process(delta_time)
+	if(get_integrity() < max_integrity) 
+		repair_damage(5 * delta_time)
 
 /obj/structure/emergency_shield/cult
 	name = "cult barrier"
@@ -149,9 +160,9 @@
 	update_appearance()
 	QDEL_LIST(deployed_shields)
 
-/obj/machinery/shieldgen/process(delta_time)
+/obj/machinery/shieldgen/process(seconds_per_tick)
 	if((machine_stat & BROKEN) && active)
-		if(deployed_shields.len && DT_PROB(2.5, delta_time))
+		if(deployed_shields.len && SPT_PROB(2.5, seconds_per_tick))
 			qdel(pick(deployed_shields))
 
 
@@ -522,3 +533,6 @@
 	else
 		if(isprojectile(mover))
 			return prob(10)
+
+#undef ACTIVE_SETUPFIELDS
+#undef ACTIVE_HASFIELDS

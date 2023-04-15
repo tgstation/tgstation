@@ -23,9 +23,9 @@
 	power_channel = AREA_USAGE_ENVIRON
 	resistance_flags = FIRE_PROOF
 
-	light_power = 0.5
-	light_range = 3
-	light_color = LIGHT_COLOR_FAINT_BLUE
+	light_power = 1
+	light_range = 1.6
+	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
@@ -91,7 +91,7 @@
 		return
 	var/area/our_area = get_area(src)
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
-	update_overlays()
+	handle_fire(our_area, our_area.fire)
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
 	//were already registered to an area. exit from here first before entering into an new area
@@ -141,7 +141,7 @@
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
 		set_light(l_power = 3)
 	else
-		set_light(l_power = 0.5)
+		set_light(l_power = 1)
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -176,7 +176,7 @@
 					if(SEC_LEVEL_GREEN)
 						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
 					if(SEC_LEVEL_BLUE)
-						set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
+						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
 					if(SEC_LEVEL_RED)
 						set_light(l_color = LIGHT_COLOR_FLARE)
 					if(SEC_LEVEL_DELTA)

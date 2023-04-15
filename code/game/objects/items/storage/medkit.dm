@@ -21,6 +21,10 @@
 	var/empty = FALSE
 	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 
+/obj/item/storage/medkit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
@@ -278,6 +282,7 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
@@ -301,10 +306,12 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
@@ -358,7 +365,10 @@
 /obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/pill,
+		/obj/item/food/bait/natural,
+	))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -550,6 +560,15 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
+/obj/item/storage/pill_bottle/naturalbait
+	name = "freshness jar"
+	desc = "Full of natural fish bait."
+
+/obj/item/storage/pill_bottle/naturalbait/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/bait/natural(src)
+
+/// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
@@ -577,57 +596,40 @@
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process(delta_time)
+/obj/item/storage/organbox/process(seconds_per_tick)
 	///if there is enough coolant var
-	var/cool = FALSE
-	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
-	if(amount > 0)
-		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
-		cool = TRUE
-	else
-		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
-		if(amount > 0)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
-			cool = TRUE
-	if(!cooling && cool)
-		cooling = TRUE
-		update_appearance()
-		for(var/C in contents)
-			freeze_contents(C)
+	var/using_coolant = coolant_to_spend()
+	if (isnull(using_coolant))
+		if (cooling)
+			cooling = FALSE
+			update_appearance()
+			for(var/obj/stored in contents)
+				stored.unfreeze()
 		return
-	if(cooling && !cool)
-		cooling = FALSE
-		update_appearance()
-		for(var/C in contents)
-			unfreeze_contents(C)
+
+	var/amount_used = 0.05 * seconds_per_tick
+	if (using_coolant != /datum/reagent/cryostylane)
+		amount_used *= 2
+	reagents.remove_reagent(using_coolant, amount_used)
+
+	if(cooling)
+		return
+	cooling = TRUE
+	update_appearance()
+	for(var/obj/stored in contents)
+		stored.freeze()
+
+/// Returns which coolant we are about to use, or null if there isn't any
+/obj/item/storage/organbox/proc/coolant_to_spend()
+	if (reagents.get_reagent_amount(/datum/reagent/cryostylane))
+		return /datum/reagent/cryostylane
+	if (reagents.get_reagent_amount(/datum/reagent/consumable/ice))
+		return /datum/reagent/consumable/ice
+	return null
 
 /obj/item/storage/organbox/update_icon_state()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
-
-///freezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/freeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags |= ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags |= ORGAN_FROZEN
-
-///unfreezes the organ and loops bodyparts like heads
-/obj/item/storage/organbox/proc/unfreeze_contents(datum/source, obj/item/I)
-	SIGNAL_HANDLER
-	if(isinternalorgan(I))
-		var/obj/item/organ/internal/int_organ = I
-		int_organ.organ_flags &= ~ORGAN_FROZEN
-		return
-	if(isbodypart(I))
-		var/obj/item/bodypart/B = I
-		for(var/obj/item/organ/internal/int_organ in B.contents)
-			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(is_reagent_container(I) && I.is_open_container())
@@ -659,3 +661,10 @@
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
 	return FIRELOSS
+
+/// A subtype of organ storage box which starts with a full coolant tank
+/obj/item/storage/organbox/preloaded
+
+/obj/item/storage/organbox/preloaded/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)

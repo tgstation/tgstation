@@ -77,7 +77,7 @@
 	new_ethereal.set_safe_hunger_level()
 	update_mail_goodies(ethereal)
 
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
 	for(var/obj/item/bodypart/limb as anything in new_ethereal.bodyparts)
@@ -89,8 +89,6 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
-	if(ishuman(former_ethereal))
-		new_species.update_mail_goodies(former_ethereal)
 	return ..()
 
 /datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())

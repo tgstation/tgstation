@@ -5,9 +5,8 @@
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
 	setup_mood()
-
-	// All start without eyes, and get them via set species
-	become_blind(NO_EYES)
+	// This needs to be called very very early in human init (before organs / species are created at the minimum)
+	setup_organless_effects()
 
 	create_dna()
 	dna.species.create_fresh_body(src)
@@ -41,6 +40,15 @@
 		return
 	mob_mood = new /datum/mood(src)
 
+/// This proc is for holding effects applied when a mob is missing certain organs
+/// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
+/// Gaining said organs removes these effects
+/mob/living/carbon/human/proc/setup_organless_effects()
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
+	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	randomize_human(src)
@@ -59,7 +67,7 @@
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()
-	var/obj/item/organ/external/wings/gliders = getorgan(/obj/item/organ/external/wings)
+	var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
 						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
@@ -452,7 +460,7 @@
 			to_chat(src, span_warning("Remove [p_their()] mask first!"))
 			return FALSE
 
-		if (!getorganslot(ORGAN_SLOT_LUNGS))
+		if (!get_organ_slot(ORGAN_SLOT_LUNGS))
 			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
 			return FALSE
 
@@ -476,7 +484,7 @@
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
-		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
+		else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
 		else
 			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))

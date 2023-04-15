@@ -77,7 +77,7 @@
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Grants you immunity to cold temperatures, and removes your need breathe. \
+	desc = "Grants you immunity to cold temperatures, and removes your need to breathe. \
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
@@ -221,7 +221,7 @@
  *
  * Also starts storms in any area that doesn't have one.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	for(var/mob/living/carbon/close_carbon in view(5, source))

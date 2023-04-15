@@ -104,7 +104,7 @@
 	qdel(src)
 
 /// Life cycle of a space vine
-/datum/spacevine_controller/process(delta_time)
+/datum/spacevine_controller/process(seconds_per_tick)
 	var/vine_count = length(vines)
 	if(!vine_count)
 		qdel(src) //space vines exterminated. Remove the controller
@@ -115,7 +115,7 @@
 	/// Base spread rate, depends solely on spread multiplier and vine count
 	var/spread_base = 0.5 * vine_count / spread_multiplier
 	/// Actual maximum spread rate for this process tick
-	var/spread_max = round(clamp(delta_time * (spread_base + start_spread_bonus), max(delta_time * minimum_spread_rate, 1), spread_cap))
+	var/spread_max = round(clamp(seconds_per_tick * (spread_base + start_spread_bonus), max(seconds_per_tick * minimum_spread_rate, 1), spread_cap))
 	var/amount_processed = 0
 	for(var/obj/structure/spacevine/vine in growth_queue)
 		if(!vine.can_spread)
@@ -127,7 +127,7 @@
 
 		if(vine.growth_stage >= 2) //If tile is fully grown
 			vine.entangle_mob()
-		else if(DT_PROB(10, delta_time)) //If tile isn't fully grown
+		else if(SPT_PROB(10, seconds_per_tick)) //If tile isn't fully grown
 			vine.grow()
 
 		vine.spread()

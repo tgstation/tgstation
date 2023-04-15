@@ -290,7 +290,7 @@ Works together with spawning an observer, noted above.
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
 			var/mob/living/carbon/human/crystal_fella = usr
-			var/our_heart = crystal_fella.getorganslot(ORGAN_SLOT_HEART)
+			var/our_heart = crystal_fella.get_organ_slot(ORGAN_SLOT_HEART)
 			if(istype(our_heart, /obj/item/organ/internal/heart/ethereal)) //so you got the heart?
 				var/obj/item/organ/internal/heart/ethereal/ethereal_heart = our_heart
 				ethereal_heart.stop_crystalization_process(crystal_fella) //stops the crystallization process
@@ -303,6 +303,7 @@ Works together with spawning an observer, noted above.
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
 /mob/living/ghostize(can_reenter_corpse = TRUE)

@@ -124,11 +124,11 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (WALL_PLANE) use this.
 
 //FLOOR_PLANE layers
+#define TURF_PLATING_DECAL_LAYER 2.001
+#define TURF_DECAL_LAYER 2.009 //Makes turf decals appear in DM how they will look inworld.
 #define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
-#define TURF_PLATING_DECAL_LAYER 2.031
-#define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
 #define LATTICE_LAYER 2.04
 #define DISPOSAL_PIPE_LAYER 2.042
 #define WIRE_LAYER 2.044
@@ -297,4 +297,4 @@
 /// We expect at most 3 layers of multiz
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
-#define MAX_EXPECTED_Z_DEPTH 2
+#define MAX_EXPECTED_Z_DEPTH 3

@@ -48,7 +48,7 @@
 		hair_hidden = TRUE
 		facial_hair_hidden = TRUE
 
-	if(!hair_hidden && !owner.getorganslot(ORGAN_SLOT_BRAIN) && !HAS_TRAIT(owner, TRAIT_NOBLOOD))
+	if(!hair_hidden && !owner.get_organ_slot(ORGAN_SLOT_BRAIN) && !HAS_TRAIT(owner, TRAIT_NOBLOOD))
 		show_debrained = TRUE
 	else
 		show_debrained = FALSE

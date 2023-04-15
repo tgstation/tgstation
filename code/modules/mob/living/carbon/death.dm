@@ -76,7 +76,7 @@
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
-	var/obj/item/organ/internal/brain/userbrain = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)
 		userbrain.suicided = suicide_state
 

@@ -71,7 +71,7 @@
 		if(35 to 41)
 			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
-/datum/mutation/human/hulk/on_life(delta_time, times_fired)
+/datum/mutation/human/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
 		to_chat(owner, span_danger("You suddenly feel very weak."))
@@ -116,7 +116,7 @@
 		return
 
 	var/mob/living/carbon/possible_throwable = user.pulling
-	if(!possible_throwable.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL))
+	if(!possible_throwable.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
 		return
 
 	if(ishuman(possible_throwable))

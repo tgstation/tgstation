@@ -1,8 +1,3 @@
-/// The duration of the fakedeath coma.
-#define LING_FAKEDEATH_TIME (40 SECONDS)
-/// The number of recent spoken lines to gain on absorbing a mob
-#define LING_ABSORB_RECENT_SPEECH 8
-
 /// Helper to format the text that gets thrown onto the chem hud element.
 #define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
@@ -161,7 +156,7 @@
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	// Brains are optional for lings.
-	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/our_ling_brain = living_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
@@ -215,7 +210,7 @@
 	if(!iscarbon(owner.current))
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
-	var/obj/item/organ/internal/brain/not_ling_brain = carbon_owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/not_ling_brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(not_ling_brain && (not_ling_brain.decoy_override != initial(not_ling_brain.decoy_override)))
 		not_ling_brain.organ_flags |= ORGAN_VITAL
 		not_ling_brain.decoy_override = FALSE
@@ -264,16 +259,16 @@
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/on_life(datum/source, delta_time, times_fired)
+/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick, total_chem_storage * 0.5)
 
 	// If we're not dead - we go up to the full chem cap.
 	else
-		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * seconds_per_tick)
 
 /**
  * Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], getting admin-healed restores our chemicals.
@@ -1047,3 +1042,5 @@
 	head = /obj/item/clothing/head/helmet/space/changeling
 	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade
+
+#undef FORMAT_CHEM_CHARGES_TEXT

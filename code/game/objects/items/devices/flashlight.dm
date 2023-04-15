@@ -100,7 +100,7 @@
 					to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 					return
 
-				var/obj/item/organ/internal/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
+				var/obj/item/organ/internal/eyes/E = M.get_organ_slot(ORGAN_SLOT_EYES)
 				if(!E)
 					to_chat(user, span_warning("[M] doesn't have any eyes!"))
 					return
@@ -341,18 +341,18 @@
 	update_brightness()
 
 /obj/item/flashlight/flare/extinguish()
-	if(fuel != INFINITY && can_be_extinguished)
+	. = ..()
+	if((fuel != INFINITY) && can_be_extinguished)
 		turn_off()
-	return ..()
 
 /obj/item/flashlight/flare/update_brightness()
 	..()
 	inhand_icon_state = "[initial(inhand_icon_state)]" + (on ? "-on" : "")
 	update_appearance()
 
-/obj/item/flashlight/flare/process(delta_time)
+/obj/item/flashlight/flare/process(seconds_per_tick)
 	open_flame(heat)
-	fuel = max(fuel - delta_time * (1 SECONDS), 0)
+	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
 
 	if(!fuel || !on)
 		turn_off()
@@ -431,7 +431,7 @@
 		turn_off()
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
-/obj/item/flashlight/flare/candle/process(delta_time)
+/obj/item/flashlight/flare/candle/process(seconds_per_tick)
 	. = ..()
 	update_appearance()
 
@@ -512,8 +512,8 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/flashlight/emp/process(delta_time)
-	charge_timer += delta_time
+/obj/item/flashlight/emp/process(seconds_per_tick)
+	charge_timer += seconds_per_tick
 	if(charge_timer < charge_delay)
 		return FALSE
 	charge_timer -= charge_delay
@@ -580,8 +580,8 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/flashlight/glowstick/process(delta_time)
-	fuel = max(fuel - delta_time * (1 SECONDS), 0)
+/obj/item/flashlight/glowstick/process(seconds_per_tick)
+	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
@@ -631,7 +631,7 @@
 	if(!fuel)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/internal/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME

@@ -125,13 +125,19 @@
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
 
-///Robot customer AI controller blackboard keys
+//Robot customer AI controller blackboard keys
+/// Corresponds to the customer's order.
+/// This can be a an item typepath or an instance of a custom order datum
 #define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
 #define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
 #define BB_CUSTOMER_PATIENCE "BB_customer_patience"
+/// A reference to a customer data datum, containing stuff like saylines and food desires
 #define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
+/// Whether we're busy eating something already
 #define BB_CUSTOMER_EATING "BB_customer_eating"
+/// A reference to the venue being attended
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
+/// Whether we're leaving the venue entirely, either happily or forced out
 #define BB_CUSTOMER_LEAVING "BB_customer_leaving"
 #define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 /// Robot customer has said their can't find seat line at least once. Used to rate limit how often they'll complain after the first time.
@@ -220,11 +226,16 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///Blackboard key for a whitelist typecache of "things we can target while trying to move"
+#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
 #define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+
+///How long have we spent with no target?
+#define BB_TARGETLESS_TIME "BB_targetless_time"
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
@@ -248,6 +259,12 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+
+// Meteor Heart AI keys
+/// Key where we keep the spike trail ability
+#define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
+/// Key where we keep the spine traps ability
+#define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
 
 // Spider AI keys
 /// Key where we store a turf to put webs on

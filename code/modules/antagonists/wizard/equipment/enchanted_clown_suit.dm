@@ -33,6 +33,7 @@
 		/obj/item/toy/foamblade = 2,
 		/obj/item/toy/gun = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/bikehorn/golden = 1,
 		/obj/item/dualsaber/toy = 1,
 		/obj/item/restraints/legcuffs/beartrap = 1,

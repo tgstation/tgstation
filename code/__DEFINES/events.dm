@@ -42,3 +42,11 @@
 #define EVENT_PLANETARY_ONLY (1 << 1)
 /// Event timer in seconds
 #define EVENT_SECONDS *0.5
+
+///Backstory key for the fugitive solo backstories
+#define FUGITIVE_BACKSTORY_WALDO "waldo"
+#define FUGITIVE_BACKSTORY_INVISIBLE "invisible"
+///Backstory keys for the fugitive team backstories
+#define FUGITIVE_BACKSTORY_PRISONER "prisoner"
+#define FUGITIVE_BACKSTORY_CULTIST "cultist"
+#define FUGITIVE_BACKSTORY_SYNTH "synth"
