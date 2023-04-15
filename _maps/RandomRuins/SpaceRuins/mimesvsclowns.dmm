@@ -172,10 +172,6 @@
 "Fx" = (
 /turf/template_noop,
 /area/template_noop)
-"Gv" = (
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "GF" = (
 /obj/structure/table,
 /obj/item/stamp/mime,
@@ -228,7 +224,6 @@
 /obj/machinery/computer/old{
 	dir = 4
 	},
-/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "KI" = (
@@ -259,7 +254,7 @@
 /area/ruin)
 "Qh" = (
 /obj/machinery/computer/old,
-/obj/machinery/light/broken/directional/north,
+/obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Sc" = (
@@ -284,6 +279,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "YF" = (
@@ -462,7 +458,7 @@ Kr
 rn
 Jz
 Jz
-Gv
+gV
 Sc
 Jz
 Jz
