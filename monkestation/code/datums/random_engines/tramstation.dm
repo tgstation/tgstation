@@ -1,7 +1,7 @@
 // *!! METASTATION ENGINES !!*
 /datum/map_template/random_engines/tram_supermatter
-	name = "Meta Supermatter"
-	room_id = "meta_supermatter"
+	name = "Tram Supermatter"
+	room_id = "tram_supermatter"
 	mappath = "monkestation/_maps/RandomEngines/TramStation/supermatter.dmm"
 	centerspawner = FALSE
 	template_height = 20
@@ -10,8 +10,8 @@
 	station_name = "Tramstation"
 
 /datum/map_template/random_engines/tram_singularity
-	name = "Meta Singularity"
-	room_id = "meta_singularity"
+	name = "Tram Singularity"
+	room_id = "tram_singularity"
 	mappath = "monkestation/_maps/RandomEngines/TramStation/singularity.dmm"
 	centerspawner = FALSE
 	template_height = 20
