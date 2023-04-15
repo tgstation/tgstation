@@ -17,7 +17,7 @@
 /datum/component/liquids_interaction/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 
-/datum/component/liquids_interaction/proc/AfterAttackdatum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+/datum/component/liquids_interaction/proc/AfterAttack(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
 	if(!isturf(turf_target) || !turf_target.liquids)
