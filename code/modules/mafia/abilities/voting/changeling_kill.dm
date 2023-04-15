@@ -12,9 +12,9 @@
 	var/static/ling_sent = FALSE
 
 /datum/mafia_ability/changeling_kill/clean_action_refs(datum/mafia_controller/game)
-	. = ..()
-	ling_sent = initial(ling_sent)
+	ling_sent = FALSE
 	game.reset_votes("Mafia")
+	return ..()
 
 /datum/mafia_ability/changeling_kill/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	var/datum/mafia_role/victim = game.get_vote_winner("Mafia")
