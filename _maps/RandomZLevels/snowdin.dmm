@@ -12675,7 +12675,7 @@
 "YR" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/crate{
-	opened = 1
+	opened = 1;
 	name = "explosives ordinance"
 	},
 /obj/machinery/light/small/directional/east,
