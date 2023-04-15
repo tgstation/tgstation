@@ -127,5 +127,5 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.
 
-/mob/living/carbon/alien/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * delta_time)
+/mob/living/carbon/alien/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)

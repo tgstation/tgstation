@@ -5,7 +5,7 @@
 	/// The action to execute, extend to add a different cooldown or something
 	var/attack_behaviour = /datum/ai_behavior/attack_obstructions
 
-/datum/ai_planning_subtree/attack_obstacle_in_path/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/attack_obstacle_in_path/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
@@ -28,7 +28,7 @@
 	/// For if you want your mob to be able to attack dense objects
 	var/can_attack_dense_objects = FALSE
 
-/datum/ai_behavior/attack_obstructions/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	var/datum/weakref/weak_target = controller.blackboard[target_key]

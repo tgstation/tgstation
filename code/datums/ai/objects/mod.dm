@@ -22,7 +22,7 @@
 	QDEL_NULL(id_card)
 	return ..() //Run parent at end
 
-/datum/ai_controller/mod/SelectBehaviors(delta_time)
+/datum/ai_controller/mod/SelectBehaviors(seconds_per_tick)
 	current_behaviors = list()
 	if(blackboard[BB_MOD_TARGET] && blackboard[BB_MOD_IMPLANT])
 		queue_behavior(/datum/ai_behavior/mod_attach)
@@ -33,7 +33,7 @@
 /datum/ai_behavior/mod_attach
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_MOVE_AND_PERFORM
 
-/datum/ai_behavior/mod_attach/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/mod_attach/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	if(!controller.pawn.Adjacent(controller.blackboard[BB_MOD_TARGET]))
 		return

@@ -78,7 +78,7 @@
 "kx" = (
 /turf/open/openspace,
 /area/station/maintenance/department/crew_quarters/dorms)
-"lb" = (
+"kz" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -294,6 +294,20 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
+"LO" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Engineering";
+	name = "navigation beacon (Engineering Delivery)"
+	},
+/obj/machinery/conveyor{
+	id = "engineeringchute"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Mq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -344,22 +358,6 @@
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"Rz" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	dir = 1;
-	freq = 1400;
-	location = "Engineering";
-	name = "navigation beacon (Engineering Delivery)"
-	},
-/obj/machinery/conveyor{
-	id = "engineeringchute"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/crew_quarters/dorms)
 "SV" = (
 /obj/structure/plasticflaps/opaque{
 	name = "airtight delivery flaps"
@@ -1486,7 +1484,7 @@ SV
 Db
 Db
 EW
-lb
+kz
 Eh
 qr
 qr
@@ -1561,7 +1559,7 @@ XV
 or
 or
 CL
-Rz
+LO
 kx
 GX
 GW

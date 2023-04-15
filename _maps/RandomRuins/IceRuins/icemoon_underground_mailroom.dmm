@@ -17,9 +17,7 @@
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "ba" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "bK" = (
@@ -288,7 +286,7 @@
 /obj/machinery/door/window{
 	dir = 2
 	},
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/item/toy/figure/cargotech,
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
 /turf/open/floor/noslip,
@@ -369,9 +367,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "MT" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)

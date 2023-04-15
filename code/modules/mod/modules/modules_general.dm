@@ -260,7 +260,7 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
-/obj/item/mod/module/flashlight/on_process(delta_time)
+/obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_range
 	return ..()
 
@@ -378,8 +378,8 @@
 		if("temperature_setting")
 			temperature_setting = clamp(value + T0C, min_temp, max_temp)
 
-/obj/item/mod/module/thermal_regulator/on_active_process(delta_time)
-	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * delta_time))
+/obj/item/mod/module/thermal_regulator/on_active_process(seconds_per_tick)
+	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * seconds_per_tick))
 
 ///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock

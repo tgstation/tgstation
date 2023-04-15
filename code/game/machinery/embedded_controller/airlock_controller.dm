@@ -63,7 +63,7 @@
 		ui = new(user, src, "AirlockController", src)
 		ui.open()
 
-/obj/machinery/airlock_controller/process(delta_time)
+/obj/machinery/airlock_controller/process(seconds_per_tick)
 	var/process_again = TRUE
 	while(process_again)
 		process_again = FALSE

@@ -151,7 +151,7 @@
 	/// Stores current fire overlay icon state, for optimisation purposes
 	var/last_icon_state
 
-/datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
+/datum/status_effect/fire_handler/fire_stacks/tick(seconds_per_tick, times_fired)
 	if(stacks <= 0)
 		qdel(src)
 		return TRUE
@@ -159,7 +159,7 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * delta_time)
+	adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -170,7 +170,7 @@
 		qdel(src)
 		return TRUE
 
-	deal_damage(delta_time, times_fired)
+	deal_damage(seconds_per_tick, times_fired)
 	update_overlay()
 	update_particles()
 
@@ -189,28 +189,28 @@
  * Proc that handles damage dealing and all special effects
  *
  * Arguments:
- * - delta_time
+ * - seconds_per_tick
  * - times_fired
  *
  */
 
-/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(delta_time, times_fired)
-	owner.on_fire_stack(delta_time, times_fired, src)
+/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired)
+	owner.on_fire_stack(seconds_per_tick, times_fired, src)
 
 	var/turf/location = get_turf(owner)
-	location.hotspot_expose(700, 25 * delta_time, TRUE)
+	location.hotspot_expose(700, 25 * seconds_per_tick, TRUE)
 
 /**
  * Used to deal damage to humans and count their protection.
  *
  * Arguments:
- * - delta_time
+ * - seconds_per_tick
  * - times_fired
  * - no_protection: When set to TRUE, fire will ignore any possible fire protection
  *
  */
 
-/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(delta_time, times_fired, no_protection = FALSE)
+/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(seconds_per_tick, times_fired, no_protection = FALSE)
 	var/mob/living/carbon/human/victim = owner
 	var/thermal_protection = victim.get_thermal_protection()
 
@@ -218,10 +218,10 @@
 		return
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		victim.adjust_bodytemperature(5.5 * delta_time)
+		victim.adjust_bodytemperature(5.5 * seconds_per_tick)
 		return
 
-	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
+	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick)
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.add_mob_memory(/datum/memory/was_burning)
 
@@ -291,8 +291,8 @@
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
 
-/datum/status_effect/fire_handler/wet_stacks/tick(delta_time)
-	adjust_stacks(-0.5 * delta_time)
+/datum/status_effect/fire_handler/wet_stacks/tick(seconds_per_tick)
+	adjust_stacks(-0.5 * seconds_per_tick)
 	if(stacks <= 0)
 		qdel(src)
 

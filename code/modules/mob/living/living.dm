@@ -1619,12 +1619,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Handles effects happening when mob is on normal fire
  *
  * Vars:
- * * delta_time
+ * * seconds_per_tick
  * * times_fired
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end
