@@ -215,6 +215,8 @@
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
+		if(C && C.prefs)
+			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 		C?.playtitlemusic(40)
 		if(speed_round)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
@@ -229,8 +231,6 @@
 	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
 		for(var/mob/player as anything in GLOB.player_list)
 			antagonist_hud.show_to(player)
-			if(player.client && player.client?.prefs)
-				player.client.prefs.adjust_metacoins(player.client.ckey, 75, "Played a Round")
 
 	CHECK_TICK
 
