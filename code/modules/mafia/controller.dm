@@ -1,4 +1,6 @@
-GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
+GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles_by_name())
+
+GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /**
  * The mafia controller handles the mafia minigame in progress.
@@ -56,10 +58,76 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 	///was our game forced to start early?
 	var/early_start = FALSE
 
-/proc/setup_mafia_roles()
+	///The 12 roles used in a default game, selected randomly from each list, going in order of position.
+	///This is balanced for player amount, regardless of players you'll still be about equal town and evils.
+	var/static/list/default_role_list = list(
+		//town
+		list(
+			TOWN_INVEST,
+			TOWN_OVERFLOW,
+		),
+		//town
+		list(
+			TOWN_SUPPORT,
+		),
+		//mafia
+		list(
+			MAFIA_REGULAR,
+		),
+		//town
+		list(
+			TOWN_INVEST,
+		),
+		//town
+		list(
+			TOWN_PROTECT,
+		),
+		//town
+		list(
+			TOWN_OVERFLOW,
+		),
+		//neutral
+		list(
+			NEUTRAL_DISRUPT,
+		),
+		//town
+		list(
+			TOWN_PROTECT,
+			TOWN_KILLING,
+		),
+		//town
+		list(
+			TOWN_KILLING,
+		),
+		//mafia
+		list(
+			MAFIA_REGULAR,
+			MAFIA_SPECIAL,
+		),
+		//neutral hard-hitting
+		list(
+			NEUTRAL_KILL,
+			NEUTRAL_DISRUPT,
+		),
+		//town
+		list(
+			TOWN_SUPPORT,
+			TOWN_OVERFLOW,
+		),
+	)
+
+/proc/setup_mafia_roles_by_name()
 	var/list/rolelist_dict = list()
 	for(var/datum/mafia_role/mafia_role as anything in typesof(/datum/mafia_role))
 		rolelist_dict[initial(mafia_role.name) + " ([uppertext(initial(mafia_role.team))])"] = mafia_role
+	return rolelist_dict
+
+/proc/setup_mafia_role_by_alignment()
+	var/list/rolelist_dict = list()
+	for(var/datum/mafia_role/mafia_role as anything in typesof(/datum/mafia_role))
+		if(!rolelist_dict[initial(mafia_role.role_type)])
+			rolelist_dict[initial(mafia_role.role_type)] = list()
+		rolelist_dict[initial(mafia_role.role_type)] += mafia_role
 	return rolelist_dict
 
 /datum/mafia_controller/New()
@@ -88,7 +156,6 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
 /datum/mafia_controller/proc/prepare_game(setup_list, ready_players)
-
 	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
 
@@ -813,101 +880,36 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		. += L[key]
 
 /**
- * Returns a standard setup, with certain important/unique roles guaranteed. More balanced of an experience than generate_forced_setup()
+ * Returns a standard setup, with certain important/unique roles guaranteed.
  *
  * please check the variables at the top of the proc to see how much of each role types it picks
+ * Args:
+ * req_players - The amount of players needed.
  */
-/datum/mafia_controller/proc/generate_standard_setup()
-	var/invests_left = 2
-	var/protects_left = 2
-	var/killings_left = 1
-	var/supports_left = 2
-
-	var/mafiareg_left = 2
-	var/mafiaspe_left = 1
-
-	// if there is one killing role, there will be less disruptors
-	var/neutral_killing_role = prob(50)
-
-	var/list/random_setup = list()
+/datum/mafia_controller/proc/generate_standard_setup(req_players)
+	var/list/selected_roles = list()
 	var/list/unique_roles_added = list()
-	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
-		if(invests_left)
-			add_setup_role(random_setup, unique_roles_added, TOWN_INVEST)
-			invests_left--
-		else if(protects_left)
-			add_setup_role(random_setup, unique_roles_added, TOWN_PROTECT)
-			protects_left--
-		else if(killings_left)
-			add_setup_role(random_setup, unique_roles_added, TOWN_KILLING)
-			killings_left--
-		else if(supports_left)
-			add_setup_role(random_setup, unique_roles_added, TOWN_SUPPORT)
-			supports_left--
-		else if(mafiareg_left)
-			add_setup_role(random_setup, unique_roles_added, MAFIA_REGULAR)
-			mafiareg_left--
-		else if(mafiaspe_left)
-			add_setup_role(random_setup, unique_roles_added, MAFIA_SPECIAL)
-			mafiaspe_left--
-		else if(neutral_killing_role)
-			add_setup_role(random_setup, unique_roles_added, NEUTRAL_KILL)
-			neutral_killing_role--
-		else
-			add_setup_role(random_setup, unique_roles_added, NEUTRAL_DISRUPT)
-	debug = random_setup
-	return random_setup
-
-/**
- * Returns a more volatile-ly generated role list, balance absolutely not expected. Does not assure any role types, only role alignments.
- *
- * Generates a setup based on a ratio of random pools of good/neutral/badguy roles.
- * Specific roles are not chosen (You could get an entire town of lawyers and double nightmares), outcomes may be unbalanced as a result.
- * This is used when a game start is forced and we don't have the players to make a properly balanced game.
- * Game will auto-resolve if less than 3 roles are generated (Town Victory), which should only be able to happen if an admin forces it.
- *
- * roles_to_generate - The number of roles we will return.
- */
-/datum/mafia_controller/proc/generate_forced_setup(roles_to_generate)
-	var/list/role_setup = list()
-	var/list/unique_roles_added = list()
-	for(var/i in 1 to roles_to_generate)
-		if(i == 6)
-			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_KILL || NEUTRAL_DISRUPT))
-			continue
-		if(i == 5)
-			add_setup_role(role_setup, unique_roles_added, pick(NEUTRAL_DISRUPT))
-			continue
-		if(ISMULTIPLE(i, MAFIA_MIN_PLAYER_COUNT))
-			add_setup_role(role_setup, unique_roles_added, pick(MAFIA_REGULAR, MAFIA_SPECIAL))
-			continue
-		add_setup_role(role_setup, unique_roles_added, pick(TOWN_INVEST, TOWN_PROTECT, TOWN_KILLING, TOWN_SUPPORT))
-
-	return role_setup
+	for(var/i in 1 to req_players)
+		add_setup_role(selected_roles, unique_roles_added, pick(default_role_list[i]))
+	return selected_roles
 
 /**
  * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.
  */
 /datum/mafia_controller/proc/add_setup_role(setup_list, banned_roles, wanted_role_type)
 	var/list/role_type_paths = list()
-	for(var/path in typesof(/datum/mafia_role))
-		var/datum/mafia_role/instance = path
-		if(initial(instance.role_type) == wanted_role_type && !(path in banned_roles))
-			role_type_paths += instance
+	for(var/datum/mafia_role/instance as anything in GLOB.mafia_role_by_alignment[wanted_role_type])
+		if(instance in banned_roles)
+			continue
+		role_type_paths += instance
 
-	var/mafia_path = pick(role_type_paths)
-	var/datum/mafia_role/mafia_path_type = mafia_path
-	var/found_role
-	for(var/searched_path in setup_list)
-		var/datum/mafia_role/searched_path_type = searched_path
-		if(initial(mafia_path_type.name) == initial(searched_path_type.name))
-			found_role = searched_path
-			break
-	if(found_role)
-		setup_list[found_role] += 1
-		return
-	setup_list[mafia_path] = 1
-	if(initial(mafia_path_type.role_flags) & ROLE_UNIQUE) //check to see if we should no longer consider this okay to add to the game
+	var/datum/mafia_role/mafia_path = pick(role_type_paths)
+	if(setup_list[mafia_path])
+		setup_list[mafia_path] += 1
+	else
+		setup_list[mafia_path] = 1
+
+	if(initial(mafia_path.role_flags) & ROLE_UNIQUE) //check to see if we should no longer consider this okay to add to the game
 		banned_roles += mafia_path
 
 /**
@@ -918,18 +920,17 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
  * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
  */
 /datum/mafia_controller/proc/basic_setup()
-	var/req_players
+	var/req_players = MAFIA_MAX_PLAYER_COUNT
 	var/list/setup = custom_setup
-	if(!setup.len)
-		req_players = MAFIA_MAX_PLAYER_COUNT
-	else
+	if(setup.len)
 		req_players = assoc_value_sum(setup)
 
 	var/list/filtered_keys = filter_players(req_players)
+	var/needed_players = length(filtered_keys)
 
 	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_standard_setup()
-	prepare_game(setup,filtered_keys)
+		setup = generate_standard_setup(needed_players)
+	prepare_game(setup, filtered_keys)
 	start_game()
 
 /**
@@ -947,7 +948,7 @@ GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles())
 		log_admin("Attempted to force a mafia game to start with nobody signed up!")
 		return
 
-	var/list/setup = generate_forced_setup(req_players)
+	var/list/setup = generate_standard_setup(req_players)
 
 	prepare_game(setup, filtered_keys)
 	early_start = TRUE
