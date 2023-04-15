@@ -2,12 +2,12 @@
 #define IV_TAKING 0
 ///IV drip operation mode when it injects reagents into the object
 #define IV_INJECTING 1
+///What the transfer rate value is rounded to
+#define IV_TRANSFER_RATE_STEP 0.01
 ///Minimum possible IV drip transfer rate in units per second
 #define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
-///What the transfer rate value is rounded to
-#define IV_TRANSFER_RATE_STEP 0.01
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -28,7 +28,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MIN_IV_TRANSFER_RATE
+	var/transfer_rate = MAX_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
