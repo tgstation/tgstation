@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Returns the anomaly detonation timer from 75 seconds (40 seconds from announcement for dangerous anomalies) back to 99 seconds (75 seconds from announcement for dangerous)."

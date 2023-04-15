@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes a runtime that can occur if a circuit floor gets changed into something else."
