@@ -143,11 +143,11 @@
 		if(slot_flags & ITEM_SLOT_OCLOTHING)
 			slot_flags = ITEM_SLOT_NECK
 			set_armor(/datum/armor/none)
-			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use"))
+			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
 		else
 			slot_flags = initial(slot_flags)			
 			set_armor(initial(armor_type))
-			user.visible_message(span_notice("[user] adjusts their [src] for defensive use"), span_notice("You adjust your [src] for defensive use"))
+			user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
 			
 /datum/armor/cloak_goliath
 	melee = 35
