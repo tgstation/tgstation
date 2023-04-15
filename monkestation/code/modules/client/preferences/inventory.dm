@@ -45,6 +45,7 @@
 			if(ACCESS_NUKIE_RANK)
 				amount *= 2
 
+	amount = round(amount, 1)
 	metacoins += amount
 	qdel(query_inc_metacoins)
 	if(announces)
