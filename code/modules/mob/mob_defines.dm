@@ -229,6 +229,3 @@
 	var/active_thinking_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
-
-	///how much gravity is slowing us down
-	var/gravity_slowdown = 0

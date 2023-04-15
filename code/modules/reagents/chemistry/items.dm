@@ -231,6 +231,7 @@
 	update_icon()
 
 /obj/item/burner/extinguish()
+	. = ..()
 	set_lit(FALSE)
 
 /obj/item/burner/attack_self(mob/living/user)
@@ -342,3 +343,6 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+
+#undef DETAILED_CHEM_OUTPUT
+#undef SHORTENED_CHEM_OUTPUT

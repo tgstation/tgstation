@@ -35,7 +35,7 @@
 	affected_respiration_type = ALL
 
 //Random healing of the 4 main groups
-/datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
@@ -57,7 +57,7 @@
 	metabolization_rate = 1*REM //This is fast
 	tox_damage = 0.25
 	ph = 14
-	//Compensates for delta_time lag by spawning multiple hands at the end
+	//Compensates for seconds_per_tick lag by spawning multiple hands at the end
 	var/lag_remainder = 0
 	//Keeps track of the hand timer so we can cleanup on removal
 	var/list/timer_ids
@@ -71,25 +71,25 @@
 //Sends hands after you for your hubris
 /*
 How it works:
-Standard delta_time for a reagent is 2s - and volume consumption is equal to the volume * delta_time.
+Standard seconds_per_tick for a reagent is 2s - and volume consumption is equal to the volume * seconds_per_tick.
 In this chem, I want to consume 0.5u for 1 hand created (since 1*REM is 0.5) so on a single tick I create a hand and set up a callback for another one in 1s from now. But since delta time can vary, I want to be able to create more hands for when the delay is longer.
 
-Initally I round delta_time to the nearest whole number, and take the part that I am rounding down from (i.e. the decimal numbers) and keep track of them. If the decimilised numbers go over 1, then the number is reduced down and an extra hand is created that tick.
+Initally I round seconds_per_tick to the nearest whole number, and take the part that I am rounding down from (i.e. the decimal numbers) and keep track of them. If the decimilised numbers go over 1, then the number is reduced down and an extra hand is created that tick.
 
-Then I attempt to calculate the how many hands to created based off the current delta_time, since I can't know the delay to the next one it assumes the next will be in 2s.
-I take the 2s interval period and divide it by the number of hands I want to make (i.e. the current delta_time) and I keep track of how many hands I'm creating (since I always create one on a tick, then I start at 1 hand). For each hand I then use this time value multiplied by the number of hands. Since we're spawning one now, and it checks to see if hands is less than, but not less than or equal to, delta_time, no hands will be created on the next expected tick.
+Then I attempt to calculate the how many hands to created based off the current seconds_per_tick, since I can't know the delay to the next one it assumes the next will be in 2s.
+I take the 2s interval period and divide it by the number of hands I want to make (i.e. the current seconds_per_tick) and I keep track of how many hands I'm creating (since I always create one on a tick, then I start at 1 hand). For each hand I then use this time value multiplied by the number of hands. Since we're spawning one now, and it checks to see if hands is less than, but not less than or equal to, seconds_per_tick, no hands will be created on the next expected tick.
 Basically, we fill the time between now and 2s from now with hands based off the current lag.
 */
-/datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	spawn_hands(owner)
-	lag_remainder += delta_time - FLOOR(delta_time, 1)
-	delta_time = FLOOR(delta_time, 1)
+	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
+	seconds_per_tick = FLOOR(seconds_per_tick, 1)
 	if(lag_remainder >= 1)
-		delta_time += 1
+		seconds_per_tick += 1
 		lag_remainder -= 1
 	var/hands = 1
-	var/time = 2 / delta_time
-	while(hands < delta_time) //we already made a hand now so start from 1
+	var/time = 2 / seconds_per_tick
+	while(hands < seconds_per_tick) //we already made a hand now so start from 1
 		LAZYADD(timer_ids, addtimer(CALLBACK(src, PROC_REF(spawn_hands), owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
 		hands += time
 	return ..()
@@ -145,7 +145,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
 	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
-	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/this_liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
@@ -167,7 +167,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/consumer = L
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
-	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/this_liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!this_liver)
 		return
 	this_liver.alcohol_tolerance /= 2
@@ -195,9 +195,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "These inhibitory peptides cause cellular damage and cost nutrition to the patient!"
 	ph = 2.1
 
-/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.adjustCloneLoss(0.25 * delta_time)
-	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * delta_time)
+/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	owner.adjustCloneLoss(0.25 * seconds_per_tick)
+	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 	. = ..()
 
 //Lenturi
@@ -231,7 +231,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/spammer = 0
 
 //Just the removed itching mechanism - omage to it's origins.
-/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
 		if(spammer < world.time)
 			to_chat(owner,span_warning("You can't help but itch yourself."))
@@ -240,7 +240,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		owner.adjustBruteLoss(scab*REM)
 		owner.bleed(scab)
 		resetting_probability = 0
-	resetting_probability += (5*(current_cycle/10) * delta_time) // 10 iterations = >51% to itch
+	resetting_probability += (5*(current_cycle/10) * seconds_per_tick) // 10 iterations = >51% to itch
 	..()
 	return TRUE
 
@@ -277,9 +277,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	taste_description = "heat! Ouch!"
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 
-/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
-	var/heating = rand(5, 25) * creation_purity * REM * delta_time
+	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
 	owner.reagents?.chem_temp += heating
 	owner.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(owner))
@@ -295,10 +295,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	exposed_mob.adjust_bodytemperature(reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT)
 	exposed_mob.adjust_fire_stacks(reac_volume / 2)
 
-/datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
-	var/heating = 10 * creation_purity * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
@@ -314,7 +314,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 5)
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
-/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	switch(current_cycle)
 		if(1 to 10)//same delay as chloral hydrate
 			if(prob(50))
@@ -370,7 +370,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
-	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
 	apply_lung_levels(lungs)
@@ -417,7 +417,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
-	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
 	restore_lung_levels(lungs)
@@ -436,8 +436,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	var/poison_interval = (9 SECONDS)
 
-/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	time_until_next_poison -= delta_time * (1 SECONDS)
+/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	time_until_next_poison -= seconds_per_tick * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
 		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
@@ -489,11 +489,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
-/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	affected_mob.adjustToxLoss(-2 * REM * creation_purity * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
@@ -523,8 +523,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		TRAIT_STABLEHEART,
 	)
 
-/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, delta_time)
-	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	metabolization_rate = 0.2 * REM
@@ -543,7 +543,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
 	..()
 
-/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(!back_from_the_dead)
 		return ..()
 	//Following is for those brought back from the dead only
@@ -551,20 +551,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
-	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * delta_time, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time, required_organtype = affected_organtype)
+	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organtype = affected_organtype)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
 		affected_mob.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(affected_mob)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/affected_mob)
 	remove_buffs(affected_mob)
-	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(affected_mob.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
 		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
@@ -574,7 +574,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob)
 	if(!back_from_the_dead)
 		return ..()
-	var/obj/item/organ/internal/heart/heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart) //No heart? No life!
 		REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
 		affected_mob.stat = DEAD
@@ -645,11 +645,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	//The temporary trauma passed to the affected mob
 	var/datum/brain_trauma/temp_trauma
 
-/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(DT_PROB(creation_purity*10, delta_time)))
+	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	var/list/forbiddentraumas = list(
@@ -659,7 +659,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
 	)
 	traumalist -= forbiddentraumas
-	var/obj/item/organ/internal/brain/brain = affected_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
@@ -694,7 +694,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon_mob = affected_mob
-	original_heart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
+	original_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!original_heart)
 		return
 	manual_heart = new(null, src)
@@ -756,9 +756,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#4C8000"
 	tox_damage = 0
 
-/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, seconds_per_tick, times_fired)
 	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
-		alcohol.boozepwr += delta_time
+		alcohol.boozepwr += seconds_per_tick
 	..()
 
 /datum/reagent/inverse/oculine
@@ -775,10 +775,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Did we get a headache?
 	var/headache = FALSE
 
-/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(headache)
 		return ..()
-	if(DT_PROB(100 * creation_purity, delta_time))
+	if(SPT_PROB(100 * creation_purity, seconds_per_tick))
 		affected_mob.become_blind(IMPURE_OCULINE)
 		to_chat(affected_mob, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
@@ -803,7 +803,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///The random span we start hearing in
 	var/randomSpan
 
-/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, delta_time, times_fired)
+/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
 	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off!"))

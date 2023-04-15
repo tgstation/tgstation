@@ -49,8 +49,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "dI" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/template_noop,
@@ -240,8 +239,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "nM" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /obj/structure/closet/crate{
@@ -459,8 +457,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "xz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -766,17 +763,14 @@
 /area/shuttle/ruin/cyborg_mothership)
 "OY" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Pf" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/crate/solarpanel_small,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -803,7 +797,7 @@
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Rv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -840,13 +834,10 @@
 /area/shuttle/ruin/cyborg_mothership)
 "SV" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ty" = (

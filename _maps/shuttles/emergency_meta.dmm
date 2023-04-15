@@ -162,9 +162,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aw" = (
@@ -213,6 +211,9 @@
 "aF" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -301,7 +302,7 @@
 	name = "Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aZ" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -342,11 +343,11 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bi" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bj" = (
 /obj/structure/table,
@@ -397,7 +398,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bu" = (
 /obj/structure/table,
@@ -493,14 +494,14 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bE" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bF" = (
 /obj/structure/table,
@@ -509,7 +510,7 @@
 	idle_power_usage = 0;
 	use_power = 0
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bG" = (
 /obj/structure/table,
@@ -517,7 +518,8 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/obj/machinery/camera/autoname,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bH" = (
 /obj/structure/table,
@@ -569,6 +571,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/camera/autoname,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bN" = (
@@ -640,7 +643,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bU" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bV" = (
 /obj/structure/chair/comfy/shuttle,
@@ -761,8 +764,22 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"ek" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"gO" = (
+/obj/machinery/stasis,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "qi" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/vending/wallmed/directional/north{
@@ -780,8 +797,21 @@
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"GL" = (
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"HC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Lk" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -905,7 +935,7 @@ aR
 ad
 bf
 bT
-be
+HC
 be
 bf
 "}
@@ -1029,7 +1059,7 @@ Lk
 ad
 ar
 LY
-aE
+ek
 ad
 bj
 bu
@@ -1079,7 +1109,7 @@ ar
 LY
 aE
 ac
-bl
+gO
 bl
 Vs
 bK
@@ -1167,7 +1197,7 @@ ac
 "}
 (23,1,1) = {"
 ad
-LY
+GL
 LY
 LY
 LY

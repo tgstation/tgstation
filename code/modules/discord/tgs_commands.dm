@@ -4,7 +4,7 @@
 
 /datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
 	var/server = CONFIG_GET(string/server)
-	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
+	return new /datum/tgs_message_content("[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]")
 
 /datum/tgs_chat_command/gameversion
 	name = "gameversion"
@@ -30,7 +30,7 @@
 				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
 				if (PR.url)
 					msg += "<[PR.url]>\n"
-	return msg.Join("")
+	return new /datum/tgs_message_content(msg.Join(""))
 
 // Notify
 /datum/tgs_chat_command/notify
@@ -39,13 +39,13 @@
 
 /datum/tgs_chat_command/notify/Run(datum/tgs_chat_user/sender, params)
 	if(!CONFIG_GET(string/channel_announce_new_game))
-		return "Notifcations are currently disabled"
+		return new /datum/tgs_message_content("Notifcations are currently disabled")
 
 	for(var/member in SSdiscord.notify_members) // If they are in the list, take them out
 		if(member == sender.mention)
 			SSdiscord.notify_members -= sender.mention
-			return "You will no longer be notified when the server restarts"
+			return new /datum/tgs_message_content("You will no longer be notified when the server restarts")
 
 	// If we got here, they arent in the list. Chuck 'em in!
 	SSdiscord.notify_members += sender.mention
-	return "You will now be notified when the server restarts"
+	return new /datum/tgs_message_content("You will now be notified when the server restarts")

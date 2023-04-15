@@ -77,7 +77,7 @@
 #define PLASMAMAN_HELMET_EXEMPT (1<<14)
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<15)
-/// Usable as casting clothes by wizards (only matters for suits and headwear)
+/// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
 #define CASTING_CLOTHES (1<<16)
 ///Moths can't eat the clothing that has this flag.
 #define INEDIBLE_CLOTHING (1<<17)

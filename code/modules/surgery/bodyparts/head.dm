@@ -151,7 +151,7 @@
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.setOrganDamage(brain.maxHealth)
+				brain.set_organ_damage(brain.maxHealth)
 			brain.forceMove(drop_loc)
 			brain = null
 			update_icon_dropped()
@@ -315,7 +315,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = FALSE
+	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
@@ -328,6 +328,6 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	dismemberable = FALSE
+	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

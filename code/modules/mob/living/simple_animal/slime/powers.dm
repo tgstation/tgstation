@@ -229,3 +229,9 @@
 /datum/action/innate/slime/reproduce/Activate()
 	var/mob/living/simple_animal/slime/S = owner
 	S.Reproduce()
+
+#undef SIZE_DOESNT_MATTER
+#undef BABIES_ONLY
+#undef ADULTS_ONLY
+#undef NO_GROWTH_NEEDED
+#undef GROWTH_NEEDED

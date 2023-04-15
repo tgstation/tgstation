@@ -120,9 +120,7 @@
 /area/shuttle/escape)
 "gM" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "gS" = (
@@ -223,8 +221,7 @@
 /obj/structure/girder,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/iron,
@@ -241,9 +238,7 @@
 /area/shuttle/escape)
 "kJ" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "kM" = (
@@ -366,7 +361,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -439,7 +434,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
@@ -455,8 +450,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /turf/open/floor/plating,
@@ -469,7 +463,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "vF" = (
@@ -528,7 +522,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -565,7 +559,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "yy" = (
@@ -647,8 +641,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "Bj" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/effect/spawner/random/structure/closet_private,
@@ -700,8 +693,7 @@
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "Dj" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/structure/rack,
@@ -804,8 +796,7 @@
 /area/shuttle/escape/brig)
 "Gz" = (
 /obj/structure/girder,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/effect/turf_decal/delivery,
@@ -814,17 +805,13 @@
 /area/shuttle/escape)
 "He" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Hn" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -917,9 +904,7 @@
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "Li" = (
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1059,8 +1044,7 @@
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/item/toy/plush/rouny{

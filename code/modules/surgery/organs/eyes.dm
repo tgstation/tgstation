@@ -116,7 +116,7 @@
 
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
-	if(!istype(parent) || parent.getorgan(/obj/item/organ/internal/eyes) != src)
+	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
@@ -149,7 +149,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
@@ -282,7 +282,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(10 * severity))
-		applyOrganDamage(20 * severity)
+		apply_organ_damage(20 * severity)
 		to_chat(owner, span_warning("Your eyes start to fizzle in their sockets!"))
 		do_sparks(2, TRUE, owner)
 		owner.emote("scream")
@@ -594,13 +594,13 @@
 	adapt_light.update_brightness(eye_owner)
 	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 
-/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
+/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/on_life(seconds_per_tick, times_fired)
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
-		applyOrganDamage(10) //blind quickly
+		apply_organ_damage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
 	else
-		applyOrganDamage(-10) //heal quickly
+		apply_organ_damage(-10) //heal quickly
 	. = ..()
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
@@ -610,3 +610,5 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
+
+#undef RGB2EYECOLORSTRING

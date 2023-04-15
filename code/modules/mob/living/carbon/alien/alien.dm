@@ -45,7 +45,7 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
@@ -55,18 +55,18 @@
 		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
 			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 			if(460 to INFINITY)
 				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
 				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 	else
 		clear_alert(ALERT_XENO_FIRE)
 
-/mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
+/mob/living/carbon/alien/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) //can metabolize all reagents
 	return FALSE
 
 /mob/living/carbon/alien/getTrail()
@@ -83,7 +83,7 @@ Des: Gives the client of the alien an image on each infected mob.
 		for (var/i in GLOB.mob_living_list)
 			var/mob/living/L = i
 			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
 					client.images += I

@@ -92,7 +92,7 @@
 
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
 	if(to_heal.damage < organ_hp_to_heal)
-		to_heal.setOrganDamage(organ_hp_to_heal)
+		to_heal.set_organ_damage(organ_hp_to_heal)
 		to_heal.balloon_alert(caster, "organ healed")
 		playsound(to_heal, 'sound/magic/staff_healing.ogg', 30)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
@@ -229,5 +229,6 @@
 /obj/item/melee/touch_attack/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

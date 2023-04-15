@@ -11,7 +11,7 @@
 	var/obj/item/target = weak_target?.resolve()
 	return isitem(target) && isturf(target.loc) && !target.anchored
 
-/datum/ai_behavior/pick_up_item/perform(delta_time, datum/ai_controller/controller, target_key, storage_key)
+/datum/ai_behavior/pick_up_item/perform(seconds_per_tick, datum/ai_controller/controller, target_key, storage_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/obj/item/target = weak_target?.resolve()

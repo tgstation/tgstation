@@ -66,8 +66,13 @@
 	var/restricted = FALSE
 	/// Can this item be deconstructed to unlock certain techweb research nodes?
 	var/illegal_tech = TRUE
-	// String to be shown instead of the price, e.g for the Random item.
+	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
+	/// Whether this item locks all other items from being purchased. Used by syndicate balloon and a few other purchases.
+	/// Can't be purchased if you've already bought other things
+	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
+	/// However, they won't be purchasable afterwards.
+	var/lock_other_purchases = FALSE
 
 /datum/uplink_item/New()
 	. = ..()
@@ -108,6 +113,8 @@
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
+	if(lock_other_purchases)
+		uplink_handler.shop_locked = TRUE
 
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)

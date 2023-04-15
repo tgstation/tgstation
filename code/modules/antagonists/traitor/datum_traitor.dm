@@ -18,6 +18,10 @@
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
+	/// Code that allows traitor to get a replacement uplink
+	var/replacement_uplink_code = ""
+	/// Radio frequency that traitor must speak on to get a replacement uplink
+	var/replacement_uplink_frequency = ""
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
@@ -47,6 +51,7 @@
 
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
+	generate_replacement_codes()
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	uplink_ref = WEAKREF(uplink)
@@ -81,6 +86,8 @@
 		forge_ending_objective()
 
 	pick_employer()
+
+	owner.teach_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -139,8 +146,14 @@
 	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
 
+/// proc that generates the traitors replacement uplink code and radio frequency
+/datum/antagonist/traitor/proc/generate_replacement_codes()
+	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
+	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
+
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
@@ -258,6 +271,8 @@
 	data["theme"] = traitor_flavor["ui_theme"]
 	data["code"] = uplink?.unlock_code
 	data["failsafe_code"] = uplink?.failsafe_code
+	data["replacement_code"] = replacement_uplink_code
+	data["replacement_frequency"] = format_frequency(replacement_uplink_frequency)
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]

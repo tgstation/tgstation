@@ -51,7 +51,7 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/hostile/tree/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(!is_tree || !isopenturf(loc))
 		return
@@ -60,7 +60,7 @@
 		return
 
 	var/co2 = T.air.gases[/datum/gas/carbon_dioxide][MOLES]
-	if(co2 > 0 && DT_PROB(13, delta_time))
+	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
 		T.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		T.atmos_spawn_air("o2=[amt]")

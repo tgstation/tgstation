@@ -108,7 +108,7 @@
 			)
 			return
 
-		var/obj/item/organ/internal/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/licking_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			dust_mob(source, user,
 				span_danger("As [user] hesitantly leans in and licks [atom_source] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
@@ -213,7 +213,8 @@
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
-		bumped_hit(hit_object)
+		bumped_hit(parent, hit_object)
+	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source

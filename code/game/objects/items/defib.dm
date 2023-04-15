@@ -583,7 +583,7 @@
 	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, FALSE)
-		var/obj/item/organ/internal/heart = H.getorgan(/obj/item/organ/internal/heart)
+		var/obj/item/organ/internal/heart = H.get_organ_by_type(/obj/item/organ/internal/heart)
 		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
@@ -652,7 +652,7 @@
 					log_combat(user, H, "revived", defib)
 				do_success()
 				return
-			else if (!H.getorgan(/obj/item/organ/internal/heart))
+			else if (!H.get_organ_by_type(/obj/item/organ/internal/heart))
 				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 			else if(H.undergoing_cardiac_arrest())
