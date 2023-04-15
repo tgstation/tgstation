@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(eigenstates)
 	if(check_teleport_valid(thing_to_send, eigen_target, get_area(thing_to_send), get_area(eigen_target), get_turf(thing_to_send), get_turf(eigen_target), TELEPORT_CHANNEL_EIGENSTATE))
 		thing_to_send.forceMove(get_turf(eigen_target))
 	else
-		balloon_alert(thing_to_send, "nothing happens!")
+		object_sent_from.balloon_alert(thing_to_send, "nothing happens!")
 		return FALSE
 	//Create ONE set of sparks for ALL times in iteration
 	if(spark_time != world.time)
