@@ -76,10 +76,12 @@
 	set_holdable(list(
 		/obj/item/knife,
 		/obj/item/switchblade,
+		/obj/item/boxcutter,
 		/obj/item/pen,
 		/obj/item/scalpel,
-		/obj/item/reagent_containers/syringe,
 		/obj/item/dnainjector,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
