@@ -10,6 +10,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/field/generator,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "cK" = (
@@ -36,6 +37,14 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"iY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "jH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/cable,
@@ -86,6 +95,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"oy" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "oA" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
@@ -702,13 +719,13 @@ Ho
 Ho
 zz
 zz
-WI
+iY
 WI
 Ou
 Ou
 Ou
 WI
-WI
+iY
 zz
 zz
 "}
@@ -878,13 +895,13 @@ Ho
 Ho
 zz
 zz
-WI
+oy
 WI
 Ou
 Ou
 Ou
 WI
-WI
+oy
 zz
 zz
 "}

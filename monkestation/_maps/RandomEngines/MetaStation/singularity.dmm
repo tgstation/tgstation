@@ -249,6 +249,14 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
+"xy" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/emitter{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "xA" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -368,6 +376,14 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"EP" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "Fa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -393,6 +409,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"GG" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter,
+/turf/open/space/basic,
+/area/space/nearstation)
 "GM" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/iron/dark,
@@ -435,8 +457,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
+/obj/machinery/field/generator,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "MT" = (
@@ -1015,13 +1037,13 @@ je
 An
 An
 An
-EM
+xy
 An
 An
 An
 An
 An
-EM
+xy
 An
 An
 An
@@ -1203,7 +1225,7 @@ je
 je
 Bc
 An
-An
+GG
 ML
 wm
 nM
@@ -1211,7 +1233,7 @@ nM
 nM
 wm
 ML
-An
+EP
 An
 Bc
 je
