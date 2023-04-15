@@ -1066,7 +1066,7 @@
 			resist_restraints() //trying to remove cuffs.
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return TRUE //returning FALSE means we successfully broke free
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
