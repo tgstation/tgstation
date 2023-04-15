@@ -2838,7 +2838,7 @@
 "aTx" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
@@ -8933,7 +8933,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
@@ -17690,7 +17690,7 @@
 "fQb" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -25435,7 +25435,7 @@
 "ikZ" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plating,
@@ -33198,7 +33198,7 @@
 "kQf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
@@ -35650,7 +35650,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -40393,7 +40393,7 @@
 "ngl" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
@@ -52206,7 +52206,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
@@ -56579,7 +56579,7 @@
 "sDe" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/maintenance,
@@ -60790,7 +60790,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 4
@@ -72513,7 +72513,7 @@
 /area/station/security/courtroom)
 "xCP" = (
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)

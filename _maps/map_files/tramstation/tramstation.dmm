@@ -4463,7 +4463,7 @@
 "axI" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -4556,7 +4556,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/stack/sheet/cardboard{
 	amount = 23
@@ -25105,7 +25105,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/stock_parts/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -29440,7 +29440,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -50972,7 +50972,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,

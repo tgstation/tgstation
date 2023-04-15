@@ -104,7 +104,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "at" = (
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,

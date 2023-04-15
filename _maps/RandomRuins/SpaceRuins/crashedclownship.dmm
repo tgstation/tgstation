@@ -36,7 +36,7 @@
 /area/ruin/space/has_grav)
 "j" = (
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,

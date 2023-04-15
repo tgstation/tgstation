@@ -456,7 +456,7 @@
 /area/centcom/wizard_station)
 "Uu" = (
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,

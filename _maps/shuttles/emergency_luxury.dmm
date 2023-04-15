@@ -617,7 +617,7 @@
 "Av" = (
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -833,7 +833,7 @@
 "In" = (
 /obj/effect/spawner/random/maintenance/eight,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/delivery,

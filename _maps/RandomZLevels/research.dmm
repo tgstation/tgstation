@@ -3866,7 +3866,7 @@
 /area/awaymission/research/interior/security)
 "Re" = (
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,

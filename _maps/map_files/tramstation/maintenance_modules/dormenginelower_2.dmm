@@ -50,7 +50,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/closet/crate{
-	opened = TRUE
+	opened = 1
 	},
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/airless,
