@@ -265,9 +265,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bq" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table,
 /obj/item/radio/off{
 	pixel_x = -4;
@@ -282,9 +280,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "br" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = 1;
@@ -300,9 +296,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bu" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 4
@@ -451,9 +445,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bM" = (
 /obj/structure/closet/emcloset,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -1591,7 +1583,7 @@
 /area/awaymission/moonoutpost19/research)
 "fm" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1843,9 +1835,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ga" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/closet/l3closet/scientist,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
@@ -3140,9 +3130,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
@@ -3291,9 +3279,7 @@
 "mi" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3351,9 +3337,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mu" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mv" = (
@@ -3368,7 +3352,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mA" = (
 /obj/structure/closet/emcloset,
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3518,13 +3502,13 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mY" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "nc" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/generic,
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3576,8 +3560,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "nx" = (
 /obj/machinery/light/small/directional/north,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/structure/table,
@@ -4312,9 +4295,7 @@
 /area/awaymission/moonoutpost19/hive)
 "tT" = (
 /obj/machinery/computer/aifixer,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
@@ -5201,9 +5182,7 @@
 	},
 /area/awaymission/moonoutpost19/hive)
 "zP" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -5274,7 +5253,7 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/moonoutpost19/arrivals)
 "AE" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
 	name = "scientist's locker";
@@ -5639,12 +5618,8 @@
 /area/awaymission/moonoutpost19/arrivals)
 "Dk" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/folder/white,
 /obj/item/stamp/rd{
 	pixel_x = 3;
@@ -6477,9 +6452,7 @@
 /area/awaymission/moonoutpost19/main)
 "Jo" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/circuitboard/computer/teleporter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -6660,9 +6633,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "Li" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt,
@@ -6832,9 +6803,7 @@
 /area/awaymission/moonoutpost19/main)
 "MN" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring the research division and the labs within.";
 	name = "research monitor";
@@ -7149,9 +7118,7 @@
 /area/awaymission/moonoutpost19/main)
 "OH" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/button/door{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
