@@ -75,9 +75,7 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "iN" = (
-/mob/living/simple_animal/hostile/pirate{
-	environment_smash = 0
-	},
+/mob/living/simple_animal/hostile/pirate/melee,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "jc" = (
@@ -620,7 +618,7 @@
 	callTime = 150;
 	dir = 2;
 	shuttle_id = "caravanpirate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Pirate Cutter";
 	port_direction = 8;
 	preferred_direction = 4
