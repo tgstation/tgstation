@@ -21,7 +21,7 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "aB" = (
 /obj/structure/cable,
-/obj/machinery/light/dim/directional/east,
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "aN" = (
@@ -89,6 +89,7 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "cl" = (
 /obj/structure/cable,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "cp" = (
@@ -696,10 +697,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/employeesection)
-"ri" = (
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/the_outlet/employeesection)
 "rk" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
@@ -731,14 +728,10 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
-"rP" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/light/dim/directional/east,
-/obj/effect/decal/cleanable/dirt{
-	icon_state = "dirt-0"
-	},
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
+"rT" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/storefront)
 "rV" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt{
@@ -1155,12 +1148,12 @@
 "Bb" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/cable,
-/obj/machinery/light/dim/directional/west,
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-8"
 	},
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Bg" = (
@@ -1721,6 +1714,7 @@
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "Oy" = (
 /obj/structure/chair/sofa/corp/left,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "OD" = (
@@ -1730,7 +1724,6 @@
 "OJ" = (
 /obj/structure/chair/sofa/corp/right,
 /obj/item/pillow,
-/obj/machinery/light/small/directional/north,
 /obj/item/bedsheet/cult{
 	dir = 1
 	},
@@ -1858,7 +1851,6 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "RL" = (
-/obj/machinery/light/dim/directional/east,
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-0"
 	},
@@ -1947,6 +1939,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"Uj" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "UF" = (
 /turf/closed/wall/r_wall/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -2034,10 +2030,6 @@
 /obj/effect/spawner/random/clothing/gloves,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
-"Wm" = (
-/obj/machinery/light/blacklight/directional/south,
-/turf/open/floor/eighties,
-/area/ruin/space/has_grav/the_outlet/storefront)
 "Wu" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/grimy,
@@ -2087,6 +2079,7 @@
 /obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/cup/coffeepot,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Xm" = (
@@ -2106,7 +2099,6 @@
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Xu" = (
 /obj/effect/decal/remains/human,
-/obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Xv" = (
@@ -2119,11 +2111,6 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
-"XO" = (
-/obj/machinery/light/dim/directional/north,
-/obj/structure/closet/crate/trashcart,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/the_outlet/employeesection)
 "XQ" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/cable,
@@ -2178,6 +2165,7 @@
 /obj/effect/decal/cleanable/oil{
 	icon_state = "floor7"
 	},
+/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Zy" = (
@@ -2699,7 +2687,7 @@ uE
 MF
 jH
 sn
-ri
+gX
 bW
 Lw
 Ts
@@ -2880,7 +2868,7 @@ FA
 BK
 rV
 Ts
-XO
+zR
 bC
 CQ
 es
@@ -3000,10 +2988,10 @@ Er
 Er
 UF
 MT
-OL
+Uj
 ZZ
 mE
-rP
+MT
 mE
 OL
 mE
@@ -3256,7 +3244,7 @@ TM
 xI
 RB
 Bg
-Wm
+xI
 od
 UY
 UY
@@ -3394,7 +3382,7 @@ iD
 ux
 uh
 HI
-TM
+rT
 UY
 UY
 UY
@@ -3805,10 +3793,10 @@ Er
 UY
 Da
 iq
-iD
+Mj
 xI
 fo
-Mj
+iD
 UY
 HH
 HH
