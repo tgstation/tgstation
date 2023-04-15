@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed forcing night shift lighting on/off"

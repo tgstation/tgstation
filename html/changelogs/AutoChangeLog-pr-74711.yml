@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - config: "Station shift start time can now be set in the server config"

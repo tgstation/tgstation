@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Add contextual screentips, balloon alerts, and examine hints to lockers"
