@@ -87,6 +87,7 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"

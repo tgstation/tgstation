@@ -851,9 +851,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(target))
 		return
-	
+
 	target.update_held_items()
-	
+
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
 
 /// Handles updates to greyscale value updates.
@@ -1278,6 +1278,7 @@
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_SPIN_ANIMATION, "SpinAnimation")
 	VV_DROPDOWN_OPTION(VV_HK_SHOW_HIDDENPRINTS, "Show Hiddenprint log")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
@@ -1391,6 +1392,19 @@
 				transform = M.Turn(angle)
 
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
+
+	if(href_list[VV_HK_SPIN_ANIMATION] && check_rights(R_VAREDIT))
+		var/num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+		if(!num_spins)
+			return
+		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
+		if(!spin_speed)
+			return
+		var/direction = input(usr, "Which direction? (-1 = counter-clockwise, 1 = clockwise)", "Spin Animation") as null|num
+		if(!direction)
+			return
+		SpinAnimation(spin_speed, num_spins, direction)
+
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
