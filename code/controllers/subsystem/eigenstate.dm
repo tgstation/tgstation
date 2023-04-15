@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(eigenstates)
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
-	if(check_teleport_valid(thing_to_send, eigen_target, get_area(thing_to_send), get_area(eigen_target), get_turf(thing_to_send), get_turf(eigen_target), TELEPORT_CHANNEL_EIGENSTATE))
+	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_EIGENSTATE))
 		thing_to_send.forceMove(get_turf(eigen_target))
 	else
 		object_sent_from.balloon_alert(thing_to_send, "nothing happens!")

@@ -64,11 +64,9 @@
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return FALSE
 
-	var/area/from_area = get_area(curturf)
-	var/area/to_area = get_area(destturf)
 	if(!forced)
-		if(!check_teleport_valid(teleatom, destination, from_area, to_area, curturf, destturf, channel))
-			return FALSE		
+		if(!check_teleport_valid(teleatom, destination, channel))
+			return FALSE
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
@@ -195,17 +193,20 @@
 		return pick(turfs)
 
 /// Validates that the teleport being attempted is valid or not
-/proc/check_teleport_valid(atom/tele_atom, atom/destination, area/from_area, area/to_area, turf/from_turf, turf/to_turf, channel)
-	if(HAS_TRAIT(tele_atom, TRAIT_NO_TELEPORT))
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel)
+	var/area/teleported_atom_area = get_area(teleported_atom)
+	var/area/destination_area = get_area(destination_area)
+
+	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
 		return FALSE
 
-	if((from_area.area_flags & NOTELEPORT) || (to_area.area_flags & NOTELEPORT))
+	if((teleported_atom_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
 		return FALSE
 
-	if(SEND_SIGNAL(tele_atom, COMSIG_MOVABLE_TELEPORTED, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTED, destination, channel) & COMPONENT_BLOCK_TELEPORT)
 		return FALSE
 
-	if(SEND_SIGNAL(to_turf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, from_turf, to_turf) & COMPONENT_BLOCK_TELEPORT)
+	if(SEND_SIGNAL(to_turf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, get_turf(teleported_atom), get_turf(destination)) & COMPONENT_BLOCK_TELEPORT)
 		return FALSE
 
 	return TRUE
