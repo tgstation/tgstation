@@ -75,7 +75,9 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "iN" = (
-/mob/living/simple_animal/hostile/pirate/melee,
+/mob/living/simple_animal/hostile/pirate/melee{
+	environment_smash = 0
+	},
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "jc" = (
