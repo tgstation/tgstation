@@ -62,58 +62,26 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	///This is balanced for player amount, regardless of players you'll still be about equal town and evils.
 	var/static/list/default_role_list = list(
 		//town
-		list(
-			TOWN_INVEST,
-			TOWN_OVERFLOW,
-		),
-		//town
-		list(
-			TOWN_SUPPORT,
-		),
+		list(TOWN_INVEST, TOWN_OVERFLOW),
+		list(TOWN_SUPPORT),
 		//mafia
-		list(
-			MAFIA_REGULAR,
-		),
+		list(MAFIA_REGULAR),
 		//town
-		list(
-			TOWN_INVEST,
-		),
-		//town
-		list(
-			TOWN_PROTECT,
-		),
-		//town
-		list(
-			TOWN_OVERFLOW,
-		),
+		list(TOWN_INVEST),
 		//neutral
-		list(
-			NEUTRAL_DISRUPT,
-		),
+		list(NEUTRAL_DISRUPT),
 		//town
-		list(
-			TOWN_PROTECT,
-			TOWN_KILLING,
-		),
+		list(TOWN_PROTECT),
+		list(TOWN_OVERFLOW),
+		//mafia hard-hitting
+		list(MAFIA_REGULAR, MAFIA_SPECIAL),
 		//town
-		list(
-			TOWN_KILLING,
-		),
-		//mafia
-		list(
-			MAFIA_REGULAR,
-			MAFIA_SPECIAL,
-		),
+		list(TOWN_PROTECT, TOWN_KILLING),
+		list(TOWN_KILLING),
 		//neutral hard-hitting
-		list(
-			NEUTRAL_KILL,
-			NEUTRAL_DISRUPT,
-		),
+		list(NEUTRAL_KILL, NEUTRAL_DISRUPT),
 		//town
-		list(
-			TOWN_SUPPORT,
-			TOWN_OVERFLOW,
-		),
+		list(TOWN_SUPPORT, TOWN_OVERFLOW),
 	)
 
 /proc/setup_mafia_roles_by_name()
