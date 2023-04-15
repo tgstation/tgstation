@@ -99,6 +99,7 @@
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
@@ -258,6 +259,30 @@
 		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 	else
 		. += span_notice("A card reader can be installed for further access control.")
+
+/obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		if(secure && !broken)
+			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
+		if(!welded)
+			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+		if(opened)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -879,6 +904,7 @@
 		if(iscarbon(user))
 			add_fingerprint(user)
 		locked = !locked
+		balloon_alert_to_viewers(locked ? "unlocked" : "locked")
 		user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
 					span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 		update_appearance()

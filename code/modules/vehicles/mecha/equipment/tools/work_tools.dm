@@ -289,39 +289,39 @@
 		if(MODE_DECONSTRUCT)
 			to_chat(source, "[icon2html(src, source)][span_notice("Deconstructing [target]...")]")
 			if(iswallturf(target))
-				var/turf/closed/wall/W = target
-				if(!do_after_cooldown(W, source))
+				var/turf/closed/wall/wall_turf = target
+				if(!do_after_cooldown(wall_turf, source))
 					return
-				W.ScrapeAway()
+				wall_turf.ScrapeAway()
 			else if(isfloorturf(target))
-				var/turf/open/floor/F = target
-				if(!do_after_cooldown(target, source))
+				var/turf/open/floor/floor_turf = target
+				if(!do_after_cooldown(floor_turf, source))
 					return
-				F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				floor_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 			else if (istype(target, /obj/machinery/door/airlock))
 				if(!do_after_cooldown(target, source))
 					return
 				qdel(target)
 		if(MODE_WALL)
 			if(isfloorturf(target))
-				var/turf/open/floor/F = target
+				var/turf/open/floor/floor_turf = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
-				if(!do_after_cooldown(F, source))
+				if(!do_after_cooldown(floor_turf, source))
 					return
-				F.PlaceOnTop(/turf/closed/wall)
+				floor_turf.PlaceOnTop(/turf/closed/wall)
 			else if(isopenturf(target))
-				var/turf/open/space/S = target
+				var/turf/open/open_turf = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
-				if(!do_after_cooldown(S, source))
+				if(!do_after_cooldown(open_turf, source))
 					return
-				S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				open_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		if(MODE_AIRLOCK)
 			if(isfloorturf(target))
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")
 				if(!do_after_cooldown(target, source))
 					return
-				var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
-				T.autoclose = TRUE
+				var/obj/machinery/door/airlock/airlock_door = new /obj/machinery/door/airlock(target)
+				airlock_door.autoclose = TRUE
 				playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
 	chassis.spark_system.start()
 	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)

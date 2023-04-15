@@ -1,10 +1,36 @@
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
+import { HelpDummy, HoverHelp } from './helpers';
+import { HypertorusFuel, HypertorusGas } from '.';
 import { filter, sortBy } from 'common/collections';
+import { getGasColor, getGasLabel } from 'tgui/constants';
+
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
-import { getGasColor, getGasLabel } from '../../constants';
-import { HelpDummy, HoverHelp } from './helpers';
+import { useBackend } from 'tgui/backend';
+
+type GasListProps = {
+  input_max: number;
+  input_min: number;
+  input_rate: string;
+  input_switch: string;
+  raw_gases: HypertorusGas[];
+  minimumScale: number;
+  prepend?: (gas: HypertorusGas) => void;
+  rateHelp?: string;
+  stickyGases?: readonly string[];
+};
+
+type GasListData = {
+  start_power: number;
+  start_cooling: number;
+};
+
+type HypertorusData = {
+  fusion_gases: HypertorusGas[];
+  moderator_gases: HypertorusGas[];
+  selectable_fuel: HypertorusFuel[];
+  selected: string;
+};
 
 /*
  * Displays contents of gas mixtures, along with help text for gases with
@@ -25,11 +51,11 @@ const moderator_gases_help = {
     'Provides huge amounts of energy and radiation. Can cause dangerous electrical storms even from a healthy HFR core when present in more than trace amounts. Wear appropriate electrical protection when handling.',
   freon:
     'Saps most forms of energy expression. Slows the rate of temperature change.',
-};
+} as const;
 
-const moderator_gases_sticky_order = ['plasma', 'bz', 'proto_nitrate'];
+const moderator_gases_sticky_order = ['plasma', 'bz', 'proto_nitrate'] as const;
 
-const ensure_gases = (gas_array, gasids) => {
+const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
   const gases_by_id = {};
   gas_array.forEach((gas) => {
     gases_by_id[gas.id] = true;
@@ -42,24 +68,25 @@ const ensure_gases = (gas_array, gasids) => {
   }
 };
 
-const GasList = (props, context) => {
-  const { act, data } = useBackend(context);
+const GasList = (props: GasListProps, context) => {
+  const { act, data } = useBackend<GasListData>(context);
   const {
     input_max,
     input_min,
     input_rate,
     input_switch,
-    gases: raw_gases,
+    raw_gases = [],
     minimumScale,
     prepend,
-    rateHelp,
+    rateHelp = '',
     stickyGases,
   } = props;
+  const { start_power, start_cooling } = data;
 
-  const gases = flow([
-    filter((gas) => gas.amount >= 0.01),
-    sortBy((gas) => -gas.amount),
-  ])(raw_gases || []);
+  const gases: HypertorusGas[] = flow([
+    filter((gas: HypertorusGas) => gas.amount >= 0.01),
+    sortBy((gas: HypertorusGas) => -gas.amount),
+  ])(raw_gases);
 
   if (stickyGases) {
     ensure_gases(gases, stickyGases);
@@ -75,15 +102,15 @@ const GasList = (props, context) => {
           </>
         }>
         <Button
-          disabled={data.start_power === 0 || data.start_cooling === 0}
-          icon={data[input_switch] ? 'power-off' : 'times'}
-          content={data[input_switch] ? 'On' : 'Off'}
-          selected={data[input_switch]}
+          disabled={start_power === 0 || start_cooling === 0}
+          icon={input_switch ? 'power-off' : 'times'}
+          content={input_switch ? 'On' : 'Off'}
+          selected={input_switch}
           onClick={() => act(input_switch)}
         />
         <NumberInput
           animated
-          value={parseFloat(data[input_rate])}
+          value={input_rate}
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}
@@ -119,13 +146,15 @@ const GasList = (props, context) => {
 };
 
 export const HypertorusGases = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<HypertorusData>(context);
+  const {
+    fusion_gases = [],
+    moderator_gases = [],
+    selectable_fuel = [],
+    selected,
+  } = data;
 
-  const { fusion_gases, moderator_gases } = data;
-
-  const selected_fuel = (data.selectable_fuel || []).filter(
-    (d) => d.id === data.selected
-  )[0];
+  const selected_fuel = selectable_fuel.filter((d) => d.id === selected)[0];
 
   return (
     <>
@@ -136,7 +165,7 @@ export const HypertorusGases = (props, context) => {
             input_switch="start_fuel"
             input_max={150}
             input_min={0.5}
-            gases={fusion_gases}
+            raw_gases={fusion_gases}
             minimumScale={500}
             prepend={() => <HelpDummy />}
             rateHelp={
@@ -158,7 +187,7 @@ export const HypertorusGases = (props, context) => {
           input_switch="start_moderator"
           input_max={150}
           input_min={0.5}
-          gases={moderator_gases}
+          raw_gases={moderator_gases}
           minimumScale={500}
           rateHelp={
             'The rate at which new moderator gas is added from the moderator port.'
