@@ -15,11 +15,8 @@
 		return .
 
 	target_role.role_flags |= ROLE_ROLEBLOCKED
-	RegisterSignal(game, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE, PROC_REF(end_block))
 
-/**
- * Ends the roleblock on the player.
- */
-/datum/mafia_ability/roleblock/proc/end_block(datum/mafia_controller/game)
-	target_role.role_flags &= ~ROLE_ROLEBLOCKED
-	UnregisterSignal(game, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE)
+/datum/mafia_ability/roleblock/clean_action_refs(datum/mafia_controller/game)
+	if(target_role)
+		target_role.role_flags &= ~ROLE_ROLEBLOCKED
+	return ..()

@@ -94,8 +94,6 @@
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
 /// now killing happens from the roles that do that. the reason this is post action phase is to ensure doctors can protect and lawyers can block
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
-/// now undoing states like protection, roleblocks, ect. Do not do any actions here, only undoing.
-#define COMSIG_MAFIA_NIGHT_POST_KILL_PHASE "night_end"
 /// now clearing refs to prepare for the next day. Do not do any actions here, it's just for ref clearing.
 #define COMSIG_MAFIA_NIGHT_END "night_end"
 

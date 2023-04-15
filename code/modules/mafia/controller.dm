@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		total_innocent_votes += role.vote_power
 
 	var/total_guilty_votes
-	for(var/datum/mafia_role/role as anyhting in judgement_guilty_votes)
+	for(var/datum/mafia_role/role as anything in judgement_guilty_votes)
 		send_message(span_red("[role.body.real_name] voted guilty."))
 		total_guilty_votes += role.vote_power
 
@@ -514,7 +514,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_PRE_ACTION_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_ACTION_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_KILL_PHASE)
-	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE)
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_END)
 	toggle_night_curtains(close=FALSE)
 	start_day()
@@ -582,11 +581,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/get_vote_winner(vote_type)
 	var/list/tally = list()
 	for(var/votee in votes[vote_type])
-		var/datum/mafia_role/votee = votee
+		var/datum/mafia_role/vote_role = votee
 		if(!tally[votes[vote_type][votee]])
-			tally[votes[vote_type][votee]] = votee.vote_power
+			tally[votes[vote_type][votee]] = vote_role.vote_power
 		else
-			tally[votes[vote_type][votee]] += votee.vote_power
+			tally[votes[vote_type][votee]] += vote_role.vote_power
 	sortTim(tally, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
 	return length(tally) ? tally[1] : null
 

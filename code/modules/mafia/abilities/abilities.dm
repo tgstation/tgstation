@@ -33,6 +33,8 @@
  * Called when refs need to be cleared, when the target is no longer set.
  */
 /datum/mafia_ability/proc/clean_action_refs(datum/mafia_controller/game)
+	SIGNAL_HANDLER
+
 	SHOULD_CALL_PARENT(TRUE)
 	target_role = null
 	using_ability = initial(using_ability)

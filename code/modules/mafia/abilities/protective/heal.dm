@@ -30,7 +30,11 @@
 		use_flags &= ~CAN_USE_ON_SELF
 	host_role.add_note("N[game.turn] - Protected [target_role.body.real_name]")
 	RegisterSignal(target_role, COMSIG_MAFIA_ON_KILL, PROC_REF(prevent_kill))
-	RegisterSignal(game, COMSIG_MAFIA_NIGHT_POST_KILL_PHASE, PROC_REF(end_protection))
+
+/datum/mafia_ability/heal/clean_action_refs(datum/mafia_controller/game)
+	if(target_role)
+		UnregisterSignal(target_role, COMSIG_MAFIA_ON_KILL)
+	return ..()
 
 /datum/mafia_ability/heal/proc/prevent_kill(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	SIGNAL_HANDLER
@@ -40,11 +44,6 @@
 	to_chat(host_role.body, span_warning("The person you protected tonight was attacked!"))
 	to_chat(target_role.body, span_greentext("You were attacked last night, but [saving_message]!"))
 	return MAFIA_PREVENT_KILL
-
-/datum/mafia_ability/heal/proc/end_protection(datum/mafia_controller/game)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(target_role, COMSIG_MAFIA_ON_KILL)
 
 /**
  * Defend subtype
