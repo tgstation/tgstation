@@ -50,9 +50,9 @@
 	qdel(query_inc_metacoins)
 	if(announces)
 		if(reason)
-			to_chat(parent, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")
+			to_chat(parent, "<span class='rose bold'>[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")
 		else
-			to_chat(parent, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account!</span>")
+			to_chat(parent, "<span class='rose bold'>[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account!</span>")
 	return TRUE
 
 /datum/preferences/proc/has_coins(amount)
