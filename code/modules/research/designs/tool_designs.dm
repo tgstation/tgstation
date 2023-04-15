@@ -169,18 +169,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/rpd_upgrade/instant
-	name = "RPD instant fabrication upgrade"
-	desc = "Upgrades the RPD's processor allowing instant fabrication of pipes and devices."
-	id = "rpd_upgrade_instant"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
-	build_path = /obj/item/rpd_upgrade/instant
-	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
 	desc = "A tool that can portable and standing lighting orbs and glowsticks."
