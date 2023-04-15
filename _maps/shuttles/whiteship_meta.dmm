@@ -2068,7 +2068,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
@@ -2077,7 +2077,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,

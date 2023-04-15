@@ -191,6 +191,7 @@
 					locked = TRUE
 					dump_contents()
 					update_appearance()
+					after_open(user, FALSE)
 					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -220,6 +221,7 @@
 	opened = TRUE
 	update_appearance()
 	dump_contents()
+	after_open(null, FALSE)
 	return
 
 /obj/structure/closet/crate/grave/filled/lead_researcher

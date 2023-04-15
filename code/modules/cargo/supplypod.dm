@@ -434,16 +434,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)

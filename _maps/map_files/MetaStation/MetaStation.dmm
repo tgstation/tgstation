@@ -2237,7 +2237,7 @@
 /area/station/medical/treatment_center)
 "aPk" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -2501,7 +2501,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "aUj" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap{
@@ -5647,7 +5647,7 @@
 "cfv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -16837,7 +16837,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/wrench,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -43695,7 +43695,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -57290,7 +57290,7 @@
 /area/station/maintenance/starboard/aft)
 "uHa" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/sheet/rglass{
 	amount = 50

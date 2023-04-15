@@ -662,7 +662,7 @@
 /area/ruin/plasma_facility/commons)
 "kA" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
@@ -1130,7 +1130,7 @@
 "rS" = (
 /obj/effect/turf_decal/bot/left,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
@@ -1149,7 +1149,7 @@
 	dir = 5
 	},
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -1761,7 +1761,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,

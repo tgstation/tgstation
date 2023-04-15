@@ -27,15 +27,11 @@
 	var/lid_x = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_y = 0
-
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
-	if(icon_state == "[initial(icon_state)]open")
-		opened = TRUE
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-	else
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
-	update_appearance()
+	if(opened)
+		dump_contents()
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time * (opened ? 0.5 : 1), climb_stun = 0)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -135,18 +131,18 @@
 	var/static/list/possible_crates = RANDOM_CRATE_LOOT
 
 	var/crate_path = pick_weight(possible_crates)
-
-	var/obj/structure/closet/crate = new crate_path(loc)
-	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+	var/obj/structure/closet/crate/random_crate = new crate_path(loc)
+	random_crate.RegisterSignal(random_crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 	if (prob(50))
-		crate.opened = TRUE
-		crate.update_appearance()
+		random_crate.opened = TRUE
+		random_crate.update_appearance()
+		random_crate.dump_contents()
+		random_crate.after_open(null, FALSE)
 
 	return INITIALIZE_HINT_QDEL
 
 /obj/structure/closet/proc/populate_with_random_maint_loot()
 	SIGNAL_HANDLER
-
 	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 

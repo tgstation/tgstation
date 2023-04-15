@@ -34326,7 +34326,7 @@
 /area/station/service/kitchen/diner)
 "jnv" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -44434,7 +44434,7 @@
 "lRc" = (
 /obj/item/reagent_containers/dropper,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
@@ -66227,7 +66227,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/entertainment/drugs,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
@@ -74306,7 +74306,7 @@
 "tSf" = (
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/mop,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -75630,7 +75630,7 @@
 "umu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
@@ -82294,7 +82294,7 @@
 /area/station/commons/storage/tools)
 "wcR" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/flashlight,

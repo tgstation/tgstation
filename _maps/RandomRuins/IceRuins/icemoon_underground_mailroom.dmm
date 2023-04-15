@@ -105,7 +105,7 @@
 /area/ruin/powered/mailroom)
 "jm" = (
 /obj/structure/closet/crate/mail{
-	icon_state = "mailopen"
+	opened = TRUE
 	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -166,7 +166,7 @@
 /area/ruin/powered/mailroom)
 "oU" = (
 /obj/structure/closet/crate/mail{
-	icon_state = "mailopen"
+	opened = TRUE
 	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -318,7 +318,7 @@
 /area/ruin/powered/mailroom)
 "Jd" = (
 /obj/structure/closet/crate/mail{
-	icon_state = "mailopen"
+	opened = TRUE
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,
@@ -414,7 +414,7 @@
 /area/ruin/powered/mailroom)
 "Qb" = (
 /obj/structure/closet/crate/mail{
-	icon_state = "mailopen"
+	opened = TRUE
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -495,7 +495,7 @@
 /area/ruin/powered/mailroom)
 "Wr" = (
 /obj/structure/closet/crate/mail{
-	icon_state = "mailopen"
+	opened = TRUE
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,

@@ -3866,7 +3866,7 @@
 /area/awaymission/research/interior/security)
 "Re" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,

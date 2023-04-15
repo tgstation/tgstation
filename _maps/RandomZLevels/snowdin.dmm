@@ -624,7 +624,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -786,7 +786,7 @@
 /area/awaymission/snowdin/post/research)
 "cD" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -1204,7 +1204,7 @@
 "dy" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
+	opened = TRUE;
 	name = "explosives ordinance"
 	},
 /turf/open/floor/iron/dark/snowdin,
@@ -1968,7 +1968,7 @@
 "gk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/crowbar,
 /obj/item/crowbar,
@@ -2290,7 +2290,7 @@
 	pixel_y = 5
 	},
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
@@ -3493,7 +3493,7 @@
 	pixel_x = 32
 	},
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/tank/internals/plasma,
 /obj/item/tank/internals/plasma,
@@ -8254,7 +8254,7 @@
 "Ca" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
+	opened = TRUE;
 	name = "explosives ordinance"
 	},
 /turf/open/floor/plating/snowed,
@@ -9722,7 +9722,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "IX" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
@@ -9816,7 +9816,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "Jp" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -9831,7 +9831,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "Jt" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
@@ -9905,7 +9905,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "JE" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -9959,7 +9959,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "JN" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -12675,7 +12675,7 @@
 "YR" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
+	opened = TRUE
 	name = "explosives ordinance"
 	},
 /obj/machinery/light/small/directional/east,

@@ -425,7 +425,7 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /obj/machinery/light/directional/south,
 /obj/item/storage/toolbox/mechanical,

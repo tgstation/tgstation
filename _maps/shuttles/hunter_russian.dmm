@@ -435,7 +435,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = TRUE
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
