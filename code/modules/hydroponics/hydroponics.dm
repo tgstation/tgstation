@@ -786,7 +786,8 @@
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
 			any_adjacent = TRUE
-			particles = new /particles/pollen()
+			if(isnull(particles))
+				particles = new /particles/pollen()
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				var/list/datum/plant_gene/reagent/possible_reagents = list()
 				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
