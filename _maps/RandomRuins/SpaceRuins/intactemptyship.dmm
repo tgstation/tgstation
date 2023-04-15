@@ -23,27 +23,7 @@
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/authorship)
-"f" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/authorship)
-"g" = (
-/obj/structure/table/wood,
-/obj/item/clothing/under/shorts/black,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "h" = (
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
-"i" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "j" = (
@@ -61,6 +41,11 @@
 /area/ruin/space/has_grav/powered/authorship)
 "n" = (
 /obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"o" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "p" = (
@@ -98,13 +83,6 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"w" = (
-/obj/structure/table/wood,
-/obj/item/paper,
-/obj/item/pen,
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "y" = (
 /mob/living/simple_animal/bot/medbot/derelict,
 /turf/open/floor/mineral/titanium/purple,
@@ -124,31 +102,51 @@
 	icon_state = "diagonalWall3"
 	},
 /area/ruin/space/has_grav/powered/authorship)
-"C" = (
-/obj/structure/bed,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
 "D" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"E" = (
+"K" = (
+/obj/structure/bed,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"M" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"N" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"J" = (
+"P" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"P" = (
+"Q" = (
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"U" = (
-/obj/machinery/light/floor,
+"R" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/shorts/black,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"U" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/space/has_grav/powered/authorship)
+"W" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/authorship)
 
 (1,1,1) = {"
@@ -179,20 +177,20 @@ a
 "}
 (3,1,1) = {"
 b
-f
-f
+W
+W
 c
 q
-U
+M
 h
 c
-f
-f
+W
+W
 z
 "}
 (4,1,1) = {"
 c
-g
+R
 l
 c
 p
@@ -200,7 +198,7 @@ D
 p
 c
 A
-J
+P
 c
 "}
 (5,1,1) = {"
@@ -212,13 +210,13 @@ h
 h
 y
 c
-P
-E
+Q
+N
 c
 "}
 (6,1,1) = {"
 c
-i
+o
 h
 h
 h
@@ -226,7 +224,7 @@ h
 h
 h
 h
-C
+K
 c
 "}
 (7,1,1) = {"
@@ -235,7 +233,7 @@ j
 h
 h
 h
-U
+M
 h
 h
 h
@@ -300,7 +298,7 @@ a
 c
 j
 r
-w
+U
 n
 j
 c

@@ -124,7 +124,7 @@
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = active ? rainbow_order[rave_number] : null
 
-/obj/item/mod/module/visor/rave/on_active_process(delta_time)
+/obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
@@ -310,7 +310,7 @@
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
 	SIGNAL_HANDLER
 
-	if(you_fucked_up || mod.wearer.has_gravity() != NEGATIVE_GRAVITY)
+	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)

@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Traitors should be able to summon their satellite hacking supply kit."
-  - bugfix: "Dark Matteor shouldn't crash on spawn and fail to arrive."

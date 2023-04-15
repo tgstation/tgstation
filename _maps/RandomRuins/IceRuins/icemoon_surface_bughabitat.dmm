@@ -34,6 +34,15 @@
 	},
 /turf/open/floor/grass,
 /area/ruin/bughabitat)
+"es" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "eM" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -42,16 +51,6 @@
 	pixel_y = 13
 	},
 /obj/machinery/light_switch/directional/east,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"eN" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/biogenerator,
-/obj/structure/window/reinforced/spawner/east,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 5
-	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "fI" = (
@@ -71,16 +70,14 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"hk" = (
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/misc/snow,
-/area/ruin/bughabitat)
-"hy" = (
-/obj/effect/decal/remains/human,
-/obj/item/clothing/suit/toggle/labcoat,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/structure/window/reinforced/spawner/north,
+"hm" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/biogenerator,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 5
+	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "hM" = (
@@ -96,21 +93,6 @@
 /obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"kv" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/item/shovel,
-/turf/open/misc/snow,
-/area/ruin/bughabitat)
-"lj" = (
-/obj/structure/cable,
-/obj/structure/window/reinforced/spawner/east,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 6
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "lE" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
@@ -123,9 +105,10 @@
 /obj/structure/statue/snow/snowman,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"mM" = (
-/obj/structure/tank_holder/oxygen,
-/turf/open/floor/plastic,
+"nF" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/grass,
 /area/ruin/bughabitat)
 "of" = (
 /obj/structure/sink/directional/east,
@@ -140,20 +123,23 @@
 /obj/item/seeds/soya,
 /turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
+"ov" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "oZ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"qV" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/item/wallframe/camera,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/grass,
-/area/ruin/bughabitat)
-"ri" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/effect/spawner/random/food_or_drink/snack,
-/turf/open/floor/grass,
+"qa" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/shovel,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "rE" = (
 /obj/effect/spawner/random/structure/chair_flipped,
@@ -172,6 +158,14 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"tl" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "tI" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plastic,
@@ -186,15 +180,6 @@
 "va" = (
 /obj/item/book/manual/wiki/cytology,
 /obj/structure/table,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"wC" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/obj/machinery/light_switch/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "wL" = (
@@ -223,19 +208,19 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"zJ" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 1
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "AL" = (
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
 "Bs" = (
 /turf/closed/wall/ice,
+/area/ruin/bughabitat)
+"Bw" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 1
+	},
+/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "BK" = (
 /obj/structure/table/rolling,
@@ -276,8 +261,22 @@
 "Ft" = (
 /turf/open/floor/grass,
 /area/ruin/bughabitat)
+"FU" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/fakebasalt,
+/area/ruin/bughabitat)
 "Gg" = (
 /obj/item/trash/shrimp_chips,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Gt" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 6
+	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "HA" = (
@@ -287,6 +286,10 @@
 /obj/machinery/light/warm/directional/east,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /turf/open/floor/carpet/neon/simple/lime,
+/area/ruin/bughabitat)
+"In" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "IX" = (
 /obj/machinery/hydroponics/constructable,
@@ -298,15 +301,6 @@
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/snow,
-/area/ruin/bughabitat)
-"Kc" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/obj/machinery/light/warm/directional/south,
-/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Kq" = (
 /obj/effect/decal/remains/human,
@@ -325,6 +319,10 @@
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"Ml" = (
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "Nv" = (
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron,
@@ -336,14 +334,6 @@
 /obj/item/plunger,
 /mob/living/basic/mouse,
 /obj/machinery/light/small/blacklight/directional/south,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"Pt" = (
-/obj/machinery/door/window/right/directional/north,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 9
-	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Qd" = (
@@ -365,11 +355,6 @@
 	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
-"RJ" = (
-/obj/structure/window/reinforced/spawner/east,
-/mob/living/basic/cockroach,
-/turf/open/floor/fakebasalt,
-/area/ruin/bughabitat)
 "RR" = (
 /turf/open/floor/carpet/neon/simple/lime,
 /area/ruin/bughabitat)
@@ -377,17 +362,15 @@
 /obj/item/coin/silver,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
-"Tp" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/bughabitat)
 "Tr" = (
 /obj/item/pen/fountain,
 /turf/open/floor/iron,
+/area/ruin/bughabitat)
+"VJ" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/wallframe/camera,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/grass,
 /area/ruin/bughabitat)
 "VM" = (
 /obj/machinery/space_heater,
@@ -398,12 +381,29 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"VT" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"WF" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/cockroach,
+/turf/open/floor/fakebasalt,
+/area/ruin/bughabitat)
 "Xn" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"Xt" = (
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/fakebasalt,
+"Yh" = (
+/obj/machinery/door/window/right/directional/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 9
+	},
+/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "ZT" = (
 /obj/effect/spawner/structure/window/hollow/directional{
@@ -472,7 +472,7 @@ Xn
 HA
 bu
 ot
-Pt
+Yh
 of
 bQ
 wL
@@ -488,12 +488,12 @@ Xn
 Xn
 Qd
 HA
-RJ
-Xt
-zJ
+WF
+FU
+Bw
 AL
 AL
-Kc
+es
 HA
 ZT
 QV
@@ -511,7 +511,7 @@ Ft
 Ea
 aR
 hM
-wC
+ov
 HA
 RR
 RR
@@ -524,9 +524,9 @@ Xn
 Xn
 Xn
 HA
-qV
-ri
-zJ
+VJ
+nF
+Bw
 Qp
 fP
 xq
@@ -560,14 +560,14 @@ Xn
 Xn
 Qd
 HA
-hk
-kv
-eN
-Tp
+In
+qa
+hm
+VT
 yC
-lj
-hy
-mM
+Gt
+tl
+Ml
 IX
 VM
 Bs

@@ -29,10 +29,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
-"h" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/djstation)
 "i" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray,
@@ -42,15 +38,15 @@
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
+"l" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
 "r" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/ruin/space/djstation)
-"z" = (
-/obj/machinery/oven,
-/turf/open/floor/iron/white,
-/area/ruin/space/djstation)
-"A" = (
+"C" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
@@ -74,6 +70,10 @@
 "J" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"K" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "L" = (
 /turf/closed/wall,
@@ -187,7 +187,7 @@ e
 b
 L
 Q
-h
+K
 W
 W
 Y
@@ -200,7 +200,7 @@ I
 e
 a
 L
-A
+C
 f
 W
 R
@@ -215,10 +215,10 @@ e
 b
 L
 k
-h
+K
 W
 i
-z
+l
 W
 F
 N

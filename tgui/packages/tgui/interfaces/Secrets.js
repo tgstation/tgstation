@@ -279,12 +279,13 @@ const FunTab = (props, context) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="flag"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
+              content="CTF Instagib Mode"
+              onClick={() => act('ctf_instagib')}
+            />
           </Stack.Item>
           <Stack.Item>
             <NoticeBox

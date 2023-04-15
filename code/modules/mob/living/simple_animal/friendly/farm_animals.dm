@@ -40,14 +40,14 @@
 	AddComponent(/datum/component/udder)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && DT_PROB(0.5, delta_time))
+		if(!enemies.len && SPT_PROB(0.5, seconds_per_tick))
 			Retaliate()
 
-		if(enemies.len && DT_PROB(5, delta_time))
+		if(enemies.len && SPT_PROB(5, seconds_per_tick))
 			enemies.Cut()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
@@ -165,17 +165,17 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
+		amount_grown += rand(0.5 * seconds_per_tick, 1 * seconds_per_tick)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/holo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 

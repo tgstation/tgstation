@@ -122,6 +122,10 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"av" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aw" = (
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
@@ -130,12 +134,6 @@
 /area/shuttle/escape)
 "ax" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"ay" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/engine,
 /area/shuttle/escape)
 "az" = (
 /obj/item/tank/internals/oxygen,
@@ -159,6 +157,13 @@
 "aE" = (
 /turf/closed/wall/r_wall/rust,
 /area/shuttle/escape)
+"aG" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"aH" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aI" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig"
@@ -200,6 +205,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
+"aP" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aQ" = (
 /obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/floor/engine,
@@ -207,13 +218,6 @@
 "aR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"aS" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
 /area/shuttle/escape)
 "aT" = (
 /obj/effect/decal/cleanable/vomit/old,
@@ -244,13 +248,6 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
-"aY" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/shuttle/escape)
 "aZ" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/machinery/door/window{
@@ -258,54 +255,9 @@
 	},
 /turf/open/floor/engine,
 /area/shuttle/escape)
-"ba" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/engine,
-/area/shuttle/escape)
-"bb" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/structure/window/reinforced,
-/turf/open/floor/engine,
-/area/shuttle/escape)
-"bc" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"bd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
 "be" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"bf" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"bg" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bh" = (
@@ -391,6 +343,11 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
+"bv" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/engine,
+/area/shuttle/escape)
 "bw" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Infirmary"
@@ -451,13 +408,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"bK" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
 "bL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -485,10 +435,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"hc" = (
-/obj/machinery/light/small/red/directional/east,
-/turf/open/floor/engine,
-/area/shuttle/escape)
 "iJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -496,57 +442,64 @@
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"kM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/light/small/red/directional/north,
-/turf/open/floor/engine,
-/area/shuttle/escape)
-"ne" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"tB" = (
+"jL" = (
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"uJ" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"vU" = (
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"wq" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"jR" = (
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/optable,
-/turf/open/floor/iron,
+/turf/open/floor/engine,
 /area/shuttle/escape)
-"xh" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/plastitanium/red,
+"jW" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
-"zR" = (
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"Ci" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"CO" = (
+"kk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"FT" = (
+"km" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"lx" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"lI" = (
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"nQ" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"wo" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/bear/fightpit,
+/obj/machinery/light/small/red/dim/directional/east,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"wq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/optable,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"wM" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/button/flasher{
 	id = "shuttle_flasher";
@@ -554,33 +507,62 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"Hw" = (
+"AM" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"Jl" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Jo" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/engine,
+/area/shuttle/escape)
+"KE" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Mv" = (
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"Kr" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"OL" = (
-/obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/bear/fightpit,
-/obj/machinery/light/small/red/dim/directional/east,
+"Ol" = (
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
 /area/shuttle/escape)
-"XH" = (
+"Pf" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Vb" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"VJ" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
-"YF" = (
+"Yy" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"YM" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/engine,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -612,9 +594,9 @@ aa
 aa
 aa
 ab
-FT
-Hw
-vU
+wM
+Mv
+aH
 ad
 ax
 bO
@@ -636,9 +618,9 @@ aa
 aa
 aa
 ad
-uJ
-Kr
-YF
+Jl
+aG
+Yy
 ad
 aX
 ax
@@ -660,16 +642,16 @@ ad
 ab
 ab
 ab
-Ci
-vU
-tB
+av
+aH
+aP
 ab
-xh
-bc
-bc
-bc
-bc
-bc
+Pf
+Vb
+Vb
+Vb
+Vb
+Vb
 aR
 bu
 bx
@@ -689,17 +671,17 @@ aI
 ac
 ad
 ax
-bd
-bd
-bd
-bd
-bd
+km
+km
+km
+km
+km
 ax
 ad
 bR
 by
 bH
-bK
+KE
 bL
 "}
 (6,1,1) = {"
@@ -723,7 +705,7 @@ ab
 by
 bx
 bI
-bK
+KE
 bL
 "}
 (7,1,1) = {"
@@ -739,15 +721,15 @@ aJ
 aJ
 be
 ax
-bc
-bc
-bc
+Vb
+Vb
+Vb
 ax
 ab
 bz
 bx
 bI
-bK
+KE
 bL
 "}
 (8,1,1) = {"
@@ -756,22 +738,22 @@ ag
 ak
 ap
 ab
-kM
-ay
-ay
-aS
-aY
-bf
+YM
+Ol
+Ol
+jR
+bv
+jW
 ax
 ax
 ax
 ax
-zR
+nQ
 ab
 ad
 ad
 ad
-bK
+KE
 bL
 "}
 (9,1,1) = {"
@@ -790,12 +772,12 @@ ax
 bl
 ax
 ax
-XH
+VJ
 ad
 bA
 gn
 bA
-bK
+KE
 bL
 "}
 (10,1,1) = {"
@@ -808,8 +790,8 @@ aA
 aL
 aB
 aK
-ba
-bg
+Jo
+jL
 ax
 ax
 ax
@@ -819,7 +801,7 @@ ac
 bB
 bB
 bJ
-bK
+KE
 bL
 "}
 (11,1,1) = {"
@@ -832,7 +814,7 @@ aB
 aA
 aA
 aT
-bb
+AM
 bh
 ax
 bm
@@ -843,7 +825,7 @@ bw
 bB
 bB
 bF
-bK
+KE
 bL
 "}
 (12,1,1) = {"
@@ -854,9 +836,9 @@ ad
 ad
 aC
 aK
-hc
+lI
 aQ
-ba
+Jo
 bh
 ax
 bn
@@ -866,7 +848,7 @@ ax
 ac
 bB
 bB
-CO
+kk
 ad
 ad
 "}
@@ -888,7 +870,7 @@ ax
 ax
 ax
 ad
-ne
+lx
 iJ
 ad
 ad
@@ -902,7 +884,7 @@ aa
 ab
 aE
 aN
-OL
+wo
 aV
 aD
 bi

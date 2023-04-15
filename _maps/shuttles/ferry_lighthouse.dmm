@@ -23,11 +23,6 @@
 "ag" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"ai" = (
-/obj/machinery/vending/liberationstation,
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
 "aj" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plating/airless,
@@ -45,13 +40,6 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"an" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
 "ao" = (
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 30
@@ -60,13 +48,6 @@
 /area/shuttle/transport)
 "ap" = (
 /turf/closed/wall,
-/area/shuttle/transport)
-"aq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/vending/clothing,
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
 /obj/structure/chair/comfy/shuttle,
@@ -95,13 +76,6 @@
 /obj/structure/grille/broken,
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"aC" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/wood,
 /area/shuttle/transport)
 "aD" = (
 /turf/open/floor/carpet,
@@ -200,28 +174,12 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ba" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/wood,
-/area/shuttle/transport)
 "bb" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "garbage";
 	layer = 2.5
 	},
-/turf/open/floor/wood,
-/area/shuttle/transport)
-"bc" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
@@ -265,8 +223,42 @@
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"rL" = (
+"ff" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/vending_refill/snack,
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"fl" = (
 /obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"fs" = (
+/obj/machinery/vending/liberationstation,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"ot" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/clothing,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"wm" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"yr" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"Qd" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 
@@ -329,8 +321,8 @@ ac
 af
 bh
 bh
-an
-aq
+wm
+ot
 as
 aB
 as
@@ -345,7 +337,7 @@ bj
 (5,1,1) = {"
 ad
 aM
-ai
+fs
 ak
 ao
 ak
@@ -354,7 +346,7 @@ ak
 ak
 aP
 aX
-ba
+yr
 be
 bh
 bi
@@ -387,7 +379,7 @@ aM
 ar
 au
 au
-rL
+fl
 au
 au
 aL
@@ -422,11 +414,11 @@ aa
 ap
 ap
 av
-aC
-aC
+Qd
+Qd
 aS
-aC
-bc
+Qd
+ff
 aM
 ad
 aa

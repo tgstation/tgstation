@@ -81,17 +81,11 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
-"dj" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 4
-	},
+"db" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/grass,
 /area/misc/anomaly_research)
 "dr" = (
@@ -119,11 +113,6 @@
 /obj/item/weldingtool/largetank,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/misc/anomaly_research)
-"eq" = (
-/obj/structure/window/reinforced,
-/obj/structure/table,
-/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "eA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -615,14 +604,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
-"pE" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "qa" = (
 /obj/effect/turf_decal/trimline/purple/corner{
 	dir = 8
@@ -662,12 +643,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
-"qR" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "rk" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/glass/fifty,
@@ -699,13 +674,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
-"sp" = (
-/obj/item/kirbyplants/random,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
 "st" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -727,10 +695,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/misc/anomaly_research)
-"sQ" = (
-/obj/machinery/light/warm/no_nightlight/directional/east,
-/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "sU" = (
 /obj/structure/table/reinforced,
@@ -996,6 +960,13 @@
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
+"xW" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/item/stock_parts/micro_laser/ultra,
+/obj/item/stock_parts/manipulator/pico,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "ya" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance"
@@ -1007,6 +978,12 @@
 /obj/structure/flora/grass/green/style_random,
 /obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
+/area/misc/anomaly_research)
+"yi" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
 /area/misc/anomaly_research)
 "yG" = (
 /obj/structure/chair/office{
@@ -1050,6 +1027,11 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
+"zv" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "As" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
@@ -1089,6 +1071,12 @@
 /area/misc/anomaly_research)
 "AV" = (
 /turf/closed/wall,
+/area/misc/anomaly_research)
+"Bh" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "BD" = (
 /obj/structure/rack,
@@ -1148,6 +1136,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
+"CC" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "CI" = (
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
@@ -1186,13 +1181,6 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fg" = (
-/turf/open/floor/iron/white,
-/area/misc/anomaly_research)
-"Fm" = (
-/obj/structure/window/reinforced,
-/obj/structure/table,
-/obj/item/stock_parts/micro_laser/ultra,
-/obj/item/stock_parts/manipulator/pico,
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Fs" = (
@@ -1275,6 +1263,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
+/area/misc/anomaly_research)
+"Hj" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_mass_spec,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "Hs" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1366,17 +1360,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/misc/anomaly_research)
-"Jp" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/machinery/light/broken/directional/south,
-/turf/open/floor/grass,
 /area/misc/anomaly_research)
 "Jw" = (
 /obj/effect/turf_decal/arrows/red,
@@ -1657,12 +1640,6 @@
 	},
 /turf/open/floor/engine,
 /area/misc/anomaly_research)
-"Sj" = (
-/obj/structure/table/reinforced,
-/obj/machinery/chem_mass_spec,
-/obj/effect/turf_decal/siding/white,
-/turf/open/floor/iron/dark,
-/area/misc/anomaly_research)
 "Sm" = (
 /obj/effect/turf_decal/tile/yellow/half,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1799,19 +1776,19 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
+"WB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "WD" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/misc/anomaly_research)
-"WM" = (
-/obj/structure/window/reinforced,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "WO" = (
 /obj/item/storage/box/lights/mixed,
@@ -1844,15 +1821,9 @@
 "Ya" = (
 /turf/closed/mineral/snowmountain/cavern,
 /area/misc/anomaly_research)
-"YA" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
+"Yf" = (
+/obj/machinery/light/warm/no_nightlight/directional/east,
+/turf/open/floor/wood,
 /area/misc/anomaly_research)
 "YB" = (
 /obj/structure/bed/double,
@@ -1860,12 +1831,27 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/misc/anomaly_research)
+"YN" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/misc/anomaly_research)
 "YU" = (
 /obj/structure/fence/door,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "Zh" = (
 /turf/open/floor/iron/smooth,
+/area/misc/anomaly_research)
+"Zj" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Zp" = (
 /obj/machinery/door/airlock/wood/glass,
@@ -2422,7 +2408,7 @@ AV
 xE
 AV
 eZ
-sQ
+Yf
 PY
 As
 pk
@@ -2497,7 +2483,7 @@ QP
 AO
 sz
 Ce
-WM
+Zj
 mE
 Sb
 lS
@@ -2535,7 +2521,7 @@ QP
 ZA
 oI
 Fg
-Fm
+xW
 Jy
 Ch
 pu
@@ -2573,7 +2559,7 @@ QP
 MG
 mY
 Fg
-eq
+zv
 eA
 CI
 Hz
@@ -2793,7 +2779,7 @@ RT
 RT
 Ya
 AV
-Sj
+Hj
 nZ
 LU
 NP
@@ -3253,7 +3239,7 @@ AV
 Nc
 Op
 AV
-qR
+Bh
 nI
 fm
 II
@@ -3291,7 +3277,7 @@ AV
 Lc
 NM
 AV
-sp
+CC
 nI
 nI
 pn
@@ -3373,7 +3359,7 @@ ii
 xh
 nI
 ZQ
-YA
+yi
 AV
 Qz
 LB
@@ -3411,7 +3397,7 @@ cA
 xh
 SX
 Ng
-Jp
+db
 AV
 AV
 AV
@@ -3449,7 +3435,7 @@ cA
 Ls
 nI
 ft
-dj
+YN
 AV
 un
 aw
@@ -3523,7 +3509,7 @@ lz
 ut
 cA
 Cf
-pE
+WB
 xh
 xQ
 AV

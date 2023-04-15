@@ -16,12 +16,6 @@
 /obj/structure/sign/warning/cold_temp,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
-"ba" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/powered/mailroom)
 "bK" = (
 /obj/structure/holobox,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -50,6 +44,19 @@
 "dG" = (
 /turf/template_noop,
 /area/template_noop)
+"dJ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/machinery/door/window{
+	dir = 2
+	},
+/obj/structure/window/spawner/directional/east,
+/obj/item/toy/figure/cargotech,
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/turf/open/floor/noslip,
+/area/ruin/powered/mailroom)
 "dR" = (
 /obj/structure/fence,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -177,6 +184,18 @@
 "pd" = (
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"pZ" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
+"qg" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
 "qp" = (
 /obj/item/pressure_plate/hologrid{
 	reward = /obj/item/keycard/icebox/office
@@ -280,19 +299,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"DY" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window{
-	dir = 1
-	},
-/obj/machinery/door/window{
-	dir = 2
-	},
-/obj/structure/window/spawner/east,
-/obj/item/toy/figure/cargotech,
-/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
-/turf/open/floor/noslip,
-/area/ruin/powered/mailroom)
 "FC" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/carpet/royalblack,
@@ -335,6 +341,11 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"Jz" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
 "KK" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/carpet/royalblack,
@@ -367,21 +378,6 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ruin/powered/mailroom)
-"MT" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/iron/textured,
-/area/ruin/powered/mailroom)
-"Nq" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/effect/decal/remains/human,
-/obj/item/clothing/suit/hooded/wintercoat,
-/turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "NE" = (
 /obj/structure/chair/office/light{
@@ -739,7 +735,7 @@ XU
 XU
 XU
 Se
-DY
+dJ
 iV
 DR
 iV
@@ -781,10 +777,10 @@ XO
 HH
 Jd
 AX
-MT
-ba
-ba
-Nq
+Jz
+qg
+qg
+pZ
 vU
 iV
 zr

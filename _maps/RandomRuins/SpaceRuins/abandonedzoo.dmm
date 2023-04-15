@@ -63,26 +63,10 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-"aK" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/template_noop,
-/area/template_noop)
 "aL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/abandonedzoo)
-"aN" = (
-/obj/structure/table/reinforced,
-/obj/item/folder,
-/obj/item/gps/spaceruin,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
@@ -90,12 +74,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-"aQ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/template_noop,
-/area/template_noop)
 "aT" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/eva,
@@ -117,19 +95,6 @@
 /obj/item/gun/energy/temperature{
 	pin = /obj/item/firing_pin
 	},
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aZ" = (
-/obj/structure/table/reinforced,
-/obj/item/cultivator,
-/obj/item/shovel,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"be" = (
-/obj/structure/frame/machine,
-/obj/structure/cable,
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
@@ -165,12 +130,6 @@
 "bm" = (
 /obj/structure/closet/wardrobe/science_white,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"bn" = (
-/obj/structure/table/reinforced,
-/obj/item/food/carrotfries,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bp" = (
@@ -261,21 +220,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
-"bQ" = (
-/obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/antiweed{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/grenade/chem_grenade/antiweed{
-	pixel_x = 4
-	},
-/obj/item/grenade/chem_grenade/antiweed{
-	pixel_x = -3;
-	pixel_y = -1
-	},
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -300,6 +244,22 @@
 /area/template_noop)
 "bX" = (
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
+"cl" = (
+/obj/structure/table/reinforced,
+/obj/item/food/carrotfries,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
+"dS" = (
+/obj/machinery/light/floor,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/abandonedzoo)
+"eV" = (
+/obj/structure/cable,
+/obj/machinery/power/shieldwallgen/unlocked/anchored,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "eY" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -343,63 +303,66 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
+"jb" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
 "kp" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"kF" = (
-/obj/machinery/space_heater,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
 "ly" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /turf/template_noop,
 /area/template_noop)
-"mY" = (
-/obj/structure/alien/weeds/node,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
+"nh" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "nY" = (
 /obj/structure/flora/bush/leavy/style_random,
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
+/area/ruin/space/has_grav/abandonedzoo)
+"ok" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "oS" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
+"pl" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/syringes{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/box/beakers,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
+"pG" = (
+/obj/structure/frame/machine,
+/obj/structure/cable,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "qX" = (
 /obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
-"sa" = (
-/obj/structure/alien/resin/wall,
-/obj/machinery/light/floor/broken,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
-"sT" = (
-/obj/structure/cable,
-/obj/machinery/power/shieldwallgen/unlocked/anchored,
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"tt" = (
+"sD" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"ua" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/machinery/light/floor,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav/abandonedzoo)
-"uA" = (
-/obj/structure/rack,
-/obj/item/crowbar,
-/obj/item/shield/riot,
-/turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "vU" = (
 /mob/living/simple_animal/hostile/asteroid/goldgrub{
@@ -413,40 +376,46 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
+"wZ" = (
+/obj/structure/table/reinforced,
+/obj/item/grenade/chem_grenade/antiweed{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/grenade/chem_grenade/antiweed{
+	pixel_x = 4
+	},
+/obj/item/grenade/chem_grenade/antiweed{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "Ap" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
-"Ct" = (
+"AL" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/syringes{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/storage/box/beakers,
+/obj/item/cultivator,
+/obj/item/shovel,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-"EN" = (
-/obj/machinery/light/floor,
-/turf/open/floor/plating,
+"EP" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Gh" = (
 /obj/machinery/power/shieldwallgen/unlocked/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
-"GX" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"Hj" = (
-/obj/machinery/light/floor,
-/turf/open/misc/asteroid,
-/area/ruin/space/has_grav/abandonedzoo)
-"Ig" = (
-/mob/living/basic/carp,
-/turf/open/floor/plating,
+"GY" = (
+/mob/living/simple_animal/hostile/bee,
+/mob/living/simple_animal/hostile/bee,
+/turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "LD" = (
 /obj/structure/rack,
@@ -471,6 +440,13 @@
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
+"MR" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/clothing/mask/surgical,
+/obj/item/razor,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "Ng" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -480,17 +456,42 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"OR" = (
+"OP" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/clothing/mask/surgical,
-/obj/item/razor,
+/obj/item/surgicaldrill,
+/obj/item/hemostat,
+/obj/item/scalpel,
+/obj/item/surgical_drapes,
+/obj/item/retractor,
+/obj/item/cautery,
+/obj/item/circular_saw,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-"PF" = (
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
-/turf/open/floor/grass,
+"OX" = (
+/obj/structure/alien/resin/wall,
+/obj/machinery/light/floor/broken,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
+"PX" = (
+/obj/structure/table/reinforced,
+/obj/item/folder,
+/obj/item/gps/spaceruin,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
+"Qg" = (
+/obj/machinery/space_heater,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
+"QZ" = (
+/mob/living/basic/carp,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "Rh" = (
 /obj/machinery/light/small/directional/west,
@@ -526,23 +527,18 @@
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
+"XM" = (
+/obj/structure/rack,
+/obj/item/crowbar,
+/obj/item/shield/riot,
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/abandonedzoo)
 "YJ" = (
 /obj/structure/chair/office/light{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/abandonedzoo)
-"ZP" = (
-/obj/structure/table/reinforced,
-/obj/item/surgicaldrill,
-/obj/item/hemostat,
-/obj/item/scalpel,
-/obj/item/surgical_drapes,
-/obj/item/retractor,
-/obj/item/cautery,
-/obj/item/circular_saw,
-/turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 
 (1,1,1) = {"
@@ -573,12 +569,12 @@ Ua
 Xx
 ah
 ac
-aK
-aK
-aK
-aK
-aK
-aK
+sD
+sD
+sD
+sD
+sD
+sD
 ac
 bu
 bv
@@ -612,7 +608,7 @@ aa
 ac
 Ua
 ah
-Hj
+dS
 Ap
 ac
 at
@@ -622,8 +618,8 @@ iX
 at
 at
 ac
-Ig
-EN
+QZ
+ok
 bv
 bv
 ac
@@ -640,7 +636,7 @@ at
 LD
 oS
 Ni
-be
+pG
 at
 ac
 bx
@@ -679,10 +675,10 @@ at
 at
 at
 at
-uA
+XM
 oS
 Ni
-GX
+EP
 at
 at
 by
@@ -697,16 +693,16 @@ aa
 aa
 aa
 ag
-OR
+MR
 aG
-aN
+PX
 aV
 oS
 oS
 bh
 bm
 bp
-kF
+Qg
 at
 at
 at
@@ -760,14 +756,14 @@ aa
 aa
 aa
 ag
-Ct
+pl
 aI
 aP
 aW
 oS
 Ni
 bi
-bn
+cl
 br
 bA
 at
@@ -784,10 +780,10 @@ at
 at
 at
 at
-bQ
+wZ
 oS
 Ni
-ZP
+OP
 at
 at
 at
@@ -810,7 +806,7 @@ oS
 Ni
 bk
 at
-sT
+eV
 ac
 ac
 ac
@@ -826,7 +822,7 @@ gE
 aA
 ac
 at
-aZ
+AL
 oS
 Ni
 bl
@@ -843,8 +839,8 @@ aa
 ac
 Mb
 Mb
-tt
-PF
+ua
+GY
 ac
 at
 at
@@ -853,8 +849,8 @@ Ti
 at
 at
 ac
-mY
-sa
+jb
+OX
 bH
 bB
 bT
@@ -888,12 +884,12 @@ gE
 av
 aC
 ac
-aQ
-aQ
-aQ
-aQ
-aQ
-aQ
+nh
+nh
+nh
+nh
+nh
+nh
 ac
 bB
 bB

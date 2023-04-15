@@ -169,13 +169,6 @@
 "cM" = (
 /turf/template_noop,
 /area/template_noop)
-"cV" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
 "cY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
@@ -256,12 +249,6 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/bridge)
-"ds" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/machinery/light/cold/no_nightlight/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "dt" = (
@@ -377,6 +364,21 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"rs" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/medical/medkit,
+/obj/structure/table,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
+"sl" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "sw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -399,14 +401,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/bridge)
-"ue" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/medical/medkit,
-/obj/structure/table,
-/obj/effect/spawner/random/medical/minor_healing,
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "wp" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -535,6 +529,12 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
+"Zz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge)
 
 (1,1,1) = {"
 cM
@@ -554,7 +554,7 @@ cM
 (2,1,1) = {"
 cM
 Tj
-cV
+sl
 aY
 bE
 ci
@@ -569,7 +569,7 @@ cM
 (3,1,1) = {"
 cM
 Tj
-cV
+sl
 bq
 dc
 ci
@@ -606,7 +606,7 @@ da
 ci
 JD
 do
-ds
+Zz
 cH
 mj
 dx
@@ -636,7 +636,7 @@ bG
 ci
 Ki
 dq
-ue
+rs
 UC
 fh
 dx
@@ -659,7 +659,7 @@ dy
 (9,1,1) = {"
 cM
 cL
-cV
+sl
 de
 ce
 ci
@@ -674,7 +674,7 @@ cM
 (10,1,1) = {"
 cM
 cL
-cV
+sl
 aq
 df
 ci

@@ -102,14 +102,14 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
 	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
-	icon = 'icons/mob/simple/lavaland/watcher.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
 	icon_aggro = "watcher"
 	icon_dead = "watcher_dead"
 	health_doll_icon = "watcher"
-	pixel_x = -10
-	base_pixel_x = -10
+	pixel_x = -12
+	base_pixel_x = -12
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -133,7 +133,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()

@@ -47,19 +47,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
-"aj" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
-"ak" = (
-/obj/structure/mecha_wreckage/ripley,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/recharge_floor,
-/area/shuttle/abandoned)
 "al" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -70,11 +57,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
-"an" = (
-/obj/effect/spawner/random/exotic/ripley,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -308,22 +290,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"aT" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/storage/medkit/regular,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
 "aU" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"aV" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aW" = (
@@ -331,12 +300,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/comfy/black,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"aX" = (
-/obj/structure/closet/emcloset,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -362,11 +325,48 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"Ad" = (
+"bw" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"cP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"iz" = (
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"lG" = (
+/obj/structure/mecha_wreckage/ripley,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/recharge_floor,
+/area/shuttle/abandoned)
+"ue" = (
+/obj/effect/spawner/random/exotic/ripley,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/recharge_floor,
+/area/shuttle/abandoned)
+"Cc" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/medkit/regular,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Ta" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "We" = (
@@ -382,7 +382,7 @@ aa
 aa
 aa
 ad
-aj
+bw
 ay
 aF
 aF
@@ -397,7 +397,7 @@ aa
 (2,1,1) = {"
 aa
 ad
-aj
+bw
 ab
 ab
 ab
@@ -433,7 +433,7 @@ aa
 (4,1,1) = {"
 ab
 ae
-ak
+lG
 ao
 ab
 as
@@ -444,7 +444,7 @@ aA
 ab
 ab
 ab
-aV
+Ta
 ab
 aa
 "}
@@ -497,7 +497,7 @@ aG
 aG
 ar
 aR
-Ad
+cP
 aQ
 ba
 ar
@@ -532,7 +532,7 @@ am
 am
 aA
 ab
-aT
+Cc
 aU
 aR
 ab
@@ -541,7 +541,7 @@ ab
 (10,1,1) = {"
 ab
 ai
-an
+ue
 ap
 ab
 ax
@@ -552,7 +552,7 @@ av
 ab
 ab
 ab
-aX
+iz
 ab
 aa
 "}
@@ -577,7 +577,7 @@ aa
 (12,1,1) = {"
 aa
 ad
-aj
+bw
 ab
 ab
 ab
@@ -598,7 +598,7 @@ aa
 aa
 aa
 ad
-aj
+bw
 ay
 aH
 aH

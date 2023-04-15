@@ -44,15 +44,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
-"h" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/ruin/powered/golem_ship)
 "i" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
@@ -88,15 +79,6 @@
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"q" = (
-/obj/structure/statue/gold/rd,
-/obj/structure/window/reinforced{
-	dir = 4;
-	name = "shrine of the liberator"
-	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
 "r" = (
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/purple,
@@ -121,24 +103,6 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"u" = (
-/obj/structure/table/wood,
-/obj/item/bedsheet/rd/royal_cape{
-	layer = 3;
-	pixel_x = 5;
-	pixel_y = 9
-	},
-/obj/item/book/manual/wiki/research_and_development{
-	name = "Sacred Text of the Liberator";
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	name = "shrine of the liberator"
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
 "v" = (
 /obj/item/resonator/upgraded,
 /turf/open/floor/mineral/titanium/purple,
@@ -158,30 +122,6 @@
 /area/ruin/powered/golem_ship)
 "z" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"A" = (
-/obj/structure/table/wood,
-/obj/item/surgical_drapes{
-	pixel_x = 15
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire,
-/obj/item/stock_parts/matter_bin,
-/obj/item/assembly/igniter,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"B" = (
-/obj/item/storage/medkit/fire,
-/obj/structure/table/wood,
-/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
@@ -221,6 +161,14 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"J" = (
+/obj/structure/statue/gold/rd,
+/obj/structure/window/reinforced/spawner/directional/east{
+	name = "shrine of the liberator"
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "K" = (
 /obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
@@ -242,14 +190,40 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
-"O" = (
-/obj/structure/ore_box,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
+"P" = (
+/obj/structure/table/wood,
+/obj/item/surgical_drapes{
+	pixel_x = 15
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
+/obj/item/stock_parts/matter_bin,
+/obj/item/assembly/igniter,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"R" = (
+/obj/item/storage/medkit/fire,
+/obj/structure/table/wood,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"S" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "T" = (
 /obj/structure/fans/tiny,
@@ -265,10 +239,32 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"W" = (
+/obj/structure/ore_box,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
 "Y" = (
 /obj/machinery/door/airlock/titanium,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Z" = (
+/obj/structure/table/wood,
+/obj/item/bedsheet/rd/royal_cape{
+	layer = 3;
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/book/manual/wiki/research_and_development{
+	name = "Sacred Text of the Liberator";
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/structure/window/reinforced/spawner/directional/east{
+	name = "shrine of the liberator"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -299,8 +295,8 @@ a
 a
 a
 b
-q
-u
+J
+Z
 G
 a
 a
@@ -396,7 +392,7 @@ l
 l
 j
 f
-O
+W
 b
 "}
 (8,1,1) = {"
@@ -537,7 +533,7 @@ l
 l
 l
 l
-A
+P
 b
 f
 f
@@ -555,7 +551,7 @@ l
 l
 v
 l
-B
+R
 b
 V
 f
@@ -599,20 +595,20 @@ b
 "}
 (19,1,1) = {"
 b
-h
-h
+S
+S
 b
-h
-h
+S
+S
 b
 t
 Q
 b
-h
-h
+S
+S
 b
-h
-h
+S
+S
 b
 "}
 (20,1,1) = {"

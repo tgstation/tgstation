@@ -376,6 +376,12 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/ghost_restaurant
+	id = "space_ghost_restaurant.dmm"
+	suffix = "space_ghost_restaurant.dmm"
+	name = "Space Ghost Restaurant"
+	description = "Ever wondered where the restaurant robots come from? On this ruined station, NTgrub interns dressed up robots in clothes, and sent them to stations to cook their meal orders for them."
+
 /datum/map_template/ruin/space/atmosasteroidruin
 	id = "atmosasteroidruin"
 	suffix = "atmosasteroidruin.dmm"
@@ -401,14 +407,50 @@
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
 
+/datum/map_template/ruin/space/botanical_haven
+	id = "botanical_haven"
+	suffix = "botanical_haven.dmm"
+	name = "Botanical Haven"
+	description = "A small sanctuary for plants and botanists, hidden away in a rusted structure."
+
 /datum/map_template/ruin/space/pod_crash
 	id = "pod_crash"
 	suffix = "pod_crash.dmm"
 	name = "Pod Crash"
 	description = "A tragic display of what happens to drivers who pda and pod."
 
+/datum/map_template/ruin/space/interdyne
+	id = "interdyne"
+	suffix = "interdyne.dmm"
+	name = "Interdyne Spinward Research Base"
+	description = "An Interdyne facility abandoned due to the accidental discovery of Romerol"
+
 /datum/map_template/ruin/space/waystation
 	id = "waystation"
 	suffix = "waystation.dmm"
 	name = "Waystation"
 	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
+
+/datum/map_template/ruin/space/mimesvclowns
+	id = "mimesvclowns"
+	suffix = "mimesvclowns.dmm"
+	name = "Abandoned Mime Outpost"
+	description = "When you fight mimes, you better bring more than slips."
+
+/datum/map_template/ruin/space/transit_booth
+	id = "transit_booth"
+	suffix = "transit_booth.dmm"
+	name = "Transit Booth"
+	description = "Make sure to check out the duty-free store!"
+
+/datum/map_template/ruin/space/the_outlet
+	id = "the_outlet"
+	suffix = "the_outlet.dmm"
+	name = "calebs krazy clothing outlet"
+	description = "A decrepit clothing store built into an asteroid. It appears long since abandoned and has fallen into disrepair."
+
+/datum/map_template/ruin/space/infested_frigate
+	id = "infested_frigate"
+	suffix = "infested_frigate.dmm"
+	name = "SYN-C Brutus"
+	description = "This wasn't an outbreak, this was a repelled attack."

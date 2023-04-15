@@ -86,13 +86,6 @@
 "aq" = (
 /turf/template_noop,
 /area/shuttle/abandoned)
-"ar" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
 "as" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/mineral/titanium,
@@ -282,14 +275,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
-"aX" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
 "aY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/iron,
@@ -341,26 +326,6 @@
 "bf" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
-"bg" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/folder/blue,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/airless,
-/area/shuttle/abandoned)
-"bh" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/cell_charger,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bi" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -452,10 +417,24 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
-"bu" = (
+"hr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/crowbar/red,
 /obj/machinery/light/floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"jo" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"lw" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "pe" = (
@@ -476,6 +455,16 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
+"wy" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/folder/blue,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/airless,
+/area/shuttle/abandoned)
 "CQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/mineral/plasma{
@@ -489,6 +478,16 @@
 /obj/item/clothing/head/helmet/space/eva,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"Vf" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -537,7 +536,7 @@ aa
 aa
 aa
 am
-ar
+jo
 ab
 av
 ay
@@ -546,7 +545,7 @@ aF
 aL
 aR
 ab
-aX
+lw
 be
 aa
 aa
@@ -557,7 +556,7 @@ aa
 aa
 aa
 an
-ar
+jo
 ac
 ak
 az
@@ -566,7 +565,7 @@ ac
 aM
 aS
 ab
-aX
+lw
 bf
 aa
 aa
@@ -606,7 +605,7 @@ ai
 pe
 ao
 ab
-bg
+wy
 bl
 ab
 ab
@@ -666,7 +665,7 @@ aq
 aq
 al
 aW
-bu
+hr
 bj
 bs
 bq
@@ -726,7 +725,7 @@ ag
 ag
 tT
 ab
-bh
+Vf
 bo
 ab
 ab
@@ -766,7 +765,7 @@ aH
 aN
 aT
 ab
-aX
+lw
 be
 aa
 aa
@@ -786,7 +785,7 @@ aI
 aO
 aU
 ab
-aX
+lw
 bf
 aa
 aa

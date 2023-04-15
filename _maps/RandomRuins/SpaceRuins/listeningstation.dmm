@@ -26,16 +26,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
-"ap" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "aP" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -139,18 +129,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"dC" = (
-/obj/structure/table,
-/obj/item/paper/fluff/ruins/listeningstation/reports/september,
-/obj/item/storage/box/donkpockets{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2
-	},
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/listeningstation)
 "dW" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -187,6 +165,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
+"gF" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "gJ" = (
 /obj/structure/table/wood,
 /obj/item/seeds/potato,
@@ -220,6 +208,12 @@
 	},
 /obj/machinery/light/very_dim/directional/east,
 /turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/listeningstation)
+"jm" = (
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/cable,
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "jr" = (
 /obj/machinery/power/port_gen/pacman{
@@ -365,6 +359,16 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"tR" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "uI" = (
 /obj/machinery/airalarm/away{
 	dir = 1;
@@ -393,6 +397,15 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
+"wf" = (
+/obj/machinery/washing_machine{
+	pixel_x = 4
+	},
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/window/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "wk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -403,16 +416,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
-"wy" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "xh" = (
 /obj/machinery/computer/records/medical/syndie{
 	dir = 2;
@@ -528,15 +531,11 @@
 "AV" = (
 /turf/template_noop,
 /area/template_noop)
-"BJ" = (
-/obj/machinery/washing_machine{
-	pixel_x = 4
-	},
-/obj/structure/sign/poster/contraband/random/directional/north,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
+"Bq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "BX" = (
@@ -629,6 +628,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
+"FX" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
+/area/ruin/space)
 "GR" = (
 /obj/structure/closet{
 	icon_door = "black";
@@ -678,14 +685,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"Jj" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/template_noop,
-/area/ruin/space)
 "JB" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
@@ -705,6 +704,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
+"KS" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/structure/marker_beacon/cerulean,
+/turf/template_noop,
+/area/ruin/space)
 "Lq" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
@@ -800,6 +807,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"PF" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "QE" = (
 /obj/structure/barricade/wooden/crude,
 /obj/structure/cable,
@@ -811,13 +824,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"RB" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/small,
-/area/ruin/space/has_grav/listeningstation)
 "RK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -827,10 +833,16 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
-"RP" = (
+"RW" = (
 /obj/structure/table,
-/obj/machinery/microwave,
-/obj/machinery/light/directional/south,
+/obj/item/paper/fluff/ruins/listeningstation/reports/september,
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2
+	},
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Sx" = (
@@ -858,14 +870,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
-"SQ" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/obj/structure/marker_beacon/cerulean,
-/turf/template_noop,
-/area/ruin/space)
 "TK" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/filingcabinet,
@@ -888,12 +892,6 @@
 "Uh" = (
 /obj/effect/turf_decal/bot_red,
 /obj/structure/tank_frame,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"Uu" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/cable,
-/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "UI" = (
@@ -968,6 +966,13 @@
 	},
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"Yq" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "Yz" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space)
@@ -989,13 +994,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"Zj" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 
 (1,1,1) = {"
@@ -1059,9 +1057,9 @@ vI
 vI
 vI
 zp
-wy
+tR
 rE
-ap
+gF
 zp
 vI
 AV
@@ -1285,7 +1283,7 @@ yB
 zZ
 UI
 qD
-Uu
+jm
 aR
 JB
 vI
@@ -1350,7 +1348,7 @@ AV
 "}
 (15,1,1) = {"
 AV
-Jj
+FX
 zp
 NY
 hm
@@ -1386,7 +1384,7 @@ ta
 Dv
 WD
 rG
-RB
+Yq
 SB
 FV
 ca
@@ -1436,7 +1434,7 @@ lk
 tm
 TK
 rG
-Zj
+Bq
 wm
 Sz
 VH
@@ -1467,7 +1465,7 @@ Yf
 FV
 lu
 db
-RP
+PF
 JB
 vI
 vI
@@ -1488,11 +1486,11 @@ SB
 Cw
 wk
 rG
-BJ
+wf
 Lq
 wm
 yH
-dC
+RW
 JB
 vI
 AV
@@ -1610,7 +1608,7 @@ AV
 AV
 AV
 AV
-SQ
+KS
 AV
 AV
 AV

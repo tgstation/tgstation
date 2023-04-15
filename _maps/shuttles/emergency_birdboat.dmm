@@ -52,6 +52,10 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"al" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -86,6 +90,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"at" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "au" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
@@ -96,6 +103,18 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"ay" = (
+/obj/structure/table,
+/obj/item/storage/box/handcuffs,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"az" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aA" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium/white,
@@ -164,29 +183,6 @@
 /obj/item/food/chocolatebar,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
-"aN" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"aO" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
-"aP" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
 "aQ" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/titanium/white,
@@ -242,13 +238,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/brig)
-"fA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "iP" = (
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
@@ -256,25 +245,21 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "lh" = (
-/obj/structure/table,
-/obj/item/storage/box/handcuffs,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"mt" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"qX" = (
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"Bi" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Airlock"
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"IQ" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"vi" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"DJ" = (
 /obj/structure/table,
 /obj/machinery/recharger{
 	active_power_usage = 0;
@@ -285,6 +270,20 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"Na" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"XN" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -395,15 +394,15 @@ aC
 aC
 aC
 aC
-fA
+vi
 ab
 "}
 (8,1,1) = {"
 aa
 ab
-mt
-qX
-qX
+al
+at
+at
 ac
 aB
 aC
@@ -417,14 +416,14 @@ ab
 (9,1,1) = {"
 aa
 ab
-mt
-qX
-qX
-Bi
+al
+at
+at
+az
 aC
 aC
-aN
-aP
+XN
+Na
 aC
 aC
 aW
@@ -433,14 +432,14 @@ ac
 (10,1,1) = {"
 aa
 ab
-mt
-qX
-qX
+al
+at
+at
 ac
 aC
 aC
-aN
-aP
+XN
+Na
 aC
 aC
 aW
@@ -449,14 +448,14 @@ ac
 (11,1,1) = {"
 aa
 ab
-mt
-qX
-IQ
+al
+at
+DJ
 ab
 aC
 aC
-aN
-aP
+XN
+Na
 aC
 aC
 aW
@@ -465,14 +464,14 @@ ac
 (12,1,1) = {"
 aa
 ab
-mt
-qX
-lh
+al
+at
+ay
 ab
 aC
 aC
-aO
-aP
+lh
+Na
 aC
 aC
 aB

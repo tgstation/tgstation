@@ -127,16 +127,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
-"eY" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/toolbox/emergency{
-	pixel_y = 3
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "fD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -207,14 +197,6 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"ht" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
-	},
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape/brig)
 "hC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -249,22 +231,31 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"il" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/food/monkeycube{
+	pixel_x = 5
+	},
+/obj/item/pai_card{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "it" = (
 /mob/living/carbon/human/species/monkey,
 /obj/structure/flora/grass/jungle/b/style_random{
 	icon_state = "bushb3"
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape)
-"iD" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5
-	},
-/obj/structure/table/reinforced,
-/obj/item/restraints/handcuffs{
-	pixel_y = 3
-	},
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iF" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -321,6 +312,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"kR" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "kT" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -371,31 +373,12 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"lV" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5
-	},
-/obj/structure/table/glass,
-/obj/item/food/soup/monkeysdelight{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/cup/soda_cans/monkey_energy{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "me" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
 /obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"mq" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/machinery/light/floor,
-/turf/open/floor/grass,
 /area/shuttle/escape)
 "mw" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -449,6 +432,21 @@
 /obj/item/storage/medkit/regular,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"pP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/structure/table/reinforced,
+/obj/item/restraints/handcuffs{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"pU" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "qD" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -534,18 +532,13 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"ur" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "uI" = (
 /obj/structure/flora/rock/pile/jungle/style_3,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"vm" = (
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "vt" = (
@@ -590,29 +583,12 @@
 /obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"wX" = (
-/obj/structure/flora/rock/style_random,
-/obj/machinery/light/floor,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "xA" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
-/area/shuttle/escape)
-"xZ" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/obj/structure/tank_dispenser/oxygen{
-	layer = 2.7;
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "yc" = (
 /turf/open/floor/iron/dark,
@@ -677,17 +653,6 @@
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"Aw" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/status_display/evac/directional/east,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "AM" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
@@ -713,6 +678,20 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"By" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bowl/soup/monkey{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/soda_cans/monkey_energy{
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -764,32 +743,14 @@
 /obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"CQ" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/obj/machinery/vending/cola/space_up,
-/turf/open/floor/iron/white,
+"Da" = (
+/obj/structure/flora/bush/generic/style_random,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "Db" = (
 /obj/structure/sign/poster/official/help_others,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"DD" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/mob/living/simple_animal/bot/medbot{
-	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/turf/open/floor/iron{
-	dir = 1
-	},
 /area/shuttle/escape)
 "DQ" = (
 /obj/effect/turf_decal/stripes/line,
@@ -797,13 +758,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"EI" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/obj/machinery/vending/snack/green,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Fo" = (
 /obj/item/cultivator,
@@ -814,29 +768,22 @@
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"Fx" = (
+/obj/structure/flora/rock/style_random,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "Gf" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
-"GO" = (
+"GE" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8
+	dir = 1
 	},
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/food/monkeycube{
-	pixel_x = 5
-	},
-/obj/item/pai_card{
-	pixel_x = -6;
-	pixel_y = 1
-	},
-/obj/machinery/light/directional/west,
+/obj/machinery/vending/cola/space_up,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "GV" = (
@@ -850,6 +797,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Hf" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "Hi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/comfy/shuttle{
@@ -862,6 +819,14 @@
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"HD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape/brig)
 "HV" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -901,12 +866,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"Jw" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
+"IE" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/obj/machinery/vending/snack/green,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "JD" = (
 /obj/effect/turf_decal/trimline/blue/filled/end{
@@ -1077,6 +1042,16 @@
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/grass,
 /area/shuttle/escape)
+"RQ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "Sl" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/computer/operating{
@@ -1136,6 +1111,20 @@
 	},
 /obj/item/hatchet,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"TQ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/mob/living/simple_animal/bot/medbot{
+	name = "\improper emergency medibot";
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/open/floor/iron{
+	dir = 1
+	},
 /area/shuttle/escape)
 "TT" = (
 /obj/effect/turf_decal/weather/dirt,
@@ -1199,12 +1188,29 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"Wc" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "Wr" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"Wy" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/tank_dispenser/oxygen{
+	layer = 2.7;
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Wz" = (
 /obj/effect/turf_decal/stripes/line,
@@ -1309,19 +1315,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"ZD" = (
-/obj/structure/flora/bush/generic/style_random,
-/obj/machinery/light/floor,
-/turf/open/floor/grass,
-/area/shuttle/escape)
 "ZL" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/banana,
-/turf/open/floor/grass,
-/area/shuttle/escape)
-"ZT" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 
@@ -1374,7 +1370,7 @@ UO
 yt
 UO
 UO
-GO
+il
 UO
 UO
 yt
@@ -1419,7 +1415,7 @@ Yu
 rg
 iV
 jO
-Jw
+pU
 gx
 gx
 GV
@@ -1452,7 +1448,7 @@ Yu
 Yu
 eq
 bg
-Jw
+pU
 gx
 gx
 gx
@@ -1485,7 +1481,7 @@ BG
 Yu
 Kv
 DQ
-Jw
+pU
 gx
 gx
 gx
@@ -1493,7 +1489,7 @@ gx
 (6,1,1) = {"
 VU
 Yu
-ht
+HD
 jZ
 yc
 vP
@@ -1506,7 +1502,7 @@ Wr
 Vv
 Ti
 Fo
-ZD
+Da
 Xm
 ZL
 LO
@@ -1518,7 +1514,7 @@ Zd
 Yu
 IB
 iO
-Jw
+pU
 gu
 WE
 WE
@@ -1551,7 +1547,7 @@ Kx
 Yu
 dP
 Hi
-Jw
+pU
 gu
 WE
 WE
@@ -1584,20 +1580,20 @@ YW
 Yu
 LY
 sm
-Jw
+pU
 gu
 WE
 WE
 "}
 (9,1,1) = {"
 VI
-eY
+RQ
 hJ
 lT
-ur
-xZ
+Hf
+Wy
 Yu
-CQ
+GE
 Zt
 VI
 Ts
@@ -1617,7 +1613,7 @@ Kx
 Yu
 Um
 DQ
-Jw
+pU
 gx
 gx
 GV
@@ -1634,7 +1630,7 @@ HV
 LG
 Ob
 Uy
-wX
+Fx
 Vv
 Fp
 qD
@@ -1642,7 +1638,7 @@ zs
 XK
 XK
 PP
-mq
+Wc
 ST
 wg
 PG
@@ -1650,7 +1646,7 @@ Zt
 gj
 Um
 cm
-Jw
+pU
 gx
 gx
 gx
@@ -1663,7 +1659,7 @@ WL
 WL
 Zg
 VI
-EI
+IE
 Zt
 VI
 Lm
@@ -1683,7 +1679,7 @@ Kx
 Yu
 Um
 Hi
-Jw
+pU
 gx
 gx
 gx
@@ -1716,7 +1712,7 @@ OS
 Yu
 Um
 Wz
-Jw
+pU
 gu
 WE
 WE
@@ -1749,7 +1745,7 @@ dj
 Yu
 QM
 DQ
-Jw
+pU
 gu
 WE
 WE
@@ -1757,7 +1753,7 @@ WE
 (14,1,1) = {"
 VU
 Yu
-iD
+pP
 og
 WL
 Zg
@@ -1770,7 +1766,7 @@ TK
 Cb
 Bt
 qD
-ZT
+vm
 Bo
 Ia
 XK
@@ -1782,7 +1778,7 @@ Zd
 Yu
 zD
 vx
-Jw
+pU
 gu
 WE
 WE
@@ -1813,9 +1809,9 @@ nA
 sV
 aA
 Yu
-DD
+TQ
 fT
-Jw
+pU
 gx
 gx
 GV
@@ -1848,7 +1844,7 @@ Yu
 Yu
 XY
 sF
-Jw
+pU
 gx
 gx
 gx
@@ -1881,7 +1877,7 @@ Yu
 BA
 He
 Sl
-Jw
+pU
 gx
 gx
 gx
@@ -1897,12 +1893,12 @@ WE
 WE
 VU
 Yu
-lV
+By
 rI
 rI
 rI
 rI
-Aw
+kR
 rI
 rI
 rI

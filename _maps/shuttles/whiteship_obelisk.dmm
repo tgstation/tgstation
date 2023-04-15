@@ -2,6 +2,12 @@
 "an" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/medbay)
+"at" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/abandoned)
 "bs" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
@@ -21,6 +27,20 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
+"cf" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/mob_spawn/corpse/human/damaged,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -187,17 +207,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/crew)
-"kE" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
-/obj/structure/table,
-/obj/effect/spawner/random/entertainment/money_medium,
-/obj/effect/spawner/random/entertainment/cigar,
-/obj/effect/turf_decal/tile/dark_blue/half,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "lP" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -255,35 +264,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned)
-"nG" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "whiteship_bridgewindows";
-	name = "Bridge Window Blastdoor Controls";
-	pixel_y = -1
-	},
-/obj/machinery/button/door{
-	id = "whiteship_windows";
-	name = "Exterior Window Blastdoor Control";
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/tile/dark_blue/half{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
-"nQ" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
 "oU" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
@@ -339,6 +319,13 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
+"sg" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "sm" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/entertainment/money_small,
@@ -438,6 +425,17 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
+"zG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/money_medium,
+/obj/effect/spawner/random/entertainment/cigar,
+/obj/effect/turf_decal/tile/dark_blue/half,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "AX" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -462,14 +460,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
-"Bw" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/tank_dispenser/oxygen,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/abandoned)
 "BH" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -620,20 +610,6 @@
 /obj/effect/spawner/random/structure/barricade,
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/bar)
-"Kv" = (
-/obj/structure/window/reinforced,
-/obj/machinery/light/small/broken/directional/west,
-/obj/machinery/button/door/directional/west{
-	name = "Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4;
-	id = "whiteship_westbolt"
-	},
-/obj/machinery/suit_storage_unit/spaceruin{
-	desc = "An industrial suit storage device carrying retro space suits. Neat!"
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/shuttle/abandoned)
 "KJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -657,20 +633,6 @@
 /obj/effect/turf_decal/tile/dark_blue/half,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
-"Mt" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/ash,
-/obj/effect/mob_spawn/corpse/human/damaged,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "MD" = (
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
@@ -680,6 +642,26 @@
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"Nz" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "whiteship_bridgewindows";
+	name = "Bridge Window Blastdoor Controls";
+	pixel_y = -1
+	},
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Exterior Window Blastdoor Control";
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "NG" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
@@ -738,22 +720,6 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
-"Qo" = (
-/obj/structure/table,
-/obj/machinery/door/window,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/fire{
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/toxin{
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/medical/minor_healing,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/abandoned/medbay)
 "Qp" = (
 /obj/machinery/vending/medical{
 	req_access = null
@@ -829,6 +795,20 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
+"Vx" = (
+/obj/structure/table,
+/obj/machinery/door/window,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire{
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/abandoned/medbay)
 "VI" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
@@ -911,6 +891,20 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/crew)
+"YL" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/light/small/broken/directional/west,
+/obj/machinery/button/door/directional/west{
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "whiteship_westbolt"
+	},
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/abandoned)
 "ZB" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -973,13 +967,13 @@ Bf
 (4,1,1) = {"
 Bf
 DE
-Qo
+Vx
 an
 ne
 hg
-Bw
+at
 cv
-Kv
+YL
 NI
 ZB
 Cv
@@ -1046,7 +1040,7 @@ SE
 oU
 WX
 Br
-Mt
+cf
 Lt
 Bl
 Sb
@@ -1062,9 +1056,9 @@ Wb
 qO
 RG
 cV
-nG
+Nz
 yY
-kE
+zG
 cV
 VX
 YA
@@ -1144,15 +1138,15 @@ Bf
 Bf
 qA
 qA
-nQ
-nQ
-nQ
-nQ
+sg
+sg
+sg
+sg
 qA
-nQ
-nQ
-nQ
-nQ
+sg
+sg
+sg
+sg
 qA
 qA
 Bf

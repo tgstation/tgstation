@@ -22,6 +22,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
 	///A pAI currently loaded into the modular computer.
 	var/obj/item/pai_card/inserted_pai
+	///Does the console update the crew manifest when the ID is removed?
+	var/crew_manifest_update = FALSE
 
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
@@ -278,6 +280,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!computer_id_slot)
 		return ..()
 
+	if(crew_manifest_update)
+		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
+
 	if(user)
 		if(!issilicon(user) && in_range(src, user))
 			user.put_in_hands(computer_id_slot)
@@ -458,7 +463,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process(delta_time)
+/obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -474,7 +479,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(idle_programs.program_state == PROGRAM_STATE_KILLED)
 			idle_threads.Remove(idle_programs)
 			continue
-		idle_programs.process_tick(delta_time)
+		idle_programs.process_tick(seconds_per_tick)
 		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
@@ -483,10 +488,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(active_program.program_state == PROGRAM_STATE_KILLED)
 			active_program = null
 		else
-			active_program.process_tick(delta_time)
+			active_program.process_tick(seconds_per_tick)
 			active_program.ntnet_status = get_ntnet_status()
 
-	handle_power(delta_time) // Handles all computer power interaction
+	handle_power(seconds_per_tick) // Handles all computer power interaction
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.

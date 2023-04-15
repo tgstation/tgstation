@@ -126,6 +126,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
+"aC" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aD" = (
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
@@ -153,6 +157,21 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
+"aH" = (
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"aI" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "aJ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig"
@@ -160,6 +179,23 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/shuttle/escape/brig)
+"aK" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"aL" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"aM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aN" = (
 /obj/structure/chair/stool/bar/directional/north{
@@ -348,13 +384,6 @@
 /obj/item/cautery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
 "bE" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -491,51 +520,20 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"ny" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"sk" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/grimy,
+"eM" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"tJ" = (
-/obj/machinery/flasher/directional/west{
-	id = "shuttle_flasher"
-	},
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = -6
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "EL" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"Ip" = (
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"SH" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"UM" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"XF" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
+"Sh" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -545,7 +543,7 @@ aa
 ab
 ab
 ab
-XF
+aK
 ab
 aT
 ab
@@ -567,16 +565,16 @@ ab
 ab
 ab
 ab
-ny
-tJ
-SH
+aC
+aH
+aL
 ab
 aE
-sk
+Sh
 aZ
 bc
 aZ
-sk
+Sh
 aE
 ab
 bp
@@ -591,9 +589,9 @@ ae
 al
 aq
 ab
-ny
-Ip
-UM
+aC
+aI
+aM
 ab
 aE
 aW
@@ -606,7 +604,7 @@ ab
 bp
 ab
 ab
-bC
+eM
 bE
 "}
 (4,1,1) = {"
@@ -615,9 +613,9 @@ af
 am
 ar
 ab
-ny
-Ip
-UM
+aC
+aI
+aM
 ab
 aE
 aW
@@ -630,7 +628,7 @@ ab
 ak
 bu
 bx
-bC
+eM
 bE
 "}
 (5,1,1) = {"
@@ -654,7 +652,7 @@ ab
 bp
 ab
 ab
-bC
+eM
 bE
 "}
 (6,1,1) = {"
@@ -678,7 +676,7 @@ bm
 bp
 bv
 by
-bC
+eM
 bE
 "}
 (7,1,1) = {"
@@ -702,7 +700,7 @@ ae
 ab
 ab
 ab
-bC
+eM
 bE
 "}
 (8,1,1) = {"
@@ -726,7 +724,7 @@ bn
 bi
 bw
 bz
-bC
+eM
 bE
 "}
 (9,1,1) = {"
@@ -750,7 +748,7 @@ bq
 bi
 bi
 bS
-bC
+eM
 bE
 "}
 (10,1,1) = {"
