@@ -19,6 +19,7 @@
 
 /datum/component/liquids_interaction/proc/AfterAttack(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	var/turf/turf_target = victim
 
 	if(!isturf(turf_target) || !turf_target.liquids)
 		return NONE
