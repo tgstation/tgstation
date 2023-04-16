@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 			screen = signal.data["done"] ? REQ_SCREEN_SENT : REQ_SCREEN_ERR
 
-			if(!silenced)
+			if(!silent)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
 
 /obj/machinery/requests_console/ui_data(mob/user)
