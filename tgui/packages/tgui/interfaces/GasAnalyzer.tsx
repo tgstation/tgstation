@@ -9,12 +9,12 @@ type GasmixHistory = {
   allGasmixes: Gasmix[];
 };
 
-export type GasAnalyzerData = {
+type GasAnalyzerData = {
   gasmixes: Gasmix[];
   autoUpdating: boolean;
 };
 
-export type GasAnalyzerHistoryData = {
+type GasAnalyzerHistoryData = {
   historyGasmixes: GasmixHistory[];
   historyViewMode: string;
   historyIndex: number;
