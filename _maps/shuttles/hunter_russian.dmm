@@ -18,7 +18,6 @@
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "bi" = (
@@ -96,6 +95,7 @@
 /obj/structure/sign/poster/contraband/communist_state{
 	pixel_x = -32
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "fN" = (
@@ -105,6 +105,7 @@
 /obj/structure/sign/poster/contraband/bountyhunters{
 	pixel_x = -32
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "gp" = (
@@ -151,7 +152,6 @@
 /turf/template_noop,
 /area/template_noop)
 "jL" = (
-/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -178,7 +178,6 @@
 "kL" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
 /obj/structure/kitchenspike,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
@@ -258,7 +257,6 @@
 "wz" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small/directional/west,
 /obj/item/soap,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
@@ -348,7 +346,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Dh" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -377,7 +374,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/cardboard,
 /obj/item/storage/box/drinkingglasses,
-/obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
@@ -494,7 +490,7 @@
 "JS" = (
 /obj/docking_port/mobile{
 	shuttle_id = "huntership";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
 	rechargeTime = 1800
 	},
@@ -532,7 +528,6 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Lg" = (
@@ -669,7 +664,6 @@
 	storage_type = /obj/item/tank/internals/oxygen/yellow
 	},
 /obj/effect/turf_decal/siding/red,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "WG" = (
