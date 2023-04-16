@@ -199,6 +199,7 @@
 
 /// Spellcasting with sign language
 /datum/component/sign_language/proc/can_cast_spell()
+	SIGNAL_HANDLER
 	if(check_signables_state() >= 1) // Cannot cast if anything but SIGN_OKAY
 		return COMSIG_CANCEL_SIGN_SPELL
 
