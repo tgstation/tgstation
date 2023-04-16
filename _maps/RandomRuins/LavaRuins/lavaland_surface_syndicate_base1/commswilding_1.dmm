@@ -73,18 +73,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"q" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/power/apc/syndicate{
-	name = "Telecommunications APC";
-	pixel_y = -25
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/telecomms)
 "s" = (
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -139,15 +127,15 @@
 /obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"K" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/telecomms)
-"M" = (
+"H" = (
 /obj/machinery/telecomms/relay/preset/ruskie{
 	use_power = 0
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/telecomms)
+"K" = (
+/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -173,6 +161,16 @@
 "W" = (
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
+"Y" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/telecomms)
 
 (1,1,1) = {"
 a
@@ -188,7 +186,7 @@ a
 f
 f
 j
-M
+H
 j
 f
 f
@@ -250,7 +248,7 @@ e
 p
 l
 u
-q
+Y
 f
 f
 "}

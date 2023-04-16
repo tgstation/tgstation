@@ -2,13 +2,6 @@
 "aA" = (
 /turf/template_noop,
 /area/template_noop)
-"be" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	req_access = list("syndicate")
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "bs" = (
 /obj/machinery/button/door{
 	id = "lavalandsyndi_mistake";
@@ -133,6 +126,12 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
+"ls" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "lR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -168,6 +167,21 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
+"oV" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"qh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "qY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -193,13 +207,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
-"tt" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/engine,
+"sc" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "uG" = (
 /obj/item/storage/toolbox/syndicate,
@@ -213,13 +227,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"wP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "xI" = (
@@ -248,6 +255,14 @@
 /area/ruin/syndicate_lava_base/testlab)
 "AS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"Ce" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "EC" = (
@@ -302,14 +317,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"Tb" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/ruin/syndicate_lava_base/testlab)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
@@ -320,14 +327,6 @@
 "Vp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"WR" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "XN" = (
@@ -404,7 +403,7 @@ XN
 uG
 em
 kE
-wP
+qh
 aA
 aA
 "}
@@ -444,13 +443,13 @@ me
 XS
 fY
 GD
-tt
+oV
 js
 kP
 IG
 kE
 xI
-be
+ls
 aA
 "}
 (7,1,1) = {"
@@ -465,7 +464,7 @@ rT
 IG
 Vp
 ef
-WR
+sc
 on
 "}
 (8,1,1) = {"
@@ -474,7 +473,7 @@ me
 AS
 oo
 JO
-Tb
+Ce
 Rp
 lR
 em

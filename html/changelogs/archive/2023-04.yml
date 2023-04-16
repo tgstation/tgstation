@@ -530,3 +530,24 @@
   vinylspiders:
   - bugfix: fixes a runtime that can occur if a circuit floor gets changed into something
       else.
+2023-04-16:
+  Cheshify:
+  - bugfix: The North Star has functional elevators once again.
+  Dawnseer:
+  - rscadd: Goliath cloak can be worn as a cloak that doesn't provide any armor benefits
+  SyncIt21:
+  - refactor: correctly type casts the turf into open type for the rcd mecha plating
+      action
+  - refactor: removes single letter variable names
+  - refactor: uses datum/ui component to get user for to_chat() instead of usr
+  carlarctg:
+  - qol: Set default IV transfer rate to maximum (5) instead of 0.
+  flowercuco:
+  - balance: syndiekits cost 20 TC instead of 25 TC
+  tf-4:
+  - bugfix: Colossuses are now actually able to trigger their final attack - be careful
+      when they drop below 10% HP!
+  vinylspiders:
+  - bugfix: spoon overlays will now update when you eat from them to reflect that
+      food = gone. it really is gone, you can stop beating yourself with the spoon.
+      oh god please stop--

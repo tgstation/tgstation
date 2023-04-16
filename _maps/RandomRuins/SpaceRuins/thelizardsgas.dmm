@@ -165,6 +165,35 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"rG" = (
+/obj/structure/closet/crate/secure/freezer{
+	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
+	locked = 0;
+	name = "The GOOD Stuff"
+	},
+/obj/machinery/power/apc/auto_name/directional/north{
+	coverlocked = 0;
+	network_id = null;
+	start_charge = 60
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/structure/cable,
+/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark/smooth_corner,
+/area/ruin/space/has_grav/thelizardsgas)
+"rX" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("lizardgas"="Plasma Supply");
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
 "ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /obj/machinery/door/airlock/external/glass,
@@ -230,26 +259,6 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/thelizardsgas)
-"AZ" = (
-/obj/structure/closet/crate/secure/freezer{
-	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
-	locked = 0;
-	name = "The GOOD Stuff"
-	},
-/obj/machinery/power/apc/auto_name/directional/north{
-	coverlocked = 0;
-	locked = 0;
-	network_id = null;
-	start_charge = 60
-	},
-/obj/structure/cable,
-/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark/smooth_corner,
-/area/ruin/space/has_grav/thelizardsgas)
 "Bi" = (
 /obj/structure/closet{
 	desc = "Why leave the chairs in a locker?";
@@ -297,15 +306,6 @@
 "EH" = (
 /turf/open/floor/iron/white/corner{
 	dir = 1
-	},
-/area/ruin/space/has_grav/thelizardsgas)
-"FJ" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("lizardgas"="Plasma Supply");
-	dir = 8
-	},
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
 	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Gr" = (
@@ -385,6 +385,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"LW" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "Mw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -508,13 +515,6 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
-/area/ruin/space/has_grav/thelizardsgas)
-"VV" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "Wh" = (
 /obj/machinery/light/directional/south,
@@ -675,7 +675,7 @@ CA
 Qg
 Qg
 mR
-AZ
+rG
 rs
 zz
 JY
@@ -730,7 +730,7 @@ Qg
 Qg
 mR
 bt
-FJ
+rX
 VP
 hl
 Gr
@@ -1002,7 +1002,7 @@ mR
 mR
 mR
 mR
-VV
+LW
 jN
 zn
 Wh
