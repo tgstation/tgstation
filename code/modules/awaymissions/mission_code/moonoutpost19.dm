@@ -32,6 +32,7 @@
 	power_light = FALSE
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 	icon_state = "awaycontent5"
+	outdoors = TRUE
 
 /area/awaymission/moonoutpost19/hive
 	name = "The Hive"
@@ -40,6 +41,19 @@
 	power_equip = FALSE
 	power_light = FALSE
 	icon_state = "awaycontent6"
+
+/area/awaymission/moonoutpost19/tent
+	name = "Research Tent"
+	icon_state = "awaycontent7"
+
+/area/awaymission/moonoutpost19/mines
+	name = "Mineral Excavation Tunnels"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	ambientsounds = list('sound/ambience/ambimine.ogg')
+	icon_state = "awaycontent8"
 
 //Fluff objects/structures.
 /obj/structure/fluff/meteor

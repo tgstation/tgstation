@@ -817,10 +817,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cD" = (
 /obj/machinery/mineral/processing_unit_console,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
+/turf/closed/wall,
 /area/awaymission/moonoutpost19/syndicate)
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7249,7 +7246,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "Pv" = (
-/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
+	on = 1
+	},
 /turf/open/misc/asteroid/moon{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -8179,6 +8178,17 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"VO" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/flashlight/flare{
+	on = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	temperature = 251
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "VQ" = (
 /obj/structure/alien/weeds,
 /obj/structure/flora/lunar_plant,
@@ -41186,7 +41196,7 @@ ca
 cp
 ca
 RS
-RS
+VO
 ca
 ca
 SL
