@@ -67,7 +67,7 @@
 		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
 
-/datum/component/stove/process(delta_time)
+/datum/component/stove/process(seconds_per_tick)
 	var/obj/machinery/real_parent = parent
 	if(real_parent.machine_stat & NOPOWER)
 		turn_off()

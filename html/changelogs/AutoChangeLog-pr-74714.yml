@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - rscadd: "Adds pAI cards to public areas on the North Star"

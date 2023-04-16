@@ -133,7 +133,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()

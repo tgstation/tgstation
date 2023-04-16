@@ -1,3 +1,4 @@
+// All the smoke variant particles.
 /particles/smoke
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
@@ -13,6 +14,9 @@
 	friction = 0.2
 	gravity = list(0, 0.95)
 	grow = 0.05
+
+/particles/smoke/burning
+	position = list(0, 0, 0)
 
 /particles/smoke/steam
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)

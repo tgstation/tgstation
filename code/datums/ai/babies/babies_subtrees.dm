@@ -4,10 +4,10 @@
 /datum/ai_planning_subtree/make_babies
 	var/chance = 5
 
-/datum/ai_planning_subtree/make_babies/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/make_babies/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
-	if(controller.pawn.gender != FEMALE || !DT_PROB(chance, delta_time))
+	if(controller.pawn.gender != FEMALE || !SPT_PROB(chance, seconds_per_tick))
 		return
 
 	var/partner_types = controller.blackboard[BB_BABIES_PARTNER_TYPES]

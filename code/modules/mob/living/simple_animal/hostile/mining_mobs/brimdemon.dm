@@ -233,7 +233,7 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/ore_sensor/process(delta_time)
+/obj/item/ore_sensor/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, ore_sensing_cooldown))
 		return
 	COOLDOWN_START(src, ore_sensing_cooldown, cooldown)

@@ -1825,7 +1825,7 @@
 		gravity_turf = get_turf(src)
 
 		if(!gravity_turf)//no gravity in nullspace
-			return 0
+			return FALSE
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)

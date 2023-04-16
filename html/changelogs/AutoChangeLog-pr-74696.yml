@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "null client error for balloon alert when toggling the electrolyser on/off via the UI"

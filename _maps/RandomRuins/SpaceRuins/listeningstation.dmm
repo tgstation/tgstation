@@ -463,11 +463,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "yH" = (
-/obj/machinery/power/apc/syndicate{
-	dir = 4;
-	name = "Syndicate Listening Post APC";
-	pixel_x = 25
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
