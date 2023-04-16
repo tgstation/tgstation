@@ -90,7 +90,6 @@
 	if (mapload && !opened)
 		. = INITIALIZE_HINT_LATELOAD
 
-	update_appearance()
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
@@ -98,6 +97,12 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
+
+	if(opened)
+		opened = FALSE //nessassary because open() proc will early return if its true
+		open(null)
+	else
+		update_appearance()
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
@@ -293,7 +298,8 @@
 	if(welded || locked)
 		return FALSE
 	if(strong_grab)
-		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
+		if(user)
+			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
@@ -344,20 +350,22 @@
 		thing.atom_storage?.close_all()
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
-	if(!can_open(user, force))
-		return FALSE
 	if(opened)
+		return FALSE
+	if(!can_open(user, force))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
 		return FALSE
 	welded = FALSE
 	locked = FALSE
-	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
+	if(user) //play a sound only if there is a mob to hear it
+		playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE
 	if(!dense_when_open)
 		set_density(FALSE)
 	dump_contents()
-	animate_door(FALSE)
+	if(user) //animate the door only if there is someone to see it
+		animate_door(FALSE)
 	update_appearance()
 
 	after_open(user, force)

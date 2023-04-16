@@ -94,9 +94,7 @@
 /obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
 	if(istype(peek_a_boo) && prob(50))
-		peek_a_boo.opened = TRUE
-		peek_a_boo.update_appearance()
-		peek_a_boo.after_open(null, FALSE)
+		peek_a_boo.open(null)
 
 	return peek_a_boo
 
@@ -129,9 +127,7 @@
 /obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/peek_a_boo = ..()
 	if(istype(peek_a_boo) && prob(50))
-		peek_a_boo.opened = TRUE
-		peek_a_boo.update_appearance()
-		peek_a_boo.after_open(null, FALSE)
+		peek_a_boo.open(null)
 
 	return peek_a_boo
 

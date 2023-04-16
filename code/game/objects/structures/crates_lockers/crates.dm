@@ -28,10 +28,8 @@
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_y = 0
 /obj/structure/closet/crate/Initialize(mapload)
-	. = ..()
-	if(opened)
-		dump_contents()
-	AddElement(/datum/element/climbable, climb_time = crate_climb_time * (opened ? 0.5 : 1), climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
+	return ..()
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -134,10 +132,7 @@
 	var/obj/structure/closet/crate/random_crate = new crate_path(loc)
 	random_crate.RegisterSignal(random_crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 	if (prob(50))
-		random_crate.opened = TRUE
-		random_crate.update_appearance()
-		random_crate.dump_contents()
-		random_crate.after_open(null, FALSE)
+		random_crate.open(null)
 
 	return INITIALIZE_HINT_QDEL
 

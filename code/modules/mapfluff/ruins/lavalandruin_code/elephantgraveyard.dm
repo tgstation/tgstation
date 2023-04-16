@@ -173,10 +173,12 @@
 			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
-	if(!opened)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
-	else
-		to_chat(user, span_notice("The grave has already been dug up."))
+	if(force)
+		return ..(force = TRUE)
+	to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+
+/obj/structure/closet/crate/grave/close(mob/living/user)
+	to_chat(user, span_notice("The grave has already been dug up."))
 
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
@@ -187,11 +189,7 @@
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
-					opened = TRUE
-					locked = TRUE
-					dump_contents()
-					update_appearance()
-					after_open(user, FALSE)
+					open(user, force = TRUE)
 					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
