@@ -1,7 +1,6 @@
 ///////////////////////////////////////////////////////////////
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
-#define SPACE_KEY "space"
 // We support two different map formats
 // It is kinda possible to process them together, but if we split them up
 // I can make optimization decisions more easily
@@ -847,7 +846,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			world.preloader_load(instance)
 	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
 	else if(!no_changeturf && old_area)
-		crds.transfer_area_lighting(old_area, crds.loc)
+		// Don't do contain/uncontain stuff, this happens a few lines up when the area actally changes
+		crds.on_change_area(old_area, crds.loc)
 	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
@@ -963,3 +963,9 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	grid_models.Cut()
 	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW
+
+#undef MAP_DMM
+#undef MAP_TGM
+#undef MAP_UNKNOWN
+#undef TRIM_TEXT
+#undef MAPLOADING_CHECK_TICK

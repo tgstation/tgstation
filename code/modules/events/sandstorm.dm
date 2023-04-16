@@ -15,7 +15,9 @@
 	earliest_start = 35 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
-	admin_setup = /datum/event_admin_setup/listed_options/sandstorm
+	min_wizard_trigger_potency = 6
+	max_wizard_trigger_potency = 7
+	admin_setup = list(/datum/event_admin_setup/listed_options/sandstorm)
 	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/sandstorm

@@ -1,5 +1,3 @@
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -90,22 +88,23 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/affected_biotype = MOB_ORGANIC
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_respiration_type = RESPIRATION_OXYGEN
+	var/affected_respiration_type = ALL
 	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
 	var/affected_organtype = ORGAN_ORGANIC
 
+	///The default reagent container for the reagent, used for icon generation
+	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
-
-	///The default reagent container for the reagent
-	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
-
 	/// Icon for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
 	var/fallback_icon
 	/// Icon state for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
 	var/fallback_icon_state
+	/// When ordered in a restaurant, what custom order do we create?
+	var/restaurant_order = /datum/custom_order/reagent/drink
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -157,11 +156,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * delta_time) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /*
 Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
@@ -193,13 +192,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, delta_time)
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * delta_time)
+	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
@@ -219,7 +218,7 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	return
 
 /// Called when an overdose starts

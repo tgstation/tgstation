@@ -64,8 +64,8 @@
 	/// The STRIPPABLE_ITEM_* key
 	var/key
 
-	/// Should we warn about dangerous clothing?
-	var/warn_dangerous_clothing = TRUE
+	/// Should we give feedback messages?
+	var/show_visible_message = TRUE
 
 /// Gets the item from the given source.
 /datum/strippable_item/proc/get_item(atom/source)
@@ -88,7 +88,7 @@
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 
-	equipping.item_start_equip(source, equipping, user, warn_dangerous_clothing)
+	equipping.item_start_equip(source, equipping, user, show_visible_message)
 	return TRUE
 
 /// The proc that places the item on the source. This should not yield.
@@ -132,7 +132,7 @@
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
+	to_chat(user, span_danger("You try to remove [source]'s [item.name]..."))
 	user.log_message("is stripping [key_name(source)] of [item].", LOG_ATTACK, color="red")
 	source.log_message("is being stripped of [item] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 	item.add_fingerprint(src)

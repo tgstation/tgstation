@@ -128,6 +128,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	st=1
 fi;
 
+part "can_perform_action argument check"
+if $grep 'can_perform_action\(\s*\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found a can_perform_action() proc with improper arguments.${NC}"
+	st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
@@ -198,6 +205,12 @@ fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
 	section "regexes requiring PCRE2"
+	part "empty variable values"
+	if $grep -PU '{\n\t},' $map_files; then
+		echo
+		echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
+		st=1
+	fi;
 	part "to_chat sanity"
 	if $grep -P 'to_chat\((?!.*,).*\)' $code_files; then
 		echo

@@ -106,8 +106,8 @@ Slimecrossing Weapons
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/gun/magic/bloodchill/process(delta_time)
-	charge_timer += delta_time
+/obj/item/gun/magic/bloodchill/process(seconds_per_tick)
+	charge_timer += seconds_per_tick
 	if(charge_timer < recharge_rate || charges >= max_charges)
 		return FALSE
 	charge_timer = 0
@@ -125,9 +125,6 @@ Slimecrossing Weapons
 /obj/projectile/magic/bloodchill
 	name = "blood ball"
 	icon_state = "pulse0_bl"
-	damage = 0
-	damage_type = OXY
-	nodamage = TRUE
 	hitsound = 'sound/effects/splat.ogg'
 
 /obj/projectile/magic/bloodchill/on_hit(mob/living/target)

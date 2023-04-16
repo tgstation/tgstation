@@ -53,7 +53,7 @@
 	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
 		if(limb.body_part == HEAD || limb.body_part == CHEST)
 			continue
-		if(limb.dismemberable)
+		if(!(limb.bodypart_flags & BODYPART_UNREMOVABLE))
 			parts += limb
 		else
 			strong_limbs++
@@ -84,6 +84,7 @@
 	overlay_icon_state = "bg_demon_border"
 
 	buttontooltipstyle = "cult"
+	button_icon = "icons/mob/actions/actions_cult.dmi"
 	button_icon_state = "cult_mark"
 	/// Where is nar nar? Are we even looking?
 	var/tracking = FALSE

@@ -25,7 +25,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	faction = list("mushroom")
+	faction = list(FACTION_MUSHROOM)
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -49,10 +49,10 @@
 	else
 		. += span_info("It looks like it's been roughed up.")
 
-/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/mushroom/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		adjustBruteLoss(-1 * delta_time)
+		adjustBruteLoss(-1 * seconds_per_tick)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize(mapload)//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
@@ -189,7 +189,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/bullet_act(obj/projectile/P)
 	. = ..()
-	if(P.nodamage)
+	if(P.damage > 0 && P.damage_type == BRUTE)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/harvest()

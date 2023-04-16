@@ -5,7 +5,7 @@
 	/// Static typecache list of potentially dangerous objs
 	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
-/datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
@@ -16,7 +16,7 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/current_target = weak_target?.resolve()
 	if (targetting_datum.can_attack(living_mob, current_target))
-		finish_action(controller, succeeded = TRUE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	controller.blackboard[target_key] = null
@@ -50,6 +50,11 @@
 		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
+
+/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, ...)
+	. = ..()
+	if (succeeded)
+		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
 
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

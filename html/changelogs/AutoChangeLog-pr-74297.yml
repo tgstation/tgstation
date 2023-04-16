@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - balance: "Engineer Borgs now have a tool to manipulate material stacks (and also tile stacks). This replaces the R-Glass tool."

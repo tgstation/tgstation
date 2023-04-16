@@ -253,7 +253,7 @@
 					else
 						M_job = "Silicon-based"
 
-				else if(isanimal(M)) //simple animals
+				else if(isanimal_or_basicmob(M)) //simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
 					else if(isslime(M))

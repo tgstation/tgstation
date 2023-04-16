@@ -164,14 +164,66 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	reagent_flags = OPENCONTAINER
+	base_icon_state = "bowl"
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
+	fill_icon_thresholds = list(0)
+	fill_icon_state = "fullbowl"
+	fill_icon = 'icons/obj/food/soupsalad.dmi'
+
+	volume = SOUP_SERVING_SIZE + 5
+	gulp_size = 3
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+	AddElement(/datum/element/foodlike_drink)
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent( \
+		/datum/component/takes_reagent_appearance, \
+		on_icon_changed = CALLBACK(src, PROC_REF(on_cup_change)), \
+		on_icon_reset = CALLBACK(src, PROC_REF(on_cup_reset)), \
+		base_container_type = /obj/item/reagent_containers/cup/bowl, \
+	)
+
+/obj/item/reagent_containers/cup/bowl/on_cup_change(datum/glass_style/style)
+	. = ..()
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/cup/bowl/on_cup_reset()
+	. = ..()
+	fill_icon_thresholds ||= list(0)
+
+/**
+ * Override standard reagent examine
+ * so that anyone examining a bowl of soup sees the soup but nothing else (unless they have sci goggles)
+ */
+/obj/item/reagent_containers/cup/bowl/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
+	SIGNAL_HANDLER
+
+	if(can_see_insides || reagents.total_volume <= 0)
+		return
+
+	var/unknown_volume = 0
+	var/list/soups_found = list()
+	for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
+		if(istype(current_reagent, /datum/reagent/consumable/nutriment/soup))
+			soups_found += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+		else
+			unknown_volume += current_reagent.volume
+
+	if(!length(soups_found))
+		// There was no soup in the pot, do normal examine
+		return
+
+	examine_list += "Inside, you can see:"
+	examine_list += soups_found
+	if(unknown_volume > 0)
+		examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+
+	return STOP_GENERIC_REAGENT_EXAMINE
 
 // empty salad for custom salads
 /obj/item/food/salad/empty

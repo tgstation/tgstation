@@ -11,7 +11,7 @@
 	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
 	/// What material do we get when we fold this box?
-	var/foldable = /obj/item/stack/sheet/cardboard
+	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// What drawing will we get on the face of the box?
 	var/illustration = "writing"
 
@@ -39,18 +39,18 @@
 /obj/item/storage/box/attack_self(mob/user)
 	..()
 
-	if(!foldable || (flags_1 & HOLOGRAM_1))
+	if(!foldable_result || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
 		balloon_alert(user, "items inside!")
 		return
-	if(!ispath(foldable))
+	if(!ispath(foldable_result))
 		return
 
+	var/obj/item/result = new foldable_result(user.drop_location())
 	balloon_alert(user, "folded")
-	var/obj/item/I = new foldable
 	qdel(src)
-	user.put_in_hands(I)
+	user.put_in_hands(result)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/package_wrap))

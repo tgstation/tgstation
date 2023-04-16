@@ -1,6 +1,5 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
 #define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
-#define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
 #define STATE_CHANGING_STATUS "changing_status"
@@ -117,7 +116,7 @@
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
-		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(!IS_TRAITOR(user))
 			to_chat(user, span_danger("You get the feeling this is a bad idea."))
 			return
 		var/obj/item/card/emag/battlecruiser/caller_card = emag_card
@@ -219,12 +218,6 @@
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
-		if ("emergency_meeting")
-			if(!check_holidays(APRIL_FOOLS))
-				return
-			if (!authenticated_as_silicon_or_captain(usr))
-				return
-			emergency_meeting(usr)
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_silicon_or_captain(usr) && !syndicate)
 				return
@@ -712,30 +705,13 @@
 
 	return length(CONFIG_GET(keyed_list/cross_server)) > 0
 
-/**
- * Call an emergency meeting
- *
- * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc.
- * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing.
- * See the SScommunications proc definition for more detail, in short, teleports the entire crew to
- * the bridge for a meetup. Should only really happen during april fools.
- * Arguments:
- * * user - Mob who called the meeting
- */
-/obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
-	if(!SScommunications.can_make_emergency_meeting(user))
-		to_chat(user, span_alert("The emergency meeting button doesn't seem to work right now. Please stand by."))
-		return
-	SScommunications.emergency_meeting(user)
-	deadchat_broadcast(" called an emergency meeting from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
-
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = issilicon(user)
 	if(!SScommunications.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
-	if(!input || !user.canUseTopic(src, !issilicon(usr)))
+	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))
 		//Adds slurs and so on. Someone should make this use languages too.
@@ -844,15 +820,20 @@
 	// If we have a certain amount of ghosts, we'll add some more !!fun!! options to the list
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
 
-	// Pirates require empty space for the ship, and ghosts for the pirates obviously
-	if(!SSmapping.is_planetary() && (num_ghosts >= MIN_GHOSTS_FOR_PIRATES))
-		hack_options += HACK_PIRATE
-	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
-	if(!SSmapping.is_planetary() && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
-		hack_options += HACK_FUGITIVES
-	// If less than a certain percent of the population is ghosts, consider sleeper agents
-	if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
-		hack_options += HACK_SLEEPER
+	// Pirates / Fugitives have enough lead in time that there's no point summoning them if the shuttle is called
+	// Both of these events also summon space ships and so cannot run on planetary maps
+	if (EMERGENCY_IDLE_OR_RECALLED && !SSmapping.is_planetary())
+		// Pirates require ghosts for the pirates obviously
+		if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES)
+			hack_options += HACK_PIRATE
+		// Fugitives require ghosts for both fugitives and hunters (Please no waldo)
+		if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES)
+			hack_options += HACK_FUGITIVES
+
+	if (!EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		// If less than a certain percent of the population is ghosts, consider sleeper agents
+		if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
+			hack_options += HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
 	message_admins("[ADMIN_LOOKUPFLW(hacker)] hacked a [name] located at [ADMIN_VERBOSEJMP(src)], resulting in: [picked_option]!")

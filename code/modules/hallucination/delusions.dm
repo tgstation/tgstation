@@ -204,18 +204,19 @@
 	affects_us = FALSE
 
 /datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
-	delusion_icon_file = get_dynamic_human_icon( \
-		mob_spawn_path = pick( \
-			/obj/effect/mob_spawn/corpse/human/syndicatesoldier, \
-			/obj/effect/mob_spawn/corpse/human/syndicatecommando, \
-			/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper, \
-		), \
-		r_hand = pick( \
-			/obj/item/knife/combat/survival, \
-			/obj/item/melee/energy/sword/saber, \
-			/obj/item/gun/ballistic/automatic/pistol, \
-			/obj/item/gun/ballistic/automatic/c20r, \
-			/obj/item/gun/ballistic/shotgun/bulldog, \
-		), \
-	)
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(
+		mob_spawn_path = pick(
+			/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+			/obj/effect/mob_spawn/corpse/human/syndicatecommando,
+			/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper,
+		),
+		r_hand = pick(
+			/obj/item/knife/combat/survival,
+			/obj/item/melee/energy/sword/saber,
+			/obj/item/gun/ballistic/automatic/pistol,
+			/obj/item/gun/ballistic/automatic/c20r,
+			/obj/item/gun/ballistic/shotgun/bulldog,
+		),
+	))
+
 	return ..()

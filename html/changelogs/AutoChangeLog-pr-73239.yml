@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Custom named drinks (with a pen) no longer reset after their glass volume updates"

@@ -139,13 +139,11 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "as" = (
@@ -155,9 +153,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/sbc_corvette)
 "au" = (
@@ -167,13 +163,11 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/zipties,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "av" = (
@@ -195,7 +189,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "ay" = (
-/obj/machinery/computer/secure_data/syndie{
+/obj/machinery/computer/records/security/syndie{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
@@ -326,18 +320,16 @@
 /area/shuttle/sbc_corvette)
 "aS" = (
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/flashlight/seclite{
 	pixel_x = 4;
 	pixel_y = 3
 	},
 /obj/item/flashlight/seclite,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aT" = (

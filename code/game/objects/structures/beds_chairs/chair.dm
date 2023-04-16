@@ -156,7 +156,7 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	color = rgb(255,255,255)
+	color = rgb(255, 255, 255)
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
@@ -204,19 +204,19 @@
 	update_armrest()
 
 /obj/structure/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(70, 47, 28)
 
 /obj/structure/chair/comfy/beige
-	color = rgb(255,253,195)
+	color = rgb(240, 238, 198)
 
 /obj/structure/chair/comfy/teal
-	color = rgb(0,255,255)
+	color = rgb(117, 214, 214)
 
 /obj/structure/chair/comfy/black
-	color = rgb(167,164,153)
+	color = rgb(61, 60, 56)
 
 /obj/structure/chair/comfy/lime
-	color = rgb(255,251,0)
+	color = rgb(193, 248, 104)
 
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
@@ -281,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(!usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+		if(!usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
 		usr.visible_message(span_notice("[usr] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
 		var/obj/item/C = new item_chair(loc)
@@ -477,7 +477,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \

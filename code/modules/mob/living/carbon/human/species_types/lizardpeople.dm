@@ -53,8 +53,20 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
+/datum/species/lizard/on_species_gain(mob/living/carbon/new_lizard, datum/species/old_species, pref_load)
+	. = ..()
+	if(ishuman(new_lizard))
+		update_mail_goodies(new_lizard)
+
+/datum/species/lizard/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/lizard
+		)
+	return ..()
+
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)
@@ -178,19 +190,19 @@ Lizard subspecies: SILVER SCALED
 	///See above
 	var/old_eye_color_right
 
-/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	var/mob/living/carbon/human/new_silverscale = C
-	old_mutcolor = C.dna.features["mcolor"]
-	old_eye_color_left = new_silverscale.eye_color_left
-	old_eye_color_right = new_silverscale.eye_color_right
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/new_silverscale, datum/species/old_species, pref_load)
+	var/mob/living/carbon/human/silverscale = new_silverscale
+	old_mutcolor = new_silverscale.dna.features["mcolor"]
+	old_eye_color_left = silverscale.eye_color_left
+	old_eye_color_right = silverscale.eye_color_right
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
-	new_silverscale.eye_color_left = "#0000a0"
-	new_silverscale.eye_color_right = "#0000a0"
+	silverscale.eye_color_left = "#0000a0"
+	silverscale.eye_color_right = "#0000a0"
 	..()
-	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
+	silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
-/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/C)
-	var/mob/living/carbon/human/was_silverscale = C
+/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/old_silverscale, datum/species/new_species, pref_load)
+	var/mob/living/carbon/human/was_silverscale = old_silverscale
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
 	was_silverscale.eye_color_left = old_eye_color_left
 	was_silverscale.eye_color_right = old_eye_color_right

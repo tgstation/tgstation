@@ -167,6 +167,14 @@
 		/obj/item/clothing/suit/wizrobe/marisa/fake,
 	)
 
+/obj/effect/spawner/costume/tape_wizard
+	name = "tape wizard costume spawner"
+	items = list(
+		/obj/item/clothing/head/wizard/tape/fake,
+		/obj/item/clothing/suit/wizrobe/tape/fake,
+		/obj/item/staff/tape,
+	)
+
 /obj/effect/spawner/costume/cutewitch
 	name = "cute witch costume spawner"
 	items = list(

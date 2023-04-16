@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
-	blocks_emissive = NONE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	///ID used to determine what lift types we can merge with
 	var/lift_id = BASIC_LIFT_ID
@@ -398,13 +398,18 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(14, 44) * collision_lethality * damage_multiplier
-				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
-				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
-				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+				var/damage = 0
+				if(prob(15)) //sorry buddy, luck wasn't on your side
+					damage = 29 * collision_lethality * damage_multiplier
+				else
+					damage = rand(7, 21) * collision_lethality * damage_multiplier
+				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+				collided.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+				log_combat(src, collided, "collided with")
 
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue

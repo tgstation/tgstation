@@ -1,8 +1,3 @@
-//These globs are to make sure that each flora instance doesn't have to make a new typepath if its type already made it; aka performance junk
-GLOBAL_LIST_EMPTY(flora_required_tools_typepaths)
-GLOBAL_LIST_EMPTY(flora_disallowed_tools_typepaths)
-GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
-
 /obj/structure/flora
 	name = "flora"
 	desc = "Some sort of plant."
@@ -19,13 +14,6 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
 	/// Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
 	var/product_types
-	/// A lazylist typecache of items that can harvest this flora.
-	/// Will be set automatically on Initialization depending on flora_flags.
-	/// Paths in this list and their subtypes will be able to harvest the flora.
-	var/required_tools
-	/// A lazylist typecache of items that will be excluded from required_tools
-	/// Paths in this list disallows items from harvesting this flora if that item is a type of this path
-	var/disallowed_tools
 	/// If the user is able to harvest this with their hands
 	var/harvest_with_hands = FALSE
 	/// The "verb" to use when the user harvests the flora
@@ -34,8 +22,6 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	var/harvest_verb_suffix = "s"
 	/// If the user is allowed to uproot the flora
 	var/can_uproot = TRUE
-	/// What tools are allowed to be used to uproot the flora
-	var/uprooting_tools = list(/obj/item/shovel)
 	var/uprooted = FALSE
 	var/previous_rotation = 0
 
@@ -66,34 +52,13 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
 
-/obj/structure/flora/Initialize(mapload)
-	. = ..()
-	if(!required_tools)
-		required_tools = list()
-		if(flora_flags & FLORA_WOODEN)
-			required_tools += FLORA_HARVEST_WOOD_TOOLS //This list does not include TOOL_SAW tools, they are handled seperately in can_harvest() for the purpose of on/off states
-		if(flora_flags & FLORA_STONE)
-			required_tools += FLORA_HARVEST_STONE_TOOLS
-
-	//ugly-looking performance optimization. what the glob bro
-	if(!GLOB.flora_required_tools_typepaths[type])
-		GLOB.flora_required_tools_typepaths[type] = typecacheof(required_tools)
-	if(!GLOB.flora_disallowed_tools_typepaths[type])
-		GLOB.flora_disallowed_tools_typepaths[type] = typecacheof(disallowed_tools)
-	if(!GLOB.flora_uprooting_tools_typepaths[type])
-		GLOB.flora_uprooting_tools_typepaths[type] = typecacheof(uprooting_tools)
-
-	required_tools = GLOB.flora_required_tools_typepaths[type]
-	disallowed_tools = GLOB.flora_disallowed_tools_typepaths[type]
-	uprooting_tools = GLOB.flora_uprooting_tools_typepaths[type]
-
 /obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
 	if(flags_1 & HOLOGRAM_1)
 		balloon_alert(user, "it goes right through!")
 		return ..()
-	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools))
+	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
 				span_notice("You start to replant [src]..."))
@@ -191,12 +156,6 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		return null
 
 	if(harvesting_item)
-		//Check if its disallowed first, because we wanna cut it down in its tracks if so
-		if(is_type_in_typecache(harvesting_item, disallowed_tools))
-			return FALSE
-		//If its a required_tool then it skips all checks and gets forced to succeed (Unless its also disallowed. Which is... weird.)
-		if(is_type_in_typecache(harvesting_item, required_tools))
-			return TRUE
 		//Check to see if wooden flora is being attacked by a saw item (letting the items on/off state control this is better than putting them in the list)
 		if((flora_flags & FLORA_WOODEN) && (harvesting_item.tool_behaviour == TOOL_SAW))
 			return TRUE
@@ -330,7 +289,6 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
-
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
 
 ///Return a see_through_map, examples in seethrough.dm

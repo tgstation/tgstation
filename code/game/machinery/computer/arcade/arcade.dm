@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/mecha/ripley = 1,
 		/obj/item/toy/mecha/ripleymkii = 1,
@@ -59,13 +60,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/abductor = 2,
 		/obj/item/toy/plush/abductor/agent = 2,
 		/obj/item/toy/plush/greek_cucumber = 2,
-		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/storage/belt/military/snack/full = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 1,
 		/obj/item/toy/foamfinger = 2,
-		/obj/item/clothing/glasses/trickblindfold = 2))
+		/obj/item/clothing/glasses/trickblindfold = 2,
+		/obj/item/clothing/mask/party_horn = 2,
+		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"

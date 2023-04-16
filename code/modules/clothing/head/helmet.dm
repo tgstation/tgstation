@@ -480,7 +480,7 @@
 /obj/item/clothing/head/helmet/rus_helmet/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/helmet)
+	create_storage(storage_type = /datum/storage/pockets/helmet)
 
 /obj/item/clothing/head/helmet/rus_ushanka
 	name = "battle ushanka"

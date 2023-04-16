@@ -17,7 +17,7 @@
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
+	if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
@@ -27,9 +27,6 @@
 
 /datum/antagonist/obsessed/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	var/policy = get_policy(ROLE_OBSESSED)
-	if(policy)
-		to_chat(owner, policy)
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()

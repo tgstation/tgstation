@@ -83,7 +83,7 @@
 	logging_desc = "Syndicate boarding party"
 
 /datum/shuttle_loan_situation/department_resupply/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
-	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
 	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
@@ -193,14 +193,14 @@
 	logging_desc = "Shuttle full of spiders"
 
 /datum/shuttle_loan_situation/spider_gift/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
-	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/simple_animal/hostile/giant_spider)
-	spawn_list.Add(/mob/living/simple_animal/hostile/giant_spider)
-	spawn_list.Add(/mob/living/simple_animal/hostile/giant_spider/nurse)
+	spawn_list.Add(/mob/living/basic/giant_spider)
+	spawn_list.Add(/mob/living/basic/giant_spider)
+	spawn_list.Add(/mob/living/basic/giant_spider/nurse)
 	if(prob(50))
-		spawn_list.Add(/mob/living/simple_animal/hostile/giant_spider/hunter)
+		spawn_list.Add(/mob/living/basic/giant_spider/hunter)
 
 	var/turf/victim_turf = pick_n_take(empty_shuttle_turfs)
 

@@ -215,7 +215,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	eject_disk(user)
@@ -2301,6 +2301,9 @@
 /obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)
 	SIGNAL_HANDLER
 	set_connected_scanner(null)
+
+#undef GENETIC_DAMAGE_PULSE_UNIQUE_IDENTITY
+#undef GENETIC_DAMAGE_PULSE_UNIQUE_FEATURES
 
 #undef ENZYME_COPY_BASE_COOLDOWN
 #undef INJECTOR_TIMEOUT
