@@ -176,8 +176,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "oW" = (
@@ -318,7 +318,6 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "Jm" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Syndicate Drop Ship APC";
@@ -326,6 +325,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Jv" = (
