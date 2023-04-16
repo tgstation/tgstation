@@ -7,7 +7,7 @@
 	template_height = 25
 	template_width = 33
 	weight = 8
-	station_name = "Meta Station"
+	station_name = "MetaStation"
 
 /datum/map_template/random_engines/meta_singularity
 	name = "Meta Singularity"
@@ -17,4 +17,4 @@
 	template_height = 25
 	template_width = 33
 	weight = 8
-	station_name = "Meta Station"
+	station_name = "MetaStation"
