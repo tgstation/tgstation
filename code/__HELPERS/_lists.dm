@@ -303,9 +303,12 @@
 			.[current_path] = TRUE
 		return
 
-	// Ok so this is more a HAHA ISN'T THIS FUNNY GUYS thing, but unrolling what gets fed into typesof() here is measurably faster
-	// It saves like, 10% of the cpu time of the proc. so not great but it's for sure something
-	// Isn't this language grand
+	// We're basically just feeding the passed in paths into typesof(), and then associating all their subtypes with TRUE
+	// The messy part here is me unrolling that loop slightly. See typesof() will accept any amount of types to get the subtypes of
+	// It's faster (very slightly but still) to pass in groups of types rather then 1 at a time
+	// That's what is going on here, we divide the pathlist into groups of 5, and if we go out of its size we just pass in null (which does nothing)
+	// This tactic would typically be done by a compiler, but old byond she doesn't think that hard
+	// It's only barely worth it but I think it's kinda fun
 	var/pathlen = length(pathlist)
 	for(var/i in 1 to ROUND_UP(pathlen / 5))
 		for(var/subpath in typesof(pathlist[i], (i + 1 <= pathlen) ? pathlist[i + 1] : null, \
@@ -381,9 +384,12 @@
 	for(var/list/working as anything in groups)
 		var/value = pathlist[working[1]]
 		var/pathlen = length(working)
-		// Ok so this is more a HAHA ISN'T THIS FUNNY GUYS thing, but unrolling what gets fed into typesof() here is measurably faster
-		// It saves like, 10% of the cpu time of the proc. so not great but it's for sure something
-		// Isn't this language grand
+		// We're basically just feeding the passed in paths into typesof(), and then associating all their subtypes with TRUE
+		// The messy part here is me unrolling that loop slightly. See typesof() will accept any amount of types to get the subtypes of
+		// It's faster (very slightly but still) to pass in groups of types rather then 1 at a time
+		// That's what is going on here, we divide the pathlist into groups of 5, and if we go out of its size we just pass in null (which does nothing)
+		// This tactic would typically be done by a compiler, but old byond she doesn't think that hard
+		// It's only barely worth it but I think it's kinda fun
 		for(var/i in 1 to ROUND_UP(pathlen / 4))
 			for(var/subpath in typesof(working[i], (i + 1 <= pathlen) ? working[i + 1] : null, \
 				(i + 2 <= pathlen) ? working[i + 2] : null, (i + 3 <= pathlen) ? working[i + 3] : null))
