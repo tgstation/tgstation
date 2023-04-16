@@ -199,19 +199,8 @@
 
 /// Spellcasting with sign language
 /datum/component/sign_language/proc/can_cast_spell()
-	switch(check_signables_state()) /// Copy+paste cringe but on_try_speech spams chat every time you pick up two items
-		if(SIGN_HANDS_FULL) // Full hands
-			return COMSIG_CANCEL_SIGN_SPELL
-		if(SIGN_CUFFED) // Restrained
-			return COMSIG_CANCEL_SIGN_SPELL
-		if(SIGN_ARMLESS) // No arms
-			return COMSIG_CANCEL_SIGN_SPELL
-		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
-			return COMSIG_CANCEL_SIGN_SPELL
-		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
-			return COMSIG_CANCEL_SIGN_SPELL
-		if(SIGN_ONE_HAND) // Only one hand
-			return COMSIG_CANCEL_SIGN_SPELL
+	if(check_signables_state() >= 1) // Cannot cast if anything but SIGN_OKAY
+		return COMSIG_CANCEL_SIGN_SPELL
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
