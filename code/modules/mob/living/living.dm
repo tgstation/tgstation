@@ -281,8 +281,6 @@
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
-	if(resting)
-		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PULL, AM, force) & COMSIG_LIVING_CANCEL_PULL)
 		return FALSE
 	if(SEND_SIGNAL(AM, COMSIG_LIVING_TRYING_TO_PULL, src, force) & COMSIG_LIVING_CANCEL_PULL)
@@ -2260,6 +2258,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
 /mob/living/proc/on_floored_start()
+	if(mind) // reset marital art combo streaks if on floor
+		mind.martial_art.reset_streak()
+
 	if(body_position == STANDING_UP) //force them on the ground
 		set_lying_angle(pick(90, 270))
 		set_body_position(LYING_DOWN)

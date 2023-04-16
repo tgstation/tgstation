@@ -170,6 +170,8 @@
 	SIGNAL_HANDLER
 	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
+	if(mind) // reset marital art combo streaks
+		mind.martial_art.reset_streak()
 
 /// Called when [TRAIT_INCAPACITATED] is removed from the mob.
 /mob/living/proc/on_incapacitated_trait_loss(datum/source)

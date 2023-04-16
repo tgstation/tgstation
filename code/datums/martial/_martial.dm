@@ -28,7 +28,10 @@
 /datum/martial_art/proc/grab_act(mob/living/A, mob/living/D)
 	return MARTIAL_ATTACK_INVALID
 
-/datum/martial_art/proc/can_use(mob/living/L)
+/datum/martial_art/proc/can_use(mob/living/user)
+	// no using martial arts while on the floor
+	if(user.body_position == LYING_DOWN || user.incapacitated())
+		return FALSE
 	return TRUE
 
 /datum/martial_art/proc/add_to_streak(element, mob/living/D)

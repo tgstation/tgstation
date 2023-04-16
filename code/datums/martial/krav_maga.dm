@@ -117,12 +117,16 @@
 	return TRUE
 
 /datum/martial_art/krav_maga/grab_act(mob/living/attacker, mob/living/defender)
+	if(!can_use(attacker))
+		return FALSE
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "grabbed (Krav Maga)")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(mob/living/attacker, mob/living/defender)
+	if(!can_use(attacker))
+		return FALSE
 	if(check_streak(attacker, defender))
 		return TRUE
 	log_combat(attacker, defender, "punched")
@@ -146,6 +150,8 @@
 	return TRUE
 
 /datum/martial_art/krav_maga/disarm_act(mob/living/attacker, mob/living/defender)
+	if(!can_use(attacker))
+		return FALSE
 	if(check_streak(attacker, defender))
 		return TRUE
 	var/obj/item/stuff_in_hand = null

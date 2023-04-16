@@ -12,6 +12,9 @@
 	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/A, mob/living/D, grab_attack)
+	if(!can_use(A))
+		return FALSE
+
 	var/atk_verb
 	switch(rand(1,8))
 		if(1)

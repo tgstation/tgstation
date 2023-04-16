@@ -3,6 +3,8 @@
 	id = MARTIALART_MUSHPUNCH
 
 /datum/martial_art/mushpunch/harm_act(mob/living/A, mob/living/D)
+	if(!can_use(A))
+		return FALSE
 	var/atk_verb
 	to_chat(A, span_spider("You begin to wind up an attack..."))
 	if(!do_after(A, 2.5 SECONDS, target = D))

@@ -123,12 +123,16 @@
 	dying.death()
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/A, mob/living/D)
+	if(!can_use(A))
+		return FALSE
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/A, mob/living/D)
+	if(!can_use(A))
+		return FALSE
 	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return TRUE
@@ -137,6 +141,8 @@
 	return FALSE
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/A, mob/living/D)
+	if(!can_use(A))
+		return FALSE
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return TRUE
