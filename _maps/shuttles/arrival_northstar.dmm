@@ -97,7 +97,6 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/machinery/light/red/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "A" = (
@@ -145,7 +144,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "J" = (
-/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
@@ -172,6 +170,11 @@
 "P" = (
 /obj/effect/turf_decal/trimline/red/warning,
 /turf/open/floor/pod,
+/area/shuttle/arrival)
+"V" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/arrival)
 "W" = (
 /obj/effect/turf_decal/trimline/red/corner,
@@ -240,7 +243,7 @@ Z
 "}
 (8,1,1) = {"
 t
-F
+V
 P
 b
 J
