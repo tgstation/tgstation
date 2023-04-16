@@ -237,6 +237,9 @@
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
+///How long should we remain stationary for?
+#define BB_STATIONARY_SECONDS "BB_stationary_time_in_seconds"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
