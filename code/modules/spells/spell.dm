@@ -380,8 +380,7 @@
 			return FALSE
 		// Handle sign language
 		else if(HAS_TRAIT(living_owner, TRAIT_SIGN_LANG))
-			var/sigreturn = SEND_SIGNAL(living_owner, COMSIG_CARBON_TRY_SIGN_SPELL)
-			if(sigreturn & COMSIG_CANCEL_SIGN_SPELL)
+			if(SEND_SIGNAL(living_owner, COMSIG_CARBON_TRY_SIGN_SPELL) & COMSIG_CANCEL_SIGN_SPELL)
 				if(feedback)
 					to_chat(owner, span_warning("You can't sign the words to invoke [src]!"))
 				return FALSE
