@@ -15,6 +15,7 @@
 	description = "Seemingly plucked from a tropical destination, this beach is calm and cool, with the salty waves roaring softly in the background. \
 	Comes with a rustic wooden bar and suicidal bartender."
 	suffix = "lavaland_biodome_beach.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/biodome/winter
 	name = "Biodome Winter"
@@ -22,12 +23,14 @@
 	description = "For those getaways where you want to get back to nature, but you don't want to leave the fortified military compound where you spend your days. \
 	Includes a unique(*) laser pistol display case, and the recently introduced I.C.E(tm)."
 	suffix = "lavaland_surface_biodome_winter.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/biodome/clown
 	name = "Biodome Clown Planet"
 	id = "biodome-clown"
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
@@ -36,6 +39,7 @@
 	suffix = "lavaland_surface_cube.dmm"
 	cost = 10
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Seed Vault"
@@ -45,6 +49,7 @@
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
@@ -54,6 +59,7 @@
 	suffix = "lavaland_surface_ash_walker1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"
@@ -62,6 +68,7 @@
 	suffix = "lavaland_surface_syndicate_base1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
@@ -72,6 +79,7 @@
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/gaia
 	name = "Patch of Eden"
@@ -80,22 +88,26 @@
 	cost = 5
 	suffix = "lavaland_surface_gaia.dmm"
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin/envy
 	name = "Ruin of Envy"
 	id = "envy"
 	description = "When you get what they have, then you'll finally be happy."
 	suffix = "lavaland_surface_envy.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin/gluttony
 	name = "Ruin of Gluttony"
 	id = "gluttony"
 	description = "If you eat enough, then eating will be all that you do."
 	suffix = "lavaland_surface_gluttony.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin/greed
 	name = "Ruin of Greed"
@@ -103,12 +115,14 @@
 	description = "Sure you don't need magical powers, but you WANT them, and \
 		that's what's important."
 	suffix = "lavaland_surface_greed.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin/pride
 	name = "Ruin of Pride"
 	id = "pride"
 	description = "Wormhole lifebelts are for LOSERS, whom you are better than."
 	suffix = "lavaland_surface_pride.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/sin/sloth
 	name = "Ruin of Sloth"
@@ -117,6 +131,7 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Dead God"
@@ -125,6 +140,8 @@
 	suffix = "lavaland_surface_dead_ratvar.dmm"
 	cost = 0
 	allow_duplicates = FALSE
+	ignore = TRUE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
@@ -133,6 +150,7 @@
 	suffix = "lavaland_surface_hierophant.dmm"
 	always_place = TRUE
 	allow_duplicates = FALSE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner
 	name = "Blood-Drunk Miner"
@@ -141,6 +159,7 @@
 	suffix = "lavaland_surface_blooddrunk1.dmm"
 	cost = 0
 	allow_duplicates = FALSE //will only spawn one variant of the ruin
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner/guidance
 	name = "Blood-Drunk Miner (Guidance)"
@@ -149,11 +168,13 @@
 /datum/map_template/ruin/lavaland/blood_drunk_miner/hunter
 	name = "Blood-Drunk Miner (Hunter)"
 	suffix = "lavaland_surface_blooddrunk3.dmm"
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner/random
 	name = "Blood-Drunk Miner (Random)"
 	suffix = null
 	always_place = TRUE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner/random/New()
 	suffix = pick("lavaland_surface_blooddrunk1.dmm", "lavaland_surface_blooddrunk2.dmm", "lavaland_surface_blooddrunk3.dmm")
@@ -165,6 +186,7 @@
 	description = "Turns out that keeping your abductees unconscious is really important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
@@ -173,6 +195,7 @@
 	Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
@@ -181,6 +204,7 @@
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
@@ -188,6 +212,7 @@
 	description = "What was once sanctuary to the common miner, is now their tomb."
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
@@ -196,6 +221,7 @@
 	suffix = "lavaland_surface_pizzaparty.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/cultaltar
 	name = "Summoning Ritual"
@@ -204,6 +230,7 @@
 	suffix = "lavaland_surface_cultaltar.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
@@ -212,6 +239,7 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/miningripley
 	name = "Ripley"
@@ -220,6 +248,7 @@
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/dark_wizards
 	name = "Dark Wizard Altar"
@@ -227,6 +256,7 @@
 	description = "A ruin with dark wizards. What secret do they guard?"
 	suffix = "lavaland_surface_wizard.dmm"
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/strong_stone
 	name = "Strong Stone"
@@ -235,6 +265,7 @@
 	suffix = "lavaland_strong_rock.dmm"
 	allow_duplicates = FALSE
 	cost = 2
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/puzzle
 	name = "Ancient Puzzle"
@@ -242,6 +273,7 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/elite_tumor
 	name = "Pulsating Tumor"
@@ -251,6 +283,7 @@
 	cost = 5
 	always_place = TRUE
 	allow_duplicates = TRUE
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/elephant_graveyard
 	name = "Elephant Graveyard"
@@ -259,6 +292,7 @@
 	suffix = "lavaland_surface_elephant_graveyard.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+	ignore = TRUE
 
 /datum/map_template/ruin/lavaland/bileworm_nest
 	name = "Bileworm Nest"
@@ -267,3 +301,4 @@
 	cost = 5
 	suffix = "lavaland_surface_bileworm_nest.dmm"
 	allow_duplicates = FALSE
+	ignore = TRUE
