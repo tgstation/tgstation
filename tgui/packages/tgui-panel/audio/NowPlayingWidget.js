@@ -6,7 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'common/redux';
-import { Button, Collapsible, Flex, Knob } from 'tgui/components';
+import { Button, Collapsible, Flex, Knob, Section } from 'tgui/components';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
 
@@ -17,7 +17,7 @@ export const NowPlayingWidget = (props, context) => {
     title = audio.meta?.title,
     URL = audio.meta?.link,
     Artist = audio.meta?.artist || 'Unknown Artist',
-    upload_date = audio.meta?.upload_date || 'Date Unknown',
+    upload_date = audio.meta?.upload_date || 'Unknown Date',
     album = audio.meta?.album || 'Unknown Album',
     duration = audio.meta?.duration,
     date = !isNaN(upload_date)
@@ -41,13 +41,33 @@ export const NowPlayingWidget = (props, context) => {
           }}>
           {
             <Collapsible title={title || 'Unknown Track'} color={'blue'}>
-              <Flex.Item grow={1} color="label">
-                Url: {URL} <br />
-                Duration: {duration} <br />
-                Artist: {Artist} <br />
-                Album: {album} <br />
-                Uploaded: {date}
-              </Flex.Item>
+              <Section>
+                {URL !== 'Song Link Hidden' && (
+                  <Flex.Item grow={1} color="label">
+                    Url: {URL}
+                  </Flex.Item>
+                )}
+                <Flex.Item grow={1} color="label">
+                  Duration: {duration}
+                </Flex.Item>
+                {Artist !== 'Song Artist Hidden' &&
+                  Artist !== 'Unknown Artist' && (
+                    <Flex.Item grow={1} color="label">
+                      Artist: {Artist}
+                    </Flex.Item>
+                  )}
+                {album !== 'Song Album Hidden' && album !== 'Unknown Album' && (
+                  <Flex.Item grow={1} color="label">
+                    Album: {album}
+                  </Flex.Item>
+                )}
+                {upload_date !== 'Song Upload Date Hidden' &&
+                  upload_date !== 'Unknown Date' && (
+                    <Flex.Item grow={1} color="label">
+                      Uploaded: {date}
+                    </Flex.Item>
+                  )}
+              </Section>
             </Collapsible>
           }
         </Flex.Item>

@@ -6,7 +6,6 @@
 	undeletable = TRUE
 	size = 4
 	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
@@ -82,7 +81,7 @@
 	download_completion = FALSE
 	ui_header = "downloader_finished.gif"
 
-/datum/computer_file/program/ntnetdownload/process_tick(delta_time)
+/datum/computer_file/program/ntnetdownload/process_tick(seconds_per_tick)
 	if(!downloaded_file)
 		return
 	if(download_completion >= downloaded_file.size)

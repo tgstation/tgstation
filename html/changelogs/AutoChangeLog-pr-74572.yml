@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "added fifty stack versions of remaining glass sheet stacks for ease of debugging"
+  - refactor: "refactored sheet crafting to better support directional constructions that aren't windows"

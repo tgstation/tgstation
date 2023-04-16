@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "The pathing for the \"Mimes vs Clowns\" space ruin should be fixed internally. Whether you see this or not is depended on your server operator(s)."

@@ -182,11 +182,10 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
-		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
+		add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
-	for(var/trait in weather_immunities)
-		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
 
@@ -209,10 +208,10 @@
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	QDEL_NULL(access_card)
@@ -358,7 +357,7 @@
 	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
@@ -366,23 +365,23 @@
 		if(abs(temp_delta) > 5)
 			if(temp_delta < 0)
 				if(!on_fire)
-					adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, temp_delta, 0))
+					adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
 			else
-				adjust_bodytemperature(clamp(temp_delta * delta_time / temperature_normalization_speed, 0, temp_delta))
+				adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
 
 	if(!environment_air_is_safe() && unsuitable_atmos_damage)
-		adjustHealth(unsuitable_atmos_damage * delta_time)
+		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
-	handle_temperature_damage(delta_time, times_fired)
+	handle_temperature_damage(seconds_per_tick, times_fired)
 
-/mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
+/mob/living/simple_animal/proc/handle_temperature_damage(seconds_per_tick, times_fired)
 	. = FALSE
 	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
-		adjustHealth(unsuitable_cold_damage * delta_time)
+		adjustHealth(unsuitable_cold_damage * seconds_per_tick)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
@@ -393,7 +392,7 @@
 		. = TRUE
 
 	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
-		adjustHealth(unsuitable_heat_damage * delta_time)
+		adjustHealth(unsuitable_heat_damage * seconds_per_tick)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)

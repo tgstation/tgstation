@@ -7,6 +7,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	max_integrity = 50
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
@@ -56,6 +57,8 @@
 
 	if(fulltile)
 		setDir()
+		obj_flags &= ~BLOCKS_CONSTRUCTION_DIR
+		obj_flags &= ~IGNORE_DENSITY
 		AddElement(/datum/element/can_barricade)
 
 	//windows only block while reinforced and fulltile
@@ -96,7 +99,6 @@
 /obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the window."))
 			qdel(src)
 			return TRUE
 	return FALSE
@@ -124,10 +126,10 @@
 
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/moved_window = mover
-		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+		return valid_build_direction(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
 
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
-		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
+		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
 
 	return TRUE
 
@@ -267,6 +269,8 @@
 			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
 				to_chat(user, span_notice("You pry the window back into the frame."))
+		else
+			return FALSE
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -435,14 +439,7 @@
 
 	return TRUE
 
-/obj/structure/window/spawner/east
-	dir = EAST
-
-/obj/structure/window/spawner/west
-	dir = WEST
-
-/obj/structure/window/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 
 /obj/structure/window/unanchored
 	anchored = FALSE
@@ -474,6 +471,12 @@
 	bomb = 25
 	fire = 80
 	acid = 100
+
+/obj/structure/window/reinforced/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 30, "cost" = 15)
+	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
@@ -566,14 +569,7 @@
 		if(RWINDOW_BARS_CUT)
 			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
 
-/obj/structure/window/reinforced/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
@@ -603,14 +599,7 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
-/obj/structure/window/plasma/spawner/east
-	dir = EAST
-
-/obj/structure/window/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/plasma/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/plasma/spawner, 0)
 
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
@@ -639,14 +628,7 @@
 /obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
-/obj/structure/window/reinforced/plasma/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/plasma/spawner/west
-	dir = WEST
-
-/obj/structure/window/reinforced/plasma/spawner/north
-	dir = NORTH
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 
 /obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
@@ -655,7 +637,6 @@
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon_state = "twindow"
-	opacity = TRUE
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
@@ -669,10 +650,17 @@
 	max_integrity = 100
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+
+/obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 25, "cost" = 10)
+	return FALSE
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
@@ -684,6 +672,7 @@
 	max_integrity = 400
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -700,6 +689,7 @@
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -716,11 +706,18 @@
 	max_integrity = 150
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+
+/obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 20)
+	return FALSE
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
@@ -732,10 +729,13 @@
 	base_icon_state = "tinted_window"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	// Not on the parent because directional opacity does NOT WORK
+	opacity = TRUE
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
@@ -756,6 +756,7 @@
 	reinf = TRUE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	reinf = TRUE
 	heat_resistance = 1600
 	armor_type = /datum/armor/reinforced_shuttle
@@ -785,6 +786,14 @@
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
+/obj/structure/window/reinforced/shuttle/indestructible
+	name = "hardened shuttle window"
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
@@ -795,6 +804,7 @@
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	heat_resistance = 1600
 	armor_type = /datum/armor/plasma_plastitanium
 	smoothing_flags = SMOOTH_BITMASK
@@ -827,6 +837,7 @@
 	max_integrity = 15
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_PAPERFRAME
 	canSmoothWith = SMOOTH_GROUP_PAPERFRAME
@@ -916,6 +927,7 @@
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	max_integrity = 50
 	glass_amount = 2
 

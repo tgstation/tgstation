@@ -299,14 +299,14 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
-/obj/machinery/hydroponics/process(delta_time)
+/obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(self_sustaining)
 		if(powered())
-			adjust_waterlevel(rand(1,2) * delta_time * 0.5)
-			adjust_weedlevel(-0.5 * delta_time)
-			adjust_pestlevel(-0.5 * delta_time)
+			adjust_waterlevel(rand(1,2) * seconds_per_tick * 0.5)
+			adjust_weedlevel(-0.5 * seconds_per_tick)
+			adjust_pestlevel(-0.5 * seconds_per_tick)
 		else
 			set_self_sustaining(FALSE)
 			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
@@ -776,6 +776,7 @@
  * * Range - The Oview range of trays to which to look for plants to donate reagents.
  */
 /obj/machinery/hydroponics/proc/pollinate(range = 1)
+	var/any_adjacent = FALSE
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
@@ -784,6 +785,9 @@
 			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
+			any_adjacent = TRUE
+			if(isnull(particles))
+				particles = new /particles/pollen()
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				var/list/datum/plant_gene/reagent/possible_reagents = list()
 				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
@@ -794,6 +798,8 @@
 						myseed.genes += reagent_gene.Copy()
 					myseed.reagents_from_genes()
 					continue
+	if(!any_adjacent)
+		particles = null
 
 /**
  * Pest Mutation Proc.
@@ -977,7 +983,7 @@
 			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
-	else if(istype(O, /obj/item/shovel/spade))
+	else if(O.tool_behaviour == TOOL_SHOVEL)
 		if(!myseed && !weedlevel)
 			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
 			return
@@ -993,6 +999,8 @@
 				name = initial(name)
 				desc = initial(desc)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
+			if(particles)
+				particles = null
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
@@ -1110,6 +1118,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
+		particles = null
 		if(self_sustaining) //No reason to pay for an empty tray.
 			set_self_sustaining(FALSE)
 	else

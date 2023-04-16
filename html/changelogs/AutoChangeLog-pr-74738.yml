@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Ghosts are now notified and given an orbit popup for the Stray Cargo Pod random event."

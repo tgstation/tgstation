@@ -996,20 +996,18 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgrey"
 
-/obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
-	if(!ismob(M))
+/obj/item/slimepotion/slime/slimeradio/attack(mob/living/radio_head, mob/user)
+	if(!isanimal_or_basicmob(radio_head))
+		to_chat(user, span_warning("[radio_head] is too complex for the potion!"))
 		return
-	if(!isanimal(M))
-		to_chat(user, span_warning("[M] is too complex for the potion!"))
-		return
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
+	if(radio_head.stat)
+		to_chat(user, span_warning("[radio_head] is dead!"))
 		return
 
-	to_chat(user, span_notice("You feed the potion to [M]."))
-	to_chat(M, span_notice("Your mind tingles as you are fed the potion. You can hear radio waves now!"))
+	to_chat(user, span_notice("You feed the potion to [radio_head]."))
+	to_chat(radio_head, span_notice("Your mind tingles as you are fed the potion. You can hear radio waves now!"))
 	var/obj/item/implant/radio/slime/imp = new(src)
-	imp.implant(M, user)
+	imp.implant(radio_head, user)
 	qdel(src)
 
 ///Definitions for slime products that don't have anywhere else to go (Floor tiles, blueprints).

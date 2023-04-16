@@ -36,10 +36,6 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
 			. += reagent
 
-#define RNGCHEM_INPUT "input"
-#define RNGCHEM_CATALYSTS "catalysts"
-#define RNGCHEM_OUTPUT "output"
-
 /datum/chemical_reaction/randomized
 
 	//Increase default leniency because these are already hard enough

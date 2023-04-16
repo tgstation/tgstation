@@ -106,3 +106,5 @@
 	. = ..()
 	desc = pick(strings(VALENTINE_FILE, "candyhearts"))
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")
+
+#undef VALENTINE_FILE

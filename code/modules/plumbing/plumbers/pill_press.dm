@@ -45,7 +45,7 @@
 
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
-/obj/machinery/plumbing/pill_press/process(delta_time)
+/obj/machinery/plumbing/pill_press/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 	if(reagents.total_volume >= current_volume)
@@ -84,7 +84,7 @@
 			stored_products -= AM
 			AM.forceMove(drop_location())
 
-	use_power(active_power_usage * delta_time)
+	use_power(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/pill_press/proc/load_styles()
 	//expertly copypasted from chemmasters

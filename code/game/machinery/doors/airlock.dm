@@ -58,12 +58,6 @@
 #define AIRLOCK_FRAME_OPEN "open"
 #define AIRLOCK_FRAME_OPENING "opening"
 
-#define AIRLOCK_LIGHT_BOLTS "bolts"
-#define AIRLOCK_LIGHT_EMERGENCY "emergency"
-#define AIRLOCK_LIGHT_DENIED "denied"
-#define AIRLOCK_LIGHT_CLOSING "closing"
-#define AIRLOCK_LIGHT_OPENING "opening"
-
 #define AIRLOCK_SECURITY_NONE 0 //Normal airlock //Wires are not secured
 #define AIRLOCK_SECURITY_IRON 1 //Medium security airlock //There is a simple iron plate over wires (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL_I_S 2 //Sliced inner plating (use crowbar), jumps to 0
@@ -98,8 +92,8 @@
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 	smoothing_groups = SMOOTH_GROUP_AIRLOCK
 
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
+	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
 
 	///The type of door frame to drop during deconstruction
 	var/assemblytype = /obj/structure/door_assembly
@@ -174,10 +168,7 @@
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	// Click on the floor to close airlocks
-	var/static/list/connections = list(
-		COMSIG_ATOM_ATTACK_HAND = PROC_REF(on_attack_hand)
-	)
-	AddElement(/datum/element/connect_loc, connections)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -698,11 +689,6 @@
 
 /obj/machinery/door/airlock/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
-
-/obj/machinery/door/airlock/proc/on_attack_hand(atom/source, mob/user, list/modifiers)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user, modifiers)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/door/airlock/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -1673,3 +1659,8 @@
 #undef DOOR_CLOSE_WAIT
 
 #undef DOOR_VISION_DISTANCE
+
+#undef AIRLOCK_FRAME_CLOSED
+#undef AIRLOCK_FRAME_CLOSING
+#undef AIRLOCK_FRAME_OPEN
+#undef AIRLOCK_FRAME_OPENING

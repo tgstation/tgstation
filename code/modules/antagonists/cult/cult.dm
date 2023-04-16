@@ -273,10 +273,19 @@
 	var/narsie_summoned = FALSE
 	///How large were we at max size.
 	var/size_at_maximum = 0
+	///list of cultists just before summoning Narsie
+	var/list/true_cultists = list()
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
+
+#ifdef UNIT_TESTS
+	// This proc is unnecessary clutter whilst running cult related unit tests
+	// Remove this if, at some point, someone decides to test that halos and eyes are added at expected ratios
+	return
+#endif
+
 	var/alive = 0
 	var/cultplayers = 0
 	for(var/I in GLOB.player_list)
@@ -470,7 +479,10 @@
 
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		parts += printplayerlist(members)
+		if(length(true_cultists))
+			parts += printplayerlist(true_cultists)
+		else
+			parts += printplayerlist(members)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
@@ -484,21 +496,20 @@
 /proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
 	if(!istype(target))
 		return FALSE
-	if(target.mind)
-		if(ishuman(target) && (target.mind.holy_role))
-			return FALSE
-		if(specific_cult?.is_sacrifice_target(target.mind))
-			return FALSE
-		var/mob/living/master = target.mind.enslaved_to?.resolve()
-		if(master && !IS_CULTIST(master))
-			return FALSE
-		if(target.mind.unconvertable)
-			return FALSE
-		if(target.mind.has_antag_datum(/datum/antagonist/heretic))
-			return FALSE
-	else
+	if(isnull(target.mind) || !GET_CLIENT(target))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target) || !target.client)
+	if(target.mind.unconvertable)
+		return FALSE
+	if(ishuman(target) && target.mind.holy_role)
+		return FALSE
+	if(specific_cult?.is_sacrifice_target(target.mind))
+		return FALSE
+	var/mob/living/master = target.mind.enslaved_to?.resolve()
+	if(master && !IS_CULTIST(master))
+		return FALSE
+	if(IS_HERETIC_OR_MONSTER(target))
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target))
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
@@ -507,9 +518,10 @@
 	if(QDELETED(new_target))
 		CRASH("A null or invalid target was passed to set_blood_target.")
 
-	if(blood_target_reset_timer)
+	if(duration != INFINITY && blood_target_reset_timer)
 		return FALSE
 
+	deltimer(blood_target_reset_timer)
 	blood_target = new_target
 	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, PROC_REF(unset_blood_target_and_timer))
 	var/area/target_area = get_area(new_target)
@@ -529,7 +541,8 @@
 		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
-	blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
+	if(duration != INFINITY)
+		blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
 	return TRUE
 
 /// Unsets out blood target, clearing the images from all the cultists.
@@ -572,3 +585,8 @@
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
 	equipped.update_body()
+
+#undef CULT_LOSS
+#undef CULT_NARSIE_KILLED
+#undef CULT_VICTORY
+#undef SUMMON_POSSIBILITIES

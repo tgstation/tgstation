@@ -22,13 +22,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/ctf)
 "cb" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "ck" = (
@@ -41,7 +35,7 @@
 /turf/closed/indestructible/syndicate,
 /area/centcom/ctf)
 "cu" = (
-/obj/machinery/capture_the_flag/green,
+/obj/machinery/ctf/spawner/green,
 /turf/open/floor/circuit/green,
 /area/centcom/ctf)
 "cy" = (
@@ -49,35 +43,22 @@
 	dir = 8;
 	resistance_flags = 64
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "cK" = (
-/obj/structure/window/reinforced/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "cO" = (
-/obj/item/ctf/green,
+/obj/item/ctf_flag/green,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "dq" = (
-/obj/structure/window/reinforced/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
-/obj/structure/window/reinforced/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
+/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "ds" = (
@@ -87,11 +68,10 @@
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "dt" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 64
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -102,10 +82,7 @@
 	dir = 4;
 	resistance_flags = 64
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/pod/light,
@@ -184,7 +161,7 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -210,7 +187,7 @@
 /area/centcom/ctf)
 "kU" = (
 /obj/effect/powerup/ammo,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/red/anim,
 /area/centcom/ctf)
 "lB" = (
@@ -226,13 +203,7 @@
 /area/centcom/ctf)
 "lL" = (
 /obj/structure/table/reinforced/ctf,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "lS" = (
@@ -275,14 +246,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ctf)
 "nT" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/ctf)
 "nV" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
@@ -294,14 +264,13 @@
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "oL" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/ctf)
 "pR" = (
-/obj/machinery/capture_the_flag/red,
+/obj/machinery/ctf/spawner/red,
 /turf/open/floor/circuit/red,
 /area/centcom/ctf)
 "rB" = (
@@ -365,22 +334,14 @@
 /area/centcom/ctf)
 "uA" = (
 /obj/structure/table/reinforced/ctf,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "vy" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -398,15 +359,11 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/ctf)
 "vR" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit/off,
 /area/centcom/ctf)
 "vY" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/pod/light,
@@ -415,23 +372,17 @@
 /turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "xl" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "xK" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit/off,
 /area/centcom/ctf)
 "xS" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "xU" = (
@@ -463,16 +414,15 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "zg" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "zs" = (
@@ -494,7 +444,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
 "Ai" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -536,30 +486,20 @@
 /turf/template_noop,
 /area/template_noop)
 "CU" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/ctf)
 "Db" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "El" = (
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -571,10 +511,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/ctf)
 "FM" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "FP" = (
@@ -582,15 +519,6 @@
 	dir = 4
 	},
 /turf/closed/indestructible/syndicate,
-/area/centcom/ctf)
-"FZ" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "Gi" = (
 /obj/effect/turf_decal/siding/purple/corner{
@@ -606,54 +534,32 @@
 /turf/open/floor/plating/abductor,
 /area/space/nearstation)
 "GH" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	resistance_flags = 64
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 64
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/ctf)
-"Hy" = (
-/obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron,
-/area/centcom/ctf)
 "HM" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "HN" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	resistance_flags = 64
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 64
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /obj/structure/flora/bush/ferny/style_random,
@@ -664,19 +570,6 @@
 	respawn_time = 600
 	},
 /turf/open/floor/circuit,
-/area/centcom/ctf)
-"Iq" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "ID" = (
 /obj/effect/turf_decal/siding/white{
@@ -707,13 +600,6 @@
 "Ju" = (
 /turf/open/floor/circuit/red/anim,
 /area/centcom/ctf)
-"JL" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
-/area/centcom/ctf)
 "JO" = (
 /turf/open/floor/circuit/green,
 /area/centcom/ctf)
@@ -732,47 +618,30 @@
 /area/centcom/ctf)
 "KO" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "KZ" = (
 /obj/effect/powerup/ammo,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "LQ" = (
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "LS" = (
-/obj/item/ctf/red,
+/obj/item/ctf_flag/red,
 /turf/open/floor/circuit/red/anim,
 /area/centcom/ctf)
 "MC" = (
 /obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "MH" = (
 /obj/structure/table/reinforced/ctf,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -780,7 +649,7 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -795,12 +664,8 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
 "NQ" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -808,7 +673,7 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -827,13 +692,7 @@
 /turf/open/floor/engine,
 /area/centcom/ctf)
 "Pm" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "Pn" = (
@@ -864,26 +723,14 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
 "Rc" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
 	},
 /turf/open/floor/pod/dark,
 /area/centcom/ctf)
 "Ri" = (
 /obj/structure/trap/ctf/red,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "Rl" = (
@@ -892,49 +739,21 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/ctf)
-"Rz" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/pod/dark,
-/area/centcom/ctf)
 "RE" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "RH" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "RT" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -963,23 +782,10 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/ctf)
 "VK" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/ctf)
-"VL" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron,
 /area/centcom/ctf)
 "VR" = (
 /obj/effect/turf_decal/siding/purple/corner{
@@ -995,12 +801,8 @@
 /area/centcom/ctf)
 "Wt" = (
 /obj/structure/table/reinforced/ctf,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
@@ -1014,7 +816,7 @@
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1351,11 +1153,11 @@ hc
 hc
 hc
 fU
-VL
-VL
-VL
-VL
-VL
+Db
+Db
+Db
+Db
+Db
 fU
 hc
 hc
@@ -1395,11 +1197,11 @@ hc
 hc
 hc
 fU
-VL
-VL
-Hy
-VL
-VL
+Db
+Db
+MC
+Db
+Db
 fU
 hc
 hc
@@ -1439,11 +1241,11 @@ hc
 hc
 hc
 fU
-VL
-Hy
-Hy
-Hy
-VL
+Db
+MC
+MC
+MC
+Db
 fU
 hc
 hc
@@ -1483,11 +1285,11 @@ hc
 hc
 hc
 fU
-VL
-VL
-Hy
-VL
-VL
+Db
+Db
+MC
+Db
+Db
 fU
 hc
 hc
@@ -1527,11 +1329,11 @@ hc
 hc
 hc
 fU
-VL
-VL
-VL
-VL
-VL
+Db
+Db
+Db
+Db
+Db
 fU
 hc
 hc
@@ -1572,9 +1374,9 @@ hc
 hc
 fU
 ck
-FZ
-FZ
-FZ
+Rc
+Rc
+Rc
 ck
 ck
 ck
@@ -1619,26 +1421,26 @@ ck
 wO
 wO
 wO
-FZ
-FZ
-FZ
-Rz
-Rz
-Rz
+Rc
+Rc
+Rc
 tM
 tM
-Rz
+tM
+tM
+tM
+tM
 RH
 Us
 nj
 Us
 FM
-Iq
-Iq
-Iq
-Iq
-Iq
-Iq
+tM
+tM
+tM
+tM
+tM
+tM
 Rc
 Rc
 Rc
@@ -1669,17 +1471,17 @@ wO
 wO
 wO
 wO
-FZ
-FZ
-FZ
+Rc
+Rc
+Rc
 RH
 nj
 nj
 nj
 FM
-FZ
-FZ
-FZ
+Rc
+Rc
+Rc
 wO
 wO
 wO
@@ -4141,9 +3943,9 @@ nj
 nj
 nj
 xS
-JL
-JL
-JL
+zg
+zg
+zg
 wO
 wO
 wO

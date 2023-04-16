@@ -58,12 +58,12 @@
 	atom_parent.update_appearance()
 
 ///Ran every time an item is grilled by something
-/datum/component/grillable/proc/on_grill(datum/source, atom/used_grill, delta_time = 1)
+/datum/component/grillable/proc/on_grill(datum/source, atom/used_grill, seconds_per_tick = 1)
 	SIGNAL_HANDLER
 
 	. = COMPONENT_HANDLED_GRILLING
 
-	current_cook_time += delta_time * 10 //turn it into ds
+	current_cook_time += seconds_per_tick * 10 //turn it into ds
 	if(current_cook_time >= required_cook_time)
 		finish_grilling(used_grill)
 
@@ -99,7 +99,10 @@
 
 	if(!current_cook_time) //Not grilled yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>grilled</b> into \a [initial(cook_result.name)].")
+			if(initial(cook_result.name) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("grilled")] into some [initial(cook_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("grilled")] into \a [initial(cook_result.name)].")
 		return
 
 	if(positive_result)

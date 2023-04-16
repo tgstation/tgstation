@@ -75,7 +75,7 @@
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
 
-/datum/species/dullahan/spec_life(mob/living/carbon/human/human, delta_time, times_fired)
+/datum/species/dullahan/spec_life(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if(QDELETED(my_head))
 		my_head = null
 		human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
@@ -95,7 +95,7 @@
 		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
-	var/obj/item/organ/internal/eyes/eyes = human.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		human.update_tint()
 		if(eyes.tint)
@@ -106,7 +106,7 @@
 			prevent_perspective_change = TRUE
 
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
-	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(owner_first_client_connection_handled)
 		if(!eyes.tint)
 			owner.reset_perspective(my_head, TRUE)

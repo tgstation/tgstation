@@ -19,10 +19,10 @@
 	telecrystal_reward = 1
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/bartender_shotgun,
-		/datum/objective_item/steal/low_risk/fireaxe,
-		/datum/objective_item/steal/low_risk/big_crowbar,
-		/datum/objective_item/steal/low_risk/nullrod,
+		/datum/objective_item/steal/traitor/bartender_shotgun,
+		/datum/objective_item/steal/traitor/fireaxe,
+		/datum/objective_item/steal/traitor/nullrod,
+		/datum/objective_item/steal/traitor/big_crowbar,
 	)
 
 /datum/traitor_objective/destroy_item/very_risky

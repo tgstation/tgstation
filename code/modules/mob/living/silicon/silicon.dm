@@ -66,13 +66,17 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
-	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MADNESS_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+	var/static/list/traits_to_apply = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_LITERATE,
+		TRAIT_MADNESS_IMMUNE,
+		TRAIT_MARTIAL_ARTS_IMMUNE,
+		TRAIT_NOFIRE_SPREAD,
+	)
+
+	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -417,7 +421,7 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
+/mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
 	return
 
 /mob/living/silicon/rust_heretic_act()

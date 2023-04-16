@@ -35,17 +35,17 @@
 	//upgrade messages
 	var/has_upgrades
 	if(emp_module)
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(xray_module)
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(proxy_module)
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")

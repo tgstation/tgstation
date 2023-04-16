@@ -156,7 +156,6 @@
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46
-#define INIT_ORDER_NETWORKS 45
 #define INIT_ORDER_SPATIAL_GRID 43
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
@@ -210,11 +209,10 @@
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
-#define FIRE_PRIOTITY_SMOOTHING 35
-#define FIRE_PRIORITY_NETWORKS 40
+#define FIRE_PRIORITY_SMOOTHING 35
 #define FIRE_PRIORITY_OBJ 40
 #define FIRE_PRIORITY_ACID 40
-#define FIRE_PRIOTITY_BURNING 40
+#define FIRE_PRIORITY_BURNING 40
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
@@ -257,25 +255,6 @@
 #define GAME_STATE_PLAYING 3
 /// Game has round finished
 #define GAME_STATE_FINISHED 4
-
-//! ## Overlays subsystem
-
-#define POST_OVERLAY_CHANGE(changed_on) \
-	if(length(changed_on.overlays) >= MAX_ATOM_OVERLAYS) { \
-		var/text_lays = overlays2text(changed_on.overlays); \
-		stack_trace("Too many overlays on [changed_on.type] - [length(changed_on.overlays)], refusing to update and cutting.\
-			\n What follows is a printout of all existing overlays at the time of the overflow \n[text_lays]"); \
-		changed_on.overlays.Cut(); \
-		changed_on.add_overlay(mutable_appearance('icons/testing/greyscale_error.dmi')); \
-	} \
-	if(alternate_appearances) { \
-		for(var/I in changed_on.alternate_appearances){\
-			var/datum/atom_hud/alternate_appearance/AA = changed_on.alternate_appearances[I];\
-			if(AA.transfer_overlays){\
-				AA.copy_overlays(changed_on, TRUE);\
-			}\
-		} \
-	}
 
 /**
 	Create a new timer and add it to the queue.
@@ -326,7 +305,7 @@
 #define WARDROBE_CALLBACK_REMOVE 2
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
-// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+// Only use these defines if you want to access some other objects processing seconds_per_tick, otherwise use the seconds_per_tick that is sent as a parameter to process()
 #define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)

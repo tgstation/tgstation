@@ -15,3 +15,37 @@
 
 /// Chance of anomalies moving every process tick
 #define ANOMALY_MOVECHANCE 45
+
+/// Blacklist of parts which should not appear when bioscrambled, largely because they will make you look totally fucked up
+GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
+	/obj/item/bodypart/chest/larva,
+	/obj/item/bodypart/head/larva,
+	// Re-add the ones below this line when the bug with offset is fixed
+	/obj/item/bodypart/leg/left/monkey,
+	/obj/item/bodypart/leg/right/monkey,
+	/obj/item/bodypart/leg/left/tallboy,
+	/obj/item/bodypart/leg/right/tallboy,
+)))
+
+/// Blacklist of organs which should not appear when bioscrambled.
+/// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
+GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
+	/obj/item/organ/external/pod_hair,
+	/obj/item/organ/external/spines,
+	/obj/item/organ/external/wings/functional,
+	/obj/item/organ/internal/alien,
+	/obj/item/organ/internal/brain,
+	/obj/item/organ/internal/body_egg,
+	/obj/item/organ/internal/cyberimp,
+	/obj/item/organ/internal/heart/cursed,
+	/obj/item/organ/internal/heart/demon,
+	/obj/item/organ/internal/lungs,
+	/obj/item/organ/internal/monster_core,
+	/obj/item/organ/internal/vocal_cords/colossus,
+	/obj/item/organ/internal/zombie_infection,
+)))
+
+/// List of body parts we can apply to people
+GLOBAL_LIST_EMPTY(bioscrambler_valid_parts)
+/// List of organs we can apply to people
+GLOBAL_LIST_EMPTY(bioscrambler_valid_organs)

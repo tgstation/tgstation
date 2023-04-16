@@ -44,8 +44,12 @@
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
+	setup_components()
+
+/// Simply adds the necessary components for this to function.
+/obj/machinery/photocopier/proc/setup_components()
+	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == object_copy)
@@ -515,6 +519,14 @@
 		return FALSE
 	else
 		return TRUE
+
+/// Subtype of photocopier that is free to use.
+/obj/machinery/photocopier/gratis
+	desc = "Does the same important paperwork, but it's free to use! The best type of free."
+
+/obj/machinery/photocopier/gratis/setup_components()
+	// it's free! no charge! very cool and gratis-pilled.
+	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /*
  * Toner cartridge

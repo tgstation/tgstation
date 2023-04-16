@@ -8,7 +8,7 @@
 		/datum/traitor_objective/demoralise/poster = 2,
 		/datum/traitor_objective/demoralise/graffiti = 1,
 	)
-	weight = OBJECTIVE_WEIGHT_TINY
+	weight = OBJECTIVE_WEIGHT_UNLIKELY
 
 /datum/traitor_objective/demoralise
 	name = "Debug your code."

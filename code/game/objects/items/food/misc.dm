@@ -413,7 +413,7 @@
 	tastes = list()
 
 /obj/item/food/pacoca
-	name = "pacoca"
+	name = "paçoca"
 	desc = "A traditional Brazilian treat made of ground peanuts, sugar, and salt compressed into a cylinder."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "pacoca"

@@ -1,0 +1,6 @@
+##
+## Master config flag for enabling/disabling auxtools.
+## Currently, this will disable Lua scripting.
+##
+
+#AUXTOOLS_ENABLED

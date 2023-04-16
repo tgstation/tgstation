@@ -1,7 +1,6 @@
-import { filter, map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
+import { Button, Section, Modal, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
 import { Window, NtosWindow } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
@@ -353,11 +352,6 @@ const TechwebDiskMenu = (props, context) => {
               Disk &rarr; Web
             </Button>
             <Button
-              icon="trash"
-              onClick={() => act('eraseDisk', { type: diskType })}>
-              Erase
-            </Button>
-            <Button
               icon="eject"
               onClick={() => {
                 act('ejectDisk', { type: diskType });
@@ -380,91 +374,13 @@ const TechwebDiskMenu = (props, context) => {
 
 const TechwebDesignDisk = (props, context) => {
   const { act, data } = useRemappedBackend(context);
-  const { design_cache, researched_designs, d_disk } = data;
+  const { design_cache, d_disk } = data;
   const { blueprints } = d_disk;
-  const [selectedDesign, setSelectedDesign] = useLocalState(
-    context,
-    'designDiskSelect',
-    null
-  );
-  const [showModal, setShowModal] = useLocalState(
-    context,
-    'showDesignModal',
-    -1
-  );
-
-  const designIdByIdx = Object.keys(researched_designs);
-  const designOptions = flow([
-    filter((x) => x.toLowerCase() !== 'error'),
-    map((id, idx) => `${design_cache[id].name} [${idx}]`),
-    sortBy((x) => x),
-  ])(designIdByIdx);
 
   return (
     <>
-      {showModal >= 0 && (
-        <Modal width="20em">
-          <Flex direction="column" className="Techweb__DesignModal">
-            <Flex.Item>Select a design to save...</Flex.Item>
-            <Flex.Item>
-              <Dropdown
-                width="100%"
-                options={designOptions}
-                onSelected={(val) => {
-                  const idx = parseInt(
-                    val
-                      .split('[')
-                      .pop()
-                      .split(']')[0],
-                    10
-                  );
-                  setSelectedDesign(designIdByIdx[idx]);
-                }}
-              />
-            </Flex.Item>
-            <Flex.Item align="center">
-              <Button onClick={() => setShowModal(-1)}>Cancel</Button>
-              <Button
-                disabled={selectedDesign === null}
-                onClick={() => {
-                  act('writeDesign', {
-                    slot: showModal + 1,
-                    selectedDesign: selectedDesign,
-                  });
-                  setShowModal(-1);
-                  setSelectedDesign(null);
-                }}>
-                Select
-              </Button>
-            </Flex.Item>
-          </Flex>
-        </Modal>
-      )}
       {blueprints.map((x, i) => (
-        <Section
-          key={i}
-          title={`Slot ${i + 1}`}
-          buttons={
-            <>
-              {x !== null && (
-                <Button
-                  icon="upload"
-                  onClick={() => act('uploadDesignSlot', { slot: i + 1 })}>
-                  Upload Design to Web
-                </Button>
-              )}
-              <Button icon="save" onClick={() => setShowModal(i)}>
-                {x !== null ? 'Overwrite Slot' : 'Load Design to Slot'}
-              </Button>
-              {x !== null && (
-                <Button
-                  icon="trash"
-                  onClick={() => act('clearDesignSlot', { slot: i + 1 })}>
-                  Clear Slot
-                </Button>
-              )}
-            </>
-          }>
+        <Section key={i} title={`Slot ${i + 1}`}>
           {(x === null && 'Empty') || (
             <>
               Contains the design for <b>{design_cache[x].name}</b>:<br />

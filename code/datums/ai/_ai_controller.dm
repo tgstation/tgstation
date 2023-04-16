@@ -108,17 +108,22 @@ multiple modular subtrees with behaviors
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
-	if (!ismob(new_pawn))
-		set_ai_status(AI_STATUS_ON)
-	else
-		set_ai_status(get_setup_mob_ai_status(new_pawn))
-		RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
-
+	reset_ai_status()
+	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-/// Mobs have more complicated factors about whether their AI should be on or not
-/datum/ai_controller/proc/get_setup_mob_ai_status(mob/mob_pawn)
+/// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
+/datum/ai_controller/proc/reset_ai_status()
+	set_ai_status(get_expected_ai_status())
+
+/// Returns what the AI status should be based on current conditions.
+/datum/ai_controller/proc/get_expected_ai_status()
 	var/final_status = AI_STATUS_ON
+
+	if (!ismob(pawn))
+		return final_status
+
+	var/mob/living/mob_pawn = pawn
 
 	if(!continue_processing_when_client && mob_pawn.client)
 		final_status = AI_STATUS_OFF
@@ -156,13 +161,13 @@ multiple modular subtrees with behaviors
 
 
 ///Runs any actions that are currently running
-/datum/ai_controller/process(delta_time)
+/datum/ai_controller/process(seconds_per_tick)
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
 	if(!LAZYLEN(current_behaviors) && idle_behavior)
-		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
+		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
 
 	if(current_movement_target)
@@ -179,9 +184,9 @@ multiple modular subtrees with behaviors
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
-		// Then pick the max of this and the delta_time passed to ai_controller.process()
-		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
-		var/action_delta_time = max(current_behavior.action_cooldown * 0.1, delta_time)
+		// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
+		// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
+		var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
 
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
 			if(!current_movement_target)
@@ -193,7 +198,7 @@ multiple modular subtrees with behaviors
 
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 					continue
-				ProcessBehavior(action_delta_time, current_behavior)
+				ProcessBehavior(action_seconds_per_tick, current_behavior)
 				return
 
 			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
@@ -202,12 +207,12 @@ multiple modular subtrees with behaviors
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 					continue
-				ProcessBehavior(action_delta_time, current_behavior)
+				ProcessBehavior(action_seconds_per_tick, current_behavior)
 				return
 		else //No movement required
 			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 				continue
-			ProcessBehavior(action_delta_time, current_behavior)
+			ProcessBehavior(action_seconds_per_tick, current_behavior)
 			return
 
 ///Determines whether the AI can currently make a new plan
@@ -219,7 +224,7 @@ multiple modular subtrees with behaviors
 			break
 
 ///This is where you decide what actions are taken by the AI.
-/datum/ai_controller/proc/SelectBehaviors(delta_time)
+/datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
@@ -229,7 +234,7 @@ multiple modular subtrees with behaviors
 
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
+			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
@@ -281,8 +286,8 @@ multiple modular subtrees with behaviors
 	else
 		behavior_args -= behavior_type
 
-/datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
-	var/list/arguments = list(delta_time, src)
+/datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
+	var/list/arguments = list(seconds_per_tick, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)
 		arguments += stored_arguments
@@ -302,8 +307,7 @@ multiple modular subtrees with behaviors
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
-	var/new_ai_status = get_setup_mob_ai_status(source)
-	set_ai_status(new_ai_status)
+	reset_ai_status()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER

@@ -46,6 +46,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	desc = "Generates cannon pulse. Needs to be linked with a fusor."
 	icon_state = "power_box"
 
+/obj/machinery/bsa/back/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
@@ -58,6 +62,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "Bluespace Artillery Bore"
 	desc = "Do not stand in front of cannon during operation. Needs to be linked with a fusor."
 	icon_state = "emitter_center"
+
+/obj/machinery/bsa/front/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
@@ -73,6 +81,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_state = "fuel_chamber"
 	var/datum/weakref/back_ref
 	var/datum/weakref/front_ref
+
+/obj/machinery/bsa/middle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))

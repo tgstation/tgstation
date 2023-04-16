@@ -1,0 +1,3 @@
+#comment This repaths the ammo toolbox (which contains 7.62 stripper clips) to a new path that more adequately explains what it contains
+
+/obj/item/storage/toolbox/ammo : /obj/item/storage/toolbox/a762{@OLD}
