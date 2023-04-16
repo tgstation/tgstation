@@ -2,6 +2,10 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"b" = (
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
 "d" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/plastitanium,
@@ -14,9 +18,21 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"i" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "j" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"k" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "l" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -100,6 +116,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "D" = (
@@ -144,6 +161,13 @@
 /obj/effect/landmark/ert_shuttle_spawn,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
+"N" = (
+/obj/machinery/suit_storage_unit/standard_unit{
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
 "O" = (
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
@@ -181,7 +205,7 @@
 	width = 17
 	},
 /obj/docking_port/mobile{
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
 	rechargeTime = 1800;
 	shuttle_id = "huntership"
@@ -198,6 +222,7 @@
 "W" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "X" = (
@@ -317,13 +342,13 @@ n
 F
 p
 G
-T
+i
 w
 A
 C
 Z
 Q
-p
+k
 G
 T
 U
@@ -367,7 +392,7 @@ f
 E
 P
 O
-t
+N
 n
 h
 a
@@ -425,7 +450,7 @@ a
 h
 S
 O
-O
+b
 O
 S
 h
