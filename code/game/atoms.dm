@@ -1395,22 +1395,30 @@
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
 	if(href_list[VV_HK_SPIN_ANIMATION] && check_rights(R_VAREDIT))
-		var/num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
+		if(num_spins == "No")
+			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+		else
+			num_spins = -1
 		if(!num_spins)
 			return
 		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
 		if(!spin_speed)
 			return
-		var/direction = input(usr, "Which direction? (-1 = counter-clockwise, 1 = clockwise)", "Spin Animation") as null|num
+		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
 		if(!direction)
 			return
+		if(direction == "Clockwise")
+			direction = 1
+		else
+			direction = 0
 		SpinAnimation(spin_speed, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
-		if(result == "No")
-			return
-		animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely. This tends to make stuff look bad, but admin said do the thing
+		if(result == "Yes")
+			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
+		return
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
