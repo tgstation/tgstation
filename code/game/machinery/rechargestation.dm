@@ -100,15 +100,15 @@
 		return
 	return ..()
 
-obj/machinery/recharge_station/attack_ai_secondary(mob/user, list/modifiers)
+/obj/machinery/recharge_station/attack_ai_secondary(mob/user, list/modifiers)
 	toggle_restock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-obj/machinery/recharge_station/attack_hand_secondary(mob/user, list/modifiers)
+/obj/machinery/recharge_station/attack_hand_secondary(mob/user, list/modifiers)
 	toggle_restock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-obj/machinery/recharge_station/proc/toggle_restock(mob/user)
+/obj/machinery/recharge_station/proc/toggle_restock(mob/user)
 	if(sendmats)
 		sendmats = FALSE
 		balloon_alert(user, "restocking from ore silo: disabled")
