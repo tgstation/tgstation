@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Added a nukeops victory state for failing to nuke the station, but somehow hijacking the shuttle."
