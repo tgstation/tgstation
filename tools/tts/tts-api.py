@@ -12,12 +12,24 @@ tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
 app = Flask(__name__)
 request_count = 0
 
+voice_name_mapping = {}
+
+use_voice_name_mapping = True
+with open("./tts_voices_mapping.json", "r") as file:
+	voice_name_mapping = json.load(file)
+	if len(voice_name_mapping) == 0:
+		use_voice_name_mapping = False
+
+voice_name_mapping_reversed = {v: k for k, v in voice_name_mapping.items()}
+
 @app.route("/tts")
 def text_to_speech():
 	global request_count
 	request_count += 1
 
 	voice = request.args.get("voice", '')
+	if use_voice_name_mapping:
+		voice = voice_name_mapping_reversed[voice]
 	text = request.json.get("text", '')
 
 	filter_complex = request.args.get("filter", '')
@@ -30,18 +42,23 @@ def text_to_speech():
 
 		ffmpeg_result = None
 		if filter_complex != "":
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
+			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
 		else:
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libmp3lame", "-b:a", "64k", "-f", "mp3", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
+			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
 		print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
 
-		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.mp3', mimetype="audio/mp3")
+		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
 
 	return result
 
 @app.route("/tts-voices")
 def voices_list():
-	return json.dumps(tts.speakers)
+	if use_voice_name_mapping:
+		data = list(voice_name_mapping.values())
+		data.sort()
+		return json.dumps(data)
+	else:
+		return json.dumps(tts.voices)
 
 @app.route("/health-check")
 def tts_health_check():

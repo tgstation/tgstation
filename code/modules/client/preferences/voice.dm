@@ -2,7 +2,6 @@
 /datum/preference/choiced/voice
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "tts_voice"
-	priority = PREFERENCE_PRIORITY_VOICE
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 
 /datum/preference/choiced/voice/is_accessible(datum/preferences/preferences)
@@ -16,6 +15,8 @@
 	if(fexists("data/cached_tts_voices.json"))
 		var/list/text_data = rustg_file_read("data/cached_tts_voices.json")
 		var/list/cached_data = json_decode(text_data)
+		if(!cached_data)
+			return list("invalid")
 		return cached_data
 	return list("invalid")
 

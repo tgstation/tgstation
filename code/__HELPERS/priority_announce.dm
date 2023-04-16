@@ -19,10 +19,8 @@
  * * players - a list of all players to send the message to. defaults to all players (not including new players)
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
- * * tts_voice - TTS voice to play. When set to null, no TTS is played.
- * * tts_filter - TTS filter to apply on the voice.
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players, encode_title = TRUE, encode_text = TRUE, tts_voice = null, tts_filter = null)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players, encode_title = TRUE, encode_text = TRUE)
 	if(!text)
 		return
 
@@ -73,26 +71,12 @@
 	if(!players)
 		players = GLOB.player_list
 
-	var/sound/sound_to_play = sound(sound)
+	var/sound_to_play = sound(sound)
 	for(var/mob/target in players)
 		if(!isnewplayer(target) && target.can_hear())
 			to_chat(target, announcement)
 			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 				SEND_SOUND(target, sound_to_play)
-
-	if(tts_voice)
-		var/list/clients_to_send = list()
-		for(var/mob/player in players)
-			if(player.client)
-				clients_to_send += player.client
-
-		// Wait for announcement sound to finish playing, assume it's around 1-2 seconds
-		// since byond does not have a reliable serverside way to check the length of a sound file.
-		var/decoded_text = text
-		if(encode_text)
-			decoded_text = html_decode(text)
-		addtimer(CALLBACK(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), decoded_text, tts_voice, clients_to_send, tts_filter), 3 SECONDS)
-
 
 /**
  * Summon the crew for an emergency meeting
@@ -150,9 +134,8 @@
  * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
- * tts_voice - optional. TTS voice to play when this announcement is sent. If set to null, no TTS sound is played.
  */
-/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players, sound_override, tts_voice = null, tts_filter = null)
+/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players, sound_override)
 	if(!message)
 		return
 
@@ -173,11 +156,3 @@
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
 			SEND_SOUND(target, sound(sound_to_play))
-
-	if(tts_voice)
-		var/list/clients_to_send = list()
-		for(var/mob/player in players)
-			if(player.client)
-				clients_to_send += player.client
-
-		addtimer(CALLBACK(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), message, tts_voice, clients_to_send, tts_filter), 1 SECONDS)

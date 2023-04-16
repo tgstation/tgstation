@@ -366,23 +366,3 @@ export const FeatureShortTextInput = (
     />
   );
 };
-
-export const FeatureTTSDropdownInput = (props: FeatureDropdownInputProps) => {
-  return (
-    <Stack>
-      <Stack.Item grow>
-        <FeatureDropdownInput {...props} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          onClick={() => {
-            props.act('test_tts');
-          }}
-          icon="play"
-          width="100%"
-          height="100%"
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};

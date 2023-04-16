@@ -1,24 +1,15 @@
-/*!
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-
-/proc/tts_alphanumeric_filter(text)
-	// Only allow alphanumeric characters and whitespace
-	var/static/regex/bad_chars_regex = regex(@"[^a-zA-Z0-9 ,?.!'&-]", "g")
-	return bad_chars_regex.Replace(text, " ")
-
-
 #define TARGET_INDEX 1
 #define IDENTIFIER_INDEX 2
 #define TIMEOUT_INDEX 3
 #define REQUEST_INDEX 4
 #define MESSAGE_INDEX 5
 #define EXTRA_TARGETS_INDEX 6
+#define LANGUAGE_INDEX 7
+#define LOCAL_INDEX 8
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
-	wait = 0.1 SECONDS
+	wait = 0.05 SECONDS
 	init_order = INIT_ORDER_TTS
 	priority = FIRE_PRIORITY_TTS
 
@@ -46,32 +37,7 @@ SUBSYSTEM_DEF(tts)
 	/// This'll determine the minimum extent of how late it is allowed to begin timing messages out
 	var/message_timeout_early_minimum = 5 SECONDS
 
-	var/max_concurrent_requests = 5
-
-	/// The real time factor. For example, an RTF of 0.33 means it'll take 2 seconds to create a 6 second voice clip
-	/// This is estimated based on how long it takes to receive text based on how long it take to process on the server
-	var/rtf = 0
-
-/proc/cmp_word_length_asc(list/a, list/b)
-	return length(a[MESSAGE_INDEX]) - length(b[MESSAGE_INDEX])
-
-#define AVERAGE_SPEECH_WPM 100
-#define AVERAGE_SYLLABLE_LENGTH 3
-#define AVERAGE_SYLLABLE_PER_SECOND 4
-
-/datum/controller/subsystem/tts/proc/estimate_word_processing_length(text, rtf_override)
-	var/rtf_to_use = rtf_override
-	if(!rtf_to_use)
-		rtf_to_use = rtf
-	var/words = length(splittext(text, " "))
-	var/characters = length(replacetext(text, " ", ""))
-	// Take the longest time
-	return max(
-		// Average speech time based on word count
-		(words / AVERAGE_SPEECH_WPM) * 60,
-		// Average speech time based on character count
-		(characters / (AVERAGE_SYLLABLE_LENGTH * AVERAGE_SYLLABLE_PER_SECOND))
-	) * rtf_to_use
+	var/max_concurrent_requests = 20
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -91,40 +57,46 @@ SUBSYSTEM_DEF(tts)
 	if(response.errored || response.status_code != 200)
 		return SS_INIT_FAILURE
 	available_speakers = json_decode(response.body)
-	available_speakers -= "ED\n" // TODO: properly fix this
 	tts_enabled = TRUE
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
 	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(identifier, filepath, list/listeners)
-	var/has_html_audio = istype(SSassets.transport, /datum/asset_transport/webroot)
+/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, local)
+	if(local)
+		SEND_SOUND(target, sound)
+		return
 
-	var/list/unfiltered_players = listeners.Copy()
-	var/list/html_audio_players
-	for(var/client/player in unfiltered_players)
-		if(!player?.prefs.read_preference(/datum/preference/toggle/sound_tts))
-			listeners -= player
+	var/turf/turf_source = get_turf(target)
+	if(!turf_source)
+		return
+
+	var/channel = SSsounds.random_available_channel()
+	var/listeners = get_hearers_in_view(SOUND_RANGE, turf_source)
+
+	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
+		var/datum/language_holder/holder = listening_mob.get_language_holder()
+		if(!listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
 			continue
 
-		if(has_html_audio && player?.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio))
-			html_audio_players += player
-			listeners -= player
-
-	if(has_html_audio)
-		var/datum/asset_cache_item/cached_mp3 = new(identifier, filepath)
-		cached_mp3.namespace = "text_to_speech"
-		SSassets.transport.register_asset(identifier, cached_mp3)
-		var/current_text_url = SSassets.transport.get_asset_url(null, cached_mp3)
-		SShtml_audio.play_audio(current_text_url, html_audio_players)
-	var/sound/sound_to_play = sound(file(filepath))
-	for(var/client/player in listeners)
-		SEND_SOUND(player, sound_to_play)
+		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && holder.has_language(language, spoken = FALSE))
+			listening_mob.playsound_local(
+				turf_source,
+				sound,
+				vol = listening_mob == target? 60 : 85,
+				falloff_exponent = SOUND_FALLOFF_EXPONENT,
+				channel = channel,
+				pressure_affected = TRUE,
+				sound_to_use = sound,
+				max_distance = SOUND_RANGE,
+				falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
+				distance_multiplier = 1,
+				use_reverb = TRUE
+			)
 
 /datum/controller/subsystem/tts/proc/handle_request(list/entry)
 	var/time_left = entry[TIMEOUT_INDEX]
-	var/estimated_processing_time = estimate_word_processing_length(entry[MESSAGE_INDEX])
-	if(time_left < world.time || (time_left < world.time + message_timeout_early_minimum && time_left - estimated_processing_time < world.time))
+	if(time_left < world.time)
 		cached_voices -= entry[IDENTIFIER_INDEX]
 		return
 	var/datum/http_request/request = entry[REQUEST_INDEX]
@@ -162,17 +134,15 @@ SUBSYSTEM_DEF(tts)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
 		var/identifier = current_message[IDENTIFIER_INDEX]
-		var/list/tts_targets = current_message[TARGET_INDEX]
-		for(var/list/targets in current_message[EXTRA_TARGETS_INDEX])
-			tts_targets |= targets
-		play_tts(identifier, "tmp/tts/[identifier].mp3", tts_targets)
+		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
+		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_message[LOCAL_INDEX])
+		for(var/extra_target in current_message[EXTRA_TARGETS_INDEX])
+			play_tts(extra_target["target"], new_sound, current_message[LANGUAGE_INDEX], extra_target["local"])
 		cached_voices -= identifier
-		var/time_taken = (message_timeout - (current_message[TIMEOUT_INDEX] - world.time)) / 10
-		rtf = time_taken / estimate_word_processing_length(current_message[MESSAGE_INDEX], 1)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(message, speaker, list/targets, filter)
+/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE)
 	if(!tts_enabled)
 		return
 
@@ -187,10 +157,11 @@ SUBSYSTEM_DEF(tts)
 	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
-		cached_voice[EXTRA_TARGETS_INDEX] += list(targets)
+		cached_voice[EXTRA_TARGETS_INDEX] += list(list(target = target, local = local))
 		return
-	else if(fexists("tmp/tts/[identifier].mp3"))
-		play_tts(identifier, "tmp/tts/[identifier].mp3", targets)
+	else if(fexists("tmp/tts/[identifier].ogg"))
+		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
+		play_tts(target, new_sound, language, local)
 		return
 	if(!(speaker in available_speakers))
 		return
@@ -199,17 +170,33 @@ SUBSYSTEM_DEF(tts)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
-	var/file_name = "tmp/tts/[identifier].mp3"
+	var/file_name = "tmp/tts/[identifier].ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	var/list/waiting_list = queued_tts_messages
 	if(length(in_process_tts_messages) < max_concurrent_requests)
 		request.begin_async()
 		waiting_list = in_process_tts_messages
 
-	var/list/data = list(targets, identifier, world.time + message_timeout, request, shell_scrubbed_input, list())
+	var/list/data = list(
+		// TARGET_INDEX = 1
+		target,
+		// IDENTIFIER_INDEX = 2
+		identifier,
+		// TIMEOUT_INDEX = 3
+		world.time + message_timeout,
+		// REQUEST_INDEX = 4
+		request,
+		// MESSAGE_INDEX = 5
+		shell_scrubbed_input,
+		// EXTRA_TARGETS_INDEX = 6
+		list(),
+		// LANGUAGE_INDEX = 7
+		language,
+		// LOCAL_INDEX = 8
+		local,
+	)
 	cached_voices[identifier] = data
 	waiting_list += list(data)
-	sortTim(waiting_list, GLOBAL_PROC_REF(cmp_word_length_asc))
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
@@ -217,3 +204,5 @@ SUBSYSTEM_DEF(tts)
 #undef REQUEST_INDEX
 #undef MESSAGE_INDEX
 #undef EXTRA_TARGETS_INDEX
+#undef LANGUAGE_INDEX
+#undef LOCAL_INDEX
