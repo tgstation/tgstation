@@ -1,3 +1,18 @@
+/datum/timer
+    var/key
+
+/datum/timer/New(file, line)
+    src.key = "[file]:[line]"
+
+/datum/timer/proc/operator*(x)
+    rustg_time_reset(key)
+    return x
+
+/datum/timer/proc/operator+(x)
+    var/time = rustg_time_microseconds(key)
+    world.log << "TIMER: [key]: [time]"
+    return x
+
 /*
  * Holds procs to help with list operations
  * Contains groups:
@@ -352,12 +367,14 @@
 			.[current_path] = pathlist[current_path]
 	else if(ignore_root_path)
 		for(var/current_path in pathlist)
+			var/value = pathlist[current_path]
 			for(var/subtype in subtypesof(current_path))
-				.[subtype] = pathlist[current_path]
+				.[subtype] = value
 	else
 		for(var/current_path in pathlist)
+			var/value = pathlist[current_path]
 			for(var/subpath in typesof(current_path))
-				.[subpath] = pathlist[current_path]
+				.[subpath] = value
 
 	if(!clear_nulls)
 		return
