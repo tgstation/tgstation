@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "spoon overlays will now update when you eat from them to reflect that food = gone. it really is gone, you can stop beating yourself with the spoon. oh god please stop--"
