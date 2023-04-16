@@ -194,9 +194,10 @@
 
 /// Validates that the teleport being attempted is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel)
-	var/area/teleported_atom_area = get_area(teleported_atom)
+	var/area/origin_area = get_area(teleported_atom)
+	var/turf/origin_turf = get_turf(teleported_atom)
+
 	var/area/destination_area = get_area(destination)
-	var/turf/teleported_atom_turf = get_turf(teleported_atom)
 	var/turf/destination_turf = get_turf(destination)
 
 	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
