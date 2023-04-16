@@ -810,7 +810,8 @@
 /area/ruin/space/has_grav/interdyne)
 "Fe" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Fw" = (

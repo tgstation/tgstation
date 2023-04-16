@@ -25588,7 +25588,8 @@
 "ijn" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/glass/bottle/hooch,
-/obj/machinery/power/apc/highcap/five_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/plating,
 /area/mine/storage)
 "ijp" = (
@@ -34926,7 +34927,8 @@
 /area/station/hallway/primary/starboard)
 "lfp" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/sm_apc/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "lfs" = (
