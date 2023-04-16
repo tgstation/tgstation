@@ -170,9 +170,6 @@
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
-	if(user.resting)
-		to_chat(user, span_warning("[src] can't be grabbed while you are on the floor!"))
-		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
