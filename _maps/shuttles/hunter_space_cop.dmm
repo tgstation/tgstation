@@ -100,6 +100,12 @@
 /obj/machinery/fugitive_capture,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
+"lx" = (
+/obj/structure/closet/crate/eva,
+/obj/effect/turf_decal/box,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "rR" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
@@ -122,6 +128,11 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"LK" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "Pq" = (
 /turf/template_noop,
 /area/template_noop)
@@ -129,6 +140,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "RO" = (
@@ -165,7 +177,7 @@ Pq
 (4,1,1) = {"
 hB
 ku
-bY
+LK
 RO
 ak
 ku
@@ -203,7 +215,7 @@ Pq
 ku
 lp
 RO
-aj
+lx
 ku
 Pq
 "}
