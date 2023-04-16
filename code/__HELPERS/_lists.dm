@@ -318,6 +318,9 @@
 			.[current_path] = TRUE
 		return
 
+	// Ok so this is more a HAHA ISN'T THIS FUNNY GUYS thing, but unrolling what gets fed into typesof() here is measurably faster
+	// It saves like, 10% of the cpu time of the proc. so not great but it's for sure something
+	// Isn't this language grand
 	var/pathlen = length(pathlist)
 	for(var/i in 1 to ROUND_UP(pathlen / 5))
 		for(var/subpath in typesof(pathlist[i], (i + 1 <= pathlen) ? pathlist[i + 1] : null, \
@@ -378,6 +381,8 @@
 				. -= cached_path
 		return
 
+	// In order to support the later on slightly faster stupid shit, we're gonna break our arguments into chunks of values
+	// This way we can easily iterate over them later on without breaking the promise of this proc
 	var/list/groups = list()
 	var/list/current_group = list()
 	var/current = null
@@ -391,6 +396,9 @@
 	for(var/list/working as anything in groups)
 		var/value = pathlist[working[1]]
 		var/pathlen = length(working)
+		// Ok so this is more a HAHA ISN'T THIS FUNNY GUYS thing, but unrolling what gets fed into typesof() here is measurably faster
+		// It saves like, 10% of the cpu time of the proc. so not great but it's for sure something
+		// Isn't this language grand
 		for(var/i in 1 to ROUND_UP(pathlen / 4))
 			for(var/subpath in typesof(working[i], (i + 1 <= pathlen) ? working[i + 1] : null, \
 				(i + 2 <= pathlen) ? working[i + 2] : null, (i + 3 <= pathlen) ? working[i + 3] : null))
