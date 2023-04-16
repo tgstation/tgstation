@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, NoticeBox, Stack } from '../../components';
-import { RequestsData } from './Types';
+import { RequestsData, RequestPriority } from './Types';
 
 export const RequestsConsoleHeader = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
@@ -75,8 +75,9 @@ export const MessageNoticeBox = (props, context) => {
   const { new_message_priority } = data;
   return (
     <NoticeBox warning>
-      You have new unread {new_message_priority == 2 && '<b>PRIORITY</b>'}
-      {new_message_priority == 3 && '<b>EXTREME PRIORITY</b>'}
+      You have new unread{' '}
+      {new_message_priority == RequestPriority.HIGH && 'PRIORITY'}
+      {new_message_priority == RequestPriority.EXTREME && 'EXTREME PRIORITY'}
       messages
     </NoticeBox>
   );

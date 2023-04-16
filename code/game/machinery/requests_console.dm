@@ -55,12 +55,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
 	var/message_stamped_by = ""
-	/// The message to be sent
-	var/message = ""
-	/// The department which will be receiving the message
-	var/to_department = ""
-	/// Priority of the message being sent
-	var/priority = REQ_NO_NEW_MESSAGE
 	/// Reference to the internal radio
 	var/obj/item/radio/radio
 	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
@@ -143,14 +137,14 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	GLOB.req_console_all += src
 
-	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
-		GLOB.req_console_assistance += department
+	if((assistance_requestable)) // adding to assistance list if not already present
+		GLOB.req_console_assistance |= department
 
-	if((supplies_requestable) && !(department in GLOB.req_console_supplies)) // supplier list
-		GLOB.req_console_supplies += department
+	if((supplies_requestable)) // supplier list
+		GLOB.req_console_supplies |= department
 
-	if((anon_tips_receiver) && !(department in GLOB.req_console_information)) // tips lists
-		GLOB.req_console_information += department
+	if((anon_tips_receiver)) // tips lists
+		GLOB.req_console_information |= department
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
 
@@ -160,9 +154,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)
 	GLOB.req_console_all -= src
-	GLOB.req_console_assistance -= src
-	GLOB.req_console_supplies -= src
-	GLOB.req_console_information -= src
 	return ..()
 
 /obj/machinery/requests_console/ui_interact(mob/user, datum/tgui/ui)
@@ -207,6 +198,51 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				update_appearance()
 				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
+		if("send_message")
+			var/recipient = params["recipient"]
+			if(!recipient)
+				return
+			var/priority = params["priority"]
+			if(!priority)
+				return
+			var/message = params["message"]
+			if(!message)
+				return
+			var/request_type = params["request_type"]
+			if(!request_type)
+				return
+
+			var/radio_freq
+			switch(ckey(recipient))
+				if("bridge")
+					radio_freq = FREQ_COMMAND
+				if("medbay")
+					radio_freq = FREQ_MEDICAL
+				if("science")
+					radio_freq = FREQ_SCIENCE
+				if("engineering")
+					radio_freq = FREQ_ENGINEERING
+				if("security")
+					radio_freq = FREQ_SECURITY
+				if("cargobay", "mining")
+					radio_freq = FREQ_SUPPLY
+
+			var/datum/signal/subspace/messaging/rc/signal = new(src, list(
+				"sender" = department,
+				"rec_dpt" = recipient,
+				"send_dpt" = department,
+				"message" = message,
+				"verified" = message_verified_by,
+				"stamped" = message_stamped_by,
+				"priority" = priority,
+				"notify_freq" = radio_freq
+			))
+			signal.send_to_receivers()
+
+			screen = signal.data["done"] ? REQ_SCREEN_SENT : REQ_SCREEN_ERR
+
+			if(!silenced)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
 
 /obj/machinery/requests_console/ui_data(mob/user)
 	var/list/data = list()
@@ -217,28 +253,22 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	data["new_message_priority"] = new_message_priority
 	data["silent"] = silent
 	data["messages"] = list()
-	for (message in messages)
+	for (var/message in messages)
 		var/list/message_data = list(
 			content = message,
-		)
+			)
 		data["messages"] += list(message_data)
 	return data
 
 
 /obj/machinery/requests_console/ui_static_data(mob/user)
 	var/list/data = list()
-	data["assistance_consoles"] = GLOB.req_console_assistance
-	data["supply_consoles"] = GLOB.req_console_supplies
-	data["information_consoles"] = GLOB.req_console_information
-	return data
 
-/// Returns the list of ckeys of a department consoles, not including our own
-/obj/machinery/requests_console/proc/get_department_ids(list/request_consoles)
-	var/list/department_ids = list()
-	for(var/request_department in request_consoles)
-		if(request_department == department)
-			continue
-		department_ids += ckey(request_department)
+	data["assistance_consoles"] = GLOB.req_console_assistance - department
+	data["supply_consoles"] = GLOB.req_console_supplies - department
+	data["information_consoles"] = GLOB.req_console_information - department
+
+	return data
 
 /obj/machinery/requests_console/say_mod(input, list/message_mods = list())
 	if(spantext_char(input, "!", -3))

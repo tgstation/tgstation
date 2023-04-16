@@ -9,7 +9,7 @@ export const RequestsConsole = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { department } = data;
   return (
-    <Window title={department + ' Requests Console'} width={500} height={500}>
+    <Window title={department + ' Requests Console'} width={500} height={600}>
       <Window.Content>
         <RequestsConsoleContent />
       </Window.Content>
@@ -37,7 +37,10 @@ export const RequestsConsoleFooter = (props, context) => {
         fluid
         checked={!silent}
         content={'Speaker'}
-        onClick={() => act('toggle_silent')}
+        onClick={() => {
+          alert('silent toggled');
+          act('toggle_silent');
+        }}
       />
     </Stack.Item>
   );
