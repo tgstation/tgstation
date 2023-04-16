@@ -509,6 +509,7 @@
 	pixel_y = 9
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "cg" = (
@@ -616,6 +617,7 @@
 /area/shuttle/syndicate/medical)
 "df" = (
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "dp" = (
@@ -628,20 +630,10 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/medical)
 "el" = (
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/hallway)
-"fk" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/smooth_edge,
-/area/shuttle/syndicate/engineering)
 "gt" = (
 /obj/item/storage/box/handcuffs{
 	pixel_x = 3;
@@ -655,7 +647,6 @@
 	},
 /area/shuttle/syndicate/airlock)
 "hT" = (
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
 /obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
@@ -724,7 +715,6 @@
 	},
 /area/shuttle/syndicate/medical)
 "nq" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -780,7 +770,6 @@
 	},
 /area/shuttle/syndicate/engineering)
 "ug" = (
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /obj/structure/sign/departments/medbay/alt/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
@@ -812,6 +801,7 @@
 /area/shuttle/syndicate/bridge)
 "vQ" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "wK" = (
@@ -851,7 +841,6 @@
 /area/shuttle/syndicate/hallway)
 "zj" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/west,
 /obj/item/bodypart/arm/left/robot{
 	pixel_x = -4;
 	pixel_y = 8
@@ -865,13 +854,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/side,
 /area/shuttle/syndicate/medical)
 "zL" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
-/obj/machinery/light/directional/west,
 /obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
@@ -924,7 +913,6 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/machinery/light/directional/east,
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
@@ -1068,6 +1056,10 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/shuttle/syndicate/medical)
+"RE" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/shuttle/syndicate/hallway)
 "RO" = (
 /obj/effect/turf_decal/loading_area/red{
 	dir = 4
@@ -1334,19 +1326,19 @@ aj
 aq
 ap
 lm
-aD
+RE
 ak
 ak
 ak
-aD
+RE
 Tu
-aD
+RE
 UN
 VW
 GW
 Fe
 zd
-aD
+RE
 bJ
 bo
 cr
@@ -1523,7 +1515,7 @@ bW
 ch
 ch
 ci
-fk
+jf
 cs
 cy
 cG
