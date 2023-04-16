@@ -128,7 +128,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "aO" = (
@@ -140,7 +139,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "aZ" = (
@@ -159,7 +157,6 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "be" = (
@@ -186,6 +183,7 @@
 	dir = 8;
 	name = "wooden railing"
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "by" = (
@@ -316,7 +314,6 @@
 /obj/item/restraints/legcuffs/bola,
 /obj/item/restraints/legcuffs/bola,
 /obj/item/restraints/legcuffs/bola,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "gS" = (
@@ -327,13 +324,6 @@
 /obj/structure/fermenting_barrel/gunpowder,
 /obj/item/reagent_containers/cup/bucket/wooden,
 /obj/item/reagent_containers/cup/bucket/wooden,
-/turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
-"hz" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "hV" = (
@@ -372,12 +362,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/blue/airless,
-/area/shuttle/pirate/flying_dutchman)
-"ny" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/machinery/light/floor,
-/turf/open/space/basic,
 /area/shuttle/pirate/flying_dutchman)
 "pG" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
@@ -451,7 +435,6 @@
 	name = "wooden railing"
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "uw" = (
@@ -487,6 +470,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "vt" = (
@@ -500,6 +484,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "vT" = (
@@ -602,6 +587,7 @@
 	dir = 4;
 	name = "wooden railing"
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Da" = (
@@ -613,6 +599,7 @@
 	pixel_x = -16;
 	pixel_y = 2
 	},
+/obj/machinery/light/floor,
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/shuttle/pirate/flying_dutchman)
 "Dr" = (
@@ -669,7 +656,16 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"FT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood,
+/obj/item/stack/cannonball/fourteen,
+/obj/item/flashlight/flare/torch,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Gr" = (
@@ -749,7 +745,6 @@
 	color = "#4C3117";
 	name = "wooden railing"
 	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Oe" = (
@@ -773,7 +768,7 @@
 /obj/docking_port/mobile/pirate{
 	dir = 8;
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Pirate Ship";
 	port_direction = 4;
 	preferred_direction = 8
@@ -794,6 +789,17 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"PC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/table/wood,
+/obj/item/stack/cannonball/fourteen,
+/obj/item/flashlight/flare/torch,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "PS" = (
@@ -954,13 +960,6 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
-"ZZ" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
 
 (1,1,1) = {"
 af
@@ -1010,7 +1009,7 @@ af
 af
 af
 af
-ny
+Oe
 af
 RY
 RY
@@ -1029,7 +1028,7 @@ af
 af
 RY
 RY
-ny
+Oe
 af
 af
 af
@@ -1041,7 +1040,7 @@ Oe
 RY
 RY
 Oe
-ny
+Oe
 "}
 (4,1,1) = {"
 af
@@ -1119,7 +1118,7 @@ pG
 SV
 WR
 af
-ny
+Oe
 af
 af
 af
@@ -1137,7 +1136,7 @@ af
 af
 af
 af
-ny
+Oe
 Gt
 pG
 SV
@@ -1158,7 +1157,7 @@ af
 af
 af
 ZL
-ZZ
+be
 rN
 WR
 WR
@@ -1166,9 +1165,9 @@ WR
 WR
 WR
 WR
-Fz
+FT
 OL
-hz
+be
 fY
 Gr
 WR
@@ -1328,7 +1327,7 @@ WR
 WR
 WR
 WR
-fH
+PC
 rd
 FK
 yy
@@ -1353,7 +1352,7 @@ Qa
 af
 af
 af
-ny
+Oe
 Gt
 pG
 uw
@@ -1389,7 +1388,7 @@ pG
 uw
 WR
 af
-ny
+Oe
 af
 af
 af
@@ -1461,7 +1460,7 @@ af
 af
 RY
 RY
-ny
+Oe
 af
 af
 af
@@ -1473,7 +1472,7 @@ Oe
 RY
 RY
 Oe
-ny
+Oe
 "}
 (20,1,1) = {"
 af
@@ -1496,7 +1495,7 @@ af
 af
 af
 af
-ny
+Oe
 af
 RY
 RY
