@@ -47814,6 +47814,17 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/construction)
+"mJy" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/pai_card,
+/turf/open/floor/wood/tile,
+/area/station/service/library)
 "mJH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -74534,6 +74545,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
+/obj/item/pai_card,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "tVC" = (
@@ -75514,6 +75526,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
+"uko" = (
+/obj/structure/table,
+/obj/item/pai_card,
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
 "ukr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -255507,7 +255524,7 @@ cdF
 sbq
 jiL
 qbz
-hRH
+uko
 qxy
 qnw
 vcg
@@ -263969,7 +263986,7 @@ kgK
 mAJ
 fll
 hav
-fll
+mJy
 kKE
 baa
 fio
