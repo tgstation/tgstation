@@ -84,6 +84,7 @@
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
 	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
+	RegisterSignal(carbon_parent, COMSIG_CARBON_TRY_SIGN_SPELL, PROC_REF(can_cast_spell))
 	return TRUE
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_DISABLE]
@@ -180,10 +181,10 @@
 		busy_hands++
 
 	// Handcuffed or otherwise restrained - can't talk
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+	if(HAS_TRAIT(carbon_parent, TRAIT_RESTRAINED))
 		return SIGN_CUFFED
 	// Some other trait preventing us from using our hands now
-	else if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+	else if(HAS_TRAIT(carbon_parent, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(carbon_parent, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 
 	// Okay let's compare the total hands to the number of busy hands
@@ -195,6 +196,22 @@
 		return SIGN_ONE_HAND
 
 	return SIGN_OKAY
+
+/// Spellcasting with sign language
+/datum/component/sign_language/proc/can_cast_spell()
+	switch(check_signables_state()) /// Copy+paste cringe but on_try_speech spams chat every time you pick up two items
+		if(SIGN_HANDS_FULL) // Full hands
+			return COMSIG_CANCEL_SIGN_SPELL
+		if(SIGN_CUFFED) // Restrained
+			return COMSIG_CANCEL_SIGN_SPELL
+		if(SIGN_ARMLESS) // No arms
+			return COMSIG_CANCEL_SIGN_SPELL
+		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
+			return COMSIG_CANCEL_SIGN_SPELL
+		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
+			return COMSIG_CANCEL_SIGN_SPELL
+		if(SIGN_ONE_HAND) // Only one hand
+			return COMSIG_CANCEL_SIGN_SPELL
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.

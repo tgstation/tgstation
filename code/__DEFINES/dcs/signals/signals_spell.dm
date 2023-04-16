@@ -14,6 +14,12 @@
 	/// Return from before cast signals to prevent the spell from going on cooldown before aftercast.
 	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
 
+/// Sent to an mob when a [/datum/action/cooldown/spell] calls try_invoke(). (/mob/user)
+#define COMSIG_CARBON_TRY_SIGN_SPELL "try_invoke_spell"
+
+    /// The spell gets canceled
+    #define COMSIG_CANCEL_SIGN_SPELL (1<<1)
+
 /// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"
 	/// Same as spell_cancel_cast, as they're able to be used interchangeably

@@ -373,10 +373,18 @@
 			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
-		if(feedback)
-			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
-		return FALSE
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT))
+		if(!HAS_TRAIT(living_owner,TRAIT_SIGN_LANG) && !living_owner.can_speak())
+			if(feedback)
+				to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+			return FALSE
+		// Handle sign language
+		else if(HAS_TRAIT(living_owner, TRAIT_SIGN_LANG))
+			var/sigreturn = SEND_SIGNAL(living_owner, COMSIG_CARBON_TRY_SIGN_SPELL)
+			if(sigreturn & COMSIG_CANCEL_SIGN_SPELL)
+				if(feedback)
+					to_chat(owner, span_warning("You can't sign the words to invoke [src]!"))
+				return FALSE
 
 	return TRUE
 
