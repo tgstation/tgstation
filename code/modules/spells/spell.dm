@@ -374,7 +374,7 @@
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT))
-		if(!HAS_TRAIT(living_owner,TRAIT_SIGN_LANG) && !living_owner.can_speak())
+		if(!HAS_TRAIT(living_owner, TRAIT_SIGN_LANG) && !living_owner.can_speak())
 			if(feedback)
 				to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 			return FALSE
