@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	return ..()
 
 /obj/machinery/requests_console/ui_interact(mob/user, datum/tgui/ui)
-	if(!open)
+	if(open)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -210,8 +210,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/ui_data(mob/user)
 	var/list/data = list()
+	data["can_send_announcements"] = can_send_announcements
 	data["department"] = department
 	data["emergency"] = emergency
+	data["hack_state"] = hack_state
 	data["new_message_priority"] = new_message_priority
 	data["silent"] = silent
 	data["messages"] = list()
@@ -221,6 +223,22 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		)
 		data["messages"] += list(message_data)
 	return data
+
+
+/obj/machinery/requests_console/ui_static_data(mob/user)
+	var/list/data = list()
+	data["assistance_consoles"] = GLOB.req_console_assistance
+	data["supply_consoles"] = GLOB.req_console_supplies
+	data["information_consoles"] = GLOB.req_console_information
+	return data
+
+/// Returns the list of ckeys of a department consoles, not including our own
+/obj/machinery/requests_console/proc/get_department_ids(list/request_consoles)
+	var/list/department_ids = list()
+	for(var/request_department in request_consoles)
+		if(request_department == department)
+			continue
+		department_ids += ckey(request_department)
 
 /obj/machinery/requests_console/say_mod(input, list/message_mods = list())
 	if(spantext_char(input, "!", -3))
@@ -271,7 +289,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				new_message_priority = REQ_EXTREME_MESSAGE_PRIORITY
 				update_appearance()
 
-	messages += "[header][sending]"
+	messages.Insert(1, "[header][sending]") //reverse order
 
 	SStgui.update_uis(src)
 
