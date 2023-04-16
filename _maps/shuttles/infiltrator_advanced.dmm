@@ -30,7 +30,6 @@
 /area/shuttle/syndicate/bridge)
 "ag" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/west,
 /obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
 	name = "Bottle of Tears";
@@ -79,7 +78,6 @@
 /area/shuttle/syndicate/bridge)
 "al" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/east,
 /obj/item/stack/cable_coil,
 /obj/item/crowbar/red,
 /obj/item/radio/headset/syndicate/alt,
@@ -124,6 +122,7 @@
 	dir = 1;
 	name = "tactical chair"
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "aq" = (
@@ -192,6 +191,7 @@
 	pixel_y = -25
 	},
 /obj/structure/cable,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
 "av" = (
@@ -240,6 +240,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
 "az" = (
@@ -299,7 +300,6 @@
 "aG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/west,
 /obj/item/paper_bin{
 	pixel_x = -4;
 	pixel_y = 4
@@ -391,7 +391,6 @@
 "aS" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/east,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate{
 	pixel_x = 8
 	},
@@ -489,6 +488,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/light/floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "bb" = (
@@ -814,6 +814,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
@@ -1089,7 +1090,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1513,7 +1513,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/directional/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
@@ -1746,7 +1745,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/box/corners,
-/obj/machinery/light/directional/west,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
@@ -1758,8 +1756,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "dL" = (
@@ -1905,10 +1903,10 @@
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/delivery,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "ea" = (
@@ -2024,7 +2022,6 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/obj/machinery/light/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
@@ -2150,6 +2147,13 @@
 "ev" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/syndicate/hallway)
+"Ny" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/obj/effect/turf_decal/box,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
+/turf/open/floor/pod/dark,
+/area/shuttle/syndicate/eva)
 
 (1,1,1) = {"
 ad
@@ -2394,7 +2398,7 @@ dm
 dm
 bk
 bK
-bi
+Ny
 aH
 dK
 cb
