@@ -2,7 +2,6 @@
 "ak" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
-/obj/machinery/light/cold/no_nightlight/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "am" = (
@@ -49,6 +48,7 @@
 /area/template_noop)
 "bZ" = (
 /obj/machinery/chem_heater/withbuffer,
+/obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "cj" = (
@@ -81,6 +81,7 @@
 "dk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/blacklight/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "dC" = (
@@ -155,12 +156,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"fj" = (
-/obj/effect/gibspawner/generic,
-/obj/machinery/light/blacklight/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "fs" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/toy/plush/whiny_plushie,
@@ -179,6 +174,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/light/cold/no_nightlight/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "fS" = (
@@ -190,7 +186,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "gi" = (
-/obj/machinery/light/blacklight/directional/north,
 /obj/structure/rack,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/smooth,
@@ -238,6 +233,10 @@
 /obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"hP" = (
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/interdyne)
 "iv" = (
 /obj/machinery/dna_infuser,
 /turf/open/floor/mineral/plastitanium,
@@ -265,6 +264,10 @@
 /area/ruin/space/has_grav/interdyne)
 "jI" = (
 /obj/structure/dresser,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/interdyne)
+"jK" = (
+/obj/machinery/light/blacklight/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "kg" = (
@@ -313,6 +316,7 @@
 /area/ruin/space/has_grav/interdyne)
 "kV" = (
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
+/obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "li" = (
@@ -323,7 +327,6 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "lQ" = (
-/obj/machinery/light/blacklight/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -396,11 +399,6 @@
 "nw" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/item/storage/bag/mail,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"nA" = (
-/obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
@@ -569,7 +567,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "uS" = (
-/obj/machinery/light/blacklight/directional/south,
 /obj/structure/cable,
 /obj/machinery/power/rtg/advanced,
 /turf/open/floor/iron/smooth,
@@ -643,11 +640,6 @@
 /obj/machinery/griddle,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"yb" = (
-/obj/structure/cable,
-/obj/machinery/light/blacklight/directional/north,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "yt" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 8
@@ -694,12 +686,6 @@
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
-"AF" = (
-/obj/machinery/light/blacklight/directional/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
 "AN" = (
 /obj/machinery/sleeper/syndie{
 	dir = 4
@@ -741,7 +727,6 @@
 "BW" = (
 /obj/structure/safe,
 /obj/item/documents/syndicate,
-/obj/machinery/light/blacklight/directional/north,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c1000,
@@ -814,7 +799,6 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Fw" = (
-/obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
 /obj/machinery/jukebox,
 /turf/open/floor/mineral/plastitanium/red,
@@ -869,7 +853,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/interdyne)
 "Jm" = (
-/obj/machinery/light/blacklight/directional/south,
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
@@ -907,6 +890,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
+/obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "JM" = (
@@ -958,13 +942,6 @@
 /turf/open/misc/asteroid/airless{
 	icon_state = "asteroid12"
 	},
-/area/ruin/space/has_grav/interdyne)
-"LB" = (
-/obj/machinery/light/blacklight/directional/north,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "LE" = (
 /obj/structure/closet/crate/mail,
@@ -1041,7 +1018,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/interdyne)
 "OD" = (
-/obj/machinery/light/blacklight/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1051,7 +1027,6 @@
 	atmos_chambers = list("interdyne_atmos"="Air Supply");
 	dir = 4
 	},
-/obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "OW" = (
@@ -1061,6 +1036,13 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
+"OX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "Pj" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1131,7 +1113,6 @@
 "Ro" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
-/obj/machinery/light/cold/no_nightlight/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
@@ -1246,10 +1227,6 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
-"VN" = (
-/obj/machinery/light/cold/no_nightlight/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/interdyne)
 "VR" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 1
@@ -1259,7 +1236,6 @@
 "Wa" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/sofa/corp/left,
-/obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "Wc" = (
@@ -1280,11 +1256,6 @@
 /obj/structure/chair/office/tactical{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/interdyne)
-"WM" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/blacklight/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "WU" = (
@@ -1484,7 +1455,7 @@ Zi
 QD
 hG
 Zi
-QD
+jK
 Zi
 ma
 Am
@@ -1514,7 +1485,7 @@ Rh
 aY
 aY
 Lb
-VN
+aY
 Zi
 QD
 QD
@@ -1554,7 +1525,7 @@ Zi
 Zi
 Zi
 KA
-yb
+fu
 Zi
 HP
 jI
@@ -1654,7 +1625,7 @@ am
 mD
 Rh
 aY
-VN
+aY
 Zi
 Zi
 Zi
@@ -1769,12 +1740,12 @@ EM
 JH
 dU
 Zi
-fj
+AV
 Ei
 Zi
 RG
 gV
-AF
+gV
 es
 jF
 bW
@@ -1934,7 +1905,7 @@ rr
 Nb
 Bj
 HF
-oO
+OX
 Zi
 dU
 BW
@@ -1947,7 +1918,7 @@ Zi
 zX
 lQ
 Zi
-nA
+fu
 QD
 rL
 Zi
@@ -2069,14 +2040,14 @@ Rn
 Rn
 Rn
 Zi
-QD
+GY
 cJ
 mQ
 QD
 vd
 Te
 Zi
-LB
+oO
 Nb
 Sy
 cj
@@ -2104,7 +2075,7 @@ Rn
 Rn
 Rn
 Zi
-GY
+QD
 QD
 pp
 uy
@@ -2118,7 +2089,7 @@ wJ
 Zi
 Zi
 Yv
-aY
+hP
 Nr
 Jo
 OD
@@ -2148,7 +2119,7 @@ Zi
 Zi
 oO
 Yv
-WM
+dR
 US
 QD
 PF
@@ -2180,7 +2151,7 @@ Zi
 Zi
 Zi
 hi
-bE
+QD
 kp
 Zi
 fu
