@@ -16,9 +16,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 #define REQ_SCREEN_AUTHENTICATE 9
 #define REQ_SCREEN_ANNOUNCE 10
 
-#define REQ_EMERGENCY_SECURITY 1
-#define REQ_EMERGENCY_ENGINEERING 2
-#define REQ_EMERGENCY_MEDICAL 3
+#define REQ_EMERGENCY_SECURITY "Security"
+#define REQ_EMERGENCY_ENGINEERING "Engineering"
+#define REQ_EMERGENCY_MEDICAL "Medical"
 
 /obj/machinery/requests_console
 	name = "requests console"
@@ -39,20 +39,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/list/messages = list()
 	/// Priority of the latest message
 	var/new_message_priority = REQ_NO_NEW_MESSAGE
-	/*
-	Define for the currently displayed page
-		0 = main menu,
-		1 = req. assistance,
-		2 = req. supplies
-		3 = relay information
-		4 = write msg - not used
-		5 = choose priority - not used
-		6 = sent successfully
-		7 = sent unsuccessfully
-		8 = view messages
-		9 = authentication before sending
-		10 = send announcement
-	*/
+	///Define for the currently displayed page
 	var/screen = REQ_SCREEN_MAIN
 	// Is the console silent? Set to TRUE for it not to beep all the time
 	var/silent = FALSE
@@ -178,232 +165,62 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	GLOB.req_console_information -= src
 	return ..()
 
-/obj/machinery/requests_console/ui_interact(mob/user)
-	. = ..()
-	var/dat = ""
+/obj/machinery/requests_console/ui_interact(mob/user, datum/tgui/ui)
 	if(!open)
-		switch(screen)
-			if(REQ_SCREEN_MAIN)
-				announcement_authenticated = FALSE
-				if (new_message_priority == REQ_NORMAL_MESSAGE_PRIORITY)
-					dat += "<div class='notice'>There are new messages</div><BR>"
-				else if (new_message_priority == REQ_HIGH_MESSAGE_PRIORITY)
-					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
-				else if (new_message_priority == REQ_EXTREME_MESSAGE_PRIORITY)
-					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_VIEW_MSGS]'>View Messages</A><BR><BR>"
-
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_REQ_ASSISTANCE]'>Request Assistance</A><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_REQ_SUPPLIES]'>Request Supplies</A><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_RELAY]'>Relay Anonymous Information</A><BR><BR>"
-
-				if(!emergency)
-					dat += "<A href='?src=[REF(src)];emergency=[REQ_EMERGENCY_SECURITY]'>Emergency: Security</A><BR>"
-					dat += "<A href='?src=[REF(src)];emergency=[REQ_EMERGENCY_ENGINEERING]'>Emergency: Engineering</A><BR>"
-					dat += "<A href='?src=[REF(src)];emergency=[REQ_EMERGENCY_MEDICAL]'>Emergency: Medical</A><BR><BR>"
-				else
-					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
-
-				if(can_send_announcements)
-					dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_ANNOUNCE]'>Send Station-wide Announcement</A><BR><BR>"
-				if (silent)
-					dat += "Speaker <A href='?src=[REF(src)];setSilent=0'>OFF</A>"
-				else
-					dat += "Speaker <A href='?src=[REF(src)];setSilent=1'>ON</A>"
-			if(REQ_SCREEN_REQ_ASSISTANCE)
-				dat += "Which department do you need assistance from?<BR><BR>"
-				dat += departments_table(GLOB.req_console_assistance)
-
-			if(REQ_SCREEN_REQ_SUPPLIES)
-				dat += "Which department do you need supplies from?<BR><BR>"
-				dat += departments_table(GLOB.req_console_supplies)
-
-			if(REQ_SCREEN_RELAY)
-				dat += "Which department would you like to send information to?<BR><BR>"
-				dat += departments_table(GLOB.req_console_information)
-
-			if(REQ_SCREEN_SENT)
-				dat += "<span class='good'>Message sent.</span><BR><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
-
-			if(REQ_SCREEN_ERR)
-				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
-
-			if(REQ_SCREEN_VIEW_MSGS)
-				for (var/obj/machinery/requests_console/Console in GLOB.req_console_all)
-					if (Console.department == department)
-						Console.new_message_priority = REQ_NO_NEW_MESSAGE
-						Console.update_appearance()
-
-				new_message_priority = REQ_NO_NEW_MESSAGE
-				update_appearance()
-				var/messageComposite = ""
-				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
-					messageComposite = "<div class='block'>[msg]</div>" + messageComposite
-				dat += messageComposite
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back to Main Menu</A><BR>"
-
-			if(REQ_SCREEN_AUTHENTICATE)
-				dat += "<B>Message Authentication</B><BR><BR>"
-				dat += "<b>Message for [to_department]: </b>[message]<BR><BR>"
-				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
-				dat += "<b>Verified by:</b> [message_verified_by ? message_verified_by : "<i>Not Verified</i>"]<br>"
-				dat += "<b>Stamped by:</b> [message_stamped_by ? message_stamped_by : "<i>Not Stamped</i>"]<br><br>"
-				dat += "<A href='?src=[REF(src)];send=[TRUE]'>Send Message</A><BR>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Discard Message</A><BR>"
-
-			if(REQ_SCREEN_ANNOUNCE)
-				dat += "<h3>Station-wide Announcement</h3>"
-				if(announcement_authenticated)
-					dat += "<div class='notice'>Authentication accepted</div><BR>"
-				else
-					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
-				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
-				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if ((announcement_authenticated || isAdminGhostAI(user)) && message)
-					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
-				else
-					dat += "<span class='linkOff'>Announce Message</span><BR>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
-
-		if(!dat)
-			CRASH("No UI for src. Screen var is: [screen]")
-		var/datum/browser/popup = new(user, "req_console", "[name]", 450, 440)
-		popup.set_content(dat)
-		popup.open()
-	return
-
-/// Receives a list of department names, filters the request console list, and returns them formatted as a html table
-/obj/machinery/requests_console/proc/departments_table(list/req_consoles)
-	var/dat = ""
-	dat += "<table width='100%'>"
-	for(var/req_dpt in req_consoles)
-		if (req_dpt != department)
-			dat += "<tr>"
-			dat += "<td width='55%'>[req_dpt]</td>"
-			dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_NORMAL_MESSAGE_PRIORITY]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_HIGH_MESSAGE_PRIORITY]'>High</A>"
-			if(hack_state)
-				dat += "<A href='?src=[REF(src)];write=[ckey(req_dpt)];priority=[REQ_EXTREME_MESSAGE_PRIORITY]'>EXTREME</A>"
-			dat += "</td>"
-			dat += "</tr>"
-	dat += "</table>"
-	dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
-	return dat
-
-/obj/machinery/requests_console/Topic(href, href_list)
-	if(..())
 		return
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RequestsConsole")
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
-	if(href_list["write"])
-		to_department = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
+/obj/machinery/requests_console/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 
-		var/new_message = (to_department in GLOB.req_console_ckey_departments) && tgui_input_text(usr, "Write your message", "Awaiting Input")
-		if(new_message)
-			to_department = GLOB.req_console_ckey_departments[to_department]
-			message = new_message
-			screen = REQ_SCREEN_AUTHENTICATE
-			priority = clamp(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
-
-	if(href_list["writeAnnouncement"])
-		var/new_message = reject_bad_text(tgui_input_text(usr, "Write your message", "Awaiting Input"))
-		if(new_message)
-			message = new_message
-			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
-		else
-			message = ""
-			announcement_authenticated = FALSE
-			screen = REQ_SCREEN_MAIN
-
-	if(href_list["sendAnnouncement"])
-		if(!can_send_announcements)
-			return
-		if(!(announcement_authenticated || isAdminGhostAI(usr)))
-			return
-		if(isliving(usr))
-			var/mob/living/L = usr
-			message = L.treat_message(message)
-		minor_announce(message, "[department] Announcement:", html_encode = FALSE)
-		GLOB.news_network.submit_article(message, department, "Station Announcements", null)
-		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
-		deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
-		announcement_authenticated = FALSE
-		message = ""
-		screen = REQ_SCREEN_MAIN
-
-	if(href_list["emergency"])
-		if(!emergency)
+	switch(action)
+		if("clear_new_message_priority")
+			for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
+				if (console.department == department)
+					console.new_message_priority = REQ_NO_NEW_MESSAGE
+					console.update_appearance()
+			return TRUE
+		if("toggle_silent")
+			silent = !silent
+			return TRUE
+		if("set_emergency")
+			if(emergency)
+				return
 			var/radio_freq
-			switch(text2num(href_list["emergency"]))
+			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
 					radio_freq = FREQ_SECURITY
-					emergency = "Security"
 				if(REQ_EMERGENCY_ENGINEERING) //Engineering
 					radio_freq = FREQ_ENGINEERING
-					emergency = "Engineering"
 				if(REQ_EMERGENCY_MEDICAL) //Medical
 					radio_freq = FREQ_MEDICAL
-					emergency = "Medical"
 			if(radio_freq)
+				emergency = params["emergency"]
 				radio.set_frequency(radio_freq)
 				radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_appearance()
 				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
+			return TRUE
 
-	if(href_list["send"] && message && to_department && priority)
-
-		var/radio_freq
-		switch(ckey(to_department))
-			if("bridge")
-				radio_freq = FREQ_COMMAND
-			if("medbay")
-				radio_freq = FREQ_MEDICAL
-			if("science")
-				radio_freq = FREQ_SCIENCE
-			if("engineering")
-				radio_freq = FREQ_ENGINEERING
-			if("security")
-				radio_freq = FREQ_SECURITY
-			if("cargobay", "mining")
-				radio_freq = FREQ_SUPPLY
-
-		var/datum/signal/subspace/messaging/rc/signal = new(src, list(
-			"sender" = department,
-			"rec_dpt" = to_department,
-			"send_dpt" = department,
-			"message" = message,
-			"verified" = message_verified_by,
-			"stamped" = message_stamped_by,
-			"priority" = priority,
-			"notify_freq" = radio_freq
-		))
-		signal.send_to_receivers()
-
-		screen = signal.data["done"] ? REQ_SCREEN_SENT : REQ_SCREEN_ERR
-
-	//Handle screen switching
-	if(href_list["setScreen"])
-		var/set_screen = clamp(text2num(href_list["setScreen"]) || 0, REQ_SCREEN_MAIN, REQ_SCREEN_ANNOUNCE)
-		switch(set_screen)
-			if(REQ_SCREEN_MAIN)
-				to_department = ""
-				message_verified_by = ""
-				message_stamped_by = ""
-				message = ""
-				priority = -1
-			if(REQ_SCREEN_ANNOUNCE)
-				if(!can_send_announcements)
-					return
-		screen = set_screen
-
-	//Handle silencing the console
-	if(href_list["setSilent"])
-		silent = text2num(href_list["setSilent"]) ? TRUE : FALSE
-
-	updateUsrDialog()
+/obj/machinery/requests_console/ui_data(mob/user)
+	var/list/data = list()
+	data["department"] = department
+	data["emergency"] = emergency
+	data["new_message_priority"] = new_message_priority
+	data["silent"] = silent
+	data["messages"] = list()
+	for (message in messages)
+		var/list/message_data = list(
+			content = message,
+		)
+		data["messages"] += list(message_data)
+	return data
 
 /obj/machinery/requests_console/say_mod(input, list/message_mods = list())
 	if(spantext_char(input, "!", -3))
@@ -456,6 +273,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	messages += "[header][sending]"
 
+	SStgui.update_uis(src)
+
 	if(!silenced)
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		say(alert)
@@ -493,20 +312,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
 			message_verified_by = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
-			updateUsrDialog()
+			SStgui.update_uis(src)
 		if(screen == REQ_SCREEN_ANNOUNCE)
 			if (ACCESS_RC_ANNOUNCE in ID.access)
 				announcement_authenticated = TRUE
+				SStgui.update_uis(src)
 			else
 				announcement_authenticated = FALSE
 				to_chat(user, span_warning("You are not authorized to send announcements!"))
-			updateUsrDialog()
 		return
 	if (istype(attacking_item, /obj/item/stamp))
 		if(screen == REQ_SCREEN_AUTHENTICATE)
 			var/obj/item/stamp/attacking_stamp = attacking_item
 			message_stamped_by = span_boldnotice("Stamped with the [attacking_stamp.name]")
-			updateUsrDialog()
+			SStgui.update_uis(src)
 		return
 	return ..()
 
