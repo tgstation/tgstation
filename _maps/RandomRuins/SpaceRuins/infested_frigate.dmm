@@ -107,7 +107,6 @@
 /mob/living/simple_animal/hostile/alien{
 	faction = list("syndicate","xenomorph")
 	},
-/obj/machinery/light/broken/directional/south,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
 "bD" = (
@@ -147,12 +146,19 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"cc" = (
+/obj/effect/turf_decal{
+	dir = 1
+	},
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
 "cv" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/obj/machinery/light/broken/directional/east,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 4
@@ -394,7 +400,7 @@
 	},
 /obj/structure/sign/warning/fire/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/red/dim/directional/east,
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "fl" = (
@@ -477,6 +483,7 @@
 	icon_state = "floor1-old"
 	},
 /obj/item/ammo_casing/spent,
+/obj/machinery/light/red/dim/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "hx" = (
@@ -601,6 +608,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/food/egg_smudge,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
 "jk" = (
@@ -635,7 +643,6 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "jA" = (
-/obj/machinery/light/small/broken/directional/east,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
@@ -649,6 +656,7 @@
 	},
 /obj/structure/barricade/security,
 /obj/structure/cable,
+/obj/machinery/light/small/red/dim/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "ka" = (
@@ -667,7 +675,6 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/obj/machinery/light/broken/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "kc" = (
@@ -693,7 +700,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "kp" = (
-/obj/machinery/light/broken/directional/west,
 /obj/structure/alien/weeds/node{
 	maximum_growtime = 240000;
 	minimum_growtime = 120000;
@@ -860,7 +866,6 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/obj/machinery/light/red/dim/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "nG" = (
@@ -969,7 +974,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "qq" = (
-/obj/machinery/light/small/red/dim/directional/east,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
@@ -1144,7 +1148,6 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
-/obj/machinery/light/very_dim/directional/west,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 8
@@ -1211,6 +1214,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/medical/minor_healing,
+/obj/machinery/light/very_dim/directional/south,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "tO" = (
@@ -1238,6 +1242,7 @@
 	},
 /obj/item/bodypart/head,
 /obj/effect/spawner/random/food_or_drink/cake_ingredients,
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
 "ug" = (
@@ -1546,6 +1551,7 @@
 /obj/item/ammo_casing/spent,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yt" = (
@@ -1637,7 +1643,6 @@
 	icon_state = "warningline_white";
 	dir = 8
 	},
-/obj/machinery/light/red/dim/directional/north,
 /obj/structure/barricade/security,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/plastitanium/red,
@@ -2439,7 +2444,6 @@
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/obj/machinery/light/broken/directional/west,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 8
@@ -2475,6 +2479,7 @@
 /obj/effect/turf_decal{
 	dir = 10
 	},
+/obj/machinery/light/very_dim/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "ML" = (
@@ -2604,7 +2609,6 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/obj/machinery/light/very_dim/directional/east,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
@@ -2640,7 +2644,6 @@
 	icon_state = "warningline_white";
 	dir = 8
 	},
-/obj/machinery/light/broken/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "Pb" = (
@@ -2716,7 +2719,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Qp" = (
-/obj/machinery/light/broken/directional/south,
 /obj/item/ammo_casing/spent,
 /obj/effect/decal/cleanable/blood{
 	icon_state = "drip1"
@@ -2789,7 +2791,6 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
 "RK" = (
-/obj/machinery/light/broken/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/alien/weeds/node{
 	maximum_growtime = 240000;
@@ -2982,7 +2983,6 @@
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},
-/obj/machinery/light/broken/directional/east,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 4
@@ -3091,7 +3091,6 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/item/kirbyplants/random,
-/obj/machinery/light/broken/directional/south,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
 "Xc" = (
@@ -3169,7 +3168,6 @@
 	icon_state = "ltrails_1";
 	dir = 1
 	},
-/obj/machinery/light/small/broken/directional/west,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
@@ -4391,7 +4389,7 @@ fl
 fl
 fl
 wP
-QA
+cc
 SE
 vz
 Xm
