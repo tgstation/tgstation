@@ -1,18 +1,3 @@
-/datum/timer
-    var/key
-
-/datum/timer/New(file, line)
-    src.key = "[file]:[line]"
-
-/datum/timer/proc/operator*(x)
-    rustg_time_reset(key)
-    return x
-
-/datum/timer/proc/operator+(x)
-    var/time = rustg_time_microseconds(key)
-    world.log << "TIMER: [key]: [time]"
-    return x
-
 /*
  * Holds procs to help with list operations
  * Contains groups:
