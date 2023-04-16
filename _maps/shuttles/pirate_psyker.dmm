@@ -73,7 +73,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/structure/bedsheetbin,
-/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/grimy,
 /area/shuttle/pirate)
 "eO" = (
@@ -106,6 +105,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "gE" = (
@@ -150,12 +150,14 @@
 /area/shuttle/pirate)
 "gY" = (
 /obj/structure/curtain/bounty,
+/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/shuttle/pirate)
 "ht" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/shuttle/pirate)
 "hE" = (
@@ -306,12 +308,6 @@
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/shuttle/pirate)
-"qq" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/machinery/light/cold/directional/south,
-/obj/item/statuebust,
-/turf/open/floor/iron/white/diagonal,
-/area/shuttle/pirate)
 "qz" = (
 /obj/structure/curtain/cloth/fancy/mechanical{
 	icon_state = "bounty-open";
@@ -355,7 +351,6 @@
 /area/shuttle/pirate)
 "td" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/east,
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron/grimy,
 /area/shuttle/pirate)
@@ -509,7 +504,6 @@
 /area/shuttle/pirate)
 "zX" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "zY" = (
@@ -595,12 +589,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/grimy,
-/area/shuttle/pirate)
-"En" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/contraband,
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/iron,
 /area/shuttle/pirate)
 "EM" = (
 /obj/machinery/door/airlock/grunge{
@@ -715,7 +703,6 @@
 /obj/item/storage/box/bodybags,
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/box/white,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "LV" = (
@@ -725,6 +712,7 @@
 /obj/item/storage/pill_bottle,
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/plastic,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/shuttle/pirate)
 "Me" = (
@@ -758,7 +746,6 @@
 /area/shuttle/pirate)
 "NO" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers,
-/obj/machinery/light/floor,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
 /area/shuttle/pirate)
@@ -870,6 +857,7 @@
 /obj/machinery/suit_storage_unit/pirate,
 /obj/effect/turf_decal/box/white,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "Tj" = (
@@ -905,6 +893,7 @@
 	pixel_y = 3
 	},
 /obj/item/gun/ballistic/revolver/c38,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "Vi" = (
@@ -932,7 +921,6 @@
 /area/shuttle/pirate)
 "Wy" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain,
-/obj/machinery/light/floor,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
 /area/shuttle/pirate)
@@ -975,6 +963,11 @@
 /obj/effect/gibspawner/human,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
+/area/shuttle/pirate)
+"XG" = (
+/obj/structure/chair/office/light,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/pirate)
 "XX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1159,7 +1152,7 @@ ca
 oL
 CW
 zY
-rF
+XG
 me
 LI
 XX
@@ -1224,7 +1217,7 @@ QI
 CW
 bV
 vT
-qq
+ZC
 CW
 yd
 Pz
@@ -1278,7 +1271,7 @@ Ea
 Id
 hE
 vT
-qq
+ZC
 CW
 oL
 Pz
@@ -1295,7 +1288,7 @@ yd
 CW
 HO
 PS
-En
+Ja
 Vi
 cp
 aV
