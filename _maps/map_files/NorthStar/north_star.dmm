@@ -44618,6 +44618,12 @@
 /obj/effect/landmark/start/quartermaster,
 /obj/structure/bed/double/pod,
 /obj/item/bedsheet/qm/double,
+/obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Requests Console";
+	supplies_requestable = 1
+	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "lTN" = (
@@ -77321,6 +77327,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/navigate_destination/bridge,
+/obj/structure/plaque/static_plaque/golden/commission/northstar,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "uMR" = (
