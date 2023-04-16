@@ -42,7 +42,6 @@
 		/mob/living/simple_animal/crab/evil/kreb,
 		/mob/living/simple_animal/crab/jon,
 		/mob/living/simple_animal/crab/kreb,
-		/mob/living/simple_animal/deer,
 		/mob/living/simple_animal/drone,
 		/mob/living/simple_animal/drone/classic,
 		/mob/living/simple_animal/drone/derelict,
