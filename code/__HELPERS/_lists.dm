@@ -316,14 +316,18 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = TRUE
-	else if(ignore_root_path)
+		return
+
+	var/pathlen = length(pathlist)
+	for(var/i in 1 to ROUND_UP(pathlen / 5))
+		for(var/subpath in typesof(pathlist[i], (i + 1 <= pathlen) ? pathlist[i + 1] : null, \
+			(i + 2 <= pathlen) ? pathlist[i + 2] : null, (i + 3 <= pathlen) ? pathlist[i + 3] : null, \
+			(i + 4 <= pathlen) ? pathlist[i + 4] : null))
+			.[subpath] = TRUE
+
+	if(ignore_root_path)
 		for(var/current_path in pathlist)
-			for(var/subtype in subtypesof(current_path))
-				.[subtype] = TRUE
-	else
-		for(var/current_path in pathlist)
-			for(var/subpath in typesof(current_path))
-				.[subpath] = TRUE
+			. -= current_path
 
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
@@ -365,16 +369,35 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = pathlist[current_path]
-	else if(ignore_root_path)
-		for(var/current_path in pathlist)
-			var/value = pathlist[current_path]
-			for(var/subtype in subtypesof(current_path))
-				.[subtype] = value
-	else
-		for(var/current_path in pathlist)
-			var/value = pathlist[current_path]
-			for(var/subpath in typesof(current_path))
+
+		if(!clear_nulls)
+			return
+
+		for(var/cached_path in .)
+			if (isnull(.[cached_path]))
+				. -= cached_path
+		return
+
+	var/list/groups = list()
+	var/list/current_group = list()
+	var/current = null
+	for(var/grouping_path in pathlist)
+		if(current != pathlist[grouping_path])
+			current = pathlist[grouping_path]
+			current_group = list()
+			groups += list(current_group)
+		current_group += grouping_path
+
+	for(var/list/working as anything in groups)
+		var/value = pathlist[working[1]]
+		var/pathlen = length(working)
+		for(var/i in 1 to ROUND_UP(pathlen / 4))
+			for(var/subpath in typesof(working[i], (i + 1 <= pathlen) ? working[i + 1] : null, \
+				(i + 2 <= pathlen) ? working[i + 2] : null, (i + 3 <= pathlen) ? working[i + 3] : null))
 				.[subpath] = value
+
+	if(ignore_root_path)
+		. -= pathlist
 
 	if(!clear_nulls)
 		return
