@@ -1406,12 +1406,13 @@
 		if(!spin_speed)
 			return
 		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
-		if(!direction)
-			return
-		if(direction == "Clockwise")
-			direction = 1
-		else
-			direction = 0
+		switch(direction)
+			if("Clockwise")
+				direction = 1
+			if("Counter-clockwise")
+				direction = 0
+			else
+				return
 		SpinAnimation(spin_speed, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS] && check_rights(R_VAREDIT))
