@@ -3793,7 +3793,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "xs" = (
-/mob/living/simple_animal/hostile/tree{
+/mob/basic/living/tree{
 	desc = "I am death. I will have my vengeance upon my enemies.";
 	melee_damage_upper = 8;
 	wander = 0
