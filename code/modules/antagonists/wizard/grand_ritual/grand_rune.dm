@@ -15,9 +15,8 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
-	pixel_x = -28
-	pixel_y = -33
-	plane = FLOOR_PLANE
+	pixel_w = -28
+	pixel_z = -33
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -327,8 +326,8 @@
 	desc = "Looks like someone's been drawing weird shapes with ash on the ground."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune_burned"
-	pixel_x = -28
-	pixel_y = -34
+	pixel_w = -28
+	pixel_z = -34
 	anchored = TRUE
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
