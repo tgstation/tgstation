@@ -12,9 +12,10 @@
 /datum/mafia_ability/roleblock/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 
 	target_role.role_flags |= ROLE_ROLEBLOCKED
+	return TRUE
 
 /datum/mafia_ability/roleblock/clean_action_refs(datum/mafia_controller/game)
 	if(target_role)

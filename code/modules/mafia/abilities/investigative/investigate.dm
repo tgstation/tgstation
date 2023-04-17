@@ -10,7 +10,7 @@
 /datum/mafia_ability/investigate/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 
 	var/team_text = "Town"
 	var/fluff = "a member of the station, or great at deception."
@@ -25,3 +25,4 @@
 
 	to_chat(host_role.body, span_warning("Your investigations reveal that [target_role.body.real_name] is [fluff]"))
 	host_role.add_note("N[game.turn] - [target_role.body.real_name] - [team_text]")
+	return TRUE

@@ -15,7 +15,7 @@
 /datum/mafia_ability/attack_player/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 
 	if(!target_role.kill(game, host_role, FALSE))
 		to_chat(host_role.body, span_danger("Your attempt at killing [target_role.body.real_name] was prevented!"))
@@ -24,6 +24,7 @@
 		if(honorable && (target_role.team != MAFIA_TEAM_TOWN))
 			to_chat(host_role.body, span_userdanger("You have killed an innocent crewmember. You will die tomorrow night."))
 			RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(internal_affairs))
+	return TRUE
 
 /datum/mafia_ability/attack_player/proc/internal_affairs(datum/mafia_controller/game)
 	SIGNAL_HANDLER

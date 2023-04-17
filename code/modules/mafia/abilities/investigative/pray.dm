@@ -12,7 +12,8 @@
 /datum/mafia_ability/seance/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 
 	to_chat(host_role.body, span_warning("You invoke spirit of [target_role.body.real_name] and learn their role was <b>[target_role.name]<b>."))
 	host_role.add_note("N[game.turn] - [target_role.body.real_name] - [target_role.name]")
+	return TRUE

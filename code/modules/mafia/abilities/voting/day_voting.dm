@@ -12,5 +12,6 @@
 /datum/mafia_ability/voting/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 	game.vote_for(host_role, day_target, vote_type = "Day")
+	return TRUE

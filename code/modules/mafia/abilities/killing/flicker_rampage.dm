@@ -19,17 +19,17 @@
 /datum/mafia_ability/flicker_rampage/perform_action_target(datum/mafia_controller/game, datum/mafia_role/day_target)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 
 	if(!(target_role in darkened_players))
 		to_chat(target_role.body, span_userdanger("The lights begin to flicker and dim. You're in danger."))
 		darkened_players += target_role
-		return ..()
-
-	for(var/datum/mafia_role/dead_players as anything in darkened_players)
-		to_chat(dead_players.body, span_userdanger("A shadowy figure appears out of the darkness!"))
-		dead_players.kill(game, host_role, FALSE)
-		darkened_players -= dead_players
+	else
+		for(var/datum/mafia_role/dead_players as anything in darkened_players)
+			to_chat(dead_players.body, span_userdanger("A shadowy figure appears out of the darkness!"))
+			dead_players.kill(game, host_role, FALSE)
+			darkened_players -= dead_players
+	return TRUE
 
 /datum/mafia_ability/flicker_rampage/proc/flickering_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
