@@ -23,7 +23,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	src.fire_overlay = fire_overlay
 	if(fire_particles)
-		particle_effect = new(atom_parent, fire_particles)
+		// burning particles look really bad on items since they tend to stack on mobs, so do not do that
+		particle_effect = new(atom_parent, fire_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
 	atom_parent.resistance_flags |= ON_FIRE
 	START_PROCESSING(SSfire_burning, src)
 
@@ -39,14 +40,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
 
 /datum/component/burning/Destroy(force, silent)
+	var/atom/atom_parent = parent
 	STOP_PROCESSING(SSfire_burning, src)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
-	var/atom/atom_parent = parent
+	. = ..()
 	if(!QDELING(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
 		atom_parent.resistance_flags &= ~ON_FIRE
 		atom_parent.update_appearance(UPDATE_ICON)
-	return ..()
 
 /datum/component/burning/process(seconds_per_tick)
 	var/atom/atom_parent = parent
