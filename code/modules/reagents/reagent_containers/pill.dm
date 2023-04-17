@@ -270,6 +270,12 @@
 	name = pick(names)
 	if(prob(30))
 		desc = pick(descs)
+	if(prob(10))
+		icon = 'monkestation/icons/obj/pills.dmi'
+		icon_state = "mdma_wario"
+		transform.Scale(0.5 ,0.5)
+	else
+		icon_state = "pill[rand(1,21)]"
 
 /obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
 	. = ..()
