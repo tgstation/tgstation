@@ -1,6 +1,5 @@
 /// Makes a mob simply stop and stare at a movable... yea...
 /datum/ai_behavior/stop_and_stare
-	action_cooldown = 5 SECONDS // pretty much a placeholder
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
 
 /datum/ai_behavior/stop_and_stare/setup(datum/ai_controller/controller, target_key)
