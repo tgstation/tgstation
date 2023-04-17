@@ -359,7 +359,7 @@
 		qdel(decal)
 	if(floor.baseturf_at_depth(1) == /turf/baseturf_bottom) //for turfs whose base is open space we put regular plating in its place else everyone dies
 		floor.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-	else //for every other turf we scarp away exposing base turf underneath
+	else //for every other turf we scrape away exposing base turf underneath
 		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
 
