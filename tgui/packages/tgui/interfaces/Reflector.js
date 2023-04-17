@@ -10,8 +10,8 @@ export const Reflector = (props, context) => {
       height={200}
       width={219}>
       <Window.Content>
-        <Flex direction="row">
-          <Flex.Item>
+        <Stack direction="row">
+          <Stack.Item>
             <Section
               title="Presets"
               textAlign="center"
@@ -103,8 +103,8 @@ export const Reflector = (props, context) => {
                 </Table.Cell>
               </Table>
             </Section>
-          </Flex.Item>
-          <Flex.Item>
+          </Stack.Item>
+          <Stack>
             <Section
               title="Angle"
               textAlign="center"
@@ -123,9 +123,9 @@ export const Reflector = (props, context) => {
                     })} />
                 </LabeledControls.Item>
               </LabeledControls>
-              <Flex direction="row" grow={1}>
-                <Flex direction="column" grow={1}>
-                  <Flex.Item>
+              <Stack direction="row" grow={1}>
+                <Stack direction="column" grow={1}>
+                  <Stack.Item>
                     <Button
                       fluid
                       icon="undo-alt"
@@ -134,8 +134,8 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: -5,
                       })} />
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack.Item>
+                  <Stack>
                     <Button
                       fluid
                       icon="undo-alt"
@@ -144,8 +144,8 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: -10,
                       })} />
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack>
+                  <Stack>
                     <Button
                       fluid
                       icon="undo-alt"
@@ -154,10 +154,10 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: -15,
                       })} />
-                  </Flex.Item>
-                </Flex>
-                <Flex direction="column">
-                  <Flex.Item>
+                  </Stack>
+                </Stack>
+                <Stack direction="column">
+                  <Stack.Item>
                     <Button
                       fluid
                       icon="redo-alt"
@@ -167,8 +167,8 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: 5,
                       })} />
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack.Item>
+                  <Stack>
                     <Button
                       fluid
                       icon="redo-alt"
@@ -178,8 +178,8 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: 10,
                       })} />
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack>
+                  <Stack>
                     <Button
                       fluid
                       icon="redo-alt"
@@ -189,12 +189,12 @@ export const Reflector = (props, context) => {
                       onClick={() => act('calculate', {
                         rotation_angle: 15,
                       })} />
-                  </Flex.Item>
-                </Flex>
-              </Flex>
+                  </Stack>
+                </Stack>
+              </Stack>
             </Section>
-          </Flex.Item>
-        </Flex>
+          </Stack>
+        </Stack>
       </Window.Content>
     </Window>
   );
