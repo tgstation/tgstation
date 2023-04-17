@@ -5447,6 +5447,7 @@
 #include "monkestation\code\modules\ranching\mutations\tier1.dm"
 #include "monkestation\code\modules\ranching\mutations\tier2.dm"
 #include "monkestation\code\modules\ranching\mutations\tier3.dm"
+#include "monkestation\code\modules\reagents\fun\shakeium.dm"
 #include "monkestation\code\modules\research\designs\computer_designs.dm"
 #include "monkestation\code\modules\research\designs\electronic_designs.dm"
 #include "monkestation\code\modules\research\designs\machine_designs.dm"
