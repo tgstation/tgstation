@@ -30,6 +30,7 @@
 
 	host_role.add_note("N[game.turn] - Vested")
 	charges--
+	return TRUE
 
 /datum/mafia_ability/vest/proc/self_defense(datum/source, datum/mafia_controller/game, datum/mafia_role/attacker, lynch)
 	SIGNAL_HANDLER
