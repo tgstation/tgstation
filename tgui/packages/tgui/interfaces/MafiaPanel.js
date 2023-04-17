@@ -1,14 +1,24 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
-import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TextArea, Tabs } from '../components';
 import { Window } from '../layouts';
+import { formatTime } from '../format';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { phase, roleinfo, role_theme, admin_controls } = data;
+  const { phase, roleinfo, admin_controls } = data;
+  const [mafia_tab, setMafiaMode] = useLocalState(
+    context,
+    mafia_tab,
+    'Role list'
+  );
   return (
-    <Window title="Mafia" theme={role_theme} width={650} height={580}>
+    <Window
+      title="Mafia"
+      theme={roleinfo && roleinfo.role_theme}
+      width={650}
+      height={580}>
       <Window.Content>
         <Stack fill vertical>
           {!roleinfo && (
@@ -17,37 +27,63 @@ export const MafiaPanel = (props, context) => {
             </Stack.Item>
           )}
           {!!roleinfo && (
-            <Stack.Item>
-              <MafiaRole />
-            </Stack.Item>
-          )}
-          {!!roleinfo && (
-            <Stack.Item>
-              <MafiaJudgement />
-            </Stack.Item>
+            <>
+              <Stack.Item>
+                <MafiaRole />
+              </Stack.Item>
+              {phase === 'Judgment' && (
+                <Stack.Item>
+                  <MafiaJudgement />
+                </Stack.Item>
+              )}
+            </>
           )}
           {phase !== 'No Game' && (
             <Stack.Item grow>
               <Stack fill>
-                <Stack.Item grow={1.34} basis={0}>
-                  <MafiaPlayers />
-                </Stack.Item>
-                <Stack.Item grow={1} basis={0}>
-                  <Stack fill vertical>
-                    <Stack.Item grow>
-                      <MafiaListOfRoles />
-                    </Stack.Item>
-                    {!!roleinfo && (
-                      <Stack.Item height="80px">
-                        <Section fill scrollable>
-                          {roleinfo.action_log?.map((line) => (
-                            <Box key={line}>{line}</Box>
-                          ))}
-                        </Section>
+                <>
+                  <Stack.Item grow={1.34} basis={0}>
+                    <MafiaPlayers />
+                  </Stack.Item>
+                  <Stack.Item grow={1} basis={0}>
+                    <Tabs fluid>
+                      <Tabs.Tab
+                        selected={mafia_tab === 'Role list'}
+                        onClick={() => setMafiaMode('Role list')}>
+                        Role list
+                        <Button
+                          color="transparent"
+                          icon="address-book"
+                          tooltipPosition="bottom-start"
+                          tooltip={multiline`
+                            This is the list of roles in the game. You can
+                            press the question mark to get a quick blurb
+                            about the role itself.`}
+                        />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        selected={mafia_tab === 'Notes'}
+                        onClick={() => setMafiaMode('Notes')}>
+                        Notes
+                        <Button
+                          color="transparent"
+                          icon="pencil"
+                          tooltipPosition="bottom-start"
+                          tooltip={multiline`
+                            This is your notes, anything you want to write
+                            can be saved for future reference. You can
+                            also send it to chat with a button.`}
+                        />
+                      </Tabs.Tab>
+                    </Tabs>
+                    <Stack fill vertical>
+                      <Stack.Item grow>
+                        {mafia_tab === 'Role list' && <MafiaListOfRoles />}
+                        {mafia_tab === 'Notes' && <MafiaNotesTab />}
                       </Stack.Item>
-                    )}
-                  </Stack>
-                </Stack.Item>
+                    </Stack>
+                  </Stack.Item>
+                </>
               </Stack>
             </Stack.Item>
           )}
@@ -64,7 +100,7 @@ export const MafiaPanel = (props, context) => {
 
 const MafiaLobby = (props, context) => {
   const { act, data } = useBackend(context);
-  const { lobbydata, phase, timeleft } = data;
+  const { lobbydata } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
     : null;
@@ -75,9 +111,6 @@ const MafiaLobby = (props, context) => {
       title="Lobby"
       buttons={
         <>
-          Phase = {phase}
-          {' | '}
-          <TimeDisplay auto="down" value={timeleft} />{' '}
           <Button
             icon="clipboard-check"
             tooltipPosition="bottom-start"
@@ -148,7 +181,7 @@ const MafiaRole = (props, context) => {
             'line-height': 1.5,
             'font-weight': 'bold',
           }}>
-          <TimeDisplay auto="down" value={timeleft} />
+          {formatTime(timeleft)}
         </Box>
       }>
       <Stack align="center">
@@ -181,34 +214,7 @@ const MafiaListOfRoles = (props, context) => {
   const { act, data } = useBackend(context);
   const { all_roles } = data;
   return (
-    <Section
-      fill
-      scrollable
-      title="Roles and Notes"
-      minHeight="120px"
-      buttons={
-        <>
-          <Button
-            color="transparent"
-            icon="address-book"
-            tooltipPosition="bottom-start"
-            tooltip={multiline`
-              The top section is the roles in the game. You can
-              press the question mark to get a quick blurb
-              about the role itself.`}
-          />
-          <Button
-            color="transparent"
-            icon="edit"
-            tooltipPosition="bottom-start"
-            tooltip={multiline`
-              The bottom section are your notes. on some roles this
-              will just be an empty box, but on others it records the
-              actions of your abilities (so for example, your
-              detective work revealing a changeling).`}
-          />
-        </>
-      }>
+    <Section fill minHeight="120px">
       <Flex direction="column">
         {all_roles?.map((r) => (
           <Flex.Item
@@ -236,53 +242,62 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
+const MafiaNotesTab = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { user_notes } = data;
+  const [note_message, setNotesMessage] = useLocalState(
+    context,
+    'Notes',
+    user_notes
+  );
+  return (
+    <Section fill scrollable>
+      <TextArea
+        maxLength={1026}
+        height="80%"
+        className="Section__title candystripe"
+        onChange={(_, value) => setNotesMessage(value)}
+        placeholder={'Notes'}
+        value={note_message}
+      />
+      <Button
+        color="good"
+        fluid
+        content="Save"
+        textAlign="center"
+        onClick={() => act('change_notes', { new_notes: note_message })}
+        tooltip="Saves the current will as your will. This can't be done while dead."
+      />
+      <Button.Confirm
+        color="bad"
+        fluid
+        content="Send to Chat"
+        textAlign="center"
+        onClick={() => act('send_notes_to_chat')}
+        tooltip="Sends the will you have saved into the chat for everyone to hear."
+      />
+    </Section>
+  );
+};
+
 const MafiaJudgement = (props, context) => {
   const { act, data } = useBackend(context);
-  const { judgement_phase } = data;
   return (
-    <Section
-      title="Judgement"
-      buttons={
-        <Button
-          color="transparent"
-          icon="info"
-          tooltipPosition="left"
-          tooltip={multiline`
-            When someone is on trial, you are in charge of their fate.
-            Innocent winning means the person on trial can live to see
-            another day... and in losing they do not. You can go back
-            to abstaining with the middle button if you reconsider.
-          `}
-        />
-      }>
+    <Section title="Judgement">
       <Flex justify="space-around">
         <Button
           icon="smile-beam"
           content="INNOCENT!"
           color="good"
-          disabled={!judgement_phase}
           onClick={() => act('vote_innocent')}
         />
-        {!judgement_phase && <Box>There is nobody on trial at the moment.</Box>}
-        {!!judgement_phase && (
-          <Box>
-            It is now time to vote, vote the accused innocent or guilty!
-          </Box>
-        )}
-        <Button
-          icon="angry"
-          color="bad"
-          disabled={!judgement_phase}
-          onClick={() => act('vote_guilty')}>
+        <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
+        <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
           GUILTY!
         </Button>
       </Flex>
       <Flex justify="center">
-        <Button
-          icon="meh"
-          color="white"
-          disabled={!judgement_phase}
-          onClick={() => act('vote_abstain')}>
+        <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>
           Abstain
         </Button>
       </Flex>
