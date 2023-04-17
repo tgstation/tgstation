@@ -203,6 +203,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			member.liquids.set_new_liquid_state(group_overlay_state)
 			member.liquid_height = expected_turf_height + member.turf_height
 
+/datum/liquid_group/proc/process_member(turf/member)
+	if(!(member in members))
+		return
+	reagents.expose(member, TOUCH, liquid = TRUE)
+
 /datum/liquid_group/proc/process_turf_disperse()
 	if(!total_reagent_volume)
 		for(var/turf/member in members)

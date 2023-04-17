@@ -119,6 +119,10 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"lM" = (
+/obj/structure/cable,
+/turf/open/floor/carpet/black,
+/area/station/engineering/supermatter/room)
 "nd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
@@ -303,6 +307,7 @@
 	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Chief Weh Officer"
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
 "zq" = (
@@ -484,6 +489,7 @@
 /area/station/engineering/supermatter/room)
 "NS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
 "OV" = (
@@ -566,6 +572,7 @@
 /area/station/engineering/supermatter/room)
 "ZC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
 
@@ -608,7 +615,7 @@ hn
 MT
 ch
 eg
-eg
+lM
 eg
 qx
 MT
