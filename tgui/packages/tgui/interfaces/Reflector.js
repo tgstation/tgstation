@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Stack, Icon, LabeledControls, Section, NumberInput, Table } from '../components';
+import { Box, Button, Stack, Icon, LabeledControls, Section, NumberInput, Table } from '../components';
 import { Window } from '../layouts';
 
 export const Reflector = (props, context) => {
