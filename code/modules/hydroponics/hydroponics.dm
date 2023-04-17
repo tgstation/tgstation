@@ -763,8 +763,8 @@
  * Called after plant mutation, update the appearance of the tray content and send a visible_message()
  */
 /obj/machinery/hydroponics/proc/after_mutation(message)
-	update_appearance()
 	visible_message(message)
+	update_appearance()
 
 /**
  * Plant Death Proc.
