@@ -59,7 +59,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	atom_parent.take_damage(10 * seconds_per_tick, BURN, FIRE, FALSE)
 
 /// Alerts any examiners that the parent is on fire (even though it should be obvious)
-/datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
+/datum/component/burning/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	examine_list += span_danger("[source.p_theyre(TRUE)] burning!")
