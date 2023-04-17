@@ -64,8 +64,8 @@
 		else
 			countdown.start()
 
-/obj/effect/anomaly/process(delta_time)
-	anomalyEffect(delta_time)
+/obj/effect/anomaly/process(seconds_per_tick)
+	anomalyEffect(seconds_per_tick)
 	if(death_time < world.time && !immortal)
 		if(loc)
 			detonate()
@@ -78,8 +78,8 @@
 		QDEL_NULL(aSignal)
 	return ..()
 
-/obj/effect/anomaly/proc/anomalyEffect(delta_time)
-	if(!immobile && DT_PROB(ANOMALY_MOVECHANCE, delta_time))
+/obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
+	if(!immobile && SPT_PROB(ANOMALY_MOVECHANCE, seconds_per_tick))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()

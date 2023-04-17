@@ -10,7 +10,7 @@
 	icon_state = "infuser"
 	base_icon_state = "infuser"
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE

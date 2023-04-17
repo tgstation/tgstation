@@ -76,7 +76,7 @@
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
 	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
 
-/obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
+/obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.stat != CONSCIOUS || !prob(0.1))
 		return
