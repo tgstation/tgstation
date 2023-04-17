@@ -137,9 +137,9 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
+	projectile_damage_multiplier = 1.2
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	projectile_damage_multiplier = 1.2
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0
