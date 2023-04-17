@@ -46,7 +46,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(particle_effect)
 	// Unregisters signals before we update the atom's appearance and stuff
 	. = ..()
-	if(!QDELING(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
+	if(!QDELETED(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
 		atom_parent.resistance_flags &= ~ON_FIRE
 		atom_parent.update_appearance(UPDATE_ICON)
 
