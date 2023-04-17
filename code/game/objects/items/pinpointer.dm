@@ -225,18 +225,12 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	desc = "A handheld tracking device that locates sheets of glass and iron."
 	icon_state = "pinpointer_sniffer"
 	worn_icon_state = "pinpointer_black"
-	/// weakref of currently locked on sheets
-	var/datum/weakref/weakly_sniffed_sheet
 
 /obj/item/pinpointer/material_sniffer/scan_for_target()
-	//keep tracking the current one
-	var/obj/item/stack/sheet/sniffed_sheet = weakly_sniffed_sheet.resolve()
-	if(sniffed_sheet && !isliving(sniffed_sheet.loc))
-		target = sniffed_sheet
+	if(target)
 		return
 	var/obj/item/stack/sheet/new_sheet_target
 	var/closest_distance = INFINITY
-	//find a new one
 	for(var/obj/item/stack/sheet/potential_sheet as anything in GLOB.sniffable_sheets)
 		//held by someone
 		if(isliving(potential_sheet.loc))
@@ -250,8 +244,6 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 			new_sheet_target = potential_sheet
 	if(!new_sheet_target)
 		target = null
-		weakly_sniffed_sheet = null
 		return
 	say("Located [new_sheet_target.amount] [new_sheet_target.singular_name]s!")
-	weakly_sniffed_sheet = WEAKREF(new_sheet_target)
 	target = new_sheet_target
