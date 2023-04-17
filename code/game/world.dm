@@ -34,11 +34,6 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-#ifdef USE_BYOND_TRACY
-	#warn USE_BYOND_TRACY is enabled
-	init_byond_tracy()
-#endif
-
 	log_world("World loaded at [time_stamp()]!")
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
