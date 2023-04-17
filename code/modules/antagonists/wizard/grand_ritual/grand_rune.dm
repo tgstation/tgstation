@@ -326,8 +326,8 @@
 	desc = "Looks like someone's been drawing weird shapes with ash on the ground."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune_burned"
-	pixel_w = -28
-	pixel_z = -34
+	pixel_x = -28
+	pixel_y = -34
 	anchored = TRUE
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
