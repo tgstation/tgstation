@@ -15,9 +15,11 @@
 	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
 
 /// Sent to an mob when a [/datum/action/cooldown/spell] calls try_invoke().
-#define COMSIG_CARBON_TRY_SIGN_SPELL "try_invoke_spell"
+#define COMSIG_MOB_TRY_INVOKE_SPELL "try_invoke_spell"
 	/// The spell gets canceled
-	#define COMSIG_CANCEL_SIGN_SPELL (1<<1)
+	#define SPELL_INVOCATION_FAIL SPELL_CANCEL_CAST
+	/// The spell succeeds
+	#define SPELL_INVOCATION_SUCCESS (1 << 1)
 
 /// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"

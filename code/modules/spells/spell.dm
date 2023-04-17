@@ -368,22 +368,25 @@
 		return FALSE
 
 	var/mob/living/living_owner = owner
+	var/sigreturn = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL)
+	if(sigreturn & SPELL_INVOCATION_FAIL)
+		if(invocation_type != INVOCATION_EMOTE) // For if a mime is a signer for some reason??
+			if(HAS_TRAIT(owner, TRAIT_SIGN_LANG))
+				if(feedback)
+					to_chat(owner, span_warning("You can't sign the words to invoke [src]!"))
+			return FALSE
+	if(sigreturn & SPELL_INVOCATION_SUCCESS)
+		return TRUE // Skips following checks.
+
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
 			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT))
-		if(!HAS_TRAIT(living_owner, TRAIT_SIGN_LANG) && !living_owner.can_speak())
-			if(feedback)
-				to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
-			return FALSE
-		// Handle sign language
-		else if(HAS_TRAIT(living_owner, TRAIT_SIGN_LANG))
-			if(SEND_SIGNAL(living_owner, COMSIG_CARBON_TRY_SIGN_SPELL) & COMSIG_CANCEL_SIGN_SPELL)
-				if(feedback)
-					to_chat(owner, span_warning("You can't sign the words to invoke [src]!"))
-				return FALSE
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
+		if(feedback)
+			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+		return FALSE
 
 	return TRUE
 

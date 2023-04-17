@@ -84,7 +84,7 @@
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
 	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
-	RegisterSignal(carbon_parent, COMSIG_CARBON_TRY_SIGN_SPELL, PROC_REF(can_cast_spell))
+	RegisterSignal(carbon_parent, COMSIG_MOB_TRY_INVOKE_SPELL, PROC_REF(can_cast_spell))
 	return TRUE
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_DISABLE]
@@ -200,8 +200,11 @@
 /// Spellcasting with sign language
 /datum/component/sign_language/proc/can_cast_spell()
 	SIGNAL_HANDLER
-	if(check_signables_state() != SIGN_OKAY) // Cannot cast if anything but SIGN_OKAY
-		return COMSIG_CANCEL_SIGN_SPELL
+	var/mob/living/carbon/carbon_parent = parent
+	if(HAS_TRAIT(carbon_parent, TRAIT_SIGN_LANG))
+		if(check_signables_state() != SIGN_OKAY) // Cannot cast if not SIGN_OKAY
+			return SPELL_INVOCATION_FAIL
+		else return SPELL_INVOCATION_SUCCESS
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
