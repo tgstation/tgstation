@@ -66,9 +66,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	// assumes unlimited space...
 	var/amount = I.amount
 	materials.user_insert(I, user, breakdown_flags)
-	var/list/matlist = list()
-	matlist[GET_MATERIAL_REF(I.material_type)] = item_mats
-	silo_log(M, "deposited", amount, "sheets", matlist)
+	var/list/matlist = I.get_material_composition(breakdown_flags)
+	silo_log(M, "deposited", amount, I.name, matlist)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
@@ -230,7 +229,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/each in materials)
 		materials[each] *= abs(_amount)
 	format()
-	log_silo("[machine_name] in [area_name] [action] [abs(amount)]x [noun] [get_raw_materials("")]")
+	log_silo("[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")]")
 
 /datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
 	if (other == src || action != other.action || noun != other.noun)
