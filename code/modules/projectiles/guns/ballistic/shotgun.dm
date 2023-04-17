@@ -137,9 +137,9 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
+	projectile_damage_multiplier = 1.2
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0
@@ -158,7 +158,6 @@
 	var/secondary_magazine_type
 	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
-	projectile_damage_multiplier = 1.2
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
 	. = ..()
