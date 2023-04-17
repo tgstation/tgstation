@@ -11,7 +11,7 @@
 
 /datum/reagent/shakeium/on_mob_life(mob/living/L)
 	. = ..()
-	var/pixel_shift = (2 + (intensity / 10))
+	var/pixel_shift = (1 + (intensity / 10))
 	L.Shake(pixel_shift)
 	intensity++
 
