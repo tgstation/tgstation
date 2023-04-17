@@ -202,7 +202,8 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/carbon_parent = parent
 	if(HAS_TRAIT(carbon_parent, TRAIT_SIGN_LANG))
-		if(check_signables_state() != SIGN_OKAY) // Cannot cast if not SIGN_OKAY
+		// Cannot cast if anything but SIGN_OKAY or if miming
+		if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING))
 			return SPELL_INVOCATION_FAIL
 		else return SPELL_INVOCATION_SUCCESS
 
