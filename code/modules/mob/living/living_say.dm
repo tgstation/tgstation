@@ -375,14 +375,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		tts_message_to_use = message_raw
 
 	var/list/filter = list()
-	if(length(src.voice_filter) > 0)
-		filter += src.voice_filter
+	if(length(voice_filter) > 0)
+		filter += voice_filter
 
 	if(length(tts_filter) > 0)
 		filter += tts_filter.Join(",")
 
-	if(src.voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, src.voice, filter.Join(","))
+	if(voice && found_client && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","))
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
