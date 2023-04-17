@@ -6,7 +6,7 @@
 	icon_dead = "deer-doe-dead"
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak_emote = list("grunts","grunts lowly")
+	speak_emote = list("grunts", "grunts lowly")
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -36,7 +36,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
