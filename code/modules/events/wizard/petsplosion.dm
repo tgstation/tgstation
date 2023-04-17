@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/simple_animal/sloth,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/chicken,
-	/mob/living/simple_animal/hostile/retaliate/bat,
+	/mob/living/basic/bat,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/snake,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,

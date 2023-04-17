@@ -371,6 +371,7 @@
 
 /datum/team/nuclear/proc/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
+	var/shuttle_landed_base = SSshuttle.emergency.is_hijacked()
 	var/disk_rescued = is_disk_rescued()
 	var/syndies_didnt_escape = !is_infiltrator_docked_at_syndiebase()
 	var/team_is_dead = are_all_operatives_dead()
@@ -398,6 +399,13 @@
 		// The station was not nuked, but something was, and the syndicates returned to their base
 		else
 			return NUKE_RESULT_WRONG_STATION
+
+	// Nuke didn't blow, but nukies somehow hijacked the emergency shuttle to land at the base anyways.
+	else if(shuttle_landed_base)
+		if(disk_rescued)
+			return NUKE_RESULT_HIJACK_DISK
+		else
+			return NUKE_RESULT_HIJACK_NO_DISK
 
 	// No nuke went off, the station rescued the disk
 	else if(disk_rescued)
@@ -439,6 +447,12 @@
 		if(NUKE_RESULT_WRONG_STATION_DEAD)
 			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
 			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
+		if(NUKE_RESULT_HIJACK_DISK)
+			parts += "<span class='greentext big'>Syndicate Miniscule Victory!</span>"
+			parts += "<B>[syndicate_name] operatives failed to destroy [station_name()], but they managed to secure the disk and hijack the emergency shuttle, causing it to land on the syndicate base. Good job?</B>"
+		if(NUKE_RESULT_HIJACK_NO_DISK)
+			parts += "<span class='greentext big'>Syndicate Insignificant Victory!</span>"
+			parts += "<B>[syndicate_name] operatives failed to destroy [station_name()] or secure the disk, but they managed to hijack the emergency shuttle, causing it to land on the syndicate base. Good job?</B>"
 		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
 			parts += "<span class='redtext big'>Crew Major Victory!</span>"
 			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"

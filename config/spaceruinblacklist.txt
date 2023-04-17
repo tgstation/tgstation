@@ -76,7 +76,7 @@
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
-#_maps/RnadomRuins/SpaceRuins/mimesvsclowns.dmm
+#_maps/RandomRuins/SpaceRuins/mimesvsclowns.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
 #_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
