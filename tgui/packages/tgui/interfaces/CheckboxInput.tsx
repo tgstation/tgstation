@@ -12,13 +12,21 @@ type Data = {
   message: string;
   title: string;
   timeout: number;
+  min_checked: number;
   max_checked: number;
 };
 
 /** Renders a list of checkboxes per items for input. */
 export const CheckboxInput = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { items = [], max_checked, message, timeout, title } = data;
+  const {
+    items = [],
+    min_checked,
+    max_checked,
+    message,
+    timeout,
+    title,
+  } = data;
 
   const [selections, setSelections] = useLocalState<string[]>(
     context,
@@ -50,6 +58,7 @@ export const CheckboxInput = (props, context) => {
           <Stack.Item>
             <NoticeBox info textAlign="center">
               {decodeHtmlEntities(message)}{' '}
+              {min_checked > 0 && ` (Min: ${min_checked})`}
               {max_checked < 50 && ` (Max: ${max_checked})`}
             </NoticeBox>
           </Stack.Item>
