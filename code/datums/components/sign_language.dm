@@ -197,7 +197,16 @@
 
 	return SIGN_OKAY
 
-/// Spellcasting with sign language
+/**
+ * Check if we can sign the given spell
+ *
+ * Checks to make sure the spell is not a mime spell, and that we are able to physically cast the spell.
+ * Arguments:
+ * * datum/action/cooldown/spell/spell - the spell we are trying to cast
+ * * feedback - whether or not a message should be displayed in chat
+ * *
+ * * returns SPELL_INVOCATION_FAIL or SPELL_INVOCATION_SUCCESS
+ */
 /datum/component/sign_language/proc/can_cast_spell(datum/action/cooldown/spell/spell, feedback)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/carbon_parent = parent
