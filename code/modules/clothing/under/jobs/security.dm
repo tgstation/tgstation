@@ -221,6 +221,12 @@
 	icon_state = "spacepol"
 	inhand_icon_state = null
 	can_adjust = FALSE
+	armor_type = /datum/armor/sec_uniform_spacepol
+
+/datum/armor/sec_uniform_spacepol
+	fire = 10
+	acid = 10
+	melee = 10
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"

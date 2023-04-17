@@ -28,8 +28,10 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	unsuitable_heat_damage = 20
-	see_in_dark = NIGHTVISION_FOV_RANGE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Going for a dark purple here
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 50
 	unique_name = 1
 	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'
@@ -51,7 +53,7 @@
 		return
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown <= 0)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
 
@@ -101,10 +103,10 @@
 	egg_cooldown--
 	plant_cooldown--
 	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
+		if(!plants_off && prob(10) && plant_cooldown <= 0)
 			plant_cooldown = initial(plant_cooldown)
 			SpreadPlants()
-		if(!sterile && prob(10) && egg_cooldown<=0)
+		if(!sterile && prob(10) && egg_cooldown <= 0)
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 

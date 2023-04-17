@@ -14,6 +14,11 @@
 	if(issilicon(accessor))
 		if(ispAI(accessor))
 			return FALSE
+		if(!(ROLE_SYNDICATE in accessor.faction))
+			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
+				return FALSE
+			if(onSyndieBase() && loc != accessor)
+				return FALSE
 		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
@@ -58,10 +63,7 @@
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_access_list(list/access_list)
-	if(!islist(req_access)) //something's very wrong
-		return TRUE
-
-	if(!req_access.len && !length(req_one_access))
+	if(!length(req_access) && !length(req_one_access))
 		return TRUE
 
 	if(!length(access_list) || !islist(access_list))

@@ -83,6 +83,8 @@
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
+	if(clip_on)
+		return
 	// Normal strip & equip delay, along with 2 second self equip since you need to squeeze your head through the hole.
 	if(is_tied)
 		icon_state = "tie_greyscale_tied"
@@ -187,8 +189,8 @@
 	var/heart_strength = span_danger("no")
 	var/lung_strength = span_danger("no")
 
-	var/obj/item/organ/internal/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/internal/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
 		if(istype(heart))
@@ -348,6 +350,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
@@ -360,6 +363,8 @@
 			new /obj/item/holochip(get_turf(user),true_price)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+
+	return .
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"

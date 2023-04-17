@@ -1,10 +1,12 @@
 /datum/round_event_control/morph
 	name = "Spawn Morph"
 	typepath = /datum/round_event/ghost_role/morph
-	weight = 0 //Admin only
+	weight = 0
 	max_occurrences = 1
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a hungry shapeshifting blobby creature."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/ghost_role/morph
 	minimum_required = 1
@@ -19,9 +21,18 @@
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
-	if(!GLOB.xeno_spawn)
+
+	var/list/spawn_locs = list()
+	for(var/spawn_area in GLOB.generic_maintenance_landmarks)
+		var/turf/spawn_turf = get_turf(spawn_area)
+		if(is_safe_turf(spawn_turf))
+			spawn_locs += spawn_turf
+
+	if(!length(spawn_locs))
+		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
+
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(spawn_locs))
 	player_mind.transfer_to(S)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
 	player_mind.special_role = ROLE_MORPH

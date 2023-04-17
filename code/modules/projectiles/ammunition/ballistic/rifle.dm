@@ -7,6 +7,11 @@
 	caliber = CALIBER_A762
 	projectile_type = /obj/projectile/bullet/a762
 
+/obj/item/ammo_casing/a762/surplus
+	name = "7.62 surplus bullet casing"
+	desc = "A surplus 7.62 bullet casing."
+	projectile_type = /obj/projectile/bullet/a762/surplus
+
 /obj/item/ammo_casing/a762/enchanted
 	projectile_type = /obj/projectile/bullet/a762/enchanted
 
@@ -22,6 +27,9 @@
 	name = "5.56mm phasic bullet casing"
 	desc = "A 5.56mm phasic bullet casing."
 	projectile_type = /obj/projectile/bullet/a556/phasic
+
+/obj/item/ammo_casing/a556/weak
+	projectile_type = /obj/projectile/bullet/a556/weak
 
 // 40mm (Grenade Launcher)
 

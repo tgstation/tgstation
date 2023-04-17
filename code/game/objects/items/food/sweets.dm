@@ -40,7 +40,7 @@
 	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bite_consumption = 1
-	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
+	food_reagents = list(/datum/reagent/consumable/mintextract = 2)
 	foodtypes = TOXIC | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY

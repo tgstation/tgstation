@@ -18,27 +18,22 @@
 	fire = 50
 	acid = 50
 
-/obj/item/plaque //The item version of the above.
-	icon = 'icons/obj/signs.dmi'
-	icon_state = "blankplaque"
-	inhand_icon_state = "blankplaque"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
-	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/gold = 2000)
-	max_integrity = 200
-	armor_type = /datum/armor/item_plaque
-	///This points the item to make the proper structure when placed on a wall.
-	var/plaque_path = /obj/structure/plaque
-	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
-	var/engraved = FALSE
+/obj/structure/plaque/Initialize(mapload)
+	. = ..()
+	register_context()
 
-/datum/armor/item_plaque
-	melee = 50
-	fire = 50
-	acid = 50
+/obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	switch (held_item?.tool_behaviour)
+		if (TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
+			return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/pen/fountain) && !engraved)
+		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -85,24 +80,6 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/item/plaque/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(user.combat_mode)
-		return FALSE
-	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This plaque is already in perfect condition."))
-		return TRUE
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
-	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
-		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-		span_notice("You finish repairing [src]."))
-	atom_integrity = max_integrity
-	return TRUE
-
 /obj/structure/plaque/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)
@@ -134,6 +111,47 @@
 		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
 		return
 	return ..()
+
+/obj/item/plaque //The item version of the above.
+	icon = 'icons/obj/signs.dmi'
+	icon_state = "blankplaque"
+	inhand_icon_state = "blankplaque"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	name = "blank plaque"
+	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/gold = 2000)
+	max_integrity = 200
+	armor_type = /datum/armor/item_plaque
+	///This points the item to make the proper structure when placed on a wall.
+	var/plaque_path = /obj/structure/plaque
+	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
+	var/engraved = FALSE
+
+/datum/armor/item_plaque
+	melee = 50
+	fire = 50
+	acid = 50
+
+/obj/item/plaque/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(user.combat_mode)
+		return FALSE
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("This plaque is already in perfect condition."))
+		return TRUE
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
+	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
+		return TRUE
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
+	atom_integrity = max_integrity
+	return TRUE
+
 
 /obj/item/plaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
 	if(istype(I, /obj/item/pen/fountain))

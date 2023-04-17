@@ -25,7 +25,8 @@
 /obj/item/circuitboard/Initialize(mapload)
 	if(name_extension)
 		name = "[initial(name)] [name_extension]"
-	set_greyscale(new_config = /datum/greyscale_config/circuit)
+	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
+		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
@@ -92,12 +93,12 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
-			machine.component_parts += new comp_path(machine, comp_amt)
+			continue
 		else if (ispath(comp_path, /datum/stock_part))
+			var/stock_part_datum = GLOB.stock_part_datums[comp_path]
+			if (isnull(stock_part_datum))
+				CRASH("[comp_path] didn't have a matching stock part datum")
 			for (var/_ in 1 to comp_amt)
-				var/stock_part_datum = GLOB.stock_part_datums[comp_path]
-				if (isnull(stock_part_datum))
-					CRASH("[comp_path] didn't have a matching stock part datum")
 				machine.component_parts += stock_part_datum
 		else
 			for(var/component in 1 to comp_amt)

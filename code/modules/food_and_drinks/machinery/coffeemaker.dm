@@ -65,8 +65,8 @@
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
 	speed = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		speed += laser.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		speed += laser.tier
 
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
@@ -126,7 +126,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(brewing)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -291,7 +291,7 @@
 /obj/machinery/coffeemaker/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave //I am positively certain that this is not a microwave
 	. = ..()
 
-	if(brewing || !user.canUseTopic(src, !issilicon(user)))
+	if(brewing || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	var/list/options = list()
@@ -331,7 +331,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 
 	switch(choice)
@@ -488,10 +488,10 @@
 	icon_state = "coffee_cartrack4"
 	base_icon_state = "coffee_cartrack"
 	contents_tag = "coffee cartridge"
-	is_open = TRUE
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	spawn_type = /obj/item/coffee_cartridge
 
-/obj/item/storage/fancy/coffee_cart_rack/Initialize()
+/obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))

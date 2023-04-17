@@ -15,7 +15,7 @@
 	base_icon_state = "gold_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	hardness = 65 //gold is soft
-	explosion_block = 0 //gold is a soft metal you dingus.
+	explosive_resistance = 0 //gold is a soft metal you dingus.
 	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
 	custom_materials = list(/datum/material/gold = 4000)
@@ -42,7 +42,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	hardness = 5 //diamond is very hard
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
-	explosion_block = 3
+	explosive_resistance = 3
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
@@ -72,7 +72,7 @@
 	base_icon_state = "sandstone_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	hardness = 50 //moh says this is apparently 6-7 on it's scale
-	explosion_block = 0
+	explosive_resistance = 0
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
@@ -158,7 +158,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 80
 	turf_flags = IS_SOLID
-	explosion_block = 0
+	explosive_resistance = 0
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
@@ -215,7 +215,7 @@
 	base_icon_state = "snow_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 80
-	explosion_block = 0
+	explosive_resistance = 0
 	slicing_duration = 30
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
@@ -236,7 +236,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	hardness = 10
 	slicing_duration = 200   //alien wall takes twice as much time to slice
-	explosion_block = 3
+	explosive_resistance = 3
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
@@ -250,7 +250,7 @@
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle_wall-0"
 	base_icon_state = "shuttle_wall"
-	explosion_block = 3
+	explosive_resistance = 3
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
@@ -314,7 +314,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	explosion_block = 4
+	explosive_resistance = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //upgrade on titanium
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS

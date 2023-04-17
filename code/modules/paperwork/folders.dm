@@ -15,6 +15,8 @@
 		/obj/item/documents,
 		/obj/item/paperwork,
 	))
+	/// Do we hide the contents on examine?
+	var/contents_hidden = FALSE
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -33,8 +35,8 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(length(contents))
-		. += span_notice("Right-click to remove [contents[1]].")
+	if(length(contents) && !contents_hidden)
+		. += span_notice("<b>Right-click</b> to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user, obj/item/writing_instrument)
 	if(!user.can_write(writing_instrument))
@@ -45,7 +47,7 @@
 	if(!inputvalue)
 		return
 
-	if(user.canUseTopic(src, be_close = TRUE))
+	if(user.can_perform_action(src))
 		name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)

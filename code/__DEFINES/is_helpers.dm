@@ -42,6 +42,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
+#define ismiscturf(A) (istype(A, /turf/open/misc))
+
 #define isclosedturf(A) (istype(A, /turf/closed))
 
 #define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
@@ -90,6 +92,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
+#define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
+
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
@@ -163,7 +167,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-#define isspider(A) (istype(A, /mob/living/simple_animal/hostile/giant_spider))
+#define isspider(A) (istype(A, /mob/living/basic/giant_spider))
 
 
 //Misc mobs
@@ -279,3 +283,4 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))
+#define is_multi_tile_object(atom) (atom.bound_width > world.icon_size || atom.bound_height > world.icon_size)

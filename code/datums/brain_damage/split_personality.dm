@@ -5,8 +5,8 @@
 	name = "Split Personality"
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
-	gain_text = "<span class='warning'>You feel like your mind was split in two.</span>"
-	lose_text = "<span class='notice'>You feel alone again.</span>"
+	gain_text = span_warning("You feel like your mind was split in two.")
+	lose_text = span_notice("You feel alone again.")
 	var/current_controller = OWNER
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
@@ -58,12 +58,6 @@
 	QDEL_NULL(owner_backseat)
 	..()
 
-/datum/brain_trauma/severe/split_personality/Destroy()
-	if(stranger_backseat)
-		QDEL_NULL(stranger_backseat)
-	if(owner_backseat)
-		QDEL_NULL(owner_backseat)
-	return ..()
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities(reset_to_owner = FALSE)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
@@ -177,7 +171,7 @@
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
 	gain_text = ""
-	lose_text = "<span class='notice'>You are free of your brainwashing.</span>"
+	lose_text = span_notice("You are free of your brainwashing.")
 	can_gain = FALSE
 	var/codeword
 	var/objective

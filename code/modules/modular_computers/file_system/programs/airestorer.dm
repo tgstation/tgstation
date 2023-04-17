@@ -118,7 +118,7 @@
 				return TRUE
 
 /datum/computer_file/program/ai_restorer/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["ejectable"] = TRUE
 	data["AI_present"] = !!stored_card?.AI

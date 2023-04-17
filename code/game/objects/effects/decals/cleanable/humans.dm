@@ -107,7 +107,7 @@
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
-	decal_reagent = /datum/reagent/liquidgibs
+	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
 	///Information about the diseases our streaking spawns
 	var/list/streak_diseases

@@ -17,7 +17,7 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
 	)
-	inherent_factions = list("mushroom")
+	inherent_factions = list(FACTION_MUSHROOM)
 	speedmod = 1.5 //faster than golems but not by much
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
@@ -27,6 +27,7 @@
 
 	mutanttongue = /obj/item/organ/internal/tongue/mush
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
+	mutantlungs = null
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom
@@ -60,9 +61,10 @@
 
 /datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
-		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.adjustToxLoss(3 * REM * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
+	return ..()
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	forced_colour = FALSE

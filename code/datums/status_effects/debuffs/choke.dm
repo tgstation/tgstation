@@ -59,8 +59,8 @@
 	check_audio_state()
 
 	owner.visible_message(span_bolddanger("[owner] tries to speak, but can't! They're choking!"), \
-		span_userdanger("You try to breath, but there's a block! You're choking!"), \
-		)
+		span_userdanger("You try to breathe, but there's a block! You're choking!"), \
+	)
 
 	//barticles
 	if(flaming)
@@ -204,7 +204,7 @@
 		owner.visible_message(span_warning("[aggressor] places [aggressor.p_their()] [hand_name]s on [victim]'s back, and begins forcefully striking it!"), \
 			span_boldwarning("You feel [aggressor]\s [hand_name]s on your back, and then repeated striking!"))
 
-	if(!do_after_mob(aggressor, victim, 7 SECONDS, extra_checks = CALLBACK(src, PROC_REF(thrusting_continues), victim, aggressor), interaction_key = "heimlich"))
+	if(!do_after(aggressor, 7 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(thrusting_continues), victim, aggressor), interaction_key = "heimlich"))
 		aggressor.stop_pulling()
 		return
 	aggressor.stop_pulling()

@@ -13,13 +13,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
-/datum/glass_style/drinking_glass/orangejuice
+/datum/glass_style/has_foodtype/drinking_glass/orangejuice
 	required_drink_type = /datum/reagent/consumable/orangejuice
 	name = "glass of orange juice"
 	desc = "Vitamins! Yay!"
 	icon_state = "glass_orange"
+	drink_type = FRUIT | BREAKFAST
 
-/datum/glass_style/juicebox/orangejuice
+/datum/glass_style/has_foodtype/juicebox/orangejuice
 	required_drink_type = /datum/reagent/consumable/orangejuice
 	name = "orange juice box"
 	desc = "A great source of vitamins. Stay healthy!"
@@ -28,7 +29,7 @@
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getOxyLoss() && DT_PROB(16, delta_time))
-		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		. = TRUE
 	..()
 
@@ -88,17 +89,16 @@
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_eye_blur(-2 SECONDS * REM * delta_time)
-	affected_mob.adjust_blindness(-1 * REM * delta_time)
+	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * delta_time)
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				affected_mob.cure_nearsighted(list(EYE_DAMAGE))
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
 		if(110 to INFINITY)
-			affected_mob.cure_nearsighted(list(EYE_DAMAGE))
-	..()
-	return
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2)
+	return ..()
 
 /datum/reagent/consumable/berryjuice
 	name = "Berry Juice"
@@ -120,7 +120,7 @@
 	taste_description = "apples"
 	ph = 3.2 // ~ 2.7 -> 3.7
 
-/datum/glass_style/juicebox/applejuice
+/datum/glass_style/has_foodtype/juicebox/applejuice
 	required_drink_type = /datum/reagent/consumable/applejuice
 	name = "apple juice box"
 	desc = "Sweet apple juice. Don't be late for school!"
@@ -186,7 +186,7 @@
 	icon_state = "banana"
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
-	var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(affected_mob))
 		affected_mob.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -209,7 +209,7 @@
 	icon_state = "nothing"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(ishuman(drinker) && drinker.mind?.miming)
+	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
@@ -264,12 +264,12 @@
 	taste_description = "grape soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/juicebox/grapejuice
+/datum/glass_style/has_foodtype/juicebox/grapejuice
 	required_drink_type = /datum/reagent/consumable/grapejuice
 	name = "grape juice box"
-	desc = "For enjoying the most wonderful time of the year."
-	icon_state = "nog2"
-	drink_type = MEAT
+	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
+	icon_state = "grapebox"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/plumjuice
 	name = "Plum Juice"
@@ -278,11 +278,12 @@
 	taste_description = "plums"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/plumjuice
+/datum/glass_style/has_foodtype/drinking_glass/plumjuice
 	required_drink_type = /datum/reagent/consumable/plumjuice
 	name = "glass of plum juice"
 	desc = "Noice."
 	icon_state = "plumjuiceglass"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/milk
 	name = "Milk"
@@ -293,13 +294,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/milk
 
-/datum/glass_style/drinking_glass/milk
+/datum/glass_style/has_foodtype/drinking_glass/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "glass of milk"
 	desc = "White and nutritious goodness!"
 	icon_state = "glass_white"
+	drink_type = DAIRY | BREAKFAST
 
-/datum/glass_style/juicebox/milk
+/datum/glass_style/has_foodtype/juicebox/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "carton of milk"
 	desc = "An excellent source of calcium for growing space explorers."
@@ -308,10 +310,11 @@
 
 	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
-	if(myseed)
-		myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
+	myseed?.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(affected_mob.getBruteLoss() && DT_PROB(10, delta_time))
@@ -805,7 +808,9 @@
 // A variety of nutrients are dissolved in club soda, without sugar.
 // These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!check_tray(chems, mytray))
+		return
+
 	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
 	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
@@ -964,9 +969,9 @@
 	affected_mob.adjustBruteLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-0.5 * REM * delta_time, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
-		var/obj/item/organ/internal/liver/liver = affected_mob.getorganslot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
 			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			affected_mob.adjust_nutrition(-2 * REM * delta_time)
@@ -1194,7 +1199,7 @@
 	taste_description = "chocolate milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/juicebox/chocolate_milk
+/datum/glass_style/has_foodtype/juicebox/chocolate_milk
 	required_drink_type = /datum/reagent/consumable/milk/chocolate_milk
 	name = "carton of chocolate milk"
 	desc = "Milk for cool kids!"
@@ -1209,11 +1214,12 @@
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/hot_coco
+/datum/glass_style/has_foodtype/drinking_glass/hot_coco
 	required_drink_type = /datum/reagent/consumable/hot_coco
 	name = "glass of hot coco"
 	desc = "A favorite winter drink to warm you up."
 	icon_state = "chocolateglass"
+	drink_type = SUGAR | DAIRY
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, affected_mob.get_body_temp_normal())
@@ -1281,9 +1287,10 @@
 	taste_description = "parsnip"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/parsnipjuice
+/datum/glass_style/has_foodtype/drinking_glass/parsnipjuice
 	required_drink_type = /datum/reagent/consumable/parsnipjuice
 	name = "glass of parsnip juice"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/pineapplejuice
 	name = "Pineapple Juice"
@@ -1293,12 +1300,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice
 
-/datum/glass_style/drinking_glass/pineapplejuice
+/datum/glass_style/has_foodtype/drinking_glass/pineapplejuice
 	required_drink_type = /datum/reagent/consumable/pineapplejuice
 	name = "glass of pineapple juice"
 	desc = "Tart, tropical, and hotly debated."
+	drink_type = FRUIT | PINEAPPLE
 
-/datum/glass_style/juicebox/pineapplejuice
+/datum/glass_style/has_foodtype/juicebox/pineapplejuice
 	required_drink_type = /datum/reagent/consumable/pineapplejuice
 	name = "pineapple juice box"
 	desc = "Why would you even want this?"
@@ -1312,9 +1320,10 @@
 	taste_description = "peaches"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/peachjuice
+/datum/glass_style/has_foodtype/drinking_glass/peachjuice
 	required_drink_type = /datum/reagent/consumable/peachjuice
 	name = "glass of peach juice"
+	drink_type = FRUIT
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
@@ -1489,7 +1498,7 @@
 
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
 	if(islizard(affected_mob))
-		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+		affected_mob.adjustOxyLoss(-0.5 * REM * delta_time, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
 	. = TRUE
 
@@ -1644,4 +1653,30 @@
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())
 	if(doll.getToxLoss() && DT_PROB(10, delta_time))
 		doll.adjustToxLoss(-0.5, FALSE, required_biotype = affected_biotype)
+	return ..()
+
+/datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	description = "If you think you're so hot, how about a victory drink?"
+	color = "#d4422f" // rgb: 212,66,47
+	taste_description = "sludge seeping down your throat"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/mississippi_queen
+	required_drink_type = /datum/reagent/consumable/mississippi_queen
+	name = "Mississippi Queen"
+	desc = "Mullets and cut-up jorts not included."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "mississippiglass"
+
+/datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	switch(current_cycle)
+		if(10 to 20)
+			drinker.adjust_dizzy(4 SECONDS * REM * delta_time)
+		if(20 to 30)
+			if(DT_PROB(15, delta_time))
+				drinker.adjust_confusion(4 SECONDS * REM * delta_time)
+		if(30 to 200)
+			drinker.adjust_hallucinations(60 SECONDS * REM * delta_time)
+
 	return ..()

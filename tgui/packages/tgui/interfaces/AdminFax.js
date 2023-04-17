@@ -199,7 +199,7 @@ export const FaxMainPanel = (props, context) => {
                 faxName: fax,
               })
             }>
-            Send fax
+            Send
           </Button>
           <Button
             icon="floppy-disk"
@@ -218,7 +218,7 @@ export const FaxMainPanel = (props, context) => {
                 fromWho: fromWho,
               });
             }}>
-            Save changes
+            Save
           </Button>
           <Button
             disabled={!saved}

@@ -55,7 +55,7 @@
 	else
 		M.visible_message(span_warning("[user] attempts to feed [M] from [src]."), \
 			span_warning("[user] attempts to feed you from [src]."))
-		if(!do_mob(user, M))
+		if(!do_after(user, 3 SECONDS, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
@@ -70,6 +70,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
@@ -152,6 +153,7 @@
 	. = ..()
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(isturf(target))
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
@@ -306,6 +308,15 @@
 	list_reagents = list(/datum/reagent/consumable/honey = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/ketchup
+	name = "ketchup"
+	// At time of writing, "ketchup" mechanically, is just ground tomatoes,
+	// rather than // tomatoes plus vinegar plus sugar.
+	desc = "A tomato slurry in a tall plastic bottle. Somehow still vaguely American."
+	icon_state = "ketchup"
+	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer
@@ -367,7 +378,7 @@
 /obj/item/reagent_containers/condiment/pack/afterattack(obj/target, mob/user , proximity)
 	if(!proximity)
 		return
-
+	. |= AFTERATTACK_PROCESSED_ITEM
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)
@@ -383,7 +394,7 @@
 			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
 			return
-	. = ..()
+	return . | ..()
 
 /// Handles reagents getting added to the condiment pack.
 /obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)

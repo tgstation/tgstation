@@ -13,7 +13,7 @@
 	// It stopped existing
 	if (!fetch_thing)
 		return FALSE
-	set_movement_target(fetch_thing)
+	set_movement_target(controller, fetch_thing)
 
 /datum/ai_behavior/fetch_seek/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
@@ -56,7 +56,7 @@
 	var/mob/living/return_target = return_ref?.resolve()
 	if(!return_target) // Guess it's mine now
 		return FALSE
-	set_movement_target(return_target)
+	set_movement_target(controller, return_target)
 
 /datum/ai_behavior/deliver_fetched_item/perform(delta_time, datum/ai_controller/controller, delivery_key, storage_key)
 	. = ..()
@@ -106,7 +106,7 @@
 
 	if(!istype(snack) || !IS_EDIBLE(snack) || !(isturf(snack.loc) || ishuman(snack.loc)))
 		return FALSE // This isn't food at all!
-	set_movement_target(snack)
+	set_movement_target(controller, snack)
 
 /datum/ai_behavior/eat_fetched_snack/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()

@@ -9,8 +9,8 @@
 	name = "Mutism"
 	desc = "Patient is completely unable to speak."
 	scan_desc = "extensive damage to the brain's speech center"
-	gain_text = "<span class='warning'>You forget how to speak!</span>"
-	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
+	gain_text = span_warning("You forget how to speak!")
+	lose_text = span_notice("You suddenly remember how to speak.")
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -24,8 +24,8 @@
 	name = "Aphasia"
 	desc = "Patient is unable to speak or understand any language."
 	scan_desc = "extensive damage to the brain's language center"
-	gain_text = "<span class='warning'>You have trouble forming words in your head...</span>"
-	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
+	gain_text = span_warning("You have trouble forming words in your head...")
+	lose_text = span_notice("You suddenly remember how languages work.")
 
 /datum/brain_trauma/severe/aphasia/on_gain()
 	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
@@ -41,8 +41,8 @@
 	name = "Cerebral Blindness"
 	desc = "Patient's brain is no longer connected to its eyes."
 	scan_desc = "extensive damage to the brain's occipital lobe"
-	gain_text = "<span class='warning'>You can't see!</span>"
-	lose_text = "<span class='notice'>Your vision returns.</span>"
+	gain_text = span_warning("You can't see!")
+	lose_text = span_notice("Your vision returns.")
 
 /datum/brain_trauma/severe/blindness/on_gain()
 	owner.become_blind(TRAUMA_TRAIT)
@@ -97,8 +97,8 @@
 			subject = "your left leg"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG)
 
-	gain_text = "<span class='warning'>You can't feel [subject] anymore!</span>"
-	lose_text = "<span class='notice'>You can feel [subject] again!</span>"
+	gain_text = span_warning("You can't feel [subject] anymore!")
+	lose_text = span_notice("You can feel [subject] again!")
 
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
@@ -148,7 +148,7 @@
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
 	gain_text = ""
-	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
+	lose_text = span_notice("You feel like you could be safe on your own.")
 	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
@@ -168,9 +168,10 @@
 		stress = max(stress - (2 * delta_time), 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
+	var/check_radius = 7
 	if(owner.is_blind())
-		return TRUE
-	for(var/mob/M in oview(owner, 7))
+		check_radius = 1
+	for(var/mob/M in oview(owner, check_radius))
 		if(!isliving(M)) //ghosts ain't people
 			continue
 		if(istype(M, /mob/living/simple_animal/pet) || istype(M, /mob/living/basic/pet) || M.ckey)
@@ -228,8 +229,8 @@
 	name = "Discoordination"
 	desc = "Patient is unable to use complex tools or machinery."
 	scan_desc = "extreme discoordination"
-	gain_text = "<span class='warning'>You can barely control your hands!</span>"
-	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
+	gain_text = span_warning("You can barely control your hands!")
+	lose_text = span_notice("You feel in control of your hands again.")
 
 /datum/brain_trauma/severe/discoordination/on_gain()
 	. = ..()
@@ -243,8 +244,8 @@
 	name = "Traumatic Non-Violence"
 	desc = "Patient is extremely unwilling to harm others in violent ways."
 	scan_desc = "pacific syndrome"
-	gain_text = "<span class='notice'>You feel oddly peaceful.</span>"
-	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
+	gain_text = span_notice("You feel oddly peaceful.")
+	lose_text = span_notice("You no longer feel compelled to not harm.")
 
 /datum/brain_trauma/severe/pacifism/on_gain()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
@@ -258,8 +259,8 @@
 	name = "Hypnotic Stupor"
 	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
 	scan_desc = "oneiric feedback loop"
-	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
-	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
+	gain_text = span_warning("You feel somewhat dazed.")
+	lose_text = span_notice("You feel like a fog was lifted from your mind.")
 
 /datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()
@@ -274,8 +275,8 @@
 	name = "Hypnotic Trigger"
 	desc = "Patient has a trigger phrase set in their subconscious that will trigger a suggestible trance-like state."
 	scan_desc = "oneiric feedback loop"
-	gain_text = "<span class='warning'>You feel odd, like you just forgot something important.</span>"
-	lose_text = "<span class='notice'>You feel like a weight was lifted from your mind.</span>"
+	gain_text = span_warning("You feel odd, like you just forgot something important.")
+	lose_text = span_notice("You feel like a weight was lifted from your mind.")
 	random_gain = FALSE
 	var/trigger_phrase = "Nanotrasen"
 
@@ -306,8 +307,8 @@
 	name = "Dyslexia"
 	desc = "Patient is unable to read or write."
 	scan_desc = "dyslexia"
-	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
-	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
+	gain_text = span_warning("You have trouble reading or writing...")
+	lose_text = span_notice("You suddenly remember how to read and write.")
 
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)

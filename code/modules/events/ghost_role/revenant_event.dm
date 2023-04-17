@@ -9,6 +9,8 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns an angry, soul sucking ghost."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 
 /datum/round_event/ghost_role/revenant
@@ -60,3 +62,5 @@
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN
+
+#undef REVENANT_SPAWN_THRESHOLD

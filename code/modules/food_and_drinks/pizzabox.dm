@@ -156,7 +156,7 @@
 				return
 			else
 				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
-				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
@@ -221,7 +221,7 @@
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
-			if(!user.canUseTopic(src, be_close = TRUE))
+			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")
 			boxtag_set = TRUE

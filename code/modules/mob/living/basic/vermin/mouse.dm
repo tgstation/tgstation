@@ -8,7 +8,6 @@
 
 	maxHealth = 5
 	health = 5
-	see_in_dark = 6
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -47,8 +46,8 @@
 	src.tame = tame
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
-		held_state = "mouse_[body_color]" // not handled by variety element
-		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	held_state = "mouse_[body_color]" // not handled by variety element
+	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
@@ -86,7 +85,7 @@
 /// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
 	icon_dead = "mouse_[body_color]_splat"
-	adjust_health(-maxHealth)
+	adjust_health(maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
 /mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
@@ -293,7 +292,7 @@
 	eatverbs = list("devour")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GORE | MEAT | RAW
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
@@ -329,6 +328,7 @@
 /obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
 	. = ..()
 	if(proximity_flag && reagents && target.is_open_container())
+		. |= AFTERATTACK_PROCESSED_ITEM
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
@@ -336,7 +336,7 @@
 			to_chat(user, span_notice("You dip [src] into [target]."))
 		else
 			to_chat(user, span_warning("That's a terrible idea."))
-		return
+		return .
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"
@@ -344,7 +344,7 @@
 	icon_state = "mouse_gray_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mold = 10)
 	foodtypes = GORE | MEAT | RAW | GROSS
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE
 
 /// The mouse AI controller
@@ -356,7 +356,7 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find people to run away from
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
+	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -400,27 +400,15 @@
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED | STOP_ACTING_WHILE_DEAD
+	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/rat,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/rat,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
 		/datum/ai_planning_subtree/random_speech/mouse,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/rat
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/rat
-
-/datum/ai_behavior/basic_melee_attack/rat
-	action_cooldown = 2 SECONDS
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/rat
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/rat
-
-/datum/ai_behavior/attack_obstructions/rat
-	action_cooldown = 2 SECONDS

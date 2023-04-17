@@ -1,5 +1,7 @@
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "latexballon"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
@@ -111,7 +113,6 @@
 /obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
@@ -204,7 +205,6 @@
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
@@ -329,9 +329,7 @@
 /obj/item/hand_item/hand
 	name = "hand"
 	desc = "Sometimes, you just want to act gentlemanly."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-
 
 /obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
@@ -400,8 +398,8 @@
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
 		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
 
-		offerer.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = taker), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HELPED_UP, list(DETAIL_DEUTERAGONIST = offerer), story_value = STORY_VALUE_OKAY)
+		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
+		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 
 		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
 		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
@@ -431,7 +429,6 @@
 /obj/item/hand_item/stealer
 	name = "steal"
 	desc = "Your filthy little fingers are ready to commit crimes."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")
@@ -474,6 +471,7 @@
 
 /obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -535,8 +533,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -545,7 +542,7 @@
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -562,11 +559,11 @@
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
-	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
 	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
-		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
@@ -607,8 +604,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -618,8 +614,8 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
-	dont_go_breakin_my_heart.applyOrganDamage(999)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 
 /obj/projectile/kiss/french
@@ -628,8 +624,10 @@
 
 /obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
 	. = ..()
+	if(isnull(living_target.reagents))
+		return
 	//Don't stack the garlic
-	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+	if(!living_target.has_reagent(/datum/reagent/consumable/garlic))
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
@@ -642,13 +640,14 @@
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
 		return
-	if(!firer || !target.Adjacent(firer))
+	if(!firer || !target.Adjacent(firer) || !ismob(firer))
 		return
+
+	var/mob/kisser = firer
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
-
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
 		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))

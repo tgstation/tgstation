@@ -60,6 +60,7 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize(mapload)
@@ -108,6 +109,7 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
 

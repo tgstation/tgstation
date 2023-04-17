@@ -23,6 +23,8 @@
 	var/shield_inhand = FALSE
 	/// Should the shield lose charges equal to the damage dealt by a hit?
 	var/lose_multiple_charges = FALSE
+	/// Should the shield's alpha change to show its remaining charge
+	var/show_charge_as_alpha = FALSE
 	/// The item we use for recharging
 	var/recharge_path
 	/// The cooldown tracking when we were last hit
@@ -32,7 +34,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, show_charge_as_alpha = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -41,6 +43,7 @@
 	src.charge_increment_delay = charge_increment_delay
 	src.charge_recovery = charge_recovery
 	src.lose_multiple_charges = lose_multiple_charges
+	src.show_charge_as_alpha = show_charge_as_alpha
 	src.recharge_path = recharge_path
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
@@ -132,7 +135,10 @@
 /datum/component/shielded/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
+	var/mutable_appearance/shield_appearance = mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
+	if(show_charge_as_alpha)
+		shield_appearance.alpha = (current_charges/max_charges)*255
+	overlays += shield_appearance
 
 /**
  * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.

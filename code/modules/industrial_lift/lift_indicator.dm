@@ -3,8 +3,8 @@
  * A lift indicator aka an elevator hall lantern w/ floor number
  */
 /obj/machinery/lift_indicator
-	name = "lift floor indicator"
-	desc = "Indicates what floor the lift is on and which way it's going."
+	name = "elevator indicator"
+	desc = "Indicates what floor the elevator is at and which way it's going."
 	icon = 'icons/obj/machines/lift_indicator.dmi'
 	icon_state = "lift_indo-base"
 	base_icon_state = "lift_indo-"
@@ -16,12 +16,12 @@
 	density = FALSE
 
 	light_range = 1
-	light_power = 0.5
-	light_color = "#F8E398"
+	light_power = 1
+	light_color = LIGHT_COLOR_DARK_BLUE
 	luminosity = 1
 
 	maptext_x = 17
-	maptext_y = 12
+	maptext_y = 21
 	maptext_width = 4
 	maptext_height = 8
 
@@ -64,13 +64,13 @@
 	var/dirtext
 	switch(current_lift_direction)
 		if(UP)
-			dirtext = "heading upwards"
+			dirtext = "travelling upwards"
 		if(DOWN)
-			dirtext = "heading downwards"
+			dirtext = "travelling downwards"
 		else
 			dirtext = "stopped"
 
-	. += span_notice("The lift is on floor [current_lift_floor], [dirtext].")
+	. += span_notice("The elevator is at floor [current_lift_floor], [dirtext].")
 
 /**
  * Update state, and only process if lift is moving.
@@ -152,7 +152,7 @@
 		return
 
 	set_light(l_on = TRUE)
-	maptext = {"<div style="font:5pt 'Small Fonts';color:#F8E398">[current_lift_floor]</div>"}
+	maptext = {"<div style="font:5pt 'Small Fonts';color:[LIGHT_COLOR_DARK_BLUE]">[current_lift_floor]</div>"}
 
 /obj/machinery/lift_indicator/update_overlays()
 	. = ..()
@@ -170,4 +170,4 @@
 	. += mutable_appearance(icon, arrow_icon_state)
 	. += emissive_appearance(icon, "[arrow_icon_state]e", offset_spokesman = src, alpha = src.alpha)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 38)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 32)

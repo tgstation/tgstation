@@ -317,7 +317,8 @@
 				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, forced = TRUE)
-		occupant.SetSleeping(destruction_sleep_duration)
+		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+			occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
@@ -351,6 +352,7 @@
 	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
+	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
 
 /**
  * Updates the pilot's mouse cursor override.
@@ -381,6 +383,7 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
 
@@ -434,21 +437,21 @@
 	if(capacitor)
 		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
 		var/initial_energy = stock_armor.get_rating(ENERGY)
-		set_armor_rating(initial_energy + (capacitor.rating * 5))
+		set_armor_rating(ENERGY, initial_energy + (capacitor.rating * 5))
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(flat_equipment))
-		. += "It's equipped with:"
+		. += span_notice("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
-			. += "[icon2html(ME, user)] \A [ME]."
+			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(enclosed)
 		return
 	if(mecha_flags & SILICON_PILOT)
-		. += "[src] appears to be piloting itself..."
+		. += span_notice("[src] appears to be piloting itself...")
 	else
 		for(var/occupante in occupants)
-			. += "You can see [occupante] inside."
+			. += span_notice("You can see [occupante] inside.")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			for(var/held_item in H.held_items)
@@ -675,11 +678,13 @@
 ///Displays a special speech bubble when someone inside the mecha speaks
 /obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
 	SIGNAL_HANDLER
-	var/list/speech_bubble_recipients = get_hearers_in_view(7,src)
-	for(var/mob/M in speech_bubble_recipients)
-		if(M.client)
-			speech_bubble_recipients.Add(M.client)
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), image('icons/mob/effects/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/listener in get_hearers_in_view(7, src))
+		if(listener.client)
+			speech_bubble_recipients += listener.client
+
+	var/image/mech_speech = image('icons/mob/effects/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), mech_speech, speech_bubble_recipients, 3 SECONDS)
 
 
 /////////////////////////

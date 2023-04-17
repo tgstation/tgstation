@@ -545,13 +545,12 @@
 	else if(!isitem(O))
 		return
 	var/turf/T = get_turf(src)
-	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
 		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
 		span_hear("You hear clanging."))
 	if(actuallyismob)
-		if(do_after_mob(user, targets, 40))
+		if(do_after(user, 4 SECONDS, O))
 			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
 				span_notice("You stuff [O] into [src]."), \
 				span_hear("You hear a loud metal bang."))
@@ -615,7 +614,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
@@ -678,7 +677,7 @@
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(!opened && secure)

@@ -11,7 +11,6 @@
 	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -60,8 +59,16 @@
 		return
 
 	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-		var/step = get_step(src, direction)
-		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
+		var/turf/step = get_step(src, direction)
+
+		if(!istype(step))
+			return
+
+		var/vine = locate(/obj/structure/spacevine) in step
+		var/mushroom = locate(/obj/structure/glowshroom) in step
+		var/flower = locate(/obj/structure/alien/resin/flower_bud) in step
+
+		if(vine || mushroom || flower)
 			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -74,29 +81,44 @@
 		eat_plants()
 
 /mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
-	var/eaten = FALSE
-	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-	if(SV)
-		SV.eat(src)
-		eaten = TRUE
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(vine)
+		vine.eat(src)
 
-	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
-	if(GS)
-		qdel(GS)
-		eaten = TRUE
+	var/obj/structure/alien/resin/flower_bud/flower = locate(/obj/structure/alien/resin/flower_bud) in loc
+	if(flower)
+		flower.take_damage(rand(30, 50), BRUTE, 0)
 
-	if(eaten && prob(10))
-		say("Nom")
+	var/obj/structure/glowshroom/mushroom = locate(/obj/structure/glowshroom) in loc
+	if(mushroom)
+		qdel(mushroom)
+
+	if((vine || flower || mushroom) && prob(10))
+		say("Nom") // bon appetit
+		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.dna.species, /datum/species/pod))
-			var/obj/item/bodypart/NB = pick(H.bodyparts)
-			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
-								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
-			NB.dismember()
+
+	if(!. || !isliving(target))
+		return
+
+	var/mob/living/plant_target = target
+	if(!(plant_target.mob_biotypes & MOB_PLANT))
+		return
+
+	plant_target.adjustBruteLoss(20)
+	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	var/obj/item/bodypart/edible_bodypart
+
+	if(ishuman(plant_target))
+		var/mob/living/carbon/human/plant_man = target
+		edible_bodypart = pick(plant_man.bodyparts)
+		edible_bodypart.dismember()
+
+	plant_target.visible_message(span_warning("[src] takes a big chomp out of [plant_target]!"), \
+							span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"))
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -157,6 +179,8 @@
 	..()
 	amount_grown = 0
 
+/// Counter for number of chicken mobs in the universe. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
+GLOBAL_VAR_INIT(chicken_count, 0)
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -188,14 +212,12 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	footstep_type = FOOTSTEP_MOB_CLAW
-	///counter for how many chickens are in existence to stop too many chickens from lagging shit up
-	var/static/chicken_count = 0
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
-	var/process_eggs = TRUE
+	var/fertile = TRUE
 
 /mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
-	chicken_count++
+	GLOB.chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
 	AddComponent(/datum/component/egg_layer,\
@@ -214,25 +236,20 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
-	chicken_count--
+	GLOB.chicken_count--
 	return ..()
 
 /mob/living/simple_animal/chicken/proc/egg_laid(obj/item/egg)
-	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
-		START_PROCESSING(SSobj, egg)
-
-/obj/item/food/egg/var/amount_grown = 0
-
-/obj/item/food/egg/process(delta_time)
-	if(isturf(loc))
-		amount_grown += rand(1,2) * delta_time
-		if(amount_grown >= 200)
-			visible_message(span_notice("[src] hatches with a quiet cracking sound."))
-			new /mob/living/simple_animal/chick(get_turf(src))
-			STOP_PROCESSING(SSobj, src)
-			qdel(src)
-	else
-		STOP_PROCESSING(SSobj, src)
+	if(GLOB.chicken_count <= MAX_CHICKENS && fertile && prob(25))
+		egg.AddComponent(/datum/component/fertile_egg,\
+			embryo_type = /mob/living/simple_animal/chick,\
+			minimum_growth_rate = 1,\
+			maximum_growth_rate = 2,\
+			total_growth_required = 200,\
+			current_growth = 0,\
+			location_allowlist = typecacheof(list(/turf)),\
+			spoilable = TRUE,\
+		)
 
 /mob/living/simple_animal/deer
 	name = "doe"
@@ -248,7 +265,6 @@
 	emote_see = list("shakes her head.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"

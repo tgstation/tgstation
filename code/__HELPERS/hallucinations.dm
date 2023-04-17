@@ -1,6 +1,14 @@
 /// A global list of all ongoing hallucinations, primarily for easy access to be able to stop (delete) hallucinations.
 GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 
+/// What typepath of the hallucination
+#define HALLUCINATION_ARG_TYPE 1
+/// Where the hallucination came from, for logging
+#define HALLUCINATION_ARG_SOURCE 2
+
+/// Onwards from this index, it's the arglist that gets passed into the hallucination created.
+#define HALLUCINATION_ARGLIST 3
+
 /// Biotypes which cannot hallucinate for balance and logic reasons (not code)
 #define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
 
@@ -20,16 +28,16 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	if(!length(raw_args))
 		CRASH("cause_hallucination called with no arguments.")
 
-	var/datum/hallucination/hallucination_type = raw_args[1] // first arg is the type always
+	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
 	if(!ispath(hallucination_type))
 		CRASH("cause_hallucination was given a non-hallucination type.")
 
-	var/hallucination_source = raw_args[2] // and second arg, the source
+	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
 	var/datum/hallucination/new_hallucination
 
-	if(length(raw_args) > 2)
-		var/list/passed_args = raw_args.Copy(3)
-		passed_args.Insert(1, src)
+	if(length(raw_args) >= HALLUCINATION_ARGLIST)
+		var/list/passed_args = raw_args.Copy(HALLUCINATION_ARGLIST)
+		passed_args.Insert(HALLUCINATION_ARG_TYPE, src)
 
 		new_hallucination = new hallucination_type(arglist(passed_args))
 	else

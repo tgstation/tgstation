@@ -43,6 +43,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	return data
 
 #define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
+#define HIGHLANDER_DELAY_TEXT "40 seconds (crush the hope of a normal shift)"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -123,7 +124,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			holder.list_fingerprints()
 
 		if("ctfbutton")
-			toggle_id_ctf(holder, "centcom")
+			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)
 
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr, "Clear all mobs?", "Thunderdome Reset", list("Yes", "No", "Cancel"))
@@ -142,6 +143,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					qdel(obj) //Clear objects
 
 			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			thunderdome_template.should_place_on_top = FALSE
 			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
 			thunderdome_template.load(thunderdome_corner)
 
@@ -260,11 +262,14 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		if("onlyone")
 			if(!is_funmin)
 				return
-			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
-			if(response == "Instant!")
-				holder.only_one()
-			else
-				holder.only_one_delayed()
+			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", HIGHLANDER_DELAY_TEXT))
+			switch(response)
+				if("Instant!")
+					holder.only_one()
+				if(HIGHLANDER_DELAY_TEXT)
+					holder.only_one_delayed()
+				else
+					return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
 		if("guns")
 			if(!is_funmin)
@@ -485,7 +490,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/animetype = tgui_alert(usr,"Would you like to have the clothes be changed?",,list("Yes","No","Cancel"))
 
 			var/droptype
-			if(animetype =="Yes")
+			if(animetype == "Yes")
 				droptype = tgui_alert(usr,"Make the uniforms Nodrop?",,list("Yes","No","Cancel"))
 
 			if(animetype == "Cancel" || droptype == "Cancel")
@@ -573,6 +578,23 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				teamsize--
 
 			return TRUE
+		if("ctf_instagib")
+			if(!is_funmin)
+				return
+			if(GLOB.ctf_games.len <= 0)
+				tgui_alert(usr, "No CTF games are set up.")
+				return
+			var/selected_game = tgui_input_list(usr, "Select a CTF game to ruin.", "Instagib Mode", GLOB.ctf_games)
+			if(isnull(selected_game))
+				return
+			var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[selected_game]
+			var/choice = tgui_alert(usr, "[ctf_controller.instagib_mode ? "Return to standard" : "Enable instagib"] mode?", "Instagib Mode", list("Yes", "No"))
+			if(choice == "No")
+				return
+			ctf_controller.toggle_instagib_mode()
+			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)
@@ -588,6 +610,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
 #undef THUNDERDOME_TEMPLATE_FILE
+#undef HIGHLANDER_DELAY_TEXT
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

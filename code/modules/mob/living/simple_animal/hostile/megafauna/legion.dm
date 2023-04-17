@@ -48,10 +48,7 @@
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
 	score_achievement_type = /datum/award/score/legion_score
-	pixel_x = -32
-	base_pixel_x = -32
-	pixel_y = -16
-	base_pixel_y = -16
+	SET_BASE_PIXEL(-32, -16)
 	maptext_height = 96
 	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
@@ -281,7 +278,7 @@
 	///How long it takes between shooting the tracer and the projectile.
 	var/shot_delay = 8
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
-	var/faction = list("mining")
+	var/faction = list(FACTION_MINING)
 
 /datum/armor/structure_legionturret
 	laser = 100

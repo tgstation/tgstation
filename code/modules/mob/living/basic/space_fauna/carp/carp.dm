@@ -36,7 +36,7 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	faction = list("carp")
+	faction = list(FACTION_CARP)
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
@@ -48,6 +48,8 @@
 	var/cell_line = CELL_LINE_TABLE_CARP
 	/// What colour is our 'healing' outline?
 	var/regenerate_colour = COLOR_PALE_GREEN
+	/// Ability which lets carp teleport around
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/teleport
 	/// Information to apply when treating this carp as a vehicle
 	var/ridable_data = /datum/component/riding/creature/carp
 	/// Commands you can give this carp once it is tamed, not static because subtypes can modify it
@@ -61,6 +63,21 @@
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
 	/// Carp want to eat delicious six pack plastic rings
 	var/static/list/desired_trash = list(/obj/item/storage/cans)
+	/// Structures that AI carp are willing to attack. This prevents them from deconstructing supermatter cooling equipment.
+	var/static/list/allowed_obstacle_targets = typecacheof(list(
+		/obj/structure/closet,
+		/obj/machinery/door,
+		/obj/structure/door_assembly,
+		/obj/structure/filingcabinet,
+		/obj/structure/frame,
+		/obj/structure/grille,
+		/obj/structure/plasticflaps,
+		/obj/structure/rack,
+		/obj/structure/reagent_dispensers, // Carp can have a little welding fuel, as a treat
+		/obj/structure/table,
+		/obj/machinery/vending,
+		/obj/structure/window,
+	))
 	/// Weighted list of colours a carp can be
 	/// Weighted list of usual carp colors
 	var/static/list/carp_colors = list(
@@ -84,8 +101,7 @@
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()
 	apply_colour()
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_traits(list(TRAIT_HEALS_FROM_CARP_RIFTS, TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
 
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -95,10 +111,19 @@
 
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
+		on_tamed(tamer, feedback = FALSE)
 		befriend(tamer)
-		on_tamed(tamer, FALSE)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+
+	teleport = new(src)
+	teleport.Grant(src)
+	ai_controller.blackboard[BB_CARP_RIFT] = WEAKREF(teleport)
+	ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST] = allowed_obstacle_targets
+
+/mob/living/basic/carp/Destroy()
+	QDEL_NULL(teleport)
+	return ..()
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
@@ -121,6 +146,14 @@
 		return
 	spin(spintime = 10, speed = 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
+
+/// Teleport when you right click away from you
+/mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
+	teleport.Trigger(target = atom_target)
+
+/// Gives the carp a list of destinations to try and travel between when it has nothing better to do
+/mob/living/basic/carp/proc/migrate_to(list/migration_points)
+	ai_controller.blackboard[BB_CARP_MIGRATION_PATH] = migration_points
 
 /**
  * Holographic carp from the holodeck
@@ -160,7 +193,7 @@
 	name = "Lia"
 	real_name = "Lia"
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	maxHealth = 200
 	health = 200
 	icon_dead = "magicarp_dead"

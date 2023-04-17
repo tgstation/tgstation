@@ -22,6 +22,9 @@
 	for(var/mob/living/iter_living in oview(2, dog))
 		if(iter_living.stat != CONSCIOUS || !HAS_TRAIT(iter_living, TRAIT_HATED_BY_DOGS))
 			continue
+		if(!isnull(dog.buckled))
+			dog.audible_message(span_notice("[dog] growls at [iter_living], yet [dog.p_they()] [dog.p_are()] much too comfy to move."), hearing_distance = COMBAT_MESSAGE_RANGE)
+			continue
 		if(!targetting_datum.can_attack(dog, iter_living))
 			continue
 

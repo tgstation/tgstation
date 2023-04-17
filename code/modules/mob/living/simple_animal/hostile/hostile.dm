@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES // Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
@@ -278,7 +278,7 @@
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
 				return FALSE
-			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
+			if(P.has_cover && !P.raised) //Don't attack invincible turrets
 				return FALSE
 			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE
@@ -671,3 +671,10 @@
 		return
 	friends += new_friend
 	faction = new_friend.faction.Copy()
+
+/mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)
+	. = ..()
+	if (malfunctioning)
+		robust_searching = TRUE // enables friends list check
+		return
+	robust_searching = initial(robust_searching)

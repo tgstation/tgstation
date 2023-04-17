@@ -36,6 +36,11 @@
 		RemoveHood()
 	return ..()
 
+/obj/item/clothing/suit/hooded/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	if(visuals_only)
+		MakeHood()
+	ToggleHood()
+
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
 	hood_up = FALSE

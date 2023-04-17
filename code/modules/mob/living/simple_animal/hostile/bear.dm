@@ -14,7 +14,6 @@
 	speak_chance = 1
 	taunt_chance = 25
 	turns_per_move = 5
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -42,7 +41,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -90,7 +89,7 @@
 	icon_state = "combatbear"
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
-	faction = list("russian")
+	faction = list(FACTION_RUSSIAN)
 	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1, /obj/item/bear_armor = 1)
 	melee_damage_lower = 18
 	melee_damage_upper = 20
@@ -105,7 +104,7 @@
 	name = "pile of bear armor"
 	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bear_armor_upgrade"
 
 /obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
@@ -132,7 +131,7 @@
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
-	faction = list(FACTION_NEUTRAL, "russian")
+	faction = list(FACTION_NEUTRAL, FACTION_RUSSIAN)
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0

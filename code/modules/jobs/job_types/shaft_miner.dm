@@ -72,14 +72,6 @@
 	mask = /obj/item/clothing/mask/gas/explorer
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	if(istype(miner.wear_suit, /obj/item/clothing/suit/hooded))
-		var/obj/item/clothing/suit/hooded/explorer_suit = miner.wear_suit
-		explorer_suit.ToggleHood()
-
 /datum/outfit/job/miner/equipped/mod
 	name = "Shaft Miner (Equipment + MODsuit)"
 	back = /obj/item/mod/control/pre_equipped/mining

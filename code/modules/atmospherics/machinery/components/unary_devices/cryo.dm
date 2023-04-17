@@ -40,8 +40,7 @@
 	if(occupant)
 		vis_contents -= occupant
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
-		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
-		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+		occupant.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 	occupant = new_occupant
 	if(!occupant)
@@ -52,9 +51,8 @@
 	occupant.vis_flags |= VIS_INHERIT_PLANE
 	vis_contents += occupant
 	pixel_y = 22
-	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
-	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
+	occupant.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING), CRYO_TRAIT)
 
 /// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
@@ -136,6 +134,7 @@
 	vis_contents += occupant_vis
 	if(airs[1])
 		airs[1].volume = CELL_VOLUME * 0.5
+	register_context()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -147,14 +146,14 @@
 	. = ..()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
-	..(dir, dir)
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction(mob/user)
+	..(user, dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	. = ..()
 	var/C
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		C += M.rating
+	for(var/datum/stock_part/matter_bin/M in component_parts)
+		C += M.tier
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C
@@ -166,6 +165,20 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	vis_contents.Cut()
@@ -358,16 +371,16 @@
 		message_cooldown = world.time + 50
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		set_on(FALSE)
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	..()
+	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
@@ -419,7 +432,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
-	if(on || occupant || state_open)
+	if(on || state_open)
 		return FALSE
 	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -536,11 +549,13 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		set_on(!on)
+		if(set_on(!on))
+			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(can_interact(user))
+		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
 		if(state_open)
 			close_machine()
 		else

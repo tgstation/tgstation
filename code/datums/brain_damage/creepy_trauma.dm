@@ -3,7 +3,7 @@
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
 	scan_desc = "psychotic schizophrenic delusions"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
-	lose_text = "<span class='warning'>The voices in your head fall silent.</span>"
+	lose_text = span_warning("The voices in your head fall silent.")
 	can_gain = TRUE
 	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
@@ -25,7 +25,7 @@
 			lose_text = ""
 			qdel(src)
 			return
-	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
+	gain_text = span_warning("You hear a sickening, raspy voice in your head. It wants one small task of you...")
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src

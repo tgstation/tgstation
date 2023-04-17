@@ -39,8 +39,8 @@
 /obj/machinery/fat_sucker/RefreshParts()
 	. = ..()
 	var/rating = 0
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		rating += L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		rating += micro_laser.tier
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
@@ -50,7 +50,7 @@
 				[span_notice("Removing [bite_size] nutritional units per operation.")]
 				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user)
+/obj/machinery/fat_sucker/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
@@ -65,7 +65,7 @@
 		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
-/obj/machinery/fat_sucker/open_machine(mob/user)
+/obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))

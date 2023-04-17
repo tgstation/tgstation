@@ -17,7 +17,8 @@
 		minimum_distance = controller.get_minimum_distance(),
 		id = controller.get_access(),
 		subsystem = SSai_movement,
-		extra_info = controller)
+		extra_info = controller,
+		initial_path = controller.blackboard[BB_PATH_TO_USE])
 
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))

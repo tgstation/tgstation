@@ -73,6 +73,12 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visualsOnly = FALSE)
+	. = ..()
+	if (human.age < AGE_MINOR)
+		mask = /obj/item/clothing/mask/cigarette/candy
+		head = /obj/item/clothing/head/fedora/det_hat/minor
+
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask

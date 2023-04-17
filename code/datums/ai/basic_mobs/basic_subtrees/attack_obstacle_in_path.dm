@@ -10,11 +10,11 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 
-	if(QDELETED(target))
+	if(isnull(target))
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
-	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
+	if (!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
 		return
 
 	controller.queue_behavior(attack_behaviour, target_key)
@@ -22,9 +22,11 @@
 
 /// Something is in our way, get it outta here
 /datum/ai_behavior/attack_obstructions
-	action_cooldown = 1 SECONDS
+	action_cooldown = 2 SECONDS
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
+	/// For if you want your mob to be able to attack dense objects
+	var/can_attack_dense_objects = FALSE
 
 /datum/ai_behavior/attack_obstructions/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -50,10 +52,11 @@
 	for (var/direction in dirs_to_move)
 		if (attack_in_direction(controller, basic_mob, direction))
 			return
+	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
-	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
+	if (!next_step.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn))
 		return FALSE
 
 	for (var/obj/object as anything in next_step.contents)
@@ -68,10 +71,20 @@
 	return FALSE
 
 /datum/ai_behavior/attack_obstructions/proc/can_smash_object(mob/living/basic/basic_mob, obj/object)
-	if (!object.density)
+	if (!object.density && !can_attack_dense_objects)
 		return FALSE
 	if (object.IsObscured())
 		return FALSE
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
+	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETTING_WHITELIST]
+	if(whitelist && !is_type_in_typecache(object, whitelist))
+		return FALSE
+
 	return TRUE // It's in our way, let's get it out of our way
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target
+	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target
+	target_key = BB_CURRENT_PET_TARGET

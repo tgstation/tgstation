@@ -7,6 +7,7 @@
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
+	header_program = TRUE
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"
@@ -53,6 +54,7 @@
 	var/obj/item/photo/pic = attacking_item
 	saved_image = pic.picture
 	ProcessPhoto()
+	user.balloon_alert(user, "photo uploaded")
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
@@ -106,7 +108,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
@@ -195,6 +196,19 @@
 			sending_virus = !sending_virus
 			return UI_UPDATE
 
+		if("PDA_selectPhoto")
+			if(!issilicon(usr))
+				return
+			var/mob/living/silicon/user = usr
+			if(!user.aicamera)
+				return
+			var/datum/picture/selected_photo = user.aicamera.selectpicture(user)
+			if(!selected_photo)
+				return
+			saved_image = selected_photo
+			ProcessPhoto()
+			return TRUE
+
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/data = ..()
 
@@ -205,7 +219,7 @@
 	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 
 	data["messages"] = messages
 	data["messengers"] = ScrubMessengerList()
@@ -236,7 +250,7 @@
 
 	if (!input_message || !sending_and_receiving)
 		return
-	if(!user.canUseTopic(computer, be_close = TRUE))
+	if(!user.can_perform_action(computer))
 		return
 	return sanitize(input_message)
 
@@ -291,7 +305,8 @@
 		"ref" = REF(computer),
 		"targets" = targets,
 		"rigged" = rigged,
-		"photo" = photo_path,
+		"photo" = saved_image,
+		"photo_path" = photo_path,
 		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
@@ -318,7 +333,9 @@
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
+	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
+	message_data["target_details"] = signal.format_target()
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
@@ -346,6 +363,8 @@
 		last_text_everyone = world.time
 
 	messages += list(message_data)
+	saved_image = null
+	photo_path = null
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
@@ -356,6 +375,7 @@
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
+	message_data["photo_path"] = signal.data["photo_path"]
 	message_data["photo"] = signal.data["photo"]
 	messages += list(message_data)
 
@@ -381,8 +401,8 @@
 		inbound_message = emoji_parse(inbound_message)
 
 		if(L.is_literate())
-			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
-
+			var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
+			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message][photo_message] [reply]"))
 
 	if (ringer_status)
 		computer.ring(ringtone)
@@ -399,7 +419,7 @@
 	if(computer.active_program != src)
 		if(!computer.open_program(usr, src))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))

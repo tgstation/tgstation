@@ -208,7 +208,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 	name = "captain's spare ID safe"
 	desc = "In case of emergency, do not break glass. All Captains and Acting Captains are provided with codes to access this safe. \
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
-There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
+There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
+It remains quite flush against the wall, and there only seems to be enough room to fit something as slim as an ID card."
 	can_hack_open = FALSE
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
@@ -227,6 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
+	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
 	atom_storage.locked = TRUE

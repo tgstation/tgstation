@@ -4,7 +4,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	///mobs worth orbiting. Because spaghetti, all mobs have the point of interest, but only some are allowed to actually show up.
 	///this obviously should be changed in the future, so we only add mobs as POI if they actually are interesting, and we don't use
 	///a typecache.
-	var/static/list/mob_allowed_typecache = list()
+	var/static/list/mob_allowed_typecache
 
 /datum/orbit_menu/ui_state(mob/user)
 	return GLOB.observer_state
@@ -49,6 +49,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	var/list/alive = list()
 	var/list/antagonists = list()
+	var/list/deadchat_controlled = list()
 	var/list/dead = list()
 	var/list/ghosts = list()
 	var/list/misc = list()
@@ -60,13 +61,18 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/mob/mob_poi = new_mob_pois[name]
 
 		var/poi_ref = REF(mob_poi)
+
+		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
+
 		serialized["ref"] = poi_ref
 		serialized["full_name"] = name
+		if(number_of_orbiters)
+			serialized["orbiters"] = number_of_orbiters
+
+		if(mob_poi.GetComponent(/datum/component/deadchat_control))
+			deadchat_controlled += list(serialized)
 
 		if(isobserver(mob_poi))
-			var/number_of_orbiters = length(mob_poi.get_all_orbiters())
-			if (number_of_orbiters)
-				serialized["orbiters"] = number_of_orbiters
 			ghosts += list(serialized)
 			continue
 
@@ -77,10 +83,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isnull(mob_poi.mind))
 			npcs += list(serialized)
 			continue
-
-		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
-		if(number_of_orbiters)
-			serialized["orbiters"] = number_of_orbiters
 
 		var/datum/mind/mind = mob_poi.mind
 		var/was_antagonist = FALSE
@@ -95,13 +97,12 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			else
 				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
 				serialized["job"] = id_card?.get_trim_assignment()
-				var/datum/id_trim/trim = id_card?.trim
-				serialized["job_icon"] = trim?.orbit_icon
 
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			if (antag_datum.show_to_ghosts)
 				was_antagonist = TRUE
 				serialized["antag"] = antag_datum.name
+				serialized["antag_group"] = antag_datum.antagpanel_category
 				antagonists += list(serialized)
 				break
 
@@ -110,6 +111,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	for(var/name in new_other_pois)
 		var/atom/atom_poi = new_other_pois[name]
+
+		// Deadchat Controlled objects are orbitable
+		if(atom_poi.GetComponent(/datum/component/deadchat_control))
+			var/number_of_orbiters = length(atom_poi.get_all_orbiters())
+			deadchat_controlled += list(list(
+				"ref" = REF(atom_poi),
+				"full_name" = name,
+				"orbiters" = number_of_orbiters,
+			))
+			continue
 
 		misc += list(list(
 			"ref" = REF(atom_poi),
@@ -137,6 +148,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	return list(
 		"alive" = alive,
 		"antagonists" = antagonists,
+		"deadchat_controlled" = deadchat_controlled,
 		"dead" = dead,
 		"ghosts" = ghosts,
 		"misc" = misc,
@@ -151,7 +163,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
  *
  * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
- * unless they're mobs, camera mobs or megafauna.
+ * unless they're mobs, camera mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
  *
  * If they satisfy that requirement, falls back to default validation for the POI.
  */
@@ -165,7 +177,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 				/mob/living/simple_animal/hostile/megafauna,
 				/mob/living/simple_animal/hostile/regalrat,
 			))
-		if(!is_type_in_typecache(potential_mob_poi, mob_allowed_typecache))
+		if(!is_type_in_typecache(potential_mob_poi, mob_allowed_typecache) && !potential_mob_poi.GetComponent(/datum/component/deadchat_control))
 			return FALSE
 
 	return potential_poi.validate()

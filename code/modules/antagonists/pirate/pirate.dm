@@ -2,6 +2,7 @@
 	name = "\improper Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
+	antagpanel_category = ANTAG_GROUP_PIRATES
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR ME MATEYS!!"

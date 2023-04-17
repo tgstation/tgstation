@@ -91,6 +91,7 @@
 	)
 	tastes = list("meat" = 1, "heat" = 1, "veggies" = 1)
 	foodtypes = MEAT | VEGETABLES | GORE
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/tsatsikh
@@ -191,7 +192,7 @@
 	icon_state = "brain_pate"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/liquidgibs = 2,
 	)
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GORE
@@ -604,73 +605,6 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-//Soup Dishes
-/obj/item/food/soup/atrakor_dumplings
-	name = "\improper Atrakor dumpling soup"
-	desc = "A bowl of rich, meaty dumpling soup, traditionally served during the festival of Atrakor's Might on Tizira. The dumplings are shaped like the Night Sky Lord himself."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "atrakor_dumplings"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 4,
-		/datum/reagent/water = 5,
-	)
-	tastes = list("bone broth" = 1, "onion" = 1, "potato" = 1)
-	foodtypes = MEAT | VEGETABLES | NUTS
-
-/obj/item/food/soup/meatball_noodles
-	name = "meatball noodle soup"
-	desc = "A hearty noodle soup made from meatballs and nizaya in a rich broth. Commonly topped with a handful of chopped nuts."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "meatball_noodles"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/nutriment/protein = 8,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
-		/datum/reagent/water = 5,
-	)
-	tastes = list("bone broth" = 1, "meat" = 1, "gnocchi" = 1, "peanuts" = 1)
-	foodtypes = MEAT | VEGETABLES | NUTS
-
-/obj/item/food/soup/black_broth
-	name = "\improper Tiziran black broth"
-	desc = "A bowl of sausage, onion, blood and vinegar, served ice cold. Every bit as rough as it sounds."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "black_broth"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/blood = 8,
-		/datum/reagent/liquidgibs = 2,
-	)
-	tastes = list("vinegar" = 1, "metal" = 1)
-	foodtypes = MEAT | VEGETABLES | GORE
-
-/obj/item/food/soup/jellyfish
-	name = "jellyfish stew"
-	desc = "A slimy bowl of jellyfish stew. It jiggles if you shake it."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "jellyfish_stew"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/consumable/nutriment = 6,
-	)
-	tastes = list("slime" = 1)
-	foodtypes = MEAT | VEGETABLES | GORE
-
-/obj/item/food/soup/rootbread_soup
-	name = "rootbread soup"
-	desc = "A big bowl of spicy, savoury soup made with rootbread. Heavily seasoned, and very tasty."
-	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "rootbread_soup"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 6,
-		/datum/reagent/consumable/nutriment = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
-	)
-	tastes = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
-	foodtypes = MEAT | VEGETABLES
-
 //Egg Dishes
 /obj/item/food/black_eggs
 	name = "black scrambled eggs"
@@ -792,42 +726,42 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/canned_jellyfish
+/obj/item/food/canned/jellyfish
 	name = "canned gunner jellyfish"
 	desc = "A can of gunner jellyfish packed in brine. Contains a mild hallucinogen which is destroyed by cooking."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_jellyfish"
+	icon_state = "jellyfish"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/toxin/mindbreaker = 2,
 		/datum/reagent/consumable/salt = 1,
 	)
+	trash_type = /obj/item/trash/can/food/jellyfish
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/desert_snails
+/obj/item/food/canned/desert_snails
 	name = "canned desert snails"
 	desc = "Giant snails from the Tiziran desert, packaged in brine. Shells included. Probably best not eaten raw, unless you're a lizard."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_snails"
+	icon_state = "snails"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/salt = 2,
 	)
+	trash_type = /obj/item/trash/can/food/desert_snails
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/larvae
+/obj/item/food/canned/larvae
 	name = "canned bee larva"
 	desc = "A can of bee larva packaged in honey. Probably appetizing to someone."
-	icon = 'icons/obj/food/canned.dmi'
-	icon_state = "canned_larvae"
+	icon_state = "larvae"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/honey = 2,
 	)
+	trash_type = /obj/item/trash/can/food/larvae
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL

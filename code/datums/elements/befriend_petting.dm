@@ -4,7 +4,7 @@
 /**
  * # Befriend Petting
  *
- * Element which makes a mob befriend you if you pet it enough, and unfriend you if you hurt it.
+ * Element which makes a mob befriend you if you pet it enough.
  */
 /datum/element/befriend_petting
 	element_flags = ELEMENT_BESPOKE
@@ -13,24 +13,19 @@
 	var/befriend_chance
 	/// Message to print if we gain a friend. String %SOURCE% and %TARGET% are replaced by names if present.
 	var/tamed_reaction
-	/// Message to print if we remove a friend. String %SOURCE% and %TARGET% are replaced by names if present.
-	var/untamed_reaction
 
-/datum/element/befriend_petting/Attach(datum/target, befriend_chance = AI_DOG_PET_FRIEND_PROB, tamed_reaction, untamed_reaction)
+/datum/element/befriend_petting/Attach(datum/target, befriend_chance = AI_DOG_PET_FRIEND_PROB, tamed_reaction)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.befriend_chance = befriend_chance
 	src.tamed_reaction = tamed_reaction
-	src.untamed_reaction = untamed_reaction
-	target.AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click))
-	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_hurt))
 
 /datum/element/befriend_petting/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_WAS_ATTACKED))
+	UnregisterSignal(target, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_WAS_ATTACKED)
 
 /// If it's a nice touch make friends
 /datum/element/befriend_petting/proc/on_click(mob/living/owner, mob/living/user)
@@ -54,23 +49,6 @@
 		return
 	var/display_message = replacetext(tamed_reaction, BEFRIEND_REPLACE_KEY_SOURCE, "[owner]")
 	display_message = replacetext(display_message, BEFRIEND_REPLACE_KEY_TARGET, "[user]")
-	owner.visible_message(span_notice(display_message))
-
-/// If it's a bad touch make enemies
-/datum/element/befriend_petting/proc/on_hurt(mob/living/owner, atom/attacker)
-	SIGNAL_HANDLER
-
-	if (owner.stat != CONSCIOUS)
-		return
-	if (!isliving(attacker))
-		return
-	var/mob/living/living_attacker = attacker
-	if (!owner.unfriend(living_attacker))
-		return
-	if (!untamed_reaction)
-		return
-	var/display_message = replacetext(untamed_reaction, BEFRIEND_REPLACE_KEY_SOURCE, "[owner]")
-	display_message = replacetext(display_message, BEFRIEND_REPLACE_KEY_TARGET, "[attacker]")
 	owner.visible_message(span_notice(display_message))
 
 #undef BEFRIEND_REPLACE_KEY_SOURCE
