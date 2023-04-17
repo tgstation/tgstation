@@ -232,6 +232,10 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	var/obj/item/stack/sheet/new_sheet_target
 	var/closest_distance = INFINITY
 	for(var/obj/item/stack/sheet/potential_sheet as anything in GLOB.sniffable_sheets)
+		// not enough for lag reasons, and shouldn't even be on this
+		if(potential_sheet.amount < 10)
+			GLOB.sniffable_sheets -= potential_sheet
+			continue
 		//held by someone
 		if(isliving(potential_sheet.loc))
 			continue

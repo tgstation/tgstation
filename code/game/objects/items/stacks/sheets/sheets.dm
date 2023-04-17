@@ -24,13 +24,20 @@
 	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
-	if(sniffable)
+	if(sniffable && is_station_level(z) && amount < 10)
 		GLOB.sniffable_sheets += src
 
 /obj/item/stack/sheet/Destroy(force)
 	if(sniffable)
 		GLOB.sniffable_sheets -= src
 	. = ..()
+
+/obj/item/stack/sheet/add(_amount)
+	. = ..()
+	if(sniffable && is_station_level(z) && amount < 10)
+		GLOB.sniffable_sheets += src
+
+/// removing from sniffable handled by the sniffer itself when it checks for targets
 
 /**
  * Facilitates sheets being smacked on the floor
