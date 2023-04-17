@@ -286,8 +286,6 @@
 // tgui menu
 
 /obj/structure/reflector/ui_interact(mob/user, datum/tgui/ui)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
 	if(!finished)
 		user.balloon_alert(user, "nothing to rotate!")
 		return
