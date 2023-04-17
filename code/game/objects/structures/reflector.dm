@@ -283,7 +283,12 @@
 /obj/item/circuit_component/reflector/input_received(datum/port/input/port)
 	attached_reflector?.set_angle(angle.value)
 
+// tgui menu
+
 /obj/structure/reflector/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		user.balloon_alert(user, "you're too monkeyish!")
+		return
 	if(!finished)
 		user.balloon_alert(user, "nothing to rotate!")
 		return
