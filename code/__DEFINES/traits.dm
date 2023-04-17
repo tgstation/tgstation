@@ -825,6 +825,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
+#define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind

@@ -104,13 +104,10 @@
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
-	if(owner.incapacitated()) // so it doesn't double up with both legs
+	owner.Knockdown(severity == EMP_HEAVY ? 8 SECONDS : 4 SECONDS)
+	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	var/timer = 4 SECONDS
-	if(severity == EMP_HEAVY)
-		timer = 8 SECONDS
-	owner.Knockdown(timer)
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -146,13 +143,10 @@
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
-	if(owner.incapacitated()) // so it doesn't double up with both legs
+	owner.Knockdown(severity == EMP_HEAVY ? 8 SECONDS : 4 SECONDS)
+	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	var/timer = 4 SECONDS
-	if(severity == EMP_HEAVY)
-		timer = 8 SECONDS
-	owner.Knockdown(timer)
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -188,8 +182,6 @@
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
 	if(!.) // other emp effects handled in parent
-		return
-	if(owner.incapacitated()) // so it doesn't double up with both legs
 		return
 	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
 	if(severity == EMP_HEAVY)
@@ -312,25 +304,24 @@
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
 
+#define EMP_GLITCH "EMP_GLITCH"
+
 /obj/item/bodypart/head/robot/emp_act(severity)
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
-	if(owner.incapacitated()) // so it doesn't double up with both legs
-		return
 	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
 
-	var/list/matrix_list_identity =	list(/*R*/ 1,0,0, /*G*/ 0,1,0, /*B*/ 0,0,1)//, 0,0,0,1, /*A*/0,0,0,0)
-	var/list/matrix_list_red =		list(/*R*/ 1,0,0, /*G*/ 0,0.5,0.5, /*B*/ 0,0.5,0.5)// /*A*/0,0,0,1, 0,0,0,0)
-	var/list/matrix_list_green =	list(/*R*/ 0.5,0,0.5, /*G*/ 0,1,0, /*B*/ 0.5,0,0.5)// 0,0,0,1, /*A*/0,0,0,0)
-	var/list/matrix_list_blue =		list(/*R*/ 0.5,0,0.5, /*G*/ 0.5,0,0.5, /*B*/ 0,0,1)//, 0,0,0,1)// /*A*/0,0,0,0)
+	var/list/matrix_list_identity =	list(/*R*/ 1,0,0, /*G*/ 0,1,0, /*B*/ 0,0,1)
+	var/list/matrix_list_red = list(/*R*/ 1,0,0, /*G*/ 0,0.5,0.5, /*B*/ 0,0.5,0.5)
+	var/list/matrix_list_green = list(/*R*/ 0.5,0,0.5, /*G*/ 0,1,0, /*B*/ 0.5,0,0.5)
+	var/list/matrix_list_blue =	list(/*R*/ 0.5,0,0.5, /*G*/ 0.5,0,0.5, /*B*/ 0,0,1)
 
-	var/glitch_duration = 10 SECONDS
-	if(severity == EMP_LIGHT)
-		glitch_duration = 5 SECONDS
+	var/glitch_duration = severity == EMP_LIGHT ? 5 SECONDS : 10 SECONDS
 
-	owner.funk_out(matrix_list_identity, matrix_list_red, matrix_list_green, matrix_list_blue, FILTER_COLOR_HSL, "EMP Glitch", glitch_duration)
+	owner.funk_out(matrix_list_identity, matrix_list_red, matrix_list_green, matrix_list_blue, FILTER_COLOR_HSL, EMP_GLITCH, glitch_duration)
 
+///Alternates the colors seen by the mob through the assorted color matrices. Extremely clunky to use if you don't know matrices.
 /mob/proc/funk_out(list/matrix_list_identity, list/matrix_list_red, list/matrix_list_green, list/matrix_list_blue, filter_color = FILTER_COLOR_HSL, filter_name = "funkin'", funk_duration = 10 SECONDS)
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -346,10 +337,6 @@
 		animate(color = matrix_list_blue, time = 4 SECONDS)
 		animate(color = matrix_list_red, time = 4 SECONDS)
 
-	//game_plane_master_controller.add_filter("psilocybin_wave", 1, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
-
-	//for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
-	//	animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(end_funk), filter_name), funk_duration)
 
 /mob/proc/end_funk(filter_name = "funkin'")
@@ -357,7 +344,8 @@
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter(filter_name)
-	//game_plane_master_controller.remove_filter("psilocybin_wave")
+
+#undef EMP_GLITCH
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)

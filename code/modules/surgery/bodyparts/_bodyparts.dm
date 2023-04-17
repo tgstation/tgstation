@@ -1142,8 +1142,8 @@
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
 	var/time_needed = 4 SECONDS
-	var/brute_damage = 2.5
-	var/burn_damage = 7.5
+	var/brute_damage = 1
+	var/burn_damage = 2.5
 
 	if(severity == EMP_HEAVY)
 		time_needed *= 2
@@ -1152,9 +1152,9 @@
 
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
-	ADD_TRAIT(src, TRAIT_PARALYSIS, "idk")
+	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
 	return TRUE
 
 /obj/item/bodypart/proc/un_paralyze()
-	REMOVE_TRAITS_IN(src, "idk")
+	REMOVE_TRAITS_IN(src, EMP_TRAIT)
