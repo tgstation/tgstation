@@ -32,3 +32,6 @@
 
 /// Checks that no light shares a tile/pixel offsets with another
 /datum/unit_test/focus_only/stacked_lights
+
+/// Checks for bad icon / icon state setups in cooking crafting menu
+/datum/unit_test/focus_only/bad_cooking_crafting_icons
