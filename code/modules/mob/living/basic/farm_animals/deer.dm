@@ -20,6 +20,7 @@
 	health = 75
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
+	ai_controller = /datum/ai_controller/basic_controller/deer
 
 /mob/living/basic/deer/Initialize(mapload)
 	. = ..()
