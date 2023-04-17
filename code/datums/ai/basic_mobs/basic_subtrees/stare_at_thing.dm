@@ -6,7 +6,8 @@
 	var/atom/target = weak_target?.resolve()
 
 	if(!isnull(target)) // No target? Time to locate one using the list we set in this mob's blackboard.
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_STATIONARY_CAUSE, controller.blackboard[BB_STATIONARY_TARGETS])
+		var/list/potential_scares = controller.blackboard[BB_STATIONARY_TARGETS]
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_STATIONARY_CAUSE, potential_scares)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/stop_and_stare, BB_STATIONARY_CAUSE)
