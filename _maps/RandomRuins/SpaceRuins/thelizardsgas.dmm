@@ -245,7 +245,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north{
 	coverlocked = 0;
-	locked = 0;
 	start_charge = 60
 	},
 /obj/effect/mapping_helpers/apc/unlocked,
