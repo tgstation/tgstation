@@ -1,6 +1,6 @@
 /// Makes a mob simply stop and stare at a movable... yea...
 /datum/ai_behavior/stop_and_stare
-	action_cooldown = 5 SECONDS
+	action_cooldown = 5 SECONDS // pretty much a placeholder
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
 
 /datum/ai_behavior/stop_and_stare/setup(datum/ai_controller/controller, target_key)
@@ -10,6 +10,8 @@
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	// i don't really like doing this but we wanna make sure that the cooldown is pertinent to what we need for this specific controller before we invoke parent
+	action_cooldown = controller.blackboard[BB_STATIONARY_COOLDOWN]
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/movable/target = weak_target?.resolve()
@@ -21,8 +23,7 @@
 
 	pawn_mob.face_atom(target)
 	pawn_mob.balloon_alert_to_viewers("stops and stares...")
-	set_movement_target(pawn_mob, pawn_turf, /datum/ai_movement/complete_stop)
+	set_movement_target(controller, pawn_turf, /datum/ai_movement/complete_stop)
 
 	if(controller.blackboard[BB_STATIONARY_MOVE_TO_TARGET])
 		addtimer(CALLBACK(PROC_REF(set_movement_target), pawn_mob, target, initial(controller.ai_movement)), (controller.blackboard[BB_STATIONARY_SECONDS] + 1 SECONDS))
-

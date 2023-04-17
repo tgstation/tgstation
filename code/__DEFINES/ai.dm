@@ -245,7 +245,7 @@
 #define BB_STATIONARY_MOVE_TO_TARGET "BB_stationary_move_to_target"
 /// What targets will trigger us to be stationary?
 #define BB_STATIONARY_TARGETS "BB_stationary_targets"
-/// How often can we get spooked by the same target?
+/// How often can we get spooked by a target?
 #define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
 
 ///List of mobs who have damaged us
