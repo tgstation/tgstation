@@ -23,7 +23,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	src.fire_overlay = fire_overlay
 	if(fire_particles)
-		// burning particles look really bad on items since they tend to stack on mobs, so do not do that
+		// burning particles when they stack on mobs, so do not do that
 		particle_effect = new(atom_parent, fire_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
 	atom_parent.resistance_flags |= ON_FIRE
 	START_PROCESSING(SSfire_burning, src)
