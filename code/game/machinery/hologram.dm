@@ -872,8 +872,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
 	glow.pixel_x = 32
 	glow.pixel_y = 32
-	add_overlay(emiss)
-	LAZYADD(update_overlays_on_z, emiss)
+	add_overlay(glow)
+	LAZYADD(update_overlays_on_z, glow)
 
 /obj/effect/overlay/holoray/Destroy(force)
 	. = ..()

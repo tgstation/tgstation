@@ -133,10 +133,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	update_sightflags(mymob, mymob.sight, NONE)
 
 /datum/hud/proc/client_refresh(datum/source)
+	SIGNAL_HANDLER
 	RegisterSignal(mymob.client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, mymob.client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
+	SIGNAL_HANDLER
 	if(mymob.canon_client)
 		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
 
@@ -147,6 +149,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COSMIG_HUD_EYE_CHANGED, old_eye, new_eye)
+
 	if(old_eye)
 		UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
 	if(new_eye)
@@ -157,6 +161,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	eye_z_changed(new_eye)
 
 /datum/hud/proc/update_sightflags(datum/source, new_sight, old_sight)
+	SIGNAL_HANDLER
 	// If neither the old and new flags can see turfs but not objects, don't transform the turfs
 	// This is to ensure parallax works when you can't see holder objects
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
