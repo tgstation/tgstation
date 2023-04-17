@@ -175,18 +175,18 @@
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process
-/obj/item/mod/module/proc/on_process(delta_time)
+/obj/item/mod/module/proc/on_process(seconds_per_tick)
 	if(active)
-		if(!drain_power(active_power_cost * delta_time))
+		if(!drain_power(active_power_cost * seconds_per_tick))
 			on_deactivation()
 			return FALSE
-		on_active_process(delta_time)
+		on_active_process(seconds_per_tick)
 	else
-		drain_power(idle_power_cost * delta_time)
+		drain_power(idle_power_cost * seconds_per_tick)
 	return TRUE
 
 /// Called on the MODsuit's process if it is an active module
-/obj/item/mod/module/proc/on_active_process(delta_time)
+/obj/item/mod/module/proc/on_active_process(seconds_per_tick)
 	return
 
 /// Called from MODsuit's install() proc, so when the module is installed.
@@ -361,12 +361,12 @@
 		return
 	return ..()
 
-/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_process(seconds_per_tick)
 	. = ..()
 	if(!core)
 		return FALSE
 
-/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_active_process(seconds_per_tick)
 	if(!core)
 		return FALSE
 	return TRUE

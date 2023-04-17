@@ -624,9 +624,7 @@
 		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup)
 			var/list/lobby_member = list()
 			lobby_member["name"] = key
-			lobby_member["status"] = "Ready"
-			if(key in GLOB.mafia_bad_signup)
-				lobby_member["status"] = "Disconnected"
+			lobby_member["status"] = (key in GLOB.mafia_bad_signup) ? "Disconnected" : "Ready"
 			lobby_member["spectating"] = "Ghost"
 			if(key in spectators)
 				lobby_member["spectating"] = "Spectator"
@@ -744,7 +742,7 @@
 					to_chat(usr, span_notice("You unregister from Mafia."))
 					return TRUE
 				else
-					GLOB.mafia_signup[C.ckey] = C
+					GLOB.mafia_signup[C.ckey] = TRUE
 					to_chat(usr, span_notice("You sign up for Mafia."))
 				if(phase == MAFIA_PHASE_SETUP)
 					check_signups()
@@ -1065,12 +1063,12 @@
 	for(var/bad_key in GLOB.mafia_bad_signup)
 		if(GLOB.directory[bad_key])//they have reconnected if we can search their key and get a client
 			GLOB.mafia_bad_signup -= bad_key
-			GLOB.mafia_signup += bad_key
+			GLOB.mafia_signup[bad_key] = TRUE
 	for(var/key in GLOB.mafia_signup)
 		var/client/C = GLOB.directory[key]
 		if(!C)//vice versa but in a variable we use later
 			GLOB.mafia_signup -= key
-			GLOB.mafia_bad_signup += key
+			GLOB.mafia_bad_signup[key] = TRUE
 			continue
 		if(!isobserver(C.mob))
 			//they are back to playing the game, remove them from the signups
