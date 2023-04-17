@@ -368,13 +368,9 @@
 		return FALSE
 
 	var/mob/living/living_owner = owner
-	var/sigreturn = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL)
+	var/sigreturn = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
 	if(sigreturn & SPELL_INVOCATION_FAIL)
-		if(invocation_type != INVOCATION_EMOTE) // For if a mime is a signer for some reason??
-			if(HAS_TRAIT(owner, TRAIT_SIGN_LANG))
-				if(feedback)
-					to_chat(owner, span_warning("You can't sign the words to invoke [src]!"))
-			return FALSE
+		return FALSE
 	if(sigreturn & SPELL_INVOCATION_SUCCESS)
 		return TRUE // Skips following checks.
 

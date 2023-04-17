@@ -198,12 +198,15 @@
 	return SIGN_OKAY
 
 /// Spellcasting with sign language
-/datum/component/sign_language/proc/can_cast_spell()
+/datum/component/sign_language/proc/can_cast_spell(datum/action/cooldown/spell/spell, feedback)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/carbon_parent = parent
-	if(HAS_TRAIT(carbon_parent, TRAIT_SIGN_LANG))
-		// Cannot cast if anything but SIGN_OKAY or if miming
-		if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING))
+	if(spell.invocation_type == INVOCATION_EMOTE) // Mime spells are not cast with signs
+		return
+	else if(HAS_TRAIT(carbon_parent, TRAIT_SIGN_LANG))
+		if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
+			if(feedback)
+				to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
 			return SPELL_INVOCATION_FAIL
 		else return SPELL_INVOCATION_SUCCESS
 
