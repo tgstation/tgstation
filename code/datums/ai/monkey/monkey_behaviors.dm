@@ -215,6 +215,13 @@
 	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return
 
+	// we've queued up a monkey attack on a mob which isn't already an enemy, so give them 1 threat to start
+	// note they might immediately reduce threat and drop from the list.
+	// this is fine, we're just giving them a love tap then leaving them alone.
+	// unless they fight back, then we retaliate
+	if(isnull(controller.blackboard[BB_MONKEY_ENEMIES][target]))
+		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, 1)
+
 	/// mob refs are uids, so this is safe
 	if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
 		controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, -1)
