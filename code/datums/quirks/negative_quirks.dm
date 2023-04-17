@@ -1110,7 +1110,7 @@
 		if(!IS_ORGANIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
-		if(organ.organ_flags & ORGAN_SYNTHETIC && !(organ.organ_flags & ORGAN_HIDDEN))
+		if((organ.organ_flags & ORGAN_SYNTHETIC || organ.status == ORGAN_ROBOTIC) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
 	update_mood()
 
@@ -1121,13 +1121,13 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if(new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
+	if((new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if(old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC && !(old_organ.organ_flags & ORGAN_HIDDEN))
+	if((old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC) && !(old_organ.organ_flags & ORGAN_HIDDEN))
 		cybernetics_level--
 		update_mood()
 
