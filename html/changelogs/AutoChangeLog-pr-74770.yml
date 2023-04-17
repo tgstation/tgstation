@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - balance: "Cyborg Rechargers now restock with metal and glass from the ore silo, and no longer grant the materials for free."
