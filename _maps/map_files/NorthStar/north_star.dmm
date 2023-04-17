@@ -85529,6 +85529,7 @@
 "wQu" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/turf_decal/trimline/blue,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
