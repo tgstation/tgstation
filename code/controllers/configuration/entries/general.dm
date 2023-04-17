@@ -121,6 +121,9 @@
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
+/// log silo material deposits/ejections
+/datum/config_entry/flag/log_silo
+
 /// log traitor objectives
 /datum/config_entry/flag/log_traitor
 

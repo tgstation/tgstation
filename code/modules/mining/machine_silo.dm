@@ -66,7 +66,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	// assumes unlimited space...
 	var/amount = I.amount
 	materials.user_insert(I, user, breakdown_flags)
-	silo_log(M, "deposited", amount, "sheets", item_mats)
+	var/list/matlist = list()
+	matlist[GET_MATERIAL_REF(I.material_type)] = item_mats
+	silo_log(M, "deposited", amount, "sheets", matlist)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
@@ -192,7 +194,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if (!length(mats))
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
-
 	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
@@ -229,6 +230,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/each in materials)
 		materials[each] *= abs(_amount)
 	format()
+	log_silo("[machine_name] in [area_name] [action] [abs(amount)]x [noun] [get_raw_materials("")]")
 
 /datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
 	if (other == src || action != other.action || noun != other.noun)
@@ -245,13 +247,14 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /datum/ore_silo_log/proc/format()
 	name = "[machine_name]: [action] [amount]x [noun]"
+	formatted = "([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br> [get_raw_materials("")]"
 
-	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
-	var/sep = ""
+/datum/ore_silo_log/proc/get_raw_materials(separator)
+	var/list/msg = list()
 	for(var/key in materials)
 		var/datum/material/M = key
 		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
-		msg += sep
-		sep = ", "
+		msg += separator
+		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
-	formatted = msg.Join()
+	return msg.Join()
