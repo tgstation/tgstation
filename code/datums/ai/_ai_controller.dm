@@ -421,6 +421,7 @@ multiple modular subtrees with behaviors
 	if(!islist(blackboard[key]))
 		CRASH("set_blackboard_key_assoc called on non-list key [key]!")
 	TRACK_AI_DATUM_TARGET(thing, key)
+	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
 
 /**
@@ -434,6 +435,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_blackboard_key_assoc_lazylist(key, thing, value)
 	LAZYINITLIST(blackboard[key])
 	TRACK_AI_DATUM_TARGET(thing, key)
+	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
 
 /**
@@ -496,6 +498,7 @@ multiple modular subtrees with behaviors
 	if(!islist(blackboard[key]))
 		CRASH("add_blackboard_key_assoc called on non-list key [key]!")
 	TRACK_AI_DATUM_TARGET(thing, key)
+	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] += value
 
 
@@ -510,6 +513,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/add_blackboard_key_assoc_lazylist(key, thing, value)
 	LAZYINITLIST(blackboard[key])
 	TRACK_AI_DATUM_TARGET(thing, key)
+	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] += value
 
 /**
@@ -548,7 +552,6 @@ multiple modular subtrees with behaviors
 			CLEAR_AI_DATUM_TARGET(thing, key)
 			associated_value -= thing
 			return
-
 		else if(associated_value[inner_key] == thing)
 			// assoc list
 			CLEAR_AI_DATUM_TARGET(thing, key)

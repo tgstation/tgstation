@@ -44,6 +44,7 @@
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 	HUD_trait = TRAIT_SECURITY_HUD
+	organ_flags = ALL
 
 /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
 	name = "Diagnostic HUD implant"
