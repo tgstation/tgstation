@@ -1,6 +1,7 @@
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
+	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
