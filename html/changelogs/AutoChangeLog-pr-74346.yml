@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - bugfix: "Body purist headrevs having a bad time with their implant"
