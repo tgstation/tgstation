@@ -239,6 +239,8 @@
 
 ///How long should we remain stationary for?
 #define BB_STATIONARY_SECONDS "BB_stationary_time_in_seconds"
+///Should we move towards the target that triggered us to be stationary?
+#define BB_STATIONARY_MOVE_TO_TARGET "BB_stationary_move_to_target"
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
