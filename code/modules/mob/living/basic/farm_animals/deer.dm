@@ -21,14 +21,21 @@
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/deer
+	/// Things that will scare us into being stationary. Vehicles are scary to deers because they might have headlights.
+	var/static/list/stationary_scary_things = list(/obj/vehicle)
 
 /mob/living/basic/deer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
+	var/time_to_freeze_for = (rand(5, 10) SECONDS)
+	ai_controller.blackboard[BB_STATIONARY_SECONDS] = time_to_freeze_for
+	ai_controller.blackboard[BB_STATIONARY_COOLDOWN] = (time_to_freeze_for * (rand(3, 5)))
+	ai_controller.blackboard[BB_STATIONARY_TARGETS] = stationary_scary_things
 
 /datum/ai_controller/basic_controller/deer
 	blackboard = list(
 		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
