@@ -31,20 +31,25 @@
 
 /datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	set_movement_target(controller, controller.blackboard[target_key])
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
 
 /datum/ai_behavior/break_spine/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
-	if(batman.stat)
-		finish_action(controller, TRUE, target_key)
-
-	if(get_dist(batman, big_guy) >= give_up_distance)
+	if(QDELETED(batman) || get_dist(batman, big_guy) >= give_up_distance)
 		finish_action(controller, FALSE, target_key)
+		return
+
+	if(batman.stat != CONSCIOUS)
+		finish_action(controller, TRUE, target_key)
+		return
 
 	big_guy.start_pulling(batman)
-	big_guy.setDir(get_dir(big_guy, batman))
+	big_guy.face_atom(batman)
 
 	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
 
@@ -61,6 +66,8 @@
 
 /datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	if(succeeded)
+		var/mob/living/bane = controller.pawn
+		bane.stop_pulling()
 		controller.clear_blackboard_key(target_key)
 	return ..()
 
