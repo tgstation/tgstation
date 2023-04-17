@@ -26,4 +26,4 @@
 	set_movement_target(controller, pawn_turf, /datum/ai_movement/complete_stop)
 
 	if(controller.blackboard[BB_STATIONARY_MOVE_TO_TARGET])
-		addtimer(CALLBACK(PROC_REF(set_movement_target), pawn_mob, target, initial(controller.ai_movement)), (controller.blackboard[BB_STATIONARY_SECONDS] + 1 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(set_movement_target), controller, target, initial(controller.ai_movement)), (controller.blackboard[BB_STATIONARY_SECONDS] + 1 SECONDS))
