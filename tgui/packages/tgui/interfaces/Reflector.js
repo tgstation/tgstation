@@ -5,17 +5,11 @@ import { Window } from '../layouts';
 export const Reflector = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      title={data.reflector_name}
-      height={200}
-      width={219}>
+    <Window title={data.reflector_name} height={200} width={219}>
       <Window.Content>
         <Stack direction="row">
           <Stack.Item>
-            <Section
-              title="Presets"
-              textAlign="center"
-              fill>
+            <Section title="Presets" textAlign="center" fill>
               <Table mt={3.5}>
                 <Table.Cell>
                   <Table.Row>
@@ -23,26 +17,35 @@ export const Reflector = (props, context) => {
                       icon="arrow-left"
                       iconRotation={45}
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 315,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 315,
+                        })
+                      }
+                    />
                   </Table.Row>
                   <Table.Row>
                     <Button
                       icon="arrow-left"
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 270,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 270,
+                        })
+                      }
+                    />
                   </Table.Row>
                   <Table.Row>
                     <Button
                       icon="arrow-left"
                       iconRotation={-45}
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 225,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 225,
+                        })
+                      }
+                    />
                   </Table.Row>
                 </Table.Cell>
                 <Table.Cell>
@@ -50,9 +53,12 @@ export const Reflector = (props, context) => {
                     <Button
                       icon="arrow-up"
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 0,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 0,
+                        })
+                      }
+                    />
                   </Table.Row>
                   <Table.Row>
                     <Box px={0.75}>
@@ -68,9 +74,12 @@ export const Reflector = (props, context) => {
                     <Button
                       icon="arrow-down"
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 180,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 180,
+                        })
+                      }
+                    />
                   </Table.Row>
                 </Table.Cell>
                 <Table.Cell>
@@ -79,36 +88,42 @@ export const Reflector = (props, context) => {
                       icon="arrow-right"
                       iconRotation={-45}
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 45,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 45,
+                        })
+                      }
+                    />
                   </Table.Row>
                   <Table.Row>
                     <Button
                       icon="arrow-right"
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 90,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 90,
+                        })
+                      }
+                    />
                   </Table.Row>
                   <Table.Row>
                     <Button
                       icon="arrow-right"
                       iconRotation={45}
                       mb={1}
-                      onClick={() => act('rotate', {
-                        rotation_angle: 135,
-                      })} />
+                      onClick={() =>
+                        act('rotate', {
+                          rotation_angle: 135,
+                        })
+                      }
+                    />
                   </Table.Row>
                 </Table.Cell>
               </Table>
             </Section>
           </Stack.Item>
           <Stack>
-            <Section
-              title="Angle"
-              textAlign="center"
-              fill>
+            <Section title="Angle" textAlign="center" fill>
               <LabeledControls>
                 <LabeledControls.Item ml={0.5} label="Set rotation">
                   <NumberInput
@@ -118,9 +133,12 @@ export const Reflector = (props, context) => {
                     maxValue={359}
                     step={1}
                     stepPixelSize={1}
-                    onDrag={(e, value) => act('rotate', {
-                      rotation_angle: value,
-                    })} />
+                    onDrag={(e, value) =>
+                      act('rotate', {
+                        rotation_angle: value,
+                      })
+                    }
+                  />
                 </LabeledControls.Item>
               </LabeledControls>
               <Stack direction="row" grow={1}>
@@ -131,9 +149,12 @@ export const Reflector = (props, context) => {
                       icon="undo-alt"
                       content="-5"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: -5,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: -5,
+                        })
+                      }
+                    />
                   </Stack.Item>
                   <Stack>
                     <Button
@@ -141,9 +162,12 @@ export const Reflector = (props, context) => {
                       icon="undo-alt"
                       content="-10"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: -10,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: -10,
+                        })
+                      }
+                    />
                   </Stack>
                   <Stack>
                     <Button
@@ -151,9 +175,12 @@ export const Reflector = (props, context) => {
                       icon="undo-alt"
                       content="-15"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: -15,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: -15,
+                        })
+                      }
+                    />
                   </Stack>
                 </Stack>
                 <Stack direction="column">
@@ -164,9 +191,12 @@ export const Reflector = (props, context) => {
                       iconPosition="right"
                       content="+5"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: 5,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: 5,
+                        })
+                      }
+                    />
                   </Stack.Item>
                   <Stack>
                     <Button
@@ -175,9 +205,12 @@ export const Reflector = (props, context) => {
                       iconPosition="right"
                       content="+10"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: 10,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: 10,
+                        })
+                      }
+                    />
                   </Stack>
                   <Stack>
                     <Button
@@ -186,9 +219,12 @@ export const Reflector = (props, context) => {
                       iconPosition="right"
                       content="+15"
                       mb={1}
-                      onClick={() => act('calculate', {
-                        rotation_angle: 15,
-                      })} />
+                      onClick={() =>
+                        act('calculate', {
+                          rotation_angle: 15,
+                        })
+                      }
+                    />
                   </Stack>
                 </Stack>
               </Stack>
