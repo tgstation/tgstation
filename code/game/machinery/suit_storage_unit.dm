@@ -7,7 +7,7 @@
 	base_icon_state = "classic"
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the unit is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
 	max_integrity = 250
 	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 
@@ -453,7 +453,7 @@
 		if(mob_occupant)
 			dump_inventory_contents()
 
-/obj/machinery/suit_storage_unit/process(delta_time)
+/obj/machinery/suit_storage_unit/process(seconds_per_tick)
 	var/obj/item/stock_parts/cell/cell
 	if(suit && istype(suit))
 		cell = suit.cell
@@ -462,9 +462,9 @@
 	if(!cell || cell.charge == cell.maxcharge)
 		return
 
-	var/cell_charged = cell.give(final_charge_rate * delta_time)
+	var/cell_charged = cell.give(final_charge_rate * seconds_per_tick)
 	if(cell_charged)
-		use_power((active_power_usage + final_charge_rate) * delta_time)
+		use_power((active_power_usage + final_charge_rate) * seconds_per_tick)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

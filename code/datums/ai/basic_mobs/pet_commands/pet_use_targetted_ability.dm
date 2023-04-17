@@ -9,7 +9,7 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/pet_use_ability/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
+/datum/ai_behavior/pet_use_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/datum/action/cooldown/mob_cooldown/ability = controller.blackboard[ability_key]
 	var/mob/living/target = controller.blackboard[target_key]
 	if (QDELETED(ability) || QDELETED(target))

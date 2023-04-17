@@ -11,7 +11,9 @@
 #define BLOCK_Z_OUT_UP (1<<7) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<8) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP (1<<9) // Should this object block z uprise from below?
-#define NO_BUILD (1<<10) // Can we build on this object?
+#define BLOCKS_CONSTRUCTION (1<<10) //! Does this object prevent things from being built on it?
+#define BLOCKS_CONSTRUCTION_DIR (1<<11) //! Does this object prevent same-direction things from being built on it?
+#define IGNORE_DENSITY (1<<12) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

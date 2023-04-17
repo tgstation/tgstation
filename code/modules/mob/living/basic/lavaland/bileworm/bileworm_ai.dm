@@ -11,7 +11,7 @@
 
 /datum/ai_planning_subtree/bileworm_attack
 
-/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(QDELETED(target))
@@ -29,7 +29,7 @@
 
 /datum/ai_planning_subtree/bileworm_execute
 
-/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
 	if(QDELETED(target) || target.stat < UNCONSCIOUS)

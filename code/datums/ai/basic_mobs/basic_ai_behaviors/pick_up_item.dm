@@ -10,7 +10,7 @@
 	var/obj/item/target = controller.blackboard[target_key]
 	return isitem(target) && isturf(target.loc) && !target.anchored
 
-/datum/ai_behavior/pick_up_item/perform(delta_time, datum/ai_controller/controller, target_key, storage_key)
+/datum/ai_behavior/pick_up_item/perform(seconds_per_tick, datum/ai_controller/controller, target_key, storage_key)
 	. = ..()
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target) || !isturf(target.loc)) // Someone picked it up or it got deleted

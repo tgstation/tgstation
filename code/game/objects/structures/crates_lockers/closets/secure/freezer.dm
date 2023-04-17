@@ -7,10 +7,6 @@
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 
-/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	toggle_organ_decay(src)
 	return ..()
@@ -35,24 +31,6 @@
 		return ..()
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
-
-/obj/structure/closet/secure_closet/freezer/add_context(
-	atom/source,
-	list/context,
-	obj/item/held_item,
-	mob/living/user,
-)
-
-	if(isnull(held_item) || !opened)
-		return NONE
-
-	if(held_item.tool_behaviour == TOOL_WELDER)
-		context[SCREENTIP_CONTEXT_LMB] = "Unweld"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/structure/closet/secure_closet/freezer/examine(mob/user)
-	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
 
 /obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)

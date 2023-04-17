@@ -16,7 +16,7 @@
 
 	COOLDOWN_DECLARE(command_cooldown)
 
-/datum/ai_controller/hostile_friend/process(delta_time)
+/datum/ai_controller/hostile_friend/process(seconds_per_tick)
 	if(isliving(pawn))
 		var/mob/living/living_pawn = pawn
 		movement_delay = living_pawn.cached_multiplicative_slowdown

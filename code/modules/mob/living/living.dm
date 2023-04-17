@@ -1377,7 +1377,7 @@
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/mushroom,
 				/mob/living/basic/statue,
-				/mob/living/simple_animal/hostile/retaliate/bat,
+				/mob/living/basic/bat,
 				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/hostile/killertomato,
 				/mob/living/basic/giant_spider,
@@ -1619,12 +1619,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Handles effects happening when mob is on normal fire
  *
  * Vars:
- * * delta_time
+ * * seconds_per_tick
  * * times_fired
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end
@@ -2072,7 +2072,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED), STAT_TRAIT)
+			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates

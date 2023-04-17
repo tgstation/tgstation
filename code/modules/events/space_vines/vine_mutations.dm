@@ -310,18 +310,18 @@
 
 	return expected_damage
 
-/datum/spacevine_mutation/woodening
+/datum/spacevine_mutation/hardened
 	name = "Hardened"
 	hue = "#997700"
 	quality = NEGATIVE
 	severity = SEVERITY_ABOVE_AVERAGE
 
-/datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
+/datum/spacevine_mutation/hardened/on_grow(obj/structure/spacevine/holder)
 	if(holder.growth_stage)
 		holder.set_density(TRUE)
 	holder.modify_max_integrity(100)
 
-/datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
+/datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
 	if(item?.get_sharpness())
 		return expected_damage * 0.5
 	return expected_damage

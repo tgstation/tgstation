@@ -55,7 +55,7 @@
 	end_withdrawal(victim_mind.current)
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
-/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time, times_fired)
+/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, seconds_per_tick, times_fired)
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type) //If this is null, we're not addicted
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
@@ -79,7 +79,7 @@
 			withdrawal_stage = 0
 
 	if(!on_drug_of_this_addiction && !HAS_TRAIT(affected_carbon, TRAIT_HOPELESSLY_ADDICTED))
-		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * delta_time)) //If true was returned, we lost the addiction!
+		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * seconds_per_tick)) //If true was returned, we lost the addiction!
 			return
 
 	if(!current_addiction_cycle) //Dont do the effects if were not on drugs
@@ -96,13 +96,13 @@
 	///One cycle is 2 seconds
 	switch(withdrawal_stage)
 		if(1)
-			withdrawal_stage_1_process(affected_carbon, delta_time)
+			withdrawal_stage_1_process(affected_carbon, seconds_per_tick)
 		if(2)
-			withdrawal_stage_2_process(affected_carbon, delta_time)
+			withdrawal_stage_2_process(affected_carbon, seconds_per_tick)
 		if(3)
-			withdrawal_stage_3_process(affected_carbon, delta_time)
+			withdrawal_stage_3_process(affected_carbon, seconds_per_tick)
 
-	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1 * delta_time) //Next cycle!
+	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1 * seconds_per_tick) //Next cycle!
 
 /// Called when addiction enters stage 1
 /datum/addiction/proc/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
@@ -121,16 +121,16 @@
 	affected_carbon.clear_mood_event("[type]_addiction")
 
 /// Called when addiction is in stage 1 every process
-/datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
-	if(DT_PROB(5, delta_time))
+/datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, seconds_per_tick)
+	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[1]]"))
 
 /// Called when addiction is in stage 2 every process
-/datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
-	if(DT_PROB(10, delta_time) )
+/datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick) )
 		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[2]]"))
 
 /// Called when addiction is in stage 3 every process
-/datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
-	if(DT_PROB(15, delta_time))
+/datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick))
 		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[3]]"))

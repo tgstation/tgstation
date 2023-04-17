@@ -21,6 +21,10 @@
 	var/empty = FALSE
 	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 
+/obj/item/storage/medkit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
@@ -278,6 +282,7 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
@@ -301,10 +306,12 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
@@ -358,7 +365,10 @@
 /obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/pill,
+		/obj/item/food/bait/natural,
+	))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -550,6 +560,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
+/obj/item/storage/pill_bottle/naturalbait
+	name = "freshness jar"
+	desc = "Full of natural fish bait."
+
+/obj/item/storage/pill_bottle/naturalbait/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/bait/natural(src)
+
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
@@ -578,7 +596,7 @@
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process(delta_time)
+/obj/item/storage/organbox/process(seconds_per_tick)
 	///if there is enough coolant var
 	var/using_coolant = coolant_to_spend()
 	if (isnull(using_coolant))
@@ -589,7 +607,7 @@
 				stored.unfreeze()
 		return
 
-	var/amount_used = 0.05 * delta_time
+	var/amount_used = 0.05 * seconds_per_tick
 	if (using_coolant != /datum/reagent/cryostylane)
 		amount_used *= 2
 	reagents.remove_reagent(using_coolant, amount_used)

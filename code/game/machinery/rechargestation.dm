@@ -57,9 +57,9 @@
 		begin_processing()
 
 
-/obj/machinery/recharge_station/process(delta_time)
+/obj/machinery/recharge_station/process(seconds_per_tick)
 	if(occupant)
-		process_occupant(delta_time)
+		process_occupant(seconds_per_tick)
 	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
@@ -114,7 +114,7 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(delta_time)
+/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * seconds_per_tick / 2, repairs)

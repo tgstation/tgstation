@@ -58,13 +58,13 @@
 /datum/ai_behavior/monkey_equip/ground
 	required_distance = 0
 
-/datum/ai_behavior/monkey_equip/ground/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	equip_item(controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket
 
-/datum/ai_behavior/monkey_equip/pickpocket/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_equip/pickpocket/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
@@ -109,7 +109,7 @@
 
 /datum/ai_behavior/monkey_flee
 
-/datum/ai_behavior/monkey_flee/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_flee/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 
 	var/mob/living/living_pawn = controller.pawn
@@ -138,7 +138,7 @@
 	. = ..()
 	set_movement_target(controller, controller.blackboard[target_key])
 
-/datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 
 	var/mob/living/target = controller.blackboard[target_key]
@@ -157,10 +157,10 @@
 				break
 
 		// if the target has a weapon, chance to disarm them
-		if(W && DT_PROB(MONKEY_ATTACK_DISARM_PROB, delta_time))
-			monkey_attack(controller, target, delta_time, TRUE)
+		if(W && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
+			monkey_attack(controller, target, seconds_per_tick, TRUE)
 		else
-			monkey_attack(controller, target, delta_time, FALSE)
+			monkey_attack(controller, target, seconds_per_tick, FALSE)
 
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -170,7 +170,7 @@
 	controller.clear_blackboard_key(target_key)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, delta_time, disarm)
+/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(living_pawn.next_move > world.time)
@@ -216,7 +216,7 @@
 		return
 
 	/// mob refs are uids, so this is safe
-	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))
+	if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
 		controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, -1)
 
 	// if we are not angry at our target, go back to idle
@@ -238,7 +238,7 @@
 	controller.set_blackboard_key(BB_MONKEY_DISPOSING, FALSE) //No longer disposing
 	controller.clear_blackboard_key(disposal_target_key) //No target disposal
 
-/datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller, attack_target_key, disposal_target_key)
+/datum/ai_behavior/disposal_mob/perform(seconds_per_tick, datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 
 	if(controller.blackboard[BB_MONKEY_DISPOSING]) //We are disposing, don't do ANYTHING!!!!
@@ -282,7 +282,7 @@
 	finish_action(controller, TRUE, attack_target_key, disposal_target_key)
 
 
-/datum/ai_behavior/recruit_monkeys/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/recruit_monkeys/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 
 	controller.set_blackboard_key(BB_MONKEY_RECRUIT_COOLDOWN, world.time + MONKEY_RECRUIT_COOLDOWN)
@@ -291,7 +291,7 @@
 	for(var/mob/living/nearby_monkey in view(living_pawn, MONKEY_ENEMY_VISION))
 		if(!HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
 			continue
-		if(!DT_PROB(MONKEY_RECRUIT_PROB, delta_time))
+		if(!SPT_PROB(MONKEY_RECRUIT_PROB, seconds_per_tick))
 			continue
 		// Recruited a monkey to our side
 		controller.set_blackboard_key(BB_MONKEY_RECRUIT_COOLDOWN, world.time + MONKEY_RECRUIT_COOLDOWN)
@@ -300,7 +300,7 @@
 
 	finish_action(controller, TRUE)
 
-/datum/ai_behavior/monkey_set_combat_target/perform(delta_time, datum/ai_controller/controller, set_key, enemies_key)
+/datum/ai_behavior/monkey_set_combat_target/perform(seconds_per_tick, datum/ai_controller/controller, set_key, enemies_key)
 	var/list/enemies = controller.blackboard[enemies_key]
 	var/list/valids = list()
 	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))

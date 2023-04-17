@@ -14,7 +14,7 @@
 		return FALSE
 	return ..()
 
-/datum/ai_behavior/run_away_from_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	var/escaped =  QDELETED(target) || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
@@ -28,10 +28,9 @@
 	finish_action(controller, succeeded = FALSE, target_key = target_key, hiding_location_key = hiding_location_key)
 
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
-	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
 	var/turf/target_destination = get_turf(controller.pawn)
 	for (var/i in 1 to run_distance)
-		var/turf/test_destination = get_ranged_target_turf(controller.pawn, run_direction, i)
+		var/turf/test_destination = get_ranged_target_turf_direct(controller.pawn, target, range = i, offset = 180)
 		if (test_destination.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn, ignore_atoms = GLOB.airlocks))
 			break
 		target_destination = test_destination

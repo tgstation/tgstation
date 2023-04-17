@@ -127,7 +127,7 @@
 	var/boom_warning = FALSE
 	var/datum/action/innate/ignite/ignite
 
-/datum/species/golem/plasma/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/plasma/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.bodytemperature > 750)
 		if(!boom_warning && H.on_fire)
 			to_chat(H, span_userdanger("You feel like you could blow up at any moment!"))
@@ -143,7 +143,7 @@
 			H.investigate_log("has been gibbed as [H.p_their()] body explodes.", INVESTIGATE_DEATHS)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable
-		H.adjust_fire_stacks(0.5 * delta_time)
+		H.adjust_fire_stacks(0.5 * seconds_per_tick)
 	..()
 
 /datum/species/golem/plasma/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -302,12 +302,12 @@
 	examine_limb_id = SPECIES_GOLEM
 
 //Regenerates because self-repairing super-advanced alien tech
-/datum/species/golem/alloy/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/alloy/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD)
 		return
-	H.heal_overall_damage(brute = 1 * delta_time, burn = 1 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
-	H.adjustToxLoss(-1 * delta_time)
-	H.adjustOxyLoss(-1 * delta_time)
+	H.heal_overall_damage(brute = 1 * seconds_per_tick, burn = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+	H.adjustToxLoss(-1 * seconds_per_tick)
+	H.adjustOxyLoss(-1 * seconds_per_tick)
 
 //Since this will usually be created from a collaboration between podpeople and free golems, wood golems are a mix between the two races
 /datum/species/golem/wood
@@ -338,28 +338,28 @@
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 	examine_limb_id = SPECIES_GOLEM
 
-/datum/species/golem/wood/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/wood/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD)
 		return
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
-		H.adjust_nutrition(5 * light_amount * delta_time)
+		H.adjust_nutrition(5 * light_amount * seconds_per_tick)
 		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
 			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(brute = 0.5 * delta_time, burn = 0.5 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
-			H.adjustToxLoss(-0.5 * delta_time)
-			H.adjustOxyLoss(-0.5 * delta_time)
+			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+			H.adjustToxLoss(-0.5 * seconds_per_tick)
+			H.adjustOxyLoss(-0.5 * seconds_per_tick)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(brute = 2, required_bodytype = BODYTYPE_ORGANIC)
 
-/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3 * REM * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		H.adjustToxLoss(3 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	return ..()
 
@@ -652,7 +652,7 @@
 			new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 			COOLDOWN_START(src, banana_cooldown, banana_delay)
 
-/datum/species/golem/bananium/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/bananium/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(!active && COOLDOWN_FINISHED(src, honkooldown))
 		active = TRUE
 		playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -739,16 +739,16 @@
 	QDEL_NULL(dominate)
 	return ..()
 
-/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(chem, /datum/reagent/water/holywater))
-		H.adjustFireLoss(4 * REM * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		H.adjustFireLoss(4 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 
 	if(chem.type == /datum/reagent/fuel/unholywater)
-		H.adjustBruteLoss(-4 * REM * delta_time)
-		H.adjustFireLoss(-4 * REM * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		H.adjustBruteLoss(-4 * REM * seconds_per_tick)
+		H.adjustFireLoss(-4 * REM * seconds_per_tick)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"
@@ -1213,12 +1213,12 @@
 		bonechill.Remove(C)
 	..()
 
-/datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5 * REM * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REM * delta_time, 0)
-		if(DT_PROB(10, delta_time))
+		H.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
+		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
+		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -1227,7 +1227,7 @@
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)
-			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
+			if(SPT_PROB(2, seconds_per_tick) && iscarbon(H)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
@@ -1238,7 +1238,7 @@
 				else
 					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
 					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return TRUE
 
 /datum/action/innate/bonechill
