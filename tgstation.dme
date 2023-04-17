@@ -769,7 +769,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\sleep_with_no_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\speech_subtree.dm"
-#include "code\datums\ai\basic_mobs\basic_subtrees\stare_at_movable.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\stare_at_thing.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\target_retaliate.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\targeted_mob_ability.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\tipped_subtree.dm"
