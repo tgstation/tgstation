@@ -10,7 +10,6 @@
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
 	wait = 0.05 SECONDS
-	init_order = INIT_ORDER_TTS
 	priority = FIRE_PRIORITY_TTS
 
 	/// Queued HTTP requests that have yet to be sent

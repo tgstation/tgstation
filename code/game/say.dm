@@ -89,14 +89,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		tts_message_to_use = message
 
 	var/list/filter = list()
-	if(length(src.voice_filter) > 0)
-		filter += src.voice_filter
+	if(length(voice_filter) > 0)
+		filter += voice_filter
 
 	if(length(tts_filter) > 0)
 		filter += tts_filter.Join(",")
 
-	if(src.voice && found_client)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, src.voice, filter.Join(","))
+	if(voice && found_client)
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","))
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.

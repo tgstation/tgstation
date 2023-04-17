@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	voice_filter = "aderivative"
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -184,8 +185,6 @@
 
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
-
-	voice_filter = "aderivative"
 
 /**
  * Initialize the vending machine
