@@ -146,7 +146,7 @@
 	name = "Material Sniffer"
 	time = 3 SECONDS
 	reqs = list(
-		/obj/item/analyzer = 1
+		/obj/item/analyzer = 1,
 		/obj/item/stack/cable_coil = 5,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)

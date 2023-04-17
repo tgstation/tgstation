@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 
 /obj/item/pinpointer/material_sniffer
 	name = "material sniffer"
-	desc = "A handheld tracking device that locates sheets of material."
+	desc = "A handheld tracking device that locates sheets of glass and iron."
 	icon_state = "pinpointer_sniffer"
 	worn_icon_state = "pinpointer_black"
 	/// weakref of currently locked on sheets
