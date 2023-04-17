@@ -14,19 +14,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	throwforce = 10
+	toolspeed = 0.3
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
-
-/obj/item/melee/sickly_blade/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 95, \
-	)
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!IS_HERETIC_OR_MONSTER(user))
