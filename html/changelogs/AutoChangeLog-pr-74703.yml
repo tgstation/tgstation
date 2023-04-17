@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Nitrous oxide, the reagent, increases bleed rate from wounds rather than directly subtracting blood. It can be counteracted using coagulants (such as those in epipens)."
-  - balance: "Heparin purges coagulants. You have to remove heparin from someone's system before you can use coagulants."

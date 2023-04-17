@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "HFR should now allow you to select input/moderator rates"
-  - bugfix: "Crystallizer ui should now properly show input gases"

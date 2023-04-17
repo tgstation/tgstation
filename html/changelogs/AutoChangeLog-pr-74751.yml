@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "Interdyne and Syn-C Brutus ruins no longer runtime on initializing."
-  - bugfix: "Interdyne's smes is now properly wired to the apc."

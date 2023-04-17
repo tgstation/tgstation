@@ -1,5 +1,0 @@
-author: "the-og-gear"
-delete-after: True
-changes:
-  - admin: "Added a SpinAnimation option for all atoms in the View-Variables drop-down menu"
-  - admin: "Added a button to stop all animations right next to the SpinAnimation option in the View-Variables drop-down menu"
