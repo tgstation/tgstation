@@ -1892,6 +1892,7 @@
 #include "code\game\objects\items\devices\gps.dm"
 #include "code\game\objects\items\devices\laserpointer.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
+#include "code\game\objects\items\devices\material_sniffer.dm"
 #include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\multitool.dm"
 #include "code\game\objects\items\devices\ocd.dm"

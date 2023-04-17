@@ -216,3 +216,42 @@
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
 	. = ..()
+
+///list of all sheets with sniffable = TRUE for the sniffer to locate
+GLOBAL_LIST_EMPTY(sniffable_sheets)
+
+/obj/item/pinpointer/material_sniffer
+	name = "material sniffer"
+	desc = "A handheld tracking device that locates sheets of material."
+	icon_state = "pinpointer_sniffer"
+	worn_icon_state = "pinpointer_black"
+	/// weakref of currently locked on sheets
+	var/datum/weakref/weakly_sniffed_sheet
+
+/obj/item/pinpointer/material_sniffer/scan_for_target()
+	//keep tracking the current one
+	var/obj/item/stack/sheet/sniffed_sheet = weakly_sniffed_sheet.resolve()
+	if(sniffed_sheet && !isliving(sniffed_sheet.loc))
+		target = sniffed_sheet
+		return
+	var/obj/item/stack/sheet/new_sheet_target
+	var/closest_distance = INFINITY
+	//find a new one
+	for(var/obj/item/stack/sheet/potential_sheet as anything in GLOB.sniffable_sheets)
+		//held by someone
+		if(isliving(potential_sheet.loc))
+			continue
+		//not on scanner's z
+		if(potential_sheet.z != z)
+			continue
+		var/distance_from_sniffer = get_dist(src, potential_sheet)
+		if(distance_from_sniffer < closest_distance)
+			closest_distance = distance_from_sniffer
+			new_sheet_target = potential_sheet
+	if(!new_sheet_target)
+		target = null
+		weakly_sniffed_sheet = null
+		return
+	say("Located [new_sheet_target.amount] [new_sheet_target.singular_name]s!")
+	weakly_sniffed_sheet = WEAKREF(new_sheet_target)
+	target = new_sheet_target

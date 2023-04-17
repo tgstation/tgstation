@@ -17,11 +17,20 @@
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
 	var/walltype
+	/// whether this sheet can be sniffed by the material sniffer
+	var/sniffable = FALSE
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
+	if(sniffable)
+		GLOB.sniffable_sheets += src
+
+/obj/item/stack/sheet/Destroy(force)
+	if(sniffable)
+		GLOB.sniffable_sheets -= src
+	. = ..()
 
 /**
  * Facilitates sheets being smacked on the floor
