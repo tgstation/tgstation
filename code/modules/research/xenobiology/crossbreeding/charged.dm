@@ -176,7 +176,7 @@ Charged extracts:
 	if(isnull(racechoice))
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	human_user.set_species(choice_list[racechoice], icon_update=1)
 	human_user.visible_message(span_warning("[human_user] suddenly shifts form as [src] dissolves into [human_user.p_their()] skin!"))

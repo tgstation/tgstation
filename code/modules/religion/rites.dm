@@ -37,7 +37,7 @@
 		return FALSE
 	to_chat(user, span_notice("You begin to perform the rite of [name]..."))
 	if(!ritual_invocations)
-		if(do_after(user, target = user, delay = ritual_length))
+		if(do_after(user, ritual_length))
 			return TRUE
 		return FALSE
 	var/first_invoke = TRUE
@@ -48,10 +48,10 @@
 			continue
 		if(!length(ritual_invocations)) //we divide so we gotta protect
 			return FALSE
-		if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations)))
+		if(!do_after(user, ritual_length/length(ritual_invocations)))
 			return FALSE
 		user.say(i)
-	if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
+	if(!do_after(user, ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -358,7 +358,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
-	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
 		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
@@ -366,7 +366,7 @@
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/internal/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)

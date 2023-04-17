@@ -125,7 +125,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return ..()
 	replace_beaker(user, BEAKER1)
 
@@ -134,7 +134,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user, BEAKER2)
 
@@ -298,7 +298,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /*				processing procs				*/
 
 ///Increments time if it's progressing - if it's past time then it purifies and stops processing
-/obj/machinery/chem_mass_spec/process(delta_time)
+/obj/machinery/chem_mass_spec/process(seconds_per_tick)
 	. = ..()
 	if(!is_operational)
 		return FALSE
@@ -312,7 +312,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		end_processing()
 		update_appearance()
 		return TRUE
-	progress_time += delta_time
+	progress_time += seconds_per_tick
 	return FALSE
 
 /*
@@ -400,3 +400,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
 	delay_time = (time * cms_coefficient)
 	return delay_time
+
+#undef BEAKER1
+#undef BEAKER2

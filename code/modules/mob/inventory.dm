@@ -474,7 +474,6 @@
 	if(hud_used)
 		hud_used.build_hand_slots()
 
-
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len
 	if(amt < old_limbs)

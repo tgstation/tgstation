@@ -2,7 +2,7 @@
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list(FACTION_NEUTRAL, "monkey")
+	faction = list(FACTION_NEUTRAL, FACTION_MONKEY)
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)
@@ -85,7 +85,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 	return ..()
 
-/mob/living/carbon/human/species/monkey/punpun/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/species/monkey/punpun/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE

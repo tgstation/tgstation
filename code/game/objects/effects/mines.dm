@@ -3,7 +3,7 @@
 	desc = "Better stay away from that thing."
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "uglymine"
 	base_icon_state = "uglymine"
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
@@ -131,6 +131,24 @@
 
 /obj/effect/mine/explosive/mineEffect(mob/victim)
 	explosion(src, range_devastation, range_heavy, range_light, range_flame, range_flash)
+
+/obj/effect/mine/explosive/light
+	name = "low-yield explosive mine"
+	range_heavy = 0
+	range_light = 3
+	range_flash = 2
+
+/obj/effect/mine/explosive/flame
+	name = "incendiary explosive mine"
+	range_heavy = 0
+	range_light = 1
+	range_flame = 3
+
+/obj/effect/mine/explosive/flash
+	name = "blinding explosive mine"
+	range_heavy = 0
+	range_light = 1
+	range_flash = 6
 
 /obj/effect/mine/stun
 	name = "stun mine"

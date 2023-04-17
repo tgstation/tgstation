@@ -38,7 +38,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Construct",
 			"rarity": "uncommon",
-			"summon_icon_file": "icons/mob/animal.dmi",
+			"summon_icon_file": "icons/mob/simple/animal.dmi",
 			"summon_icon_state": "stickman"
 		},
 		{

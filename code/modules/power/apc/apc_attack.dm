@@ -173,12 +173,12 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !isturf(loc))
 		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/apc_interactor = user
-	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
@@ -192,7 +192,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/ethereal = user
-	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.get_organ_slot(ORGAN_SLOT_STOMACH)
 	// how long we wanna wait before we show the balloon alert. don't want it to be very long in case the ethereal wants to opt-out of doing that action, just long enough to where it doesn't collide with previously queued balloon alerts.
 	var/alert_timer_duration = 0.75 SECONDS
 

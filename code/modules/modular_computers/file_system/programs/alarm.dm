@@ -26,7 +26,7 @@
 	QDEL_NULL(alert_control)
 	return ..()
 
-/datum/computer_file/program/alarm_monitor/process_tick(delta_time)
+/datum/computer_file/program/alarm_monitor/process_tick(seconds_per_tick)
 	..()
 
 	if(has_alert)
@@ -41,7 +41,7 @@
 	return 1
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data += alert_control.ui_data(user)
 	return data
 

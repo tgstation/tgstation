@@ -18,6 +18,10 @@
 	///Number of times switched on and off
 	var/switchcount = 0
 
+/obj/item/light/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -31,12 +35,21 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
-	inhand_icon_state = "c_tube"
+	inhand_icon_state = "ltube"
 	brightness = 8
 	custom_price = PAYCHECK_CREW * 0.5
 
+/obj/item/light/tube/update_icon_state()
+	. = ..()
+	switch(status)
+		if(LIGHT_BURNED)
+			inhand_icon_state = "[base_state]-burned"
+		if(LIGHT_BROKEN)
+			inhand_icon_state = "[base_state]-broken"
+
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
+	sharpness = SHARP_POINTY 
 
 /obj/item/light/bulb
 	name = "light bulb"
@@ -51,6 +64,7 @@
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
+	sharpness = SHARP_POINTY 
 
 /obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
@@ -58,23 +72,31 @@
 
 // update the icon state and description of the light
 
-/obj/item/light/proc/update()
+/obj/item/light/update_icon_state()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
 			icon_state = base_state
-			desc = "A replacement [name]."
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
-			desc = "A burnt-out [name]."
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
+
+/obj/item/light/update_desc()
+	. = ..()
+	switch(status)
+		if(LIGHT_OK)
+			desc = "A replacement [name]."
+		if(LIGHT_BURNED)
+			desc = "A burnt-out [name]."
+		if(LIGHT_BROKEN)
 			desc = "A broken [name]."
 
 /obj/item/light/Initialize(mapload)
 	. = ..()
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE | SEALED_CONTAINER | TRANSPARENT)
 	AddComponent(/datum/component/caltrop, min_damage = force)
-	update()
+	update_icon_state()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -103,8 +125,9 @@
 		visible_message(span_danger("[src] shatters."),span_hear("You hear a small glass object shatter."))
 		status = LIGHT_BROKEN
 		force = 5
+		sharpness = SHARP_POINTY 
 		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)
-		update()
+		update_appearance(UPDATE_DESC | UPDATE_ICON)

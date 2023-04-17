@@ -1,0 +1,6 @@
+help: Colorless turf_decal detected! Please delete it or replace it with the desired colored subtype.
+=/obj/effect/turf_decal/tile:
+  banned: TRUE
+
+=/obj/effect/turf_decal/trimline:
+  banned: TRUE

@@ -117,7 +117,7 @@
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
-	else if(default_pry_open(P))
+	else if(default_pry_open(P, close_after_pry = TRUE))
 		return
 
 	else if(default_deconstruction_crowbar(P))
@@ -131,7 +131,7 @@
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	src.go_out()
 	add_fingerprint(usr)

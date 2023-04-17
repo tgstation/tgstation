@@ -1,5 +1,7 @@
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "latexballoon"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
@@ -111,7 +113,6 @@
 /obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
@@ -204,7 +205,6 @@
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
@@ -329,9 +329,7 @@
 /obj/item/hand_item/hand
 	name = "hand"
 	desc = "Sometimes, you just want to act gentlemanly."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-
 
 /obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
@@ -431,7 +429,6 @@
 /obj/item/hand_item/stealer
 	name = "steal"
 	desc = "Your filthy little fingers are ready to commit crimes."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")
@@ -536,8 +533,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
@@ -546,7 +542,7 @@
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -608,8 +604,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -619,8 +614,8 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
-	dont_go_breakin_my_heart.applyOrganDamage(999)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 
 /obj/projectile/kiss/french
@@ -629,8 +624,10 @@
 
 /obj/projectile/kiss/french/harmless_on_hit(mob/living/living_target)
 	. = ..()
+	if(isnull(living_target.reagents))
+		return
 	//Don't stack the garlic
-	if(! living_target.has_reagent(/datum/reagent/consumable/garlic) )
+	if(!living_target.has_reagent(/datum/reagent/consumable/garlic))
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
@@ -643,13 +640,14 @@
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
 		return
-	if(!firer || !target.Adjacent(firer))
+	if(!firer || !target.Adjacent(firer) || !ismob(firer))
 		return
+
+	var/mob/kisser = firer
 
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
-
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
 		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))

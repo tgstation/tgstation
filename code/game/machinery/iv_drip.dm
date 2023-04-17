@@ -2,12 +2,12 @@
 #define IV_TAKING 0
 ///IV drip operation mode when it injects reagents into the object
 #define IV_INJECTING 1
+///What the transfer rate value is rounded to
+#define IV_TRANSFER_RATE_STEP 0.01
 ///Minimum possible IV drip transfer rate in units per second
 #define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
-///What the transfer rate value is rounded to
-#define IV_TRANSFER_RATE_STEP 0.01
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -28,7 +28,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MIN_IV_TRANSFER_RATE
+	var/transfer_rate = MAX_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -158,7 +158,7 @@
 
 /obj/machinery/iv_drip/MouseDrop(atom/target)
 	. = ..()
-	if(!Adjacent(target) || !usr.canUseTopic(src, be_close = TRUE))
+	if(!Adjacent(target) || !usr.can_perform_action(src))
 		return
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
@@ -223,7 +223,7 @@
 		new /obj/item/stack/sheet/iron(loc)
 	qdel(src)
 
-/obj/machinery/iv_drip/process(delta_time)
+/obj/machinery/iv_drip/process(seconds_per_tick)
 	if(!attached)
 		return PROCESS_KILL
 
@@ -250,22 +250,22 @@
 	// Give reagents
 	if(mode)
 		if(drip_reagents.total_volume)
-			drip_reagents.trans_to(attached, transfer_rate * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+			drip_reagents.trans_to(attached, transfer_rate * seconds_per_tick, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 			update_appearance(UPDATE_ICON)
 
 	// Take blood
 	else if (isliving(attached))
 		var/mob/living/attached_mob = attached
-		var/amount = min(transfer_rate * delta_time, drip_reagents.maximum_volume - drip_reagents.total_volume)
+		var/amount = min(transfer_rate * seconds_per_tick, drip_reagents.maximum_volume - drip_reagents.total_volume)
 		// If the beaker is full, ping
 		if(!amount)
 			set_transfer_rate(MIN_IV_TRANSFER_RATE)
-			visible_message(span_hear("[src] pings."))
+			audible_message(span_hear("[src] pings."))
 			return
 
 		// If the human is losing too much blood, beep.
 		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-			visible_message(span_hear("[src] beeps loudly."))
+			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
 		attached_mob.transfer_blood_to(target, amount)
@@ -325,7 +325,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	if(usr.incapacitated())
 		return
@@ -345,7 +345,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if (!usr.canUseTopic())
+	if(!usr.can_perform_action(src))
 		return
 	if(usr.incapacitated())
 		return
@@ -433,3 +433,5 @@
 
 #undef MIN_IV_TRANSFER_RATE
 #undef MAX_IV_TRANSFER_RATE
+
+#undef IV_TRANSFER_RATE_STEP

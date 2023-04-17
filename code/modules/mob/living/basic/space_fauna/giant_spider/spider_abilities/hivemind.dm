@@ -62,7 +62,7 @@
 	if(!message)
 		return
 	var/my_message = span_spider("<b>Command from [user]:</b> [message]")
-	for(var/mob/living/simple_animal/hostile/giant_spider/spider as anything in GLOB.spidermobs)
+	for(var/mob/living/basic/giant_spider/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(ghost, user)

@@ -18,6 +18,7 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/bone_gel/four = 4,
 		/obj/item/cane/white = 2,
+		/obj/item/clothing/glasses/eyepatch/medical = 2,
 	)
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,

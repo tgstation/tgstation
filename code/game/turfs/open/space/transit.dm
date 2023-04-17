@@ -12,9 +12,6 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 
-	for(var/atom/movable/movable in src)
-		throw_atom(movable)
-
 /turf/open/space/transit/Destroy()
 	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
 	UnregisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED)
@@ -44,51 +41,31 @@
 
 	var/turf/location = gone.loc
 	if(istype(location, /turf/open/space) && !istype(location, src.type))//they got forced out of transit area into default space tiles
-		throw_atom(gone) //launch them into game space, away from transitspace
+		dump_in_space(gone) //launch them into game space, away from transitspace
 
 ///Get rid of all our contents, called when our reservation is released (which in our case means the shuttle arrived)
 /turf/open/space/transit/proc/launch_contents(datum/turf_reservation/reservation)
 	SIGNAL_HANDLER
 
 	for(var/atom/movable/movable in contents)
-		throw_atom(movable)
+		dump_in_space(movable)
 
-/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
-	if(!AM || istype(AM, /obj/docking_port) || istype(AM, /obj/effect/abstract))
-		return
+///Dump a movable in a random valid spacetile
+/proc/dump_in_space(atom/movable/dumpee)
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
 	var/list/possible_transtitons = list()
-	for(var/A in SSmapping.z_list)
-		var/datum/space_level/D = A
-		if (D.linkage == CROSSLINKED)
-			possible_transtitons += D.z_value
+	for(var/datum/space_level/level as anything in SSmapping.z_list)
+		if (level.linkage == CROSSLINKED)
+			possible_transtitons += level.z_value
 	if(!length(possible_transtitons)) //No space to throw them to - try throwing them onto mining
 		possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_MINING)
 		if(!length(possible_transtitons)) //Just throw them back on station, if not just runtime.
 			possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	var/_z = pick(possible_transtitons)
 
-	//now select coordinates for a border turf
-	var/_x
-	var/_y
-	switch(dir)
-		if(SOUTH)
-			_x = rand(min,max)
-			_y = max
-		if(WEST)
-			_x = max
-			_y = rand(min,max)
-		if(EAST)
-			_x = min
-			_y = rand(min,max)
-		else
-			_x = rand(min,max)
-			_y = min
-
-	var/turf/T = locate(_x, _y, _z)
-	AM.forceMove(T)
+	//move the dumpee to a random coordinate turf
+	dumpee.forceMove(locate(rand(min,max), rand(min,max), pick(possible_transtitons)))
 
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)

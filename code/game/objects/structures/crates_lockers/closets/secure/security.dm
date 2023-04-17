@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
+	name = "captain's locker"
 	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "cap"
 
@@ -22,7 +22,7 @@
 	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "head of personnel's locker"
 	req_access = list(ACCESS_HOP)
 	icon_state = "hop"
 
@@ -46,7 +46,7 @@
 	new /obj/item/storage/lockbox/medal/hop(src)
 
 /obj/structure/closet/secure_closet/hos
-	name = "\proper head of security's locker"
+	name = "head of security's locker"
 	req_access = list(ACCESS_HOS)
 	icon_state = "hos"
 
@@ -74,7 +74,7 @@
 	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
-	name = "\proper warden's locker"
+	name = "warden's locker"
 	req_access = list(ACCESS_ARMORY)
 	icon_state = "warden"
 
@@ -173,7 +173,7 @@
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 
 /obj/structure/closet/secure_closet/injection
-	name = "lethal injections"
+	name = "lethal injections locker"
 	req_access = list(ACCESS_HOS)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
@@ -234,7 +234,7 @@
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
-	name = "Secure Evidence Closet"
+	name = "secure evidence closet"
 	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -249,22 +249,24 @@
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	..()
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	for(var/i in 1 to 3)
 		new /obj/item/paper/fluff/jobs/security/court_judgement (src)
 	new /obj/item/pen (src)
 	new /obj/item/clothing/suit/costume/judgerobe (src)
 	new /obj/item/clothing/head/costume/powdered_wig (src)
 	new /obj/item/storage/briefcase(src)
+	new /obj/item/clothing/under/suit/black_really(src)
+	new /obj/item/clothing/neck/tie/red(src)
 
 /obj/structure/closet/secure_closet/contraband/armory
 	anchored = TRUE
-	name = "Contraband Locker"
+	name = "contraband locker"
 	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/contraband/heads
 	anchored = TRUE
-	name = "Contraband Locker"
+	name = "contraband locker"
 	req_access = list(ACCESS_COMMAND)
 
 /obj/structure/closet/secure_closet/armory1

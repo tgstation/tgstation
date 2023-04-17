@@ -10,6 +10,7 @@ and your disease can spread via people walking on vomit.
 /datum/symptom/vomit
 	name = "Vomiting"
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
+	illness = "Cyclonic Irritation"
 	stealth = -2
 	resistance = -1
 	stage_speed = -1

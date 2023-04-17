@@ -83,43 +83,32 @@
 /// Callback for the ghoul status effect - what effects are applied to the ghoul.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/apply_to_risen(mob/living/risen)
 	LAZYADD(created_items, WEAKREF(risen))
-
-	for(var/obj/item/held as anything in risen.held_items)
-		if(istype(held))
-			risen.dropItemToGround(held)
-
-		risen.put_in_hands(new /obj/item/risen_hand(), del_on_fail = TRUE)
+	risen.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/shattered_risen)
 
 /// Callback for the ghoul status effect - cleaning up effects after the ghoul status is removed.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/remove_from_risen(mob/living/risen)
 	LAZYREMOVE(created_items, WEAKREF(risen))
-
-	for(var/obj/item/risen_hand/hand in risen.held_items)
-		qdel(hand)
+	qdel(risen.GetComponent(/datum/component/mutant_hands))
 
 #undef RISEN_MAX_HEALTH
 
 /// The "hand" "weapon" used by shattered risen
-/obj/item/risen_hand
+/obj/item/mutant_hand/shattered_risen
 	name = "bone-shards"
 	desc = "What once appeared to be a normal human fist, now holds a maulled nest of sharp bone-shards."
-	icon = 'icons/effects/blood.dmi'
-	base_icon_state = "bloodhand"
 	color = "#001aff"
-	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	hitsound = SFX_SHATTER
 	force = 16
-	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
 	demolition_mod = 1.5
+	sharpness = SHARP_EDGED
 
-/obj/item/risen_hand/Initialize(mapload)
+/obj/item/mutant_hand/shattered_risen/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/risen_hand/visual_equipped(mob/user, slot)
+/obj/item/mutant_hand/shattered_risen/visual_equipped(mob/user, slot)
 	. = ..()
 
 	// Even hand indexes are right hands,

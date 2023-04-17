@@ -16,13 +16,6 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharger,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 6
@@ -30,15 +23,15 @@
 /obj/item/gun/energy/laser{
 	pixel_y = 3
 	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ac" = (
 /obj/machinery/computer/shuttle/pirate,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ad" = (
@@ -52,13 +45,7 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ae" = (
@@ -119,23 +106,14 @@
 	},
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "al" = (
 /obj/machinery/loot_locator,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -148,13 +126,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red,
 /obj/machinery/button/door/directional/south{
 	id = "piratebridgebolt";
 	name = "Bridge Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ao" = (
@@ -185,10 +163,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "ar" = (
@@ -221,10 +196,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "au" = (
@@ -233,8 +205,8 @@
 	name = "Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "av" = (
@@ -251,10 +223,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "ax" = (
@@ -262,10 +231,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "ay" = (
@@ -274,10 +240,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "az" = (
@@ -286,20 +249,13 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "aC" = (
 /obj/machinery/shuttle_scrambler,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -438,13 +394,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "be" = (
@@ -582,10 +532,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "by" = (
@@ -628,20 +575,14 @@
 	pixel_x = -8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "bH" = (
 /obj/machinery/vending/boozeomat/all_access{
 	onstation = 0
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "bI" = (
@@ -656,13 +597,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "bK" = (
@@ -683,8 +618,8 @@
 	name = "Crew Cabin"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bO" = (
@@ -693,6 +628,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bP" = (
@@ -788,8 +724,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
 /obj/machinery/power/shuttle_engine/heater,
@@ -818,7 +753,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "ex" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/machine,
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
@@ -831,14 +766,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eA" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
 /obj/structure/frame/computer{
@@ -911,11 +845,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -986,9 +916,7 @@
 	name = "decontamination shower"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/machinery/door/window{
 	name = "Decontamination"
 	},
@@ -1023,10 +951,7 @@
 /area/shuttle/pirate)
 "Oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "OD" = (
@@ -1043,10 +968,7 @@
 "OL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "RY" = (
@@ -1073,7 +995,7 @@
 	},
 /obj/docking_port/mobile/pirate{
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Pirate Ship";
 	port_direction = 2
 	},
@@ -1090,10 +1012,7 @@
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 

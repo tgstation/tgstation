@@ -1,24 +1,3 @@
-/obj/structure/window/reinforced/tram/front
-	name = "tram wall"
-	icon = 'icons/obj/smooth_structures/tram_window.dmi'
-	desc = "A lightweight titanium composite structure with a windscreen installed."
-	icon = 'icons/obj/smooth_structures/tram_window.dmi'
-	icon_state = "tram_window-0"
-	base_icon_state = "tram_window"
-	max_integrity = 100
-	wtype = "shuttle"
-	reinf = TRUE
-	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	reinf = TRUE
-	heat_resistance = 1600
-	armor_type = /datum/armor/window_tram
-	explosion_block = 3
-	glass_type = /obj/item/stack/sheet/titaniumglass
-	glass_amount = 2
-	receive_ricochet_chance_mod = 1.2
-	rad_insulation = RAD_MEDIUM_INSULATION
-
 /obj/structure/window/reinforced/tram
 	name = "tram window"
 	desc = "A window made out of a titanium-silicate alloy. It looks tough to break. Is that a challenge?"
@@ -31,6 +10,19 @@
 	explosion_block = 0
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	rad_insulation = RAD_MEDIUM_INSULATION
+	glass_material_datum = /datum/material/alloy/titaniumglass
+
+/obj/structure/window/reinforced/tram/front
+	name = "tram wall"
+	desc = "A lightweight titanium composite structure with a windscreen installed."
+	icon_state = "tram_window-0"
+	base_icon_state = "tram_window"
+	wtype = "shuttle"
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	explosion_block = 3
+	glass_amount = 2
+	receive_ricochet_chance_mod = 1.2
 
 /obj/structure/window/reinforced/tram/left/directional/north
 	icon_state = "tram_left"
@@ -62,11 +54,6 @@
 	bomb = 45
 	fire = 99
 	acid = 100
-
-/obj/structure/window/reinforced/tram/spawnDebris(location)
-	. = list()
-	. += new /obj/item/stack/sheet/titaniumglass(location)
-	. += new /obj/item/stack/rods(location)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tram/mid, 0)

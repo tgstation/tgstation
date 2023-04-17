@@ -1,0 +1,724 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aq" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"aX" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3;
+	pixel_y = 11
+	},
+/obj/item/storage/box/donkpockets/donkpocketpizza{
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 4
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travelers_rest)
+"bq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/travelers_rest)
+"bz" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ruin/space/has_grav/travelers_rest)
+"bA" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/box/beakers{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	on = 1;
+	hide = 1
+	},
+/obj/item/pai_card{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"bN" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"cr" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/chem_dispenser{
+	layer = 2.7
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"gF" = (
+/obj/structure/cable,
+/obj/machinery/power/solar,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/has_grav/travelers_rest)
+"gN" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"hL" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
+	environ = 0;
+	equipment = 0;
+	lighting = 0
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"iD" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 8
+	},
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = 6;
+	pixel_y = 26
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"iP" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"iZ" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travelers_rest)
+"jL" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/tank/air{
+	pixel_y = -3
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"mg" = (
+/obj/effect/turf_decal/trimline/dark_green,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"pk" = (
+/obj/item/kirbyplants,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"sn" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"sM" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/brigdoor{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"uq" = (
+/obj/effect/turf_decal/trimline/brown,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"uS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"vX" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	id = "foreport";
+	name = "Solar Control";
+	dir = 8
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"xk" = (
+/obj/structure/cable,
+/obj/machinery/door/window/brigdoor{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"xq" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"yo" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"zw" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/neutral,
+/turf/open/floor/iron/recharge_floor,
+/area/ruin/space/has_grav/travelers_rest)
+"Dq" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/chem_heater/withbuffer{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Dw" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/door/window/brigdoor,
+/obj/effect/turf_decal/trimline/dark_green/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Ef" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"Ep" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"EI" = (
+/obj/structure/chair/stool/bar/directional/south{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"Fa" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/end,
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"FL" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/light/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/window/brigdoor,
+/obj/effect/turf_decal/trimline/blue/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Gj" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"HA" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/door/window/brigdoor{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"HC" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"KD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travelers_rest)
+"KJ" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 10
+	},
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"KL" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/rack,
+/obj/item/clothing/mask/breath{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/tank/internals/oxygen{
+	pixel_x = -4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"Lx" = (
+/obj/structure/cable,
+/obj/machinery/power/solar,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/has_grav/travelers_rest)
+"LS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travelers_rest)
+"LU" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 6
+	},
+/obj/machinery/reagentgrinder{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"MB" = (
+/turf/template_noop,
+/area/template_noop)
+"NG" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/travelers_rest)
+"Ob" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Px" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall,
+/area/ruin/space/has_grav/travelers_rest)
+"Rp" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/toilet,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = -9;
+	pixel_x = -10
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"RN" = (
+/obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/trimline/neutral/end{
+	dir = 1
+	},
+/obj/item/disk/holodisk/ruin/space/travelers_rest{
+	pixel_x = 12;
+	pixel_y = 18
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"Sw" = (
+/obj/effect/decal/cleanable/food/plant_smudge,
+/obj/effect/turf_decal/trimline/dark_green/filled/line,
+/obj/machinery/airalarm/directional/south{
+	locked = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"TX" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 1
+	},
+/obj/item/storage/secure/safe/directional/north{
+	pixel_y = 45
+	},
+/obj/structure/sink/kitchen/directional/south{
+	pixel_y = 14
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Vn" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Vv" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"Xo" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/closet{
+	anchored = 1
+	},
+/obj/item/stock_parts/capacitor/super,
+/obj/item/storage/box/lights/tubes,
+/obj/item/clothing/glasses/night,
+/obj/item/stock_parts/capacitor/super,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"Xu" = (
+/obj/machinery/recharge_station,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/space/has_grav/travelers_rest)
+"Xw" = (
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/trimline/dark_green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+"Yd" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/textured_large,
+/area/ruin/space/has_grav/travelers_rest)
+"YH" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 10
+	},
+/obj/structure/chair/stool/bar/directional/south{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/ruin/space/has_grav/travelers_rest)
+"ZE" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/chem_master,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/travelers_rest)
+
+(1,1,1) = {"
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+"}
+(2,1,1) = {"
+MB
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+MB
+"}
+(3,1,1) = {"
+MB
+MB
+MB
+gF
+bz
+Xw
+iD
+KJ
+bz
+gF
+MB
+MB
+MB
+"}
+(4,1,1) = {"
+MB
+MB
+gF
+gF
+NG
+TX
+mg
+Sw
+NG
+gF
+gF
+MB
+MB
+"}
+(5,1,1) = {"
+MB
+Lx
+Px
+NG
+Dw
+Ob
+aX
+LU
+HA
+NG
+bz
+gF
+MB
+"}
+(6,1,1) = {"
+MB
+MB
+cr
+gN
+sn
+Ef
+EI
+YH
+aq
+KL
+Xu
+bq
+MB
+"}
+(7,1,1) = {"
+MB
+MB
+ZE
+HC
+KD
+Fa
+zw
+RN
+LS
+xk
+uS
+Yd
+MB
+"}
+(8,1,1) = {"
+MB
+MB
+jL
+bA
+Dq
+Vv
+yo
+Ep
+Vn
+hL
+vX
+bq
+MB
+"}
+(9,1,1) = {"
+MB
+gF
+bz
+NG
+FL
+iP
+iZ
+pk
+sM
+NG
+bz
+gF
+MB
+"}
+(10,1,1) = {"
+MB
+MB
+gF
+gF
+NG
+Gj
+uq
+xq
+NG
+gF
+gF
+MB
+MB
+"}
+(11,1,1) = {"
+MB
+MB
+MB
+gF
+bz
+Rp
+bN
+Xo
+bz
+gF
+MB
+MB
+MB
+"}
+(12,1,1) = {"
+MB
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+gF
+MB
+MB
+MB
+MB
+"}
+(13,1,1) = {"
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+"}

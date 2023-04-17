@@ -5,9 +5,7 @@
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
-	var/is_adult = 0
-	var/docile = 0
-	faction = list("slime", FACTION_NEUTRAL)
+	faction = list(FACTION_SLIME, FACTION_NEUTRAL)
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
@@ -30,7 +28,6 @@
 	healable = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 25
-	see_in_dark = NIGHTVISION_FOV_RANGE
 
 	verb_say = "blorbles"
 	verb_ask = "inquisitively blorbles"
@@ -42,6 +39,17 @@
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	footstep_type = FOOTSTEP_MOB_SLIME
+
+	///The current mood of the slime, set randomly or through emotes (if sentient).
+	var/current_mood
+
+	var/AIproc = 0 // determines if the AI loop is activated
+	var/Atkcool = 0 // attack cooldown
+	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
+	var/SStun = 0 // stun variable
+
+	var/is_adult = 0
+	var/docile = 0
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
@@ -63,7 +71,6 @@
 
 	var/list/speech_buffer = list() // Last phrase said near it and person who said it
 
-	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
@@ -74,10 +81,30 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
-	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
-	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
-	"cerulean", "sepia", "black", "pyrite")
+	var/static/list/slime_colours = list(
+		"adamantine",
+		"black",
+		"blue",
+		"bluespace",
+		"cerulean",
+		"dark blue",
+		"dark purple",
+		"gold",
+		"green",
+		"grey",
+		"light pink",
+		"metal",
+		"oil",
+		"orange",
+		"pink",
+		"purple",
+		"pyrite",
+		"rainbow",
+		"red",
+		"sepia",
+		"silver",
+		"yellow",
+	)
 
 	///////////CORE-CROSSING CODE
 
@@ -153,8 +180,8 @@
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
-		if(mood && !stat)
-			add_overlay("aslime-[mood]")
+		if(current_mood && !stat)
+			add_overlay("aslime-[current_mood]")
 	else
 		icon_state = icon_dead
 	..()

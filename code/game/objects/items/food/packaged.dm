@@ -108,26 +108,31 @@
 		return ..()
 	apply_buff(user)
 
+/obj/item/food/canned/envirochow/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	if(!check_buffability(user))
+		return ..()
+	apply_buff(user)
+
 /obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)
-		return
-	if(!isanimal(target))
 		return
 	if(!check_buffability(target))
 		return
 	apply_buff(target, user)
 
 ///This proc checks if the mob is able to recieve the buff.
-/obj/item/food/canned/envirochow/proc/check_buffability(mob/living/simple_animal/hungry_pet)
-	if(!is_drainable()) //can is not open
+/obj/item/food/canned/envirochow/proc/check_buffability(mob/living/hungry_pet)
+	if(!isanimal_or_basicmob(hungry_pet)) // Not a pet
 		return FALSE
-	if(hungry_pet.stat) //parrot deceased
+	if(!is_drainable()) // Can is not open
+		return FALSE
+	if(hungry_pet.stat) // Parrot deceased
 		return FALSE
 	if(hungry_pet.mob_biotypes & (MOB_BEAST|MOB_REPTILE|MOB_BUG))
 		return TRUE
 	else
-		return FALSE //humans, robots & spooky ghosts not allowed
+		return FALSE // Humans, robots & spooky ghosts not allowed
 
 ///This makes the animal eat the food, and applies the buff status effect to them.
 /obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)

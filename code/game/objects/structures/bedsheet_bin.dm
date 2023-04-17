@@ -138,7 +138,7 @@ LINEN BINS
 
 /obj/item/bedsheet/AltClick(mob/living/user)
 	// double check the canUseTopic args to make sure it's correct
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	dir = turn(dir, 180)
 
@@ -311,6 +311,21 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	inhand_icon_state = "sheetwiz"
 	dream_messages = list("a book", "an explosion", "lightning", "a staff", "a skeleton", "a robe", "magic")
+
+/obj/item/bedsheet/rev
+	name = "revolutionary's bedsheet"
+	desc = "A bedsheet stolen from a Central Command official's bedroom, used a symbol of triumph against Nanotrasen's tyranny. The golden emblem on the front has been scribbled out."
+	icon_state = "sheetrev"
+	inhand_icon_state = "sheetrev"
+	dream_messages = list(
+		"the people",
+		"liberation",
+		"collaboration",
+		"heads rolling",
+		"so, so many baseball bats",
+		"blinding light",
+		"your brothers in arms"
+	)
 
 /obj/item/bedsheet/nanotrasen
 	name = "\improper Nanotrasen bedsheet"
@@ -528,6 +543,11 @@ LINEN BINS
 /obj/item/bedsheet/wiz/double
 	icon_state = "double_sheetwiz"
 	worn_icon_state = "sheetwiz"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/rev/double
+	icon_state = "double_sheetrev"
+	worn_icon_state = "sheetrev"
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/nanotrasen/double

@@ -191,7 +191,7 @@
 			if (EMP_LIGHT)
 				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
 				apply_damage(maxHealth * 0.6)
-				Shake(5, 5, 1 SECONDS)
+				Shake(duration = 1 SECONDS)
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)

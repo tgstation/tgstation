@@ -96,13 +96,15 @@
 /datum/component/fov_handler/proc/remove_mask()
 	var/mob/parent_mob = parent
 	var/client/parent_client = parent_mob.client
+	// Prevents stupid ass hard deletes
+	parent_mob.hud_used.always_visible_inventory -= blocker_mask
+	parent_mob.hud_used.always_visible_inventory -= visual_shadow
 	if(!parent_client) //Love client volatility!!
 		return
 	applied_mask = FALSE
 	parent_client.screen -= blocker_mask
 	parent_client.screen -= visual_shadow
-	parent_mob.hud_used.always_visible_inventory -= blocker_mask
-	parent_mob.hud_used.always_visible_inventory -= visual_shadow
+
 
 /datum/component/fov_handler/proc/add_mask()
 	var/mob/parent_mob = parent

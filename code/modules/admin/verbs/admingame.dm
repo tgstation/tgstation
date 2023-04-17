@@ -84,6 +84,7 @@
 		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
 		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
 		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_INTERNET_REQUEST]'><font color='[(muted & MUTE_INTERNET_REQUEST)?"red":"blue"]'>WEBREQ</font></a> | "
 		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
 		body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
@@ -212,10 +213,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.name
-		new_character.gender = record_found.gender
+		new_character.gender = lowertext(record_found.gender)
 		new_character.age = record_found.age
 		var/datum/dna/found_dna = record_found.dna_ref
-		new_character.hardset_dna(found_dna.unique_identity, record_found.dna_string, null, record_found.name, record_found.blood_type, new record_found.species, found_dna.features)
+		new_character.hardset_dna(found_dna.unique_identity, found_dna.mutation_index, null, record_found.name, record_found.blood_type, new record_found.species_type, found_dna.features)
 	else
 		new_character.randomize_human_appearance()
 		new_character.dna.update_dna_identity()
@@ -388,7 +389,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.show_to(mob)
 
-	mob.lighting_alpha = mob.default_lighting_alpha()
+	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
 /client/proc/disable_combo_hud()
@@ -404,7 +405,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.hide_from(mob)
 
-	mob.lighting_alpha = mob.default_lighting_alpha()
+	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
 /datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
