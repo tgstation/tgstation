@@ -30,6 +30,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /datum/component/burning/RegisterWithParent()
 	. = ..()
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_extinguish))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_ATOM_EXTINGUISH, PROC_REF(on_extinguish))
 	var/atom/atom_parent = parent
@@ -37,18 +38,17 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /datum/component/burning/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
+	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_EXTINGUISH))
 
 /datum/component/burning/Destroy(force, silent)
-	var/atom/atom_parent = parent
 	STOP_PROCESSING(SSfire_burning, src)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
-	// Unregisters signals before we update the atom's appearance and stuff
-	. = ..()
+	var/atom/atom_parent = parent
 	if(!QDELETED(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
 		atom_parent.resistance_flags &= ~ON_FIRE
 		atom_parent.update_appearance(UPDATE_ICON)
+	return ..()
 
 /datum/component/burning/process(seconds_per_tick)
 	var/atom/atom_parent = parent
@@ -58,9 +58,19 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	atom_parent.take_damage(10 * seconds_per_tick, BURN, FIRE, FALSE)
 
+/// Alerts any examiners that the parent is on fire (even though it should be obvious)
+/datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_danger("[source.p_theyre(TRUE)] burning!")
+
 /// Maintains the burning overlay on the parent atom
 /datum/component/burning/proc/on_update_overlays(atom/source, list/overlays)
 	SIGNAL_HANDLER
+
+	//most likely means the component is being removed
+	if(!(source.resistance_flags & ON_FIRE))
+		return
 
 	if(fire_overlay)
 		overlays += fire_overlay

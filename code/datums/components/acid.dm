@@ -23,9 +23,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
-/datum/component/acid/Initialize(_acid_power, _acid_volume, _max_volume=null)
-	if((_acid_power) <= 0 || (_acid_volume <= 0))
-		stack_trace("Acid component added with insufficient acid power ([_acid_power]) or acid volume ([_acid_power]).")
+/datum/component/acid/Initialize(acid_power, acid_volume, _max_volume=null)
+	if((acid_power) <= 0 || (acid_volume <= 0))
+		stack_trace("Acid component added with insufficient acid power ([acid_power]) or acid volume ([acid_volume]).")
 		return COMPONENT_INCOMPATIBLE // Not enough acid or the acid's too weak, either one.
 	if(!isatom(parent))
 		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
@@ -46,8 +46,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		max_volume = TURF_ACID_VOLUME_MAX
 		process_effect = CALLBACK(src, PROC_REF(process_turf), parent)
 
-	acid_power = _acid_power
-	set_volume(_acid_volume)
+	src.acid_power = acid_power
+	set_volume(acid_volume)
 
 	var/atom/parent_atom = parent
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
@@ -61,7 +61,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(process_effect)
 		QDEL_NULL(process_effect)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	if(parent && !QDELING(parent))
+	if(parent && !QDELETED(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
 	return ..()
@@ -153,13 +153,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	overlays += mutable_appearance('icons/effects/acid.dmi', parent_atom.custom_acid_overlay || ACID_OVERLAY_DEFAULT)
 
 /// Alerts any examiners to the acid on the parent atom.
-/datum/component/acid/proc/on_examine(atom/A, mob/user, list/examine_list)
+/datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_danger("[A.p_theyre()] covered in corrosive liquid!")
+	examine_list += span_danger("[source.p_theyre(TRUE)] covered in corrosive liquid!")
 
 /// Makes it possible to clean acid off of objects.
-/datum/component/acid/proc/on_clean(atom/A, clean_types)
+/datum/component/acid/proc/on_clean(atom/source, clean_types)
 	SIGNAL_HANDLER
 
 	if(!(clean_types & CLEAN_TYPE_ACID))
