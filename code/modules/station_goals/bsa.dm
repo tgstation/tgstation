@@ -363,7 +363,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		notice = "Cannon unpowered!"
 		return
 	notice = null
-	cannon.fire(user, get_impact_turf())
+	var/turf/target_turf = get_impact_turf()
+	if(obj_flags & EMAGGED)
+		target_turf = get_turf(src)
+	cannon.fire(user, target_turf)
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
 	var/obj/machinery/bsa/full/prebuilt = locate() in range(7) //In case of adminspawn
@@ -386,3 +389,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	QDEL_NULL(centerpiece.back_ref)
 	qdel(centerpiece)
 	return cannon
+/obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, span_warning("You emag [src], you hear the focusing crystal short out."))
