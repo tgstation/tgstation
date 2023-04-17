@@ -44,6 +44,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	STOP_PROCESSING(SSfire_burning, src)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
+	// Unregisters signals before we update the atom's appearance and stuff
 	. = ..()
 	if(!QDELING(atom_parent) && (atom_parent.resistance_flags & ON_FIRE))
 		atom_parent.resistance_flags &= ~ON_FIRE
