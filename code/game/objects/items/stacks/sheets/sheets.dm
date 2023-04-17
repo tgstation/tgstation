@@ -30,7 +30,7 @@
 /obj/item/stack/sheet/Destroy(force)
 	if(sniffable)
 		GLOB.sniffable_sheets -= src
-	. = ..()
+	return ..()
 
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
