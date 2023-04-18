@@ -12,7 +12,7 @@ export const Reflector = (props, context) => {
   return (
     <Window title={reflector_name} height={200} width={219}>
       <Window.Content>
-        <Stack direction="row">
+        <Stack>
           <Stack.Item>
             <Section title="Presets" textAlign="center" fill>
               <Table mt={3.5}>
@@ -146,8 +146,8 @@ export const Reflector = (props, context) => {
                   />
                 </LabeledControls.Item>
               </LabeledControls>
-              <Stack direction="row" grow={1}>
-                <Stack direction="column" grow={1}>
+              <Stack fill>
+                <Stack fill vertical>
                   <Stack.Item>
                     <Button
                       fluid
@@ -188,7 +188,7 @@ export const Reflector = (props, context) => {
                     />
                   </Stack>
                 </Stack>
-                <Stack direction="column">
+                <Stack vertical>
                   <Stack.Item>
                     <Button
                       fluid
