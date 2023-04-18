@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
 
-/obj/item/stack/sheet/plastitaniumglass
+/obj/item/stack/sheet/plastitaniumglass/fifty
 	amount = 50
 
 /datum/armor/sheet_plastitaniumglass
