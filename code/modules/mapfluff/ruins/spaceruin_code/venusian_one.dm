@@ -9,12 +9,18 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | UNACIDABLE | FREEZE_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	max_integrity = 500
+	/// Time it takes to open the vault.
 	var/open_time = 10 SECONDS
+	/// Ref to the
 	var/obj/item/gun/energy/plasma_cannon/gun
 
 /obj/structure/plasma_cannon_vault/Initialize(mapload)
 	. = ..()
 	gun = new(src)
+
+/obj/structure/plasma_cannon_vault/Destroy()
+	QDEL_NULL(gun)
+	return ..()
 
 /obj/structure/plasma_cannon_vault/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -55,8 +61,9 @@
 	desc = "The Venusian's \"self-defense\" weapon against hostile ships. \
 		<b>Incredibly</b> breaching. <b>Incredibly</b> inefficient. <b>Incredibly</b> dangerous. \
 		Requires cell charge, plasma and sulfur to function."
-	icon_state = "instagib"
-	inhand_icon_state = "instagib"
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "plasmacannon"
+	inhand_icon_state = "plasmacannon"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma_cannon)
 	flags_1 = CONDUCT_1
 	force = 16
@@ -66,6 +73,9 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_HUGE
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	automatic_charge_overlays = FALSE
+	base_pixel_x = -4
+	pixel_x = -4
 	light_range = 2
 	light_power = 1
 	light_color = COLOR_PALE_PURPLE_GRAY
@@ -93,14 +103,17 @@
 	. = ..()
 	if(starting_sulfur)
 		reagents.add_reagent(/datum/reagent/sulfur, starting_sulfur)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/gun/energy/plasma_cannon/can_shoot()
-	return plasma_charges == required_plasma && (!required_sulfur || reagents.has_reagent(/datum/reagent/sulfur, required_sulfur)) && ..()
+	return plasma_charges >= required_plasma && (!required_sulfur || reagents.has_reagent(/datum/reagent/sulfur, required_sulfur)) && ..()
 
 /obj/item/gun/energy/plasma_cannon/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	. = ..()
-	plasma_charges = 0
-	reagents.del_reagent(/datum/reagent/sulfur)
+	if(.)
+		plasma_charges = 0
+		reagents.del_reagent(/datum/reagent/sulfur)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/gun/energy/plasma_cannon/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
@@ -114,6 +127,8 @@
 			return FALSE
 		plasma_charges += charge_given * uses_needed
 		balloon_alert(user, "plasma [plasma_charges == required_plasma ? "fully" : "partially"] refueled")
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE
 	if(!attacking_item.is_open_container())
 		return FALSE
 	if(reagents.has_reagent(/datum/reagent/sulfur, required_sulfur))
@@ -122,7 +137,18 @@
 	if(!attacking_item.reagents.trans_id_to(src, /datum/reagent/sulfur, required_sulfur))
 		return FALSE
 	balloon_alert(user, "sulfur [reagents.has_reagent(/datum/reagent/sulfur, required_sulfur) ? "fully" : "partially"] reloaded")
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
+
+/obj/item/gun/energy/plasma_cannon/update_overlays()
+	. = ..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(cell && cell.charge >= shot.e_cost)
+		. += "plasmacannon_cell"
+	if(plasma_charges >= required_plasma)
+		. += "plasmacannon_plasma"
+	if(!required_sulfur || reagents.has_reagent(/datum/reagent/sulfur, required_sulfur))
+		. += "plasmacannon_sulfur"
 
 /obj/item/gun/energy/plasma_cannon/loaded
 	dead_cell = FALSE
@@ -162,7 +188,7 @@
 	/// How many projectiles we fire on explosion!
 	var/exploded_amount = 4
 	/// How many objects/walls we pierce.
-	var/possible_pierces = 3
+	var/possible_pierces = 2
 
 /obj/projectile/plasma_cannon/Initialize(mapload)
 	. = ..()
