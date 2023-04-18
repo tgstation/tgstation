@@ -556,13 +556,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(!.)
 		return
 	var/datum/hud/our_hud = home.our_hud
-	if(!our_hud)
+	if(isnull(our_hud))
 		return
 
 	// We'll hide the slate if we're not seeing through a camera eye
 	// This can call on a cycle cause we don't clear in hide_from
 	// Yes this is the best way of hooking into the hud, I hate myself too
-	RegisterSignal(our_hud, COSMIG_HUD_EYE_CHANGED, PROC_REF(eye_changed), override = TRUE)
+	RegisterSignal(our_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed), override = TRUE)
 	eye_changed(our_hud, null, our_hud.mymob?.client?.eye)
 
 /atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
