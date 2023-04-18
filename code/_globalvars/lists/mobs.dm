@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
-GLOBAL_LIST_INIT(emote_list, init_emote_list())
+GLOBAL_LIST_EMPTY(emote_list)
 
 GLOBAL_LIST_INIT(construct_radial_images, list(
 	CONSTRUCT_JUGGERNAUT = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "juggernaut"),
