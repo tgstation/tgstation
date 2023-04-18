@@ -56,14 +56,15 @@ GLOBAL_VAR(restart_counter)
  * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
  * SO HELP ME GOD IF I FIND ABSTRACTION LAYERS OVER THIS!
  */
-/world/proc/Genesis()
+/world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
-
-	log_world("Genesis...");
 
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
-	init_byond_tracy()
+	if(!tracy_initialized)
+		init_byond_tracy()
+		Genesis(TRUE)
+		return
 #endif
 
 	Profile(PROFILE_RESTART)
