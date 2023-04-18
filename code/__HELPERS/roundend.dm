@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	embed.title = "Round End "
 	embed.description = "<byond://[world.internet_address]:[world.port]>"
 	embed.author = "Round Controller"
-	if(GLOB.round_end_images)
+	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)
 	var/round_state = "Round has ended"
 
