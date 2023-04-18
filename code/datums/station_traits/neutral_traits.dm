@@ -144,7 +144,7 @@
 /datum/station_trait/cargorilla
 	name = "Cargo Gorilla"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 1
+	weight = 5
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 
 	/// The gorilla we created, we only hold this ref until the round starts.

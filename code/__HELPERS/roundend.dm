@@ -283,7 +283,53 @@
 
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
+	var/datum/discord_embed/embed = format_roundend_embed("<@999008528595419278>")
+	send2roundend_webhook(embed)
 	standard_reboot()
+
+/datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
+	var/datum/discord_embed/embed = new()
+	embed.title = "Round End "
+	embed.description = "<byond://[world.internet_address]:[world.port]>"
+	embed.author = "Round Controller"
+	var/round_state = "Round has ended"
+
+	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
+	embed.fields = list(
+		"PLAYERS" = player_count,
+		"ROUND STATE" = round_state,
+		"ROUND ID" = GLOB.round_id,
+		"ROUND TIME" = ROUND_TIME(),
+		"MESSAGE" = message,
+	)
+	return embed
+
+/datum/controller/subsystem/ticker/proc/send2roundend_webhook(message_or_embed)
+	var/webhook = CONFIG_GET(string/regular_roundend_webhook_url)
+
+	if(!webhook)
+		return
+	var/list/webhook_info = list()
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
+	if(CONFIG_GET(string/mentorhelp_webhook_name))
+		webhook_info["username"] = CONFIG_GET(string/roundend_webhook_name)
+	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
+		webhook_info["avatar_url"] = CONFIG_GET(string/roundend_webhook_pfp)
+	// Uncomment when servers are moved to TGS4
+	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
+	request.begin_async()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
