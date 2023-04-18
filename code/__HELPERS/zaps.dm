@@ -6,7 +6,7 @@
 	var/list/shocked_targets
 
 /datum/zap_information/proc/zap()
-	return SSzaps.process_zap()
+	return SSzaps.process_zap(src)
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets = list(), immediate = FALSE)
 	if(!SSzaps.can_fire)
