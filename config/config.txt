@@ -140,9 +140,6 @@ LOG_SILICON
 ## log economy actions
 LOG_ECON
 
-## log ore silo actions
-LOG_SILO
-
 ## log traitor objectives
 LOG_TRAITOR
 

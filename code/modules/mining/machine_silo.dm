@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
-		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT * count
 		silo_log(src, "ejected", -count, "sheets", matlist)
 		return TRUE
 	else if(href_list["page"])
@@ -189,6 +189,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		I.buffer = src
 		return TRUE
 
+/**
+ * Creates a log entry for depositing/withdrawing from the silo both ingame and in silo.log
+ *
+ * Arguments:
+ * - [M][/obj/machinery]: The machine performing the action.
+ * - action: Text that visually describes the action (smelted/deposited/resupplied...)
+ * - amount: The amount of sheets/objects deposited/withdrawn by this action. Positive for depositing, negative for withdrawing.
+ * - noun: Name of the object the action was performed with (sheet, units, ore...)
+ * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 2000 iron you would pass a list with the iron material datum = 20000
+ */
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))
 		return
@@ -226,8 +236,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	amount = _amount
 	noun = _noun
 	materials = mats.Copy()
-	for(var/each in materials)
-		materials[each] *= abs(_amount)
 	format()
 	log_silo("[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")]")
 
@@ -252,7 +260,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list()
 	for(var/key in materials)
 		var/datum/material/M = key
-		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
+		var/val = round(materials[key])
 		msg += separator
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
