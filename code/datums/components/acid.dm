@@ -30,12 +30,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	//not incompatible, but pointless
+	var/atom/atom_parent = parent
 	if((acid_power) <= 0 || (acid_volume <= 0))
 		stack_trace("Acid component added to an atom ([atom_parent.type]) with insufficient acid power ([acid_power]) or acid volume ([acid_volume]).")
 		qdel(src)
 		return
 
-	var/atom/atom_parent = parent
+
 	if(isliving(parent))
 		max_volume = MOB_ACID_VOLUME_MAX
 		process_effect = CALLBACK(src, PROC_REF(process_mob), parent)
