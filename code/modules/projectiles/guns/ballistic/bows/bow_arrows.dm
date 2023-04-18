@@ -2,6 +2,7 @@
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
 	desc = "Stabby Stabman!"
+	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
 	icon_state = "arrow"
 	inhand_icon_state = "arrow"
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -43,7 +44,7 @@
 /obj/projectile/bullet/reusable/arrow/holy
 	name = "holy arrow"
 	desc = "Here it comes, cultist scum!"
-	icon = "holy_arrow_projectile"
+	icon_state = "holy_arrow_projectile"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/holy
 	damage = 20 //still a lot but this is roundstart gear so far less
 

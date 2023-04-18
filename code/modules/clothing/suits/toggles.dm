@@ -8,6 +8,8 @@
 	var/alternative_mode = FALSE
 	///Whether the hood is flipped up
 	var/hood_up = FALSE
+	/// What should be added to the end of the icon state when the hood is up? Set to "" for the suit sprite to not change at all
+	var/hood_up_affix = "_t"
 
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
@@ -81,7 +83,7 @@
 					RemoveHood()
 				return
 			hood_up = TRUE
-			icon_state = "[initial(icon_state)]_t"
+			icon_state = "[initial(icon_state)][hood_up_affix]"
 			H.update_worn_oversuit()
 			H.update_mob_action_buttons()
 	else

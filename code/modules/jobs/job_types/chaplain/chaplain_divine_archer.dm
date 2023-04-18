@@ -1,5 +1,6 @@
 
-// this costume has so many fugging parts 😭. fuck it, it's a file. in fact, we should strive to make the chaplain kits of this quality, moreso than the other way around.
+// this costume has so many fugging parts 😭. fuck it, it's a file.
+//in fact, we should strive to make the chaplain kits of this quality, moreso than the other way around.
 
 /// undersuit
 /obj/item/clothing/under/rank/civilian/chaplain/divine_archer
@@ -23,6 +24,7 @@
 	strip_delay = 80
 	equip_delay_other = 60
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/divine_archer
+	hood_up_affix = ""
 
 /datum/armor/chaplainsuit_armor_weaker
 	melee = 40

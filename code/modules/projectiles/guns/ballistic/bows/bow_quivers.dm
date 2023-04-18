@@ -31,4 +31,5 @@
 	desc = "Holds arrows for your divine bow, where they wait to find their target."
 	icon_state = "holyquiver"
 	inhand_icon_state = "holyquiver"
+	worn_icon_state = "holyquiver"
 	arrow_path = /obj/item/ammo_casing/caseless/arrow/holy

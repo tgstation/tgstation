@@ -76,10 +76,15 @@
 	target.apply_damage(extra_damage, source.damtype, attacker.zone_selected)
 	SEND_SIGNAL(target, COMSIG_LIVING_BANED, source, attacker) // for extra effects when baned.
 
-/// projectile hitting doesn't work great for the activate proc, so this is more of a special case. ignores combat mode checks and stuff.
+/// projectile hitting doesn't work great for the activate proc, so this is more of a special case.
+/// ignores combat mode checks and uses hit_limb.
 /datum/element/bane/proc/projectile_bane(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+
 	var/extra_damage = max(0, (source.force * damage_multiplier) + added_damage)
-	target.apply_damage(extra_damage, source.damtype, attacker.zone_selected)
-	SEND_SIGNAL(target, COMSIG_LIVING_BANED, source, firer) // for extra effects when baned.
+	living_target.apply_damage(extra_damage, source.damtype, hit_limb)
+	SEND_SIGNAL(living_target, COMSIG_LIVING_BANED, source, firer) // for extra effects when baned.

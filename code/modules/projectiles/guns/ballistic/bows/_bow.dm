@@ -1,6 +1,6 @@
 
 /obj/item/gun/ballistic/bow
-	icon = 'icons/obj/weapons/guns/bows.dmi'
+	icon = 'icons/obj/weapons/guns/bows/bows.dmi'
 	load_sound = null
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
@@ -37,7 +37,9 @@
 		chambered.forceMove(src)
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
-	if(chambered)
+	if(!chambered)
+		balloon_alert(user, "no arrow nocked!")
+	else
 		balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 		drawn = !drawn
 	update_appearance()
