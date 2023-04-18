@@ -54,17 +54,17 @@
 /datum/component/udder/living_requirements/Initialize(udder_type, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_typepath)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	. = ..()
+	return ..()
 
 /datum/component/udder/living_requirements/on_examine(mob/living/milk_source, mob/user, list/examine_list)
 	if(milk_source.stat != CONSCIOUS)
 		return //come on now
-	. = ..()
+	return ..()
 
 /datum/component/udder/living_requirements/on_attackby(mob/living/milk_source, obj/item/milking_tool, mob/user)
 	if(milk_source.stat != CONSCIOUS)
 		return //come on now x2
-	. = ..()
+	return ..()
 
 /**
  * # udder item
