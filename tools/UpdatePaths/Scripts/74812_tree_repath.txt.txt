@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/tree : /mob/living/basic/tree{@OLD;wander=@SKIP}
