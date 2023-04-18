@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	if(!prob(sm.gas_percentage[/datum/gas/zauker]))
 		return
 	playsound(sm.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-	sm.supermatter_zap(
+	supermatter_zap(
 		sm,
 		range = 6,
 		zap_str = clamp(sm.internal_energy * 2, 4000, 20000),
