@@ -30,8 +30,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	point_value = 1
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
-	cost = 500
-	source = /datum/robot_energy_storage/glass
+	cost = MINERAL_MATERIAL_AMOUNT
+	source = /datum/robot_energy_storage/material/glass
 
 /datum/armor/sheet_glass
 	fire = 50
