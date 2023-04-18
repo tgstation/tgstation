@@ -4,8 +4,9 @@ import { Window } from '../layouts';
 
 export const Reflector = (props, context) => {
   const { act, data } = useBackend(context);
+  const { reflector_name, rotation_angle } = data;
   return (
-    <Window title={data.reflector_name} height={200} width={219}>
+    <Window title={reflector_name} height={200} width={219}>
       <Window.Content>
         <Stack direction="row">
           <Stack.Item>
@@ -65,7 +66,7 @@ export const Reflector = (props, context) => {
                       <Icon
                         name="angle-double-up"
                         size={1.66}
-                        rotation={data.rotation_angle}
+                        rotation={rotation_angle}
                         mb={1}
                       />
                     </Box>
@@ -127,7 +128,7 @@ export const Reflector = (props, context) => {
               <LabeledControls>
                 <LabeledControls.Item ml={0.5} label="Set rotation">
                   <NumberInput
-                    value={data.rotation_angle}
+                    value={rotation_angle}
                     unit="degrees"
                     minValue={0}
                     maxValue={359}
