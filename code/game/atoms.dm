@@ -930,9 +930,23 @@
 		return FALSE
 	return TRUE
 
+/**
+ * Respond to fire being used on our atom
+ *
+ * Default behaviour is to send [COMSIG_ATOM_FIRE_ACT] and return
+ */
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
-	return
+	return FALSE
+
+/**
+ * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
+ *
+ * Can be hooked onto for extra behavior.
+ */
+/atom/proc/extinguish()
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)
 
 /**
  * React to being hit by a thrown object

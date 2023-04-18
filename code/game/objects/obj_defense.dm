@@ -102,7 +102,7 @@
 	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
 		return FALSE
 
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume, custom_acid_overlay || GLOB.acid_overlay)
 	return TRUE
 
 ///called when the obj is destroyed by acid.
@@ -124,9 +124,8 @@
 		return TRUE
 	return ..()
 
-///called when the obj is destroyed by fire
-/obj/burn()
-	. = ..()
+/// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
+/obj/proc/burn()
 	deconstruct(FALSE)
 
 ///Called when the obj is hit by a tesla bolt.
