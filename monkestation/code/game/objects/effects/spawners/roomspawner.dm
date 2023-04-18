@@ -120,3 +120,8 @@
 	name = "tram engine spawner"
 	room_width = 24
 	room_height = 20
+
+/obj/effect/spawner/random_engines/kilo
+	name = "kilo engine spawner"
+	room_width = 20
+	room_height = 21

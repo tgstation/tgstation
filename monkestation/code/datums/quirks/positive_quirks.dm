@@ -35,7 +35,7 @@
 	name = "Gourmand"
 	desc = "You enjoy the finer things in life. You are able to have one more food buff applied at once."
 	value = 2
-	icon = FA_ICON_BONE
+	icon = FA_ICON_COOKIE_BITE
 	mob_trait = TRAIT_GOURMAND
 	gain_text = "<span class='notice'>You start to enjoy fine cuisine.</span>"
 	lose_text = "<span class='danger'>Those Space Twinkies are starting to look mighty fine.</span>"
