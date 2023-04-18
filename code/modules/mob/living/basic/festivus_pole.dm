@@ -106,7 +106,7 @@
 	charge_ability = ability_weakref?.resolve()
 
 /datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/hunter, obj/machinery/power/apc/hunted)
-	if(isnull(charged_ability))
+	if(isnull(charge_ability))
 		return
 	charge_ability.Activate(hunted)
 
