@@ -28,24 +28,25 @@
 	if (log_entries.len >= 400)
 		log_entries.Cut(1, 2)
 
-	var/datum/comm_log_entry/log = new
-	log.parameters["mobtype"] = signal.virt.source.type
-	log.parameters["name"] = signal.data["name"]
-	log.parameters["job"] = signal.data["job"]
-	log.parameters["message"] = signal.data["message"]
-	log.parameters["language"] = signal.language
-
-	// If the signal is still compressed, make the log entry gibberish
-	var/compression = signal.data["compression"]
-	if(compression > 0)
-		log.input_type = "Corrupt File"
-		var/replace_characters = compression >= 20 ? TRUE : FALSE
-		log.parameters["name"] = Gibberish(signal.data["name"], replace_characters)
-		log.parameters["job"] = Gibberish(signal.data["job"], replace_characters)
-		log.parameters["message"] = Gibberish(signal.data["message"], replace_characters)
-
-	// Give the log a name and store it. If it is from a syndicate frequency, checks if it has syndicate access
+	// Don't create a log if the frequency is banned from being logged
 	if(!(signal.frequency in banned_frequencies))
+		var/datum/comm_log_entry/log = new
+		log.parameters["mobtype"] = signal.virt.source.type
+		log.parameters["name"] = signal.data["name"]
+		log.parameters["job"] = signal.data["job"]
+		log.parameters["message"] = signal.data["message"]
+		log.parameters["language"] = signal.language
+
+		// If the signal is still compressed, make the log entry gibberish
+		var/compression = signal.data["compression"]
+		if(compression > 0)
+			log.input_type = "Corrupt File"
+			var/replace_characters = compression >= 20 ? TRUE : FALSE
+			log.parameters["name"] = Gibberish(signal.data["name"], replace_characters)
+			log.parameters["job"] = Gibberish(signal.data["job"], replace_characters)
+			log.parameters["message"] = Gibberish(signal.data["message"], replace_characters)
+
+		// Give the log a name and store it
 		var/identifier = num2text( rand(-1000,1000) + world.time )
 		log.name = "data packet ([md5(identifier)])"
 		log_entries.Add(log)
