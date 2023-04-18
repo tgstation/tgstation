@@ -93,7 +93,8 @@ SUBSYSTEM_DEF(radiation)
 
 			if (irradiate_after_basic_checks(target))
 				target.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
-				target.rad_act(intensity)
+
+			target.rad_act(intensity)
 
 		if(MC_TICK_CHECK)
 			break
