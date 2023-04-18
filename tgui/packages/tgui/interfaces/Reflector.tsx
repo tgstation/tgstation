@@ -2,11 +2,11 @@ import { useBackend } from '../backend';
 import { Box, Button, Stack, Icon, LabeledControls, Section, NumberInput, Table } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+  reflector_name: string;
+  rotation_angle: number;
+};
 export const Reflector = (props, context) => {
-  type Data = {
-    reflector_name: string;
-    rotation_angle: number;
-  };
   const { act, data } = useBackend<Data>(context);
   const { reflector_name, rotation_angle } = data;
   return (
