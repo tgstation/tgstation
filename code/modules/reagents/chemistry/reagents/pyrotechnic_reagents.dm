@@ -10,7 +10,7 @@
 /datum/reagent/thermite/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(reac_volume >= 1)
-		exposed_turf.AddComponent(/datum/component/thermite, reac_volume)
+		exposed_turf.AddComponent(/datum/component/thermite, reac_volume, GLOB.thermite_overlay)
 
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, 0)
