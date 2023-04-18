@@ -282,6 +282,7 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
@@ -305,10 +306,12 @@
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
@@ -593,7 +596,7 @@
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process(delta_time)
+/obj/item/storage/organbox/process(seconds_per_tick)
 	///if there is enough coolant var
 	var/using_coolant = coolant_to_spend()
 	if (isnull(using_coolant))
@@ -604,7 +607,7 @@
 				stored.unfreeze()
 		return
 
-	var/amount_used = 0.05 * delta_time
+	var/amount_used = 0.05 * seconds_per_tick
 	if (using_coolant != /datum/reagent/cryostylane)
 		amount_used *= 2
 	reagents.remove_reagent(using_coolant, amount_used)

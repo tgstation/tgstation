@@ -68,7 +68,7 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
-/obj/structure/blob/special/core/process(delta_time)
+/obj/structure/blob/special/core/process(seconds_per_tick)
 	if(QDELETED(src))
 		return
 	if(!overmind)
@@ -77,7 +77,7 @@
 		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
-	reinforce_area(delta_time)
+	reinforce_area(seconds_per_tick)
 	produce_spores()
 	..()
 

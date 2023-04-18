@@ -7,7 +7,6 @@
 	organ_flags = ORGAN_SYNTHETIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
-	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
 /obj/item/organ/internal/cyberimp/New(mob/implanted_mob = null)
 	if(iscarbon(implanted_mob))

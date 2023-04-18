@@ -6,6 +6,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
@@ -127,6 +128,9 @@
 			var/obj/vehicle/sealed/mecha/mecha = AM
 			for(var/O in mecha.occupants)
 				var/mob/living/occupant = O
+				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+					open()
+					return
 				if(allowed(occupant))
 					open_and_close()
 					return
@@ -142,14 +146,20 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if(operating || !density)
 		return
+
 	add_fingerprint(user)
 	if(!requiresID())
 		user = null
 
-	if(allowed(user))
+	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+		open()
+
+	else if(allowed(user))
 		open_and_close()
+
 	else
 		do_animate("deny")
+
 	return
 
 /obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
@@ -162,10 +172,10 @@
 
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/moved_window = mover
-		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+		return valid_build_direction(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
 
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
-		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
+		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
 
 	return TRUE
 
@@ -195,7 +205,10 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
-	if (operating) //doors can still open when emag-disabled
+	if(!density)
+		return TRUE
+
+	if(operating) //doors can still open when emag-disabled
 		return FALSE
 
 	if(!try_to_force_door_open(forced))
@@ -240,6 +253,9 @@
 	return ..()
 
 /obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density)
+		return TRUE
+
 	if(operating || !try_to_force_door_shut(forced))
 		return FALSE
 
@@ -430,7 +446,6 @@
 			qdel(src)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
