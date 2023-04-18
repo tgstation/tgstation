@@ -61,6 +61,7 @@
 		visible_message(span_warning("[src] crackles with static electricity!"))
 		for(var/obj/item/stock_parts/cell/cell in range(2, get_turf(src)))
 			cell.give(75)
+			cell.update_appearance()
 		for(var/mob/living/silicon/robot/robot in range(2, get_turf(src)))
 			if(robot.cell)
 				robot.cell.give(75)
@@ -82,7 +83,8 @@
 	hunt_range = 6
 
 /datum/ai_behavior/hunt_target/apcs
-	hunt_cooldown = 10 SECONDS
+	hunt_cooldown = 15 SECONDS
+	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/hunter, obj/machinery/power/apc/hunted)
 	new /obj/effect/particle_effect/sparks(hunted.loc)

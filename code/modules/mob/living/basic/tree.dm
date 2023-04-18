@@ -1,6 +1,6 @@
 /mob/living/basic/tree
 	name = "pine tree"
-	desc = "I swear that thing just moved..."
+	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
@@ -77,6 +77,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/tree,
+		/datum/ai_planning_subtree/random_speech/tree,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/tree
