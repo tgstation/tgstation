@@ -95,22 +95,21 @@
 /datum/ai_behavior/basic_melee_attack/tree/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/mob/living/carbon/carbon_target = weak_target?.resolve()
 
-	if(!iscarbon(target))
+	if(isnull(carbon_target))
 		return
 
-	var/mob/living/carbon/carbon = target
 	var/boost = 0
 	var/list/items = controller.blackboard[BB_TREE_FURY_LIST]
 
 	for(var/item_path in items)
-		if(locate(item_path) in carbon.held_items)
+		if(locate(item_path) in carbon_target.held_items)
 			boost = anger_boost
 			break
 
 	var/mob/living/living_pawn = controller.pawn
 	if(prob(paralyze_prob + boost))
-		carbon.Paralyze(paralyze_value + boost)
-		carbon.visible_message(span_danger("\The [living_pawn] knocks down \the [carbon]!"), \
+		carbon_target.Paralyze(paralyze_value + boost)
+		carbon_target.visible_message(span_danger("\The [living_pawn] knocks down \the [carbon_target]!"), \
 				span_userdanger("\The [living_pawn] knocks you down!"))

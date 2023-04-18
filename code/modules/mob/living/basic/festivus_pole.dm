@@ -43,6 +43,9 @@
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/rods))
+	var/datum/action/cooldown/mob_cooldown/charge_apc/charge_ability = new(src)
+	charge_ability.Grant(src)
+	ai_controller.blackboard[BB_FESTIVE_APC] = WEAKREF(charge_ability)
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
@@ -60,15 +63,20 @@
 
 /mob/living/basic/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(!user.combat_mode)
-		visible_message(span_warning("[src] crackles with static electricity!"))
-		for(var/obj/item/stock_parts/cell/cell in range(2, get_turf(src)))
+	if(user.combat_mode)
+		return
+	visible_message(span_warning("[src] crackles with static electricity!"))
+	for(var/atom/affected in range(2, get_turf(src)))
+		if(istype(affected, /obj/item/stock_parts/cell))
+			var/obj/item/stock_parts/cell/cell = affected
 			cell.give(recharge_value)
 			cell.update_appearance()
-		for(var/mob/living/silicon/robot/robot in range(2, get_turf(src)))
+		if(istype(affected, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/robot = affected
 			if(robot.cell)
 				robot.cell.give(recharge_value)
-		for(var/obj/machinery/power/apc/apc_target in range(2, get_turf(src)))
+		if(istype(affected, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc_target = affected
 			if(apc_target.cell)
 				apc_target.cell.give(recharge_value)
 
@@ -88,12 +96,17 @@
 /datum/ai_behavior/hunt_target/apcs
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
-	///how much charge we will give off to the APC we find
-	var/given_charge = 80
+	///the ability we will be activating
+	var/datum/action/cooldown/mob_cooldown/charge_ability
+
+
+/datum/ai_behavior/hunt_target/apcs/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+	. = ..()
+	var/datum/weakref/ability_weakref =  controller.blackboard[BB_FESTIVE_APC]
+	charge_ability = ability_weakref?.resolve()
 
 /datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/hunter, obj/machinery/power/apc/hunted)
-	new /obj/effect/particle_effect/sparks(hunted.loc)
-	hunted.cell.give(given_charge)
+	charge_ability.Activate(hunted)
 
 
 /datum/ai_behavior/find_hunt_target/apcs
@@ -108,3 +121,24 @@
 			return FALSE
 
 	return can_see(source, dinner, radius)
+
+
+/datum/action/cooldown/mob_cooldown/charge_apc
+	name = "Charge APCs"
+	button_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "rift"
+	desc = "Give off charge to an APC."
+	cooldown_time = 15 SECONDS
+	///how much charge are we giving off to an APC?
+	var/given_charge = 80
+
+/datum/action/cooldown/mob_cooldown/charge_apc/Activate(atom/target_atom)
+	if(!istype(target_atom,/obj/machinery/power/apc))
+		return
+	var/obj/machinery/power/apc/target_apc = target_atom
+	if(!target_apc.cell)
+		return
+	new /obj/effect/particle_effect/sparks(target_apc.loc)
+	target_apc.cell.give(given_charge)
+	StartCooldown()
+	return TRUE

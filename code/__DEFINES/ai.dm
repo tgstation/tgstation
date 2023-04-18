@@ -279,3 +279,7 @@
 // Tree AI keys
 /// Key where we keep the items that make us angry
 #define BB_TREE_FURY_LIST "BB_Tree_Fury_List"
+
+//Festivus AI keys
+/// Key where we store the charging apc ability
+#define BB_FESTIVE_APC "BB_festive_apc"
