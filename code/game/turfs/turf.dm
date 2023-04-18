@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 
 	AddComponent(/datum/component/acid, acidpwr, acid_volume, GLOB.acid_overlay)
-	for(var/atom/movable/movable_atom in src)
+	for(var/atom/movable/movable_atom as anything in src)
 		if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(movable_atom, TRAIT_T_RAY_VISIBLE))
 			continue
 
