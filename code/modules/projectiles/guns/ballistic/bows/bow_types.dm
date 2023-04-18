@@ -6,8 +6,8 @@
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	base_icon_state = "bow"
-	accepted_arrow_type = /obj/item/ammo_casing/caseless/arrow
 
+///chaplain's divine archer bow
 /obj/item/gun/ballistic/bow/divine
 	name = "divine bow"
 	desc = "Holy armament to pierce the souls of sinners."
@@ -15,14 +15,18 @@
 	inhand_icon_state = "holybow"
 	base_icon_state = "holybow"
 	slot_flags = ITEM_SLOT_BACK
-	accepted_arrow_type = /obj/item/ammo_casing/caseless/arrow/holy
+	mag_type = /obj/item/ammo_box/magazine/internal/bow/holy
+
+/obj/item/ammo_box/magazine/internal/bow/holy
+	name = "divine bowstring"
+	ammo_type = /obj/item/ammo_casing/caseless/arrow/holy
 
 /obj/item/gun/ballistic/bow/divine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		success_forcesay = "BOW-GONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \

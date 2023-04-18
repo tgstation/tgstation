@@ -14,8 +14,6 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	/// whether the bow is drawn back
 	var/drawn = FALSE
-	/// what types of arrow can this bow support?
-	var/accepted_arrow_type = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/gun/ballistic/bow/update_icon_state()
 	. = ..()
