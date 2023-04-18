@@ -42,10 +42,11 @@
 
 /// Inits GLOB.surgeries
 /proc/init_surgeries()
-	. = list()
+	var/surgeries = list()
 	for(var/path in subtypesof(/datum/surgery))
-		. += new path()
+		surgeries += new path()
 	sort_list(., GLOBAL_PROC_REF(cmp_typepaths_asc))
+	return surgeries
 
 /// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 /proc/init_hair_gradients()
