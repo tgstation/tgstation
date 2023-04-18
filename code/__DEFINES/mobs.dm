@@ -71,10 +71,6 @@
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
-//Bodypart change blocking flags
-///Bodypart does not get replaced during set_species()
-#define BP_BLOCK_CHANGE_SPECIES (1<<0)
-
 //Bodytype defines for how things can be worn, surgery, and other misc things.
 ///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
@@ -879,6 +875,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Checking flags for [/mob/proc/can_read()]
 #define READING_CHECK_LITERACY (1<<0)
 #define READING_CHECK_LIGHT (1<<1)
+
+// Flash deviation defines
+/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
+#define DEVIATION_NONE 0
+/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
+#define DEVIATION_PARTIAL 1
+/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
+#define DEVIATION_FULL 2
 
 /// In dynamic human icon gen we don't replace the held item.
 #define NO_REPLACE 0

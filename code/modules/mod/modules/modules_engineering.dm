@@ -34,7 +34,7 @@
 	/// T-ray scan range.
 	var/range = 4
 
-/obj/item/mod/module/t_ray/on_active_process(delta_time)
+/obj/item/mod/module/t_ray/on_active_process(seconds_per_tick)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
 
 ///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
