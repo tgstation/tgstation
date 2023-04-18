@@ -291,8 +291,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
 	var/datum/discord_embed/embed = new()
-	embed.title = "Round End "
-	embed.description = "<byond://[world.internet_address]:[world.port]>"
+	embed.title = "Round End"
+	embed.description = "Join Server! <byond://[world.internet_address]:[world.port]>"
 	embed.author = "Round Controller"
 	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)
