@@ -2,6 +2,12 @@
 "am" = (
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"ap" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/bot/right,
+/obj/machinery/light/directional/south,
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
 "au" = (
 /obj/machinery/door/airlock/silver/glass,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -9,22 +15,6 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
-"aA" = (
-/obj/item/storage/bag/money/vault,
-/obj/item/stack/sheet/mineral/gold{
-	amount = 3;
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/silver{
-	amount = 8;
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/structure/table,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aZ" = (
 /obj/machinery/suit_storage_unit/pirate,
@@ -61,10 +51,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
-"dd" = (
-/obj/machinery/newscaster/directional/east,
-/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "de" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -202,12 +188,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"ko" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/bot/right,
-/obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
 "ky" = (
 /obj/structure/toilet{
 	dir = 8
@@ -322,23 +302,43 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
-"qA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
 "rB" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "sB" = (
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
+"tY" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/directional/north,
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
 "ue" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"uz" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 4
+	},
+/obj/item/flashlight/seclite,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 10
+	},
+/obj/item/multitool,
+/obj/effect/turf_decal/bot,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "uP" = (
 /obj/structure/bed/pod,
@@ -392,10 +392,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
-"xe" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
 "xj" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/brute,
@@ -432,6 +428,32 @@
 "yv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/meter,
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"yI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"yS" = (
+/obj/item/storage/bag/money/vault,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 3;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 8;
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/structure/table,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"yT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "zB" = (
@@ -499,31 +521,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"Bl" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	shuttle_id = "pirate_home";
-	name = "Deep Space";
-	width = 26
-	},
-/obj/docking_port/mobile/pirate{
-	dir = 4;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "Silverscale Cruiser";
-	preferred_direction = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/light,
-/area/shuttle/pirate)
 "Ch" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
@@ -533,15 +530,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"CP" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/directional/north,
-/turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "CW" = (
 /obj/machinery/vending/boozeomat/all_access{
@@ -596,11 +584,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"HS" = (
-/obj/structure/musician/piano,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "Ig" = (
 /obj/structure/table/glass,
 /obj/machinery/chem_dispenser/drinks{
@@ -647,6 +630,31 @@
 "JV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
+"Lc" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	shuttle_id = "pirate_home";
+	name = "Deep Space";
+	width = 26
+	},
+/obj/docking_port/mobile/pirate{
+	dir = 4;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Silverscale Cruiser";
+	preferred_direction = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Lk" = (
 /obj/machinery/power/terminal{
@@ -779,22 +787,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
-"QU" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 4
-	},
-/obj/item/flashlight/seclite,
-/obj/item/storage/box/lights/bulbs,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 10
-	},
-/obj/item/multitool,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
 "RE" = (
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/royalblack,
@@ -865,6 +857,11 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
+"TG" = (
+/obj/structure/musician/piano,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "TT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -982,6 +979,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Zx" = (
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "ZD" = (
 /obj/machinery/door/airlock/silver/glass,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -1002,7 +1003,7 @@ jG
 Gr
 Gr
 rB
-Bl
+Lc
 rB
 je
 je
@@ -1085,7 +1086,7 @@ rB
 "}
 (6,1,1) = {"
 rB
-CP
+tY
 Lk
 Si
 ht
@@ -1099,14 +1100,14 @@ wa
 cH
 Si
 yv
-ko
+ap
 rB
 "}
 (7,1,1) = {"
 rB
-QU
+uz
 Pg
-qA
+yI
 rB
 Qm
 wa
@@ -1116,7 +1117,7 @@ Qm
 wa
 Qm
 rB
-xe
+yT
 wa
 Wy
 rB
@@ -1146,13 +1147,13 @@ JL
 fT
 Aj
 xs
-HS
+TG
 Ch
 eU
 Jc
 gg
 Ch
-aA
+yS
 xs
 Ai
 fT
@@ -1230,7 +1231,7 @@ vz
 YD
 Ae
 xs
-dd
+Zx
 fT
 Ig
 HD

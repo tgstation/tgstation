@@ -375,7 +375,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CANT_RIDE "cant_ride"
 /// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
 #define TRAIT_CANNOT_BE_UNBUCKLED "cannot_be_unbuckled"
-/// from heparin, makes open bleeding wounds rapidly spill more blood
+/// from heparin and nitrous oxide, makes open bleeding wounds rapidly spill more blood
 #define TRAIT_BLOODY_MESS "bloody_mess"
 /// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 #define TRAIT_COAGULATING "coagulating"

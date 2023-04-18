@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes lava not cleaning up the permanently on fire trait"

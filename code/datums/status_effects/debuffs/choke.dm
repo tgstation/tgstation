@@ -64,7 +64,7 @@
 
 	//barticles
 	if(flaming)
-		ash = new(owner, /particles/smoke/ash)
+		ash = new(owner, /particles/smoke/ash, PARTICLE_ATTACH_MOB)
 		var/clear_in = rand(15 SECONDS, 25 SECONDS)
 		if(duration != -1)
 			clear_in = min(duration, clear_in)
