@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	var/burn_require
 	/// The thermite overlay
 	var/thermite_overlay
-	/// Callback related to burning, stored so the timer can be easily reset
+	/// Callback related to burning, stored so the timer can be easily reset without losing the user
 	var/datum/callback/burn_callback
 	/// The timer for burning parent, calls burn_callback when done
 	var/burn_timer
@@ -64,6 +64,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	return ..()
 
 /datum/component/thermite/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
@@ -74,6 +75,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 
 /datum/component/thermite/UnregisterFromParent()
 	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_PARENT_ATTACKBY,
@@ -89,6 +91,12 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	if(burn_timer) // prevent people from skipping a longer timer
 		deltimer(burn_timer)
 		burn_timer = addtimer(burn_callback, min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
+
+/// Alerts the user that this turf is, in fact, covered with thermite.
+/datum/component/thermite/proc/on_examine(turf/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_warning("[source.p_theyre(TRUE)] covered in thermite.")
 
 /// Used to maintain the thermite overlay on the parent [/turf].
 /datum/component/thermite/proc/on_update_overlays(turf/parent_turf, list/overlays)
@@ -111,7 +119,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	burn_callback = CALLBACK(src, PROC_REF(burn_parent), user)
 	burn_timer = addtimer(burn_callback, min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 	//unregister everything mechanical, we are burning up
-	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_FIRE_ACT))
 
 /**
  * Used to actually melt parent
