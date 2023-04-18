@@ -96,16 +96,10 @@
 /datum/ai_behavior/hunt_target/apcs
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
-	///the ability we will be activating
-	var/datum/action/cooldown/mob_cooldown/charge_ability
 
-
-/datum/ai_behavior/hunt_target/apcs/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
-	. = ..()
-	var/datum/weakref/ability_weakref =  controller.blackboard[BB_FESTIVE_APC]
-	charge_ability = ability_weakref?.resolve()
-
-/datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/hunter, obj/machinery/power/apc/hunted)
+/datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/basic/hunter, obj/machinery/power/apc/hunted)
+	var/datum/weakref/ability_weakref =  hunter.ai_controller.blackboard[BB_FESTIVE_APC]
+	var/datum/action/cooldown/mob_cooldown/charge_ability = ability_weakref?.resolve()
 	if(isnull(charge_ability))
 		return
 	charge_ability.Activate(hunted)

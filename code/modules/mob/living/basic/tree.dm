@@ -48,15 +48,14 @@
 	///chance of target getting paralyzed
 	var/paralyze_prob = 15
 	///for how the target is  paralyzed
-	var/paralyze_value = 50
-	///boost added when our target is holding an item that offends us
-	var/anger_boost = 85
+	var/paralyze_value = 5 SECONDS
+	///Additional paralyze chance
+	var/anger_boost = 50
 
 /mob/living/basic/tree/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/sheet/mineral/wood))
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(handle_paralysis))
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
@@ -72,26 +71,27 @@
 		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		our_turf.atmos_spawn_air("o2=[amt]")
 
-/mob/living/basic/tree/proc/handle_paralysis(mob/living/simple_animal/hostile/attacker, atom/target, success)
-	SIGNAL_HANDLER
+/mob/living/basic/tree/melee_attack(atom/target, list/modifiers)
+	. = ..()
 
-	if(!success || !iscarbon(target))
+	if(!.)
 		return
 
-	var/mob/living/carbon/carbon_target = target
+	if(!isliving(target))
+		return
+
+	var/mob/living/victim = target
 	var/boost = 0
-
-	var/list/items = infuriating_objects
-
-	for(var/item_path in items)
-		if(locate(item_path) in carbon_target.held_items)
-			boost = anger_boost
-			break
+	if(iscarbon(victim))
+		for(var/item_path in infuriating_objects)
+			if(locate(item_path) in victim.held_items)
+				boost = anger_boost
+				break
 
 	if(prob(paralyze_prob + boost))
-		carbon_target.Paralyze(paralyze_value + boost)
-		carbon_target.visible_message(
-			span_danger("[src] knocks down [carbon_target]!"),
+		victim.Paralyze(paralyze_value + boost)
+		victim.visible_message(
+			span_danger("[src] knocks down [victim]!"),
 			span_userdanger("[src] knocks you down!"),
 		)
 
