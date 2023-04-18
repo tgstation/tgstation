@@ -5209,6 +5209,7 @@
 #include "code\modules\wiremod\shell\shell_items.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
+#include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\fonts.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"

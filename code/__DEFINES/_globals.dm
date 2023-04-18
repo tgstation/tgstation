@@ -28,9 +28,6 @@
 /// Standard typed BYOND global, seriously do not use without an earthshakingly good reason
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X;
 
-/// !!!!!!USED ONLY BY MASTER ONLY BY MASTER ONLY BY MASTER DO NOT FUCKING USE THIS!!!!!!
-#define MASTER_GLOBAL var/global/datum/controller/master/Master = world.RealGlobalsPreInit();
-
 /// Defines a global var on the controller, do not use
 #define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X
 

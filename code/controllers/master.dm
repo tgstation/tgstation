@@ -8,8 +8,7 @@
  **/
 
 // See initialization order in /code/game/world.dm
-MASTER_GLOBAL
-
+GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master
 	name = "Master"
 

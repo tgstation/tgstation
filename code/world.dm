@@ -21,3 +21,17 @@
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif
+
+
+/proc/bar(caller)
+	log_world("[caller] All bubble blowing babies...");
+	return "baz"
+
+/proc/foo()
+	var/static/faf = bar("foo")
+
+/datum/with_a_static
+	var/static/fek = bar("with_a_static")
+
+/proc/fad()
+	var/static/fas = bar("fad")

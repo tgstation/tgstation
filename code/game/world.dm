@@ -13,15 +13,16 @@ GLOBAL_VAR(restart_counter)
  *
  * BYOND =>
  * - (secret init native) =>
- *   - world.RealGlobalsPreInit() =>
+ *   - world.Genesis() =>
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
- *     - (Start debugger if present)
+ *     - world.init_debugger()
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
  *       - GLOB =>
  *         - make_datum_reference_lists()
+ *   - (/static variable inits, reverse declaration order)
  * - (all pre-mapped atoms) /atom/New()
  * - world.New() =>
  *   - config.Load()
@@ -55,8 +56,10 @@ GLOBAL_VAR(restart_counter)
  * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
  * SO HELP ME GOD IF I FIND ABSTRACTION LAYERS OVER THIS!
  */
-/world/proc/RealGlobalsPreInit()
+/world/proc/Genesis()
 	RETURN_TYPE(/datum/controller/master)
+
+	log_world("Genesis...");
 
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
@@ -69,14 +72,11 @@ GLOBAL_VAR(restart_counter)
 	// Write everything to this log file until we get to SetupLogs() later
 	_initialize_log_files("data/logs/config_error.[GUID()].log")
 
-	// Init the debugger datum first so we can debug Master
-	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (dll)
-		LIBCALL(dll, "auxtools_init")()
-		enable_debugging()
+	// Init the debugger first so we can debug Master
+	init_debugger()
 
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
-	return new /datum/controller/master
+	Master = new
 
 /**
  * World creation
@@ -450,6 +450,11 @@ GLOBAL_VAR(restart_counter)
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
+/world/proc/init_debugger()
+	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (dll)
+		LIBCALL(dll, "auxtools_init")()
+		enable_debugging()
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))
