@@ -250,8 +250,11 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	var/mob/living/basic/star_gazer/star_gazer_mob = new /mob/living/basic/star_gazer(loc)
+	star_gazer_mob.maxHealth = INFINITY
+	star_gazer_mob.health = INFINITY
+	user.AddElement(/datum/element/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
-	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 2, clone_damage = 0.2, simple_damage = 2, has_owner = user)
+	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, clone_damage = 0.05, simple_damage = 0.5, has_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = locate() in user.actions
 	if(star_touch_spell)

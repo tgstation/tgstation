@@ -53,3 +53,6 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
 	)
+
+/mob/living/basic/fire_shark/no_ai
+	ai_controller = null

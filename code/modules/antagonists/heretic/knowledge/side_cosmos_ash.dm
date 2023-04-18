@@ -15,7 +15,7 @@
 		/obj/effect/decal/cleanable/food/salt = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
-	mob_to_summon = /mob/living/basic/fire_shark
+	mob_to_summon = /mob/living/basic/fire_shark/no_ai
 	cost = 1
 	route = PATH_SIDE
 
