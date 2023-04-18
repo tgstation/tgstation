@@ -14,7 +14,7 @@ GLOBAL_VAR(restart_counter)
  * BYOND =>
  * - (secret init native) =>
  *   - world.RealGlobalsPreInit() =>
- *     - world.init_byond_tracy()
+ *     - (Init byond_tracy)
  *     - (Start native profiling)
  *     - (Start debugger if present)
  *     - Master =>
@@ -60,7 +60,19 @@ GLOBAL_VAR(restart_counter)
 
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
-	init_byond_tracy()
+	// Ugly having this whole snippet in here but we want it to run ASAP
+	var/tracy_library
+	switch (system_type)
+		if (MS_WINDOWS)
+			tracy_library = "prof.dll"
+		if (UNIX)
+			tracy_library = "libprof.so"
+		else
+			CRASH("Unsupported platform: [system_type]")
+
+	var/tracy_init_result = LIBCALL(tracy_library, "init")()
+	if (tracy_init_result != "0")
+		CRASH("Error initializing byond-tracy: [tracy_init_result]")
 #endif
 
 	Profile(PROFILE_RESTART)
@@ -434,21 +446,6 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
-
-/world/proc/init_byond_tracy()
-	var/library
-
-	switch (system_type)
-		if (MS_WINDOWS)
-			library = "prof.dll"
-		if (UNIX)
-			library = "libprof.so"
-		else
-			CRASH("Unsupported platform: [system_type]")
-
-	var/init_result = LIBCALL(library, "init")()
-	if (init_result != "0")
-		CRASH("Error initializing byond-tracy: [init_result]")
 
 
 /world/Profile(command, type, format)
