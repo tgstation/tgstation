@@ -45,7 +45,7 @@
 
 /obj/item/organ/internal/tongue/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has big sharp teeth.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 /obj/item/organ/internal/tongue/carp/on_insert(mob/living/carbon/tongue_owner)
