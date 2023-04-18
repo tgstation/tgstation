@@ -28,6 +28,9 @@
 	else
 		return ELEMENT_INCOMPATIBLE
 
+	if(isprojectile(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(projectile_bane))
+
 	src.target_type = target_type
 	src.damage_multiplier = damage_multiplier
 	src.added_damage = added_damage
@@ -35,7 +38,10 @@
 	src.mob_biotypes = mob_biotypes
 
 /datum/element/bane/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(source, list(
+		COMSIG_ITEM_AFTERATTACK,
+		COMSIG_PROJECTILE_SELF_ON_HIT,
+	))
 	return ..()
 
 /datum/element/bane/proc/species_check(obj/item/source, mob/living/target, mob/user, proximity_flag, click_parameters)
@@ -69,3 +75,11 @@
 	var/extra_damage = max(0, (source.force * damage_multiplier) + added_damage)
 	target.apply_damage(extra_damage, source.damtype, attacker.zone_selected)
 	SEND_SIGNAL(target, COMSIG_LIVING_BANED, source, attacker) // for extra effects when baned.
+
+/// projectile hitting doesn't work great for the activate proc, so this is more of a special case. ignores combat mode checks and stuff.
+/datum/element/bane/proc/projectile_bane(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb)
+	SIGNAL_HANDLER
+
+	var/extra_damage = max(0, (source.force * damage_multiplier) + added_damage)
+	target.apply_damage(extra_damage, source.damtype, attacker.zone_selected)
+	SEND_SIGNAL(target, COMSIG_LIVING_BANED, source, firer) // for extra effects when baned.
