@@ -37,7 +37,7 @@ DECLARE_LOG(tgui_log, TRUE)
 #ifdef REFERENCE_DOING_IT_LIVE
 DECLARE_LOG_NAMED(harddel_log, "harddels", TRUE)
 #endif
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 DECLARE_LOG_NAMED(test_log, "tests", TRUE)
 #endif
 DECLARE_LOG_NAMED(filter_log, "filters", FALSE)
