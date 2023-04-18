@@ -4,6 +4,8 @@
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 
+GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
 	record_nuke_disk_location()
@@ -292,6 +294,8 @@
 	embed.title = "Round End "
 	embed.description = "<byond://[world.internet_address]:[world.port]>"
 	embed.author = "Round Controller"
+	if(GLOB.round_end_images)
+		embed.image = pick(round_end_images)
 	var/round_state = "Round has ended"
 
 	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
