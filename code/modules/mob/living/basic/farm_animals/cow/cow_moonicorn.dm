@@ -28,7 +28,7 @@
 	AddElement(/datum/element/movement_turf_changer, /turf/open/floor/grass/fairy)
 
 /mob/living/basic/cow/moonicorn/udder_component()
-	AddComponent(/datum/component/udder, /obj/item/udder, null, null, /datum/reagent/drug/mushroomhallucinogen)
+	AddComponent(/datum/component/udder/living_requirements, /obj/item/udder, null, null, /datum/reagent/drug/mushroomhallucinogen)
 
 /mob/living/basic/cow/moonicorn/setup_eating()
 	var/static/list/food_types

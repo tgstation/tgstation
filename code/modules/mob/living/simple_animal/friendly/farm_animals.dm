@@ -37,7 +37,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
-	AddComponent(/datum/component/udder)
+	AddComponent(/datum/component/udder/living_requirements)
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)

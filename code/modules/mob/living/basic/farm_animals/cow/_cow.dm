@@ -49,7 +49,7 @@
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
-	AddComponent(/datum/component/udder)
+	AddComponent(/datum/component/udder/living_requirements)
 
 /*
  * food related components and elements are set up here for a few reasons:

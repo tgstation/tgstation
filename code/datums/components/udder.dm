@@ -1,5 +1,5 @@
 /**
- * Udder component; for farm animals to generate milk.
+ * Udder component; for farm animals to generate milk. You're probably thinking of the subtype with living requirements.
  *
  * Used for cows, goats, gutlunches. neat!
  */
@@ -11,7 +11,7 @@
 
 //udder_type and reagent_produced_typepath are typepaths, not reference
 /datum/component/udder/Initialize(udder_type = /obj/item/udder, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
-	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	udder = new udder_type(null, parent, on_generate_callback, reagent_produced_typepath)
 	src.on_milk_callback = on_milk_callback
@@ -28,10 +28,6 @@
 /datum/component/udder/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/mob/living/milked = parent
-	if(milked.stat != CONSCIOUS)
-		return //come on now
-
 	var/udder_filled_percentage = PERCENT(udder.reagents.total_volume / udder.reagents.maximum_volume)
 	switch(udder_filled_percentage)
 		if(0 to 10)
@@ -46,12 +42,29 @@
 /datum/component/udder/proc/on_attackby(datum/source, obj/item/milking_tool, mob/user)
 	SIGNAL_HANDLER
 
-	var/mob/living/milked = parent
-	if(milked.stat == CONSCIOUS && istype(milking_tool, /obj/item/reagent_containers/cup))
+	if(istype(milking_tool, /obj/item/reagent_containers/cup))
 		udder.milk(milking_tool, user)
 		if(on_milk_callback)
 			on_milk_callback.Invoke(udder.reagents.total_volume, udder.reagents.maximum_volume)
 		return COMPONENT_NO_AFTERATTACK
+
+/// an udder that requires at least living, but brings with it extra checks for the mob to be alive.
+/datum/component/udder/living_requirements
+
+/datum/component/udder/living_requirements/Initialize(udder_type, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_typepath)
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+	. = ..()
+
+/datum/component/udder/living_requirements/on_examine(mob/living/milk_source, mob/user, list/examine_list)
+	if(milk_source.stat != CONSCIOUS)
+		return //come on now
+	. = ..()
+
+/datum/component/udder/living_requirements/on_attackby(mob/living/milk_source, obj/item/milking_tool, mob/user)
+	if(milk_source.stat != CONSCIOUS)
+		return //come on now x2
+	. = ..()
 
 /**
  * # udder item
@@ -66,12 +79,12 @@
 	///how much the udder holds
 	var/size = 50
 	///mob that has the udder component
-	var/mob/living/udder_mob
+	var/atom/udder_owner
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
 
-/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
-	src.udder_mob = udder_mob
+/obj/item/udder/Initialize(mapload, udder_owner, on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
+	src.udder_owner = udder_owner
 	src.on_generate_callback = on_generate_callback
 	create_reagents(size, REAGENT_HOLDER_ALIVE)
 	src.reagent_produced_typepath = reagent_produced_typepath
@@ -81,11 +94,14 @@
 /obj/item/udder/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	udder_mob = null
+	udder_owner = null
 
 /obj/item/udder/process(seconds_per_tick)
-	if(udder_mob.stat != DEAD)
-		generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process
+	if(isliving(udder_owner))
+		var/mob/living/udder_living = udder_owner
+		if(udder_living.stat == DEAD)
+			return
+	generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process
 
 /**
  * Proc called on creation separate from the reagent datum creation to allow for signalled milk generation instead of processing milk generation
@@ -131,16 +147,17 @@
 	name = "nutrient sac"
 
 /obj/item/udder/gutlunch/initial_conditions()
-	if(!udder_mob)
+	if(!udder_owner || !isliving(udder_owner))
 		return
-	if(udder_mob.gender == FEMALE)
+	var/mob/living/udder_living = udder_owner
+	if(udder_living.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_attacking))
+	RegisterSignal(udder_living, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_attacking))
 
 /obj/item/udder/gutlunch/process(seconds_per_tick)
-	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob
-	if(reagents.total_volume != reagents.maximum_volume)
+	if(!istype(udder_owner, /mob/living/simple_animal/hostile/asteroid/gutlunch) || reagents.total_volume != reagents.maximum_volume)
 		return
+	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_owner
 	if(gutlunch.make_babies())
 		reagents.clear_reagents()
 		//usually this would be a callback but this is a specifically gutlunch feature so fuck it, gutlunch specific proccall
@@ -154,7 +171,7 @@
 
 	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
 		generate()
-		gutlunch.visible_message(span_notice("[udder_mob] slurps up [target]."))
+		gutlunch.visible_message(span_notice("[gutlunch] slurps up [target]."))
 		qdel(target)
 	return COMPONENT_HOSTILE_NO_ATTACK //there is no longer a target to attack
 
