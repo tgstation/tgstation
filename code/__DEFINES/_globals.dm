@@ -24,7 +24,6 @@
 /// Standard BYOND global, seriously do not use without an earthshakingly good reason
 #define GLOBAL_REAL_VAR(X) var/global/##X;
 
-// ▲▼ I added the semi-colons because people kept using these to fuck with init order. See /code/game/world.dm for that - Dominion/Cyberboss
 
 /// Standard typed BYOND global, seriously do not use without an earthshakingly good reason
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X;
