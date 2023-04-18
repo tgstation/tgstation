@@ -110,20 +110,24 @@
 /obj/machinery/recharge_station/proc/toggle_restock(mob/user)
 	if(sendmats)
 		sendmats = FALSE
-		balloon_alert(user, "restocking from ore silo: disabled")
+		if(user)
+			balloon_alert(user, "restocking from ore silo: disabled")
 		return
 	if(state_open || !occupant)
 		return
 	if(!iscyborg(occupant))
 		return
 	if(!materials.silo)
-		balloon_alert(user, "error: ore silo connection offline")
+		if(user)
+			balloon_alert(user, "error: ore silo connection offline")
 		return
 	if(materials.on_hold())
-		balloon_alert(user, "error: access denied")
+		if(user)
+			balloon_alert(user, "error: access denied")
 		return FALSE
 	sendmats = TRUE
-	balloon_alert(user, "restocking from ore silo: enabled")
+	if(user)
+		balloon_alert(user, "restocking from ore silo: enabled")
 
 /obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()

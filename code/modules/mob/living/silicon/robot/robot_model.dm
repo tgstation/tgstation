@@ -166,6 +166,8 @@
  * Pulls from the charger's silo connection, or fails otherwise.
  */
 /obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -188,7 +190,7 @@
 
 		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -to_stock, "units", list(storage_datum.mat_type))
+		charger.materials.silo_log(charger, "resupplied", -to_stock, "units", list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
