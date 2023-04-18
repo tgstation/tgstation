@@ -37,6 +37,9 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/festivus_pole
 
+	///how much charge we give off to cells around us when rubbed
+	var/recharge_value = 75
+
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/rods))
@@ -60,14 +63,14 @@
 	if(!user.combat_mode)
 		visible_message(span_warning("[src] crackles with static electricity!"))
 		for(var/obj/item/stock_parts/cell/cell in range(2, get_turf(src)))
-			cell.give(75)
+			cell.give(recharge_value)
 			cell.update_appearance()
 		for(var/mob/living/silicon/robot/robot in range(2, get_turf(src)))
 			if(robot.cell)
-				robot.cell.give(75)
+				robot.cell.give(recharge_value)
 		for(var/obj/machinery/power/apc/apc_target in range(2, get_turf(src)))
 			if(apc_target.cell)
-				apc_target.cell.give(75)
+				apc_target.cell.give(recharge_value)
 
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_apcs
 	hunting_behavior = /datum/ai_behavior/hunt_target/apcs
@@ -85,10 +88,12 @@
 /datum/ai_behavior/hunt_target/apcs
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
+	///how much charge we will give off to the APC we find
+	var/given_charge = 80
 
 /datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/hunter, obj/machinery/power/apc/hunted)
 	new /obj/effect/particle_effect/sparks(hunted.loc)
-	hunted.cell.give(75)
+	hunted.cell.give(given_charge)
 
 
 /datum/ai_behavior/find_hunt_target/apcs
