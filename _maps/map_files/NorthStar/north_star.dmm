@@ -12270,6 +12270,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dcI" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -12873,6 +12874,7 @@
 /area/station/hallway/floor4/fore)
 "dmi" = (
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -18345,6 +18347,7 @@
 /area/station/service/library/garden)
 "eMx" = (
 /obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/starboard/aft)
 "eMA" = (
@@ -28744,6 +28747,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "hHI" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/maintenance/floor1/starboard/aft)
 "hIa" = (
@@ -29146,6 +29150,7 @@
 /area/station/science/xenobiology)
 "hNe" = (
 /obj/structure/table_frame,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/aft)
 "hNf" = (
@@ -32506,6 +32511,7 @@
 /turf/open/floor/noslip,
 /area/station/medical/virology)
 "iLZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -33932,6 +33938,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"jfi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor1/starboard/aft)
 "jfl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -37303,6 +37313,10 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
+"jXl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall,
+/area/station/maintenance/floor1/starboard/aft)
 "jXu" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -37958,6 +37972,7 @@
 "khb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -40516,6 +40531,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/security/prison)
 "kPN" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -41284,6 +41300,10 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/starboard)
+"lam" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/station/maintenance/floor1/starboard/aft)
 "lao" = (
 /obj/structure/chair/sofa/corp/right,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43427,6 +43447,7 @@
 /area/station/maintenance/floor3/port/aft)
 "lCx" = (
 /obj/effect/spawner/random/trash/bucket,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/aft)
 "lCz" = (
@@ -54302,6 +54323,7 @@
 /area/station/cargo/miningdock)
 "olm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -63337,6 +63359,7 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
 	},
+/obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "qHR" = (
@@ -73440,6 +73463,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"tAp" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/station/maintenance/floor1/port/aft)
 "tAv" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/reinforced,
@@ -82418,6 +82445,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"vYQ" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor1/starboard/fore)
 "vYV" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/doppler_array{
@@ -84715,6 +84747,7 @@
 "wCg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -84850,6 +84883,7 @@
 "wDK" = (
 /obj/item/rack_parts,
 /obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/aft)
 "wDS" = (
@@ -90782,6 +90816,10 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/aft)
+"yhm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/station/maintenance/floor1/port/aft)
 "yhn" = (
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -112282,7 +112320,7 @@ oic
 oic
 fHM
 dIz
-uNF
+vYQ
 oic
 rLs
 gVw
@@ -135446,7 +135484,7 @@ vcr
 owK
 xGl
 dou
-ixD
+yhm
 cll
 vcr
 vcr
@@ -140840,7 +140878,7 @@ vcr
 deF
 mKY
 mGp
-uhx
+aHt
 dEc
 fyT
 fHy
@@ -141577,7 +141615,7 @@ hxC
 dSH
 fvN
 dla
-hfm
+jfi
 hhf
 sKt
 sKt
@@ -141826,7 +141864,7 @@ pmt
 sKt
 xBZ
 wDK
-hfm
+jfi
 dSH
 dSH
 sKt
@@ -141839,7 +141877,7 @@ hhf
 ugV
 ugV
 ugV
-hfm
+jfi
 gIz
 owI
 jkM
@@ -142082,7 +142120,7 @@ tOS
 aoq
 sKt
 sbp
-hfm
+jfi
 dSH
 dSH
 sKt
@@ -142090,13 +142128,13 @@ sKt
 ieM
 jLi
 ieM
-sKt
-hfm
+jXl
+jfi
 ugV
-hfm
+jfi
 qGC
 lCx
-hfm
+jfi
 gIz
 cHX
 lhT
@@ -142352,7 +142390,7 @@ sKt
 sPZ
 sKt
 sKt
-hfm
+jfi
 kbf
 teq
 owI
@@ -142863,7 +142901,7 @@ mVN
 vxx
 ofx
 fkJ
-hfm
+jfi
 dla
 flT
 sKt
@@ -143105,7 +143143,7 @@ teq
 sKt
 eMx
 jMa
-gxE
+lam
 sOA
 jMa
 wqb
@@ -143120,8 +143158,8 @@ atK
 iLZ
 sKt
 hfm
-hfm
-hfm
+jfi
+jfi
 hfm
 glH
 jHv
@@ -143159,7 +143197,7 @@ ueS
 aZW
 pOL
 mXC
-aZW
+tAp
 pOL
 bME
 vcr
