@@ -283,7 +283,7 @@
 
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
-	var/datum/discord_embed/embed = format_roundend_embed("<@999008528595419278>")
+	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
 	send2roundend_webhook(embed)
 	standard_reboot()
 
