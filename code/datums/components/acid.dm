@@ -27,12 +27,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/datum/callback/process_effect
 
 /datum/component/acid/Initialize(acid_power, acid_volume, acid_overlay)
-	if((acid_power) <= 0 || (acid_volume <= 0))
-		stack_trace("Acid component added with insufficient acid power ([acid_power]) or acid volume ([acid_volume]).")
-		return COMPONENT_INCOMPATIBLE // Not enough acid or the acid's too weak, either one.
 	if(!isatom(parent))
-		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
-		return COMPONENT_INCOMPATIBLE // Incompatible type. TODO: Rework take_damage to the atom level and move this there.
+		return COMPONENT_INCOMPATIBLE
+	//not incompatible, but pointless
+	if((acid_power) <= 0 || (acid_volume <= 0))
+		stack_trace("Acid component added to an atom ([atom_parent.type]) with insufficient acid power ([acid_power]) or acid volume ([acid_volume]).")
+		qdel(src)
+		return
 
 	var/atom/atom_parent = parent
 	if(isliving(parent))
