@@ -1,3 +1,4 @@
+GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
 GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 #define VALID_RANDOM_RECIPE_REAGENT(chemical_flags) (chemical_flags & REAGENT_CAN_BE_SYNTHESIZED && !(chemical_flags & REAGENT_NO_RANDOM_RECIPE))
@@ -255,13 +256,10 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	results = list(/datum/reagent/consumable/secretsauce=1)
 
 /datum/chemical_reaction/randomized/secret_sauce/GetPossibleReagents(kind)
-	var/static/list/all_food_reagents
-	if(!all_food_reagents)
-		all_food_reagents = build_reagents_to_food()
 	switch(kind)
 		if(RNGCHEM_INPUT,RNGCHEM_CATALYSTS)
 			var/food_reagent_ids = list()
-			for(var/key in all_food_reagents)
+			for(var/key in GLOB.food_reagents)
 				food_reagent_ids += key
 			return food_reagent_ids
 	return ..()
