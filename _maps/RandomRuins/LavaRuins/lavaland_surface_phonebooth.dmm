@@ -14,14 +14,13 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/lavaland_phone_booth)
 "k" = (
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/snack/green{
 	onstation_override = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/lavaland_phone_booth)
 "q" = (
-/obj/structure/window/reinforced/spawner/west,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -30,6 +29,7 @@
 	dir = 8;
 	piping_layer = 4
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/lavaland_phone_booth)
 "v" = (
@@ -44,7 +44,6 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/lavaland_phone_booth)
 "J" = (
-/obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -54,6 +53,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/lavaland_phone_booth)
 "M" = (
@@ -68,10 +68,10 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/lavaland_phone_booth)
 "W" = (
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/lavaland_phone_booth)
 

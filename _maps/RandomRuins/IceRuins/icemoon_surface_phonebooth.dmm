@@ -18,12 +18,11 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "k" = (
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/coffee,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "q" = (
-/obj/structure/window/reinforced/spawner/west,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -32,6 +31,7 @@
 	dir = 8;
 	piping_layer = 4
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "v" = (
@@ -48,7 +48,6 @@
 	},
 /area/ruin/powered/icemoon_phone_booth)
 "J" = (
-/obj/structure/window/reinforced/spawner/west,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -58,6 +57,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "M" = (
@@ -72,10 +72,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "W" = (
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/vending/cigarette{
 	onstation_override = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 
