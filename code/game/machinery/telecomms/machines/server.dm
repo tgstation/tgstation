@@ -15,7 +15,6 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
-	var/syndicate = FALSE // can the server log syndicate messages?
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-vocal signals
@@ -46,7 +45,7 @@
 		log.parameters["message"] = Gibberish(signal.data["message"], replace_characters)
 
 	// Give the log a name and store it. If it is from a syndicate frequency, checks if it has syndicate access
-	if(signal.frequency != FREQ_SYNDICATE || syndicate)
+	if(!(signal.frequency in banned_frequencies))
 		var/identifier = num2text( rand(-1000,1000) + world.time )
 		log.name = "data packet ([md5(identifier)])"
 		log_entries.Add(log)
@@ -122,10 +121,3 @@
 /obj/machinery/telecomms/server/presets/common/birdstation/Initialize(mapload)
 	. = ..()
 	freq_listening = list()
-
-/obj/machinery/telecomms/server/presets/syndicate
-	syndicate = TRUE
-	id = "Syndicate Server"
-	network = "syndisat"
-	freq_listening = list(FREQ_SYNDICATE)
-	autolinkers = list("syndicate")
