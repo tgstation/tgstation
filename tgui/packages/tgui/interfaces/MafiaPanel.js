@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TextArea, Tabs } from '../components';
+import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { formatTime } from '../format';
 
@@ -40,48 +40,46 @@ export const MafiaPanel = (props, context) => {
           )}
           {phase !== 'No Game' && (
             <Stack.Item grow>
-              <Stack fill>
+              <Stack grow fill>
                 <>
-                  <Stack.Item grow={1.34} basis={0}>
+                  <Stack.Item grow>
                     <MafiaPlayers />
                   </Stack.Item>
-                  <Stack.Item grow={1} basis={0}>
-                    <Tabs fluid>
-                      <Tabs.Tab
-                        selected={mafia_tab === 'Role list'}
-                        onClick={() => setMafiaMode('Role list')}>
-                        Role list
-                        <Button
-                          color="transparent"
-                          icon="address-book"
-                          tooltipPosition="bottom-start"
-                          tooltip={multiline`
+                  <Stack.Item grow>
+                    <Stack.Item grow>
+                      <Tabs fluid>
+                        <Tabs.Tab
+                          selected={mafia_tab === 'Role list'}
+                          onClick={() => setMafiaMode('Role list')}>
+                          Role list
+                          <Button
+                            color="transparent"
+                            icon="address-book"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
                             This is the list of roles in the game. You can
                             press the question mark to get a quick blurb
                             about the role itself.`}
-                        />
-                      </Tabs.Tab>
-                      <Tabs.Tab
-                        selected={mafia_tab === 'Notes'}
-                        onClick={() => setMafiaMode('Notes')}>
-                        Notes
-                        <Button
-                          color="transparent"
-                          icon="pencil"
-                          tooltipPosition="bottom-start"
-                          tooltip={multiline`
+                          />
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                          selected={mafia_tab === 'Notes'}
+                          onClick={() => setMafiaMode('Notes')}>
+                          Notes
+                          <Button
+                            color="transparent"
+                            icon="pencil"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
                             This is your notes, anything you want to write
                             can be saved for future reference. You can
                             also send it to chat with a button.`}
-                        />
-                      </Tabs.Tab>
-                    </Tabs>
-                    <Stack fill vertical>
-                      <Stack.Item grow>
-                        {mafia_tab === 'Role list' && <MafiaListOfRoles />}
-                        {mafia_tab === 'Notes' && <MafiaNotesTab />}
-                      </Stack.Item>
-                    </Stack>
+                          />
+                        </Tabs.Tab>
+                      </Tabs>
+                    </Stack.Item>
+                    {mafia_tab === 'Role list' && <MafiaListOfRoles />}
+                    {mafia_tab === 'Notes' && <MafiaNotesTab />}
                   </Stack.Item>
                 </>
               </Stack>
@@ -167,10 +165,10 @@ const MafiaLobby = (props, context) => {
 
 const MafiaRole = (props, context) => {
   const { act, data } = useBackend(context);
-  const { phase, roleinfo, timeleft } = data;
+  const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
-      title={phase}
+      title={phase + turn}
       minHeight="100px"
       maxHeight="50px"
       buttons={
@@ -214,7 +212,7 @@ const MafiaListOfRoles = (props, context) => {
   const { act, data } = useBackend(context);
   const { all_roles } = data;
   return (
-    <Section fill minHeight="120px">
+    <Section fill>
       <Flex direction="column">
         {all_roles?.map((r) => (
           <Flex.Item
@@ -251,31 +249,35 @@ const MafiaNotesTab = (props, context) => {
     user_notes
   );
   return (
-    <Section fill scrollable>
+    <Section grow fill>
       <TextArea
-        maxLength={1026}
         height="80%"
+        maxLength={600}
         className="Section__title candystripe"
         onChange={(_, value) => setNotesMessage(value)}
-        placeholder={'Notes'}
+        placeholder={'Insert Notes...'}
         value={note_message}
       />
-      <Button
-        color="good"
-        fluid
-        content="Save"
-        textAlign="center"
-        onClick={() => act('change_notes', { new_notes: note_message })}
-        tooltip="Saves the current will as your will. This can't be done while dead."
-      />
-      <Button.Confirm
-        color="bad"
-        fluid
-        content="Send to Chat"
-        textAlign="center"
-        onClick={() => act('send_notes_to_chat')}
-        tooltip="Sends the will you have saved into the chat for everyone to hear."
-      />
+      <Stack grow>
+        <Stack.Item grow fill>
+          <Button
+            color="good"
+            fluid
+            content="Save"
+            textAlign="center"
+            onClick={() => act('change_notes', { new_notes: note_message })}
+            tooltip="Saves whatever is written as your notepad. This can't be done while dead."
+          />
+          <Button.Confirm
+            color="bad"
+            fluid
+            content="Send to Chat"
+            textAlign="center"
+            onClick={() => act('send_notes_to_chat')}
+            tooltip="Sends your notes immediately into the chat for everyone to hear."
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

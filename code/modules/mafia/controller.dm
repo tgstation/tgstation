@@ -636,7 +636,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	data["phase"] = phase
 	if(turn)
-		data["phase"] += " - Day [turn]"
+		data["turn"] = " - Day [turn]"
 
 	if(phase == MAFIA_PHASE_SETUP)
 		data["lobbydata"] = list()
