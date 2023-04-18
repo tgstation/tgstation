@@ -874,7 +874,8 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"paicard",
-		"mecha_camera"
+		"mecha_camera",
+		"botnavbeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

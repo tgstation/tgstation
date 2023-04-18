@@ -16,14 +16,9 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/spawn_turf in GLOB.generic_maintenance_landmarks)
-		if(istype(get_area(spawn_turf), /area/station/maintenance) && is_safe_turf(spawn_turf))
-			possible_spawns += spawn_turf
-	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found, aborting...")
+	var/turf/landing_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(isnull(landing_turf))
 		return MAP_ERROR
-	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 

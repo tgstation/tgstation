@@ -37,28 +37,28 @@
 	START_PROCESSING(SSobj, src)
 
 
-/obj/item/organ/internal/process(delta_time, times_fired)
-	on_death(delta_time, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/internal/process(seconds_per_tick, times_fired)
+	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/internal/on_death(delta_time, times_fired) //runs decay when outside of a person
+/obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	apply_organ_damage(decay_factor * maxHealth * delta_time)
+	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here
 /// To give you some scale, if there's 100 carbons in the game, they each have maybe 9 organs
 /// So that's 900 calls to this proc every life process. Please don't be dumb
-/obj/item/organ/internal/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
+/obj/item/organ/internal/on_life(seconds_per_tick, times_fired) //repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
-		handle_failing_organs(delta_time)
+		handle_failing_organs(seconds_per_tick)
 		return
 
 	if(failure_time > 0)
 		failure_time--
 
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
-		apply_organ_damage(decay_factor * maxHealth * delta_time)
+		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 
 	if(!damage) // No sense healing if you're not even hurt bro
@@ -68,7 +68,7 @@
 	var/healing_amount = healing_factor
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount += (owner.satiety > 0) ? (4 * healing_factor * owner.satiety / MAX_SATIETY) : 0
-	apply_organ_damage(-healing_amount * maxHealth * delta_time, damage) // pass curent damage incase we are over cap
+	apply_organ_damage(-healing_amount * maxHealth * seconds_per_tick, damage) // pass curent damage incase we are over cap
 
 ///Used as callbacks by object pooling
 /obj/item/organ/internal/exit_wardrobe()
@@ -79,9 +79,9 @@
 	STOP_PROCESSING(SSobj, src)
 
 ///Organs don't die instantly, and neither should you when you get fucked up
-/obj/item/organ/internal/handle_failing_organs(delta_time)
+/obj/item/organ/internal/handle_failing_organs(seconds_per_tick)
 	if(owner.stat == DEAD)
 		return
 
-	failure_time += delta_time
-	organ_failure(delta_time)
+	failure_time += seconds_per_tick
+	organ_failure(seconds_per_tick)
