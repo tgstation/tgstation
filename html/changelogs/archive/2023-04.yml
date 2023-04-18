@@ -632,3 +632,22 @@
   zxaber:
   - balance: Engineer Borgs now have a tool to manipulate material stacks (and also
       tile stacks). This replaces the R-Glass tool.
+2023-04-18:
+  Helg2:
+  - bugfix: Pirate and hunter shuttles now have no wi-fi. (added cutAIwire apc helpers
+      to them)
+  - bugfix: Added missing apc helpers to apc on DeepStorage (the bunker with "away"
+      access)
+  IHateGeese:
+  - rscadd: emagging the BSA explodes the next person to fire it.
+  NamelessFairy:
+  - bugfix: Fixes being unable to switch modes on the Oingo Boingo Punch-face
+  Singul0:
+  - bugfix: Nanotrasen has supplied the North Star with a B.E.P.I.S Chamber.
+  SyncIt21:
+  - bugfix: RTD animation effect adding a timer on deleted floor tiles.
+  tralezab:
+  - bugfix: Body purist headrevs having a bad time with their implant
+  zxaber:
+  - balance: Cyborg Rechargers now restock with metal and glass from the ore silo,
+      and no longer grant the materials for free.

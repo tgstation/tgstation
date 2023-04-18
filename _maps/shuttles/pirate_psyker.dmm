@@ -621,6 +621,7 @@
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "GS" = (
