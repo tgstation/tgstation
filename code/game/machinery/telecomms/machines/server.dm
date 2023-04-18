@@ -45,7 +45,7 @@
 		log.parameters["job"] = Gibberish(signal.data["job"], replace_characters)
 		log.parameters["message"] = Gibberish(signal.data["message"], replace_characters)
 
-	// Give the log a name and store it. If it is from a syndicate frequency, checks if it has syndicate access first, otherwise passes on the message
+	// Give the log a name and store it. If it is from a syndicate frequency, checks if it has syndicate access
 	if(signal.frequency != FREQ_SYNDICATE || syndicate)
 		var/identifier = num2text( rand(-1000,1000) + world.time )
 		log.name = "data packet ([md5(identifier)])"
