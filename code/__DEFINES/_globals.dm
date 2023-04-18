@@ -1,4 +1,5 @@
-//See also controllers/globals.dm
+// See also controllers/globals.dm
+// See initialization order in /code/game/world.dm
 
 /// Creates a global initializer with a given InitValue expression, do not use
 #define GLOBAL_MANAGED(X, InitValue)\
@@ -20,11 +21,16 @@
 #define GLOBAL_PROTECT(X)
 #endif
 
-/// Standard BYOND global, do not use
-#define GLOBAL_REAL_VAR(X) var/global/##X
+/// Standard BYOND global, seriously do not use without an earthshakingly good reason
+#define GLOBAL_REAL_VAR(X) var/global/##X;
 
-/// Standard typed BYOND global, do not use
-#define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
+// ▲▼ I added the semi-colons because people kept using these to fuck with init order. See /code/game/world.dm for that - Dominion/Cyberboss
+
+/// Standard typed BYOND global, seriously do not use without an earthshakingly good reason
+#define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X;
+
+/// !!!!!!USED ONLY BY MASTER ONLY BY MASTER ONLY BY MASTER DO NOT FUCKING USE THIS!!!!!!
+#define MASTER_GLOBAL var/global/datum/controller/master/Master = world.RealGlobalsPreInit();
 
 /// Defines a global var on the controller, do not use
 #define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X
