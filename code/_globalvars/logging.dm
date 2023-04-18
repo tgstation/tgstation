@@ -19,6 +19,8 @@ GLOBAL_PROTECT(##log_var_name);\
 }
 
 #define DECLARE_LOG(log_name, start) DECLARE_LOG_NAMED(##log_name, "[copytext(#log_name, 1, length(#log_name) - 4)]", start)
+#define START_LOG TRUE
+#define DONT_START_LOG FALSE
 
 /// Populated by log declaration macros to set log file names and start messages
 /world/proc/_initialize_log_files(temp_log_override = null)
@@ -27,45 +29,45 @@ GLOBAL_PROTECT(##log_var_name);\
 	return
 
 // All individual log files
-DECLARE_LOG(config_error_log, FALSE)
-DECLARE_LOG(dynamic_log, FALSE)
-DECLARE_LOG(lua_log, FALSE)
-DECLARE_LOG(perf_log, FALSE) // Declared here but name is set in time_track subsystem
-DECLARE_LOG(query_debug_log, FALSE)
-DECLARE_LOG(signals_log, FALSE)
-DECLARE_LOG(tgui_log, TRUE)
+DECLARE_LOG(config_error_log, DONT_START_LOG)
+DECLARE_LOG(dynamic_log, DONT_START_LOG)
+DECLARE_LOG(lua_log, DONT_START_LOG)
+DECLARE_LOG(perf_log, DONT_START_LOG) // Declared here but name is set in time_track subsystem
+DECLARE_LOG(query_debug_log, DONT_START_LOG)
+DECLARE_LOG(signals_log, DONT_START_LOG)
+DECLARE_LOG(tgui_log, START_LOG)
 #ifdef REFERENCE_DOING_IT_LIVE
-DECLARE_LOG_NAMED(harddel_log, "harddels", TRUE)
+DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
 #endif
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
-DECLARE_LOG_NAMED(test_log, "tests", TRUE)
+DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
 #endif
-DECLARE_LOG_NAMED(filter_log, "filters", FALSE)
-DECLARE_LOG_NAMED(sql_error_log, "sql", FALSE)
-DECLARE_LOG_NAMED(world_asset_log, "asset", FALSE)
-DECLARE_LOG_NAMED(world_attack_log, "attack", TRUE)
-DECLARE_LOG_NAMED(world_econ_log, "econ", TRUE)
-DECLARE_LOG_NAMED(world_game_log, "game", TRUE)
-DECLARE_LOG_NAMED(world_href_log, "hrefs", TRUE)
-DECLARE_LOG_NAMED(world_job_debug_log, "job_debug", TRUE)
-DECLARE_LOG_NAMED(world_manifest_log, "manifest", TRUE)
-DECLARE_LOG_NAMED(world_map_error_log, "map_errors", FALSE)
-DECLARE_LOG_NAMED(world_mecha_log, "mecha", FALSE)
-DECLARE_LOG_NAMED(world_mob_tag_log, "mob_tags", TRUE)
-DECLARE_LOG_NAMED(world_paper_log, "paper", FALSE)
-DECLARE_LOG_NAMED(world_pda_log, "pda", TRUE)
-DECLARE_LOG_NAMED(world_qdel_log, "qdel", TRUE)
-DECLARE_LOG_NAMED(world_runtime_log, "runtime", TRUE)
-DECLARE_LOG_NAMED(world_shuttle_log, "shuttle", TRUE)
-DECLARE_LOG_NAMED(world_silicon_log, "silicon", FALSE)
-DECLARE_LOG_NAMED(world_speech_indicators_log, "speech_indicators", FALSE)
-DECLARE_LOG_NAMED(world_telecomms_log, "telecomms", TRUE)
-DECLARE_LOG_NAMED(world_tool_log, "tools", FALSE)
-DECLARE_LOG_NAMED(world_uplink_log, "uplink", TRUE)
-DECLARE_LOG_NAMED(world_virus_log, "virus", FALSE)
+DECLARE_LOG_NAMED(filter_log, "filters", DONT_START_LOG)
+DECLARE_LOG_NAMED(sql_error_log, "sql", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_asset_log, "asset", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_attack_log, "attack", START_LOG)
+DECLARE_LOG_NAMED(world_econ_log, "econ", START_LOG)
+DECLARE_LOG_NAMED(world_game_log, "game", START_LOG)
+DECLARE_LOG_NAMED(world_href_log, "hrefs", START_LOG)
+DECLARE_LOG_NAMED(world_job_debug_log, "job_debug", START_LOG)
+DECLARE_LOG_NAMED(world_manifest_log, "manifest", START_LOG)
+DECLARE_LOG_NAMED(world_map_error_log, "map_errors", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_mecha_log, "mecha", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_mob_tag_log, "mob_tags", START_LOG)
+DECLARE_LOG_NAMED(world_paper_log, "paper", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_pda_log, "pda", START_LOG)
+DECLARE_LOG_NAMED(world_qdel_log, "qdel", START_LOG)
+DECLARE_LOG_NAMED(world_runtime_log, "runtime", START_LOG)
+DECLARE_LOG_NAMED(world_shuttle_log, "shuttle", START_LOG)
+DECLARE_LOG_NAMED(world_silicon_log, "silicon", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_speech_indicators_log, "speech_indicators", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_telecomms_log, "telecomms", START_LOG)
+DECLARE_LOG_NAMED(world_tool_log, "tools", DONT_START_LOG)
+DECLARE_LOG_NAMED(world_uplink_log, "uplink", START_LOG)
+DECLARE_LOG_NAMED(world_virus_log, "virus", DONT_START_LOG)
 /// Log associated with [/proc/log_suspicious_login()]
 /// Intended to hold all logins that failed due to suspicious circumstances such as ban detection, CID randomisation etc.
-DECLARE_LOG_NAMED(world_suspicious_login_log, "suspicious_logins", FALSE)
+DECLARE_LOG_NAMED(world_suspicious_login_log, "suspicious_logins", DONT_START_LOG)
 
 
 
@@ -97,3 +99,5 @@ GLOBAL_PROTECT(lawchanges)
 
 #undef DECLARE_LOG
 #undef DECLARE_LOG_NAMED
+#undef START_LOG
+#undef DONT_START_LOG
