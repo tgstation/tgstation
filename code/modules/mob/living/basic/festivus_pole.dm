@@ -125,8 +125,8 @@
 
 /datum/action/cooldown/mob_cooldown/charge_apc
 	name = "Charge APCs"
-	button_icon = 'icons/effects/effects.dmi'
-	button_icon_state = "rift"
+	button_icon = 'icons/obj/power.dmi'
+	button_icon_state = "apc0"
 	desc = "Give off charge to an APC."
 	cooldown_time = 15 SECONDS
 	///how much charge are we giving off to an APC?

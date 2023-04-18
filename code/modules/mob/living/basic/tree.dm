@@ -111,5 +111,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(prob(paralyze_prob + boost))
 		carbon_target.Paralyze(paralyze_value + boost)
-		carbon_target.visible_message(span_danger("\The [living_pawn] knocks down \the [carbon_target]!"), \
-				span_userdanger("\The [living_pawn] knocks you down!"))
+		carbon_target.visible_message(
+			span_danger("[living_pawn] knocks down [carbon_target]!"),
+			span_userdanger("[living_pawn] knocks you down!"),
+		)
