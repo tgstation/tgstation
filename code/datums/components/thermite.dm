@@ -69,7 +69,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_destroy)) //probably necessary because turfs are wack
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
 
