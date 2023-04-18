@@ -43,8 +43,10 @@
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
 		return
 	if(state_open)
+		flick("xray-closing", src)
 		close_machine()
 	else
+		flick("xray-opening", src)
 		open_machine()
 
 /obj/machinery/artifact_xray/attackby(obj/item/item, mob/living/user, params)
@@ -80,20 +82,20 @@
 	update_appearance()
 
 /obj/machinery/artifact_xray/proc/pulse()
-	if(!COOLDOWN_FINISHED(src,pulse_cooldown) || pulsing)
+	if(!COOLDOWN_FINISHED(src,pulse_cooldown) || pulsing || !occupant)
 		return
 	if(state_open)
 		return
-	if(ishuman(occupant))
-		if(obj_flags & EMAGGED)
-			if(!HAS_TRAIT(occupant, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(occupant))
-				occupant.AddComponent(/datum/component/irradiated)
-		else
+	if(isliving(occupant))
+		if(!(obj_flags & EMAGGED))
 			say("Cannot pulse with a living being inside!")
 			return
 	var/datum/component/artifact/component = occupant.GetComponent(/datum/component/artifact)
 	if(component)
 		component.Stimulate(STIMULUS_RADIATION, chosen_level)
+	else
+		if(!HAS_TRAIT(occupant, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(occupant))
+			occupant.AddComponent(/datum/component/irradiated)
 	pulsing = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	addtimer(CALLBACK(src, PROC_REF(post_pulse), component), pulse_time)

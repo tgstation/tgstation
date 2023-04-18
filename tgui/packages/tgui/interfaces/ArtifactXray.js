@@ -52,6 +52,7 @@ export const ArtifactXray = (props, context) => {
                 onClick={() => act("pulse")} />
             </Stack.Item>
      </Stack>
+          )}
 		  <Section title={"Last Scan Results"} backgroundColor="black">
               {results.map((result) => (
                 <Box mb={1} key={result} color="green">
@@ -60,7 +61,6 @@ export const ArtifactXray = (props, context) => {
               ))}
     </Section>
             </>
-          )}
         </Section>
       </Window.Content>
     </Window>
