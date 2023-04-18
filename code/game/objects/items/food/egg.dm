@@ -29,6 +29,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/chick_throw_prob = 13
 	bite_consumption = 100 // whole ass egg all at once
+	food_buffs = STATUS_EFFECT_FOOD_STAM_TINY
 
 /obj/item/food/egg/Initialize(mapload)
 	. = ..()
@@ -224,6 +225,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/boiledegg/rotten
+	food_buffs = STATUS_EFFECT_FOOD_STAM_TINY
 
 /obj/item/food/eggsausage
 	name = "egg with sausage"
@@ -255,6 +257,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "cheese" = 1)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
 
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
@@ -288,6 +291,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/eggwrap
 	name = "egg wrap"

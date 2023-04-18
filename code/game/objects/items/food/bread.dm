@@ -8,6 +8,7 @@
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
+	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
 	/// type is spawned 5 at a time and replaces this bread loaf when processed by cutting tool
 	var/obj/item/food/breadslice/slice_type
 	/// so that the yield can change if it isnt 5
@@ -32,6 +33,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_STAM_TINY
 
 /obj/item/food/breadslice/Initialize(mapload)
 	. = ..()
@@ -208,6 +210,7 @@
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtypes = GRAIN | FRUIT
 	slice_type = /obj/item/food/breadslice/banana
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/breadslice/banana
 	name = "banana-nut bread slice"
@@ -219,6 +222,7 @@
 	)
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN | FRUIT
+	food_buffs = STATUS_EFFECT_STAM_REGEN_SMALL
 
 /obj/item/food/bread/tofu
 	name = "Tofubread"
@@ -258,6 +262,7 @@
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtypes = GRAIN | DAIRY
 	slice_type = /obj/item/food/breadslice/creamcheese
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -270,6 +275,7 @@
 	)
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtypes = GRAIN | DAIRY
+	food_buffs = STATUS_EFFECT_STAM_REGEN_SMALL
 
 /obj/item/food/bread/mimana
 	name = "mimana bread"
@@ -284,6 +290,7 @@
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtypes = GRAIN | FRUIT
 	slice_type = /obj/item/food/breadslice/mimana
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/breadslice/mimana
 	name = "mimana bread slice"
@@ -297,6 +304,7 @@
 	)
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtypes = GRAIN | FRUIT
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/bread/empty
 	name = "bread"
@@ -434,6 +442,7 @@
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/butterbiscuit
 	name = "butter biscuit"
@@ -448,6 +457,7 @@
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_TINY
 
 /obj/item/food/butterdog
 	name = "butterdog"

@@ -18,6 +18,7 @@
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_SWEATY
 
 /obj/item/food/fishmeat
 	name = "fish fillet"
@@ -721,6 +722,7 @@
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = MEAT | FRUIT
+	food_buffs = STATUS_EFFECT_FOOD_SLIDE
 
 /obj/item/food/meatclown/Initialize(mapload)
 	. = ..()
@@ -824,6 +826,7 @@
 	)
 	tastes = list("tex-mex" = 3, "cumin" = 2)
 	foodtypes = MEAT | VEGETABLES
+	food_buffs = STATUS_EFFECT_FOOD_SWEATY
 
 /obj/item/food/fried_chicken
 	name = "fried chicken"
