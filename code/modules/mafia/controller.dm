@@ -803,10 +803,13 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			user_role.body.balloon_alert(user_role.body, "notes saved")
 			return TRUE
 		if("send_notes_to_chat")
-			if(user_role.game_status == MAFIA_DEAD)
+			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
 				return TRUE
 			if(phase == MAFIA_PHASE_NIGHT)
 				return TRUE
+			if(!COOLDOWN_FINISHED(user_role, note_chat_sending_cooldown))
+				return FALSE
+			COOLDOWN_START(user_role, note_chat_sending_cooldown, MAFIA_NOTE_SENDING_COOLDOWN)
 			user_role.body.say("[user_role.written_notes]", forced = "mafia notes sending")
 			return TRUE
 		if("perform_action")

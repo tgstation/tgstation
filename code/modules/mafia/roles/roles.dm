@@ -34,6 +34,9 @@
 	///set this to something cool for antagonists and their window will look different
 	var/special_ui_theme
 
+	///The cooldown between being able to send your will in chat.
+	COOLDOWN_DECLARE(note_chat_sending_cooldown)
+
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)

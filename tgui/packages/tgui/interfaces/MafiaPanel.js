@@ -38,6 +38,7 @@ export const MafiaPanel = (props, context) => {
               )}
             </>
           )}
+          {!!admin_controls && <MafiaAdmin />}
           {phase !== 'No Game' && (
             <Stack.Item grow>
               <Stack grow fill>
@@ -45,10 +46,11 @@ export const MafiaPanel = (props, context) => {
                   <Stack.Item grow>
                     <MafiaPlayers />
                   </Stack.Item>
-                  <Stack.Item grow>
-                    <Stack.Item grow>
+                  <Stack.Item fluid grow>
+                    <Stack.Item>
                       <Tabs fluid>
                         <Tabs.Tab
+                          align="center"
                           selected={mafia_tab === 'Role list'}
                           onClick={() => setMafiaMode('Role list')}>
                           Role list
@@ -63,6 +65,7 @@ export const MafiaPanel = (props, context) => {
                           />
                         </Tabs.Tab>
                         <Tabs.Tab
+                          align="center"
                           selected={mafia_tab === 'Notes'}
                           onClick={() => setMafiaMode('Notes')}>
                           Notes
@@ -83,11 +86,6 @@ export const MafiaPanel = (props, context) => {
                   </Stack.Item>
                 </>
               </Stack>
-            </Stack.Item>
-          )}
-          {!!admin_controls && (
-            <Stack.Item>
-              <MafiaAdmin />
             </Stack.Item>
           )}
         </Stack>
@@ -215,11 +213,8 @@ const MafiaListOfRoles = (props, context) => {
     <Section fill>
       <Flex direction="column">
         {all_roles?.map((r) => (
-          <Flex.Item
-            key={r}
-            height="30px"
-            className="Section__title candystripe">
-            <Flex height="18px" align="center" justify="space-between">
+          <Flex.Item key={r} className="Section__title candystripe">
+            <Flex align="center" justify="space-between">
               <Flex.Item>{r}</Flex.Item>
               <Flex.Item textAlign="right">
                 <Button

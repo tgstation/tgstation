@@ -18,6 +18,9 @@
 ///The length of the roundend report, where people can look over the round and the details.
 #define VICTORY_LAP_PERIOD_LENGTH (20 SECONDS)
 
+///The cooldown between being able to send your notes in chat.
+#define MAFIA_NOTE_SENDING_COOLDOWN (15 SECONDS)
+
 ///How fast the game will speed up when half the players are gone.
 #define MAFIA_SPEEDUP_INCREASE 2
 
