@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "RTD animation effect adding a timer on deleted floor tiles."
