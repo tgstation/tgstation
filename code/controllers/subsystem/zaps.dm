@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(zaps)
 
 
 	zap.zap_range = next_range
-	zap.source = source
+	zap.source = closest_atom
 	zap.shocked_targets = shocked_targets
 	zap.power = power
 
