@@ -1,6 +1,8 @@
 
 /obj/item/gun/ballistic/bow
 	icon = 'icons/obj/weapons/guns/bows/bows.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
 	load_sound = null
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
@@ -54,6 +56,15 @@
 	drawn = FALSE
 	. = ..() //fires, removing the arrow
 	update_appearance()
+
+/obj/item/gun/ballistic/bow/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot == ITEM_SLOT_BACK)
+		if(chambered)
+			balloon_alert(user, "the arrow falls out!")
+			drop_arrow()
+			drawn = FALSE
+			update_appearance()
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)
 	return //no clicking sounds please
