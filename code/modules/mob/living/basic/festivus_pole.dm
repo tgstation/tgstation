@@ -128,7 +128,7 @@
 	button_icon = 'icons/obj/power.dmi'
 	button_icon_state = "apc0"
 	desc = "Give off charge to an APC."
-	cooldown_time = 15 SECONDS
+	cooldown_time = 5 SECONDS
 	///how much charge are we giving off to an APC?
 	var/given_charge = 80
 

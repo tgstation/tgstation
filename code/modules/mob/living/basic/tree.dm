@@ -45,13 +45,18 @@
 
 	///items that make us angry
 	var/list/infuriating_objects = list(/obj/item/chainsaw, /obj/item/hatchet, /obj/item/stack/sheet/mineral/wood)
+	///chance of target getting paralyzed
+	var/paralyze_prob = 15
+	///for how the target is  paralyzed
+	var/paralyze_value = 50
+	///boost added when our target is holding an item that offends us
+	var/anger_boost = 85
 
 /mob/living/basic/tree/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/sheet/mineral/wood))
-	ai_controller.blackboard[BB_TREE_FURY_LIST] = infuriating_objects
-
+	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(handle_paralysis))
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
@@ -66,6 +71,29 @@
 		var/amt = min(co2, 9)
 		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		our_turf.atmos_spawn_air("o2=[amt]")
+
+/mob/living/basic/tree/proc/handle_paralysis(mob/living/simple_animal/hostile/attacker, atom/target, success)
+	SIGNAL_HANDLER
+
+	if(!success || !iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	var/boost = 0
+
+	var/list/items = infuriating_objects
+
+	for(var/item_path in items)
+		if(locate(item_path) in carbon_target.held_items)
+			boost = anger_boost
+			break
+
+	if(prob(paralyze_prob + boost))
+		carbon_target.Paralyze(paralyze_value + boost)
+		carbon_target.visible_message(
+			span_danger("[src] knocks down [carbon_target]!"),
+			span_userdanger("[src] knocks you down!"),
+		)
 
 /datum/ai_controller/basic_controller/tree
 	blackboard = list(
@@ -85,33 +113,3 @@
 
 /datum/ai_behavior/basic_melee_attack/tree
 	action_cooldown = 2 SECONDS
-	///chance of target getting paralyzed
-	var/paralyze_prob = 15
-	///for how the target is  paralyzed
-	var/paralyze_value = 50
-	///boost added when our target is holding an item that offends us
-	var/anger_boost = 10
-
-/datum/ai_behavior/basic_melee_attack/tree/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
-	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/carbon/carbon_target = weak_target?.resolve()
-
-	if(isnull(carbon_target))
-		return
-
-	var/boost = 0
-	var/list/items = controller.blackboard[BB_TREE_FURY_LIST]
-
-	for(var/item_path in items)
-		if(locate(item_path) in carbon_target.held_items)
-			boost = anger_boost
-			break
-
-	var/mob/living/living_pawn = controller.pawn
-	if(prob(paralyze_prob + boost))
-		carbon_target.Paralyze(paralyze_value + boost)
-		carbon_target.visible_message(
-			span_danger("[living_pawn] knocks down [carbon_target]!"),
-			span_userdanger("[living_pawn] knocks you down!"),
-		)
