@@ -509,9 +509,8 @@
 	cost = 5
 	minimum_players = 15
 	repeatable = TRUE
-	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat = 0)
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
 	if(!spawn_loc)
 		return FALSE
@@ -521,17 +520,17 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/carbon/human/S = new (pick(spawn_locs))
-	player_mind.transfer_to(S)
+	var/mob/living/carbon/human/new_nightmare = new (find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	player_mind.transfer_to(new_nightmare)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
 	player_mind.special_role = ROLE_NIGHTMARE
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	S.set_species(/datum/species/shadow/nightmare)
+	new_nightmare.set_species(/datum/species/shadow/nightmare)
 
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
-	log_dynamic("[key_name(S)] was spawned as a Nightmare by the midround ruleset.")
-	return S
+	playsound(new_nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(new_nightmare)] has been made into a Nightmare by the midround ruleset.")
+	log_dynamic("[key_name(new_nightmare)] was spawned as a Nightmare by the midround ruleset.")
+	return new_nightmare
 
 /// Midround Space Dragon Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon
