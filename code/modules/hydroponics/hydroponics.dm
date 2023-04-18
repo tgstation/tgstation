@@ -1,6 +1,7 @@
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
+	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
@@ -471,6 +472,13 @@
 		return
 	set_light(0)
 
+/obj/machinery/hydroponics/update_name(updates)
+	. = ..()
+	if(myseed)
+		name = "[initial(name)] ([myseed.plantname])"
+	else
+		name = initial(name)
+
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
@@ -520,6 +528,8 @@
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
 	update_appearance()
+	if(isnull(myseed))
+		particles = null
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -691,7 +701,6 @@
 	set_weedlevel(0, update_icon = FALSE) // Reset
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
-	TRAY_NAME_UPDATE
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
 	if(!myseed)
@@ -754,9 +763,9 @@
  * Called after plant mutation, update the appearance of the tray content and send a visible_message()
  */
 /obj/machinery/hydroponics/proc/after_mutation(message)
-		update_appearance()
-		visible_message(message)
-		TRAY_NAME_UPDATE
+	visible_message(message)
+	update_appearance()
+
 /**
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
@@ -890,7 +899,6 @@
 			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			set_seed(O)
-			TRAY_NAME_UPDATE
 			age = 1
 			set_plant_health(myseed.endurance)
 			lastcycle = world.time
@@ -996,11 +1004,7 @@
 				set_plant_health(0, update_icon = FALSE, forced = TRUE)
 				lastproduce = 0
 				set_seed(null)
-				name = initial(name)
-				desc = initial(desc)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
-			if(particles)
-				particles = null
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
@@ -1064,8 +1068,6 @@
 	else if(plant_status == HYDROTRAY_PLANT_DEAD)
 		to_chat(user, span_notice("You remove the dead plant from [src]."))
 		set_seed(null)
-		update_appearance()
-		TRAY_NAME_UPDATE
 	else
 		if(user)
 			user.examinate(src)
@@ -1096,6 +1098,7 @@
 	if(warning == "Yes" && user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
@@ -1115,10 +1118,6 @@
 		to_chat(user, span_notice("You harvest [product_count] items from the [myseed.plantname]."))
 	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		set_seed(null)
-		name = initial(name)
-		desc = initial(desc)
-		TRAY_NAME_UPDATE
-		particles = null
 		if(self_sustaining) //No reason to pay for an empty tray.
 			set_self_sustaining(FALSE)
 	else
