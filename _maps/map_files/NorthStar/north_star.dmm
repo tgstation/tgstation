@@ -14312,15 +14312,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard)
-"dIq" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/weldingtool/largetank,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "dIv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16422,16 +16413,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
-"elh" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/item/folder/yellow,
-/obj/item/wrench,
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "ell" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line{
@@ -25477,15 +25458,6 @@
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/carpet/royalblue,
 /area/station/medical/break_room)
-"gNn" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "gNq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31790,6 +31762,18 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
+"iBO" = (
+/obj/effect/landmark/start/quartermaster,
+/obj/structure/bed/double/pod,
+/obj/item/bedsheet/qm/double,
+/obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Requests Console";
+	supplies_requestable = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/station/command/heads_quarters/qm)
 "iCh" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/newscaster/directional/south,
@@ -32138,6 +32122,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
+"iHZ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/screwdriver,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/weldingtool/largetank,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "iIb" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/airalarm/directional/west,
@@ -37818,6 +37813,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"khk" = (
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 8
+	},
+/obj/effect/landmark/navigate_destination/bridge,
+/obj/structure/plaque/static_plaque/golden/commission/northstar,
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor4/fore)
 "khm" = (
 /obj/structure/closet/firecloset/full,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -44614,18 +44617,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard)
-"lTL" = (
-/obj/effect/landmark/start/quartermaster,
-/obj/structure/bed/double/pod,
-/obj/item/bedsheet/qm/double,
-/obj/machinery/requests_console/directional/north{
-	announcementConsole = 1;
-	department = "Quartermaster's Desk";
-	name = "Quartermaster's Requests Console";
-	supplies_requestable = 1
-	},
-/turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
 "lTN" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Maintenance Bulkhead"
@@ -58820,6 +58811,12 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"pCW" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/rnd/bepis,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "pDd" = (
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/reagent_containers/pill/epinephrine{
@@ -73901,6 +73898,16 @@
 /obj/structure/sign/warning/pods/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"tLt" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "tLE" = (
 /obj/machinery/light/blacklight/directional/east,
 /obj/machinery/vending/cola/pwr_game,
@@ -74339,16 +74346,6 @@
 	dir = 4
 	},
 /area/station/cargo/sorting)
-"tSw" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/item/screwdriver,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "tSD" = (
 /obj/structure/closet/mini_fridge{
 	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
@@ -77322,14 +77319,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/station/service/library/lounge)
-"uMN" = (
-/obj/effect/turf_decal/trimline/red/end{
-	dir = 8
-	},
-/obj/effect/landmark/navigate_destination/bridge,
-/obj/structure/plaque/static_plaque/golden/commission/northstar,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor4/fore)
 "uMR" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -79774,6 +79763,19 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/carpet/red,
 /area/station/service/theater)
+"vtj" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/item/folder/yellow,
+/obj/item/wrench,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "vtt" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics"
@@ -114670,9 +114672,9 @@ gFU
 kHQ
 mLq
 aQK
-dIq
-gNn
-tSw
+vtj
+tLt
+iHZ
 lSJ
 wqF
 jUP
@@ -114927,7 +114929,7 @@ wZu
 vTt
 vOD
 aQK
-elh
+pCW
 rhs
 dmk
 lSJ
@@ -120575,7 +120577,7 @@ owI
 owI
 hKN
 lWH
-lTL
+iBO
 fLr
 lWH
 tud
@@ -307443,7 +307445,7 @@ rUa
 hJF
 rEU
 rlC
-uMN
+khk
 gfb
 rEU
 hLL

@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - bugfix: "Nightmares will once again spawn"
