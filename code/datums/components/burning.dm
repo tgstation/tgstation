@@ -28,6 +28,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		particle_effect = new(atom_parent, fire_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
 	START_PROCESSING(SSburning, src)
 
+/datum/component/burning/Destroy(force, silent)
+	STOP_PROCESSING(SSburning, src)
+	if(particle_effect)
+		QDEL_NULL(particle_effect)
+	return ..()
+
 /datum/component/burning/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
@@ -42,12 +48,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!QDELETED(atom_parent))
 		atom_parent.resistance_flags &= ~ON_FIRE
 		atom_parent.update_appearance()
-
-/datum/component/burning/Destroy(force, silent)
-	STOP_PROCESSING(SSburning, src)
-	if(particle_effect)
-		QDEL_NULL(particle_effect)
-	return ..()
 
 /datum/component/burning/process(seconds_per_tick)
 	var/atom/atom_parent = parent
