@@ -113,7 +113,6 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
  */
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/parent_turf = parent
-	parent_turf.cut_overlay(overlay)
 	playsound(parent_turf, 'sound/items/welder.ogg', 100, TRUE)
 	fakefire = new(parent_turf)
 	burn_callback = CALLBACK(src, PROC_REF(burn_parent), user)
