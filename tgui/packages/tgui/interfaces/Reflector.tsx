@@ -3,7 +3,11 @@ import { Box, Button, Stack, Icon, LabeledControls, Section, NumberInput, Table 
 import { Window } from '../layouts';
 
 export const Reflector = (props, context) => {
-  const { act, data } = useBackend(context);
+  type Data = {
+    reflector_name: string;
+    rotation_angle: number;
+  };
+  const { act, data } = useBackend<Data>(context);
   const { reflector_name, rotation_angle } = data;
   return (
     <Window title={reflector_name} height={200} width={219}>
