@@ -101,13 +101,13 @@
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
 		SSmove_manager.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
-	if(AIStatus == AI_OFF)
+	if(AIStatus == AI_OFF || QDELETED(src))
 		return FALSE
 	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
 
@@ -188,6 +188,8 @@
 		. = oview(vision_range, target_from)
 
 /mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets)//Step 2, filter down possible targets to things we actually care about
+	if(QDELETED(src))
+		return
 	var/list/all_potential_targets = list()
 
 	if(isnull(possible_targets))
@@ -224,6 +226,8 @@
 
 
 /mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
+	if(QDELETED(A))
+		return FALSE
 	return
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
@@ -242,7 +246,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target) // bail out on invalids
+	if(isturf(the_target) || QDELETED(the_target) || QDELETED(src)) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -293,7 +297,7 @@
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	add_target(new_target)
 	LosePatience()
-	if(target != null)
+	if(!QDELETED(target))
 		GainPatience()
 		Aggro()
 		return TRUE
@@ -573,15 +577,17 @@
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(list/possible_targets)
+	if(QDELETED(src))
+		return FALSE
 	switch(AIStatus)
 		if(AI_ON)
-			. = 1
+			return TRUE
 		if(AI_IDLE)
 			if(FindTarget(possible_targets))
-				. = 1
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
+				return TRUE
 			else
-				. = 0
+				return FALSE
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
 	return !FindTarget(possible_targets)
@@ -592,7 +598,8 @@
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
-		lose_patience_timer_id = addtimer(CALLBACK(src, PROC_REF(LoseTarget)), lose_patience_timeout, TIMER_STOPPABLE)
+		if(!QDELETED(src))
+			lose_patience_timer_id = addtimer(CALLBACK(src, PROC_REF(LoseTarget)), lose_patience_timeout, TIMER_STOPPABLE)
 
 
 /mob/living/simple_animal/hostile/proc/LosePatience()

@@ -407,7 +407,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "rG" = (
-/obj/machinery/capture_the_flag/medisim/blue,
+/obj/machinery/ctf/spawner/medisim/blue,
 /turf/open/indestructible/binary,
 /area/shuttle/escape/simulation)
 "rK" = (
@@ -417,7 +417,7 @@
 /turf/open/floor/stone,
 /area/shuttle/escape/simulation)
 "rQ" = (
-/obj/item/ctf/blue/medisim,
+/obj/item/ctf_flag/blue/medisim,
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/simulation)
 "rT" = (
@@ -1317,11 +1317,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Zk" = (
-/obj/machinery/capture_the_flag/medisim/red,
+/obj/machinery/ctf/spawner/medisim/red,
 /turf/open/indestructible/binary,
 /area/shuttle/escape/simulation)
 "Zv" = (
-/obj/item/ctf/red/medisim,
+/obj/item/ctf_flag/red/medisim,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/simulation)
 "Zx" = (

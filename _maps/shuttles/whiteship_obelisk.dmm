@@ -281,9 +281,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "oU" = (
@@ -467,9 +465,7 @@
 "Bw" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/tank_dispenser/oxygen,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned)
 "BH" = (
@@ -623,7 +619,7 @@
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/bar)
 "Kv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/light/small/broken/directional/west,
 /obj/machinery/button/door/directional/west{
 	name = "Bolt Control";
@@ -742,9 +738,7 @@
 "Qo" = (
 /obj/structure/table,
 /obj/machinery/door/window,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire{
 	pixel_y = 3

@@ -15,7 +15,7 @@
 		return FALSE
 	set_movement_target(controller, fetch_thing)
 
-/datum/ai_behavior/fetch_seek/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/fetch_seek/perform(seconds_per_tick, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
 	var/datum/weakref/thing_ref = controller.blackboard[target_key]
 	var/obj/item/fetch_thing = thing_ref?.resolve()
@@ -58,7 +58,7 @@
 		return FALSE
 	set_movement_target(controller, return_target)
 
-/datum/ai_behavior/deliver_fetched_item/perform(delta_time, datum/ai_controller/controller, delivery_key, storage_key)
+/datum/ai_behavior/deliver_fetched_item/perform(seconds_per_tick, datum/ai_controller/controller, delivery_key, storage_key)
 	. = ..()
 	var/datum/weakref/return_ref = controller.blackboard[delivery_key]
 	var/mob/living/return_target = return_ref?.resolve()
@@ -108,7 +108,7 @@
 		return FALSE // This isn't food at all!
 	set_movement_target(controller, snack)
 
-/datum/ai_behavior/eat_fetched_snack/perform(delta_time, datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/eat_fetched_snack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, delivery_key)
 	. = ..()
 	var/datum/weakref/thing_ref = controller.blackboard[target_key]
 	var/obj/item/snack = thing_ref?.resolve()
@@ -122,7 +122,7 @@
 
 	if(isturf(snack.loc))
 		basic_pawn.melee_attack(snack) // snack attack!
-	else if(iscarbon(snack.loc) && DT_PROB(10, delta_time))
+	else if(iscarbon(snack.loc) && SPT_PROB(10, seconds_per_tick))
 		basic_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
 
 	if(QDELETED(snack)) // we ate it!
@@ -150,7 +150,7 @@
 	if (!length(controller.blackboard[BB_FETCH_IGNORE_LIST]))
 		return
 
-/datum/ai_behavior/forget_failed_fetches/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/forget_failed_fetches/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	COOLDOWN_START(src, reset_ignore_cooldown, cooldown_duration)
 	controller.blackboard[BB_FETCH_IGNORE_LIST] = list()
