@@ -4,8 +4,13 @@
 #define NONSENSICAL_VALUE -99999
 #warn lemnon todo, reorder
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on, l_angle, l_dir)
+	// We null everything but l_dir, because we don't want to allow for modifications while frozen
 	if(light_flags & LIGHT_FROZEN)
-		return
+		l_range = null
+		l_power = null
+		l_color = null
+		l_on = null
+		l_angle = null
 
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
@@ -154,7 +159,8 @@
 
 /// Setter for the light direction of this atom
 /atom/proc/set_light_dir(new_value)
-	if(new_value == light_dir || light_flags & LIGHT_FROZEN)
+	// No frozen check here because we allow direction changes in a freeze 
+	if(new_value == light_dir)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_DIR, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
