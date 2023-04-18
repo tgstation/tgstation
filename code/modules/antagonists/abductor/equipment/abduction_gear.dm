@@ -134,8 +134,8 @@
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/armor/abductor/vest/process(delta_time)
-	combat_cooldown += delta_time
+/obj/item/clothing/suit/armor/abductor/vest/process(seconds_per_tick)
+	combat_cooldown += seconds_per_tick
 	if(combat_cooldown >= initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
@@ -339,7 +339,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		var/obj/item/organ/internal/heart/gland/G = C.getorganslot("heart")
+		var/obj/item/organ/internal/heart/gland/G = C.get_organ_slot("heart")
 		if(!istype(G))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -616,7 +616,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
-			if (L.getorganslot(ORGAN_SLOT_HEART))
+			if (L.get_organ_slot(ORGAN_SLOT_HEART))
 				helptext = span_notice("Subject suitable for experiments.")
 			else
 				helptext = span_warning("Subject unsuitable for experiments.")
@@ -861,13 +861,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		START_PROCESSING(SSobj, src)
 		to_chat(AM, span_danger("You feel a series of tiny pricks!"))
 
-/obj/structure/table/optable/abductor/process(delta_time)
+/obj/structure/table/optable/abductor/process(seconds_per_tick)
 	. = PROCESS_KILL
 	for(var/mob/living/carbon/C in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_am * delta_time)
-				C.reagents.add_reagent(chemical, inject_am * delta_time)
+			if(C.reagents.get_reagent_amount(chemical) < inject_am * seconds_per_tick)
+				C.reagents.add_reagent(chemical, inject_am * seconds_per_tick)
 
 /obj/structure/table/optable/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -904,3 +904,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /datum/armor/under_abductor
 	bomb = 10
 	bio = 10
+
+#undef BATON_CUFF
+#undef BATON_MODES
+#undef BATON_PROBE
+#undef BATON_SLEEP
+#undef BATON_STUN
+#undef GIZMO_MARK
+#undef GIZMO_SCAN
+#undef MIND_DEVICE_CONTROL
+#undef MIND_DEVICE_MESSAGE
+#undef VEST_COMBAT
+#undef VEST_STEALTH

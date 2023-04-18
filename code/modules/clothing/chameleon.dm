@@ -1052,3 +1052,5 @@
 	var/obj/item/gun/new_gun = new guntype(src)
 	set_chameleon_gun(new_gun)
 	qdel(new_gun)
+
+#undef EMP_RANDOMISE_TIME

@@ -202,7 +202,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 				return
 			succeed_objective()
 
-/datum/traitor_objective/steal_item/process(delta_time)
+/datum/traitor_objective/steal_item/process(seconds_per_tick)
 	var/mob/owner = handler.owner?.current
 	if(objective_state != OBJECTIVE_STATE_ACTIVE || !bug.planted_on)
 		return PROCESS_KILL
@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		return PROCESS_KILL
 	if(get_dist(get_turf(owner), get_turf(bug)) > max_distance)
 		return
-	time_fulfilled += delta_time * (1 SECONDS)
+	time_fulfilled += seconds_per_tick * (1 SECONDS)
 	if(time_fulfilled >= hold_time_required * (1 MINUTES))
 		progression_reward += extra_progression
 		telecrystal_reward += extra_tc
@@ -250,7 +250,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/device_syndie.dmi'
 	icon_state = "bug"
 
 	/// The object on which this bug can be planted on. Has to be a type.
@@ -265,7 +265,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	if(planted_on)
 		return
 
-	if(user.mind?.has_antag_datum(/datum/antagonist/traitor))
+	if(IS_TRAITOR(user))
 		if(target_object_type)
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")

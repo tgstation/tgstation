@@ -132,10 +132,7 @@
 	pixel_x = -8;
 	pixel_y = 13
 	},
-/obj/item/food/soup/stew{
-	name = "porridge";
-	pixel_y = 3
-	},
+/obj/item/reagent_containers/cup/bowl/soup/stew,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

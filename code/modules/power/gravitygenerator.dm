@@ -311,14 +311,16 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	update_use_power(ACTIVE_POWER_USE)
 
 	soundloop.start()
-	if (!gravity_in_level())
+	var/old_gravity = gravity_in_level()
+	complete_state_update()
+	gravity_field = new(src, 2, TRUE, 6)
+
+	if (!old_gravity)
 		if(SSticker.current_state == GAME_STATE_PLAYING)
 			investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 			message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
-	gravity_field = new(src, 2, TRUE, 6)
 
-	complete_state_update()
 
 /obj/machinery/gravity_generator/main/proc/disable()
 	charging_state = POWER_IDLE
@@ -327,13 +329,15 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 	soundloop.stop()
 	QDEL_NULL(gravity_field)
-	if (gravity_in_level())
+	var/old_gravity = gravity_in_level()
+	complete_state_update()
+
+	if (old_gravity)
 		if(SSticker.current_state == GAME_STATE_PLAYING)
 			investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
 			message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
 
-	complete_state_update()
 
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
 	update_appearance()
@@ -388,7 +392,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			continue
 		if(!is_valid_z_level(T, mob_turf))
 			continue
-		mobs.update_gravity(mobs.has_gravity())
+		if(isliving(mobs))
+			var/mob/living/grav_update = mobs
+			grav_update.refresh_gravity()
 		if(mobs.client)
 			shake_camera(mobs, 15, 1)
 			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
@@ -420,11 +426,6 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		else
 			GLOB.gravity_generators["[z]"] -= src
 		SSmapping.calculate_z_level_gravity(z)
-
-/obj/machinery/gravity_generator/main/proc/change_setting(value)
-	if(value != setting)
-		setting = value
-		shake_everyone()
 
 /obj/machinery/gravity_generator/main/proc/blackout()
 	charge_count = 0
@@ -471,3 +472,12 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	<li>Mend the damaged framework with a welding tool.</li>
 	<li>Add additional plasteel plating.</li>
 	<li>Secure the additional plating with a wrench.</li></ol>"}
+
+#undef POWER_IDLE
+#undef POWER_UP
+#undef POWER_DOWN
+
+#undef GRAV_NEEDS_PLASTEEL
+#undef GRAV_NEEDS_SCREWDRIVER
+#undef GRAV_NEEDS_WELDING
+#undef GRAV_NEEDS_WRENCH

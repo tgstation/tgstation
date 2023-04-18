@@ -36,7 +36,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
-		id_tag = SSnetworks.assign_random_name()
+		id_tag = assign_random_name()
 		var/static/list/tool_screentips = list(
 			TOOL_MULTITOOL = list(
 				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",

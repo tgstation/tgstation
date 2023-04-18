@@ -85,3 +85,6 @@
 			var/turf/turf = get_turf(computer)
 			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))
 			return TRUE
+
+#undef ATMOZPHERE_SCAN_ENV
+#undef ATMOZPHERE_SCAN_CLICK

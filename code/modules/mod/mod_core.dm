@@ -243,7 +243,7 @@
 	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
-	var/obj/item/organ/internal/stomach/ethereal/ethereal_stomach = mod.wearer.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/ethereal_stomach = mod.wearer.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(ethereal_stomach))
 		return
 	return ethereal_stomach

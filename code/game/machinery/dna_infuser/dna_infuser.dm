@@ -10,7 +10,7 @@
 	icon_state = "infuser"
 	base_icon_state = "infuser"
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
@@ -149,7 +149,7 @@
 	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
 	// Remove organ typepaths from the list if they're incompatible with target.
 	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
-		var/obj/item/organ/old_organ = target.getorganslot(initial(new_organ.slot))
+		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
 			if((old_organ.type != new_organ) && (old_organ.status != ORGAN_ROBOTIC))
 				continue // Old organ can be mutated!

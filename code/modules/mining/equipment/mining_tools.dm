@@ -204,6 +204,7 @@
 	. = ..()
 	. += span_notice("Use in hand to switch configuration.")
 	. += span_notice("It functions as a [tool_behaviour] tool.")
+	. += span_danger("<i>This weapon has no random critical hits.</i>")
 
 /obj/item/trench_tool/update_icon_state()
 	. = ..()
