@@ -59,12 +59,11 @@
 
 /obj/item/gun/ballistic/bow/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_BACK)
-		if(chambered)
-			balloon_alert(user, "the arrow falls out!")
-			drop_arrow()
-			drawn = FALSE
-			update_appearance()
+	if(slot == ITEM_SLOT_BACK && chambered)
+		balloon_alert(user, "the arrow falls out!")
+		drop_arrow()
+		drawn = FALSE
+		update_appearance()
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)
 	return //no clicking sounds please
