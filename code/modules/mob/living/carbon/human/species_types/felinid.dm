@@ -27,7 +27,19 @@
 	if(istype(chem, /datum/reagent/toxin/carpotoxin))
 		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
-
+	if(istype(chem, /datum/reagent/consumable/coco) || istype(chem, /datum/reagent/consumable/hot_coco) || istype(chem, /datum/reagent/consumable/milk/chocolate_milk) || istype(chem, /datum/reagent/consumable/chocolatepudding))
+		switch(rand(55))
+			if(36 to 55)
+				H.adjust_disgust(15)
+			if(31 to 35)
+				H.visible_message(span_warning(pick("[H] dry heaves!", "[H] coughs!", "[H] splutters!")))
+			if(21 to 30)
+				var/sick_message = pick("Your insides revolt at the presence of lethal chocolate!", "You feel nyauseous.", "You're nya't feeling so good.", "You feel like your insides are melting.", "You feel illsies.")
+				to_chat(H, span_notice("[sick_message]"))
+			if(0 to 20)
+				var/obj/item/organ/guts = pick(list(H.get_organ_slot(ORGAN_SLOT_LIVER), H.get_organ_slot(ORGAN_SLOT_BRAIN), H.get_organ_slot(ORGAN_SLOT_HEART), H.get_organ_slot(ORGAN_SLOT_EYES)))
+				guts.apply_organ_damage(2)
+		return FALSE
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
 	if(ishuman(carbon_being))
