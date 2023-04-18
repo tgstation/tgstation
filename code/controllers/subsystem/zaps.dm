@@ -2,7 +2,7 @@
 
 //Return values for zap processing.
 ///Stop the zap, remove from processing and delete the zap.
-#define KILL_ZAP 0
+#define KILL_ZAP null
 ///Stop zap processing for the tick.
 #define STOP_ZAP 1
 ///End of zap process loop. Will let the zap to process again in the same tick.
@@ -202,6 +202,7 @@ SUBSYSTEM_DEF(zaps)
 	zap.zap_range = next_range
 	zap.source = source
 	zap.shocked_targets = shocked_targets
+	zap.power = power
 
 	if(MC_TICK_CHECK)
 		return STOP_ZAP
