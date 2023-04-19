@@ -15,7 +15,6 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
-	desc_controls = "Alt + Left-Click to toggle transfer."
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -53,16 +52,13 @@
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
-	update_appearance(UPDATE_ICON)
 	if(use_internal_storage)
 		create_reagents(internal_volume_maximum, TRANSPARENT)
 		if(internal_list_reagents)
 			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		rmb_text = "Detach / Eject / Configure", \
-	)
+	register_context()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -79,6 +75,24 @@
 	if(!ui)
 		ui = new(user, src, "IVDrip", name)
 		ui.open()
+
+/obj/machinery/iv_drip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(attached)
+		context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
+	else if(reagent_container && !use_internal_storage)
+		context[SCREENTIP_CONTEXT_RMB] = "Eject container"
+	else if(!inject_only)
+		context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+
+	if(istype(src, /obj/machinery/iv_drip/plumbing))
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to min"
+	else
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to max"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
@@ -212,10 +226,6 @@
 	if(!can_interact(user))
 		return FALSE
 	if(istype(src, /obj/machinery/iv_drip/plumbing)) // AltClick is used for rotation there
-		return FALSE
-	if(!attached)
-		return FALSE
-	if(!get_reagents())
 		return FALSE
 	return TRUE
 
