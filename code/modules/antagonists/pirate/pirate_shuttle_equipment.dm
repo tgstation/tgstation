@@ -52,7 +52,7 @@
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
 	for(var/obj/machinery/rnd/server/S as anything in SSresearch.science_tech.techweb_servers)
-		if(S.machine_stat & (NOPOWER|BROKEN))
+		if(S.machine_stat & (NOPOWER|BROKEN|EMPED))
 			continue
 		S.emp_act(EMP_LIGHT)
 		new /obj/effect/temp_visual/emp(get_turf(S))
