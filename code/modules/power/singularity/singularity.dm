@@ -165,7 +165,7 @@
 		if(prob(event_chance))
 			event()
 	dissipate(delta_time)
-	radiation_pulse(src, 5, intensity = min(5000, (energy * 4.5) + 1000))
+	radiation_pulse(src, 4, intensity = min(5000, (energy * 4.5) + 1000))
 	check_energy()
 
 /obj/singularity/proc/dissipate(delta_time)
