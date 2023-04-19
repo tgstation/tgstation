@@ -80,7 +80,6 @@
 		lid.pixel_y = lid_y
 		lid.layer = layer
 		. += lid
-	. += ..()
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
