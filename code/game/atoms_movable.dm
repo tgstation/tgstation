@@ -129,6 +129,7 @@
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
+			contents.Remove(em_block) // we don't want these to end up in the atom's contents
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
