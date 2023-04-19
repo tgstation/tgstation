@@ -8,6 +8,8 @@
 #define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
+///Default IV drip transfer rate in units per second
+#define DEFAULT_IV_TRANSFER_RATE 5
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -28,8 +30,8 @@
 	var/atom/attached
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
-	///whether we feed slower
-	var/transfer_rate = MIN_IV_TRANSFER_RATE
+	///The chemicals flow speed
+	var/transfer_rate = DEFAULT_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -119,15 +121,10 @@
 		if("changeRate")
 			set_transfer_rate(text2num(params["rate"]))
 			return TRUE
-		if("toggleTransfer")
-			toggle_transfer_rate()
-			return TRUE
 
 /// Sets the transfer rate to the provided value
 /obj/machinery/iv_drip/proc/set_transfer_rate(new_rate)
 	if(!use_internal_storage && !reagent_container)
-		return
-	if(!attached)
 		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
@@ -140,7 +137,7 @@
 		set_transfer_rate(MAX_IV_TRANSFER_RATE)
 
 /obj/machinery/iv_drip/update_icon_state()
-	if(transfer_rate > 0)
+	if(transfer_rate > 0 && attached)
 		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
 	else
 		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
@@ -315,7 +312,6 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
-	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	attached = null
 	update_appearance(UPDATE_ICON)
 
@@ -367,7 +363,6 @@
 		mode = IV_INJECTING
 		return
 	mode = !mode
-	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
 
 /obj/machinery/iv_drip/examine(mob/user)
