@@ -152,9 +152,16 @@
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
 	teleport.Trigger(target = atom_target)
 
-/// Gives the carp a list of destinations to try and travel between when it has nothing better to do
-/mob/living/basic/carp/proc/migrate_to(list/migration_points)
-	ai_controller.set_blackboard_key(BB_CARP_MIGRATION_PATH, migration_points)
+/// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do
+/mob/living/basic/carp/proc/migrate_to(list/datum/weakref/migration_points)
+	var/list/actual_points = list()
+	for(var/datum/weakref/point_ref as anything in migration_points)
+		var/turf/point_resolved = point_ref.resolve()
+		if(QDELETED(point_resolved))
+			return // invalid list, we can't migrate to this
+		actual_points += point_resolved
+
+	ai_controller.set_blackboard_key(BB_CARP_MIGRATION_PATH, actual_points)
 
 /**
  * Holographic carp from the holodeck

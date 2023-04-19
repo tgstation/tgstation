@@ -353,7 +353,9 @@ multiple modular subtrees with behaviors
  */
 #define TRACK_AI_DATUM_TARGET(tracked_datum, key) do { \
 	if(isweakref(tracked_datum)) { \
-		stack_trace("Weakref found in ai datum blackboard! This is an outdated method of ai reference handling, please remove it."); \
+		var/datum/_bad_weakref = tracked_datum
+		stack_trace("Weakref (Actual datum: [_bad_weakref.resolve()]) found in ai datum blackboard! \
+			This is an outdated method of ai reference handling, please remove it."); \
 	}; \
 	else if(isdatum(tracked_datum)) { \
 		var/datum/_tracked_datum = tracked_datum; \
@@ -559,8 +561,9 @@ multiple modular subtrees with behaviors
 	SIGNAL_HANDLER
 
 	var/list/list/remove_queue = list(blackboard)
-	while(length(remove_queue))
-		var/list/next_to_clear = popleft(remove_queue)
+	var/index = 1
+	while(index <= length(remove_queue))
+		var/list/next_to_clear = remove_queue[index]
 		for(var/inner_value in next_to_clear)
 			var/associated_value = next_to_clear[inner_value]
 			// We are a lists of lists, add the next value to the queue so we can handle references in there
@@ -580,6 +583,8 @@ multiple modular subtrees with behaviors
 			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
 			else if(associated_value == source)
 				next_to_clear -= inner_value
+
+		index += 1
 
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET
