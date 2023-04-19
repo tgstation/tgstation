@@ -129,13 +129,15 @@ SUBSYSTEM_DEF(mapping)
 
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
+	space_levels_so_far = 0
 	while (space_levels_so_far < config.space_ruin_levels)
+		add_new_zlevel("Empty Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
-	// and one level with no ruins
-	for (var/i in 1 to config.space_empty_levels)
+	// Create space levels with no ruins
+	space_levels_so_far = 0
+	while (space_levels_so_far < config.space_empty_levels)
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
@@ -426,9 +428,10 @@ Used by the AI doomsday and the self-destruct nuke.
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
+	space_levels_so_far = 0
 	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
+		add_new_zlevel("Empty Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
