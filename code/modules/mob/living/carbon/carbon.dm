@@ -506,9 +506,15 @@
 	if(isnull(.))
 		return
 	if(new_value == LYING_DOWN)
-		add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+		if(HAS_TRAIT(src, FOOD_SLIDE))
+			add_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
+		else
+			add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 	else
-		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+		if(HAS_TRAIT(src, FOOD_SLIDE))
+			remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
+		else
+			remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 
 
 //Updates the mob's health from bodyparts and mob damage variables

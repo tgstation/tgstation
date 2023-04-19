@@ -248,8 +248,8 @@
 	.=..()
 	if(HAS_TRAIT(owner, FOOD_SLIDE))
 		REMOVE_TRAIT(owner, FOOD_SLIDE, "food_buffs")
-		if(owner.has_movespeed_modifier("belly_slide"))
-			owner.remove_movespeed_modifier("belly_slide")
+		if(owner.has_movespeed_modifier(/datum/movespeed_modifier/belly_slide))
+			owner.remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
 
 
 /datum/status_effect/food/stam_regen
