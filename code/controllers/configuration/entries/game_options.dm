@@ -421,4 +421,7 @@
 /datum/config_entry/string/tts_http_url
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/tts_http_token
+	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
 /datum/config_entry/flag/give_tutorials_without_db

@@ -5,7 +5,7 @@ import io
 import gc
 import json
 import subprocess
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, abort
 
 tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
 
@@ -22,11 +22,15 @@ with open("./tts_voices_mapping.json", "r") as file:
 
 voice_name_mapping_reversed = {v: k for k, v in voice_name_mapping.items()}
 
+authorization_token = "coolio"
+
 @app.route("/tts")
 def text_to_speech():
 	global request_count
-	request_count += 1
+	if authorization_token != request.headers["Authorization"]:
+		abort(401)
 
+	request_count += 1
 	voice = request.args.get("voice", '')
 	if use_voice_name_mapping:
 		voice = voice_name_mapping_reversed[voice]
@@ -53,6 +57,9 @@ def text_to_speech():
 
 @app.route("/tts-voices")
 def voices_list():
+	if authorization_token != request.headers["Authorization"]:
+		abort(401)
+
 	if use_voice_name_mapping:
 		data = list(voice_name_mapping.values())
 		data.sort()
