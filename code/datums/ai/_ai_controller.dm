@@ -14,13 +14,6 @@ multiple modular subtrees with behaviors
 	 *
 	 * DO NOT set values in the blackboard directly, and especially not if you're adding a datum reference to this!
 	 * Use the setters, this is important for reference handing.
-	 *
-	 * Does not (currently) support three-level deep lists.
-	 * * blackboard = list("key" = datum) is okay
-	 * * blackboard = list("key" = "value") is okay
-	 * * blackboard = list("key" = list("key2" = datum)) is okay
-	 * * blackboard = list("key" = list(datum = "value")) is okay
-	 * * blackboard = list("key" = list("key2" = list("key3" = datum))) is not okay and you shouldn't need this anyways
 	 */
 	var/list/blackboard = list()
 
@@ -562,26 +555,47 @@ multiple modular subtrees with behaviors
 		(The passed value is not tracked in the passed list.)")
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
-/// Works with keys that associate to lists, but no deeper (currently)
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/key in blackboard)
-		var/inner_value = blackboard[key]
-		if(blackboard[key] == source)
-			CLEAR_AI_DATUM_TARGET(blackboard[key], key)
-			blackboard[key] = null
+#ifdef TESTING
+	var/depth = 1
+#endif
 
-		else if(islist(inner_value))
-			for(var/inner_key in inner_value)
-				if(inner_key == source)
-					// flat list
-					CLEAR_AI_DATUM_TARGET(source, key)
-					inner_value -= source
-				else if(inner_value[inner_key] == source)
-					// assoc list
-					CLEAR_AI_DATUM_TARGET(source, key)
-					inner_value -= inner_key
+	testing("AI blackboard reference cleanup: Detected [source] deletion.")
+
+	var/list/list/remove_queue = list(blackboard)
+	while(length(remove_queue))
+		var/list/next_to_clear = popleft(remove_queue)
+		for(var/inner_value in next_to_clear)
+			testing("AI blackboard reference cleanup: The value [inner_value] was found at [depth].")
+			testing("AI blackboard reference cleanup: The value [inner_value] at depth [depth] had the assoc value of [inner_value].")
+			var/associated_value = next_to_clear[inner_value]
+			// We are a lists of lists, add the next value to the queue so we can handle references in there
+			if(islist(inner_value) && length(inner_value))
+				remove_queue += inner_value
+				testing("-- AI blackboard reference cleanup: Found list at depth [depth], adding to queue.")
+
+			// We found the value that's been deleted. Clear it out from this list
+			else if(inner_value == source)
+				CLEAR_AI_DATUM_TARGET(source, inner_value)
+				next_to_clear -= inner_value
+				testing("-- AI blackboard reference cleanup: Clearing [source] reference, at depth [depth].")
+
+			// We are an assoc lists of lists, the list at the next value so we can handle references in there
+			if(islist(associated_value) && length(associated_value))
+				remove_queue += associated_value
+				testing("-- AI blackboard reference cleanup: Found list assocly at depth [depth], adding to queue.")
+
+			// We found the value that's been deleted
+			else if(associated_value == source)
+				CLEAR_AI_DATUM_TARGET(associated_value, inner_value)
+				next_to_clear -= inner_value
+				testing("-- AI blackboard reference cleanup: Clearing [source] assoc reference, at depth [depth].")
+
+#ifdef TESTING
+		depth += 1
+#endif
 
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET
