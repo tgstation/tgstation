@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
-		var/default_ruin_amount = global.config.defaultmap.space_ruin_levels
+		var/default_ruin_amount = 7
 		var/proportional_budget = CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruin_amount)
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
 
