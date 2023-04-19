@@ -5401,6 +5401,7 @@
 #include "monkestation\code\modules\mob\living\carbon\human\carbon.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\custom_bodytype.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\damage_procs.dm"
+#include "monkestation\code\modules\mob\living\carbon\human\emotes.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\human_defines.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\simian_gags.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\worn_overlays.dm"
