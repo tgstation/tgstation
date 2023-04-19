@@ -229,13 +229,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"tC" = (
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "ug" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -258,6 +251,13 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"xu" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "xG" = (
 /obj/structure/cable,
@@ -322,6 +322,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"Cn" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "Cu" = (
 /obj/structure/cable,
 /obj/machinery/field/generator,
@@ -428,9 +431,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"Lu" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "LD" = (
 /obj/structure/cable,
 /obj/machinery/camera/directional/north{
@@ -1058,7 +1058,7 @@ WZ
 (19,1,1) = {"
 zs
 LD
-tC
+xu
 Ib
 xG
 oK
@@ -1095,9 +1095,9 @@ WZ
 ug
 ug
 ug
-WZ
-Lu
-Lu
-Lu
-Lu
+Cn
+Cn
+Cn
+Cn
+Cn
 "}
