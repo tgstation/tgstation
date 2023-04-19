@@ -53,4 +53,4 @@
 /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
-	syndicate_implant = TRUE
+	organ_flags = ORGAN_SYNTHETIC | ORGAN_HIDDEN

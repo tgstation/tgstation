@@ -6,10 +6,11 @@
  * message - The message inside the window
  * title - The title of the window
  * list/items - The list of items to display
+ * min_checked - The minimum number of checkboxes that must be checked (defaults to 1)
  * max_checked - The maximum number of checkboxes that can be checked (optional)
  * timeout - The timeout for the input (optional)
  */
-/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, max_checked = 50, timeout = 0)
+/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -22,7 +23,7 @@
 			return
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
-	var/datum/tgui_checkbox_input/input = new(user, message, title, items, max_checked, timeout)
+	var/datum/tgui_checkbox_input/input = new(user, message, title, items, min_checked, max_checked, timeout)
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -45,13 +46,16 @@
 	var/timeout
 	/// Whether the input was closed
 	var/closed
+	/// Minimum number of checkboxes that must be checked
+	var/min_checked
 	/// Maximum number of checkboxes that can be checked
 	var/max_checked
 
-/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, max_checked, timeout)
+/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, min_checked, max_checked, timeout)
 	src.title = title
 	src.message = message
 	src.items = items.Copy()
+	src.min_checked = min_checked
 	src.max_checked = max_checked
 
 	if (timeout)
@@ -94,6 +98,7 @@
 	var/list/data = list()
 
 	data["items"] = items
+	data["min_checked"] = min_checked
 	data["max_checked"] = max_checked
 	data["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
 	data["message"] = message
@@ -110,7 +115,7 @@
 	switch(action)
 		if("submit")
 			var/list/selections = params["entry"]
-			if(length(selections) > 0 && length(selections) <= max_checked)
+			if(length(selections) >= min_checked && length(selections) <= max_checked)
 				set_choices(selections)
 			closed = TRUE
 			SStgui.close_uis(src)

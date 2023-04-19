@@ -530,3 +530,171 @@
   vinylspiders:
   - bugfix: fixes a runtime that can occur if a circuit floor gets changed into something
       else.
+2023-04-16:
+  Cheshify:
+  - bugfix: The North Star has functional elevators once again.
+  Dawnseer:
+  - rscadd: Goliath cloak can be worn as a cloak that doesn't provide any armor benefits
+  SyncIt21:
+  - refactor: correctly type casts the turf into open type for the rcd mecha plating
+      action
+  - refactor: removes single letter variable names
+  - refactor: uses datum/ui component to get user for to_chat() instead of usr
+  carlarctg:
+  - qol: Set default IV transfer rate to maximum (5) instead of 0.
+  flowercuco:
+  - balance: syndiekits cost 20 TC instead of 25 TC
+  tf-4:
+  - bugfix: Colossuses are now actually able to trigger their final attack - be careful
+      when they drop below 10% HP!
+  vinylspiders:
+  - bugfix: spoon overlays will now update when you eat from them to reflect that
+      food = gone. it really is gone, you can stop beating yourself with the spoon.
+      oh god please stop--
+2023-04-17:
+  ArcaneMusic:
+  - imageadd: Hydroponics trays now have pollen particles that they generate when
+      they share stats and chems. Non-allergenic!
+  Cheshify:
+  - bugfix: The North Star is no longer missing it's commission plaque or the QM's
+      request console.
+  Dawnseer:
+  - bugfix: Fixed warning messages
+  Fikou:
+  - bugfix: death squad officer outfit works
+  - bugfix: fixes lava not cleaning up the permanently on fire trait
+  Helg2:
+  - bugfix: slapper is visible in-hand again.
+  - bugfix: Interdyne and Syn-C Brutus ruins no longer runtime on initializing.
+  - bugfix: Interdyne's smes is now properly wired to the apc.
+  Jacquerel:
+  - bugfix: Renault and other simple animals are now correctly fireproof.
+  JohnFulpWillard:
+  - code_imp: Space Bats are now Basic mobs.
+  Jolly:
+  - bugfix: The pathing for the "Mimes vs Clowns" space ruin should be fixed internally.
+      Whether you see this or not is depended on your server operator(s).
+  NamelessFairy:
+  - admin: Admins can now control the spawn location, potency, production and starting
+      mutations of the space vines event.
+  - bugfix: The space vine event will now correctly give vines mutations when they
+      spawn rather than always being mutation free.
+  - code_imp: Checkbox tgui inputs now support setting a minimum number of inputs
+      rather than it being hardcoded to 1.
+  Rhials:
+  - qol: Ghosts are now notified and given an orbit popup for the Stray Cargo Pod
+      random event.
+  Singul0:
+  - bugfix: a pirate shipmate aboard the pirate cutter has found their lost energy
+      cutlass
+  SyncIt21:
+  - bugfix: null client error for balloon alert when toggling the electrolyser on/off
+      via the UI
+  Vect0r:
+  - balance: The blowgun no longer takes time to windup before you can shoot it.
+  YehnBeep:
+  - rscadd: Adds pAI cards to public areas on the North Star
+  Zonespace27:
+  - bugfix: Eigenstasium lockers no longer bypass teleport protection
+  carlarctg:
+  - rscadd: Added a nukeops victory state for failing to nuke the station, but somehow
+      hijacking the shuttle.
+  - balance: Makes Black Market Uplinks more easily craftable, adds them to uncommon
+      maint loot pool
+  flowercuco:
+  - qol: text that appears when you dont have an uplink in the traitor panel now tells
+      you the codes for your replacement uplink
+  jlsnow301:
+  - bugfix: HFR should now allow you to select input/moderator rates
+  - bugfix: Crystallizer ui should now properly show input gases
+  necromanceranne:
+  - balance: Nitrous oxide, the reagent, increases bleed rate from wounds rather than
+      directly subtracting blood. It can be counteracted using coagulants (such as
+      those in epipens).
+  - balance: Heparin purges coagulants. You have to remove heparin from someone's
+      system before you can use coagulants.
+  the-og-gear:
+  - admin: Added a SpinAnimation option for all atoms in the View-Variables drop-down
+      menu
+  - admin: Added a button to stop all animations right next to the SpinAnimation option
+      in the View-Variables drop-down menu
+  timothymtorres:
+  - code_imp: Cleanup 1 letter var names in martial arts files
+  vinylspiders:
+  - qol: added fifty stack versions of remaining glass sheet stacks for ease of debugging
+  - refactor: refactored sheet crafting to better support directional constructions
+      that aren't windows
+  - bugfix: fixes hostile mobs sometimes being able to target an atom that has been
+      marked for deletion and then becoming confused, and in a similar vein fixes
+      mobs sometimes still running their AI while being marked for deletion.
+  - bugfix: 'icebox: patched up some holes underneath the vent doors in science burn
+      room'
+  zxaber:
+  - balance: Engineer Borgs now have a tool to manipulate material stacks (and also
+      tile stacks). This replaces the R-Glass tool.
+2023-04-18:
+  Helg2:
+  - bugfix: Pirate and hunter shuttles now have no wi-fi. (added cutAIwire apc helpers
+      to them)
+  - bugfix: Added missing apc helpers to apc on DeepStorage (the bunker with "away"
+      access)
+  IHateGeese:
+  - rscadd: emagging the BSA explodes the next person to fire it.
+  NamelessFairy:
+  - bugfix: Fixes being unable to switch modes on the Oingo Boingo Punch-face
+  Singul0:
+  - bugfix: Nanotrasen has supplied the North Star with a B.E.P.I.S Chamber.
+  SyncIt21:
+  - bugfix: RTD animation effect adding a timer on deleted floor tiles.
+  tralezab:
+  - bugfix: Body purist headrevs having a bad time with their implant
+  zxaber:
+  - balance: Cyborg Rechargers now restock with metal and glass from the ore silo,
+      and no longer grant the materials for free.
+2023-04-19:
+  ATHATH:
+  - bugfix: Laser pointers will no longer disable borgs that have somehow been made
+      immune to flashes.
+  BlueMemesauce:
+  - bugfix: Fixed a bug where additonal receivers wouldn't work if the first one was
+      on but disconnected
+  Dawnseer:
+  - bugfix: The rolling table actually plays the rolling sound, as the lord intended.
+  Helg2:
+  - qol: Reflectors now have better rotating menu. Changed from alt-click to just
+      lmb.
+  Iamgoofball:
+  - bugfix: PDA messaging is now more immersive based on age
+  JohnFulpWillard:
+  - bugfix: Plague doctor hats no longer give you an FOV.
+  - refactor: '[Mafia] All Mafia abilities have been overhauled in the backend, it''s
+      now much easier to understand what each role''s ability can do and how it works.'
+  - admin: '[Mafia] Admin setup of Mafia is now in TGUI'
+  - balance: '[Mafia] Doctors/Officers can protect themselves once per game. Be careful
+      around them!'
+  - bugfix: '[Mafia] Thoughtfeeder''s UI buttons at night won''t overlap with eachother.'
+  - bugfix: '[Mafia] HoP''s votes now actually matter, instead of being purely visual.'
+  - qol: '[Mafia] Lawyers, Wardens, etc. now perform their night ability at night,
+      instead of the day prior.'
+  - qol: '[Mafia] Night time now lasts 40 seconds instead of 45.'
+  - admin: Secret buttons for Engineering/Brig maint accesses should now work more
+      consistently.
+  Melbert:
+  - qol: Hydroponics trays should update more snappily now
+  Mey-Ha-Zah:
+  - imageadd: Updated Wrapping Icons.
+  Supermichael777:
+  - bugfix: ' Plastitanium glass no longer always creates stacks of 50'
+  Tattle:
+  - bugfix: Nightmares will once again spawn
+  carlarctg:
+  - qol: Shoe storage can now fit box cutters, pills, and toy pistol magazines.
+  vinylspiders:
+  - bugfix: candles can now be used to light other candles, cigarettes, and anything
+      else that needs lighting in a pinch.
+  - bugfix: flashlights that have directional lights now have directional sprites
+      to match
+  - bugfix: candles can now be snuffed again
+  - imageadd: adds new inhand sprites for most flashlights in the game, including
+      animated flares and candles
+  - refactor: cleaned up flashlight.dm's unnecessary bits and made some slight improvements

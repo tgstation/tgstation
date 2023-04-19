@@ -1,0 +1,3 @@
+# turning space bat simple animals into basic mobs
+
+/mob/living/simple_animal/hostile/retaliate/bat : /mob/living/basic/bat{@OLD}

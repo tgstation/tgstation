@@ -1590,7 +1590,7 @@
 // helps bleeding wounds clot faster
 /datum/reagent/medicine/coagulant
 	name = "Sanguirite"
-	description = "A proprietary coagulant used to help bleeding wounds clot faster."
+	description = "A proprietary coagulant used to help bleeding wounds clot faster. It is purged by heparin."
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
