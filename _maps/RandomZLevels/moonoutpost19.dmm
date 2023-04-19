@@ -3402,13 +3402,10 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "rb" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
-	start_charge = 100
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
@@ -3488,23 +3485,6 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
-"rI" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/worn_out,
-/obj/effect/mapping_helpers/apc/full_charge,
-/obj/effect/mapping_helpers/apc/unlocked,
-/obj/effect/mapping_helpers/apc/cell_10k,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "rO" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -3765,12 +3745,11 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ts" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	name = "Worn-out APC";
-	pixel_y = -25;
-	req_access = "150";
-	start_charge = 0
+/obj/machinery/power/apc/auto_name/directional/south{
+	req_access = "150"
 	},
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3782,22 +3761,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"tt" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/worn_out,
-/obj/effect/mapping_helpers/apc/full_charge,
-/obj/effect/mapping_helpers/apc/unlocked,
-/obj/effect/mapping_helpers/apc/cell_10k,
-/obj/structure/cable,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "tu" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -6117,23 +6080,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"GE" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/power/apc/worn_out,
-/obj/effect/mapping_helpers/apc/full_charge,
-/obj/effect/mapping_helpers/apc/unlocked,
-/obj/effect/mapping_helpers/apc/cell_10k,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/turf/open/misc/asteroid/moon{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "GG" = (
 /obj/structure/closet/secure_closet{
 	locked = 0;
@@ -6932,13 +6878,10 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "Ml" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 4;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = 25;
-	start_charge = 100
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
 /turf/open/floor/iron/white{
@@ -8066,13 +8009,10 @@
 /turf/open/floor/carpet/orange,
 /area/awaymission/moonoutpost19/arrivals)
 "UT" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
-	start_charge = 100
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /obj/effect/turf_decal/lunar_sand,
 /turf/open/floor/plating{
@@ -38515,7 +38455,7 @@ UP
 UP
 UP
 UP
-rI
+UP
 UP
 UP
 dZ
@@ -43152,7 +43092,7 @@ UP
 UP
 UP
 UP
-tt
+UP
 UP
 UP
 UP
@@ -43881,7 +43821,7 @@ UP
 UP
 UP
 UP
-GE
+UP
 UP
 UP
 UP
