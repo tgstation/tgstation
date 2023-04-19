@@ -16,6 +16,7 @@
 	open_menu()
 	return TRUE
 
+/// Opens the pet command options menu for a mob.
 /datum/action/cooldown/open_mob_commands/proc/open_menu()
 	var/mob/living/basic/star_gazer/our_mob_resolved = our_mob?.resolve()
 	if(our_mob_resolved)
