@@ -426,10 +426,9 @@ Used by the AI doomsday and the self-destruct nuke.
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	space_levels_so_far = 0
 	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
-		add_new_zlevel("Empty Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
+		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
