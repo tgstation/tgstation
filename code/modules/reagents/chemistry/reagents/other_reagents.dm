@@ -1459,7 +1459,8 @@
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
-	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
+	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery. As it is an anticoagulant, nitrous oxide is best \
+		used alongside sanguirite to allow blood clotting to continue."
 	reagent_state = LIQUID
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#808080"
@@ -1480,11 +1481,24 @@
 		var/drowsiness_to_apply = max(round(reac_volume, 1) * 2 SECONDS, 4 SECONDS)
 		exposed_mob.adjust_drowsiness(drowsiness_to_apply)
 
+/datum/reagent/nitrous_oxide/on_mob_metabolize(mob/living/affected_mob)
+	if(!HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //IF the mob does not have a coagulant in them, we add the blood mess trait to make the bleed quicker
+		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+	return ..()
+
+/datum/reagent/nitrous_oxide/on_mob_end_metabolize(mob/living/affected_mob)
+	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+	return ..()
+
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_drowsiness(4 SECONDS * REM * seconds_per_tick)
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/affected_human = affected_mob
-		affected_human.blood_volume = max(affected_human.blood_volume - (10 * REM * seconds_per_tick), 0)
+
+	if(!HAS_TRAIT(affected_mob, TRAIT_BLOODY_MESS) && !HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //So long as they do not have a coagulant, if they did not have the bloody mess trait, they do now
+		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+
+	else if(HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //if we find they now have a coagulant, we remove the trait
+		REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 2
 		affected_mob.adjust_confusion_up_to(2 SECONDS, 5 SECONDS)

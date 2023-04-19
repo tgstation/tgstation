@@ -45,6 +45,9 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	// Blue, dim light
+	light_power = 0.8
+	light_color = LIGHT_COLOR_BLUE
 	/// associative lazylist of the form: list(mob calling us = hologram representing that mob).
 	/// this is only populated for holopads answering calls from another holopad
 	var/list/masters
@@ -527,31 +530,29 @@ Possible to do for anyone motivated enough:
 			to_chat(user, "[span_danger("ERROR:")] \black Image feed in progress.")
 			return
 
-		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
+		// What to pull our appearance out of
+		var/obj/effect/overlay/holo_pad_hologram/hologram = new(loc)//Spawn a blank effect at the location.
+		var/atom/work_off = AI?.hologram_appearance || user
+
+		hologram.icon = work_off.icon
+		hologram.icon_state = work_off.icon_state
+		hologram.copy_overlays(work_off, TRUE)
+		hologram.makeHologram()
+
 		if(AI)
-			Hologram.icon = AI.holo_icon
 			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad
 		else //make it like real life
-			Hologram.icon = user.icon
-			Hologram.icon_state = user.icon_state
-			Hologram.copy_overlays(user, TRUE)
-			//codersprite some holo effects here
-			Hologram.alpha = 100
-			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-			Hologram.Impersonation = user
+			hologram.Impersonation = user
+		hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+		hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
+		SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
+		hologram.set_anchored(TRUE)//So space wind cannot drag it.
+		hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 
-		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-		Hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
-		SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
-		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
-		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
-		Hologram.set_light(2) //hologram lighting
-		move_hologram()
-
-		set_holo(user, Hologram)
+		set_holo(user, hologram)
 		visible_message(span_notice("A holographic image of [user] flickers to life before your eyes!"))
 
-		return Hologram
+		return hologram
 	else
 		to_chat(user, "[span_danger("ERROR:")] Unable to project hologram.")
 
@@ -672,20 +673,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		return FALSE
 
 /obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
-	if(LAZYLEN(masters) && masters[user])
-		var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
-		var/transfered = FALSE
-		if(!validate_location(new_turf))
-			if(!transfer_to_nearby_pad(new_turf,user))
-				clear_holo(user)
-				return FALSE
-			else
-				transfered = TRUE
-		//All is good.
-		holo.abstract_move(new_turf)
-		SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
-		if(!transfered)
-			update_holoray(user,new_turf)
+	if(!LAZYLEN(masters) || !masters[user])
+		return TRUE
+	var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
+	var/transfered = FALSE
+	if(!validate_location(new_turf))
+		if(!transfer_to_nearby_pad(new_turf,user))
+			return FALSE
+		else
+			transfered = TRUE
+	//All is good.
+	holo.abstract_move(new_turf)
+	SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
+	if(!transfered)
+		update_holoray(user,new_turf)
 	return TRUE
 
 
@@ -715,21 +716,19 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 // RECORDED MESSAGES
 
 /obj/machinery/holopad/proc/setup_replay_holo(datum/holorecord/record)
-	var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
-	Hologram.add_overlay(record.caller_image)
-	Hologram.alpha = 170
-	Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-	Hologram.dir = SOUTH //for now
-	var/datum/language_holder/holder = Hologram.get_language_holder()
+	var/obj/effect/overlay/holo_pad_hologram/hologram = new(loc)//Spawn a blank effect at the location.
+	hologram.add_overlay(record.caller_image)
+	hologram.makeHologram()
+
+	var/datum/language_holder/holder = hologram.get_language_holder()
 	holder.selected_language = record.language
-	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
-	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
-	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
-	Hologram.set_light(2) //hologram lighting
+	hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
+	hologram.set_anchored(TRUE)//So space wind cannot drag it.
+	hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	visible_message(span_notice("A holographic image of [record.caller_name] flickers to life before your eyes!"))
-	return Hologram
+	return hologram
 
 /obj/machinery/holopad/proc/replay_start()
 	if(!replay_mode)
@@ -827,6 +826,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		QDEL_NULL(disk.record)
 
 /obj/effect/overlay/holo_pad_hologram
+	// Adds KEEP_TOGETHER to ensure we render overlays right
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE|KEEP_TOGETHER
 	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
@@ -858,6 +859,25 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	pixel_x = -32
 	pixel_y = -32
 	alpha = 100
+	var/atom/movable/render_step/emissive/glow
+
+/obj/effect/overlay/holoray/Initialize(mapload)
+	. = ..()
+	if(!render_target)
+		var/static/uid = 0
+		render_target = "holoray#[uid]"
+		uid++
+	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)
+	glow = new(src, render_target)
+	// We need to counteract the pixel offset to ensure we don't double offset (I hate byond)
+	glow.pixel_x = 32
+	glow.pixel_y = 32
+	add_overlay(glow)
+	LAZYADD(update_overlays_on_z, glow)
+
+/obj/effect/overlay/holoray/Destroy(force)
+	. = ..()
+	QDEL_NULL(glow)
 
 #undef CAN_HEAR_ACTIVE_HOLOCALLS
 #undef CAN_HEAR_ALL_FLAGS
