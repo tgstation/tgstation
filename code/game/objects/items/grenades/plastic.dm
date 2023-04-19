@@ -77,7 +77,7 @@
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
-	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")

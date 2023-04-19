@@ -25,7 +25,7 @@
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 
 /obj/item/ammo_box/c38/match
@@ -86,6 +86,10 @@
 	max_ammo = 5
 	caliber = CALIBER_A762
 	multiple_sprites = AMMO_BOX_PER_BULLET
+
+/obj/item/ammo_box/a762/surplus
+	name = "stripper clip (7.62mm Surplus)"
+	ammo_type = /obj/item/ammo_casing/a762/surplus
 
 /obj/item/ammo_box/n762
 	name = "ammo box (7.62x38mmR)"

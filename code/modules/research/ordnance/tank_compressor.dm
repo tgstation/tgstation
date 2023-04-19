@@ -298,7 +298,7 @@
 			compressor_record -= record
 			return TRUE
 		if("save_record")
-			var/datum/data/compressor_record/record  = locate(params["ref"]) in compressor_record
+			var/datum/data/compressor_record/record = locate(params["ref"]) in compressor_record
 			if(!compressor_record || !(record in compressor_record))
 				return
 			print(usr, record)
@@ -344,3 +344,7 @@
 			single_record_data["gases"] += list(initial(gas_path.name) = record.gas_data[gas_path])
 		data["records"] += list(single_record_data)
 	return data
+
+#undef TANK_COMPRESSOR_PRESSURE_LIMIT
+#undef TANK_COMPRESSOR_MAX_TRANSFER_RATE
+#undef SIGNIFICANT_AMOUNT_OF_MOLES

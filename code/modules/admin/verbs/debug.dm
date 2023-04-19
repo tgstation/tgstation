@@ -310,7 +310,7 @@
 			areas_with_multiple_APCs.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/airalarm/AA in GLOB.machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.air_alarms)
 		var/area/A = get_area(AA)
 		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
 			dat += "Skipped over [AA] in invalid location, [AA.loc].<br>"
@@ -737,7 +737,7 @@
 	set name = "Unload CTF"
 	set desc = "Despawns the majority of CTF"
 
-	toggle_id_ctf(usr, unload=TRUE)
+	toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
 
 /client/proc/run_empty_query(val as num)
 	set category = "Debug"
@@ -861,7 +861,7 @@
 	set desc = "Force config reload to world default"
 	if(!check_rights(R_DEBUG))
 		return
-	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", list("No", "Yes")) == "Yes")
+	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
 /// A debug verb to check the sources of currently running timers

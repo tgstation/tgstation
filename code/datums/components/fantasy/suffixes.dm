@@ -76,7 +76,7 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/bane, picked_mobtype)
+	master.AddElement(/datum/element/bane, target_type = picked_mobtype)
 	target_types_by_comp[comp] = picked_mobtype
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 

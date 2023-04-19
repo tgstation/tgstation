@@ -20,6 +20,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
+	/// This mob's Grand Ritual ability
+	var/datum/action/cooldown/grand_ritual/ritual
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -63,6 +65,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return wiz_team
 
 /datum/antagonist/wizard/on_gain()
+	if(!owner)
+		CRASH("Wizard datum with no owner.")
+	assign_ritual()
 	equip_wizard()
 	if(give_objectives)
 		create_objectives()
@@ -91,12 +96,15 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_team.name = "[owner.current.real_name] team"
 	wiz_team.master_wizard = src
 
+/// Initialises the grand ritual action for this mob
+/datum/antagonist/wizard/proc/assign_ritual()
+	ritual = new(owner.current)
+	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
+
 /datum/antagonist/wizard/proc/send_to_lair()
 	// And now we ensure that its loaded
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
@@ -160,8 +168,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -179,6 +185,15 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	data["objectives"] = get_objectives()
 	return data
 
+/datum/antagonist/wizard/ui_data(mob/user)
+	var/list/data = list()
+	var/completed = ritual ? ritual.times_completed : 0
+	data["ritual"] = list(\
+		"remaining" = GRAND_RITUAL_FINALE_COUNT - completed,
+		"next_area" = ritual ? initial(ritual.target_area.name) : "",
+	)
+	return data
+
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
 
@@ -194,14 +209,27 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_mob.fully_replace_character_name(wiz_mob.real_name, newname)
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	M.faction |= ROLE_WIZARD
-	add_team_hud(M)
+	var/mob/living/wizard_mob = mob_override || owner.current
+	wizard_mob.faction |= ROLE_WIZARD
+	add_team_hud(wizard_mob)
+	ritual?.Grant(owner.current)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	M.faction -= ROLE_WIZARD
+	var/mob/living/wizard_mob = mob_override || owner.current
+	wizard_mob.faction -= ROLE_WIZARD
+	if (ritual)
+		ritual.Remove(wizard_mob)
+		UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
+/// If we receive this signal, you're done with objectives
+/datum/antagonist/wizard/proc/on_ritual_complete()
+	SIGNAL_HANDLER
+	var/datum/objective/custom/successful_ritual = new()
+	successful_ritual.owner = owner
+	successful_ritual.explanation_text = "Complete the Grand Ritual at least seven times."
+	successful_ritual.completed = TRUE
+	objectives = list(successful_ritual)
+	UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
 /datum/antagonist/wizard/get_admin_commands()
 	. = ..()
@@ -222,10 +250,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow [master.p_their()] orders and help [master.p_them()] in accomplishing [master.p_their()] goals.")
 	owner.announce_objectives()
 
+/datum/antagonist/wizard/apprentice/assign_ritual()
+	return // Haven't learned how to do it yet
+
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
-	if(!owner)
-		CRASH("Antag datum with no owner.")
 	if(!ishuman(owner.current))
 		return
 
@@ -330,6 +359,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
 
+/datum/antagonist/wizard/academy/assign_ritual()
+	return // Has other duties to be getting on with
+
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()
 	if(!isliving(owner.current))
@@ -356,6 +388,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/list/parts = list()
 
 	parts += printplayer(owner)
+	if (ritual)
+		parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
 	var/wizardwin = 1

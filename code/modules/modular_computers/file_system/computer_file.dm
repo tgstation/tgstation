@@ -30,6 +30,15 @@
 		disk_host = null
 	return ..()
 
+/**
+ * Used for special cases where an application
+ * Requires special circumstances to install on a PC
+ * Args:
+ * * potential_host - the ModPC that is attempting to store this file.
+ */
+/datum/computer_file/proc/can_store_file(obj/item/modular_computer/potential_host)
+	return TRUE
+
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = FALSE)
 	var/datum/computer_file/temp = new type
@@ -72,3 +81,23 @@
  */
 /datum/computer_file/proc/try_eject(mob/living/user, forced = FALSE)
 	return FALSE
+
+/**
+ * Called when a computer program is shut down from the tablet's charge dying
+ * Arguments:
+ * * background - Whether the app is running in the background.
+ */
+/datum/computer_file/program/proc/event_powerfailure(background)
+	kill_program(forced = TRUE)
+
+/**
+ * Called when a computer program is crashing due to any required connection being shut off.
+ * Arguments:
+ * * background - Whether the app is running in the background.
+ */
+/datum/computer_file/program/proc/event_networkfailure(background)
+	kill_program(forced = TRUE)
+	if(background)
+		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
+	else
+		computer.visible_message(span_danger("\The [computer]'s screen briefly freezes and then shows \"NETWORK ERROR - NTNet connection lost. Please retry. If problem persists contact your system administrator.\" error."))

@@ -143,7 +143,7 @@
 		objective.completed = TRUE
 
 //SECURITY CONSOLE//
-/obj/machinery/computer/secure_data/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
 	if(!can_hack(ninja, feedback = TRUE))
@@ -153,12 +153,11 @@
 	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/computer/secure_data/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja)))
 		return
-	for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
-		for(var/datum/data/record/security_record in GLOB.data_core.security)
-			security_record.fields["criminal"] = "*Arrest*"
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		target.wanted_status = WANTED_ARREST
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
@@ -166,7 +165,7 @@
 	if(objective)
 		objective.completed = TRUE
 
-/obj/machinery/computer/secure_data/proc/can_hack(mob/living/hacker, feedback = FALSE)
+/obj/machinery/computer/records/security/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
 		if(feedback && hacker)
 			balloon_alert(hacker, "can't hack!")

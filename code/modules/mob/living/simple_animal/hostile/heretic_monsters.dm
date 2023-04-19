@@ -18,8 +18,10 @@
 	combat_mode = TRUE
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
-	see_in_dark = 7
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Sort of greenish brown, to match the vibeTM
+	lighting_cutoff_red = 20
+	lighting_cutoff_green = 25
+	lighting_cutoff_blue = 5
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -320,11 +322,12 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		if(HAS_TRAIT(carbon_target, TRAIT_NODISMEMBER))
-			return
+			return ..()
+
 		var/list/parts_to_remove = list()
 		for(var/obj/item/bodypart/bodypart in carbon_target.bodyparts)
 			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
-				if(bodypart.dismemberable)
+				if(!(bodypart.bodypart_flags & BODYPART_UNREMOVABLE))
 					parts_to_remove += bodypart
 
 		if(parts_to_remove.len && prob(10))
@@ -376,14 +379,14 @@
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-1.5 * delta_time, FALSE)
-		adjustFireLoss(-1.5 * delta_time, FALSE)
+		adjustBruteLoss(-1.5 * seconds_per_tick, FALSE)
+		adjustFireLoss(-1.5 * seconds_per_tick, FALSE)
 
 	return ..()
 

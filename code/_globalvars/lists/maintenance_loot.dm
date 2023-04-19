@@ -174,6 +174,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/roller = 1,
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
+		/obj/item/market_uplink/blackmarket = 1,
 		) = 8,
 
 	list(//equipment
@@ -255,6 +256,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/computer_disk/maintenance/scanner = 1,
 		/obj/item/computer_disk/maintenance/camera = 1,
 		/obj/item/computer_disk/maintenance/modsuit_control = 1,
+		/obj/item/computer_disk/maintenance/theme = 3,
 	) = 4,
 
 	list(//modsuits

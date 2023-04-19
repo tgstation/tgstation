@@ -12,7 +12,6 @@ type Job = {
   command: BooleanLike;
   open_slots: number;
   used_slots: number;
-  icon: string;
   prioritized: BooleanLike;
   description: string;
 };
@@ -42,7 +41,7 @@ export const JobEntry: SFC<{
   const jobName = data.jobName;
   const job = data.job;
   const department = data.department;
-  const jobIcon = job.icon || JOB2ICON[jobName] || null;
+  const jobIcon = JOB2ICON[jobName] || null;
   return (
     <Button
       fluid

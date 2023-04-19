@@ -11,7 +11,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
-	equipped.faction |= "pirate"
+	equipped.faction |= FACTION_PIRATE
 
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)

@@ -134,8 +134,8 @@
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/armor/abductor/vest/process(delta_time)
-	combat_cooldown += delta_time
+/obj/item/clothing/suit/armor/abductor/vest/process(seconds_per_tick)
+	combat_cooldown += seconds_per_tick
 	if(combat_cooldown >= initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
@@ -339,7 +339,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		var/obj/item/organ/internal/heart/gland/G = C.getorganslot("heart")
+		var/obj/item/organ/internal/heart/gland/G = C.get_organ_slot("heart")
 		if(!istype(G))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -363,6 +363,7 @@
 			return
 
 		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			user.balloon_alert(user, "foiled!")
 			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
@@ -381,6 +382,7 @@
 		if(QDELETED(L) || L.stat == DEAD)
 			return
 
+		L.balloon_alert(L, "you hear a voice")
 		to_chat(L, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
 		to_chat(user, span_notice("You send the message to your target."))
 		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
@@ -587,7 +589,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 			C.visible_message(span_danger("[user] begins restraining [C] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
-			if(do_mob(user, C, time_to_cuff) && C.canBeHandcuffed())
+			if(do_after(user, time_to_cuff, C) && C.canBeHandcuffed())
 				if(!C.handcuffed)
 					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
 					C.update_handcuffed()
@@ -610,11 +612,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		species = span_notice("[H.dna.species.name]")
 		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/internal/heart/gland/temp = locate() in H.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
-			if (L.getorganslot(ORGAN_SLOT_HEART))
+			if (L.get_organ_slot(ORGAN_SLOT_HEART))
 				helptext = span_notice("Subject suitable for experiments.")
 			else
 				helptext = span_warning("Subject unsuitable for experiments.")
@@ -859,13 +861,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		START_PROCESSING(SSobj, src)
 		to_chat(AM, span_danger("You feel a series of tiny pricks!"))
 
-/obj/structure/table/optable/abductor/process(delta_time)
+/obj/structure/table/optable/abductor/process(seconds_per_tick)
 	. = PROCESS_KILL
 	for(var/mob/living/carbon/C in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_am * delta_time)
-				C.reagents.add_reagent(chemical, inject_am * delta_time)
+			if(C.reagents.get_reagent_amount(chemical) < inject_am * seconds_per_tick)
+				C.reagents.add_reagent(chemical, inject_am * seconds_per_tick)
 
 /obj/structure/table/optable/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -902,3 +904,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /datum/armor/under_abductor
 	bomb = 10
 	bio = 10
+
+#undef BATON_CUFF
+#undef BATON_MODES
+#undef BATON_PROBE
+#undef BATON_SLEEP
+#undef BATON_STUN
+#undef GIZMO_MARK
+#undef GIZMO_SCAN
+#undef MIND_DEVICE_CONTROL
+#undef MIND_DEVICE_MESSAGE
+#undef VEST_COMBAT
+#undef VEST_STEALTH

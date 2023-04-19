@@ -146,9 +146,10 @@
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/canUseTopic(atom/movable/movable, be_close = FALSE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE, floor_okay = FALSE)
-	// Resting is just an aesthetic feature for them.
-	return ..(movable, be_close, no_dexterity, no_tk, need_hands, TRUE)
+/mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
+	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
+	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
+	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
@@ -162,6 +163,17 @@
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
+
+// Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
+/mob/living/silicon/pai/send_applicable_messages()
+	var/turf/location = get_turf(src)
+	location.visible_message(span_danger(get_visible_suicide_message()), null, span_hear(get_blind_suicide_message())) // null in the second arg here because we're sending from the turf
+
+/mob/living/silicon/pai/get_visible_suicide_message()
+	return "[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""
+
+/mob/living/silicon/pai/get_blind_suicide_message()
+	return "[src] bleeps electronically."
 
 /mob/living/silicon/pai/emag_act(mob/user)
 	handle_emag(user)
@@ -215,10 +227,9 @@
 		pai_card.set_personality(src)
 	forceMove(pai_card)
 	card = pai_card
-	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
+	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
@@ -227,8 +238,8 @@
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/process(delta_time)
-	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * delta_time)), -50, HOLOCHASSIS_MAX_HEALTH)
+/mob/living/silicon/pai/process(seconds_per_tick)
+	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()

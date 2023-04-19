@@ -136,22 +136,23 @@
 /// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
-	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
-		var/loot = rand(1,100)
-		switch(loot)
-			if(1 to 5)
-				to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
-				var/pickedcoin = pick(GLOB.ratking_coins)
-				for(var/i = 1 to rand(1,3))
-					new pickedcoin(get_turf(king))
-			if(6 to 33)
-				king.say(pick("Treasure!","Our precious!","Cheese!"))
-				to_chat(king, span_notice("Score! You find some cheese!"))
-				new /obj/item/food/cheese/wedge(get_turf(king))
-			else
-				var/pickedtrash = pick(GLOB.ratking_trash)
-				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
-				new pickedtrash(get_turf(king))
+	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
+		return
+	var/loot = rand(1,100)
+	switch(loot)
+		if(1 to 5)
+			to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
+			var/pickedcoin = pick(GLOB.ratking_coins)
+			for(var/i = 1 to rand(1,3))
+				new pickedcoin(get_turf(king))
+		if(6 to 33)
+			king.say(pick("Treasure!","Our precious!","Cheese!"), ignore_spam = TRUE, forced = "regal rat rummaging")
+			to_chat(king, span_notice("Score! You find some cheese!"))
+			new /obj/item/food/cheese/wedge(get_turf(king))
+		else
+			var/pickedtrash = pick(GLOB.ratking_trash)
+			to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
+			new pickedtrash(get_turf(king))
 
 /// Moves an item into the diposal bin
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
@@ -185,7 +186,7 @@
 		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
-	if(do_mob(user, target, 20))
+	if(do_after(user, 2 SECONDS, target))
 		if (!loc)
 			return
 		target.forceMove(src)
@@ -319,11 +320,9 @@
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/T = I
+		var/obj/item/storage/bag/trash/bag = I
 		to_chat(user, span_warning("You empty the bag."))
-		for(var/obj/item/O in T.contents)
-			T.atom_storage.attempt_remove(O,src)
-		T.update_appearance()
+		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
 		return ..()
@@ -383,7 +382,7 @@
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
-		if(prob(75))
+		if((throwingdatum.thrower && HAS_TRAIT(throwingdatum.thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
@@ -439,7 +438,7 @@
 
 //timed process
 //charge the gas reservoir and perform flush if ready
-/obj/machinery/disposal/bin/process(delta_time)
+/obj/machinery/disposal/bin/process(seconds_per_tick)
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -471,7 +470,7 @@
 		return
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	var/transfer_moles = 0.05 * delta_time * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles = 0.05 * seconds_per_tick * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 	//Actually transfer the gas
 	var/datum/gas_mixture/removed = env.remove(transfer_moles)
@@ -562,3 +561,5 @@
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+#undef SEND_PRESSURE

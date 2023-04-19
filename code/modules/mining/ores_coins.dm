@@ -107,8 +107,8 @@
 	merge_type = /obj/item/stack/ore/glass
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, category = CAT_MISC),\
-		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, category = CAT_TILES)\
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, check_density = FALSE, category = CAT_MISC),\
+		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
 ))
 
 /obj/item/stack/ore/glass/get_main_recipes()
@@ -351,6 +351,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
 	var/override_material_worth = FALSE
+	/// The name of the heads side of the coin
+	var/heads_name = "heads"
+	/// If the coin has an action or not
+	var/has_action = FALSE
 
 /obj/item/coin/Initialize(mapload)
 	. = ..()
@@ -438,7 +442,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
 				span_hear("You hear the clattering of loose change."))
+		if(has_action)
+			if(coinflip == heads_name)
+				heads_action(user)
+			else
+				tails_action(user)
 	return TRUE//did the coin flip? useful for suicide_act
+
+/obj/item/coin/proc/heads_action(mob/user)
+	return
+
+/obj/item/coin/proc/tails_action(mob/user)
+	return
 
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = 400)
@@ -483,6 +498,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_valid"
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
+	heads_name = "valid"
 	material_flags = NONE
 	override_material_worth = TRUE
 
@@ -523,4 +539,56 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/adamantine/doubloon
 	name = "doubloon"
 
+/obj/item/coin/eldritch
+	name = "eldritch coin"
+	desc = "Everytime it lands it bolts or opens doors, except for you."
+	icon_state = "coin_heretic"
+	custom_materials = list(/datum/material/diamond = 1000, /datum/material/plasma = 1000)
+	sideslist = list("heretic", "blade")
+	heads_name = "heretic"
+	has_action = TRUE
+	material_flags = NONE
+	/// The range at which airlocks are effected.
+	var/airlock_range = 5
+
+/obj/item/coin/eldritch/heads_action(mob/user)
+	var/mob/living/living_user = user
+	if(!IS_HERETIC(user))
+		living_user.adjustBruteLoss(5)
+		return
+	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
+		if(target_airlock.density)
+			target_airlock.open()
+			continue
+		target_airlock.close(force_crush = TRUE)
+
+/obj/item/coin/eldritch/tails_action(mob/user)
+	var/mob/living/living_user = user
+	if(!IS_HERETIC(user))
+		living_user.adjustFireLoss(5)
+		return
+	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
+		if(target_airlock.locked)
+			target_airlock.unlock()
+			continue
+		target_airlock.lock()
+
+/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!IS_HERETIC(user))
+		var/mob/living/living_user = user
+		living_user.adjustBruteLoss(5)
+		living_user.adjustFireLoss(5)
+		return
+	if(istype(target_atom, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/target_airlock = target_atom
+		to_chat(user, span_warning("You put insert the [src] into the airlock."))
+		target_airlock.emag_act(user, src)
+		qdel(src)
+
+#undef GIBTONITE_QUALITY_HIGH
+#undef GIBTONITE_QUALITY_LOW
+#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

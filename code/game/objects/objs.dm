@@ -35,8 +35,10 @@
 	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
 	var/list/req_one_access
 
-	/// Custom fire overlay icon
+	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
+	/// Particles this obj uses when burning, if any
+	var/burning_particles
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
@@ -45,9 +47,6 @@
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
-	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
-	/// broadcasted to as long as the other guys network is on the same branch or above.
-	var/network_id = null
 
 	uses_integrity = TRUE
 
@@ -56,19 +55,6 @@
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 			return FALSE
 	return ..()
-
-// Call this if you want to add your object to a network
-/obj/proc/init_network_id(network_id)
-	var/area/A = get_area(src)
-	if(A)
-		if(!A.network_root_id)
-			log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
-			SSnetworks.lookup_area_root_id(A)
-		network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
-	else
-		log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
-		network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
-	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 
 /// A list of all /obj by their id_tag
 GLOBAL_LIST_EMPTY(objects_by_id_tag)
@@ -290,7 +276,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**
@@ -372,7 +358,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/freeze()
 	if(HAS_TRAIT(src, TRAIT_FROZEN))
 		return FALSE
-	if(obj_flags & FREEZE_PROOF)
+	if(resistance_flags & FREEZE_PROOF)
 		return FALSE
 
 	AddElement(/datum/element/frozen)

@@ -186,6 +186,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, M, "attacked", src)
 
+/obj/item/storage/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/storage/book/bible)
+
 /obj/item/storage/book/bible/afterattack(atom/bible_smacked, mob/user, proximity)
 	. = ..()
 	if(!proximity)

@@ -119,14 +119,14 @@
 		begin_processing()
 
 
-/obj/machinery/chem_dispenser/process(delta_time)
+/obj/machinery/chem_dispenser/process(seconds_per_tick)
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
 			use_power(active_power_usage + recharge_amount)
 		recharge_counter = 0
 		return
-	recharge_counter += delta_time
+	recharge_counter += seconds_per_tick
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -338,7 +338,7 @@
 			if(!is_operational)
 				return
 			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
 				return
@@ -453,7 +453,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -588,7 +588,7 @@
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-		/datum/reagent/toxin/minttoxin,
+		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
 	)

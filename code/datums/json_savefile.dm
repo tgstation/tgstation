@@ -57,6 +57,9 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(path)
 		rustg_file_write(json_encode(tree), path)
 
+/datum/json_savefile/serialize_list(list/options)
+	return tree.Copy()
+
 /// Traverses the entire dir tree of the given savefile and dynamically assembles the tree from it
 /datum/json_savefile/proc/import_byond_savefile(savefile/savefile)
 	tree.Cut()

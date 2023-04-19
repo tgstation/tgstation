@@ -149,6 +149,14 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"pa" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/wizard/tape,
+/obj/item/clothing/suit/wizrobe/tape,
+/obj/item/staff/tape,
+/obj/item/stack/sticky_tape/super,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "pq" = (
 /obj/item/soap/homemade,
 /obj/machinery/light/small/directional/west,
@@ -188,7 +196,7 @@
 /area/centcom/wizard_station)
 "tv" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/netherworld{
+/mob/living/basic/creature{
 	name = "Experiment 35b"
 	},
 /turf/open/floor/grass,
@@ -363,9 +371,8 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "OV" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/north{
 	color = "#008000";
-	dir = 1;
 	resistance_flags = 3
 	},
 /turf/open/lava,
@@ -404,9 +411,8 @@
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/north{
 	color = "#008000";
-	dir = 1;
 	resistance_flags = 3
 	},
 /turf/open/lava/airless,
@@ -1346,7 +1352,7 @@ qo
 iQ
 gC
 dp
-jp
+pa
 hT
 hT
 OV

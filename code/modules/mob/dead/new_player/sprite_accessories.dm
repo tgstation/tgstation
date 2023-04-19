@@ -819,6 +819,10 @@
 	name = "Wisp"
 	icon_state = "hair_wisp"
 
+/datum/sprite_accessory/hair/ziegler
+	name = "Ziegler"
+	icon_state = "hair_ziegler"
+
 /*
 /////////////////////////////////////
 /  =---------------------------=    /
@@ -1762,7 +1766,7 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
-	icon_state = "cat"
+	icon_state = "default"
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/monkey

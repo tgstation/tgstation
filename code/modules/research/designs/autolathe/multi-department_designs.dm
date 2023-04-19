@@ -6,7 +6,7 @@
 	build_path = /obj/item/flashlight
 	category = list(
 		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
 	)
 
 /datum/design/crowbar
@@ -27,6 +27,18 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
 	build_path = /obj/item/multitool
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/rwd
+	name = "Rapid Wiring Device"
+	id = "rwd"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
+	build_path = /obj/item/rwd/loaded
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
@@ -525,3 +537,43 @@
 		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/universal_scanner
+	name = "Universal Scanner"
+	desc = "A utility scanner that fills multiple roles: Exports, sales, and vendor price tags."
+	id = "universal_scanner"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/universal_scanner
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/paper_biscuit
+	name = "Paper Biscuit"
+	desc = "An paper biscuit which can seal in itself paperwork. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
+	id = "biscuit"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 20)
+	build_path = /obj/item/folder/biscuit/unsealed
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/paper_biscuit_confidential
+	name = "Confidential Paper Biscuit"
+	desc = "An paper biscuit which can seal in itself paperwork, this one is used for confidential Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permamently open. Not actually a biscuit."
+	id = "confidential_biscuit"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 30)
+	build_path = /obj/item/folder/biscuit/unsealed/confidential
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
+

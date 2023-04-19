@@ -255,8 +255,10 @@
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
 	desc = "A lifelike statue of a horrifying monster."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
 	icon_state = "goliath"
+	pixel_x = -12
+	base_pixel_x = -12
 	name = "goliath"
 
 ///////////Other Stuff//////////////////////////////////////////////
@@ -298,7 +300,7 @@
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/wall_engraver)
 	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
-	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/netherworld/statue, damage_multiplier = 40)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/statue, damage_multiplier = 40)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null

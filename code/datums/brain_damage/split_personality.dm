@@ -5,8 +5,8 @@
 	name = "Split Personality"
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
-	gain_text = "<span class='warning'>You feel like your mind was split in two.</span>"
-	lose_text = "<span class='notice'>You feel alone again.</span>"
+	gain_text = span_warning("You feel like your mind was split in two.")
+	lose_text = span_notice("You feel alone again.")
 	var/current_controller = OWNER
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
@@ -42,12 +42,12 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/on_life(delta_time, times_fired)
+/datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
 		qdel(src)
-	else if(DT_PROB(1.5, delta_time))
+	else if(SPT_PROB(1.5, seconds_per_tick))
 		switch_personalities()
 	..()
 
@@ -58,12 +58,6 @@
 	QDEL_NULL(owner_backseat)
 	..()
 
-/datum/brain_trauma/severe/split_personality/Destroy()
-	if(stranger_backseat)
-		QDEL_NULL(stranger_backseat)
-	if(owner_backseat)
-		QDEL_NULL(owner_backseat)
-	return ..()
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities(reset_to_owner = FALSE)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
@@ -141,7 +135,7 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/split_personality/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
@@ -177,7 +171,7 @@
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
 	gain_text = ""
-	lose_text = "<span class='notice'>You are free of your brainwashing.</span>"
+	lose_text = span_notice("You are free of your brainwashing.")
 	can_gain = FALSE
 	var/codeword
 	var/objective
@@ -213,7 +207,7 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_life(delta_time, times_fired)
+/datum/brain_trauma/severe/split_personality/brainwashing/on_life(seconds_per_tick, times_fired)
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)

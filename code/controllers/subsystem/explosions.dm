@@ -67,10 +67,6 @@ SUBSYSTEM_DEF(explosions)
 	msg += "} "
 	return ..()
 
-
-#define SSEX_TURF "turf"
-#define SSEX_OBJ "obj"
-
 /datum/controller/subsystem/explosions/proc/is_exploding()
 	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
@@ -590,16 +586,24 @@ SUBSYSTEM_DEF(explosions)
 		var/highest_y = our_y + i
 		// top left to one before top right
 		if(highest_y <= max_y)
-			outlist += block(locate(max(lowest_x, 1), highest_y, our_z), locate(min(highest_x - 1, max_x), highest_y, our_z))
+			outlist += block(
+				locate(max(lowest_x, 1), highest_y, our_z),
+				locate(min(highest_x - 1, max_x), highest_y, our_z))
 		// top right to one before bottom right
 		if(highest_x <= max_x)
-			outlist += block(locate(highest_x, min(highest_y, max_y), our_z), locate(highest_x, max(lowest_y + 1, 1), our_z))
+			outlist += block(
+				locate(highest_x, min(highest_y, max_y), our_z),
+				locate(highest_x, max(lowest_y + 1, 1), our_z))
 		// bottom right to one before bottom left
 		if(lowest_y >= 1)
-			outlist += block(locate(min(highest_x, max_x), lowest_y, our_z), locate(max(lowest_x + 1, 1), lowest_y, our_z))
+			outlist += block(
+				locate(min(highest_x, max_x), lowest_y, our_z),
+				locate(max(lowest_x + 1, 1), lowest_y, our_z))
 		// bottom left to one before top left
 		if(lowest_x >= 1)
-			outlist += block(locate(lowest_x, max(lowest_y, 1), our_z), locate(lowest_x, min(highest_y - 1, max_y), our_z))
+			outlist += block(
+				locate(lowest_x, max(lowest_y, 1), our_z),
+				locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
 	return outlist
 
@@ -708,3 +712,5 @@ SUBSYSTEM_DEF(explosions)
 		cost_throwturf = MC_AVERAGE(cost_throwturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	currentpart = SSEXPLOSIONS_TURFS
+
+#undef EXPLOSION_THROW_SPEED

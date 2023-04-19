@@ -1,21 +1,3 @@
-/// If an object needs to be rotated with a wrench
-#define ROTATION_REQUIRE_WRENCH (1<<0)
-/// If ghosts can rotate an object (if the ghost config is enabled)
-#define ROTATION_GHOSTS_ALLOWED (1<<1)
-/// If an object will ignore anchored for rotation (used for chairs)
-#define ROTATION_IGNORE_ANCHORED (1<<2)
-/// If an object will omit flipping from rotation (used for pipes since they use custom handling)
-#define ROTATION_NO_FLIPPING (1<<3)
-/// If an object needs to have an empty spot available in target direction (used for windoors and railings)
-#define ROTATION_NEEDS_ROOM (1<<4)
-
-/// Rotate an object clockwise
-#define ROTATION_CLOCKWISE -90
-/// Rotate an object counterclockwise
-#define ROTATION_COUNTERCLOCKWISE 90
-/// Rotate an object upside down
-#define ROTATION_FLIP 180
-
 /datum/component/simple_rotation
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
@@ -102,7 +84,7 @@
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
-	if(isliving(user) && user.canUseTopic(parent, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(isliving(user) && user.can_perform_action(parent, NEED_DEXTERITY))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
@@ -132,7 +114,7 @@
 		var/target_dir = turn(rotated_obj.dir, degrees)
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
-		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
+		if(!valid_build_direction(rotated_obj.loc, target_dir, is_fulltile = fulltile))
 			if(!silent)
 				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE

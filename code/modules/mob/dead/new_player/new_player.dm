@@ -36,6 +36,9 @@
 
 	return ..()
 
+/mob/dead/new_player/mob_negates_gravity()
+	return TRUE //no need to calculate if they have gravity.
+
 /mob/dead/new_player/prepare_huds()
 	return
 
@@ -198,7 +201,7 @@
 		humanc = character //Let's retypecast the var to be human,
 
 	if(humanc) //These procs all expect humans
-		GLOB.data_core.manifest_inject(humanc)
+		GLOB.manifest.inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else

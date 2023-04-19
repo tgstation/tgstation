@@ -46,8 +46,7 @@
 	change_message(message)
 
 /atom/movable/screen/tutorial_instruction_text/proc/change_message(message)
-	// We don't use MAPTEXT macro here because it doesn't handle big text
-	message = "<span style='font-family: \"VCR OSD Mono\"; font-size: 22px; text-align: center'>[message]</span>"
+	message = MAPTEXT_VCR_OSD_MONO("<span style='font-size: 22px; text-align: center'>[message]</span>")
 
 	animate(src, alpha = 0, time = (maptext ? 0.5 SECONDS : 0), easing = SINE_EASING)
 	animate(alpha = 255, time = 0.5 SECONDS, maptext = message)

@@ -15,6 +15,8 @@
 	var/flipped = FALSE
 	///Has this card been "tapped"? AKA, is it horizontal?
 	var/tapped = FALSE
+	///Cached icon used for inspecting the card
+	var/icon/cached_flat_icon
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
@@ -61,7 +63,14 @@
 	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
 		name_chaser += "Ruleset: [data_holder.rules]"
+	name_chaser += list("[icon2html(get_cached_flat_icon(), user, "extra_classes" = "hugeicon")]")
+
 	return name_chaser
+
+/obj/item/tcgcard/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
@@ -186,7 +195,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/tcg)
+	create_storage(storage_type = /datum/storage/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
@@ -246,7 +255,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
 	if(istype(item, /obj/item/tcgcard))
-		if(contents.len > 30)
+		if(contents.len >= 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
 			return FALSE
 		var/obj/item/tcgcard/new_card = item
@@ -501,3 +510,5 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			continue
 		vars[name] = SStrading_card_game.resolve_keywords(value)
 
+#undef TAPPED_ANGLE
+#undef UNTAPPED_ANGLE

@@ -90,6 +90,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
+	/client/proc/cmd_admin_law_panel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -945,7 +946,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		// Finally, ensure the minds are tracked and in the manifest.
 		SSticker.minds += character.mind
 		if(ishuman(character))
-			GLOB.data_core.manifest_inject(character)
+			GLOB.manifest.inject(character)
 
 		number_made++
 		CHECK_TICK
@@ -977,8 +978,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			real_reqs += "Must have a mind"
 		if(reqs & SPELL_REQUIRES_NO_ANTIMAGIC)
 			real_reqs += "Must have no antimagic"
-		if(reqs & SPELL_REQUIRES_OFF_CENTCOM)
-			real_reqs += "Must be off central command z-level"
+		if(reqs & SPELL_REQUIRES_STATION)
+			real_reqs += "Must be on the station z-level"
 		if(reqs & SPELL_REQUIRES_WIZARD_GARB)
 			real_reqs += "Must have wizard clothes"
 
@@ -994,10 +995,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Load/Jump Lazy Template"
 	set category = "Admin.Events"
 	if(!check_rights(R_ADMIN))
-		return
-
-	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(usr, span_warning("The game hasnt started yet!"))
 		return
 
 	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()

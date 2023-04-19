@@ -13,14 +13,14 @@
 		return
 
 	if(is_absorbing)
-		to_chat(owner, span_warning("We are already absorbing!"))
+		owner.balloon_alert(owner, "already absorbing!")
 		return
 
 	if(!owner.pulling || !iscarbon(owner.pulling))
-		to_chat(owner, span_warning("We must be grabbing a creature to absorb them!"))
+		owner.balloon_alert(owner, "needs grab!")
 		return
 	if(owner.grab_state <= GRAB_NECK)
-		to_chat(owner, span_warning("We must have a tighter grip to absorb this creature!"))
+		owner.balloon_alert(owner, "needs tighter grip!")
 		return
 
 	var/mob/living/carbon/target = owner.pulling
@@ -160,8 +160,8 @@
 				target.take_overall_damage(40)
 
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
-		if(!do_mob(owner, target, 15 SECONDS))
-			to_chat(owner, span_warning("Our absorption of [target] has been interrupted!"))
+		if(!do_after(owner, 15 SECONDS, target))
+			owner.balloon_alert(owner, "interrupted!")
 			is_absorbing = FALSE
 			return FALSE
 	return TRUE

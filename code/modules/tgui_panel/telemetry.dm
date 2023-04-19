@@ -138,3 +138,6 @@
 		))
 		query.Execute()
 		qdel(query)
+
+#undef TGUI_TELEMETRY_MAX_CONNECTIONS
+#undef TGUI_TELEMETRY_RESPONSE_WINDOW

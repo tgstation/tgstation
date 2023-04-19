@@ -15,6 +15,7 @@
 	light_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+	light_on = FALSE
 	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
 	footstep = FOOTSTEP_LAVA
@@ -33,10 +34,79 @@
 	var/immunity_resistance_flags = LAVA_PROOF
 	/// the temperature that this turf will attempt to heat/cool gasses too in a heat exchanger, in kelvin
 	var/lava_temperature = 5000
+	/// The icon that covers the lava bits of our turf
+	var/mask_icon = 'icons/turf/floors.dmi'
+	/// The icon state that covers the lava bits of our turf
+	var/mask_state = "lava-lightmask"
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+	refresh_light()
+	if(!smoothing_flags)
+		update_appearance()
+
+/turf/open/lava/update_overlays()
+	. = ..()
+	. += emissive_appearance(mask_icon, mask_state, src)
+	// We need a light overlay here because not every lava turf casts light, only the edge ones
+	var/mutable_appearance/light = mutable_appearance(mask_icon, mask_state, LIGHTING_PRIMARY_LAYER, src, LIGHTING_PLANE)
+	light.color = light_color
+	light.blend_mode = BLEND_ADD
+	. += light
+	// Mask away our light underlay, so things don't double stack
+	// This does mean if our light underlay DOESN'T look like the light we emit things will be wrong
+	// But that's rare, and I'm ok with that, quartering our light source count is useful
+	var/mutable_appearance/light_mask = mutable_appearance(mask_icon, mask_state, LIGHTING_MASK_LAYER, src, LIGHTING_PLANE)
+	light_mask.blend_mode = BLEND_MULTIPLY
+	light_mask.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+	. += light_mask
+
+/// Refreshes this lava turf's lighting
+/turf/open/lava/proc/refresh_light()
+	var/border_turf = FALSE
+	var/list/turfs_to_check = RANGE_TURFS(1, src)
+	if(GET_LOWEST_STACK_OFFSET(z))
+		var/turf/above = SSmapping.get_turf_above(src)
+		if(above)
+			turfs_to_check += RANGE_TURFS(1, above)
+		var/turf/below = SSmapping.get_turf_below(src)
+		if(below)
+			turfs_to_check += RANGE_TURFS(1, below)
+
+	for(var/turf/around as anything in turfs_to_check)
+		if(islava(around))
+			continue
+		border_turf = TRUE
+
+	if(!border_turf)
+		set_light(l_on = FALSE)
+		return
+
+	set_light(l_on = TRUE)
+
+/turf/open/lava/ChangeTurf(path, list/new_baseturfs, flags)
+	var/turf/result = ..()
+
+	if(result && !islava(result))
+		// We have gone from a lava turf to a non lava turf, time to let them know
+		var/list/turfs_to_check = RANGE_TURFS(1, result)
+		if(GET_LOWEST_STACK_OFFSET(z))
+			var/turf/above = SSmapping.get_turf_above(result)
+			if(above)
+				turfs_to_check += RANGE_TURFS(1, above)
+			var/turf/below = SSmapping.get_turf_below(result)
+			if(below)
+				turfs_to_check += RANGE_TURFS(1, below)
+		for(var/turf/open/lava/inform in turfs_to_check)
+			inform.set_light(l_on = TRUE)
+
+	return result
+
+/turf/open/lava/smooth_icon()
+	. = ..()
+	mask_state = icon_state
+	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
 	return
@@ -64,18 +134,18 @@
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone))
-		var/mob/living/L = gone
-		if(!islava(get_step(src, direction)))
-			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!L.on_fire)
-			L.update_fire()
+		var/mob/living/leaving_mob = gone
+		if(!islava(leaving_mob.loc))
+			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		if(!leaving_mob.on_fire)
+			leaving_mob.update_fire()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/process(delta_time)
-	if(!burn_stuff(null, delta_time))
+/turf/open/lava/process(seconds_per_tick)
+	if(!burn_stuff(null, seconds_per_tick))
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -161,7 +231,7 @@
 #define LAVA_BE_BURNING 2
 
 ///Proc that sets on fire something or everything on the turf that's not immune to lava. Returns TRUE to make the turf start processing.
-/turf/open/lava/proc/burn_stuff(atom/movable/to_burn, delta_time = 1)
+/turf/open/lava/proc/burn_stuff(atom/movable/to_burn, seconds_per_tick = 1)
 	if(is_safe())
 		return FALSE
 
@@ -173,7 +243,7 @@
 			if(LAVA_BE_IGNORING)
 				continue
 			if(LAVA_BE_BURNING)
-				if(!do_burn(burn_target, delta_time))
+				if(!do_burn(burn_target, seconds_per_tick))
 					continue
 		. = TRUE
 
@@ -219,7 +289,7 @@
 #undef LAVA_BE_PROCESSING
 #undef LAVA_BE_BURNING
 
-/turf/open/lava/proc/do_burn(atom/movable/burn_target, delta_time = 1)
+/turf/open/lava/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
@@ -231,7 +301,7 @@
 			burn_obj.resistance_flags &= ~FIRE_PROOF
 		if(burn_obj.get_armor_rating(FIRE) > 50) //obj with 100% fire armor still get slowly burned away.
 			burn_obj.set_armor_rating(FIRE, 50)
-		burn_obj.fire_act(temperature_damage, 1000 * delta_time)
+		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
 		if(istype(burn_obj, /obj/structure/closet))
 			var/obj/structure/closet/burn_closet = burn_obj
 			for(var/burn_content in burn_closet.contents)
@@ -242,16 +312,18 @@
 	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
 	burn_living.update_fire()
 
-	burn_living.adjustFireLoss(lava_damage * delta_time)
+	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
 	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
-		burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
+		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
 
 /turf/open/lava/smooth
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
+	mask_icon = 'icons/turf/floors/lava_mask.dmi'
 	icon_state = "lava-255"
+	mask_state = "lava-255"
 	base_icon_state = "lava"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
@@ -292,7 +364,7 @@
 		return
 	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
 
-/turf/open/lava/plasma/do_burn(atom/movable/burn_target, delta_time = 1)
+/turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE
 	if(isobj(burn_target))
 		return FALSE // Does nothing against objects. Old code.
@@ -303,7 +375,7 @@
 		return
 	burn_living.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
 	burn_living.adjust_bodytemperature(-rand(50,65)) //its cold, man
-	if(!ishuman(burn_living) || DT_PROB(65, delta_time))
+	if(!ishuman(burn_living) || SPT_PROB(65, seconds_per_tick))
 		return
 	var/mob/living/carbon/human/burn_human = burn_living
 	var/datum/species/burn_species = burn_human.dna.species
@@ -318,7 +390,7 @@
 		if(!IS_ORGANIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
-	burn_human.adjustToxLoss(15)
+	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
 	burn_human.adjustFireLoss(25)
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs

@@ -34,8 +34,6 @@ Difficulty: Hard
 	aggro_vision_range = 18 // man-eating for a reason
 	speed = 6
 	move_to_delay = 6
-	rapid_melee = 8 // every 1/4 second
-	melee_queue_distance = 18 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
 	base_pixel_x = -16
@@ -335,6 +333,7 @@ Difficulty: Hard
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 
+#undef WENDIGO_ENRAGED
 #undef WENDIGO_CIRCLE_SHOTCOUNT
 #undef WENDIGO_CIRCLE_REPEATCOUNT
 #undef WENDIGO_SPIRAL_SHOTCOUNT

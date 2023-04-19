@@ -1,0 +1,138 @@
+/obj/item/folder/biscuit
+	name = "biscuit card"
+	desc = "A biscuit card. On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
+	icon_state = "paperbiscuit"
+	bg_color = "#ffffff"
+	w_class = WEIGHT_CLASS_TINY
+	max_integrity = 130
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
+	contents_hidden = TRUE
+	/// Is biscuit cracked open or not?
+	var/cracked = FALSE
+	/// The paper slip inside, if there is one
+	var/obj/item/paper/paperslip/contained_slip
+
+/obj/item/folder/biscuit/Initialize(mapload)
+	. = ..()
+	if(!isnull(contained_slip))
+		contained_slip = new contained_slip(src)
+
+/obj/item/folder/biscuit/Destroy()
+	if(contained_slip)
+		QDEL_NULL(contained_slip)
+	return ..()
+
+/obj/item/folder/biscuit/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] tries to eat [src]! [user.p_theyre()] trying to commit suicide!"))
+	playsound(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg', 40, TRUE) //Don't eat plastic cards kids, they get really sharp if you chew on them.
+	return BRUTELOSS
+
+/obj/item/folder/biscuit/update_overlays()
+	. = ..()
+	if(contents.len) //This is to prevent the unsealed biscuit from having the folder_paper overlay when it gets sealed
+		. -= "folder_paper"
+		if(cracked) //Shows overlay only when it has contents and is cracked open
+			. += "paperbiscuit_paper"
+
+///Checks if the biscuit has been already cracked.
+/obj/item/folder/biscuit/proc/crack_check(mob/user)
+	if (cracked)
+		return TRUE
+	balloon_alert(user, "unopened!")
+	return FALSE
+
+/obj/item/folder/biscuit/examine()
+	. = ..()
+	if(cracked)
+		. += span_notice("It's been cracked open.")
+	else
+		. += span_notice("You'll need to crack it open to access its contents.")
+		if(contained_slip)
+			. += "This one contains [contained_slip.name]."
+
+//The next few checks are done to prevent you from reaching the contents or putting anything inside when it's not cracked open
+/obj/item/folder/biscuit/remove_item(obj/item/item, mob/user)
+	if (!crack_check(user))
+		return
+
+	return ..()
+
+/obj/item/folder/biscuit/attack_hand(mob/user, list/modifiers)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK) && !crack_check(user))
+		return
+
+	return ..()
+
+/obj/item/folder/biscuit/attackby(obj/item/weapon, mob/user, params)
+	if (is_type_in_typecache(weapon, folder_insertables) && !crack_check(user))
+		return
+
+	return ..()
+
+/obj/item/folder/biscuit/attack_self(mob/user)
+	add_fingerprint(user)
+	if (!cracked)
+		if (tgui_alert(user, "Do you want to crack it open?", "Biscuit Cracking", list("Yes", "No")) != "Yes")
+			return
+		cracked = TRUE
+		contents_hidden = FALSE
+		playsound(get_turf(user), 'sound/effects/wounds/crack1.ogg', 60)
+		icon_state = "[icon_state]_cracked"
+		update_appearance()
+
+	ui_interact(user)
+
+//Corporate "confidential" biscuit cards
+/obj/item/folder/biscuit/confidential
+	name = "confidential biscuit card"
+	desc = "A confidential biscuit card. The tasteful blue color and NT logo on the front makes it look a little like a chocolate bar. \
+		On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
+	icon_state = "paperbiscuit_secret"
+	bg_color = "#355e9f"
+
+/obj/item/folder/biscuit/confidential/spare_id_safe_code
+	name = "spare ID safe code biscuit card"
+	contained_slip = /obj/item/paper/paperslip/corporate/fluff/spare_id_safe_code
+
+/obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code
+	name = "spare emergency ID safe code biscuit card"
+	contained_slip = /obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code
+
+//Biscuits which start open. Used for crafting, printing, and such
+/obj/item/folder/biscuit/unsealed
+	name = "biscuit card"
+	desc = "A biscuit card. On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
+	icon_state = "paperbiscuit_cracked"
+	contents_hidden = FALSE
+	cracked = TRUE
+	///Was the biscuit already sealed by players? Prevents re-sealing after use
+	var/has_been_sealed = FALSE
+	///What is the sprite for when it's sealed? It starts unsealed, so needs a sprite for when it's sealed.
+	var/sealed_icon = "paperbiscuit"
+
+/obj/item/folder/biscuit/unsealed/examine()
+	. = ..()
+	if(!has_been_sealed)
+		. += span_notice("This one could be sealed <b>in hand</b>. Once sealed, the contents are inaccessible until cracked open again - but once opened this is irreversible.")
+
+//Asks if you want to seal the biscuit, after you do that it behaves like a normal paper biscuit.
+/obj/item/folder/biscuit/unsealed/attack_self(mob/user)
+	add_fingerprint(user)
+	if(!cracked)
+		return ..()
+	if(tgui_alert(user, "Do you want to seal it? This can only be done once.", "Biscuit Sealing", list("Yes", "No")) != "Yes")
+		return
+	cracked = FALSE
+	has_been_sealed = TRUE
+	contents_hidden = TRUE
+	playsound(get_turf(user), 'sound/items/duct_tape_snap.ogg', 60)
+	icon_state = "[sealed_icon]"
+	update_appearance()
+
+/obj/item/folder/biscuit/unsealed/confidential
+	name = "confidential biscuit card"
+	desc = "A confidential biscuit card. The tasteful blue color and NT logo on the front makes it look a little like a chocolate bar. On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
+	icon_state = "paperbiscuit_secret_cracked"
+	bg_color = "#355e9f"
+	sealed_icon = "paperbiscuit_secret"

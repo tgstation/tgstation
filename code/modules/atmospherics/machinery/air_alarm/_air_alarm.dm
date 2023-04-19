@@ -76,7 +76,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	my_area = get_area(src)
 	alarm_manager = new(src)
 	select_mode(src, /datum/air_alarm_mode/filtering)
-	update_appearance()
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
@@ -87,6 +86,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
+	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
@@ -95,6 +95,27 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
+
+/obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
+	//were already registered to an area. exit from here first before entering into an new area
+	if(!isnull(my_area))
+		return
+	. = ..()
+
+	my_area = area_to_register
+	update_appearance()
+
+/obj/machinery/airalarm/update_name(updates)
+	. = ..()
+	name = "[get_area_name(my_area)] Air Alarm"
+
+/obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)
+	//we cannot unregister from an area we never registered to in the first place
+	if(my_area != area_to_unregister)
+		return
+	. = ..()
+
+	my_area = null
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -158,14 +179,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		"value" = "[round(temp, 0.01)] Kelvin / [round(temp, 0.01) - T0C] Celcius",
 		"danger" = tlv_collection["temperature"].check_value(temp),
 	))
-	for(var/gas_path in environment.gases)
-		var/moles = environment.gases[gas_path][MOLES]
-		var/portion = moles / total_moles
-		data["envData"] += list(list(
-			"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
-			"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
-			"danger" = tlv_collection[gas_path].check_value(portion * pressure),
-		))
+	if(total_moles)
+		for(var/gas_path in environment.gases)
+			var/moles = environment.gases[gas_path][MOLES]
+			var/portion = moles / total_moles
+			data["envData"] += list(list(
+				"name" = GLOB.meta_gas_info[gas_path][META_GAS_NAME],
+				"value" = "[round(moles, 0.01)] moles / [round(100 * portion, 0.01)] % / [round(portion * pressure, 0.01)] kPa",
+				"danger" = tlv_collection[gas_path].check_value(portion * pressure),
+			))
 
 	data["tlvSettings"] = list()
 	for(var/threshold in tlv_collection)
@@ -397,7 +419,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		color = "#03A728" // green
 
-	set_light(1.4, 1, color)
+	set_light(1.5, 1, color)
 
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)
@@ -446,9 +468,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
-	for(var/gas_path in environment.gases)
-		var/moles = environment.gases[gas_path][MOLES]
-		danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
+	if(total_moles)
+		for(var/gas_path in environment.gases)
+			var/moles = environment.gases[gas_path][MOLES]
+			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)

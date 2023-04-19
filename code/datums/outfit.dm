@@ -245,7 +245,12 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			H.open_internals(H.get_item_by_slot(internals_slot))
+			if(internals_slot & ITEM_SLOT_HANDS)
+				var/obj/item/tank/internals/internals = H.is_holding_item_of_type(/obj/item/tank/internals)
+				if(internals)
+					H.open_internals(internals)
+			else 
+				H.open_internals(H.get_item_by_slot(internals_slot))
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = SSwardrobe.provide_type(implant_type, H)

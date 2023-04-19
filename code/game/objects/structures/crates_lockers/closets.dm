@@ -92,6 +92,7 @@
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
@@ -224,17 +225,36 @@
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
-	if(welded)
-		. += span_notice("It's welded shut.")
-	if(anchored)
-		. += span_notice("It is <b>bolted</b> to the ground.")
-	if(opened && cutting_tool == /obj/item/weldingtool)
-		. += span_notice("The parts are <b>welded</b> together.")
-	else if(secure && !opened)
-		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
+
+	. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
+
+/obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		if(secure && !broken)
+			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
+		if(!welded)
+			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+		if(opened)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -545,13 +565,12 @@
 	else if(!isitem(O))
 		return
 	var/turf/T = get_turf(src)
-	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
 		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
 		span_hear("You hear clanging."))
 	if(actuallyismob)
-		if(do_after_mob(user, targets, 40))
+		if(do_after(user, 4 SECONDS, O))
 			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
 				span_notice("You stuff [O] into [src]."), \
 				span_hear("You hear a loud metal bang."))
@@ -615,7 +634,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
@@ -678,7 +697,7 @@
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(!opened && secure)
@@ -690,14 +709,15 @@
 		if(allowed(user))
 			if(iscarbon(user))
 				add_fingerprint(user)
+			balloon_alert_to_viewers(locked ? "unlocked" : "locked")
 			locked = !locked
 			user.visible_message(span_notice("[user] [locked ? null : "un"]locks [src]."),
 							span_notice("You [locked ? null : "un"]lock [src]."))
 			update_appearance()
 		else if(!silent)
-			to_chat(user, span_alert("Access Denied."))
+			balloon_alert(user, "access denied!")
 	else if(secure && broken)
-		to_chat(user, span_warning("\The [src] is broken!"))
+		balloon_alert(user, "broken!")
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)

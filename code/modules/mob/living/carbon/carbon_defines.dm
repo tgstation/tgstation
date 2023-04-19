@@ -10,15 +10,11 @@
 	num_hands = 0 //Populated on init through list/bodyparts
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
-	blocks_emissive = NONE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/obj/item/organ/internal/internal_organs = list()
-	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
-	var/list/internal_organs_slot = list()
-	///List of [/obj/item/organ/external] in the mob, similarly used as internal_organs.
-	var/list/obj/item/organ/external/external_organs = list()
-	///Same as [above][/mob/living/carbon/var/external_organs], but stores "ID" = "organ" pairs.
-	var/list/external_organs_slot = list()
+	var/list/obj/item/organ/internal/organs = list()
+	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
+	var/list/organs_slot = list()
 	///How many dream images we have left to send
 	var/dreaming = 0
 
@@ -58,8 +54,9 @@
 
 	///This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 	var/failed_last_breath = FALSE
-
+	/// Used in [carbon/proc/check_breath] and [lungs/proc/check_breath]]
 	var/co2overloadtime = null
+
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -115,5 +112,8 @@
 
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
+
+	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
+	var/last_top_offset
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

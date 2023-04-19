@@ -55,7 +55,7 @@
 	else
 		M.visible_message(span_warning("[user] attempts to feed [M] from [src]."), \
 			span_warning("[user] attempts to feed you from [src]."))
-		if(!do_mob(user, M))
+		if(!do_after(user, 3 SECONDS, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
@@ -306,6 +306,15 @@
 	desc = "A jar of sweet and viscous honey."
 	icon_state = "honey"
 	list_reagents = list(/datum/reagent/consumable/honey = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/ketchup
+	name = "ketchup"
+	// At time of writing, "ketchup" mechanically, is just ground tomatoes,
+	// rather than // tomatoes plus vinegar plus sugar.
+	desc = "A tomato slurry in a tall plastic bottle. Somehow still vaguely American."
+	icon_state = "ketchup"
+	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
 	fill_icon_thresholds = null
 
 //technically condiment packs but they are non transparent

@@ -82,7 +82,7 @@
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
 			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
-			card.mining_points += point_value
+			card.registered_account.mining_points += point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
@@ -167,7 +167,7 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

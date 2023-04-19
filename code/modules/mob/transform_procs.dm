@@ -1,10 +1,14 @@
 #define TRANSFORMATION_DURATION 22
 
-/mob/living/carbon/proc/monkeyize()
+/mob/living/carbon/proc/monkeyize(instant = FALSE)
 	if (notransform || transformation_timer)
 		return
 
 	if(ismonkey(src))
+		return
+
+	if(instant)
+		finish_monkeyize()
 		return
 
 	//Make mob invisible and spawn animation
@@ -15,7 +19,6 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify(loc)
-
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_monkeyize)), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_monkeyize()
@@ -33,11 +36,15 @@
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(species = /datum/species/human)
+/mob/living/carbon/proc/humanize(species = /datum/species/human, instant = FALSE)
 	if (notransform || transformation_timer)
 		return
 
 	if(!ismonkey(src))
+		return
+
+	if(instant)
+		finish_humanize(species)
 		return
 
 	//Make mob invisible and spawn animation
@@ -183,8 +190,7 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
@@ -215,8 +221,7 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()

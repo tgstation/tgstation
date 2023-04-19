@@ -57,6 +57,16 @@
 	time = 20 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/freezer_cabinat
+	name = "Freezer Cabinet"
+	result = /obj/structure/closet/secure_closet/freezer/empty
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/assembly/igniter/condenser = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/trapdoor_kit
 	name = "Trapdoor Construction Kit"
 	result = /obj/item/trapdoor_kit

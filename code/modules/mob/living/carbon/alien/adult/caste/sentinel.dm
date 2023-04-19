@@ -11,7 +11,7 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/sentinel/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	organs += new /obj/item/organ/internal/alien/plasmavessel
+	organs += new /obj/item/organ/internal/alien/acid
+	organs += new /obj/item/organ/internal/alien/neurotoxin
 	..()

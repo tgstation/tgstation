@@ -233,6 +233,10 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
+	
+/datum/greyscale_config/sneakers_marisa/worn
+	name = "Worn Marisa Sneakers"
+	icon_file = 'icons/mob/clothing/feet.dmi'
 
 /datum/greyscale_config/circuit
 	name = "Circuit Board"
@@ -910,6 +914,16 @@
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
 
+/datum/greyscale_config/witch_hat
+	name = "Fancy Hat"
+	icon_file = 'icons/obj/clothing/head/wizard.dmi'
+	json_config = 'code/datums/greyscale/json_configs/witch_hat.json'
+
+/datum/greyscale_config/witch_hat_worn
+	name = "Worn Fancy Hat"
+	icon_file = 'icons/mob/clothing/head/wizard.dmi'
+	json_config = 'code/datums/greyscale/json_configs/witch_hat_worn.json'
+
 /datum/greyscale_config/fancy_hat
 	name = "Fancy Hat"
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
@@ -1000,3 +1014,23 @@
 	name = "Transmutation Rune"
 	icon_file = 'icons/effects/96x96.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heretic_rune.json'
+
+/datum/greyscale_config/festive_hat
+	name = "Festive Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
+
+/datum/greyscale_config/festive_hat_worn
+	name = "Festive Hat Worn"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
+
+/datum/greyscale_config/party_hat
+	name = "Party Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
+
+/datum/greyscale_config/party_hat_worn
+	name = "Party Hat Worn"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/party_hat.json'

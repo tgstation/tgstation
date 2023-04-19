@@ -521,10 +521,7 @@ SUBSYSTEM_DEF(job)
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
-	equipping.mind?.set_assigned_role(job)
-
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>You are the [job.title].</b></span>")
+	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
 
 	equipping.on_job_equipping(job)
 
@@ -543,13 +540,12 @@ SUBSYSTEM_DEF(job)
 
 	if(player_client)
 		if(job.req_admin_notify)
-			to_chat(player_client, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
+			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
+				If you have to disconnect, please notify the admins via adminhelp.</b>"))
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
-
-		var/related_policy = get_policy(job.title)
-		if(related_policy)
-			to_chat(player_client, related_policy)
+			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
+				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+				have been added to your ID card."))
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
@@ -986,20 +982,20 @@ SUBSYSTEM_DEF(job)
 		"[JP_HIGH]" = "High Priority",
 	)
 
-/obj/item/paper/fluff/spare_id_safe_code
+/obj/item/paper/paperslip/corporate/fluff/spare_id_safe_code
 	name = "Nanotrasen-Approved Spare ID Safe Code"
 	desc = "Proof that you have been approved for Captaincy, with all its glory and all its horror."
 
-/obj/item/paper/fluff/spare_id_safe_code/Initialize(mapload)
+/obj/item/paper/paperslip/corporate/fluff/spare_id_safe_code/Initialize(mapload)
 	var/safe_code = SSid_access.spare_id_safe_code
 	default_raw_text = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
 	return ..()
 
-/obj/item/paper/fluff/emergency_spare_id_safe_code
+/obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code
 	name = "Emergency Spare ID Safe Code Requisition"
 	desc = "Proof that nobody has been approved for Captaincy. A skeleton key for a skeleton shift."
 
-/obj/item/paper/fluff/emergency_spare_id_safe_code/Initialize(mapload)
+/obj/item/paper/paperslip/corporate/fluff/emergency_spare_id_safe_code/Initialize(mapload)
 	var/safe_code = SSid_access.spare_id_safe_code
 	default_raw_text = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
 	return ..()
@@ -1010,7 +1006,7 @@ SUBSYSTEM_DEF(job)
 	if(!id_safe_code)
 		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
 
-	var/paper = new /obj/item/paper/fluff/spare_id_safe_code()
+	var/paper = new /obj/item/folder/biscuit/confidential/spare_id_safe_code()
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
 		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
@@ -1036,7 +1032,7 @@ SUBSYSTEM_DEF(job)
 
 /// Send a drop pod containing a piece of paper with the spare ID safe code to loc
 /datum/controller/subsystem/job/proc/send_spare_id_safe_code(loc)
-	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/paper/fluff/emergency_spare_id_safe_code())
+	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/folder/biscuit/confidential/emergency_spare_id_safe_code())
 	safe_code_timer_id = null
 	safe_code_request_loc = null
 

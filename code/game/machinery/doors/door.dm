@@ -46,6 +46,12 @@
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
+	/// Special operating mode for elevator doors
+	var/elevator_mode = FALSE
+	/// Current elevator status for processing
+	var/elevator_status
+	/// What specific lift ID do we link with?
+	var/elevator_linked_id
 
 /datum/armor/machinery_door
 	melee = 30
@@ -64,6 +70,12 @@
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	GLOB.airlocks += src
+	if(elevator_mode)
+		if(elevator_linked_id)
+			elevator_status = LIFT_PLATFORM_LOCKED
+			GLOB.elevator_doors += src
+		else
+			stack_trace("Elevator door [src] has no linked elevator ID!")
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	if(density)
@@ -118,6 +130,8 @@
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
 	GLOB.airlocks -= src
+	if(elevator_mode)
+		GLOB.elevator_doors -= src
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
@@ -210,7 +224,9 @@
 	if(!density || (obj_flags & EMAGGED))
 		return
 
-	if(requiresID() && allowed(user))
+	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+		open()
+	else if(requiresID() && allowed(user))
 		open()
 	else
 		do_animate("deny")
@@ -283,13 +299,16 @@
 	try_to_crowbar(tool, user, forced_open)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
-		try_to_crowbar(I, user, FALSE)
+/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/access_key))
+		var/obj/item/access_key/key = weapon
+		return key.attempt_open_door(user, src)
+	else if(!user.combat_mode && istype(weapon, /obj/item/fireaxe))
+		try_to_crowbar(weapon, user, FALSE)
 		return TRUE
-	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
+	else if(weapon.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
-	else if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
+	else if(!user.combat_mode && istype(weapon, /obj/item/stack/sheet/mineral/wood))
 		return ..() // we need this so our can_barricade element can be called using COMSIG_PARENT_ATTACKBY
 	else if(try_to_activate_door(user))
 		return TRUE
@@ -352,12 +371,13 @@
 			if(!machine_stat)
 				flick("door_deny", src)
 
-
-/obj/machinery/door/proc/open()
+/// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
+/// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
+/obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS)
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
-		return
+		return FALSE
 	operating = TRUE
 	use_power(active_power_usage)
 	do_animate("opening")
@@ -374,19 +394,26 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
-	return 1
+	return TRUE
 
-/obj/machinery/door/proc/close()
+/// Private proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.
+/// In case a specific behavior isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
+/obj/machinery/door/proc/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
+	return TRUE // the base "door" can always be forced open since there's no power or anything like emagging it to prevent an open, not even invoked on the base type anyways.
+
+/// Public proc that simply handles closing the door. Returns TRUE if the door was closed, FALSE otherwise.
+/// Use argument "forced" in conjuction with try_to_force_door_shut if you want/need additional checks depending on how sorely you need the door closed.
+/obj/machinery/door/proc/close(forced = DEFAULT_DOOR_CHECKS)
 	if(density)
 		return TRUE
 	if(operating || welded)
-		return
+		return FALSE
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
 					autoclose_in(DOOR_CLOSE_WAIT)
-				return
+				return FALSE
 
 	operating = TRUE
 
@@ -411,6 +438,11 @@
 	else
 		crush()
 	return TRUE
+
+/// Private proc that runs a series of checks to see if we should forcibly shut the door. Returns TRUE if we should shut the door, FALSE otherwise. Implemented in child types.
+/// In case a specific behavior isn't covered, we should default to TRUE just to be safe (simply put, this proc should have an explicit reason to return FALSE).
+/obj/machinery/door/proc/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
+	return TRUE // the base "door" can always be forced shut
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))

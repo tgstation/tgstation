@@ -239,19 +239,6 @@
 	contains = list(/obj/item/training_toolbox = 2)
 	crate_name = "training toolbox crate"
 
-/datum/supply_pack/misc/blackmarket_telepad
-	name = "Black Market LTSRBT"
-	desc = "Need a faster and better way of transporting your illegal goods from and to the \
-		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
-		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
-	cost = CARGO_CRATE_VALUE * 20
-	contraband = TRUE
-	contains = list(/obj/item/circuitboard/machine/ltsrbt,
-					/obj/item/stack/ore/bluespace_crystal/artificial = 2,
-					/obj/item/stock_parts/subspace/ansible,
-				)
-	crate_name = "crate"
-
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"
@@ -262,14 +249,15 @@
 	crate_type = /obj/structure/closet/crate
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
-	var/uplink_flag = UPLINK_TRAITORS
+	///What uplink the contents are pulled from
+	var/contents_uplink_type = UPLINK_TRAITORS
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
-		if(item.purchasable_from & UPLINK_TRAITORS && item.item)
+		if(item.purchasable_from & contents_uplink_type && item.item)
 			uplink_items += item
 
 	while(crate_value)
@@ -283,6 +271,12 @@
 		crate_value -= uplink_item.cost
 		new uplink_item.item(C)
 
+///Syndicate supply crate that can have its contents value changed by admins, uses a seperate datum to avoid having admins touch the original one.
+/datum/supply_pack/misc/syndicate/custom_value
+
+/datum/supply_pack/misc/syndicate/custom_value/proc/setup_contents(value, uplink)
+	crate_value = value
+	contents_uplink_type = uplink
 
 /datum/supply_pack/misc/fishing_portal
 	name = "Fishing Portal Generator Crate"
@@ -290,3 +284,14 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/machinery/fishing_portal_generator)
 	crate_name = "fishing portal crate"
+
+/datum/supply_pack/misc/papercutter
+	name = "Paper Cutters Crate"
+	desc = "Contains 3 office-grade paper cutters, equipped with sharp blades that can cut any paper into two thin slips.\
+		Comes with one replacement blade."
+	cost = CARGO_CRATE_VALUE * 3.5
+	contains = list(
+		/obj/item/papercutter = 3,
+		/obj/item/hatchet/cutterblade = 1,
+	)
+	crate_name = "paper cutters crate"

@@ -24,6 +24,7 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10)
+	var/spray_sound = 'sound/effects/spray2.ogg'
 
 /obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -51,7 +52,7 @@
 
 	spray(target, user)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+	playsound(src.loc, spray_sound, 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(target, user))
 	return
@@ -177,7 +178,7 @@
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(do_mob(user,user,30))
+	if(do_after(user, 3 SECONDS, user))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message(span_suicide("[user] pulls the trigger!"))
 			spray(user)
@@ -201,7 +202,7 @@
 /obj/item/reagent_containers/spray/pepper
 	name = "pepperspray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pepperspray"
 	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -359,6 +360,31 @@
 	last_generate = world.time
 	reagents.add_reagent(generate_type, generate_amount)
 
+/obj/item/reagent_containers/spray/chemsprayer/party
+	name = "party popper"
+	desc = "A small device used for celebrations and annoying the janitor."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "party_popper"
+	inhand_icon_state = "party_popper"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	reagent_flags = NONE
+	list_reagents = list(/datum/reagent/glitter/confetti = 15)
+	volume = 15
+	amount_per_transfer_from_this = 5
+	can_toggle_range = FALSE
+	stream_mode = FALSE
+	current_range = 2
+	spray_range = 2
+	spray_sound = 'sound/effects/snap.ogg'
+	possible_transfer_amounts = list(5)
+
+/obj/item/reagent_containers/spray/chemsprayer/party/spray(atom/A, mob/user)
+	. = ..()
+	icon_state = "[icon_state]_used"
+
+
 // Plant-B-Gone
 /obj/item/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
@@ -401,7 +427,7 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
+	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)

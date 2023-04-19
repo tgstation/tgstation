@@ -3,7 +3,7 @@
 
 /obj/item/camera
 	name = "camera"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/art/camera.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	inhand_icon_state = "camera"
@@ -63,17 +63,17 @@
 		to_chat(user, span_warning("You must be holding the camera to continue!"))
 		return FALSE
 	var/desired_x = tgui_input_number(user, "How wide do you want the camera to shoot?", "Zoom", picture_size_x, picture_size_x_max, picture_size_x_min)
-	if(!desired_x || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	var/desired_y = tgui_input_number(user, "How high do you want the camera to shoot", "Zoom", picture_size_y, picture_size_y_max, picture_size_y_min)
-	if(!desired_y || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+	if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
 /obj/item/camera/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	adjust_zoom(user)
 
@@ -188,25 +188,27 @@
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
-	for(var/turf/placeholder in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
-		var/turf/T = placeholder
-		while(istype(T, /turf/open/openspace)) //Multi-z photography
-			T = SSmapping.get_turf_below(T)
-			if(!T)
+
+	var/width = size_x * 2
+	var/height = size_y * 2
+	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
+		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
+			placeholder = SSmapping.get_turf_below(placeholder)
+			if(!placeholder)
 				break
 
-		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
-			turfs += T
-			for(var/mob/M in T)
+		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+			turfs += placeholder
+			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in T)
+			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
 				blueprints = TRUE
-	for(var/i in mobs)
-		var/mob/M = i
-		mobs_spotted += M
-		if(M.stat == DEAD)
-			dead_spotted += M
-		desc += M.get_photo_description(src)
+
+	for(var/mob/mob as anything in mobs)
+		mobs_spotted += mob
+		if(mob.stat == DEAD)
+			dead_spotted += mob
+		desc += mob.get_photo_description(src)
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size

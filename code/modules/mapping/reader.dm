@@ -1,7 +1,6 @@
 ///////////////////////////////////////////////////////////////
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
-#define SPACE_KEY "space"
 // We support two different map formats
 // It is kinda possible to process them together, but if we split them up
 // I can make optimization decisions more easily
@@ -280,7 +279,10 @@
 			SSmapping.build_area_turfs(z_index)
 
 	if(!no_changeturf)
-		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+		var/list/turfs = block(
+			locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+			locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+		for(var/turf/T as anything in turfs)
 			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
 
@@ -797,11 +799,11 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
+	var/area/old_area
 	if(members[index] != /area/template_noop)
-		var/area/area_instance
 		if(members_attributes[index] != default_list)
 			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
-		area_instance = loaded_areas[members[index]]
+		var/area/area_instance = loaded_areas[members[index]]
 		if(!area_instance)
 			var/area_type = members[index]
 			// If this parsed map doesn't have that area already, we check the global cache
@@ -814,7 +816,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			loaded_areas[area_type] = area_instance
 
 		if(!new_z)
-			var/area/old_area = crds.loc
+			old_area = crds.loc
 			old_area.turfs_to_uncontain += crds
 			area_instance.contained_turfs.Add(crds)
 		area_instance.contents.Add(crds)
@@ -842,6 +844,10 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
 			world.preloader_load(instance)
+	// If this isn't template work, we didn't change our turf and we changed area, then we've gotta handle area lighting transfer
+	else if(!no_changeturf && old_area)
+		// Don't do contain/uncontain stuff, this happens a few lines up when the area actally changes
+		crds.on_change_area(old_area, crds.loc)
 	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
@@ -957,3 +963,9 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	grid_models.Cut()
 	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW
+
+#undef MAP_DMM
+#undef MAP_TGM
+#undef MAP_UNKNOWN
+#undef TRIM_TEXT
+#undef MAPLOADING_CHECK_TICK

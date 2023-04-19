@@ -1,11 +1,11 @@
 GLOBAL_LIST_INIT(rod_recipes, list ( \
-	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = FALSE, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("railing", /obj/structure/railing, 6, time = 3.6 SECONDS, window_checks = TRUE, category = CAT_STRUCTURE), \
-	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 150, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("railing", /obj/structure/railing, 6, time = 3.6 SECONDS, check_direction = TRUE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 150, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("catwalk floor tile", /obj/item/stack/tile/catwalk_tile, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("stairs frame", /obj/structure/stairs_frame, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("white cane", /obj/item/cane/white, 3, time = 10, one_per_turf = FALSE, category = CAT_TOOLS), \

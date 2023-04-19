@@ -54,8 +54,7 @@
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
 
-	var/turf/reservation_bottom_left = coords2turf(reservation.bottom_left_coords)
-	if(!loading.load(reservation_bottom_left))
+	if(!loading.load(coords2turf(reservation.bottom_left_coords)))
 		CRASH("Failed to load lazy template: '[key]'")
 	reservations += reservation
 

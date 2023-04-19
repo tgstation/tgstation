@@ -84,11 +84,11 @@
 		. += "[initial(icon_state)]-on"
 
 
-/obj/item/weldingtool/process(delta_time)
+/obj/item/weldingtool/process(seconds_per_tick)
 	if(welding)
 		force = 15
 		damtype = BURN
-		burned_fuel_for += delta_time
+		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 			use(TRUE)
 		update_appearance()
@@ -145,7 +145,7 @@
 			if(user == attacked_humanoid)
 				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
 					span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-				if(!do_mob(user, attacked_humanoid, 50))
+				if(!do_after(user, 5 SECONDS, attacked_humanoid))
 					return
 			item_heal_robotic(attacked_humanoid, user, 15, 0)
 	else
@@ -315,7 +315,7 @@
 		var/obj/item/stack/rods/used_rods = tool
 		if (used_rods.use(1))
 			var/obj/item/flamethrower/flamethrower_frame = new /obj/item/flamethrower(user.loc)
-			if(!remove_item_from_storage(flamethrower_frame))
+			if(!remove_item_from_storage(flamethrower_frame, user))
 				user.transferItemToLoc(src, flamethrower_frame, TRUE)
 			flamethrower_frame.weldtool = src
 			add_fingerprint(user)

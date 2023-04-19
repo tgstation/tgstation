@@ -163,6 +163,20 @@
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
 
+/obj/machinery/door/airlock/gold/discoinferno
+	heat_proof = TRUE
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/discoinferno_airlock
+
+/datum/armor/discoinferno_airlock
+	melee = 30
+	bullet = 30
+	laser = 20
+	energy = 20
+	bomb = 10
+	fire = 100
+	acid = 100
+
 /obj/machinery/door/airlock/gold/glass
 	opacity = FALSE
 	glass = TRUE
@@ -634,14 +648,14 @@
 
 // set_density on both open and close procs has a check and return builtin.
 
-/obj/machinery/door/airlock/instant/open(forced = FALSE)
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	set_density(FALSE)
 	operating = FALSE
 	return TRUE
 
-/obj/machinery/door/airlock/instant/close(forced = FALSE, force_crush = FALSE)
+/obj/machinery/door/airlock/instant/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
 	operating = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	set_density(TRUE)

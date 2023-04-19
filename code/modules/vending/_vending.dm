@@ -62,7 +62,7 @@
 	armor_type = /datum/armor/machinery_vending
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
-	light_power = 0.5
+	light_power = 0.7
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 
 	/// Is the machine active (No sales pitches if off)!
@@ -615,6 +615,11 @@
 	else
 		. = ..()
 		if(tiltable && !tilted && I.force)
+			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
+				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
+				var/target = get_step(src, opposite_direction)
+				tilt(get_turf(target))
+				return
 			switch(rand(1, 100))
 				if(1 to 5)
 					freebie(user, 3)
@@ -1061,7 +1066,7 @@
 			speak("You are not of legal age to purchase [R.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
-					sec_radio = new
+					sec_radio = new (src)
 					sec_radio.set_listening(FALSE)
 				sec_radio.set_frequency(FREQ_SECURITY)
 				sec_radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
@@ -1114,7 +1119,7 @@
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 	vend_ready = TRUE
 
-/obj/machinery/vending/process(delta_time)
+/obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 	if(!active)
@@ -1124,12 +1129,12 @@
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && DT_PROB(2.5, delta_time))
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && SPT_PROB(2.5, seconds_per_tick))
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && DT_PROB(shoot_inventory_chance, delta_time))
+	if(shoot_inventory && SPT_PROB(shoot_inventory_chance, seconds_per_tick))
 		throw_item()
 /**
  * Speak the given message verbally
@@ -1442,3 +1447,5 @@
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+
+#undef MAX_VENDING_INPUT_AMOUNT

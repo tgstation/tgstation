@@ -1,9 +1,3 @@
-// Flags for [/obj/item/grenade/var/dud_flags]
-/// The grenade cannot detonate at all. It is innately nonfunctional.
-#define GRENADE_DUD (1<<0)
-/// The grenade has been used and as such cannot detonate.
-#define GRENADE_USED (1<<1)
-
 /**
  * Base class for all grenades.
  */
@@ -202,7 +196,7 @@
 	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
 	if (isnull(newtime))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))

@@ -5,7 +5,7 @@ import { Component, Fragment } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
@@ -24,6 +24,7 @@ type UplinkItem = {
   restricted_species: string;
   progression_minimum: number;
   cost_override_string: string;
+  lock_other_purchases: BooleanLike;
   ref?: string;
 };
 
@@ -56,6 +57,8 @@ type UplinkData = {
   active_objectives: Objective[];
   maximum_active_objectives: number;
   maximum_potential_objectives: number;
+  purchased_items: number;
+  shop_locked: BooleanLike;
 };
 
 type UplinkState = {
@@ -171,6 +174,8 @@ export class Uplink extends Component<{}, UplinkState> {
       extra_purchasable_stock,
       current_stock,
       lockable,
+      purchased_items,
+      shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
@@ -200,7 +205,19 @@ export class Uplink extends Component<{}, UplinkState> {
         id: item.id,
         name: item.name,
         category: item.category,
-        desc: <Box>{item.desc}</Box>,
+        desc: (
+          <Box>
+            {item.desc}
+            {(item.lock_other_purchases && (
+              <Box color="orange" bold>
+                Taking this item will lock you from further purchasing from the
+                marketplace. Additionally, if you have already purchased an
+                item, you will not be able to purchase this.
+              </Box>
+            )) ||
+              null}
+          </Box>
+        ),
         cost: (
           <Box>
             {item.cost_override_string || `${item.cost} TC`}
@@ -216,7 +233,10 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled: !canBuy || (has_progression && !hasEnoughProgression),
+        disabled:
+          !canBuy ||
+          (has_progression && !hasEnoughProgression) ||
+          (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
         },
@@ -395,19 +415,34 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <GenericUplink
-                    currency=""
-                    categories={allCategories}
-                    items={items}
-                    handleBuy={(item) => {
-                      const extraDataItem = item as Item<ItemExtraData>;
-                      if (!extraDataItem.extraData?.ref) {
-                        act('buy', { path: item.id });
-                      } else {
-                        act('buy', { ref: extraDataItem.extraData.ref });
-                      }
-                    }}
-                  />
+                  <Section>
+                    <GenericUplink
+                      currency=""
+                      categories={allCategories}
+                      items={items}
+                      handleBuy={(item) => {
+                        const extraDataItem = item as Item<ItemExtraData>;
+                        if (!extraDataItem.extraData?.ref) {
+                          act('buy', { path: item.id });
+                        } else {
+                          act('buy', { ref: extraDataItem.extraData.ref });
+                        }
+                      }}
+                    />
+                    {(shop_locked && (
+                      <Dimmer>
+                        <Box
+                          color="red"
+                          fontFamily={'Bahnschrift'}
+                          fontSize={3}
+                          align={'top'}
+                          as="span">
+                          SHOP LOCKED
+                        </Box>
+                      </Dimmer>
+                    )) ||
+                      null}
+                  </Section>
                 )}
             </Stack.Item>
           </Stack>

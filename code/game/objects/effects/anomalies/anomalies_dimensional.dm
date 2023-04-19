@@ -21,7 +21,7 @@
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
 
-/obj/effect/anomaly/dimensional/anomalyEffect(delta_time)
+/obj/effect/anomaly/dimensional/anomalyEffect(seconds_per_tick)
 	. = ..()
 	transmute_area()
 
@@ -42,10 +42,12 @@
 
 /**
  * Prepare a new area for transformation into a new theme.
+ * Optionally pass in the typepath of an anomaly theme to use that one.
  */
-/obj/effect/anomaly/dimensional/proc/prepare_area()
-	var/datum/dimension_theme/themes = new()
-	theme = themes.get_random_theme()
+/obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
+	if (!new_theme_path)
+		new_theme_path = pick(subtypesof(/datum/dimension_theme))
+	theme = new new_theme_path()
 	apply_theme_icon()
 
 	target_turfs = new()

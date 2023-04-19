@@ -91,7 +91,7 @@
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
-	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
+	if(P.is_hostile_projectile() && (. != BULLET_ACT_BLOCK))
 		var/attack_direction = get_dir(P.starting, src)
 		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
 		// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
@@ -206,7 +206,7 @@
 				log_combat(user, src, "attempted to neck grab", addition="neck grab")
 			if(GRAB_NECK)
 				log_combat(user, src, "attempted to strangle", addition="kill grab")
-		if(!do_mob(user, src, grab_upgrade_time))
+		if(!do_after(user, grab_upgrade_time, src))
 			return FALSE
 		if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 			return FALSE

@@ -1,5 +1,5 @@
 /datum/ai_behavior/basic_melee_attack
-	action_cooldown = 0.6 SECONDS
+	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
@@ -14,7 +14,7 @@
 		return
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
@@ -41,6 +41,9 @@
 	if(!succeeded)
 		controller.blackboard -= target_key
 
+/datum/ai_behavior/basic_melee_attack/average_speed
+	action_cooldown = 1 SECONDS
+
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
@@ -58,7 +61,7 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/basic_ranged_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore

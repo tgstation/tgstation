@@ -1,15 +1,10 @@
-///If the machine is used/deleted in the crafting process
-#define CRAFTING_MACHINERY_CONSUME 1
-///If the structure is used/deleted in the crafting process
-#define CRAFTING_STRUCTURE_CONSUME 1
-///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
-#define CRAFTING_MACHINERY_USE 0
-///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
-#define CRAFTING_STRUCTURE_USE 0
-
 /datum/crafting_recipe
-	///in-game display name
+	/// in-game display name
+	/// Optional, if not set uses result name
 	var/name
+	/// description displayed in game
+	/// Optional, if not set uses result desc
+	var/desc
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
 	///type paths of items explicitly not allowed as an ingredient
@@ -44,6 +39,8 @@
 	var/datum/chemical_reaction/reaction
 	/// Resulting amount (for stacks only)
 	var/result_amount
+	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
+	var/delete_contents = TRUE
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -84,3 +81,7 @@
 	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 		return TRUE
 	return FALSE
+
+/// Additional UI data to be passed to the crafting UI for this recipe
+/datum/crafting_recipe/proc/crafting_ui_data()
+	return list()

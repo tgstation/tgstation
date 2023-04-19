@@ -1,17 +1,19 @@
-#define TRAM_MALFUNCTION_TIME_UPPER 420
-#define TRAM_MALFUNCTION_TIME_LOWER 240
+#define TRAM_MALFUNCTION_TIME_UPPER 210
+#define TRAM_MALFUNCTION_TIME_LOWER 120
 
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
-	weight = 20
+	weight = 40
 	max_occurrences = 4
 	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Tram crossing signals malfunction, tram collision damage is increased."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 3
 
 //Check if there's a tram we can cause to malfunction.
-/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt)
+/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -37,23 +39,32 @@
 
 /datum/round_event/tram_malfunction/start()
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
-		if(signal.obj_flags & EMAGGED)
-			return
-
 		signal.start_malfunction()
+
+	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
+		door.start_malfunction()
+
+	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
+		sign.malfunctioning = TRUE
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
-		tram.collision_lethality = 2
+		tram.collision_lethality = original_lethality * 1.25
 
 /datum/round_event/tram_malfunction/end()
-	for(var/obj/machinery/crossing_signal/signal in GLOB.tram_signals)
+	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
 		signal.end_malfunction()
+
+	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
+		door.end_malfunction()
+
+	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
+		sign.malfunctioning = FALSE
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		tram.collision_lethality = original_lethality
 
-	priority_announce("We've successfully reset the software of the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused. We hope you have a good rest of your shift.", "CentCom Engineering Division")
+	priority_announce("We've successfully reset the software on the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "CentCom Engineering Division")
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
 #undef TRAM_MALFUNCTION_TIME_LOWER

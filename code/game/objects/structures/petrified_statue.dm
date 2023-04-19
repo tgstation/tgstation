@@ -19,16 +19,16 @@
 		L.visible_message(span_warning("[L]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
 		L.forceMove(src)
 		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
-		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
+		L.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
 		L.status_flags |= GODMODE
 		atom_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = atom_integrity
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/statue/petrified/process(delta_time)
+/obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer -= delta_time
+	timer -= seconds_per_tick
 	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
@@ -43,8 +43,8 @@
 
 /obj/structure/statue/petrified/Destroy()
 
-	if(istype(src.loc, /mob/living/simple_animal/hostile/netherworld/statue))
-		var/mob/living/simple_animal/hostile/netherworld/statue/S = src.loc
+	if(istype(src.loc, /mob/living/basic/statue))
+		var/mob/living/basic/statue/S = src.loc
 		forceMove(S.loc)
 		if(S.mind)
 			if(petrified_mob)
@@ -62,7 +62,7 @@
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
 		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transfered to the mob
-		petrified_mob.faction -= "mimic"
+		petrified_mob.faction -= FACTION_MIMIC
 		petrified_mob = null
 	return ..()
 
@@ -73,7 +73,7 @@
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			if(iscarbon(petrified_mob))
 				var/mob/living/carbon/petrified_carbon = petrified_mob
-				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
 				carbon_brain.forceMove(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"

@@ -4,7 +4,7 @@
 /datum/unit_test/barsigns_icon
 
 /datum/unit_test/barsigns_icon/Run()
-	var/obj/structure/sign/barsign_type = /obj/structure/sign/barsign
+	var/obj/machinery/barsign_type = /obj/machinery/barsign
 	var/icon/barsign_icon = initial(barsign_type.icon)
 	var/list/barsign_icon_states = icon_states(barsign_icon)
 
