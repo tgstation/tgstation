@@ -196,7 +196,7 @@
 		return
 	toggle_power(user)
 
-/obj/machinery/electrolyzer/proc/toggle_power(user)
+/obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)
 		balloon_alert(user, "insert cell or anchor!")
 		return
@@ -226,13 +226,13 @@
 		data["powerLevel"] = round(cell.percent(), 1)
 	return data
 
-/obj/machinery/electrolyzer/ui_act(action, params)
+/obj/machinery/electrolyzer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			toggle_power()
+			toggle_power(ui.user)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

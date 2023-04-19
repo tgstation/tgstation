@@ -1237,10 +1237,10 @@
 		else
 			. += span_notice("The digital timer on the card has [time_left] seconds remaining. Don't do the crime if you can't do the time.")
 
-/obj/item/card/id/advanced/prisoner/process(delta_time)
+/obj/item/card/id/advanced/prisoner/process(seconds_per_tick)
 	if(!timed)
 		return
-	time_left -= delta_time
+	time_left -= seconds_per_tick
 	if(time_left <= 0)
 		say("Sentence time has been served. Thank you for your cooperation in our corporate rehabilitation program!")
 		STOP_PROCESSING(SSobj, src)

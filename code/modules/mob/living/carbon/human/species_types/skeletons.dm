@@ -63,12 +63,12 @@
 	return ..()
 
 //Can still metabolize milk through meme magic
-/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5 * REM * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REM * delta_time, 0)
-		if(DT_PROB(10, delta_time))
+		H.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
+		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
+		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -77,7 +77,7 @@
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)
-			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
+			if(SPT_PROB(2, seconds_per_tick) && iscarbon(H)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
@@ -88,7 +88,7 @@
 				else
 					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
 					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return TRUE
 
 /datum/species/skeleton/get_species_description()

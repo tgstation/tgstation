@@ -463,11 +463,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "yH" = (
-/obj/machinery/power/apc/syndicate{
-	dir = 4;
-	name = "Syndicate Listening Post APC";
-	pixel_x = 25
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -534,9 +531,7 @@
 	pixel_x = 4
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)

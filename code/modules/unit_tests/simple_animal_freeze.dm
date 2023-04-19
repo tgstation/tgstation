@@ -240,7 +240,6 @@
 		/mob/living/simple_animal/hostile/regalrat,
 		/mob/living/simple_animal/hostile/regalrat/controlled,
 		/mob/living/simple_animal/hostile/retaliate,
-		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/clown,
 		/mob/living/simple_animal/hostile/retaliate/clown/banana,
 		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk,

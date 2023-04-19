@@ -146,7 +146,7 @@
 		ownerlimb.update_icon_dropped()
 	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
 
-/obj/item/organ/external/on_life(delta_time, times_fired)
+/obj/item/organ/external/on_life(seconds_per_tick, times_fired)
 	return
 
 /obj/item/organ/external/update_overlays()
