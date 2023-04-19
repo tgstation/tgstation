@@ -231,10 +231,7 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled:
-          !canBuy ||
-          has_progression ||
-          (item.lock_other_purchases && purchased_items > 0),
+        disabled: !canBuy || (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
         },
