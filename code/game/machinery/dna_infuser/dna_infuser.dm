@@ -237,8 +237,8 @@
 
 // mostly good for dead mobs that turn into items like dead mice (smack to add).
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
-	if(!state_open || !is_valid_infusion(target, user))
+	// if the machine already has a infusion target, or the target is not valid then no adding.
+	if(!is_valid_infusion(target, user))
 		return
 	if(!user.transferItemToLoc(target, src))
 		to_chat(user, span_warning("[target] is stuck to your hand!"))
@@ -248,7 +248,7 @@
 // mostly good for dead mobs like corpses (drag to add).
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
-	if(!state_open || !is_valid_infusion(target, user))
+	if(!is_valid_infusion(target, user))
 		return
 	infusing_from = target
 	infusing_from.forceMove(src)
