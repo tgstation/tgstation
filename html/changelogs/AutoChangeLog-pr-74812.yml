@@ -1,0 +1,8 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes:
+  - refactor: "refactors trees into basic mobs"
+  - refactor: "refactors poles into basic mobs"
+  - rscadd: "If trees now see you holding a chainsaw, hatchet, or some wood they will get angry and knock you out for longer"
+  - rscadd: "Poles will run around giving some of their charge to  APCs they find along the way"
+  - bugfix: "cells charged by the pole will now have their icon correctly updated to reflect their charge"
