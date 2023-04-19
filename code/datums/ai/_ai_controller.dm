@@ -558,44 +558,28 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)
 	SIGNAL_HANDLER
 
-#ifdef TESTING
-	var/depth = 1
-#endif
-
-	testing("AI blackboard reference cleanup: Detected [source] deletion.")
-
 	var/list/list/remove_queue = list(blackboard)
 	while(length(remove_queue))
 		var/list/next_to_clear = popleft(remove_queue)
 		for(var/inner_value in next_to_clear)
-			testing("AI blackboard reference cleanup: The value [inner_value] was found at [depth].")
-			testing("AI blackboard reference cleanup: The value [inner_value] at depth [depth] had the assoc value of [inner_value].")
 			var/associated_value = next_to_clear[inner_value]
 			// We are a lists of lists, add the next value to the queue so we can handle references in there
+			// (But we only need to bother checking the list if it's not empty.)
 			if(islist(inner_value) && length(inner_value))
-				remove_queue += inner_value
-				testing("-- AI blackboard reference cleanup: Found list at depth [depth], adding to queue.")
+				UNTYPED_LIST_ADD(remove_queue, inner_value)
 
 			// We found the value that's been deleted. Clear it out from this list
 			else if(inner_value == source)
-				CLEAR_AI_DATUM_TARGET(source, inner_value)
 				next_to_clear -= inner_value
-				testing("-- AI blackboard reference cleanup: Clearing [source] reference, at depth [depth].")
 
 			// We are an assoc lists of lists, the list at the next value so we can handle references in there
+			// (But again, we only need to bother checking the list if it's not empty.)
 			if(islist(associated_value) && length(associated_value))
-				remove_queue += associated_value
-				testing("-- AI blackboard reference cleanup: Found list assocly at depth [depth], adding to queue.")
+				UNTYPED_LIST_ADD(remove_queue, associated_value)
 
-			// We found the value that's been deleted
+			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
 			else if(associated_value == source)
-				CLEAR_AI_DATUM_TARGET(associated_value, inner_value)
 				next_to_clear -= inner_value
-				testing("-- AI blackboard reference cleanup: Clearing [source] assoc reference, at depth [depth].")
-
-#ifdef TESTING
-		depth += 1
-#endif
 
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET
