@@ -275,3 +275,7 @@
 // Fugu AI keys
 /// Key where we store the inflating ability
 #define BB_FUGU_INFLATE "BB_fugu_inflate"
+
+//Festivus AI keys
+/// Key where we store the charging apc ability
+#define BB_FESTIVE_APC "BB_festive_apc"
