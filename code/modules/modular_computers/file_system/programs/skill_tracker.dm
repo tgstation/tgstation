@@ -51,9 +51,6 @@
 	return null
 
 /datum/computer_file/program/skill_tracker/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("PRG_reward")
 			var/skill_type = find_skilltype(params["skill"])
