@@ -274,7 +274,8 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/power/apc/highcap/ten_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
@@ -471,9 +472,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cb" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	name = "Gateway APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -1190,9 +1190,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	name = "Vault APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -2175,9 +2174,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kp" = (
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Dorms APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -2430,7 +2428,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lo" = (
@@ -3405,7 +3404,8 @@
 "DC" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "DO" = (
@@ -3745,7 +3745,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "Or" = (

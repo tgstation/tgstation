@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "correctly type casts the turf into open type for the rcd mecha plating action"
-  - refactor: "removes single letter variable names"
-  - refactor: "uses datum/ui component to get user for to_chat() instead of usr"

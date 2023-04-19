@@ -86628,7 +86628,8 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/machinery/power/apc/sm_apc/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "vFm" = (

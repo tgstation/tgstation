@@ -5,6 +5,7 @@
 
 #_maps/RandomRuins/SpaceRuins/abandonedteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm
+#_maps/RandomRuins/SpaceRuins/allamericandiner.dmm
 #_maps/RandomRuins/SpaceRuins/anomaly_research.dmm
 #_maps/RandomRuins/SpaceRuins/asteroid1.dmm
 #_maps/RandomRuins/SpaceRuins/asteroid2.dmm
@@ -76,7 +77,7 @@
 #_maps/RandomRuins/SpaceRuins/space_billboard.dmm
 #_maps/RandomRuins/SpaceRuins/spinwardsmoothies.dmm
 #_maps/RandomRuins/SpaceRuins/dangerous_research.dmm
-#_maps/RnadomRuins/SpaceRuins/mimesvsclowns.dmm
+#_maps/RandomRuins/SpaceRuins/mimesvsclowns.dmm
 #_maps/RandomRuins/SpaceRuins/the_faceoff.dmm
 #_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm

@@ -28795,7 +28795,8 @@
 /area/station/maintenance/starboard/fore)
 "kxw" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/sm_apc/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "kxz" = (

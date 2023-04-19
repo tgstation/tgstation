@@ -94,3 +94,8 @@
 	name = "\improper Fortune Teller billboard"
 	desc = "A billboard advertising Fortune Telling. Apparently it's done by real psykers!"
 	icon_state = "billboard_fortune_tell"
+
+/obj/structure/billboard/american_diner
+	name = "\improper All-American Diner billboard"
+	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
+	icon_state = "billboard_american_diner"

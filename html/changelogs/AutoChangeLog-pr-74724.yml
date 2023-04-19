@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Set default IV transfer rate to maximum (5) instead of 0."
