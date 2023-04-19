@@ -15,7 +15,7 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
-	desc_controls = "Right-Click to detach the IV or the attached container.\nAlt-Click to toggle transfer."
+	desc_controls = "Alt + Left-Click to toggle transfer."
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -59,6 +59,10 @@
 		if(internal_list_reagents)
 			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Detach / Eject / Configure", \
+	)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -124,7 +128,7 @@
 
 /// Sets the transfer rate to the provided value
 /obj/machinery/iv_drip/proc/set_transfer_rate(new_rate)
-	if(!use_internal_storage && !reagent_container)
+	if(inject_from_plumbing && mode == IV_INJECTING)
 		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
@@ -352,17 +356,14 @@
 	if(usr.incapacitated())
 		return
 	if(inject_only)
-		if(!mode)
-			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	// Prevent blood draining from non-living
 	if(attached && !isliving(attached))
-		if(!mode)
-			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	mode = !mode
+	update_appearance(UPDATE_ICON)
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
 
 /obj/machinery/iv_drip/examine(mob/user)
