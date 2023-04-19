@@ -1,5 +1,3 @@
-GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "thermite"))
-
 /datum/component/thermite
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Amount of thermite on parent
@@ -15,6 +13,8 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 	/// The thermite fire overlay
 	var/obj/effect/overlay/thermite/fakefire
 
+	/// Default thermite overlay, do not touch
+	var/static/mutable_appearance/default_thermite_overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	/// Blacklist of turfs that cannot have thermite on it
 	var/static/list/blacklist = typecacheof(list(
 		/turf/open/lava,
@@ -33,7 +33,7 @@ GLOBAL_DATUM_INIT(thermite_overlay, /mutable_appearance, mutable_appearance('ico
 		/turf/closed/wall/r_wall,
 	))
 
-/datum/component/thermite/Initialize(amount, thermite_overlay = GLOB.thermite_overlay)
+/datum/component/thermite/Initialize(amount = 50, thermite_overlay = default_thermite_overlay)
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	//not actually incompatible, but not valid
