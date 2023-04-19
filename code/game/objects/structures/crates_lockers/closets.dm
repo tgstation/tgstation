@@ -279,7 +279,7 @@
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
 			if(!card_reader_installed)
-				if(can_install_electronics)
+				if(length(access_choices) && can_install_electronics)
 					. += span_notice("You can install a card reader for furthur access control.")
 			else
 				. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
@@ -560,13 +560,13 @@
 
 		update_appearance()
 
-	else if(secure && !locked && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
+	else if(secure && !locked && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
-		if(!(secure && !locked && !card_reader_installed && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
+		if(!(secure && !locked && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
 			return
 
 		card_reader_installed = TRUE
@@ -576,8 +576,12 @@
 		balloon_alert(user, "card reader installed")
 
 	else if(secure && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = W.GetID())))
+		var/num_choices = length(access_choices)
+		if(!num_choices)
+			return
+
 		var/choice
-		if(length(access_choices) == 1)
+		if(num_choices == 1)
 			choice = access_choices[1]
 		else
 			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
@@ -589,19 +593,21 @@
 			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(id)
 				name = "[id.registered_name] locker"
-				desc = "Owned by [id.registered_name]."
+				desc = "Owned by [id.registered_name]. [initial(desc)]"
 			if("Departmental") //anyone who has the same access permissions as this id has access
-				name = "[id.assignment] Closet"
-				desc = "Its a [id.assignment] closet"
+				name = "[id.assignment] closet"
+				desc = "Its a [id.assignment] closet. [initial(desc)]"
 				set_access(id.GetAccess())
 			if("None") //free for all
-				name = "Closet"
-				desc = "Its a closet"
+				name = initial(name)
+				desc = initial(desc)
+				req_access = list()
+				req_one_access = null
 				set_access(list())
 
 		var/msg
 		if(!isnull(id_card))
-			msg = "now owned by [name]"
+			msg = "now owned by [id.registered_name]"
 		else
 			msg = "set to [choice]"
 		balloon_alert(user, msg)
@@ -912,8 +918,8 @@
 		if(!isnull(id_card))
 			var/obj/item/card/id/advanced/prisoner/registered_id = id_card.resolve()
 			if(QDELETED(registered_id)) //id was deleted at some point. make this closet public access again
-				name = "Closet"
-				desc = "Its a closet"
+				name = initial(name)
+				desc = initial(desc)
 				id_card = null
 				req_access = list()
 				req_one_access = null

@@ -4,7 +4,6 @@
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	card_reader_installed = TRUE
 	access_choices = list("Personal")
-	access_locked = TRUE
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()

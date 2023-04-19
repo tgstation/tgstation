@@ -61,11 +61,9 @@
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
-	var/obj/item/card/id/id_card = null
+	var/datum/weakref/id_card = null
 	/// should we prevent furthur access change
 	var/access_locked = FALSE
-	/// electronics for access control
-	var/obj/item/electronics/airlock/electronics = null
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -168,9 +166,8 @@
 
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
-	for(var/obj/item/electronics/airlock/access_control in component_parts)
-		electronics = access_control
-		set_access()
+
+	set_access(null)
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
@@ -185,12 +182,12 @@
 	update_appearance()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	electronics = null
 	QDEL_NULL(suit)
 	QDEL_NULL(helmet)
 	QDEL_NULL(mask)
 	QDEL_NULL(mod)
 	QDEL_NULL(storage)
+	id_card = null
 	return ..()
 
 /obj/machinery/suit_storage_unit/update_overlays()
@@ -229,32 +226,43 @@
 
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()
-	. += "You can change its name & description with a pen"
-	if(card_reader_installed)
-		. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
-		. += span_notice("Use a multitool to lock/unlock access panel.")
-		if(access_locked)
-			. += span_alert("The access panel is locked.")
+
+	if(!locked && !state_open && panel_open)
+		if(!card_reader_installed)
+			. += span_notice("A card reader can be installed for further control access.")
 		else
-			. += span_green("The access panel is open.")
-		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
-	else
-		. += span_notice("A card reader can be installed for further control access.")
+			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
+
+	if(!locked && !state_open && card_reader_installed)
+		if(!access_locked && !panel_open)
+			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+		if(panel_open)
+			. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel.")
 
 /// copy over access of electronics
-/obj/machinery/suit_storage_unit/proc/set_access()
-	if (electronics.one_access)
-		req_one_access = electronics.accesses
-	else
-		req_access = electronics.accesses
+/obj/machinery/suit_storage_unit/proc/set_access(list/accesses)
+	for(var/obj/item/electronics/airlock/electronics in component_parts)
+		if(QDELETED(electronics))
+			return
+
+		if(!isnull(accesses))
+			electronics.accesses = accesses
+		if (electronics.one_access)
+			req_one_access = electronics.accesses
+			req_access = null
+		else
+			req_access = electronics.accesses
+			req_one_access = null
+
+		return
 
 /obj/machinery/suit_storage_unit/RefreshParts()
 	. = ..()
+
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
-	for(var/obj/item/electronics/airlock/access_control in component_parts)
-		electronics = access_control
-		set_access()
+
+	set_access(null)
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
@@ -281,14 +289,23 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/proc/access_check(mob/living/user)
-	//physical id references don't match up
-	if(id_card && (user.get_idcard() != id_card))
-		balloon_alert(user, "not your unit!")
-		return FALSE
-	//general access check
+	if(!isnull(id_card))
+		var/obj/item/card/id/id = id_card.resolve()
+		if(QDELETED(id))
+			name = initial(name)
+			desc = initial(desc)
+			id_card = null
+			req_access = list()
+			req_one_access = null
+			set_access(list())
+			return TRUE
+		if(id_card && (user.get_idcard() != id))
+			balloon_alert(user, "not your unit!")
+			return FALSE
 	else if(!allowed(user))
 		balloon_alert(user, "access denied!")
 		return FALSE
+
 	return TRUE
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -574,11 +591,7 @@
 		open_machine()
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
-	if(!card_reader_installed || !panel_open)
-		return TRUE
-
-	if(locked)
-		balloon_alert(user, "unlock first!")
+	if(locked || state_open || !card_reader_installed || !panel_open)
 		return TRUE
 
 	access_locked = !access_locked
@@ -586,30 +599,24 @@
 	return TRUE
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
-	if(panel_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
-		if(card_reader_installed)
-			balloon_alert(user, "already installed!")
+	. = TRUE
+	var/obj/item/card/id/id = null
+	if(!locked && !state_open && panel_open && is_operational && !card_reader_installed && istype(I, /obj/item/stock_parts/card_reader))
+		user.visible_message(span_notice("[user] is installing a card reader."),
+					span_notice("You begin installing the card reader."))
+		if(!do_after(user, 4 SECONDS, target = src))
 			return
 
-		if(do_after(user, 4 SECONDS))
-			card_reader_installed = TRUE
-			I.moveToNullspace()
-			qdel(I)
-			balloon_alert(user, "card reader installed")
+		if(!(!locked && !state_open && panel_open && is_operational && !card_reader_installed) || !user.transferItemToLoc(I, src))
+			return
 
-		return TRUE
+		card_reader_installed = TRUE
+		I.moveToNullspace()
+		qdel(I)
 
-	else if(istype(I, /obj/item/pen))
-		//you need to unlock to perform the operation else anyone can change name & description on a locked closet
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return TRUE
+		balloon_alert(user, "card reader installed")
 
-		//you cant rename departmental lockers cause thats vandalism
-		if(!id_card)
-			balloon_alert(user, "not yours to rename!")
-			return TRUE
-
+	else if(!locked && !state_open && !panel_open && !isnull(id_card) && istype(I, /obj/item/pen))
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
@@ -631,47 +638,40 @@
 		if(bit_flag != NONE)
 			update_appearance(bit_flag)
 
-		return TRUE
-	else if(is_operational && card_reader_installed)
-		var/obj/item/card/id/id = null
-		if(istype(I, /obj/item/card/id))
-			id = I
-		else if(istype(I, /obj/item/modular_computer/pda))
-			var/obj/item/modular_computer/pda/pda = I
-			id = pda.computer_id_slot
-		if(!isnull(id))
-			//you need to unlock to perform the operation else anyone can change access on a locked closet
-			if(locked)
-				balloon_alert(user, "unlock first!")
-				return TRUE
+	else if(!locked && !state_open && !panel_open && !access_locked && is_operational && card_reader_installed && !isnull((id = I.GetID())))
+		//change the access type
+		var/static/list/choices = list(
+			"Personal",
+			"Departmental",
+			"None"
+		)
+		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
+		if(isnull(choice))
+			return
 
-			if(access_locked)
-				balloon_alert(user, "access panel locked!")
-				return TRUE
+		id_card = null
+		switch(choice)
+			if("Personal") //only the player who swiped their id has access.
+				id_card = WEAKREF(id)
+				name = "[id.registered_name] Suit Storage Unit"
+				desc = "Owned by [id.registered_name]. [initial(desc)]"
+			if("Departmental") //anyone who has the same access permissions as this id has access
+				name = "[id.assignment] Suit Storage Unit"
+				desc = "Its a [id.assignment] Suit Storage Unit. [initial(desc)]"
+				set_access(id.GetAccess())
+			if("None") //free for all
+				name = initial(name)
+				desc = initial(desc)
+				req_access = list()
+				req_one_access = null
+				set_access(list())
 
-			//change the access type
-			var/static/list/choices = list(
-				"Personel",
-				"Departmental",
-				"None"
-			)
-			var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
-			if(isnull(choice))
-				return
-
-			id_card = null
-			switch(choice)
-				if("Personel") //only the player who swiped their pda has access.
-					id_card = id
-				if("Departmental") //anyone who has the same access permissions as this id has access
-					electronics.accesses = id.GetAccess()
-					set_access()
-				else //free for all
-					electronics.accesses = list()
-					set_access()
-			balloon_alert(user, "access is now [choice]")
-
-			return TRUE
+		var/msg
+		if(!isnull(id_card))
+			msg = "now owned by [id.registered_name]"
+		else
+			msg = "set to [choice]"
+		balloon_alert(user, msg)
 
 	if(state_open && is_operational)
 		if(istype(I, /obj/item/clothing/suit))
@@ -736,8 +736,8 @@
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
 /obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && uv)
-		to_chat(user, span_warning("It might not be wise to fiddle with [src] while it's running..."))
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
+		to_chat(user, span_warning("You cant open the panel while its [locked ? "locked" : "decontaminating"]"))
 		return TRUE
 	return ..()
 

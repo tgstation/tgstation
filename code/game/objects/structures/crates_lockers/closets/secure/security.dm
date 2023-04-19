@@ -184,12 +184,14 @@
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	anchored = TRUE
-	var/id = null
 	req_one_access = list(ACCESS_BRIG)
+	var/id = null
 
 /obj/structure/closet/secure_closet/brig/genpop
 	name = "genpop storage locker"
 	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
+	access_choices = null
+	paint_jobs = null
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
 	. = ..()
