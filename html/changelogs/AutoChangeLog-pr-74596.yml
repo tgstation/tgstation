@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - bugfix: "Laser pointers will no longer disable borgs that have somehow been made immune to flashes."

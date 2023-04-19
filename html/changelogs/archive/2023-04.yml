@@ -651,3 +651,50 @@
   zxaber:
   - balance: Cyborg Rechargers now restock with metal and glass from the ore silo,
       and no longer grant the materials for free.
+2023-04-19:
+  ATHATH:
+  - bugfix: Laser pointers will no longer disable borgs that have somehow been made
+      immune to flashes.
+  BlueMemesauce:
+  - bugfix: Fixed a bug where additonal receivers wouldn't work if the first one was
+      on but disconnected
+  Dawnseer:
+  - bugfix: The rolling table actually plays the rolling sound, as the lord intended.
+  Helg2:
+  - qol: Reflectors now have better rotating menu. Changed from alt-click to just
+      lmb.
+  Iamgoofball:
+  - bugfix: PDA messaging is now more immersive based on age
+  JohnFulpWillard:
+  - bugfix: Plague doctor hats no longer give you an FOV.
+  - refactor: '[Mafia] All Mafia abilities have been overhauled in the backend, it''s
+      now much easier to understand what each role''s ability can do and how it works.'
+  - admin: '[Mafia] Admin setup of Mafia is now in TGUI'
+  - balance: '[Mafia] Doctors/Officers can protect themselves once per game. Be careful
+      around them!'
+  - bugfix: '[Mafia] Thoughtfeeder''s UI buttons at night won''t overlap with eachother.'
+  - bugfix: '[Mafia] HoP''s votes now actually matter, instead of being purely visual.'
+  - qol: '[Mafia] Lawyers, Wardens, etc. now perform their night ability at night,
+      instead of the day prior.'
+  - qol: '[Mafia] Night time now lasts 40 seconds instead of 45.'
+  - admin: Secret buttons for Engineering/Brig maint accesses should now work more
+      consistently.
+  Melbert:
+  - qol: Hydroponics trays should update more snappily now
+  Mey-Ha-Zah:
+  - imageadd: Updated Wrapping Icons.
+  Supermichael777:
+  - bugfix: ' Plastitanium glass no longer always creates stacks of 50'
+  Tattle:
+  - bugfix: Nightmares will once again spawn
+  carlarctg:
+  - qol: Shoe storage can now fit box cutters, pills, and toy pistol magazines.
+  vinylspiders:
+  - bugfix: candles can now be used to light other candles, cigarettes, and anything
+      else that needs lighting in a pinch.
+  - bugfix: flashlights that have directional lights now have directional sprites
+      to match
+  - bugfix: candles can now be snuffed again
+  - imageadd: adds new inhand sprites for most flashlights in the game, including
+      animated flares and candles
+  - refactor: cleaned up flashlight.dm's unnecessary bits and made some slight improvements
