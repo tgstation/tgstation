@@ -643,7 +643,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0 //the tgui menu counts this down.
 
 	var/datum/mafia_role/user_role = player_role_lookup[user]
-	data["user_notes"] = user_role.written_notes
+	if(user_role)
+		data["user_notes"] = user_role.written_notes
 
 	data["players"] = list()
 	for(var/datum/mafia_role/role as anything in all_roles)
@@ -1060,7 +1061,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	maptext = MAPTEXT("<b style='color: [COLOR_RED]; text-align: center; font-size: 32px'> [text]</b>")
 	maptext_width = view_to_pixels(owner?.view_size.getView())[1]
 	owner?.screen += src
-	addtimer(CALLBACK(src, PROC_REF(null_text)), 10 SECONDS, TIMER_OVERRIDE|TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(null_text)), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 /atom/movable/screen/mafia_popup/proc/null_text()
 	maptext = null
