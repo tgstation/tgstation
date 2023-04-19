@@ -252,7 +252,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"xu" = (
+"xr" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
@@ -322,9 +322,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"Cn" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "Cu" = (
 /obj/structure/cable,
 /obj/machinery/field/generator,
@@ -523,6 +520,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"QS" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "RL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron,
@@ -1058,7 +1058,7 @@ WZ
 (19,1,1) = {"
 zs
 LD
-xu
+xr
 Ib
 xG
 oK
@@ -1095,9 +1095,9 @@ WZ
 ug
 ug
 ug
-Cn
-Cn
-Cn
-Cn
-Cn
+QS
+QS
+QS
+QS
+QS
 "}
