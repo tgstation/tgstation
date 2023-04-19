@@ -27,9 +27,22 @@
 	var/lid_x = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_y = 0
+
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
-	return ..()
+	. = ..()
+
+	var/static/list/crate_paint_jobs = list(
+		"Internals" = list("icon_state" = "o2crate"),
+		"Medical" = list("icon_state" = "medicalcrate"),
+		"Radiation" = list("icon_state" = "radiation"),
+		"Hydrophonics" = list("icon_state" = "hydrocrate"),
+		"Science" = list("icon_state" = "scicrate"),
+		"Solar" = list("icon_state" = "engi_e_crate"),
+		"Engineering" = list("icon_state" = "engi_crate")
+	)
+	if(!isnull(paint_jobs))
+		paint_jobs = crate_paint_jobs
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -46,7 +59,9 @@
 				return TRUE
 
 /obj/structure/closet/crate/update_icon_state()
-	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
+	if(isnull(base_icon_state))
+		base_icon_state = initial(icon_state)
+	icon_state = "[base_icon_state][opened ? "open" : ""]"
 	return ..()
 
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
@@ -59,6 +74,13 @@
 		. += "securecrater"
 	else if(secure)
 		. += "securecrateg"
+	if(opened && lid_icon_state)
+		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
+		lid.pixel_x = lid_x
+		lid.pixel_y = lid_y
+		lid.layer = layer
+		. += lid
+	. += ..()
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -71,21 +93,16 @@
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-
-/obj/structure/closet/crate/after_close(mob/living/user, force)
-	. = ..()
-	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
-
-
-/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(. && !QDELETED(manifest))
-		to_chat(user, span_notice("The manifest is torn off [src]."))
+	if(!QDELETED(manifest))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
+
+/obj/structure/closet/crate/after_close(mob/living/user)
+	. = ..()
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
@@ -96,16 +113,6 @@
 		user.put_in_hands(manifest)
 	manifest = null
 	update_appearance()
-
-/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
-	. = new_overlays
-	if(opened && lid_icon_state)
-		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_x = lid_x
-		lid.pixel_y = lid_y
-		lid.layer = layer
-		. += lid
-	. += ..()
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
@@ -120,6 +127,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
+	paint_jobs = null
 
 /obj/structure/closet/crate/maint
 
@@ -132,12 +140,13 @@
 	var/obj/structure/closet/crate/random_crate = new crate_path(loc)
 	random_crate.RegisterSignal(random_crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 	if (prob(50))
-		random_crate.open(null)
+		random_crate.open(null, special_effects = FALSE) //crates spawned as immediatly opened don't need to animate into being opened
 
 	return INITIALIZE_HINT_QDEL
 
 /obj/structure/closet/proc/populate_with_random_maint_loot()
 	SIGNAL_HANDLER
+
 	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
@@ -189,25 +198,23 @@
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+	paint_jobs = null
 
-//Snowflake organ freezer code
-//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+/obj/structure/closet/crate/freezer/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
 
-/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
 	toggle_organ_decay(src)
-	..()
+	return TRUE
 
-/obj/structure/closet/crate/freezer/close()
-	..()
+/obj/structure/closet/crate/freezer/after_close(mob/living/user)
+	. = ..()
 	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/Destroy()
 	toggle_organ_decay(src)
 	return ..()
-
-/obj/structure/closet/crate/freezer/Initialize(mapload)
-	. = ..()
-	toggle_organ_decay(src)
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"

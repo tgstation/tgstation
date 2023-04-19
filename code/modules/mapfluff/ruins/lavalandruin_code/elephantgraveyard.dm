@@ -133,15 +133,36 @@
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
-	locked = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
 	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
+	can_install_electronics = FALSE
+	paint_jobs = null
+
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
-	can_install_electronics = FALSE
+	var/grave_dug_open = FALSE
+
+/obj/structure/closet/crate/grave/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!grave_dug_open)
+		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/grave/before_close(mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	to_chat(user, span_notice("The grave is already dug up."))
+	return FALSE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -172,14 +193,6 @@
 			//empty grave
 			return
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
-	if(force)
-		return ..(force = TRUE)
-	to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
-
-/obj/structure/closet/crate/grave/close(mob/living/user)
-	to_chat(user, span_notice("The grave has already been dug up."))
-
 /obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
 	return
 
@@ -189,6 +202,7 @@
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
 				if (do_after(user,20, target = src))
+					grave_dug_open = TRUE
 					open(user, force = TRUE)
 					user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)

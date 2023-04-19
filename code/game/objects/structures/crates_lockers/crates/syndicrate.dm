@@ -18,6 +18,17 @@
 	laser = 50
 	energy = 100
 
+/obj/structure/closet/crate/syndicrate/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!created_items)
+		balloon_alert(user, "locked!")
+		return FALSE
+
+	return TRUE
+
 /obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(created_items)
 		return ..()
@@ -46,13 +57,6 @@
 /obj/structure/closet/crate/syndicrate/attackby_secondary(obj/item/weapon, mob/user, params)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-///overwrites default opening behavior until it is unlocked via the syndicrate key
-/obj/structure/closet/crate/syndicrate/can_open(mob/living/user, force = FALSE)
-	if(!created_items)
-		balloon_alert(user, "locked!")
-		return FALSE
-	return ..()
-
 ///syndicrate has a unique overlay for being unlocked
 /obj/structure/closet/crate/syndicrate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
@@ -70,7 +74,7 @@
 	. = ..()
 	register_item_context()
 
-/obj/item/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+/obj/item/syndicrate_key/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
 
 	var/obj/structure/closet/crate/syndicrate/target_structure = target

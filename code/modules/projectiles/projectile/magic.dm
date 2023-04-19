@@ -284,13 +284,12 @@
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
+/obj/structure/closet/decay/after_open(mob/living/user, force)
+	. = ..()
+	unmagify()
+
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
-		unmagify()
-
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself

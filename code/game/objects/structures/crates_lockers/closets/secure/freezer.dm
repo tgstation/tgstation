@@ -6,6 +6,19 @@
 	door_anim_time = 4
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
+	paint_jobs = null
+
+/obj/structure/closet/secure_closet/freezer/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	toggle_organ_decay(src)
+	return TRUE
+
+/obj/structure/closet/secure_closet/freezer/after_close(mob/living/user)
+	. = ..()
+	toggle_organ_decay(src)
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	toggle_organ_decay(src)
@@ -14,17 +27,6 @@
 /obj/structure/closet/secure_closet/freezer/Initialize(mapload)
 	. = ..()
 	toggle_organ_decay(src)
-
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
-	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
-		return FALSE
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..()) //if we actually closed the locker
-		toggle_organ_decay(src)
-		return TRUE
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
@@ -81,8 +83,8 @@
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = list()
 	locked = FALSE
+	req_access = list()
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge
 	name = "refrigerator"

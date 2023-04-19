@@ -219,6 +219,7 @@
 	lid_icon_state = "maillid"
 	lid_x = -26
 	lid_y = 2
+	paint_jobs = null
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
