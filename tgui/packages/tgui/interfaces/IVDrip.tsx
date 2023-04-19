@@ -133,7 +133,7 @@ export const IVDrip = (props, context) => {
             ) : (
               <LabeledList.Item label="Object">
                 <Tooltip content="Drag the cursor from the drip and drop it on an object to connect.">
-                  <NoticeBox my={0.7}>No object hasObjectAttached.</NoticeBox>
+                  <NoticeBox my={0.7}>No object attached.</NoticeBox>
                 </Tooltip>
               </LabeledList.Item>
             )}
@@ -147,13 +147,24 @@ export const IVDrip = (props, context) => {
                 !!canAdjustTransfer && (
                   <LabeledList.Item
                     label="Transfer Rate"
-                    buttons={'Units / Second'}>
+                    buttons={
+                      <Button
+                        my={1}
+                        width={8}
+                        lineHeight={2}
+                        align="center"
+                        icon="power-off"
+                        content={transferRate ? 'Stop' : 'Start'}
+                        onClick={() => act('toggleTransfer')}
+                      />
+                    }>
                     <Slider
                       step={transferStep}
                       my={1}
                       value={transferRate}
                       minValue={minTransferRate}
                       maxValue={maxTransferRate}
+                      unit="units/sec."
                       onDrag={(e, value) =>
                         act('changeRate', {
                           rate: value,

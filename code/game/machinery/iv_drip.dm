@@ -12,7 +12,8 @@
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
+	desc_controls = "Right-Click to detach the IV or the attached container.\nAlt-Click to toggle transfer."
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -28,7 +29,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MAX_IV_TRANSFER_RATE
+	var/transfer_rate = MIN_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -118,6 +119,9 @@
 		if("changeRate")
 			set_transfer_rate(text2num(params["rate"]))
 			return TRUE
+		if("toggleTransfer")
+			toggle_transfer_rate()
+			return TRUE
 
 /// Sets the transfer rate to the provided value
 /obj/machinery/iv_drip/proc/set_transfer_rate(new_rate)
@@ -127,6 +131,13 @@
 		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
+
+/// Toggles transfer rate between min and max rate
+/obj/machinery/iv_drip/proc/toggle_transfer_rate()
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	else
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0)
@@ -210,13 +221,7 @@
 /obj/machinery/iv_drip/AltClick(mob/user)
 	if(!can_use_alt_click(user))
 		return ..()
-	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		set_transfer_rate(MIN_IV_TRANSFER_RATE)
-	else
-		set_transfer_rate(MAX_IV_TRANSFER_RATE)
-	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
-	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
-	update_appearance(UPDATE_ICON)
+	toggle_transfer_rate()
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -312,6 +317,7 @@
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	attached = null
+	update_appearance(UPDATE_ICON)
 
 /// Get the reagents used by IV drip
 /obj/machinery/iv_drip/proc/get_reagents()
