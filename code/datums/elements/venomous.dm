@@ -61,3 +61,23 @@
 	else
 		final_amount_added = amount_added
 	target.reagents?.add_reagent(poison_type, final_amount_added)
+
+
+/**
+ * Subtype for projectiles to apply a reagent on hit.
+ */
+/datum/element/venomous/projectile
+
+/datum/element/venomous/projectile/Attach(datum/target, poison_type, amount_added)
+	. = ..()
+	if(!isprojectile(target))
+		return ELEMENT_INCOMPATIBLE
+
+	RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_hit))
+
+/datum/element/venomous/projectile/proc/on_hit(datum/source, mob/firer, atom/target, angle, hit_limb)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	add_reagent(target)

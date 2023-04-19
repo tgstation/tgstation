@@ -12,6 +12,10 @@
 	caliber = CALIBER_ARROW
 	heavy_metal = FALSE
 
+/obj/item/ammo_casing/caseless/arrow/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/element/envenomable_casing)
+
 ///base arrow projectile
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
@@ -19,6 +23,16 @@
 	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
+	damage = 50
+	speed = 1
+	range = 25
+
+///*sigh* NON-REUSABLE base arrow projectile. In the future: let's componentize the reusable subtype, jesus
+/obj/projectile/bullet/arrow
+	name = "arrow"
+	desc = "Ow! Get it out of me!"
+	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon_state = "arrow_projectile"
 	damage = 50
 	speed = 1
 	range = 25
@@ -52,3 +66,29 @@
 	. = ..()
 	//50 damage to revenants
 	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 30)
+
+/// special pyre sect arrow
+/// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
+/obj/item/ammo_casing/caseless/arrow/holy/blazing
+	name = "blazing star arrow"
+	desc = "A holy diver seeking its target, blessed with fire. Will ignite on hit, destroying the arrow. But if you hit an already ignited target...?"
+	projectile_type = /obj/projectile/bullet/arrow/blazing
+
+/obj/projectile/bullet/arrow/blazing
+	name = "blazing arrow"
+	desc = "THE UNMATCHED POWER OF THE SUN"
+	icon_state = "holy_arrow_projectile"
+	damage = 20
+
+/obj/projectile/bullet/arrow/blazing/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/human_target = target
+	if(!human_target.on_fire)
+		to_chat(human_target, span_danger("[src] explodes into flames which quickly envelop you!"))
+		human_target.adjust_fire_stacks(2)
+		human_target.ignite_mob()
+		return
+	to_chat(human_target, span_danger("[src] reacts with the flames on y-"))
+	explosion(src, light_impact_range = 1, flame_range = 2) //ow
