@@ -131,12 +131,10 @@ SUBSYSTEM_DEF(mapping)
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
 		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
-		log_world("added ruin space level [space_levels_so_far+1].")
 		++space_levels_so_far
 	// and one level with no ruins
 	while (space_levels_so_far < config.space_empty_levels + config.space_ruin_levels)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-		log_world("added empty space level [space_levels_so_far+1].")
 		++space_levels_so_far
 
 	// Pick a random away mission.
@@ -256,7 +254,6 @@ SUBSYSTEM_DEF(mapping)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
 		var/default_ruin_amount = 7
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruin_amount))
-		log_world("starting spawning ruins with [proportional_budget] and non rounded [CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruin_amount)].")
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
