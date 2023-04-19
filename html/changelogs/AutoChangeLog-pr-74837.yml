@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - qol: "made dna infusers less confusing to use by removing the \"must be opened\" check"
+  - bugfix: "fixed up gondola mutants and how to obtain them"
