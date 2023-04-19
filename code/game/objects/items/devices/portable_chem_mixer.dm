@@ -90,6 +90,7 @@
 	if (!atom_storage.locked)
 		update_contents()
 	if (atom_storage.locked)
+		atom_storage.hide_contents(usr)
 		replace_beaker(user)
 	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
