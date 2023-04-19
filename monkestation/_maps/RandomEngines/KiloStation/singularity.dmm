@@ -229,6 +229,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"tC" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "ug" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -239,9 +246,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"vn" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "vD" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/energy_accumulator/grounding_rod,
@@ -258,6 +262,9 @@
 "xG" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "xZ" = (
@@ -421,6 +428,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"Lu" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "LD" = (
 /obj/structure/cable,
 /obj/machinery/camera/directional/north{
@@ -428,6 +438,9 @@
 	name = "shuttle camera"
 	},
 /obj/machinery/light/blacklight/directional/north,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "LZ" = (
@@ -1045,7 +1058,7 @@ WZ
 (19,1,1) = {"
 zs
 LD
-Ib
+tC
 Ib
 xG
 oK
@@ -1082,9 +1095,9 @@ WZ
 ug
 ug
 ug
-ug
-vn
-vn
-vn
-vn
+WZ
+Lu
+Lu
+Lu
+Lu
 "}

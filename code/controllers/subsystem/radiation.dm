@@ -80,6 +80,7 @@ SUBSYSTEM_DEF(radiation)
 			else
 				perceived_chance = 100
 
+			target.rad_act(pulse_information.intensity)
 			var/irradiation_result = SEND_SIGNAL(target, COMSIG_IN_THRESHOLD_OF_IRRADIATION, pulse_information)
 			if (irradiation_result & CANCEL_IRRADIATION)
 				continue
@@ -93,8 +94,6 @@ SUBSYSTEM_DEF(radiation)
 
 			if (irradiate_after_basic_checks(target))
 				target.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
-
-			target.rad_act(pulse_information.intensity)
 
 		if(MC_TICK_CHECK)
 			break
