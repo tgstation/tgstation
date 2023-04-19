@@ -1,0 +1,4 @@
+author: "iain0"
+delete-after: True
+changes:
+  - bugfix: "Fixes an error in health analyzers which would cut off the top of the health scan if the player was deaf."
