@@ -271,6 +271,11 @@
 	to_chat(user, span_notice("You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\"."))
 	return FALSE
 
+/obj/item/modular_computer/pda/ui_state(mob/user)
+	for(var/obj/item/inhand in user.held_items)
+		if(inhand == src)
+			return GLOB.horizontal_state
+
 /**
  * Silicon PDA
  *
