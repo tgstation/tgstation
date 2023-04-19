@@ -130,12 +130,13 @@ SUBSYSTEM_DEF(mapping)
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	for (var/i in 0 to config.space_ruin_levels)
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 		++space_levels_so_far
+		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+
 	// Create space levels with no ruins
 	for (var/i in 0 to config.space_empty_levels)
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
