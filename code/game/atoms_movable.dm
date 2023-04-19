@@ -128,7 +128,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(render_target)
+			em_block = new(src, render_target)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
