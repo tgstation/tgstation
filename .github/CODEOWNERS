@@ -6,7 +6,7 @@
 
 # MAINTAINERS
 
-# Cyberboss
+# Dominion/Cyberboss
 
 /.github/workflows/update_tgs_dmapi.yml @Cyberboss
 /.tgs.yml @Cyberboss
@@ -21,7 +21,6 @@
 /code/controllers/globals.dm @Cyberboss
 /code/datums/helper_datums/getrev.dm @Cyberboss
 /code/modules/tgs/ @Cyberboss
-/tools/tgs_scripts/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
 
 # Dragomagol/Tattle
@@ -198,8 +197,7 @@
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 /tools/build/ @MrStonedOne @stylemistake
-/tools/LinuxOneShot/ @Cyberboss @MrStonedOne
-/tools/tgs4_scripts/ @Cyberboss @MrStonedOne
+/tools/tgs_scripts/ @Cyberboss @MrStonedOne
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
 
