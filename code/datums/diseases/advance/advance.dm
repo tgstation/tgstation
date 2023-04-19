@@ -130,6 +130,8 @@
 		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
+			if(istype(competition, /datum/disease/advance/sentient_disease))
+				continue //Sentient diseases are built different and cannot be overwritten.
 			if(totalTransmittable() > competition.totalResistance())
 				competition.cure(FALSE)
 			else
