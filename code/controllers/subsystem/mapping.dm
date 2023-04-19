@@ -252,8 +252,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
-		var/default_ruins_amount = global.config.defaultmap.space_ruin_levels
-		var/proportional_budget = CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruins_amount)
+		var/default_ruin_amount = global.config.defaultmap.space_ruin_levels
+		var/proportional_budget = CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruin_amount)
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
