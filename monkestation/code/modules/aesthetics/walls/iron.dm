@@ -5,3 +5,11 @@
 /turf/closed/wall/r_wall
 	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+
+/obj/structure/falsewall
+	icon = 'monkestation/icons/turf/walls/wall.dmi'
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+
+/obj/structure/falsewall/reinforced
+	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
