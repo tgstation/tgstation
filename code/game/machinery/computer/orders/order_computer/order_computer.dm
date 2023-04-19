@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
-	data["total_cost"] = "[get_total_cost()]"
+	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	if(!isliving(user))
@@ -107,13 +107,14 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	data["purchase_tooltip"] = purchase_tooltip
 	data["forced_express"] = forced_express
 	data["cargo_value"] = CARGO_CRATE_VALUE
-	data["cargo_cost_multiplier"] = "[cargo_cost_multiplier]"
-	data["express_cost_multiplier"] = "[express_cost_multiplier]"
+	data["cargo_cost_multiplier"] = cargo_cost_multiplier
+	data["express_cost_multiplier"] = express_cost_multiplier
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
+
 		data["order_datums"] += list(list(
 			"name" = item.name,
 			"desc" = item.desc,
