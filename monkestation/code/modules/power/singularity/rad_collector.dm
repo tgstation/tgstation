@@ -182,7 +182,6 @@
 		update_appearance()
 
 /obj/machinery/power/rad_collector/rad_act(intensity)
-	. = ..()
 	if(loaded_tank && active && intensity > RAD_COLLECTOR_EFFICIENCY)
 		stored_energy += (intensity-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
