@@ -28,6 +28,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "fx" = (
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "fN" = (
@@ -39,6 +40,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "hD" = (
@@ -61,6 +63,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "iW" = (
@@ -236,6 +239,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"vn" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "vD" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/energy_accumulator/grounding_rod,
@@ -306,6 +312,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Cu" = (
@@ -326,6 +333,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "EU" = (
@@ -337,6 +345,7 @@
 /area/station/engineering/supermatter/room)
 "Fj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Fu" = (
@@ -347,6 +356,7 @@
 /area/station/engineering/supermatter/room)
 "FB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Hs" = (
@@ -423,6 +433,7 @@
 "LZ" = (
 /obj/structure/particle_accelerator/particle_emitter/center,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Mb" = (
@@ -513,6 +524,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Su" = (
@@ -1016,7 +1028,7 @@ oK
 oK
 oK
 oK
-oK
+Ib
 Ii
 rz
 lg
@@ -1039,7 +1051,7 @@ xG
 oK
 re
 th
-oK
+Ib
 RN
 eo
 tB
@@ -1071,8 +1083,8 @@ ug
 ug
 ug
 ug
-ug
-WZ
-WZ
-WZ
+vn
+vn
+vn
+vn
 "}
