@@ -25,8 +25,6 @@
 
 # Dragomagol/Tattle
 
-/code/__HELPERS/logging/ @dragomagol
-
 # Fikou
 
 /code/modules/awaymissions/ @Fikou
@@ -128,6 +126,16 @@
 /code/modules/wiremod/ @Watermelon914
 /code/modules/antagonists/traitor/ @Watermelon914
 
+# ZephyrTFA
+
+/code/__HELPERS/admin_verb.dm @ZephyrTFA
+/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
+/code/datums/json_savefile.dm @ZephyrTFA
+/code/datums/armor/ @ZephyrTFA
+/code/modules/admin/verbs/ @ZephyrTFA
+/code/modules/logging/ @ZephyrTFA
+
+
 # CONTRIBUTORS
 
 # Cobby
@@ -171,15 +179,7 @@
 /code/__DEFINES/atmospherics/ @Pickle-Coding
 /code/__DEFINES/reactions.dm @Pickle-Coding
 /code/modules/atmospherics/ @Pickle-Coding
-/code/modules/power/ @Pickle-Coding
-
-# ZephyrTFA
-
-/code/__HELPERS/admin_verb.dm @ZephyrTFA
-/code/controllers/subsystem/admin_verbs.dm @ZephyrTFA
-/code/datums/json_savefile.dm @ZephyrTFA
-/code/datums/armor/ @ZephyrTFA
-/code/modules/admin/verbs/ @ZephyrTFA
+/code/modules/power/ @Pickle-Codi
 
 # MULTIPLE OWNERS
 
@@ -188,6 +188,7 @@
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+/code/__HELPERS/logging/ @dragomagol @ZephyrTFA
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
