@@ -41,7 +41,7 @@ jobs:
         source_branch: "tgs-dmapi-update"
         destination_branch: "master"
         pr_title: "Automatic TGS DMAPI Update"
-        pr_body: "This pull request updates the TGS DMAPI to the latest version. Please note any breaking or unimplemented changes before merging."
+        pr_body: "This pull request updates the TGS DMAPI to the latest version. Please note any changes that may be breaking or unimplemented in your codebase by checking what changes are in the definitions file: code/__DEFINES/tgs.dm before merging."
         pr_label: "Tools"
         pr_allow_empty: false
         github_token: ${{ secrets.COMFY_ORANGE_PAT }}

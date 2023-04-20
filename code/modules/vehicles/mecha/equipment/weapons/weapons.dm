@@ -457,7 +457,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
 	. = ..()
-	if(action == "toggle")
+	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Enabled.")]")
