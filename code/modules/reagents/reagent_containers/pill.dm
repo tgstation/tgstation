@@ -267,9 +267,8 @@
 	list_reagents = list(get_random_reagent_id_unrestricted() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	if(!GLOB.pill_names.len)
-		var/json = file("data/pill_names.json")
-		if(json)
-			GLOB.pill_names = json_decode(file2text(json))
+		var/json = file("strings/pill_names.json")
+		GLOB.pill_names = json_decode(file2text(json))
 
 	var/drug_word = pick(GLOB.pill_names)
 	if(prob(10))
