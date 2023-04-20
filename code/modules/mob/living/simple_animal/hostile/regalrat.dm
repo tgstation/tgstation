@@ -129,10 +129,20 @@
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
 		return
-	else
+	else if(src.mind && !src.combat_mode && istype(target, /obj/machinery/disposal/))
+		src.visible_message(span_warning("[src] starts rummaging through [src]."),span_notice("You rummage through [target]..."))
+		if(!do_after(src, 2 SECONDS, target, interaction_key = "regalrat"))
+			return
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
-	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // prevents attacking while performing other interactions (e.g. disposal rummaging)
 		return
+	else if(src.mind && !src.combat_mode && istype(target, /obj/structure/cable/) || istype(target, /obj/item/food/cheese))
+		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+		return
+
+	//TODO - Have only a single src.mind and src.combat_mode check, and add returns to each of these if/elses. Don't add an internal else, so that attack is still default.
+
+	// if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // prevents attacking while performing other interactions (e.g. disposal rummaging)
+	// 	return
 	return ..()
 
 #undef REGALRAT_INTERACTION
