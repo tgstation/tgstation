@@ -43,6 +43,9 @@
 	QDEL_NULL(particles)
 	return ..()
 
+/obj/machinery/oven/AllowDrop()
+	return FALSE
+
 /// Used to determine if the oven appears active and cooking, or offline.
 /obj/machinery/oven/proc/appears_active()
 	return !open && length(used_tray?.contents) && !(machine_stat & (BROKEN|NOPOWER))
