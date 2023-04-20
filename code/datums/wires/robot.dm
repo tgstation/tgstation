@@ -66,7 +66,8 @@
 
 		if(WIRE_RESET_MODEL)
 			if(R.has_model())
-				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
+				R.ResetModel()
+				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -100,9 +101,8 @@
 			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")
 			log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)] via wire")
 		if(WIRE_RESET_MODEL)
-			if(R.has_model() && !mend)
-				R.ResetModel()
-				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
+			if(R.has_model())
+				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 
 /datum/wires/robot/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))
