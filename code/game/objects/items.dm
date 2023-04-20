@@ -879,7 +879,9 @@
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
-	return heat
+	. = heat
+	if(resistance_flags & ON_FIRE)
+		. = max(., FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.
 /obj/item/proc/get_sharpness()
