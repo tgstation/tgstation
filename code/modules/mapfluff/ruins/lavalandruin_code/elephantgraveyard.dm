@@ -150,7 +150,7 @@
 	if(!.)
 		return FALSE
 
-	if(!grave_dug_open)
+	if(!force && !grave_dug_open)
 		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
 		return FALSE
 
@@ -226,14 +226,6 @@
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 				deconstruct(TRUE)
 				return 1
-	return
-
-/obj/structure/closet/crate/grave/bust_open()
-	..()
-	opened = TRUE
-	update_appearance()
-	dump_contents()
-	after_open(null, FALSE)
 	return
 
 /obj/structure/closet/crate/grave/filled/lead_researcher

@@ -23,7 +23,7 @@
 	if(!.)
 		return FALSE
 
-	if(!created_items)
+	if(!broken && !force && !created_items)
 		balloon_alert(user, "locked!")
 		return FALSE
 

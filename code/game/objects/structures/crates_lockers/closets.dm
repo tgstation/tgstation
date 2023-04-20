@@ -272,22 +272,21 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-	if(!locked && !opened && (welded || !can_weld_shut))
+	if(!locked && (welded || !can_weld_shut))
 		if(!secure)
 			if(!broken && can_install_electronics)
 				. += span_notice("You can install airlock electronics for access control.")
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
-			if(!card_reader_installed)
-				if(length(access_choices) && can_install_electronics)
-					. += span_notice("You can install a card reader for furthur access control.")
-			else
-				. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
+			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics)
+				. += span_notice("You can install a card reader for furthur access control.")
+		if(card_reader_installed)
+			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 
 	if(!locked && !opened)
 		if(id_card)
 			. += "You can change its name & description with a pen."
-		if(secure && card_reader_installed)
+		if(secure && card_reader_installed && !broken)
 			if(!access_locked)
 				. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
 			. += span_notice("Use multitool to [access_locked ? "unlock" : "lock"] the access panel.")
@@ -307,12 +306,44 @@
 		if(opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		else
-			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
-		screentip_change = TRUE
+			if(!welded && can_weld_shut)
+				context[SCREENTIP_CONTEXT_LMB] = "Weld"
+				screentip_change = TRUE
+			else if(welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+				screentip_change = TRUE
 
 	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
+
+	if(!locked && (welded || !can_weld_shut))
+		if(!secure)
+			if(!broken && can_install_electronics && istype(held_item, /obj/item/electronics/airlock))
+				context[SCREENTIP_CONTEXT_LMB] = "Install Electronics"
+				screentip_change = TRUE
+		else
+			if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Electronics"
+				screentip_change = TRUE
+			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics && istype(held_item, /obj/item/stock_parts/card_reader))
+				context[SCREENTIP_CONTEXT_LMB] = "Install Reader"
+				screentip_change = TRUE
+		if(card_reader_installed && istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove Reader"
+			screentip_change = TRUE
+
+	if(!locked && !opened)
+		if(id_card && istype(held_item, /obj/item/pen))
+			context[SCREENTIP_CONTEXT_LMB] = "Rename"
+			screentip_change = TRUE
+		if(secure && card_reader_installed && !broken)
+			if(!access_locked && istype(held_item) && !isnull(held_item.GetID()))
+				context[SCREENTIP_CONTEXT_LMB] = "Swipe"
+				screentip_change = TRUE
+			if(istype(held_item) && istype(held_item) && held_item.tool_behaviour == TOOL_MULTITOOL)
+				context[SCREENTIP_CONTEXT_LMB] = "[access_locked ? "Unlock" : "Lock"] Access Panel"
+				screentip_change = TRUE
 
 	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
@@ -520,7 +551,7 @@
 		break
 
 /obj/structure/closet/multitool_act(mob/living/user, obj/item/tool)
-	if(!secure || !card_reader_installed || locked || opened)
+	if(!secure || !card_reader_installed || broken || locked || opened)
 		return
 	access_locked = !access_locked
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
@@ -560,13 +591,13 @@
 
 		update_appearance()
 
-	else if(secure && !locked && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
+	else if(secure && !broken && !locked && can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
-		if(!(secure && !locked && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
+		if(!(secure && !broken && !locked && can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut)) || !user.transferItemToLoc(W, src))
 			return
 
 		card_reader_installed = TRUE
@@ -575,7 +606,7 @@
 
 		balloon_alert(user, "card reader installed")
 
-	else if(secure && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = W.GetID())))
+	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = W.GetID())))
 		var/num_choices = length(access_choices)
 		if(!num_choices)
 			return
@@ -705,7 +736,7 @@
 			span_notice("You begin to remove the electronics from the [src]..."))
 		if (!W.use_tool(src, user, 40, volume=50))
 			return
-		if(!secure)
+		if(!(secure && !locked && (welded || !can_weld_shut)))
 			return
 
 		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
@@ -894,7 +925,7 @@
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
-	open()
+	open(null, force = TRUE, special_effects = FALSE)
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
@@ -907,10 +938,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
-	if(!secure)
-		return
-	if(broken)
-		balloon_alert(user, "its broken!")
+	if(!secure || broken)
 		return
 
 	if(locked) //only apply checks while unlocking else allow anyone to lock it
@@ -951,7 +979,6 @@
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
-		secure = FALSE
 		update_appearance()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)

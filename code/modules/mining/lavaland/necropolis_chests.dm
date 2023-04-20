@@ -82,7 +82,7 @@
 	if(!.)
 		return FALSE
 
-	if(!spawned_loot)
+	if(!broken && !force && !spawned_loot)
 		balloon_alert(user, "its locked!")
 		return FALSE
 
