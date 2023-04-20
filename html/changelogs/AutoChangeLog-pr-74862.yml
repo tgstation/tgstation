@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - admin: "Adds a warning that spawning revs via traitor panel will not function as expected."
