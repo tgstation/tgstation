@@ -149,7 +149,7 @@
 	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
-	var/list/poster_types = subtypesof(base_type)
+	var/list/poster_types = subtypesof(base_type) - typesof(/obj/structure/sign/poster/traitor)
 	var/list/approved_types = list()
 	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
 		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
