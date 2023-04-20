@@ -9894,7 +9894,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = "surg_a_privacy";
+	id = "surg_b_privacy";
 	name = "Surgery Privacy Shutters"
 	},
 /turf/open/floor/plating,
@@ -19278,7 +19278,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = "surg_b_privacy";
+	id = "surg_a_privacy";
 	name = "Surgery Privacy Shutters"
 	},
 /turf/open/floor/plating,
@@ -78383,7 +78383,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/west{
-	id = "surg_a_shutters";
+	id = "surg_b_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
@@ -85448,7 +85448,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/west{
-	id = "surg_b_shutters";
+	id = "surg_a_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
@@ -85530,6 +85530,8 @@
 /area/station/security/prison/garden)
 "wQu" = (
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/turf_decal/trimline/blue,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},

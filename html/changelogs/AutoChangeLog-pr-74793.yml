@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "Holograms glow now, pokes at the lighting for holocalls in general a bit to make em nicer."
-  - qol: "You can no longer accidentally end a holocall (as a non ai) by leaving the area. Felt like garbage"
-  - bugfix: "Fixes static rendering improperly if viewed by a non ai"
