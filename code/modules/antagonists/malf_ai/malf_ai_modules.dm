@@ -693,7 +693,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
-	for(var/obj/machinery/airalarm/AA in GLOB.machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.air_alarms)
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED

@@ -510,13 +510,13 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	var/pull_effort = 1 SECONDS
-	var/loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list(/datum/reagent/cellulose = 20)
+	var/loom_result = /obj/item/stack/sheet/cloth
+	var/loom_time = 1 SECONDS
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/loomable, resulting_item = loom_result, loom_time = pull_effort)
+	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -524,8 +524,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
-	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
+	loom_result = /obj/item/stack/sheet/durathread
 
 /obj/item/stack/sheet/cotton/wool
 	name = "raw wool bundle"
@@ -533,8 +533,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw wool ball"
 	icon_state = "sheet-wool"
 	merge_type = /obj/item/stack/sheet/cotton/wool
-	loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list()
+	loom_result = /obj/item/stack/sheet/cloth
 
 /*
  * Cardboard
