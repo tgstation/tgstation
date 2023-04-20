@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - bugfix: "Surgery room ID's in NorthStar are now properly ID-ed"
+  - bugfix: "Fixes missing APC in 2nd deck aft hallway of Northstar."
