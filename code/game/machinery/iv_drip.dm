@@ -296,7 +296,6 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 		detach_iv()
-		return
 	else if(reagent_container)
 		eject_beaker(user)
 	else
