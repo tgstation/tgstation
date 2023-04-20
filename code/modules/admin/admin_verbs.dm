@@ -1,86 +1,10 @@
-//admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
-//the procs are cause you can't put the comments in the GLOB var define
-
-GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
-GLOBAL_PROTECT(admin_verbs_admin)
-/world/proc/AVerbsAdmin()
-	return list(
-	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
-	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
-	/client/proc/admin_disable_shuttle, /*allows us to disable the emergency shuttle admin-wise so that it cannot be called*/
-	/client/proc/admin_enable_shuttle,  /*undoes the above*/
-	/client/proc/admin_hostile_environment, /*Allows admins to prevent the emergency shuttle from leaving, also lets admins clear hostile environments if theres one stuck*/
-	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
-	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/fax_panel, /*send a paper to fax*/
-	/client/proc/Getmob, /*teleports a mob to our location*/
-	/client/proc/Getkey, /*teleports a mob with a certain ckey to our location*/
-	/client/proc/getserverlogs, /*for accessing server logs*/
-	/client/proc/getcurrentlogs, /*for accessing server logs for the current round*/
-	/client/proc/ghost_pool_protection, /*opens a menu for toggling ghost roles*/
-	/client/proc/jumptoarea,
-	/client/proc/jumptokey, /*allows us to jump to the location of a mob with a certain ckey*/
-	/client/proc/jumptomob, /*allows us to jump to a specific mob*/
-	/client/proc/jumptoturf, /*allows us to jump to a specific turf*/
-	/client/proc/jumptocoord, /*we ghost and jump to a coordinate*/
-	/client/proc/message_pda, /*send a message to somebody on PDA*/
-	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
-	/client/proc/cmd_admin_law_panel,
-	)
-
-GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
-GLOBAL_PROTECT(admin_verbs_debug)
-/world/proc/AVerbsDebug()
-	return list(
-	/datum/admins/proc/create_or_modify_area,
-	/client/proc/adventure_manager,
-	/client/proc/atmos_control,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/check_bomb_impacts,
-	/client/proc/cmd_admin_debug_traitor_objectives,
-	/client/proc/cmd_admin_toggle_fov,
-	/client/proc/debug_controller,
-	/client/proc/debug_hallucination_weighted_list_per_type,
-	/client/proc/debugNatureMapGenerator,
-	/client/proc/enable_mapping_verbs,
-	/client/proc/generate_wikichem_list,
-	/client/proc/load_circuit,
-	/client/proc/map_template_load,
-	/client/proc/map_template_upload,
-	/client/proc/open_lua_editor,
-	/client/proc/outfit_manager,
-	/client/proc/reload_cards,
-	/client/proc/restart_controller,
-	/client/proc/SDQL2_query,
-	/client/proc/test_cardpack_distribution,
-	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI,
-	/client/proc/validate_cards,
-	)
-
 /client/proc/add_admin_verbs()
 	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 	SSadmin_verbs.assosciate_client(src)
 
-		// if(rights & R_ADMIN)
-		// 	add_verb(src, GLOB.admin_verbs_admin)
-		// if(rights & R_FUN)
-		// 	add_verb(src, GLOB.admin_verbs_fun)
-		// if(rights & R_DEBUG)
-		// 	add_verb(src, GLOB.admin_verbs_debug)
-
 /client/proc/remove_admin_verbs()
+	control_freak = initial(control_freak)
 	SSadmin_verbs.deassosciate_client(src)
-	remove_verb(src, list(
-		/*Debug verbs added by "show debug verbs"*/
-		GLOB.admin_verbs_debug_mapping,
-		/client/proc/disable_mapping_verbs,
-		/client/proc/readmin
-		))
 
 ADMIN_VERB(hide_verbs, "AdminVerbs - Hide All", "Hide all of your admin verbs, but remain an admin.", NONE, VERB_CATEGORY_ADMIN)
 	user.remove_admin_verbs()
@@ -332,31 +256,20 @@ ADMIN_VERB(dynex_set_scale, "Set DynEx Scale", "Set the scale multiplier for Dyn
 	log_admin("[key_name(user)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(user)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
-/client/proc/atmos_control()
-	set name = "Atmos Control Panel"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
-	SSair.ui_interact(mob)
+ADMIN_VERB(atmos_control, "Atmos Control Panel", "Open the atmos control panel.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	SSair.ui_interact(user.mob)
 
-/client/proc/reload_cards()
-	set name = "Reload Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(reload_cards, "Reload Cards", "Reloads all cards.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
 	SStrading_card_game.reloadAllCardFiles()
 
-/client/proc/validate_cards()
-	set name = "Validate Cards"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(validate_cards, "Validate Cards", "Checks all cards for errors.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
+
 	var/message = SStrading_card_game.check_cardpacks(SStrading_card_game.card_packs)
 	message += SStrading_card_game.check_card_datums()
 	if(message)
@@ -364,21 +277,16 @@ ADMIN_VERB(dynex_set_scale, "Set DynEx Scale", "Set the scale multiplier for Dyn
 	else
 		message_admins("No errors found in card rarities or overrides.")
 
-/client/proc/test_cardpack_distribution()
-	set name = "Test Cardpack Distribution"
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(test_cardpack_distribution, "Test Cardpack Distribution", "Opens a cardpack a bunch of times and shows the distribution of cards.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	var/pack = tgui_input_list(usr, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
+	var/pack = tgui_input_list(user, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
 	if(!pack)
 		return
-	var/batch_count = tgui_input_number(usr, "How many times should we open it?", "Don't worry, I understand")
-	var/batch_size = tgui_input_number(usr, "How many cards per batch?", "I hope you remember to check the validation")
-	var/guar = tgui_input_number(usr, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
-
+	var/batch_count = tgui_input_number(user, "How many times should we open it?", "Don't worry, I understand")
+	var/batch_size = tgui_input_number(user, "How many cards per batch?", "I hope you remember to check the validation")
+	var/guar = tgui_input_number(user, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
 	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
 ADMIN_VERB(print_cards, "Print Cards", "View all valid cards.", R_DEBUG, VERB_CATEGORY_DEBUG)
@@ -483,6 +391,7 @@ ADMIN_VERB(deadmin, "DeAdmin", "Shed your admin powers.", NONE, VERB_CATEGORY_AD
 	var/message = "[key_name(user)] has deadminned themselves."
 	log_admin(message)
 	message_admins(message)
+	add_verb(user, /client/proc/readmin)
 
 /client/proc/readmin()
 	set name = "Readmin"

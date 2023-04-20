@@ -1,11 +1,5 @@
-/client/proc/air_status(turf/target)
-	set category = "Debug"
-	set name = "Display Air Status"
-
-	if(!isturf(target))
-		return
+ADMIN_VERB_HIDDEN(air_status, "Display Air Status", "", R_DEBUG, VERB_CATEGORY_DEBUG, turf/target in world)
 	atmos_scan(user=usr, target=target, silent=TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
 	set category = "Debug"

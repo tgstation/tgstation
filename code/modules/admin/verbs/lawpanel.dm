@@ -1,17 +1,8 @@
-/client/proc/cmd_admin_law_panel()
-	set category = "Admin.Events"
-	set name = "Law Panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-	if(!isobserver(usr) && SSticker.HasRoundStarted())
-		message_admins("[key_name_admin(usr)] checked AI laws via the Law Panel.")
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Law Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/law_panel/tgui = new()
-	tgui.ui_interact(usr)
-
-/datum/law_panel
+ADMIN_VERB(law_panel, "Law Panel", "", R_ADMIN, VERB_CATEGORY_EVENTS)
+	if(!isobserver(user.mob) && SSticker.HasRoundStarted())
+		message_admins("[key_name_admin(user)] checked AI laws via the Law Panel.")
+	var/datum/law_panel/tgui = new
+	tgui.ui_interact(user.mob)
 
 /datum/law_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

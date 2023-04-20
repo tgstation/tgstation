@@ -1311,14 +1311,13 @@
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_admin_drop_everything(src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/direct_control_take, src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/direct_control_give, src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return

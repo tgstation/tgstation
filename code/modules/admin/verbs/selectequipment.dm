@@ -177,7 +177,7 @@ ADMIN_VERB_CONTEXT_MENU(select_equipment, "Select Equipment", R_FUN|R_DEBUG, mob
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb_holder/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])

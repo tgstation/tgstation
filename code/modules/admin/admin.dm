@@ -69,10 +69,8 @@
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-/datum/admins/proc/create_or_modify_area()
-	set category = "Debug"
-	set name = "Create or modify area"
-	create_area(usr)
+ADMIN_VERB(area_modify, "Create or Modify Area", "", R_DEBUG, VERB_CATEGORY_DEBUG)
+	create_area(user.mob)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)

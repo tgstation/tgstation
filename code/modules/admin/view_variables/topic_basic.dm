@@ -136,6 +136,7 @@
 		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations)
 		menu.Unlock()
 		menu.ui_interact(usr)
+
 	if(href_list[VV_HK_CALLPROC])
-		usr.client.callproc_datum(target)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/callproc_on, target)
 

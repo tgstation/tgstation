@@ -23,8 +23,11 @@ SUBSYSTEM_DEF(admin_verbs)
 	/// List of ckeys that are waiting to be assosciated
 	var/list/waiting_assoscations
 
-	/// List of revealed categories by admin
-	var/list/revealed_categories
+	/// List of verbs that are hidden (admin -> type[])
+	var/list/hidden_verbs
+
+	/// List of verbs that are revealed (admin -> type[]). For use with verbs that are hidden by default.
+	var/list/revealed_verbs
 
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
 	return "V: [length(admin_verb_datum_holder_map)] | A: [length(assosciated_clients)] | C: [length(admin_verbs_by_category)]"
@@ -49,8 +52,9 @@ SUBSYSTEM_DEF(admin_verbs)
 		admin_verbs_by_category[holder_category] += holder
 
 /datum/controller/subsystem/admin_verbs/Initialize()
-	revealed_categories = list()
 	assosciated_clients = list()
+	hidden_verbs = list()
+	revealed_verbs = list()
 	setup_holder_map()
 	process_waiting()
 	return SS_INIT_SUCCESS
@@ -61,6 +65,10 @@ SUBSYSTEM_DEF(admin_verbs)
 		if(!check_rights_for(target, text2num(permission)))
 			continue
 		for(var/datum/admin_verb_holder/holder as anything in admin_verbs_by_permission[permission])
+			if(holder.type in hidden_verbs[target.ckey])
+				continue // are we hidden?
+			if(holder.starts_hidden && !(holder.type in revealed_verbs[target.ckey]))
+				continue // are we supposed to be hidden, and not revealed?
 			holder.assosciate_client(target)
 
 /// Removes all admin verbs from the client.
@@ -106,23 +114,39 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(target.ckey in assosciated_clients)
 		assign_verbs_to_client(target)
 
-/// Checks if a client has the given category revealed.
-/datum/controller/subsystem/admin_verbs/proc/check_hidden_revealed(client/target, category)
-	return (category in revealed_categories[target.ckey])
+/// Hides a specific verb for a client.
+/datum/controller/subsystem/admin_verbs/proc/hide_verb(client/target, holder_path)
+	if(!(target.ckey in revealed_verbs))
+		revealed_verbs[target.ckey] = list()
+	if(!(target.ckey in hidden_verbs))
+		hidden_verbs[target.ckey] = list()
 
-/// Reveals a category for a client.
-/datum/controller/subsystem/admin_verbs/proc/reveal_category(client/target, category)
-	if(!(target.ckey in revealed_categories))
-		revealed_categories[target.ckey] = list()
-	revealed_categories[target.ckey] |= category
-	SEND_SIGNAL(src, COMSIG_ADMIN_VERBS_CATEGORY_REVEALED, target, category)
-
-/// Hides a category for a client.
-/datum/controller/subsystem/admin_verbs/proc/hide_category(client/target, category)
-	if(!(target.ckey in revealed_categories))
+	var/list/hiding = islist(holder_path) ? holder_path : list(holder_path)
+	hidden_verbs[target.ckey] |= hiding
+	revealed_verbs[target.ckey] -= hiding
+	if(!(target.ckey in assosciated_clients))
 		return
-	revealed_categories[target.ckey] -= category
-	SEND_SIGNAL(src, COMSIG_ADMIN_VERBS_CATEGORY_HIDDEN, target, category)
+
+	for(var/path in hiding)
+		var/datum/admin_verb_holder/holder = admin_verb_datum_holder_map[path]
+		holder.deassosciate_client(target)
+
+/// Reveals a specific verb for a client.
+/datum/controller/subsystem/admin_verbs/proc/reveal_verb(client/target, holder_path)
+	if(!(target.ckey in revealed_verbs))
+		revealed_verbs[target.ckey] = list()
+	if(!(target.ckey in hidden_verbs))
+		hidden_verbs[target.ckey] = list()
+
+	var/list/revealing = islist(holder_path) ? holder_path : list(holder_path)
+	hidden_verbs[target.ckey] -= revealing
+	revealed_verbs[target.ckey] |= revealing
+	if(!(target.ckey in assosciated_clients))
+		return
+
+	for(var/path in revealing)
+		var/datum/admin_verb_holder/holder = admin_verb_datum_holder_map[path]
+		holder.assosciate_client(target)
 
 /// Invokes a verb for a given client based on the typepath of the holder given
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(target, datum/admin_verb_holder/verb_path, ...)

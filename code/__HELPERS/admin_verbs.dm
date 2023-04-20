@@ -27,9 +27,8 @@ GENERAL_PROTECT_DATUM(/datum/admin_verb_holder)
 	message_admins("[usr] attempted to create [type] via byond save loading.")
 	del(src) // hard del now, don't let anything else do anything
 
-#define ADMIN_VERB_HIDDEN(id, name_, description, permissions, category_, hidden_id_, arguments...) \
+#define ADMIN_VERB_HIDDEN(id, name_, description, permissions, category_, arguments...) \
 /datum/admin_verb_holder/##id/starts_hidden = TRUE; \
-/datum/admin_verb_holder/##id/hidden_id = hidden_id_; \
 ADMIN_VERB(##id, ##name_, ##description, ##permissions, ##category_, ##arguments)
 
 /// (id, name, permissions, args...)

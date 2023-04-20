@@ -9,7 +9,7 @@ ADMIN_VERB(debug_game, "Debug-Game", "Toggle debugging for the game.", R_DEBUG, 
 		message_admins("[key_name(user)] toggled debugging on.")
 		log_admin("[key_name(user)] toggled debugging on.")
 
-ADMIN_VERB(air_status, "Air Status in Location", "View the air status for your current turf.", R_DEBUG, VERB_CATEGORY_DEBUG)
+ADMIN_VERB_HIDDEN(air_status_here, "Air Status in Location", "View the air status for your current turf.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	atmos_scan(user=user.mob, target=get_turf(user.mob), silent=TRUE)
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -108,6 +108,7 @@ ADMIN_VERB(make_powernets, "Make Powernets", "Forcibly recreates all powernets."
 	log_admin("[key_name(user)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(user)] has remade the powernets. makepowernets() called.")
 
+/datum/admin_verb_holder/grant_full_access/starts_hidden = TRUE
 ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/living/carbon/human/target in world)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user,"Wait until the game starts")
@@ -145,44 +146,36 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 	log_admin("[key_name(user)] has granted [key_name(target)] full access.")
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [key_name_admin(target)] full access."))
 
-/client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Assume direct control"
-	set desc = "Direct intervention"
-
+/datum/admin_verb_holder/direct_control_take/starts_hidden = TRUE
+ADMIN_VERB_CONTEXT_MENU(direct_control_take, "Assume Direct Control", R_ADMIN|R_DEBUG, mob/M in world)
 	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 	if(!M || QDELETED(M))
-		to_chat(usr, span_warning("The target mob no longer exists."))
+		to_chat(user, span_warning("The target mob no longer exists."))
 		return
-	message_admins(span_adminnotice("[key_name_admin(usr)] assumed direct control of [M]."))
-	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = mob
+	message_admins(span_adminnotice("[key_name_admin(user)] assumed direct control of [M]."))
+	log_admin("[key_name(user)] assumed direct control of [M].")
+	var/mob/adminmob = user.mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = key
-	init_verbs()
+	M.key = user.key
+	user.init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Give direct control"
-
-	if(!M)
-		return
+/datum/admin_verb_holder/direct_control_give/starts_hidden = TRUE
+ADMIN_VERB_CONTEXT_MENU(direct_control_give, "Give Direct Control", R_ADMIN|R_DEBUG, mob/M in world)
 	if(M.ckey)
-		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
+	var/client/newkey = input(user, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
-	if((isobserver(oldmob) || tgui_alert(usr,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
+	if((isobserver(oldmob) || tgui_alert(user,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
 		delmob = TRUE
 	if(!M || QDELETED(M))
-		to_chat(usr, span_warning("The target mob no longer exists, aborting."))
+		to_chat(user, span_warning("The target mob no longer exists, aborting."))
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
@@ -190,9 +183,8 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [M] to [newkey]."))
-	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins(span_adminnotice("[key_name_admin(user)] gave away direct control of [M] to [newkey]."))
+	log_admin("[key_name(user)] gave away direct control of [M] to [newkey].")
 
 /client/proc/cmd_admin_areatest(on_station, filter_maint)
 	set category = "Mapping"
@@ -387,21 +379,14 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 	popup.set_content(dat.Join())
 	popup.open()
 
+ADMIN_VERB_HIDDEN(area_test_station, "Test Areas (STATION ONLY)", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	user.cmd_admin_areatest(TRUE)
 
-/client/proc/cmd_admin_areatest_station()
-	set category = "Mapping"
-	set name = "Test Areas (STATION ONLY)"
-	cmd_admin_areatest(TRUE)
+ADMIN_VERB_HIDDEN(area_test_station_no_maintenence, "Test Areas (STATION - NO MAINT)", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	user.cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
 
-/client/proc/cmd_admin_areatest_station_no_maintenance()
-	set category = "Mapping"
-	set name = "Test Areas (STATION - NO MAINT)"
-	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
-
-/client/proc/cmd_admin_areatest_all()
-	set category = "Mapping"
-	set name = "Test Areas (ALL)"
-	cmd_admin_areatest(FALSE)
+ADMIN_VERB_HIDDEN(area_test_all, "Test Areas (ALL)", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	user.cmd_admin_areatest(FALSE)
 
 /client/proc/robust_dress_shop()
 
@@ -455,37 +440,20 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 
 	return dresscode
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Rejuvenate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!mob)
-		return
-	if(!istype(M))
-		tgui_alert(usr,"Cannot revive a ghost")
-		return
+// why is this tucked away in the mapping verb list?
+ADMIN_VERB_HIDDEN(rejuvenate, "Rejuvenate", "", R_DEBUG|R_ADMIN, VERB_CATEGORY_DEBUG, mob/living/M in world)
 	M.revive(ADMIN_HEAL_ALL)
-
-	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
+	log_admin("[key_name(user)] healed / revived [key_name(M)]")
+	var/msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ADMIN_VERB_CONTEXT_MENU(delete, "Delete", R_SERVER|R_ADMIN|R_DEBUG|R_SPAWN, atom/target as obj|mob|turf in world)
 	user.admin_delete(target)
 
-/client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Check Contents"
-
-	var/list/L = M.get_contents()
-	for(var/t in L)
-		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB_CONTEXT_MENU(check_contents, "Check Contents", R_ADMIN|R_DEBUG, mob/living/target as mob in world)
+	for(var/atom/movable/held as anything in target.get_contents())
+		to_chat(user, "[held.name] [ADMIN_VV(held)] [ADMIN_TAG(held)]")
 
 ADMIN_VERB(modify_goals, "Modify Goals", "View the station's goals and modify then.", R_ADMIN, VERB_CATEGORY_ADMIN)
 	user.holder.modify_goals()
@@ -608,7 +576,7 @@ ADMIN_VERB(jump_to_ruin, "Jump to Ruin", "Displays a list of all placed ruins to
 	to_chat(user, span_name("[template.name]"))
 	to_chat(user, "<span class='italics'>[template.description]</span>")
 
-ADMIN_VERB(place_ruin, "Spawn Ruin", "Attemp to randomly place a specific ruin.", R_DEBUG, VERB_CATEGORY_DEBUG)
+ADMIN_VERB_HIDDEN(place_ruin, "Spawn Ruin", "Attempt to randomly place a specific ruin.", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
 		var/obj/effect/landmark/ruin/L = landmark
@@ -711,19 +679,19 @@ ADMIN_VERB(pump_random_event, "Pump Random Event", "Schedules the event subsyste
 	message_admins(span_adminnotice("[key_name_admin(user)] pumped a random event."))
 	log_admin("[key_name(user)] pumped a random event.")
 
-ADMIN_VERB(line_profile_start, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", R_DEBUG, VERB_CATEGORY_DEBUG)
+ADMIN_VERB_HIDDEN(line_profile_start, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	LINE_PROFILE_START
 
 	message_admins(span_adminnotice("[key_name_admin(user)] started line by line profiling."))
 	log_admin("[key_name(user)] started line by line profiling.")
 
-ADMIN_VERB(line_profile_stop, "Stop Line Profiling", "Stops tracking line by line profiling.", R_DEBUG, VERB_CATEGORY_DEBUG)
+ADMIN_VERB_HIDDEN(line_profile_stop, "Stop Line Profiling", "Stops tracking line by line profiling.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	LINE_PROFILE_STOP
 
 	message_admins(span_adminnotice("[key_name_admin(user)] stopped line by line profiling."))
 	log_admin("[key_name(user)] stopped line by line profiling.")
 
-ADMIN_VERB(line_profiling_show, "Show Line Profiling", "Shows tracked profiling info from tracked data.", R_DEBUG, VERB_CATEGORY_DEBUG)
+ADMIN_VERB_HIDDEN(line_profile_show, "Show Line Profiling", "Shows tracked profiling info from tracked data.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/sortlist = list(
 		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
 		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),

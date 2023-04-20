@@ -108,17 +108,11 @@ ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, 
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
-/client/proc/admin_call_shuttle()
-	set category = "Admin.Events"
-	set name = "Call Shuttle"
-
+ADMIN_VERB(call_shuttle, "Call Shuttle", "", R_ADMIN, VERB_CATEGORY_EVENTS)
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "You sure?", "Confirm", list("Yes", "Yes (No Recall)", "No"))
+	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "Yes (No Recall)", "No"))
 	switch(confirm)
 		if(null, "No")
 			return
@@ -127,17 +121,11 @@ ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, 
 			SSshuttle.emergency.mode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.request()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
-	return
+	log_admin("[key_name(user)] admin-called the emergency shuttle.")
+	message_admins(span_adminnotice("[key_name_admin(user)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
 
-/client/proc/admin_cancel_shuttle()
-	set category = "Admin.Events"
-	set name = "Cancel Shuttle"
-	if(!check_rights(0))
-		return
-	if(tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+ADMIN_VERB(cancel_shuttle, "Cancel Shuttle", "", R_ADMIN, VERB_CATEGORY_EVENTS)
+	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
 	if(SSshuttle.admin_emergency_no_recall)
@@ -147,27 +135,18 @@ ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, 
 		return
 
 	SSshuttle.emergency.cancel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Cancel Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] admin-recalled the emergency shuttle."))
+	log_admin("[key_name(user)] admin-recalled the emergency shuttle.")
+	message_admins(span_adminnotice("[key_name_admin(user)] admin-recalled the emergency shuttle."))
 
-	return
-
-/client/proc/admin_disable_shuttle()
-	set category = "Admin.Events"
-	set name = "Disable Shuttle"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(disable_shuttle, "Disable Shuttle", "", R_ADMIN, VERB_CATEGORY_EVENTS)
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
-		to_chat(usr, span_warning("Error, shuttle is already disabled."))
+		to_chat(user, span_warning("Error, shuttle is already disabled."))
 		return
 
-	if(tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
-	message_admins(span_adminnotice("[key_name_admin(usr)] disabled the shuttle."))
+	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
 
 	SSshuttle.last_mode = SSshuttle.emergency.mode
 	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
@@ -176,21 +155,15 @@ ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, 
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
 	priority_announce("Warning: Emergency Shuttle uplink failure, shuttle disabled until further notice.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
-/client/proc/admin_enable_shuttle()
-	set category = "Admin.Events"
-	set name = "Enable Shuttle"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(enable_shuttle, "Enable Shuttle", "", R_ADMIN, VERB_CATEGORY_EVENTS)
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
-		to_chat(usr, span_warning("Error, shuttle not disabled."))
+		to_chat(user, span_warning("Error, shuttle not disabled."))
 		return
 
-	if(tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
-	message_admins(span_adminnotice("[key_name_admin(usr)] enabled the emergency shuttle."))
+	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
 	SSshuttle.admin_emergency_no_recall = FALSE
 	SSshuttle.emergency_no_recall = FALSE
 	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
@@ -202,28 +175,24 @@ ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, 
 	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce("Warning: Emergency Shuttle uplink reestablished, shuttle enabled.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
-/client/proc/admin_hostile_environment()
-	set category = "Admin.Events"
-	set name = "Hostile Environment"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	switch(tgui_alert(usr, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
+ADMIN_VERB(hostile_environment, "Hostile Environment", "", R_ADMIN, VERB_CATEGORY_EVENTS)
+	switch(tgui_alert(user, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
 		if("Enable")
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
-				to_chat(usr, span_warning("Error, admin hostile environment already enabled."))
+				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(usr)] Enabled an admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
 				SSshuttle.registerHostileEnvironment("Admin")
+
 		if("Disable")
 			if (!SSshuttle.hostile_environments["Admin"])
-				to_chat(usr, span_warning("Error, no admin hostile environment found."))
+				to_chat(user, span_warning("Error, no admin hostile environment found."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(usr)] Disabled the admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
 				SSshuttle.clearHostileEnvironment("Admin")
+
 		if("Clear All")
-			message_admins(span_adminnotice("[key_name_admin(usr)] Disabled all current hostile environment sources"))
+			message_admins(span_adminnotice("[key_name_admin(user)] Disabled all current hostile environment sources"))
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 

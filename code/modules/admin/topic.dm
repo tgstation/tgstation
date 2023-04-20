@@ -758,7 +758,7 @@
 		if(!isobserver(usr))
 			SSadmin_verbs.dynamic_invoke_verb(C, /datum/admin_verb_holder/admin_ghost)
 		sleep(0.2 SECONDS)
-		C.jumptocoord(x,y,z)
+		SSadmin_verbs.dynamic_invoke_verb(C, /datum/admin_verb_holder/jumpto_coord, x, y, z)
 
 	else if(href_list["adminchecklaws"])
 		if(!check_rights(R_ADMIN))
@@ -993,21 +993,18 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
-	else if(href_list["jumpto"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))
-			return
 
-		var/mob/M = locate(href_list["jumpto"])
-		usr.client.jumptomob(M)
+	else if(href_list["jumpto"])
+		var/mob/target = locate(href_list["jumpto"])
+		if(!target)
+			return
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/jumpto_mob, target)
 
 	else if(href_list["getmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
+		var/mob/target = locate(href_list["getmob"])
 		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
 			return
-		var/mob/M = locate(href_list["getmob"])
-		usr.client.Getmob(M)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/get_mob, target)
 
 	else if(href_list["sendmob"])
 		if(!check_rights(R_ADMIN))
@@ -1071,7 +1068,7 @@
 			else
 				D.traitor_panel()
 		else
-			show_traitor_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/traitor_panel_for, M)
 
 	else if(href_list["skill"])
 		if(!check_rights(R_ADMIN))

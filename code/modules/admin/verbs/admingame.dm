@@ -325,23 +325,15 @@ ADMIN_VERB(view_range, "Change View Range", "Switch between normal and custom vi
 
 	log_admin("[key_name(user)] changed their view range to [user.view].")
 
-/client/proc/toggle_combo_hud()
-	set category = "Admin.Game"
-	set name = "Toggle Combo HUD"
-	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (combo_hud_enabled)
-		disable_combo_hud()
+ADMIN_VERB(combo_hud, "Toggle Combo HUD", "Toggles the Admin Combo HUD.", R_ADMIN, VERB_CATEGORY_GAME)
+	if(user.combo_hud_enabled)
+		user.disable_combo_hud()
 	else
-		enable_combo_hud()
+		user.enable_combo_hud()
 
-	to_chat(usr, "You toggled your admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
-	message_admins("[key_name_admin(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin combo HUD [combo_hud_enabled ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[combo_hud_enabled ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	to_chat(user, "You toggled your admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
+	message_admins("[key_name_admin(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
+	log_admin("[key_name(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 
 /client/proc/enable_combo_hud()
 	if (combo_hud_enabled)
@@ -375,19 +367,15 @@ ADMIN_VERB(view_range, "Change View Range", "Switch between normal and custom vi
 	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
 
-/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set desc = "Edit mobs's memory and role"
-	set name = "Show Traitor Panel"
+ADMIN_VERB(traitor_panel_for, "Show Traitor Panel", "Edit mobs' memory and role.", R_ADMIN, VERB_CATEGORY_GAME, mob/target_mob in world)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
-		to_chat(usr, "This mob has no mind!", confidential = TRUE)
+		to_chat(user, "This mob has no mind!")
 		return
 	if(!istype(target_mob) && !istype(target_mind))
-		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		to_chat(user, "This can only be used on instances of type /mob and /mind")
 		return
 	target_mind.traitor_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_skill_panel(target)
 	set category = "Admin.Game"

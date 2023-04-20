@@ -37,14 +37,9 @@ ADMIN_VERB(announce, "Announce", "Announce your desires to the world.", R_ADMIN,
 		tgui_alert(usr,"[M.name] is not prisoned.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
-	set category = "Admin"
-	set name = "Player Playtime"
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(player_playtime, "Player Playtime", "Allows admins to determine who the newer players are.", R_ADMIN, VERB_CATEGORY_ADMIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		to_chat(usr, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
+		to_chat(user, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
 		return
 
 	var/list/msg = list()
@@ -52,7 +47,7 @@ ADMIN_VERB(announce, "Announce", "Announce your desires to the world.", R_ADMIN,
 	for(var/client/client in sort_list(GLOB.clients, GLOBAL_PROC_REF(cmp_playtime_asc)))
 		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+	user << browse(msg.Join(), "window=Player_playtime_check")
 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))

@@ -20,48 +20,45 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, //-errorage
-	/client/proc/sec_camera_report, //-errorage
-	/client/proc/intercom_view, //-errorage
-	/client/proc/air_status, //Air things
-	// AVD TODO /client/proc/Cell
-	/client/proc/atmosscan, //check plumbing
-	/client/proc/powerdebug, //check power
-	/client/proc/count_objects_on_z_level,
-	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control, //-errorage
-	/client/proc/cmd_give_direct_control,
-	/client/proc/set_server_fps, //allows you to set the ticklag.
-	// AVD TODO /client/proc/cmd_admin_grantfullaccess
-	/client/proc/cmd_admin_areatest_all,
-	/client/proc/cmd_admin_areatest_station,
-	/client/proc/cmd_admin_areatest_station_no_maintenance,
 	#ifdef TESTING
-	/client/proc/see_dirty_varedits,
+	/datum/admin_verb_holder/see_dirty_varedits,
 	#endif
-	/client/proc/cmd_admin_rejuvenate,
-	/datum/admins/proc/show_traitor_panel,
-	/client/proc/disable_communication,
-	/client/proc/show_map_reports,
-	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_markers,
-	/client/proc/manipulate_organs,
-	// AVD TODO /client/proc/start_line_profiling,
-	// AVD TODO /client/proc/stop_line_profiling,
-	// AVD TODO /client/proc/show_line_profiling,
-	/client/proc/create_mapping_job_icons,
-	/client/proc/debug_z_levels,
-	// AVD TODO /client/proc/place_ruin,
-	/client/proc/station_food_debug,
-	/client/proc/station_stack_debug,
-	/client/proc/check_for_obstructed_atmospherics,
-))
+
+	/datum/admin_verb_holder/air_status,
+	/datum/admin_verb_holder/air_status_here,
+	/datum/admin_verb_holder/camera_view,
+	/datum/admin_verb_holder/camera_report,
+	/datum/admin_verb_holder/debug_power,
+	/datum/admin_verb_holder/intercom_view,
+	/datum/admin_verb_holder/scan_plumbing,
+	/datum/admin_verb_holder/count_objects_on_z_level,
+	/datum/admin_verb_holder/count_objects_all,
+	/datum/admin_verb_holder/direct_control_take,
+	/datum/admin_verb_holder/direct_control_give,
+	/datum/admin_verb_holder/set_server_fps,
+	/datum/admin_verb_holder/grant_full_access,
+	/datum/admin_verb_holder/area_test_station_no_maintenence,
+	/datum/admin_verb_holder/area_test_station,
+	/datum/admin_verb_holder/area_test_all,
+	/datum/admin_verb_holder/rejuvenate,
+	/datum/admin_verb_holder/disable_communication,
+	/datum/admin_verb_holder/map_report,
+	/datum/admin_verb_holder/show_active_turf_list,
+	/datum/admin_verb_holder/show_roundstart_active_turfs,
+	/datum/admin_verb_holder/manipulate_organs,
+	/datum/admin_verb_holder/line_profile_start,
+	/datum/admin_verb_holder/line_profile_stop,
+	/datum/admin_verb_holder/line_profile_show,
+	/datum/admin_verb_holder/create_mapping_job_icons,
+	/datum/admin_verb_holder/debug_z_levels,
+	/datum/admin_verb_holder/place_ruin,
+	/datum/admin_verb_holder/count_station_food,
+	/datum/admin_verb_holder/count_station_stacks,
+	/datum/admin_verb_holder/check_for_obstructed_atmospherics,
+	))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
-/client/proc/camera_view()
-	set category = "Mapping"
-	set name = "Camera Range Display"
-
+ADMIN_VERB_HIDDEN(camera_view, "Camera Range Display", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/on = FALSE
 	for(var/turf/T in world)
 		if(T.maptext)
@@ -75,36 +72,23 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 				seen[T]++
 		for(var/turf/T in seen)
 			T.maptext = MAPTEXT(seen[T])
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
 #ifdef TESTING
 GLOBAL_LIST_EMPTY(dirty_vars)
 
-/client/proc/see_dirty_varedits()
-	set category = "Mapping"
-	set name = "Dirty Varedits"
-
+ADMIN_VERB_HIDDEN(see_dirty_varedits, "See Dirty Varedits", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/dat = list()
 	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
 	for(var/thing in GLOB.dirty_vars)
 		dat += "[thing]<br>"
 		CHECK_TICK
-	var/datum/browser/popup = new(usr, "dirty_vars", "Dirty Varedits", 900, 750)
+	var/datum/browser/popup = new(user.mob, "dirty_vars", "Dirty Varedits", 900, 750)
 	popup.set_content(dat.Join())
 	popup.open()
 #endif
 
-/client/proc/sec_camera_report()
-	set category = "Mapping"
-	set name = "Camera Report"
-
-	if(!Master)
-		tgui_alert(usr,"Master_controller not found.","Sec Camera Report")
-		return FALSE
-
+ADMIN_VERB_HIDDEN(camera_report, "Camera Report", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/obj/machinery/camera/CL = list()
-
 	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		CL += C
 
@@ -132,13 +116,9 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
-	usr << browse(output,"window=airreport;size=1000x500")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	user << browse(output,"window=airreport;size=1000x500")
 
-/client/proc/intercom_view()
-	set category = "Mapping"
-	set name = "Intercom Range Display"
-
+ADMIN_VERB_HIDDEN(intercom_view, "Intercomm Range Display", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/static/intercom_range_display_status = FALSE
 	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
@@ -150,25 +130,14 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
 				for(var/turf/turf in view(7,intercom.loc))
 					new /obj/effect/abstract/marker/intercom(turf)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/show_map_reports()
-	set category = "Mapping"
-	set name = "Show map report list"
-	set desc = "Displays a list of map reports"
-
+ADMIN_VERB_HIDDEN(map_report, "Show Map Report List", "Displays a list of map reports.", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/dat = {"<b>List of all map reports:</b><br>"}
-
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
 		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+	user << browse(dat, "window=map_reports")
 
-	usr << browse(dat, "window=map_reports")
-
-/client/proc/cmd_show_at_list()
-	set category = "Mapping"
-	set name = "Show roundstart AT list"
-	set desc = "Displays a list of active turfs coordinates at roundstart"
-
+ADMIN_VERB_HIDDEN(show_active_turf_list, "Show Roundstart AT List", "Displays a list of coordinates of active turfs at roundstart.", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
@@ -176,51 +145,34 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		var/turf/T = t
 		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
+	user << browse(dat, "window=at_list")
 
-	usr << browse(dat, "window=at_list")
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_show_at_markers()
-	set category = "Mapping"
-	set name = "Show roundstart AT markers"
-	set desc = "Places a marker on all active-at-roundstart turfs"
-
+ADMIN_VERB_HIDDEN(show_roundstart_active_turfs, "Show roundstart AT list", "", R_ADMIN, VERB_CATEGORY_MAPPING)
 	var/count = 0
 	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
 		qdel(AT)
 		count++
 
 	if(count)
-		to_chat(usr, "[count] AT markers removed.", confidential = TRUE)
+		to_chat(user, "[count] AT markers removed.", confidential = TRUE)
 	else
 		for(var/t in GLOB.active_turfs_startlist)
 			new /obj/effect/abstract/marker/at(t)
 			count++
-		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
+		to_chat(user, "[count] AT markers placed.", confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
+ADMIN_VERB(mapping_verbs_enable, "Mapping Verbs - Enable", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	SSadmin_verbs.reveal_verb(user, /datum/admin_verb_holder/mapping_verbs_disable)
+	SSadmin_verbs.reveal_verb(user, GLOB.admin_verbs_debug_mapping)
+	SSadmin_verbs.hide_verb(user, /datum/admin_verb_holder/mapping_verbs_enable)
 
-/client/proc/enable_mapping_verbs()
-	set category = "Debug"
-	set name = "Mapping verbs - Enable"
-	if(!check_rights(R_DEBUG))
-		return
-	remove_verb(src, /client/proc/enable_mapping_verbs)
-	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB_HIDDEN(mapping_verbs_disable, "Mapping Verbs - Disable", "", NONE, VERB_CATEGORY_MAPPING)
+	SSadmin_verbs.hide_verb(user, /datum/admin_verb_holder/mapping_verbs_disable)
+	SSadmin_verbs.hide_verb(user, GLOB.admin_verbs_debug_mapping)
+	SSadmin_verbs.reveal_verb(user, /datum/admin_verb_holder/mapping_verbs_enable)
 
-/client/proc/disable_mapping_verbs()
-	set category = "Debug"
-	set name = "Mapping verbs - Disable"
-	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
-	add_verb(src, /client/proc/enable_mapping_verbs)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/count_objects_on_z_level()
-	set category = "Mapping"
-	set name = "Count Objects On Level"
-	var/level = input("Which z-level?","Level?") as text|null
+ADMIN_VERB_HIDDEN(count_objects_on_z_level, "Count Objects On Level", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	var/level = input(user, "Which z-level?","Level?") as text|null
 	if(!level)
 		return
 	var/num_level = text2num(level)
@@ -254,13 +206,9 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					atom_list += A
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/count_objects_all()
-	set category = "Mapping"
-	set name = "Count Objects All"
-
-	var/type_text = input("Which type path?","") as text|null
+ADMIN_VERB_HIDDEN(count_objects_all, "Count Objects All", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	var/type_text = input(user, "Which type path?","") as text|null
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)
@@ -274,25 +222,18 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			count++
 
 	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 
 //This proc is intended to detect lag problems relating to communication procs
 GLOBAL_VAR_INIT(say_disabled, FALSE)
-/client/proc/disable_communication()
-	set category = "Mapping"
-	set name = "Disable all communication verbs"
 
+ADMIN_VERB_HIDDEN(disable_communication, "Disable all communication verbs", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	GLOB.say_disabled = !GLOB.say_disabled
 	if(GLOB.say_disabled)
-		message_admins("[key] used 'Disable all communication verbs', killing all communication methods.")
+		message_admins("[key_name_admin(user)] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[key] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[key_name_admin(user)] used 'Disable all communication verbs', restoring all communication methods.")
 
-//This generates the icon states for job starting location landmarks.
-/client/proc/create_mapping_job_icons()
-	set name = "Generate job landmarks icons"
-	set category = "Mapping"
+ADMIN_VERB_HIDDEN(create_mapping_job_icons, "Generate job landmarks icons", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/icon/final = icon()
 	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
 	D.setDir(SOUTH)
@@ -316,10 +257,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
-/client/proc/debug_z_levels()
-	set name = "Debug Z-Levels"
-	set category = "Mapping"
-
+ADMIN_VERB_HIDDEN(debug_z_levels, "Debug Z-Levels", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/z_list = SSmapping.z_list
 	var/list/messages = list()
 	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
@@ -374,11 +312,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
+	to_chat(user, examine_block(messages.Join("")), confidential = TRUE)
 
-/client/proc/station_food_debug()
-	set name = "Count Station Food"
-	set category = "Mapping"
+ADMIN_VERB_HIDDEN(count_station_food, "Count Station Food", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/foodcount = list()
 	for(var/obj/item/food/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
@@ -395,13 +331,11 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
-	var/datum/browser/popup = new(mob, "fooddebug", "Station Food Count", 600, 400)
+	var/datum/browser/popup = new(user.mob, "fooddebug", "Station Food Count", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 
-/client/proc/station_stack_debug()
-	set name = "Count Station Stacks"
-	set category = "Mapping"
+ADMIN_VERB_HIDDEN(count_station_stacks, "Count Station Stacks", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
@@ -418,24 +352,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
-	var/datum/browser/popup = new(mob, "stackdebug", "Station Stack Count", 600, 400)
+	var/datum/browser/popup = new(user.mob, "stackdebug", "Station Stack Count", 600, 400)
 	popup.set_content(page_contents)
 	popup.open()
 
-/// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
-/client/proc/check_for_obstructed_atmospherics()
-	set name = "Check For Obstructed Atmospherics"
-	set category = "Mapping"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
-		return
-	message_admins(span_adminnotice("[key_name_admin(usr)] is checking for obstructed atmospherics through the debug command."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check For Obstructed Atmospherics") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+ADMIN_VERB_HIDDEN(check_for_obstructed_atmospherics, "Check for Obstructed Atmospherics", "", R_DEBUG, VERB_CATEGORY_MAPPING)
+	message_admins(span_adminnotice("[key_name_admin(user)] is checking for obstructed atmospherics through the debug command."))
 	var/list/results = list()
-
 	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
-
 	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
 	var/list/ignore_list = list(
 		/obj/effect,
@@ -478,8 +402,8 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			results += "There is an obstruction on top of an atmospherics machine at: [ADMIN_VERBOSEJMP(iterated_turf)].<br>"
 
 	if(results.len == 1) // only the header is in the list, we're good
-		to_chat(src, "No obstructions detected.", confidential = TRUE)
+		to_chat(user, "No obstructions detected.", confidential = TRUE)
 	else
-		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
+		var/datum/browser/popup = new(user.mob, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
 		popup.set_content(results.Join())
 		popup.open()

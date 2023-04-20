@@ -77,12 +77,9 @@ SUBSYSTEM_DEF(explosions)
 	flameturf -= T
 	throwturf -= T
 
-/client/proc/check_bomb_impacts()
-	set name = "Check Bomb Impact"
-	set category = "Debug"
-
-	var/newmode = tgui_alert(usr, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
-	var/turf/epicenter = get_turf(mob)
+ADMIN_VERB(check_bomb_impact, "Check Bomb Impact", "", R_DEBUG, VERB_CATEGORY_DEBUG)
+	var/newmode = tgui_alert(user, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
+	var/turf/epicenter = get_turf(user.mob)
 	if(!epicenter)
 		return
 
@@ -90,7 +87,7 @@ SUBSYSTEM_DEF(explosions)
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = tgui_input_list(usr, "Pick the bomb size", "Bomb Size?", choices)
+	var/choice = tgui_input_list(user, "Pick the bomb size", "Bomb Size?", choices)
 	switch(choice)
 		if(null)
 			return 0
@@ -107,9 +104,9 @@ SUBSYSTEM_DEF(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devastation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
+			dev = input(user, "Devastation range (Tiles):") as num
+			heavy = input(user, "Heavy impact range (Tiles):") as num
+			light = input(user, "Light impact range (Tiles):") as num
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x

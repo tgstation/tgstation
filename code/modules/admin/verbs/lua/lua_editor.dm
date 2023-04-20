@@ -230,10 +230,6 @@
 	. = ..()
 	qdel(src)
 
-/client/proc/open_lua_editor()
-	set name = "Open Lua Editor"
-	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
-		return
-	var/datum/lua_editor/editor = new()
-	editor.ui_interact(usr)
+ADMIN_VERB(lua_editor, "Open Lua Editor", "", R_DEBUG, VERB_CATEGORY_DEBUG)
+	var/datum/lua_editor/editor = new
+	editor.ui_interact(user.mob)
