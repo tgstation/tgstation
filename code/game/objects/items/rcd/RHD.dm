@@ -214,13 +214,13 @@
 	return TRUE
 
 ///shared action for toggling silo link rcd,rld & plumbing
-/obj/item/construction/ui_act(action, list/params)
+/obj/item/construction/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
 	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
-		toggle_silo(usr)
+		toggle_silo(ui.user)
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)

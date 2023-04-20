@@ -116,3 +116,7 @@
 	speak = list("Gnot a gnelf!", "Gnot a gnoblin!", "Howdy chum!")
 	emote_hear = list("snores.", "burps.")
 	emote_see = list("blinks.")
+
+/datum/ai_planning_subtree/random_speech/tree
+	speech_chance = 3
+	emote_see = list("photosynthesizes angirly.")

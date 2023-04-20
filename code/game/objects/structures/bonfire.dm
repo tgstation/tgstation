@@ -161,12 +161,14 @@
 	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()
-	if(burning)
-		icon_state = "bonfire"
-		burning = FALSE
-		set_light(0)
-		QDEL_NULL(particles)
-		STOP_PROCESSING(SSobj, src)
+	. = ..()
+	if(!burning)
+		return
+	icon_state = "bonfire"
+	burning = FALSE
+	set_light(0)
+	QDEL_NULL(particles)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)
 	if(..())
@@ -175,23 +177,5 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
-
-/particles/bonfire
-	icon = 'icons/effects/particles/bonfire.dmi'
-	icon_state = "bonfire"
-	width = 100
-	height = 100
-	count = 1000
-	spawning = 4
-	lifespan = 0.7 SECONDS
-	fade = 1 SECONDS
-	grow = -0.01
-	velocity = list(0, 0)
-	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
-	gravity = list(0, 0.95)
-	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
-	rotation = 30
-	spin = generator(GEN_NUM, -20, 20)
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

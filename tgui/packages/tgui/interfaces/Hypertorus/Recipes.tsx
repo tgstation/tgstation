@@ -1,5 +1,27 @@
-import { Box, Button, Icon, Table, Tooltip } from '../../components';
-import { getGasColor, getGasLabel } from '../../constants';
+import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
+import { getGasColor, getGasLabel } from 'tgui/constants';
+
+import { HypertorusData } from '.';
+import { useBackend } from 'tgui/backend';
+
+type Recipe = {
+  param: string;
+  label: string;
+  icon: string | string[];
+  scale: number;
+  override_base?: number;
+  tooltip?: (value: number, data: any) => string;
+};
+
+type GasCellProps = {
+  gasid: string;
+};
+
+type RecipeProps = {
+  baseMaxTemperature: number;
+  enableRecipeSelection: boolean;
+  onRecipe: (recipe: string) => void;
+};
 
 /*
  * Recipe selection interface
@@ -28,7 +50,7 @@ import { getGasColor, getGasLabel } from '../../constants';
  *             If omitted, the default of "x{value}" is used.
  *
  */
-const recipe_effect_structure = [
+const recipe_effect_structure: Recipe[] = [
   {
     param: 'recipe_cooling_multiplier',
     label: 'Cooling',
@@ -86,17 +108,6 @@ const effect_to_icon = (effect_value, effect_scale, base) => {
   return 'angle-down';
 };
 
-const recipeChange = {
-  onComponentShouldUpdate: (lastProps, nextProps) =>
-    lastProps.selectedFuelID !== nextProps.selectedFuelID ||
-    lastProps.enableRecipeSelection !== nextProps.enableRecipeSelection,
-};
-
-const activeChange = {
-  onComponentShouldUpdate: (lastProps, nextProps) =>
-    lastProps.active !== nextProps.active,
-};
-
 const MemoRow = (props) => {
   const { active, children, key, ...rest } = props;
   return (
@@ -110,10 +121,11 @@ const MemoRow = (props) => {
   );
 };
 
-MemoRow.defaultHooks = activeChange;
-
-const GasCellItem = (props) => {
+const GasCellItem = (props: GasCellProps) => {
   const { gasid, ...rest } = props;
+
+  if (!gasid) return <Table.Cell />;
+
   return (
     <Table.Cell key={gasid} label={getGasLabel(gasid)} {...rest}>
       <Box color={getGasColor(gasid)}>{getGasLabel(gasid)}</Box>
@@ -121,14 +133,11 @@ const GasCellItem = (props) => {
   );
 };
 
-export const HypertorusRecipes = (props) => {
-  const {
-    enableRecipeSelection: enable_recipe_selection,
-    onRecipe,
-    selectableFuels: selectable_fuels,
-    selectedFuelID: selected_fuel_id,
-    ...rest
-  } = props;
+export const HypertorusRecipes = (props: RecipeProps, context) => {
+  const { enableRecipeSelection, onRecipe, ...rest } = props;
+  const { data } = useBackend<HypertorusData>(context);
+  const { selectable_fuel, selected } = data;
+
   return (
     <Box overflowX="auto">
       <Table>
@@ -152,17 +161,14 @@ export const HypertorusRecipes = (props) => {
           <Table.Cell>Tier 6</Table.Cell>
           {
             // Lay out our pictographic headers for effects.
-            recipe_effect_structure.map((item) => (
-              <Table.Cell key={item.param} color="label">
-                <Tooltip content={item.label}>
-                  {typeof item.icon === 'string' ? (
-                    <Icon
-                      className="hypertorus-recipes__icon"
-                      name={item.icon}
-                    />
+            recipe_effect_structure.map(({ param, label, icon }) => (
+              <Table.Cell key={param} color="label">
+                <Tooltip content={label}>
+                  {typeof icon === 'string' ? (
+                    <Icon className="hypertorus-recipes__icon" name={icon} />
                   ) : (
                     <Icon.Stack className="hypertorus-recipes__icon">
-                      {item.icon.map((icon) => (
+                      {icon.map((icon) => (
                         <Icon key={icon} name={icon} />
                       ))}
                     </Icon.Stack>
@@ -172,20 +178,19 @@ export const HypertorusRecipes = (props) => {
             ))
           }
         </MemoRow>
-        {selectable_fuels
-          .filter((d) => d.id)
-          .map((recipe, index) => {
-            const active = recipe.id === selected_fuel_id;
+        {selectable_fuel
+          .filter((excluded) => excluded.id)
+          .map((recipe) => {
+            const active = recipe.id === selected;
+
             return (
               <MemoRow key={recipe.id} active={active}>
                 <Table.Cell>
                   <Button
-                    icon={
-                      recipe.id === selected_fuel_id ? 'times' : 'power-off'
-                    }
-                    disabled={!enable_recipe_selection}
+                    icon={recipe.id === selected ? 'times' : 'power-off'}
+                    disabled={!enableRecipeSelection}
                     key={recipe.id}
-                    selected={recipe.id === selected_fuel_id}
+                    selected={recipe.id === selected}
                     onClick={onRecipe.bind(null, recipe.id)}
                   />
                 </Table.Cell>
@@ -196,29 +201,28 @@ export const HypertorusRecipes = (props) => {
                 {recipe.product_gases.map((gasid) => (
                   <GasCellItem key={gasid} gasid={gasid} />
                 ))}
-                {recipe_effect_structure.map((item) => {
-                  const value = recipe[item.param];
-                  // Note that the minus icon is wider than the arrow icons,
-                  // so we set the width to work with both without jumping.
-                  return (
-                    <Table.Cell key={item.param}>
-                      <Tooltip
-                        content={(item.tooltip || ((v) => 'x' + v))(
-                          value,
-                          rest
-                        )}>
-                        <Icon
-                          className="hypertorus-recipes__icon"
-                          name={effect_to_icon(
-                            value,
-                            item.scale,
-                            item.override_base || 1
-                          )}
-                        />
-                      </Tooltip>
-                    </Table.Cell>
-                  );
-                })}
+                {recipe_effect_structure.map(
+                  ({ param, tooltip, scale, override_base }) => {
+                    const value = recipe[param];
+                    // Note that the minus icon is wider than the arrow icons,
+                    // so we set the width to work with both without jumping.
+                    return (
+                      <Table.Cell key={param}>
+                        <Tooltip
+                          content={(tooltip || ((v) => 'x' + v))(value, rest)}>
+                          <Icon
+                            className="hypertorus-recipes__icon"
+                            name={effect_to_icon(
+                              value,
+                              scale,
+                              override_base || 1
+                            )}
+                          />
+                        </Tooltip>
+                      </Table.Cell>
+                    );
+                  }
+                )}
               </MemoRow>
             );
           })}
@@ -226,5 +230,3 @@ export const HypertorusRecipes = (props) => {
     </Box>
   );
 };
-
-HypertorusRecipes.defaultHooks = recipeChange;
