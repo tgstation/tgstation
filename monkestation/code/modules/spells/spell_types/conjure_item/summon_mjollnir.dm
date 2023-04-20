@@ -3,7 +3,7 @@
 	desc = "Summons the mighty Mjollnir to you for a limited time."
 	invocation_type = INVOCATION_SHOUT
 	invocation = "I HAV TH POWR"
-	button_icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	button_icon = 'icons/obj/weapons/hammer.dmi'
 	button_icon_state = "mjollnir0"
 	cooldown_time = 70 SECONDS
 	spell_max_level = 1

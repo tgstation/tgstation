@@ -10,13 +10,14 @@
 	var/bounce_recharge_rate
 	//how far away will the parent item try and bounce to something
 	var/targeting_range = 5
+
 	//if the parent item is currently bouncing
 	var/bouncing = FALSE
 	//var used for tracking how close to gaining a charge if it has a recharge rate
 	var/recharge_timer = 0
 	//who threw the parent item, used to mark who to return to and to not hit, might not need to be a weakref
 	var/datum/weakref/item_thrower
-	//the cooldown for bounce_cooldown
+	//the cooldown declare for bounce_cooldown
 	COOLDOWN_DECLARE(last_bounce_proc)
 
 /datum/component/throw_bounce/Initialize(bounce_cooldown, bounce_charge_max, bounce_recharge_rate, targeting_range)
@@ -67,7 +68,7 @@
 	if(!COOLDOWN_FINISHED(src, last_bounce_proc)) //if this timer fails we dont want to do anything here
 		return
 
-	if(item_thrower?.resolve() && (istype(hit_atom, /mob/living)) && !(bouncing))
+	if(item_thrower && (istype(hit_atom, /mob/living)) && !(bouncing))
 		if(bounce_charges >= 1 || !(bounce_charge_max))
 			var/list/possible_targets = list()
 			for(var/mob/living/target_mob in oview(targeting_range, item_thrower?.resolve())) //find bounce targets
@@ -99,10 +100,10 @@
 	if(spawned_effect)
 		parent_item.forceMove(spawned_effect)
 
-/datum/component/throw_bounce/proc/finish_bounce(obj/effect/throw_bounce_visual/bounce_effect, var/no_thrower = FALSE)
+/datum/component/throw_bounce/proc/finish_bounce(obj/effect/throw_bounce_visual/bounce_effect)
 	bouncing = FALSE
 	var/obj/item/parent_item = parent
-	if(no_thrower)
+	if(!item_thrower)
 		parent_item.forceMove(get_turf(bounce_effect))
 		return qdel(bounce_effect)
 	var/mob/living/thrower_ref = item_thrower?.resolve()
@@ -125,6 +126,7 @@
 	var/move_to_timer = 0
 	//how long since our last mob hit, if its been too long there is most likely something blocking us so start phasing movement until we hit something
 	var/last_hit_timer = 0
+
 	//list of mob to clear from possible_targets on process(), also used for preventing hitting someone twice
 	var/list/hit_mobs = list()
 	//a ref to our owning component
@@ -160,7 +162,7 @@
 
 //process() handles targeting
 /obj/effect/throw_bounce_visual/process(delta_time)
-	if(!(owning_component?.resolve()) || !(owning_component_parent?.resolve()))
+	if(!(owning_component) || !(owning_component_parent))
 		return qdel(src)
 
 	if(!last_hit_timer)
@@ -189,7 +191,7 @@
 
 	if(!current_target)
 		targets_list.len ? (current_target = WEAKREF(targets_list[1])) : move_to_thrower() //if we have a targets_list then set current_target to [1] in the list. else, move_to_thrower
-		if(current_target?.resolve() && !(moving_to_mob))
+		if(current_target && !(moving_to_mob))
 			moving_to_mob = MOVING_TO_TARGET
 			addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, current_target?.resolve(), 1), 1)
 
@@ -206,7 +208,7 @@
 		owning_ref.finish_bounce(src)
 		return
 
-	if(!(owning_ref) || !(owning_component_parent?.resolve()))
+	if(!(owning_ref) || !(owning_component_parent))
 		return qdel(src) //if our component or its parent item somehow get destroyed we wont work so qdel us
 	if((crossed == owning_ref.item_thrower?.resolve()) || (crossed in hit_mobs)) //dont hit the thrower, if it turns out to be a problem we could also make this only hit possible_targets
 		return
@@ -224,16 +226,16 @@
 //starts moving us towards our thrower
 /obj/effect/throw_bounce_visual/proc/move_to_thrower()
 	var/datum/component/throw_bounce/owning_ref = owning_component?.resolve()
-	if(!(owning_ref) || !(owning_component_parent?.resolve()))
+	if(!(owning_ref) || !(owning_component_parent))
 		return qdel(src)
 
 	moving_to_mob = MOVING_TO_THROWER
 
-	var/mob/living/thrower_ref = owning_ref.item_thrower?.resolve()
-	if(thrower_ref)
-		addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, thrower_ref, 1), 1)
+//	var/mob/living/thrower_ref = owning_ref.item_thrower?.resolve() might need this still
+	if(owning_ref.item_thrower)
+		addtimer(CALLBACK(SSmove_manager, TYPE_PROC_REF(/datum/controller/subsystem/move_manager, home_onto), src, owning_ref.item_thrower?.resolve(), 1), 1)
 	else
-		owning_ref.finish_bounce(src, TRUE)
+		owning_ref.finish_bounce(src)
 #undef MOVING_TO_THROWER
 #undef MOVING_TO_TARGET
 #undef START_PHASING_TIME

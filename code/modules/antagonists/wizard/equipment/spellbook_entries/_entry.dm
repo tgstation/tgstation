@@ -33,6 +33,8 @@
 	/// Used so you can't have specific spells together
 	var/list/no_coexistance_typecache
 
+	var/can_random = TRUE //monkestation edit: some things break if you get them from the random spell sets, this just restricts them from being picked if set to FALSE
+
 /datum/spellbook_entry/New()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 

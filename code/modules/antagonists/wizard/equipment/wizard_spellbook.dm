@@ -322,6 +322,8 @@
 	uses += bonus_to_give
 	while(uses > 0 && length(entries_copy))
 		var/datum/spellbook_entry/entry = pick(entries_copy)
+		if(!entry.can_random) //monkestation edit: as explained on the var, some things dont random well
+			continue //monkestation edit
 		if(!purchase_entry(entry, wizard))
 			continue
 		entries_copy -= entry
