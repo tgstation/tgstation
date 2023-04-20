@@ -63,7 +63,7 @@ GLOBAL_VAR(restart_counter)
 #warn USE_BYOND_TRACY is enabled
 	if(!tracy_initialized)
 		init_byond_tracy()
-		Genesis(TRUE)
+		Genesis(tracy_initialized = TRUE)
 		return
 #endif
 
