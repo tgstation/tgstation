@@ -95,7 +95,7 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound = 'sound/effects/clownstep1.ogg'
+	var/sound = 'sound/effects/footstep/clownstep1.ogg'
 
 /turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
