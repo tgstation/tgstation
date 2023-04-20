@@ -164,7 +164,7 @@
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
 		// Let's not mess with  indestructible items.
 		// Chef doesn't need more ways to delete things with cooking.
-		if((ingredient.resistance_flags & INDESTRUCTIBLE))
+		if(ingredient.resistance_flags & INDESTRUCTIBLE)
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
