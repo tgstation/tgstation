@@ -625,12 +625,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		)
 
 	return data
-/*
-/datum/mafia_controller/proc/get_time_ui()
-	if(!next_phase_timer)
-		return "00:00"
-	return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
-*/
+
 /datum/mafia_controller/ui_data(mob/user)
 	var/list/data = list()
 
