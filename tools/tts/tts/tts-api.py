@@ -5,6 +5,7 @@ import io
 import gc
 import json
 import subprocess
+import requests
 from flask import Flask, request, send_file, abort
 
 tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
@@ -29,6 +30,7 @@ def text_to_speech():
 	global request_count
 	if authorization_token != request.headers["Authorization"]:
 		abort(401)
+		pass
 
 	request_count += 1
 	voice = request.args.get("voice", '')
@@ -44,15 +46,10 @@ def text_to_speech():
 		with torch.no_grad():
 			tts.tts_to_file(text=text, speaker=voice, file_path=data_bytes)
 
-		ffmpeg_result = None
-		if filter_complex != "":
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
-		else:
-			ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=data_bytes.getvalue(), capture_output = True)
-		print(f"ffmpeg result size: {len(ffmpeg_result.stdout)} stderr = \n{ffmpeg_result.stderr.decode()}")
+		response = requests.get(f"http://ffmpeg-container:5003/ffmpeg?filter={filter_complex}", data=data_bytes.getvalue())
+		print(f"ffmpeg result size: {len(response.content)}")
 
-		result = send_file(io.BytesIO(ffmpeg_result.stdout), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
-
+		result = send_file(io.BytesIO(response.content), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
 	return result
 
 @app.route("/tts-voices")
