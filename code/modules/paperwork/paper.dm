@@ -353,7 +353,7 @@
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
 	//can't be put on fire!
-	if(resistance_flags & FIRE_PROOF)
+	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
 		return
 	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
