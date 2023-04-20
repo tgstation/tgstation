@@ -101,7 +101,7 @@
 
 
 /obj/item/chasm_detritus/restricted/bodies
-	default_contents_chance = 50
+	default_contents_chance = 12.5
 	default_contents_key = BODIES_ONLY
 	chasm_storage_restricted_type = /mob
 
