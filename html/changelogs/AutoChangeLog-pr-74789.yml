@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - admin: "Secret buttons for Engineering/Brig maint accesses should now work more consistently."
