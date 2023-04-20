@@ -30,7 +30,6 @@ def text_to_speech():
 	global request_count
 	if authorization_token != request.headers["Authorization"]:
 		abort(401)
-		pass
 
 	request_count += 1
 	voice = request.args.get("voice", '')
