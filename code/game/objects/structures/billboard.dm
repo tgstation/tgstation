@@ -100,3 +100,7 @@
 	desc = "A billboard advertising Holophones. Interstellar calls for a affordable 49.99 credits with duty free snacks!"
 	icon_state = "billboard_phone"
 
+/obj/structure/billboard/american_diner
+	name = "\improper All-American Diner billboard"
+	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
+	icon_state = "billboard_american_diner"

@@ -276,8 +276,6 @@
 		/mob/living/simple_animal/hostile/smspider,
 		/mob/living/simple_animal/hostile/smspider/overcharged,
 		/mob/living/simple_animal/hostile/space_dragon,
-		/mob/living/simple_animal/hostile/tree,
-		/mob/living/simple_animal/hostile/tree/festivus,
 		/mob/living/simple_animal/hostile/vatbeast,
 		/mob/living/simple_animal/hostile/venus_human_trap,
 		/mob/living/simple_animal/hostile/wizard,
