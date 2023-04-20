@@ -29,6 +29,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	/// List of verbs that are revealed (admin -> type[]). For use with verbs that are hidden by default.
 	var/list/revealed_verbs
 
+GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
+
 /datum/controller/subsystem/admin_verbs/stat_entry(msg)
 	return "V: [length(admin_verb_datum_holder_map)] | A: [length(assosciated_clients)] | C: [length(admin_verbs_by_category)]"
 
