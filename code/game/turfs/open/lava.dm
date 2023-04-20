@@ -48,7 +48,8 @@
 	if(!smoothing_flags)
 		update_appearance()
 
-	new /obj/effect/abstract/particle_holder (src, particle_type)
+	if(x % 5 == 0 && y % 5 == 0)
+		get_shared_particle_effect(src, amount = 1, particle_effect = particle_type)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -324,17 +325,17 @@
 /particles/lava
 	icon = 'icons/effects/particles/lava.dmi'
 	icon_state = list("lava" = 20, "smoke" = 1)
-	width = 100
-	height = 500
-	count = 100
-	spawning = 0.2
+	width = 320
+	height = 400
+	count = 600
+	spawning = 10
 	lifespan = 2 SECONDS
 	fadein = 0.1 SECONDS
 	fade = 0.5 SECONDS
 	grow = 0.01
 	friction = 0.03
 	velocity = list(0, 2)
-	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	position = generator(square, 320, 0, NORMAL_RAND)
 	drift = generator(GEN_SPHERE, 0.1, 0, NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), UNIFORM_RAND)
 	rotation = 30
