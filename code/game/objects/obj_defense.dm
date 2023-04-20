@@ -99,7 +99,7 @@
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	. = ..()
-	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || (acidpwr <= 0))
 		return FALSE
 
 	AddComponent(/datum/component/acid, acidpwr, acid_volume, custom_acid_overlay || GLOB.acid_overlay)
