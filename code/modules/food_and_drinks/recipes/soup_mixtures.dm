@@ -55,6 +55,11 @@
 	/// (EX: A tomato with 10 nutriment will lose 2.5 nutriment before being added to the pot)
 	var/percentage_of_nutriment_converted = 0.25
 
+	///an assoc list of what items are outputted as a final product in the soup production line
+	var/list/outputted_ingredients
+	///how many ouputs can be processed per reaction
+	var/max_outputs = 1
+
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
@@ -162,6 +167,19 @@
 
 	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
 
+	if(length(outputted_ingredients))
+		var/repeating_amount = 0
+		for(var/obj/item/ingredient as anything in pot.added_ingredients)
+			if(is_type_in_list(ingredient, required_ingredients))
+				qdel(ingredient)
+				repeating_amount++
+
+		repeating_amount = min(repeating_amount, max_outputs)
+		for(var/number in 1 to repeating_amount)
+			for(var/obj/item/created_output as anything in outputted_ingredients)
+				var/obj/item/new_item = new created_output(pot)
+				LAZYADD(pot.added_ingredients, new_item)
+
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
 		// Let's not mess with fireproof / indestructible items.
 		// It's not likely that soups use fireproof items as ingredients,
@@ -170,7 +188,7 @@
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
-		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+		if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients) || is_type_in_list(ingredient, outputted_ingredients))
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done
@@ -180,7 +198,7 @@
 		else
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
-	LAZYNULL(pot.added_ingredients)
+	//LAZYNULL(pot.added_ingredients)
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
 	BLACKBOX_LOG_FOOD_MADE(type)
 

@@ -637,11 +637,6 @@
 	result = /obj/item/food/boiledrice
 	category = CAT_SALAD
 
-/datum/crafting_recipe/food/microwave/boiledspaghetti
-	reqs = list(/obj/item/food/spaghetti/raw = 1)
-	result = /obj/item/food/spaghetti/boiledspaghetti
-	category = CAT_SPAGHETTI
-
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)
 	result = /obj/item/food/onionrings
