@@ -940,7 +940,7 @@
 	return FALSE
 
 /**
- * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
+ * Sends [COMSIG_ATOM_EXTINGUISH] signal, which properly removes burning component if it is present.
  *
  * Can be hooked onto for extra behavior.
  */
