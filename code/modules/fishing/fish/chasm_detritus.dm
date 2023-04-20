@@ -46,7 +46,7 @@
 		create_default_object()
 		return
 
-	var/atom/movable/detritus = pick(chasm_stuff)
+	var/atom/movable/detritus = pick_weight(chasm_stuff)
 	detritus.forceMove(get_turf(src))
 	qdel(src)
 
@@ -66,7 +66,12 @@
 	var/list/chasm_storage_resolved = recursive_list_resolve(GLOB.chasm_storage)
 	for (var/obj/storage as anything in chasm_storage_resolved)
 		for (var/thing as anything in storage.contents)
-			chasm_contents += thing
+			if(ismob(thing))
+				var/mob/fallen_mob = thing
+				if(fallen_mob.client)
+					chasm_contents += list(fallen_mob = 90) // we want to priotitize sentient mobs over say, a bunch of legion skeletons
+					continue
+			chasm_contents += list(thing = 10)
 
 	return chasm_contents
 
