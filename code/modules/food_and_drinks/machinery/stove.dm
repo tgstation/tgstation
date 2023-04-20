@@ -21,9 +21,6 @@
 	. = ..()
 	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
 
-/obj/machinery/stove/AllowDrop()
-	return FALSE
-
 // Soup pot for cooking soup
 // Future addention ideas:
 // - Thermostat you can stick in the pot to see in examine the temperature

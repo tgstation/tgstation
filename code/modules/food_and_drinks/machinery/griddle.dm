@@ -35,9 +35,6 @@
 	QDEL_NULL(grill_loop)
 	return ..()
 
-/obj/machinery/griddle/AllowDrop()
-	return FALSE
-
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)

@@ -49,9 +49,6 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_heater/AllowDrop()
-	return FALSE
-
 /obj/machinery/chem_heater/handle_atom_del(atom/A)
 	. = ..()
 	if(A == beaker)

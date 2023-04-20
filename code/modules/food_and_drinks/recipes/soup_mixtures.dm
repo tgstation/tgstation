@@ -180,7 +180,7 @@
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
 	// Anything left in the ingredient list will get dumped out
-	pot.dump_ingredients()
+	pot.dump_ingredients(get_turf(pot))
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
 	BLACKBOX_LOG_FOOD_MADE(type)
 
