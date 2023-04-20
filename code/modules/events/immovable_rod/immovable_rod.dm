@@ -246,21 +246,21 @@
  * * strongman - the suplexer of the rod.
  */
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
-	if(can_suplex) //monkestation edit
-		strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
-		strongman.visible_message(
-			span_boldwarning("[strongman] suplexes [src] into the ground!"),
-			span_warning("You suplex [src] into the ground!")
-			)
-		new /obj/structure/festivus/anchored(drop_location())
-		new /obj/effect/anomaly/flux(drop_location())
-		qdel(src)
-		return TRUE
-	strongman.visible_message( //monkestation edit
+	if(!can_suplex) //monkestation edit
+		strongman.visible_message( //monkestation edit
 		span_boldwarning("[src] overpowers [strongman]!"), //monkestation edit
 		span_warning("You feel [src] overpowering you!") //monkestation edit
 		) //monkestation edit
-	return FALSE //monkestation edit
+		return FALSE //monkestation edit
+	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
+	strongman.visible_message(
+		span_boldwarning("[strongman] suplexes [src] into the ground!"),
+		span_warning("You suplex [src] into the ground!")
+		)
+	new /obj/structure/festivus/anchored(drop_location())
+	new /obj/effect/anomaly/flux(drop_location())
+	qdel(src)
+	return TRUE
 
 /* Below are a couple of admin helper procs when dealing with immovable rod memes. */
 /**

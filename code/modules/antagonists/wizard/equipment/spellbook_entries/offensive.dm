@@ -76,6 +76,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
 	category = "Offensive"
+	cost = 1 //monkestation edit
 
 /datum/spellbook_entry/splattercasting
 	name = "Splattercasting"

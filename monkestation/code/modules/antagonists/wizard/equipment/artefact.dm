@@ -28,7 +28,7 @@
 	return
 
 //reactive talisman
-#define REACTION_COOLDOWN_DURATION 1 SECONDS //15 SECONDS
+#define REACTION_COOLDOWN_DURATION 15 SECONDS
 /obj/item/clothing/neck/neckless/wizard_reactive //reactive armor for wizards that casts a spell when it reacts
 	name = "reactive talisman"
 	desc = "A reactive talisman for the reactive mage."
@@ -43,7 +43,7 @@
 									  /datum/action/cooldown/spell/emp/disable_tech, /datum/action/cooldown/spell/aoe/repulse/wizard,
 								      /datum/action/cooldown/spell/timestop, /datum/action/cooldown/spell/forcewall, /datum/action/cooldown/spell/conjure/the_traps,
 								      /datum/action/cooldown/spell/conjure/bee, /datum/action/cooldown/spell/conjure/lesser_summonapes,
-								      /datum/action/cooldown/spell/jaunt/ethereal_jaunt, /datum/action/cooldown/spell/teleport/radius_turf/blink)
+								      /datum/action/cooldown/spell/teleport/radius_turf/blink)
 
 	COOLDOWN_DECLARE(armor_cooldown) //unsure if I should use a world.time instead of this
 
