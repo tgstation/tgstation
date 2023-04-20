@@ -167,9 +167,9 @@ ADMIN_VERB(mapping_verbs_enable, "Mapping Verbs - Enable", "", R_DEBUG, VERB_CAT
 	SSadmin_verbs.hide_verb(user, /datum/admin_verb_holder/mapping_verbs_enable)
 
 ADMIN_VERB_HIDDEN(mapping_verbs_disable, "Mapping Verbs - Disable", "", NONE, VERB_CATEGORY_MAPPING)
+	SSadmin_verbs.reveal_verb(user, /datum/admin_verb_holder/mapping_verbs_enable)
 	SSadmin_verbs.hide_verb(user, /datum/admin_verb_holder/mapping_verbs_disable)
 	SSadmin_verbs.hide_verb(user, GLOB.admin_verbs_debug_mapping)
-	SSadmin_verbs.reveal_verb(user, /datum/admin_verb_holder/mapping_verbs_enable)
 
 ADMIN_VERB_HIDDEN(count_objects_on_z_level, "Count Objects On Level", "", R_DEBUG, VERB_CATEGORY_MAPPING)
 	var/level = input(user, "Which z-level?","Level?") as text|null
