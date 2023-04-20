@@ -325,7 +325,7 @@
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
 		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
+	if(!user.client.ai_interact) // Do they have it enabled?
 		return
 	return TRUE
 

@@ -1283,26 +1283,22 @@
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.holder.show_player_panel(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/player_panel, src)
+
 	if(href_list[VV_HK_GODMODE])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.cmd_admin_godmode(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/godmode, src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/give_spell, src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/remove_spell, src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/give_disease, src)
+
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return

@@ -1,61 +1,55 @@
-/client/proc/debug_variables(datum/D in world)
-	set category = "Debug"
-	set name = "View Variables"
-	//set src in world
+ADMIN_VERB_CONTEXT_MENU(view_variables, "View Variables", NONE, datum/target in world)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
-
-	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
-		to_chat(usr, span_danger("You need to be an administrator to access this."), confidential = TRUE)
-		return
-
-	if(!D)
+	if(isnull(target))
+		stack_trace("We somehow called view variables on a null target")
 		return
 
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
-	asset_cache_datum.send(usr)
+	asset_cache_datum.send(user)
 
-	var/islist = islist(D)
-	if(!islist && !istype(D))
+	var/islist = islist(target)
+	if(!islist && !istype(target))
 		return
 
 	var/title = ""
-	var/refid = REF(D)
+	var/refid = REF(target)
 	var/icon/sprite
 	var/hash
 
-	var/type = islist? /list : D.type
+	var/type = islist? /list : target.type
 	var/no_icon = FALSE
 
-	if(istype(D, /atom))
-		sprite = getFlatIcon(D)
+	if(istype(target, /atom))
+		sprite = getFlatIcon(target)
 		if(sprite)
 			hash = md5(sprite)
-			src << browse_rsc(sprite, "vv[hash].png")
+			user << browse_rsc(sprite, "vv[hash].png")
 		else
 			no_icon = TRUE
 
-	title = "[D] ([REF(D)]) = [type]"
+	title = "[target] ([REF(target)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
 	var/sprite_text
 	if(sprite)
 		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
-	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
+	var/list/header = islist(target)? list("<b>/list</b>") : target.vv_get_header()
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
 	var/marked_line
-	if(holder && holder.marked_datum && holder.marked_datum == D)
+	var/datum/admins/holder = user.holder
+	if(holder && holder.marked_datum && holder.marked_datum == target)
 		marked_line = VV_MSG_MARKED
 	var/tagged_line
-	if(holder && LAZYFIND(holder.tagged_datums, D))
-		var/tag_index = LAZYFIND(holder.tagged_datums, D)
+	if(holder && LAZYFIND(holder.tagged_datums, target))
+		var/tag_index = LAZYFIND(holder.tagged_datums, target)
 		tagged_line = VV_MSG_TAGGED(tag_index)
 	var/varedited_line
-	if(!islist && (D.datum_flags & DF_VAR_EDITED))
+	if(!islist && (target.datum_flags & DF_VAR_EDITED))
 		varedited_line = VV_MSG_EDITED
 	var/deleted_line
-	if(!islist && D.gc_destroyed)
+	if(!islist && target.gc_destroyed)
 		deleted_line = VV_MSG_DELETED
 
 	var/list/dropdownoptions
@@ -75,17 +69,17 @@
 			var/link = dropdownoptions[name]
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
 	else
-		dropdownoptions = D.vv_get_dropdown()
+		dropdownoptions = target.vv_get_dropdown()
 
 	var/list/names = list()
 	if(!islist)
-		for(var/V in D.vars)
+		for(var/V in target.vars)
 			names += V
 	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)
-		var/list/L = D
+		var/list/L = target
 		for(var/i in 1 to L.len)
 			var/key = L[i]
 			var/value
@@ -95,8 +89,8 @@
 	else
 		names = sort_list(names)
 		for(var/V in names)
-			if(D.can_vv_get(V))
-				variable_html += D.vv_get_var(V)
+			if(target.can_vv_get(V))
+				variable_html += target.vv_get_var(V)
 
 	var/html = {"
 <html>
@@ -272,7 +266,7 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 	</body>
 </html>
 "}
-	src << browse(html, "window=variables[refid];size=475x650")
+	user << browse(html, "window=variables[refid];size=475x650")
 
-/client/proc/vv_update_display(datum/D, span, content)
-	src << output("[span]:[content]", "variables[REF(D)].browser:replace_span")
+/client/proc/vv_update_display(datum/target, span, content)
+	src << output("[span]:[content]", "variables[REF(target)].browser:replace_span")

@@ -189,6 +189,7 @@
 			var/task_info = params["info"]
 			SSlua.kill_task(current_state, task_info)
 			return TRUE
+
 		if("vvReturnValue")
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
@@ -196,15 +197,17 @@
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/view_variables, thing_to_debug)
 			return FALSE
+
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
-			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/view_variables, thing_to_debug)
 			return FALSE
+
 		if("clearArgs")
 			arguments.Cut()
 			return TRUE

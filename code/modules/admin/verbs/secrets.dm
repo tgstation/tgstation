@@ -1,12 +1,8 @@
 GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
-/client/proc/secrets() //Creates a verb for admins to open up the ui
-	set name = "Secrets"
-	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
-	set category = "Admin.Game"
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/secrets_menu/tgui = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+ADMIN_VERB(secrets, "Secrets", "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu", NONE, VERB_CATEGORY_GAME)
+	var/datum/secrets_menu/tgui = new(user.mob)
+	tgui.ui_interact(user.mob)
 
 /datum/secrets_menu
 	var/client/holder //client of whoever is using this datum
@@ -102,25 +98,25 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					D.cure(0)
 
 		if("list_bombers")
-			holder.list_bombers()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/list_bombers)
 
 		if("list_signalers")
-			holder.list_signalers()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/list_signalers)
 
 		if("list_lawchanges")
-			holder.list_law_changes()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/list_law_changes)
 
 		if("showailaws")
-			holder.check_ai_laws()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/check_ai_laws)
 
 		if("manifest")
-			holder.show_manifest()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/show_manifst)
 
 		if("dna")
-			holder.list_dna()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/list_dna)
 
 		if("fingerprints")
-			holder.list_fingerprints()
+			SSadmin_verbs.dynamic_invoke_verb(holder, /datum/admin_verb_holder/list_fingerprints)
 
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")

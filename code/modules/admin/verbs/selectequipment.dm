@@ -1,10 +1,6 @@
-/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-
-
-	var/datum/select_equipment/ui = new(usr, target)
-	ui.ui_interact(usr)
+ADMIN_VERB_CONTEXT_MENU(select_equipment, "Select Equipment", R_FUN|R_DEBUG, mob/target in world)
+	var/datum/select_equipment/ui = new(user, target)
+	ui.ui_interact(user.mob)
 
 /*
  * This is the datum housing the select equipment UI.

@@ -1,39 +1,25 @@
 // Admin Tab - Event Verbs
 
-/client/proc/cmd_admin_subtle_message(mob/M in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Subtle Message"
-
-	if(!ismob(M))
-		return
-	if(!check_rights(R_ADMIN))
-		return
-
-	message_admins("[key_name_admin(src)] has started answering [ADMIN_LOOKUPFLW(M)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
+ADMIN_VERB_CONTEXT_MENU(subtle_message, "Subtle Message", R_ADMIN, mob/target in world)
+	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
+	var/msg = input("Message:", text("Subtle PM to [target.key]")) as text|null
 
 	if(!msg)
-		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(M)]'s prayer")
+		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
 		return
-	if(usr)
-		if (usr.client)
-			if(usr.client.holder)
-				M.balloon_alert(M, "you hear a voice")
-				to_chat(M, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]")
+	target.balloon_alert(target, "you hear a voice")
+	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
+
+	log_admin("SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]")
+	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(user)] -> [key_name_admin(target)] :</b> [msg]")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_ticket_log(target, msg)
 
-/client/proc/cmd_admin_headset_message(mob/M in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Headset Message"
+ADMIN_VERB_CONTEXT_MENU(headset_message, "Headset Message", R_ADMIN, mob/living/carbon/human/target in world)
+	user.admin_headset_message(target)
 
-	admin_headset_message(M)
-
-/client/proc/admin_headset_message(mob/M in GLOB.mob_list, sender = null)
+/client/proc/admin_headset_message(mob/M, sender)
 	var/mob/living/carbon/human/H = M
 
 	if(!check_rights(R_ADMIN))
@@ -64,90 +50,55 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_world_narrate()
-	set category = "Admin.Events"
-	set name = "Global Narrate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
-
+ADMIN_VERB(global_narrate, "Global Narrate", "Send direct chat output to all connected clients.", R_ADMIN|R_SERVER, VERB_CATEGORY_EVENTS)
+	var/msg = input(user, "Message:", text("Enter the text you wish to appear to everyone:")) as text|null
 	if (!msg)
 		return
-	to_chat(world, "[msg]", confidential = TRUE)
-	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins(span_adminnotice("[key_name_admin(usr)] Sent a global narrate"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_local_narrate(atom/A)
-	set category = "Admin.Events"
-	set name = "Local Narrate"
+	to_chat(world, "[msg]")
+	log_admin("GlobalNarrate: [key_name(user)] : [msg]")
+	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
 
-	if(!check_rights(R_ADMIN))
-		return
-	if(!A)
-		return
-	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num|null
+ADMIN_VERB(narrate_local, "Local Narrate", "Send direct chat output to all clients within the given range.", R_ADMIN, VERB_CATEGORY_EVENTS, atom/around)
+	var/range = input(user, "Range:", "Narrate to mobs within how many tiles:", 7) as num|null
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
+
+	var/msg = input(user, "Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
 	if (!msg)
 		return
-	for(var/mob/M in view(range,A))
-		to_chat(M, msg, confidential = TRUE)
 
-	log_admin("LocalNarrate: [key_name(usr)] at [AREACOORD(A)]: [msg]")
-	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(usr)] at [ADMIN_VERBOSEJMP(A)]:</b> [msg]<BR>"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	for(var/mob/M in view(range, around))
+		to_chat(M, msg)
 
-/client/proc/cmd_admin_direct_narrate(mob/M)
-	set category = "Admin.Events"
-	set name = "Direct Narrate"
+	log_admin("LocalNarrate: [key_name(user)] at [AREACOORD(around)]: [msg]")
+	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(usr)] at [ADMIN_VERBOSEJMP(around)]:</b> [msg]<BR>"))
 
-	if(!check_rights(R_ADMIN))
+ADMIN_VERB_CONTEXT_MENU(narrate_direct, "Direct Narrate", R_ADMIN, mob/target in world)
+	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target") as text|null
+	if(!msg)
 		return
 
-	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in GLOB.player_list
-
-	if(!M)
-		return
-
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text|null
-
-	if( !msg )
-		return
-
-	to_chat(M, msg, confidential = TRUE)
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	msg = span_adminnotice("<b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR>")
+	to_chat(target, msg)
+	log_admin("DirectNarrate: [key_name(user)] to ([target.name]/[target.key]): [msg]")
+	msg = span_adminnotice("<b> DirectNarrate: [key_name(user)] to ([target.name]/[target.key]):</b> [msg]<BR>")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_ticket_log(target, msg)
 
-/client/proc/cmd_admin_add_freeform_ai_law()
-	set category = "Admin.Events"
-	set name = "Add Custom AI law"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+ADMIN_VERB(add_custom_ai_law, "Ass Custom AI Law", "Adds a custom freeform law, as an ion law.", R_FUN, VERB_CATEGORY_EVENTS)
+	var/input = input(user, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
 
-	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
-	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
+	log_admin("Admin [key_name(user)] has added a new AI law - [input]")
+	message_admins("Admin [key_name_admin(user)] has added a new AI law - [input]")
 
-	var/show_log = tgui_alert(usr, "Show ion message?", "Message", list("Yes", "No"))
+	var/show_log = tgui_alert(user, "Show ion message?", "Message", list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()
 	set category = "Admin.Events"
@@ -268,109 +219,92 @@
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
-	set category = "Admin.Events"
-	set name = "Toggle Nuke"
-	set popup_menu = FALSE
-	if(!check_rights(R_DEBUG))
-		return
-
-	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num|null
-		if(!newtime)
+ADMIN_VERB(toggle_nuke, "Toggle Nuke", "View, arm, and disarm nuclear devices.", R_FUN|R_DEBUG, VERB_CATEGORY_EVENTS, obj/machinery/nuclearbomb/nuke in world)
+	if(!nuke.timing)
+		var/set_time = tgui_input_number(
+			user,
+			"How long until detonation? (in seconds)",
+			"Toggle Nuke",
+			90,
+			min_value = nuke.minimum_timer_set,
+			max_value = nuke.maximum_timer_set,
+			)
+		if(!set_time)
 			return
-		N.timer_set = newtime
-	N.toggle_nuke_safety()
-	N.toggle_nuke_armed()
 
-	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(N)].")
-	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		if(nuke.safety)
+			nuke.toggle_nuke_safety()
+		nuke.timer_set = set_time
+		nuke.toggle_nuke_armed()
 
-/client/proc/admin_change_sec_level()
-	set category = "Admin.Events"
-	set name = "Set Security Level"
-	set desc = "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke"
+	else
+		if(!nuke.safety)
+			nuke.toggle_nuke_safety() // automatically disarms
+		else
+			nuke.toggle_nuke_armed()
 
-	if(!check_rights(R_ADMIN))
-		return
+	log_admin("[key_name(user)] [nuke.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(nuke)].")
+	message_admins("[ADMIN_LOOKUPFLW(user.mob)] [nuke.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(nuke)].")
 
-	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
-
+ADMIN_VERB(set_security_level, "Set Security Level", "Changes the security level. Announcement only.", R_ADMIN, VERB_CATEGORY_EVENTS)
+	var/level = tgui_input_list(user, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
 	if(!level)
 		return
 
 	SSsecurity_level.set_level(level)
+	log_admin("[key_name(user)] changed the security level to [level]")
+	message_admins("[key_name_admin(user)] changed the security level to [level]")
 
-	log_admin("[key_name(usr)] changed the security level to [level]")
-	message_admins("[key_name_admin(usr)] changed the security level to [level]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/run_weather()
-	set category = "Admin.Events"
-	set name = "Run Weather"
-	set desc = "Triggers a weather on the z-level you choose."
-
-	if(!holder)
-		return
-
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
+ADMIN_VERB(run_weather, "Run Weather", "Triggers weather on the z-level you choose.", R_FUN, VERB_CATEGORY_EVENTS)
+	var/weather_type = input(user, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
-	var/turf/T = get_turf(mob)
-	var/z_level = input("Z-Level to target?", "Z-Level", T?.z) as num|null
+	var/turf/T = get_turf(user.mob)
+	var/z_level = input(user, "Z-Level to target?", "Z-Level", T?.z) as num|null
 	if(!isnum(z_level))
 		return
 
 	SSweather.run_weather(weather_type, z_level)
 
-	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
-	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
+	message_admins("[key_name_admin(user)] started weather of type [weather_type] on the z-level [z_level].")
+	log_admin("[key_name(user)] started weather of type [weather_type] on the z-level [z_level].")
 
-/client/proc/add_mob_ability()
-	set category = "Admin.Events"
-	set name = "Add Mob Ability"
-	set desc = "Adds an ability to a marked mob."
-
-	if(!holder)
-		return
-
-	if(!isliving(holder.marked_datum))
+ADMIN_VERB(add_mob_ability, "Add Mod Ability", "Adds an ability to your marked mob.", R_FUN, VERB_CATEGORY_EVENTS)
+	if(!isliving(user.holder.marked_datum))
 		to_chat(usr, span_warning("Error: Please mark a mob to add actions to it."))
 		return
 
-	var/mob/living/marked_mob = holder.marked_datum
+	var/mob/living/marked_mob = user.holder.marked_datum
 
 	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
+	var/ability_type = tgui_input_list(user, "Choose an ability", "Ability", all_mob_actions)
 
 	if(!ability_type)
 		return
 
 	var/datum/action/cooldown/mob_cooldown/add_ability
 
-	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	var/make_sequence = tgui_alert(user, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
 	if(make_sequence == "Yes")
 		add_ability = new /datum/action/cooldown/mob_cooldown(marked_mob)
 		add_ability.sequence_actions = list()
 		while(!isnull(ability_type))
-			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			var/ability_delay = tgui_input_number(user, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
 			if(isnull(ability_delay) || ability_delay < 0)
 				ability_delay = 0
 			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
-			ability_type = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", all_mob_actions)
-		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+			ability_type = tgui_input_list(user, "Choose a new sequence ability", "Sequence Ability", all_mob_actions)
+		var/ability_cooldown = tgui_input_number(user, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
 		if(isnull(ability_cooldown) || ability_cooldown < 0)
 			ability_cooldown = 2
 		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
-		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		var/ability_melee_cooldown = tgui_input_number(user, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability")
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(marked_mob)
@@ -379,29 +313,21 @@
 		return
 	add_ability.Grant(marked_mob)
 
-	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(user)] added mob ability [ability_type] to mob [marked_mob].")
+	log_admin("[key_name(user)] added mob ability [ability_type] to mob [marked_mob].")
 
-/client/proc/remove_mob_ability()
-	set category = "Admin.Events"
-	set name = "Remove Mob Ability"
-	set desc = "Removes an ability from marked mob."
-
-	if(!holder)
+ADMIN_VERB(remove_mob_ability, "Remove Mob Ability", "Removes an ability from your marked mob.", R_FUN, VERB_CATEGORY_EVENTS)
+	if(!isliving(user.holder.marked_datum))
+		to_chat(user, span_warning("Error: Please mark a mob to remove actions from it."))
 		return
 
-	if(!isliving(holder.marked_datum))
-		to_chat(usr, span_warning("Error: Please mark a mob to remove actions from it."))
-		return
-
-	var/mob/living/marked_mob = holder.marked_datum
+	var/mob/living/marked_mob = user.holder.marked_datum
 
 	var/list/all_mob_actions = list()
 	for(var/datum/action/cooldown/mob_cooldown/ability in marked_mob.actions)
 		all_mob_actions.Add(ability)
 
-	var/datum/action/cooldown/mob_cooldown/ability = tgui_input_list(usr, "Remove an ability", "Ability", all_mob_actions)
+	var/datum/action/cooldown/mob_cooldown/ability = tgui_input_list(user, "Remove an ability", "Ability", all_mob_actions)
 
 	if(!ability)
 		return
@@ -409,27 +335,19 @@
 	var/ability_name = ability.name
 	QDEL_NULL(ability)
 
-	message_admins("[key_name_admin(usr)] removed ability [ability_name] from mob [marked_mob].")
-	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(user)] removed ability [ability_name] from mob [marked_mob].")
+	log_admin("[key_name(user)] removed mob ability [ability_name] from mob [marked_mob].")
 
-/client/proc/command_report_footnote()
-	set category = "Admin.Events"
-	set name = "Command Report Footnote"
-	set desc = "Adds a footnote to the roundstart command report."
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(command_report_footnote, "Command Report Footnote", "Add a footnote to the roundstart command report.", R_ADMIN, VERB_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
 
-	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
-
+	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report.", "P.S.")
 	if(!command_report_footnote.message)
+		SScommunications.block_command_report--
 		return
 
-	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+	command_report_footnote.signature = tgui_input_text(user, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
 
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"
@@ -437,23 +355,16 @@
 	SScommunications.command_report_footnotes += command_report_footnote
 	SScommunications.block_command_report--
 
-	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
+	message_admins("[user] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
 /datum/command_footnote
 	var/message
 	var/signature
 
-/client/proc/delay_command_report()
-	set category = "Admin.Events"
-	set name = "Delay Command Report"
-	set desc = "Prevents the roundstart command report from being sent until toggled."
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(delay_command_report, "Delay Command Report", "Prevents the roundstart command report from being sent until toggled.", R_ADMIN, VERB_CATEGORY_EVENTS)
 	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
 		SScommunications.block_command_report--
-		message_admins("[usr] has enabled the roundstart command report.")
+		message_admins("[user] has enabled the roundstart command report.")
 	else
 		SScommunications.block_command_report++
-		message_admins("[usr] has delayed the roundstart command report.")
+		message_admins("[user] has delayed the roundstart command report.")

@@ -10,12 +10,7 @@
 
 	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
-/client/proc/investigate_show()
-	set name = "Investigate"
-	set category = "Admin.Game"
-	if(!holder)
-		return
-
+ADMIN_VERB(investigate_show, "Investigate", "Allows you to crawl through several detailed logs for specific actions made throughout the round.", NONE, VERB_CATEGORY_GAME)
 	var/list/investigates = list(
 		INVESTIGATE_ACCESSCHANGES,
 		INVESTIGATE_ATMOS,
@@ -34,7 +29,7 @@
 		INVESTIGATE_RECORDS,
 		INVESTIGATE_RESEARCH,
 		INVESTIGATE_WIRES,
-	)
+		)
 
 	var/list/logs_present = list("notes, memos, watchlist")
 	var/list/logs_missing = list("---")
@@ -48,7 +43,7 @@
 
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = tgui_input_list(src, "Investigate what?", "Investigation", combined)
+	var/selected = tgui_input_list(user, "Investigate what?", "Investigation", combined)
 	if(isnull(selected))
 		return
 	if(!(selected in combined) || selected == "---")
@@ -60,8 +55,8 @@
 		browse_messages()
 		return
 
-	var/F = file("[GLOB.log_directory]/[selected].html")
-	if(!fexists(F))
-		to_chat(src, span_danger("No [selected] logfile was found."), confidential = TRUE)
+	var/investigate_file = file("[GLOB.log_directory]/[selected].html")
+	if(!fexists(investigate_file))
+		to_chat(user, span_danger("No [selected] logfile was found."))
 		return
-	src << browse(F,"window=investigate[selected];size=800x300")
+	user << browse(investigate_file, "window=investigate[selected];size=800x300")

@@ -1248,16 +1248,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /// Attempts to make the client orbit the given object, for administrative purposes.
 /// If they are not an observer, will try to aghost them.
 /client/proc/admin_follow(atom/movable/target)
-	var/can_ghost = TRUE
-
-	if (!isobserver(mob))
-		can_ghost = admin_ghost()
-
-	if(!can_ghost)
-		return FALSE
+	if(!isobserver(mob))
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb_holder/admin_ghost)
+		if(!isobserver(mob))
+			return FALSE
 
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
+	return TRUE
 
 /client/verb/stop_client_sounds()
 	set name = "Stop Sounds"

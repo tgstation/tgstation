@@ -46,7 +46,7 @@
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
 	///Used for admin AI interaction
-	var/AI_Interact = FALSE
+	var/ai_interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null

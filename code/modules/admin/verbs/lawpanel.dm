@@ -211,7 +211,7 @@
 
 	switch(action)
 		if("lawchange_logs")
-			usr.client?.list_law_changes()
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/list_law_changes)
 			return FALSE
 
 		if("force_state_laws")

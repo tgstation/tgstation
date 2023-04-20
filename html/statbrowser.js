@@ -45,6 +45,9 @@ function run_after_focus(callback) {
 }
 
 function createStatusTab(name) {
+	if (name == "Context Menu") {
+		return;
+	}
 	if (name.indexOf(".") != -1) {
 		var splitName = name.split(".");
 		if (split_admin_tabs && splitName[0] === "Admin")
@@ -760,7 +763,11 @@ function add_verb_list(payload) {
 		var part = to_add[i];
 		if (!part[0])
 			continue;
+
 		var category = part[0];
+		if (category == "Context Menu") {
+			continue;
+		}
 		if (category.indexOf(".") != -1) {
 			var splitName = category.split(".");
 			if (split_admin_tabs && splitName[0] === "Admin")

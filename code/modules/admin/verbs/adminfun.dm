@@ -84,61 +84,46 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_gib_self()
-	set name = "Gibself"
-	set category = "Admin.Fun"
+ADMIN_VERB(gib_self, "Gib-Self", "It's even better if you spin before doing it.", R_FUN, VERB_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
 
-	var/confirm = tgui_alert(usr, "You sure?", "Confirm", list("Yes", "No"))
-	if(confirm == "Yes")
-		log_admin("[key_name(usr)] used gibself.")
-		message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] used gibself.")
+	message_admins(span_adminnotice("[key_name_admin(user)] used gibself."))
+	var/mob/living/ourself = user.mob
+	if (istype(ourself))
+		ourself.gib(TRUE, TRUE, TRUE)
 
-		var/mob/living/ourself = mob
-		if (istype(ourself))
-			ourself.gib(TRUE, TRUE, TRUE)
-
-/client/proc/everyone_random()
-	set category = "Admin.Fun"
-	set name = "Make Everyone Random"
-	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
-
+ADMIN_VERB(everyone_random, "Make Everyone Random", "Make everyone have a random appearance, can only be used before round start.", R_SERVER, VERB_CATEGORY_FUN)
 	if(SSticker.HasRoundStarted())
-		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
+		to_chat(user, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
 	var/frn = CONFIG_GET(flag/force_random_names)
 	if(frn)
 		CONFIG_SET(flag/force_random_names, FALSE)
-		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
-		to_chat(usr, "Disabled.", confidential = TRUE)
+		message_admins("Admin [key_name_admin(user)] has disabled \"Everyone is Special\" mode.")
+		to_chat(user, "Disabled.", confidential = TRUE)
 		return
 
-	var/notifyplayers = tgui_alert(usr, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
+	var/notifyplayers = tgui_alert(user, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
 	if(notifyplayers == "Cancel")
 		return
 
-	log_admin("Admin [key_name(src)] has forced the players to have random appearances.")
-	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.")
+	log_admin("Admin [key_name(user)] has forced the players to have random appearances.")
+	message_admins("Admin [key_name_admin(user)] has forced the players to have random appearances.")
 
 	if(notifyplayers == "Yes")
-		to_chat(world, span_adminnotice("Admin [usr.key] has forced the players to have completely random identities!"), confidential = TRUE)
+		to_chat(world, span_adminnotice("Admin [user.key] has forced the players to have completely random identities!"), confidential = TRUE)
 
-	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
+	to_chat(user, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
 
 	CONFIG_SET(flag/force_random_names, TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/mass_zombie_infection()
-	set category = "Admin.Fun"
-	set name = "Mass Zombie Infection"
-	set desc = "Infects all humans with a latent organ that will zombify \
-		them on death."
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", list("Yes", "No"))
+ADMIN_VERB(zombie_mass_infection, "Mass Zombie Infection", "Infects all humans with the zombie organ to zombify them on death.", R_FUN, VERB_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -146,46 +131,30 @@
 		var/mob/living/carbon/human/H = i
 		new /obj/item/organ/internal/zombie_infection/nodamage(H)
 
-	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
-	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Infection")
+	message_admins("[key_name_admin(user)] added a latent zombie infection to all humans.")
+	log_admin("[key_name(user)] added a latent zombie infection to all humans.")
 
-/client/proc/mass_zombie_cure()
-	set category = "Admin.Fun"
-	set name = "Mass Zombie Cure"
-	set desc = "Removes the zombie infection from all humans, returning them to normal."
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", list("Yes", "No"))
+ADMIN_VERB(zombie_mass_cure, "Mass Zombie Cure", "Removes the zombie organ implanted by Mass Infection. Does not cure normal zombies.", R_FUN, VERB_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
 	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
-	message_admins("[key_name_admin(usr)] cured all zombies.")
-	log_admin("[key_name(usr)] cured all zombies.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Cure")
+	message_admins("[key_name_admin(user)] cured all zombies.")
+	log_admin("[key_name(user)] cured all zombies.")
 
-/client/proc/polymorph_all()
-	set category = "Admin.Fun"
-	set name = "Polymorph All"
-	set desc = "Applies the effects of the bolt of change to every single mob."
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", list("Yes", "No"))
+ADMIN_VERB(polymorph_all, "Polymorph All", "Applies the effects of Bolt of Change to every alive mob in world.", R_FUN, VERB_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
 	var/list/mobs = shuffle(GLOB.alive_mob_list.Copy()) // might change while iterating
-	var/who_did_it = key_name_admin(usr)
+	var/who_did_it = key_name_admin(user)
 
-	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
-	log_admin("[key_name(usr)] polymorphed all living mobs.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Polymorph All")
+	message_admins("[key_name_admin(user)] started polymorphed all living mobs.")
+	log_admin("[key_name(user)] polymorphed all living mobs.")
 
 	for(var/mob/living/M in mobs)
 		CHECK_TICK
@@ -195,28 +164,21 @@
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
 		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
-
 		M.wabbajack()
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
-/client/proc/smite(mob/living/target as mob)
-	set category = "Admin.Fun"
-	set name = "Smite"
-	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
-		return
-
-	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
-
-	if(QDELETED(target) || !punishment)
+ADMIN_VERB_CONTEXT_MENU(smite, "Smite", R_ADMIN|R_FUN, mob/living/smoten as mob in world)
+	var/punishment = input(user, "Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
+	if(QDELETED(smoten) || !punishment)
 		return
 
 	var/smite_path = GLOB.smites[punishment]
 	var/datum/smite/smite = new smite_path
-	var/configuration_success = smite.configure(usr)
-	if (configuration_success == FALSE)
+	var/configuration_success = smite.configure(user.mob)
+	if(!configuration_success)
 		return
-	smite.effect(src, target)
+	smite.effect(user, smoten)
 
 ///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
 /proc/breadify(atom/movable/target)

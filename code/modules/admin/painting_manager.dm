@@ -1,11 +1,6 @@
-/datum/admins/proc/paintings_manager()
-	set name = "Paintings Manager"
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/datum/paintings_manager/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(paintings_manager, "Paintings Manager", "View and edit saved paintings.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	var/datum/paintings_manager/ui = new
+	ui.ui_interact(user.mob)
 
 /// Painting Admin Management Panel
 /datum/paintings_manager

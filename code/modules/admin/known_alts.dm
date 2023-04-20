@@ -187,8 +187,5 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 	client << browse(html, "window=known_alts;size=700x400")
 
-/datum/admins/proc/known_alts_panel()
-	set name = "Known Alts Panel"
-	set category = "Admin"
-
-	GLOB.known_alts.show_panel(usr.client)
+ADMIN_VERB(alts_panel, "Known Alts Panel", "See and manage known alt accounts.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	GLOB.known_alts.show_panel(user)

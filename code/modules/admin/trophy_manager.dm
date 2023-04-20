@@ -1,11 +1,6 @@
-/datum/admins/proc/trophy_manager()
-	set name = "Trophy Manager"
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/datum/trophy_manager/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(trophy_manager, "Trophy Manager", "View and edit assigned trophies.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	var/datum/trophy_manager/ui = new
+	ui.ui_interact(user.mob)
 
 /// Trophy Admin Management Panel
 /datum/trophy_manager

@@ -161,19 +161,23 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
 	var/datum/request/request = !id ? null : requests_by_id[id]
 
+	if(isnull(request?.owner))
+		to_chat(usr, span_warning("Unable to locate the owner for the request, did they disconnect?"))
+		return FALSE
+
 	switch(action)
 		if ("pp")
-			var/mob/M = request.owner?.mob
-			usr.client.holder.show_player_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/player_panel, request.owner.mob)
 			return TRUE
+
 		if ("vv")
-			var/mob/M = request.owner?.mob
-			usr.client.debug_variables(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/view_variables, request.owner.mob)
 			return TRUE
+
 		if ("sm")
-			var/mob/M = request.owner?.mob
-			usr.client.cmd_admin_subtle_message(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/subtle_message, request.owner.mob)
 			return TRUE
+
 		if ("flw")
 			var/mob/M = request.owner?.mob
 			usr.client.admin_follow(M)
@@ -209,8 +213,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 				return TRUE
-			usr.client.smite(H)
+
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/smite, H)
 			return TRUE
+
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)

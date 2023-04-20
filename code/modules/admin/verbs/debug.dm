@@ -1,30 +1,16 @@
-/client/proc/Debug2()
-	set category = "Debug"
-	set name = "Debug-Game"
-	if(!check_rights(R_DEBUG))
-		return
 
+ADMIN_VERB(debug_game, "Debug-Game", "Toggle debugging for the game.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	if(GLOB.Debug2)
-		GLOB.Debug2 = 0
-		message_admins("[key_name(src)] toggled debugging off.")
-		log_admin("[key_name(src)] toggled debugging off.")
+		GLOB.Debug2 = FALSE
+		message_admins("[key_name(user)] toggled debugging off.")
+		log_admin("[key_name(user)] toggled debugging off.")
 	else
-		GLOB.Debug2 = 1
-		message_admins("[key_name(src)] toggled debugging on.")
-		log_admin("[key_name(src)] toggled debugging on.")
+		GLOB.Debug2 = TRUE
+		message_admins("[key_name(user)] toggled debugging on.")
+		log_admin("[key_name(user)] toggled debugging on.")
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/Cell()
-	set category = "Debug"
-	set name = "Air Status in Location"
-	if(!mob)
-		return
-	var/turf/T = get_turf(mob)
-	if(!isturf(T))
-		return
-	atmos_scan(user=usr, target=T, silent=TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(air_status, "Air Status in Location", "View the air status for your current turf.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	atmos_scan(user=user.mob, target=get_turf(user.mob), silent=TRUE)
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
@@ -50,13 +36,8 @@
 		return
 	return types[key]
 
-//TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(object as text)
-	set category = "Debug"
-	set name = "Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(del_all, "Del-All", "Delete all objects of a given type.", R_SERVER|R_DEBUG, VERB_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
@@ -66,16 +47,11 @@
 			counter++
 			qdel(O)
 		CHECK_TICK
-	log_admin("[key_name(src)] has deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] has deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has deleted all ([counter]) instances of [type_to_del].")
 
-/client/proc/cmd_debug_force_del_all(object as text)
-	set category = "Debug"
-	set name = "Force-Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(del_all_force, "Force-Del-All", "Delete all objects of a given type, forcibly.", R_SERVER|R_DEBUG, VERB_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
@@ -85,29 +61,24 @@
 			counter++
 			qdel(O, force = TRUE)
 		CHECK_TICK
-	log_admin("[key_name(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force-Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] has force-deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has force-deleted all ([counter]) instances of [type_to_del].")
 
-/client/proc/cmd_debug_hard_del_all(object as text)
-	set category = "Debug"
-	set name = "Hard-Del-All"
-
-	var/type_to_del = poll_type_to_del(object)
-
+ADMIN_VERB(del_all_hard, "Hard-Del-All", "Delete all objects of a given type using byond's built in GC.", R_SERVER|R_DEBUG, VERB_CATEGORY_DEBUG, object as text)
+	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
 
-	var/choice = alert("ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
+	var/choice = alert(user, "ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
 	if(choice != "Yes")
 		return
 
-	choice = alert("Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
+	choice = alert(user, "Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
 	var/should_pre_qdel = TRUE
 	if(choice == "No")
 		should_pre_qdel = FALSE
 
-	choice = alert("Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
+	choice = alert(user, "Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
 	var/should_check_tick = TRUE
 	if(choice == "Ignore the server")
 		should_check_tick = FALSE
@@ -129,61 +100,51 @@
 					qdel(O)
 				del(O)
 			CHECK_TICK
-	log_admin("[key_name(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	message_admins("[key_name_admin(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hard Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] has hard deleted all ([counter]) instances of [type_to_del].")
+	message_admins("[key_name_admin(user)] has hard deleted all ([counter]) instances of [type_to_del].")
 
-/client/proc/cmd_debug_make_powernets()
-	set category = "Debug"
-	set name = "Make Powernets"
+ADMIN_VERB(make_powernets, "Make Powernets", "Forcibly recreates all powernets.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	SSmachines.makepowernets()
-	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
-	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] has remade the powernet. makepowernets() called.")
+	message_admins("[key_name_admin(user)] has remade the powernets. makepowernets() called.")
 
-/client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
-	set category = "Debug"
-	set name = "Grant Full Access"
-
+ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/living/carbon/human/target in world)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts")
+		tgui_alert(user,"Wait until the game starts")
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/worn = H.wear_id
-		var/obj/item/card/id/id = null
 
-		if(worn)
-			id = worn.GetID()
-		if(id)
-			if(id == worn)
-				worn = null
-			qdel(id)
+	var/obj/item/worn = target.wear_id
+	var/obj/item/card/id/id = worn?.GetID()
+	if(!isnull(id))
+		if(id == worn)
+			worn = null
+		qdel(id)
 
-		id = new /obj/item/card/id/advanced/debug()
+	id = new /obj/item/card/id/advanced/debug
+	id.registered_name = target.real_name
+	id.update_label()
+	id.update_appearance()
 
-		id.registered_name = H.real_name
-		id.update_label()
-		id.update_icon()
+	if(!isnull(worn))
+		if(istype(worn, /obj/item/modular_computer/pda))
+			var/obj/item/modular_computer/pda/pda = worn
+			worn.InsertID(id, target)
 
-		if(worn)
-			if(istype(worn, /obj/item/modular_computer/pda))
-				var/obj/item/modular_computer/pda/PDA = worn
-				PDA.InsertID(id, H)
+		else if(istype(worn, /obj/item/storage/wallet))
+			var/obj/item/storage/wallet/wallet = worn
+			wallet.front_id = id
+			id.forceMove(wallet)
+			wallet.update_appearance()
 
-			else if(istype(worn, /obj/item/storage/wallet))
-				var/obj/item/storage/wallet/W = worn
-				W.front_id = id
-				id.forceMove(W)
-				W.update_icon()
 		else
-			H.equip_to_slot(id,ITEM_SLOT_ID)
+			to_chat(user, "Couldn't figure out how to handle giving them the ID. Dropping it at their feet.")
+			id.forceMove(target.drop_location())
 
 	else
-		tgui_alert(usr,"Invalid mob")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] has granted [M.key] full access."))
+		target.equip_to_slot(id, ITEM_SLOT_ID)
+
+	log_admin("[key_name(user)] has granted [key_name(target)] full access.")
+	message_admins(span_adminnotice("[key_name_admin(user)] has granted [key_name_admin(target)] full access."))
 
 /client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
 	set category = "Admin.Game"
@@ -515,14 +476,8 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
-	set category = "Debug"
-	set name = "Delete"
-
-	if(!check_rights(R_SPAWN|R_DEBUG))
-		return
-
-	admin_delete(A)
+ADMIN_VERB_CONTEXT_MENU(delete, "Delete", R_SERVER|R_ADMIN|R_DEBUG|R_SPAWN, atom/target as obj|mob|turf in world)
+	user.admin_delete(target)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
 	set category = "Debug"
@@ -533,14 +488,8 @@
 		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/modify_goals()
-	set category = "Debug"
-	set name = "Modify goals"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	holder.modify_goals()
+ADMIN_VERB(modify_goals, "Modify Goals", "View the station's goals and modify then.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	user.holder.modify_goals()
 
 /datum/admins/proc/modify_goals()
 	var/dat = ""
@@ -549,34 +498,27 @@
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
-/client/proc/cmd_debug_mob_lists()
-	set category = "Debug"
-	set name = "Debug Mob Lists"
-	set desc = "For when you just gotta know"
-	var/chosen_list = tgui_input_list(usr, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+ADMIN_VERB(debug_mob_lists, "Debug Mob Lists", "What broke this time.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	var/chosen_list = tgui_input_list(user, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 	if(isnull(chosen_list))
 		return
 	switch(chosen_list)
 		if("Players")
-			to_chat(usr, jointext(GLOB.player_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.player_list,","), confidential = TRUE)
 		if("Admins")
-			to_chat(usr, jointext(GLOB.admins,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.admins,","), confidential = TRUE)
 		if("Mobs")
-			to_chat(usr, jointext(GLOB.mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.mob_list,","), confidential = TRUE)
 		if("Living Mobs")
-			to_chat(usr, jointext(GLOB.alive_mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.alive_mob_list,","), confidential = TRUE)
 		if("Dead Mobs")
-			to_chat(usr, jointext(GLOB.dead_mob_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.dead_mob_list,","), confidential = TRUE)
 		if("Clients")
-			to_chat(usr, jointext(GLOB.clients,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.clients,","), confidential = TRUE)
 		if("Joined Clients")
-			to_chat(usr, jointext(GLOB.joined_player_list,","), confidential = TRUE)
+			to_chat(user, jointext(GLOB.joined_player_list,","), confidential = TRUE)
 
-/client/proc/cmd_display_del_log()
-	set category = "Debug"
-	set name = "Display del() Log"
-	set desc = "Display del's log of everything that's passed through it."
-
+ADMIN_VERB(display_del_log, "Display Del Log", "Display the log which shows everything that has been deleted this round.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
 	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in SSgarbage.items)
@@ -603,38 +545,19 @@
 		dellog += "</ul></li>"
 
 	dellog += "</ol>"
+	user << browse(dellog.Join(), "window=dellog")
 
-	usr << browse(dellog.Join(), "window=dellog")
+ADMIN_VERB(display_overlay_log, "Display Overlay Log", "Display the log of all overlays that have gone through SSoverlays.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	render_stats(SSoverlays.stats, user)
 
-/client/proc/cmd_display_overlay_log()
-	set category = "Debug"
-	set name = "Display overlay Log"
-	set desc = "Display SSoverlays log of everything that's passed through it."
+ADMIN_VERB(display_initialize_log, "Display Initialize Log", "Display the log of all datums that didn't Initialize properly.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	user << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
-	render_stats(SSoverlays.stats, src)
+ADMIN_VERB(colorblind_test, "Coloring Testing", "Change your view to budget colorblindness to test for usability.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	user.holder.color_test.ui_interact(user.mob)
 
-/client/proc/cmd_display_init_log()
-	set category = "Debug"
-	set name = "Display Initialize() Log"
-	set desc = "Displays a list of things that didn't handle Initialize() properly"
-
-	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
-
-/client/proc/open_colorblind_test()
-	set category = "Debug"
-	set name = "Colorblind Testing"
-	set desc = "Change your view to a budget version of colorblindness to test for usability"
-
-	if(!holder)
-		return
-	holder.color_test.ui_interact(mob)
-
-/client/proc/debug_plane_masters()
-	set category = "Debug"
-	set name = "Edit/Debug Planes"
-	set desc = "Edit and visualize plane masters and their connections (relays)"
-
-	edit_plane_masters()
+ADMIN_VERB(debug_plane_masters, "Edit/Debug Planes", "Edit and visualize plane masters and their connections (relays).", R_DEBUG, VERB_CATEGORY_DEBUG)
+	user.edit_plane_masters()
 
 /client/proc/edit_plane_masters(mob/debug_on)
 	if(!holder)
@@ -646,21 +569,20 @@
 		holder.plane_debug.set_mirroring(FALSE)
 	holder.plane_debug.ui_interact(mob)
 
-/client/proc/debug_huds(i as num)
-	set category = "Debug"
-	set name = "Debug HUDs"
-	set desc = "Debug the data or antag HUDs"
-
-	if(!holder)
+ADMIN_VERB(debug_huds, "Debug HUDs", "Debug the data or antag HUDs.", R_DEBUG, VERB_CATEGORY_DEBUG, hud_idx as num)
+	hud_idx ||= tgui_input_number(
+		user,
+		"Hud index to debug?",
+		"Debug HUDs",
+		0,
+		max_value = length(GLOB.huds),
+	)
+	if(!hud_idx)
 		return
-	debug_variables(GLOB.huds[i])
 
-/client/proc/jump_to_ruin()
-	set category = "Debug"
-	set name = "Jump to Ruin"
-	set desc = "Displays a list of all placed ruins to teleport to."
-	if(!holder)
-		return
+	SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb_holder/view_variables, GLOB.huds[hud_idx])
+
+ADMIN_VERB(jump_to_ruin, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/list/names = list()
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
@@ -675,24 +597,19 @@
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in sort_list(names)
-
-
+	var/ruinname = input(user, "Select ruin", "Jump to Ruin") as null|anything in sort_list(names)
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
-
-	if(istype(landmark))
-		var/datum/map_template/ruin/template = landmark.ruin_template
-		usr.forceMove(get_turf(landmark))
-		to_chat(usr, span_name("[template.name]"), confidential = TRUE)
-		to_chat(usr, "<span class='italics'>[template.description]</span>", confidential = TRUE)
-
-/client/proc/place_ruin()
-	set category = "Debug"
-	set name = "Spawn Ruin"
-	set desc = "Attempt to randomly place a specific ruin."
-	if (!holder)
+	if(isnull(landmark))
 		return
 
+	var/datum/map_template/ruin/template = landmark.ruin_template
+	if(!isobserver(user.mob))
+		SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb_holder/admin_ghost)
+	user.mob.forceMove(get_turf(landmark))
+	to_chat(user, span_name("[template.name]"))
+	to_chat(user, "<span class='italics'>[template.description]</span>")
+
+ADMIN_VERB(place_ruin, "Spawn Ruin", "Attemp to randomly place a specific ruin.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
 		var/obj/effect/landmark/ruin/L = landmark
@@ -708,15 +625,15 @@
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
+	var/ruinname = input(user, "Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]
 	if (!data)
 		return
 	var/datum/map_template/ruin/template = data[1]
 	if (exists[template])
-		var/response = tgui_alert(usr,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
+		var/response = tgui_alert(user,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
 		if (response == "Jump")
-			usr.forceMove(get_turf(exists[template]))
+			user.mob.forceMove(get_turf(exists[template]))
 			return
 		else if (response == "Cancel")
 			return
@@ -725,75 +642,61 @@
 	seedRuins(SSmapping.levels_by_trait(data[2]), max(1, template.cost), data[3], list(ruinname = template))
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
-		log_admin("[key_name(src)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
+		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
 		usr.forceMove(get_turf(landmark))
-		to_chat(src, span_name("[template.name]"), confidential = TRUE)
-		to_chat(src, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+		to_chat(user, span_name("[template.name]"), confidential = TRUE)
+		to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 	else
-		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
+		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
-/client/proc/unload_ctf()
-	set category = "Debug"
-	set name = "Unload CTF"
-	set desc = "Despawns the majority of CTF"
+ADMIN_VERB(unload_ctf, "Unload CTF", "Despawn CTF.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	toggle_id_ctf(user.mob, unload=TRUE)
 
-	toggle_id_ctf(usr, unload=TRUE)
-
-/client/proc/run_empty_query(val as num)
-	set category = "Debug"
-	set name = "Run empty query"
-	set desc = "Amount of queries to run"
-
+ADMIN_VERB(run_empty_queries, "Run Empty Query", "Run empty queries.", R_DEBUG, VERB_CATEGORY_DEBUG, amount as num)
 	var/list/queries = list()
-	for(var/i in 1 to val)
+	for(var/i in 1 to amount)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
-		INVOKE_ASYNC(query, TYPE_PROC_REF(/datum/db_query, Execute))
 		queries += query
+		ASYNC
+			query.Execute()
 
 	for(var/datum/db_query/query as anything in queries)
 		query.sync()
 		qdel(query)
 	queries.Cut()
+	message_admins("[key_name_admin(user)] ran [amount] empty queries.")
 
-	message_admins("[key_name_admin(src)] ran [val] empty queries.")
-
-/client/proc/clear_dynamic_transit()
-	set category = "Debug"
-	set name = "Clear Dynamic Turf Reservations"
-	set desc = "Deallocates all reserved space, restoring it to round start conditions."
-	if(!holder)
-		return
-	var/answer = tgui_alert(usr,"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", list("YES", "NO"))
-	if(answer != "YES")
-		return
-	message_admins(span_adminnotice("[key_name_admin(src)] cleared dynamic transit space."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
-	log_admin("[key_name(src)] cleared dynamic transit space.")
-	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
-
-/client/proc/toggle_medal_disable()
-	set category = "Debug"
-	set name = "Toggle Medal Disable"
-	set desc = "Toggles the safety lock on trying to contact the medal hub."
-
-	if(!check_rights(R_DEBUG))
+ADMIN_VERB(clear_dynamic_transit, "Clear Dynamic Turf Reservations", "Deallocates all reserved space.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	var/answer = tgui_alert(
+		user,
+		"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, LAZY TEMPLATES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!",
+		"Really wipe dynamic turfs?",
+		list("Yes", "No"),
+		)
+	if(answer != "Yes")
 		return
 
+	if(length(SSmapping.loaded_lazy_templates))
+		answer = tgui_alert(
+			user,
+			"WARNING: THERE ARE LOADED LAZY TEMPLATES, THIS WILL WIPE THEM TOO!",
+			"Are you sure?",
+			list("Yes", "No"),
+			)
+		if(answer != "Yes")
+			return
+
+	message_admins(span_adminnotice("[key_name_admin(user)] cleared dynamic transit space."))
+	log_admin("[key_name(user)] cleared dynamic transit space.")
+	SSmapping.wipe_reservations()
+
+ADMIN_VERB(toggle_medal_disable, "Toggle Medal Disable", "Toggles the safety lock on trying to contact the medal hub.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	SSachievements.achievements_enabled = !SSachievements.achievements_enabled
+	message_admins(span_adminnotice("[key_name_admin(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
+	log_admin("[key_name(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
-	message_admins(span_adminnotice("[key_name_admin(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
-	log_admin("[key_name(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
-
-/client/proc/view_runtimes()
-	set category = "Debug"
-	set name = "View Runtimes"
-	set desc = "Open the runtime Viewer"
-
-	if(!holder)
-		return
-
-	GLOB.error_cache.show_to(src)
+ADMIN_VERB(view_runtimes, "View Runtimes", "Open the Runtime Viewer.", R_DEBUG, VERB_CATEGORY_DEBUG)
+	GLOB.error_cache.show_to(user)
 
 	// The runtime viewer has the potential to crash the server if there's a LOT of runtimes
 	// this has happened before, multiple times, so we'll just leave an alert on it
@@ -802,80 +705,46 @@
 		if(GLOB.total_runtimes >= 100000)
 			warning = "There are a TON of runtimes, clicking any button (especially \"linear\") WILL LIKELY crash the server"
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
-		alert(usr, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
+		alert(user, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
-/client/proc/pump_random_event()
-	set category = "Debug"
-	set name = "Pump Random Event"
-	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."
-	if(!holder)
-		return
-
+ADMIN_VERB(pump_random_event, "Pump Random Event", "Schedules the event subsystem to fire a new random event immediately.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	SSevents.scheduled = world.time
+	message_admins(span_adminnotice("[key_name_admin(user)] pumped a random event."))
+	log_admin("[key_name(user)] pumped a random event.")
 
-	message_admins(span_adminnotice("[key_name_admin(src)] pumped a random event."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
-	log_admin("[key_name(src)] pumped a random event.")
-
-/client/proc/start_line_profiling()
-	set category = "Profile"
-	set name = "Start Line Profiling"
-	set desc = "Starts tracking line by line profiling for code lines that support it"
-
+ADMIN_VERB(line_profile_start, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	LINE_PROFILE_START
 
-	message_admins(span_adminnotice("[key_name_admin(src)] started line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
-	log_admin("[key_name(src)] started line by line profiling.")
+	message_admins(span_adminnotice("[key_name_admin(user)] started line by line profiling."))
+	log_admin("[key_name(user)] started line by line profiling.")
 
-/client/proc/stop_line_profiling()
-	set category = "Profile"
-	set name = "Stops Line Profiling"
-	set desc = "Stops tracking line by line profiling for code lines that support it"
-
+ADMIN_VERB(line_profile_stop, "Stop Line Profiling", "Stops tracking line by line profiling.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	LINE_PROFILE_STOP
 
-	message_admins(span_adminnotice("[key_name_admin(src)] stopped line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
-	log_admin("[key_name(src)] stopped line by line profiling.")
+	message_admins(span_adminnotice("[key_name_admin(user)] stopped line by line profiling."))
+	log_admin("[key_name(user)] stopped line by line profiling.")
 
-/client/proc/show_line_profiling()
-	set category = "Profile"
-	set name = "Show Line Profiling"
-	set desc = "Shows tracked profiling info from code lines that support it"
-
+ADMIN_VERB(line_profiling_show, "Show Line Profiling", "Shows tracked profiling info from tracked data.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/sortlist = list(
 		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
 		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),
 		"Call Count" = GLOBAL_PROC_REF(cmp_profile_count_dsc)
 	)
-	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	var/sort = input(user, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
 	if (!sort)
 		return
 	sort = sortlist[sort]
-	profile_show(src, sort)
+	profile_show(user, sort)
 
-/client/proc/reload_configuration()
-	set category = "Debug"
-	set name = "Reload Configuration"
-	set desc = "Force config reload to world default"
-	if(!check_rights(R_DEBUG))
-		return
-	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
+ADMIN_VERB(reload_configuration, "Reload Configuration", "Force config reload to world default.", R_DEBUG|R_SERVER, VERB_CATEGORY_DEBUG)
+	if(tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
-/// A debug verb to check the sources of currently running timers
-/client/proc/check_timer_sources()
-	set category = "Debug"
-	set name = "Check Timer Sources"
-	set desc = "Checks the sources of the running timers"
-	if (!check_rights(R_DEBUG))
-		return
-
+ADMIN_VERB(check_timer_sources, "Check Timer Sources", "Checks the sources of running timers.", R_DEBUG, VERB_CATEGORY_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
 	var/second_queue = generate_timer_source_output(SStimer.second_queue)
 
-	usr << browse({"
+	user << browse({"
 		<h3>bucket_list</h3>
 		[bucket_list_output]
 
@@ -923,69 +792,3 @@
 
 /proc/cmp_timer_data(list/a, list/b)
 	return b["count"] - a["count"]
-
-#ifdef TESTING
-/client/proc/check_missing_sprites()
-	set category = "Debug"
-	set name = "Debug Worn Item Sprites"
-	set desc = "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)"
-	var/actual_file_name
-	for(var/test_obj in subtypesof(/obj/item))
-		var/obj/item/sprite = new test_obj
-		if(!sprite.slot_flags || (sprite.item_flags & ABSTRACT))
-			continue
-		//Is there an explicit worn_icon to pick against the worn_icon_state? Easy street expected behavior.
-		if(sprite.worn_icon)
-			if(!(sprite.icon_state in icon_states(sprite.worn_icon)))
-				to_chat(src, span_warning("ERROR sprites for [sprite.type]. Slot Flags are [sprite.slot_flags]."), confidential = TRUE)
-		else if(sprite.worn_icon_state)
-			if(sprite.slot_flags & ITEM_SLOT_MASK)
-				actual_file_name = 'icons/mob/clothing/mask.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Mask slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_NECK)
-				actual_file_name = 'icons/mob/clothing/neck.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Neck slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_BACK)
-				actual_file_name = 'icons/mob/clothing/back.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head/default.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_BELT)
-				actual_file_name = 'icons/mob/clothing/belt.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Belt slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_SUITSTORE)
-				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
-				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
-		else if(sprite.icon_state)
-			if(sprite.slot_flags & ITEM_SLOT_MASK)
-				actual_file_name = 'icons/mob/clothing/mask.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Mask slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_NECK)
-				actual_file_name = 'icons/mob/clothing/neck.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Neck slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_BACK)
-				actual_file_name = 'icons/mob/clothing/back.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head/default.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_BELT)
-				actual_file_name = 'icons/mob/clothing/belt.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Belt slot."), confidential = TRUE)
-			if(sprite.slot_flags & ITEM_SLOT_SUITSTORE)
-				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
-				if(!(sprite.icon_state in icon_states(actual_file_name)))
-					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
-#endif

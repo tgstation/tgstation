@@ -10,3 +10,7 @@
 		if (ch < 48 || ch > 57) //0-9
 			return FALSE
 	return TRUE
+
+/client/proc/is_localhost()
+	var/static/list/localhost_addresses = list("localhost", "127.0.0.1", "::1")
+	return (src.address in localhost_addresses)

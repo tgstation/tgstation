@@ -50,23 +50,13 @@
 					<font color='#00cccc'>[X.getOxyLoss()]</font>\
 					[X.getCloneLoss() ? " <font color='#1c3ac4'>[X.getCloneLoss()]</font>" : ""])"
 
-/// Display all of the tagged datums
-/datum/admins/proc/display_tags()
-	set category = "Admin.Game"
-	set name = "View Tags"
-
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
-
+ADMIN_VERB(check_tags, "View Tags", "See all of your tagged datums.", NONE, VERB_CATEGORY_GAME)
 	var/index = 0
 	var/list/dat = list("<center><B>Tag Menu</B></center><hr>")
 
 	dat += "<br><A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
-	if(LAZYLEN(tagged_datums))
-		for(var/datum/iter_datum as anything in tagged_datums)
+	if(LAZYLEN(user.holder.tagged_datums))
+		for(var/datum/iter_datum as anything in user.holder.tagged_datums)
 			index++
 			var/specific_info
 
@@ -94,13 +84,13 @@
 				specific_info = "[resolved_subsystem.stat_entry()]"
 			// else, it's just a /datum
 
-			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)] | [TAG_DEL(iter_datum)] | [iter_datum == marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
+			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)] | [TAG_DEL(iter_datum)] | [iter_datum == user.holder.marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
 			dat += "\t(<b><font size='2'>[iter_datum.type])</font></b>"
 	else
 		dat += "No datums tagged :("
 
 	dat = dat.Join("<br>")
-	usr << browse(dat, "window=tag;size=800x480")
+	user << browse(dat, "window=tag;size=800x480")
 
 #undef TAG_DEL
 #undef TAG_MARK

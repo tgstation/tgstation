@@ -3,20 +3,15 @@
 #define SHELLEO_STDOUT 2
 #define SHELLEO_STDERR 3
 
-/client/proc/play_sound(S as sound)
-	set category = "Admin.Fun"
-	set name = "Play Global Sound"
-	if(!check_rights(R_SOUND))
-		return
-
+ADMIN_VERB(play_sound, "Play Global Sound", "Send a sound to all connected clients.", R_SOUND, VERB_CATEGORY_FUN, sound as sound)
 	var/freq = 1
-	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
+	var/vol = input(user, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
 	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
-	admin_sound.file = S
+	admin_sound.file = sound
 	admin_sound.priority = 250
 	admin_sound.channel = CHANNEL_ADMIN
 	admin_sound.frequency = freq
@@ -25,15 +20,15 @@
 	admin_sound.status = SOUND_STREAM
 	admin_sound.volume = vol
 
-	var/res = tgui_alert(usr, "Show the title of this song to the players?",, list("Yes","No", "Cancel"))
+	var/res = tgui_alert(user, "Show the title of this song to the players?",, list("Yes","No", "Cancel"))
 	switch(res)
 		if("Yes")
-			to_chat(world, span_boldannounce("An admin played: [S]"), confidential = TRUE)
+			to_chat(world, span_boldannounce("An admin played: [sound]"), confidential = TRUE)
 		if("Cancel")
 			return
 
-	log_admin("[key_name(src)] played sound [S]")
-	message_admins("[key_name_admin(src)] played sound [S]")
+	log_admin("[key_name(user)] played sound [sound]")
+	message_admins("[key_name_admin(user)] played sound [sound]")
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
@@ -41,34 +36,19 @@
 			SEND_SOUND(M, admin_sound)
 			admin_sound.volume = vol
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(play_sound_local, "Play Local Sound", "Play a sound centered on your current turf.", R_SOUND, VERB_CATEGORY_FUN, sound as sound)
+	log_admin("[key_name(user)] played a local sound [sound]")
+	message_admins("[key_name_admin(user)] played a local sound [sound]")
+	playsound(get_turf(user.mob), sound, 50, FALSE, FALSE)
 
-
-/client/proc/play_local_sound(S as sound)
-	set category = "Admin.Fun"
-	set name = "Play Local Sound"
-	if(!check_rights(R_SOUND))
+ADMIN_VERB_CONTEXT_MENU(play_sound_direct, "Play Direct Sound", R_SOUND, mob/target in world, sound as sound)
+	if(!target)
+		target = input(user, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
+	if(!target || QDELETED(target))
 		return
-
-	log_admin("[key_name(src)] played a local sound [S]")
-	message_admins("[key_name_admin(src)] played a local sound [S]")
-	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/play_direct_mob_sound(S as sound, mob/M)
-	set category = "Admin.Fun"
-	set name = "Play Direct Mob Sound"
-	if(!check_rights(R_SOUND))
-		return
-
-	if(!M)
-		M = input(usr, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
-	if(!M || QDELETED(M))
-		return
-	log_admin("[key_name(src)] played a direct mob sound [S] to [M].")
-	message_admins("[key_name_admin(src)] played a direct mob sound [S] to [ADMIN_LOOKUPFLW(M)].")
-	SEND_SOUND(M, S)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] played a direct mob sound [sound] to [target].")
+	message_admins("[key_name_admin(user)] played a direct mob sound [sound] to [ADMIN_LOOKUPFLW(target)].")
+	SEND_SOUND(target, sound)
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
 /proc/web_sound(mob/user, input)
@@ -163,56 +143,42 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
-
-/client/proc/play_web_sound()
-	set category = "Admin.Fun"
-	set name = "Play Internet Sound"
-	if(!check_rights(R_SOUND))
-		return
-
+ADMIN_VERB(web_sound, "Play Internet Sound", "Plays the sound file from the given address.", R_SOUND, VERB_CATEGORY_FUN)
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
-		to_chat(src, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
+		to_chat(user, span_boldwarning("Youtube-dl was not configured, action unavailable"), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = tgui_input_text(usr, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
+	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
 
 	if(length(web_sound_input))
 		web_sound_input = trim(web_sound_input)
 		if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
-			to_chat(src, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
-			to_chat(src, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
+			to_chat(user, span_boldwarning("Non-http(s) URIs are not allowed."), confidential = TRUE)
+			to_chat(user, span_warning("For youtube-dl shortcuts like ytsearch: please use the appropriate full URL from the website."), confidential = TRUE)
 			return
 		var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-		web_sound(usr, shell_scrubbed_input)
+		web_sound(user.mob, shell_scrubbed_input)
 	else
-		web_sound(usr, null)
+		web_sound(user.mob, null)
 
-/client/proc/set_round_end_sound(S as sound)
-	set category = "Admin.Fun"
-	set name = "Set Round End Sound"
-	if(!check_rights(R_SOUND))
+/datum/admin_verb_holder/web_sound/assosciate_client(client/user)
+	if(!CONFIG_GET(string/invoke_youtubedl))
 		return
+	..()
 
-	SSticker.SetRoundEndSound(S)
+ADMIN_VERB(set_round_end_sound, "Set Round End Sound", "Sets the sound sent to all connected clients when the round ends.", R_SOUND, VERB_CATEGORY_FUN, sound as sound)
+	SSticker.SetRoundEndSound(sound)
 
-	log_admin("[key_name(src)] set the round end sound to [S]")
-	message_admins("[key_name_admin(src)] set the round end sound to [S]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] set the round end sound to [sound]")
+	message_admins("[key_name_admin(user)] set the round end sound to [sound]")
 
-/client/proc/stop_sounds()
-	set category = "Debug"
-	set name = "Stop All Playing Sounds"
-	if(!src.holder)
-		return
-
-	log_admin("[key_name(src)] stopped all currently playing sounds.")
-	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
-	for(var/mob/M in GLOB.player_list)
-		SEND_SOUND(M, sound(null))
-		var/client/C = M.client
-		C?.tgui_panel?.stop_music()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(stop_sounds, "Stop All Playing Sounds", "Stop all currently playing sounds.", NONE, VERB_CATEGORY_FUN)
+	log_admin("[key_name(user)] stopped all currently playing sounds.")
+	message_admins("[key_name_admin(user)] stopped all currently playing sounds.")
+	for(var/mob/listener as anything in GLOB.player_list)
+		SEND_SOUND(listener, sound(null))
+		listener.client?.tgui_panel?.stop_music()
 
 //world/proc/shelleo
 #undef SHELLEO_ERRORLEVEL

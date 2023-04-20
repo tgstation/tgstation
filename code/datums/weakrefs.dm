@@ -105,4 +105,4 @@
 			return
 		var/datum/R = resolve()
 		if(R)
-			usr.client.debug_variables(R)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/view_variables, R)

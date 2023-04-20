@@ -67,26 +67,17 @@
 	usr << browse(output,"window=radioreport")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/reload_admins()
-	set name = "Reload Admins"
-	set category = "Admin"
-
-	if(!src.holder)
-		return
-
-	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
+ADMIN_VERB(reload_admins, "Reload Admins", "Reloads admins from the database.", NONE, VERB_CATEGORY_ADMIN)
+	var/confirm = tgui_alert(user, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
 	load_admins()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Admins") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
+	message_admins("[key_name_admin(user)] manually reloaded admins")
 
-/client/proc/toggle_cdn()
-	set name = "Toggle CDN"
-	set category = "Server"
+ADMIN_VERB(toggle_cdn, "Toggle CDN", "If shit isn't loading correctly toggle dis.", R_SERVER|R_DEBUG, VERB_CATEGORY_SERVER)
 	var/static/admin_disabled_cdn_transport = null
-	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
+	if (alert(user, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return
 	var/current_transport = CONFIG_GET(string/asset_transport)
 	if (!current_transport || current_transport == "simple")
@@ -94,17 +85,17 @@
 			CONFIG_SET(string/asset_transport, admin_disabled_cdn_transport)
 			admin_disabled_cdn_transport = null
 			SSassets.OnConfigLoad()
-			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
-			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
+			message_admins("[key_name_admin(user)] re-enabled the CDN asset transport")
+			log_admin("[key_name(user)] re-enabled the CDN asset transport")
 		else
-			to_chat(usr, span_adminnotice("The CDN is not enabled!"))
-			if (tgui_alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
+			to_chat(user, span_adminnotice("The CDN is not enabled!"))
+			if (tgui_alert(user, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
-				message_admins("[key_name_admin(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
-				log_admin("[key_name(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
+				message_admins("[key_name_admin(user)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
+				log_admin("[key_name(user)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
 	else
 		admin_disabled_cdn_transport = current_transport
 		CONFIG_SET(string/asset_transport, "simple")
 		SSassets.OnConfigLoad()
-		message_admins("[key_name_admin(usr)] disabled the CDN asset transport")
-		log_admin("[key_name(usr)] disabled the CDN asset transport")
+		message_admins("[key_name_admin(user)] disabled the CDN asset transport")
+		log_admin("[key_name(user)] disabled the CDN asset transport")

@@ -1,10 +1,8 @@
-/// Opens the station traits admin panel
-/datum/admins/proc/station_traits_panel()
-	set name = "Modify Station Traits"
-	set category = "Admin.Events"
-
-	var/static/datum/station_traits_panel/station_traits_panel = new
-	station_traits_panel.ui_interact(usr)
+ADMIN_VERB(station_traits, "Modify Station Traits", "View, queue, or revert station traits.", R_FUN, VERB_CATEGORY_EVENTS)
+	var/static/datum/station_traits_panel/panel
+	if(isnull(panel))
+		panel = new
+	panel.ui_interact(user.mob)
 
 /datum/station_traits_panel
 	var/static/list/future_traits

@@ -1,21 +1,20 @@
-/datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin.Game"
-	set name = "Show Borg Panel"
-	set desc = "Show borg panel"
 
-	if(!check_rights(R_ADMIN))
+ADMIN_VERB(borg_panel, "Show Borg Panel", "View the information and laws for a borg.", R_ADMIN, VERB_CATEGORY_GAME, mob/living/silicon/borg in world)
+	if(isnull(borg))
+		var/options = list()
+		for(var/mob/living/silicon/robot/borgo in GLOB.silicon_mobs)
+			options[borgo.name] = borgo
+		var/choice = tgui_input_list(user, "Select the borg to view", "Borg Panel", options)
+		borg = options[choice]
+
+	if(isnull(borg))
+		return
+	if(!istype(borg))
+		to_chat(user, span_warning("Attempted to view the borg panel of a non-borg."))
 		return
 
-	if (!iscyborg(borgo))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!iscyborg(borgo))
-		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
-
-	var/datum/borgpanel/borgpanel = new(usr, borgo)
-
-	borgpanel.ui_interact(usr)
-
-
+	var/datum/borgpanel/borgpanel = new(user, borg)
+	borgpanel.ui_interact(user.mob)
 
 /datum/borgpanel
 	var/mob/living/silicon/robot/borg

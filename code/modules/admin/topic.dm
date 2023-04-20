@@ -136,8 +136,7 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		// Permissions are checked in delay_round_end
-		delay_round_end()
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/delay_round_end)
 
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
@@ -714,7 +713,7 @@
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/player_panel, M)
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -729,7 +728,7 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		show_player_panel(target_mob)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/player_panel, target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -757,7 +756,7 @@
 
 		var/client/C = usr.client
 		if(!isobserver(usr))
-			C.admin_ghost()
+			SSadmin_verbs.dynamic_invoke_verb(C, /datum/admin_verb_holder/admin_ghost)
 		sleep(0.2 SECONDS)
 		C.jumptocoord(x,y,z)
 
@@ -960,15 +959,12 @@
 		give_admin_popup(target, owner, message)
 
 	else if(href_list["adminsmite"])
-		if(!check_rights(R_ADMIN|R_FUN))
+		var/mob/living/carbon/human/humano = locate(href_list["adminsmite"]) in GLOB.mob_list
+		if(!istype(humano))
+			to_chat(usr, "Cannot smite non-living mobs.")
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in GLOB.mob_list
-		if(!H || !istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
-			return
-
-		usr.client.smite(H)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/smite, humano)
 
 	else if(href_list["CentComReply"])
 		if(!check_rights(R_ADMIN))
@@ -1021,18 +1017,12 @@
 		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
+		var/mob/target = locate(href_list["narrateto"])
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/narrate_direct, target)
 
 	else if(href_list["subtlemessage"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["subtlemessage"])
-		usr.client.cmd_admin_subtle_message(M)
+		var/mob/target = locate(href_list["subtlemessage"])
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/subtle_message, target)
 
 	else if(href_list["playsoundto"])
 		if(!check_rights(R_SOUND))
@@ -1041,7 +1031,7 @@
 		var/mob/M = locate(href_list["playsoundto"])
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			usr.client.play_direct_mob_sound(S, M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/play_sound_direct, M, S)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
@@ -1111,7 +1101,7 @@
 		if(!iscyborg(M))
 			to_chat(usr, "This can only be used on cyborgs", confidential = TRUE)
 		else
-			open_borgopanel(M)
+			SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb_holder/borg_panel, M)
 
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
@@ -1276,7 +1266,7 @@
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))
 			return
-		usr.client.check_antagonists()
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/check_antagonists)
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
@@ -1347,7 +1337,7 @@
 					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb_holder/lag_switches)
 
 	else if(href_list["change_lag_switch_option"])
 		if(!check_rights(R_ADMIN))
@@ -1376,7 +1366,7 @@
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb_holder/lag_switches)
 
 	else if(href_list["viewruntime"])
 		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
@@ -1492,11 +1482,7 @@
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/confirm = tgui_alert(usr,"Are you sure you want to reboot the server?", "Confirm Reboot", list("Yes", "No"))
-		if(confirm == "No")
-			return
-		if(confirm == "Yes")
-			restart()
+		SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb_holder/restart)
 
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
@@ -1713,7 +1699,7 @@
 	else if(href_list["show_tags"])
 		if(!check_rights(R_ADMIN))
 			return
-		return display_tags()
+		return SSadmin_verbs.dynamic_invoke_verb(owner, /datum/admin_verb_holder/check_tags)
 
 	else if(href_list["mark_datum"])
 		if(!check_rights(R_ADMIN))

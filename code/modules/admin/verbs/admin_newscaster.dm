@@ -1,17 +1,5 @@
-/datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin.Events"
-	set name = "Access Newscaster Network"
-	set desc = "Allows you to view, add and edit news feeds."
-
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
-
-	var/datum/newspanel/new_newspanel = new
-
-	new_newspanel.ui_interact(usr)
+ADMIN_VERB(news_network, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", R_ADMIN, VERB_CATEGORY_EVENTS)
+	new /datum/newspanel(user)
 
 /datum/newspanel
 	///What newscaster channel is currently being viewed by the player?
@@ -38,6 +26,10 @@
 	var/channel_desc
 	///What is the current, in-creation comment's body going to be?
 	var/comment_text
+
+/datum/newspanel/New(client/holder)
+	ui_interact(holder.mob)
+	return ..()
 
 /datum/newspanel/ui_state(mob/user)
 	return GLOB.admin_state

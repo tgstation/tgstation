@@ -44,9 +44,11 @@
 		if(OOC_CHANNEL)
 			client.ooc(entry)
 			return TRUE
+
 		if(ADMIN_CHANNEL)
-			client.cmd_admin_say(entry)
+			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb_holder/asay, entry)
 			return TRUE
+
 	return FALSE
 
 /**

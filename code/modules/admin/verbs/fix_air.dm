@@ -1,20 +1,15 @@
-// Proc taken from yogstation, credit to nichlas0010 for the original
-/client/proc/fix_air(turf/open/T in world)
-	set name = "Fix Air"
-	set category = "Admin.Game"
-	set desc = "Fixes air in specified radius."
-
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
+ADMIN_VERB_CONTEXT_MENU(fix_air, "Fix Air", R_ADMIN, turf/open/target in world)
+	var/range = tgui_input_number(user, "What radius would you like to fix the air around the turf.", "Fix Air", 2, max_value = user.view, min_value = 0)
+	if(isnull(range))
 		return
-	if(check_rights(R_ADMIN,1))
-		var/range=input("Enter range:","Num",2) as num
-		message_admins("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
-		usr.log_message("fixed air with range [range] in area [T.loc.name]", LOG_ADMIN)
-		for(var/turf/open/F in range(range,T))
-			if(F.blocks_air)
-			//skip walls
-				continue
-			var/datum/gas_mixture/GM = SSair.parse_gas_string(F.initial_gas_mix, /datum/gas_mixture/turf)
-			F.copy_air(GM)
-			F.update_visuals()
+
+	var/message = "[key_name(user)] fixed air with a range of [range] centered around [target.loc.name]"
+	message_admins("[message][ADMIN_JMP(target)]")
+	usr.log_message(message, LOG_ADMIN)
+
+	for(var/turf/open/floor in range(range, target))
+		if(floor.blocks_air)
+			continue
+		var/datum/gas_mixture/initial_gas = SSair.parse_gas_string(floor.initial_gas_mix, /datum/gas_mixture/turf)
+		floor.copy_air(initial_gas)
+		floor.update_visuals()

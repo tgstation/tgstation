@@ -60,13 +60,9 @@
 		reagents.add_reagent(reagenttype, amount)
 	return container
 
-/datum/admins/proc/beaker_panel()
-	set category = "Admin.Events"
-	set name = "Spawn reagent container"
-	if(!check_rights())
-		return
+ADMIN_VERB(beaker_panel, "Spawn Reagent Container", "Spawn a reagent container of a specific type with specific reagents.", R_SPAWN, VERB_CATEGORY_EVENTS)
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/namespaced/common)
-	asset_datum.send(usr)
+	asset_datum.send(user)
 	//Could somebody tell me why this isn't using the browser datum, given that it copypastes all of browser datum's html
 	var/dat = {"
 		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -320,4 +316,4 @@
 		</html>
 	"}
 
-	usr << browse(dat, "window=beakerpanel;size=1100x720")
+	user << browse(dat, "window=beakerpanel;size=1100x720")

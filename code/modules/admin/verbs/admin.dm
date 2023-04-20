@@ -1,15 +1,7 @@
 // Admin Tab - Admin Verbs
 
-/client/proc/show_tip()
-	set category = "Admin"
-	set name = "Show Tip"
-	set desc = "Sends a tip (that you specify) to all players. After all \
-		you're the experienced player here."
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+ADMIN_VERB(show_tip, "Show Tip", "Sends a tip that you specify to all players.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	var/input = input(user, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
 	if(!input)
 		return
 
@@ -22,24 +14,17 @@
 	else
 		SSticker.selected_tip = input
 
-	message_admins("[key_name_admin(usr)] sent a tip of the round.")
-	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
+	message_admins("[key_name_admin(user)] sent a tip of the round.")
+	log_admin("[key_name(user)] sent \"[input]\" as the Tip of the Round.")
 
-/datum/admins/proc/announce()
-	set category = "Admin"
-	set name = "Announce"
-	set desc="Announce your desires to the world"
-	if(!check_rights(0))
+ADMIN_VERB(announce, "Announce", "Announce your desires to the world.", R_ADMIN, VERB_CATEGORY_ADMIN)
+	var/announcement = tgui_input_text(user, "Global message to send", "Announce", multiline = TRUE, encode = FALSE)
+	if(!length(announcement))
 		return
-
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message|null
-	if(message)
-		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
-		to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]", confidential = TRUE)
-		log_admin("Announce: [key_name(usr)] : [message]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!check_rights_for(user, R_SERVER))
+		announcement = adminscrub(announcement, 500)
+	to_chat(world, "[span_adminnotice(span_bold("[user.holder.fakekey ? "Administrator" : user.ckey] announces:"))]\n\t[announcement]")
+	log_admin("Announce: [key_name(user)] : [announcement]")
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"

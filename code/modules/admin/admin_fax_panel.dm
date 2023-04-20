@@ -98,7 +98,7 @@
 
 		if("follow")
 			if(!isobserver(usr))
-				usr.client?.admin_ghost()
+				SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/admin_ghost)
 
 			usr.client?.admin_follow(action_fax)
 

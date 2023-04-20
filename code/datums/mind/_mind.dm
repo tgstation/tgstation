@@ -222,7 +222,7 @@
 		if(!istype(to_vv))
 			to_chat(usr, span_warning("Invalid antagonist ref to be vv'd."))
 			return
-		usr.client?.debug_variables(to_vv)
+		SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb_holder/view_variables, to_vv)
 
 	if (href_list["role_edit"])
 		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)

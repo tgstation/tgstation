@@ -12,7 +12,5 @@
 	else
 		holder.add_tagged_datum(target_datum)
 
-/client/proc/tag_datum_mapview(datum/target_datum as mob|obj|turf|area in view(view))
-	set category = "Debug"
-	set name = "Tag Datum"
-	tag_datum(target_datum)
+ADMIN_VERB_CONTEXT_MENU(tag_datum, "Tag Datum", NONE, datum/target as mob|obj|turf|area in view())
+	user.tag_datum(target)

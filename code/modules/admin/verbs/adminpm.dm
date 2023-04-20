@@ -14,37 +14,12 @@
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
 /// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Admin PM Mob"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-	if(!ismob(M))
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
-			confidential = TRUE)
-		return
-	cmd_admin_pm(M.client, null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB_CONTEXT_MENU(admin_pm_context, "Admin PM", NONE, mob/target in view())
+	user.cmd_admin_pm(target.client, null)
 
-/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
-/client/proc/cmd_admin_pm_panel()
-	set category = "Admin"
-	set name = "Admin PM"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-
+ADMIN_VERB(admin_pm_panel, "Admin PM", "Select from a list of connected players to send an Admin PM to.", NONE, VERB_CATEGORY_ADMIN)
 	var/list/targets = list()
-	for(var/client/client in GLOB.clients)
+	for(var/client/client as anything in GLOB.clients)
 		var/nametag = ""
 		var/mob/lad = client.mob
 		var/mob_name = lad?.name
@@ -59,11 +34,10 @@
 			nametag = "[real_mob_name](as [mob_name])"
 		targets["[nametag] - [client]"] = client
 
-	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	var/target = input(user, "To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
 	if (isnull(target))
 		return
-	cmd_admin_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	user.cmd_admin_pm(targets[target], null)
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)

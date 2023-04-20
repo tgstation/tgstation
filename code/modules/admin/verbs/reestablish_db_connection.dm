@@ -1,27 +1,30 @@
-/client/proc/reestablish_db_connection()
-	set category = "Server"
-	set name = "Reestablish DB Connection"
-	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
+ADMIN_VERB(connect_db, "Re-Establish DB Connection", "Attempts to reconnect the database, optionally forcing a disconnect if it is already connected.", NONE, VERB_CATEGORY_ADMIN)
+	if(!CONFIG_GET(flag/sql_enabled))
+		tgui_alert(user, "The database is not enabled!", "Re-Establish DB Connection")
 		return
 
-	if (SSdbcore.IsConnected())
-		if (!check_rights(R_DEBUG,0))
-			tgui_alert(usr,"The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
+	if(SSdbcore.IsConnected())
+		if(!check_rights_for(user, R_DEBUG))
+			tgui_alert(user, "The database is already connected, and you do not have permission to force a reconnection!", "Re-Establish DB Connection")
 			return
 
-		var/reconnect = tgui_alert(usr,"The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", list("Force Reconnect", "Cancel"))
-		if (reconnect != "Force Reconnect")
+		var/force_reconnect = tgui_alert(
+			user,
+			"The data base is already connected; If you are certain that this is incorrect, you can force a reconnection",
+			"Re-Establish DB Connection",
+			list("Force", "Cancel"),
+			) == "Force"
+		if(!force_reconnect)
 			return
 
+		var/message = "[key_name(user)] has forced the database to disconnect."
 		SSdbcore.Disconnect()
-		log_admin("[key_name(usr)] has forced the database to disconnect")
-		message_admins("[key_name_admin(usr)] has <b>forced</b> the database to disconnect!")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin(message)
+		message_admins(message)
 
-	log_admin("[key_name(usr)] is attempting to re-establish the DB Connection")
-	message_admins("[key_name_admin(usr)] is attempting to re-establish the DB Connection")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/message = "[key_name(user)] is attempted to re-establish the DB connection."
+	log_admin(message)
+	message_admins(message)
 
 	SSdbcore.failed_connections = 0
 	if(!SSdbcore.Connect())

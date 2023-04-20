@@ -11,7 +11,7 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		debug_variables(locate(href_list["Vars"]))
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb_holder/view_variables, locate(href_list["Vars"]))
 
 //Stuff below aren't in dropdowns/etc.
 
@@ -118,5 +118,5 @@
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(isdatum(DAT) || istype(DAT, /client) || islist(DAT))
-			debug_variables(DAT)
+			SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb_holder/view_variables, DAT)
 
