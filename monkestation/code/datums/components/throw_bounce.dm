@@ -17,8 +17,9 @@
 	var/recharge_timer = 0
 	//who threw the parent item, used to mark who to return to and to not hit, might not need to be a weakref
 	var/datum/weakref/item_thrower
-	//the cooldown declare for bounce_cooldown
-	COOLDOWN_DECLARE(last_bounce_proc)
+	//timer for bounce_cooldown tracking
+	var/bounce_timer = 0
+
 
 /datum/component/throw_bounce/Initialize(bounce_cooldown, bounce_charge_max, bounce_recharge_rate, targeting_range)
 	. = ..()
@@ -65,7 +66,7 @@
 
 /datum/component/throw_bounce/proc/hit_throw(datum/source, atom/hit_atom)
 	SIGNAL_HANDLER
-	if(!COOLDOWN_FINISHED(src, last_bounce_proc)) //if this timer fails we dont want to do anything here
+	if(!world.time >= bounce_timer + bounce_cooldown) //if this timer fails we dont want to do anything here
 		return
 
 	if(item_thrower && (istype(hit_atom, /mob/living)) && !(bouncing))
@@ -93,7 +94,7 @@
 		return
 
 	var/obj/item/parent_item = parent
-	COOLDOWN_START(src, last_bounce_proc, bounce_cooldown)
+	bounce_timer = world.time
 	bounce_charges--
 	bouncing = TRUE
 	var/obj/effect/throw_bounce_visual/spawned_effect = new(get_turf(parent_item), src, parent_item, targets_list)
