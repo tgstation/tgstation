@@ -2,19 +2,15 @@ import torch
 from TTS.api import TTS
 import os
 import io
-import gc
 import json
-import subprocess
-import requests
-from flask import Flask, request, send_file, abort
+import gc
+from flask import Flask, request, send_file
 
 tts = TTS("tts_models/en/vctk/vits", progress_bar=False, gpu=False)
 
 app = Flask(__name__)
-request_count = 0
 
 voice_name_mapping = {}
-
 use_voice_name_mapping = True
 with open("./tts_voices_mapping.json", "r") as file:
 	voice_name_mapping = json.load(file)
@@ -23,39 +19,22 @@ with open("./tts_voices_mapping.json", "r") as file:
 
 voice_name_mapping_reversed = {v: k for k, v in voice_name_mapping.items()}
 
-authorization_token = "coolio"
-
-@app.route("/tts")
+@app.route("/generate-tts")
 def text_to_speech():
-	global request_count
-	if authorization_token != request.headers["Authorization"]:
-		abort(401)
-
-	request_count += 1
-	voice = request.args.get("voice", '')
+	text = request.json.get("text", "")
+	voice = request.json.get("voice", "")
 	if use_voice_name_mapping:
 		voice = voice_name_mapping_reversed[voice]
-	text = request.json.get("text", '')
-
-	filter_complex = request.args.get("filter", '')
-	filter_complex = filter_complex.replace("\"", "")
 
 	result = None
 	with io.BytesIO() as data_bytes:
 		with torch.no_grad():
 			tts.tts_to_file(text=text, speaker=voice, file_path=data_bytes)
-
-		response = requests.get(f"http://ffmpeg-container:5003/ffmpeg?filter={filter_complex}", data=data_bytes.getvalue())
-		print(f"ffmpeg result size: {len(response.content)}")
-
-		result = send_file(io.BytesIO(response.content), as_attachment=True, download_name='identifier.ogg', mimetype="audio/ogg")
+		result = send_file(io.BytesIO(data_bytes.getvalue()), mimetype="audio/wav")
 	return result
 
 @app.route("/tts-voices")
 def voices_list():
-	if authorization_token != request.headers["Authorization"]:
-		abort(401)
-
 	if use_voice_name_mapping:
 		data = list(voice_name_mapping.values())
 		data.sort()
@@ -66,12 +45,10 @@ def voices_list():
 @app.route("/health-check")
 def tts_health_check():
 	gc.collect()
-	if request_count > 2048:
-		return f"EXPIRED: {request_count}", 500
-	return f"OK: {request_count}", 200
+	return f"OK", 200
 
 if __name__ == "__main__":
 	if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
 		os.putenv('LD_LIBRARY_PATH', os.getenv('TTS_LD_LIBRARY_PATH'))
 	from waitress import serve
-	serve(app, host="0.0.0.0", port=5002, threads=2, backlog=16, connection_limit=24, channel_timeout=10)
+	serve(app, host="0.0.0.0", port=5003, threads=2, backlog=16, connection_limit=24, channel_timeout=10)

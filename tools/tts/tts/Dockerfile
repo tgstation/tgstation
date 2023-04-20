@@ -40,4 +40,4 @@ WORKDIR /root
 RUN conda env config vars set TTS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 RUN conda env config vars set LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_DIR/lib
 
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "intel", "python", "tts-api.py"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "intel", "python", "tts.py"]
