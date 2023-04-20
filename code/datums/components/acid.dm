@@ -26,7 +26,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
-/datum/component/acid/Initialize(acid_power, acid_volume, acid_overlay)
+/datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	//not incompatible, but pointless
@@ -167,7 +167,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_danger("[source.p_theyre(TRUE)] covered in corrosive liquid!")
+	examine_list += span_danger("[source.p_theyre(TRUE)] covered in a corrosive liquid!")
 
 /// Makes it possible to clean acid off of objects.
 /datum/component/acid/proc/on_clean(atom/source, clean_types)
