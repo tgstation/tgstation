@@ -1,9 +1,40 @@
+import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
+
+type OrderDatum = {
+  name: string;
+  desc: number;
+  cat: string;
+  ref: string;
+  cost: number;
+  product_icon: string;
+};
+
+type Item = {
+  name: string;
+  amt: number;
+};
+
+type Data = {
+  credit_type: string;
+  off_cooldown: BooleanLike;
+  points: number;
+  express_tooltip: string;
+  purchase_tooltip: string;
+  forced_express: string;
+  cargo_value: number;
+  cargo_cost_multiplier: number;
+  express_cost_multiplier: number;
+  order_categories: string[];
+  order_datums: OrderDatum[];
+  item_amts: Item[];
+  total_cost: number;
+};
 
 const TAB2NAME = [
   {
@@ -20,34 +51,41 @@ const findAmount = (item_amts, name) => {
 };
 
 const ShoppingTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<Data>(context);
   const { credit_type, order_categories, order_datums, item_amts } = data;
-  const [shopIndex, setShopIndex] = useLocalState(context, 'shop-index', 1);
-  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
+  const [shopCategory, setShopCategory] = useLocalState(
+    context,
+    'shopCategory',
+    order_categories[0]
+  );
+  const [condensed] = useLocalState(context, 'condensed', false);
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  const search = createSearch(searchItem, (order_datums) => order_datums.name);
+  const search = createSearch<OrderDatum>(
+    searchItem,
+    (order_datums) => order_datums.name
+  );
   let goods =
     searchItem.length > 0
-      ? data.order_datums.filter(search)
-      : order_datums.filter((item) => item && item.cat === shopIndex);
+      ? order_datums.filter((item) => search(item) && item.cat === shopCategory)
+      : order_datums.filter((item) => item && item.cat === shopCategory);
 
   return (
     <Stack fill vertical>
       <Section mb={-1}>
         <Stack.Item>
           <Tabs>
-            {order_categories.map((item, key) => (
+            {order_categories.map((category) => (
               <Tabs.Tab
-                key={item.id}
-                selected={item === shopIndex}
+                key={category}
+                selected={category === shopCategory}
                 onClick={() => {
-                  setShopIndex(item);
+                  setShopCategory(category);
 
                   if (searchItem.length > 0) {
                     setSearchItem('');
                   }
                 }}>
-                {item}
+                {category}
               </Tabs.Tab>
             ))}
             <Stack.Item grow>
@@ -60,10 +98,6 @@ const ShoppingTab = (props, context) => {
                 value={searchItem}
                 onInput={(e, value) => {
                   setSearchItem(value);
-
-                  if (value.length > 0) {
-                    setShopIndex(1);
-                  }
                 }}
                 fluid
               />
@@ -75,8 +109,8 @@ const ShoppingTab = (props, context) => {
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {goods.map((item) => (
-              <Stack.Item key={item}>
+            {goods.map((item, key) => (
+              <Stack.Item key={key}>
                 <Stack>
                   <span
                     style={{
@@ -154,17 +188,20 @@ const ShoppingTab = (props, context) => {
 };
 
 const CheckoutTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<Data>(context);
   const {
     credit_type,
     purchase_tooltip,
     express_tooltip,
     forced_express,
+    cargo_value,
     order_datums,
     total_cost,
+    cargo_cost_multiplier,
+    express_cost_multiplier,
     item_amts,
   } = data;
-
+  const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
   const checkout_list = order_datums.filter(
     (food) => food && (findAmount(item_amts, food.name) || 0)
   );
@@ -187,8 +224,8 @@ const CheckoutTab = (props, context) => {
               </>
             )}
             <Stack.Item grow>
-              {checkout_list.map((item) => (
-                <Stack.Item key={item}>
+              {checkout_list.map((item, key) => (
+                <Stack.Item key={key}>
                   <Stack>
                     <Stack.Item>{capitalize(item.name)}</Stack.Item>
                     <Stack.Item grow mt={-1} color="label" fontSize="10px">
@@ -228,7 +265,8 @@ const CheckoutTab = (props, context) => {
         <Section>
           <Stack>
             <Stack.Item grow mt={0.5}>
-              Total Cost: {total_cost}
+              Total Cost:{total_cargo_cost}&#40;Express:
+              {total_cost * express_cost_multiplier}&#41;
             </Stack.Item>
             {!forced_express && (
               <Stack.Item grow textAlign="center">
@@ -236,7 +274,12 @@ const CheckoutTab = (props, context) => {
                   fluid
                   icon="plane-departure"
                   content="Purchase"
-                  tooltip={purchase_tooltip}
+                  disabled={total_cargo_cost < cargo_value}
+                  tooltip={
+                    total_cargo_cost < cargo_value
+                      ? `Total Cost must be above or equal to ${cargo_value}`
+                      : purchase_tooltip
+                  }
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
                 />
@@ -248,7 +291,10 @@ const CheckoutTab = (props, context) => {
                 icon="parachute-box"
                 color="yellow"
                 content="Express"
-                tooltip={express_tooltip}
+                disabled={total_cost <= 0}
+                tooltip={
+                  total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
+                }
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
               />
@@ -261,7 +307,6 @@ const CheckoutTab = (props, context) => {
 };
 
 const OrderSent = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Dimmer>
       <Stack vertical>
@@ -277,13 +322,13 @@ const OrderSent = (props, context) => {
 };
 
 export const ProduceConsole = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { points, off_cooldown } = data;
+  const { data } = useBackend<Data>(context);
+  const { points, off_cooldown, order_categories } = data;
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
-    <Window width={500} height={400}>
+    <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
       <Window.Content>
         {!off_cooldown && <OrderSent />}
         <Stack vertical fill>

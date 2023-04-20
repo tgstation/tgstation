@@ -1,5 +1,0 @@
-author: "BlueMemesauce"
-delete-after: True
-changes:
-  - bugfix: "You can no longer log syndicate comms (or any other banned frequencies) with a telecomms server"
-  - bugfix: "You can no longer use tcomms buses to change messages to banned frequencies"
