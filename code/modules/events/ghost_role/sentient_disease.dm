@@ -9,6 +9,18 @@
 	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 7
 
+/datum/round_event_control/sentient_disease/can_spawn_event(players_amt, allow_magic)
+	. = ..()
+	var/sick_counter = 0 //Counts how many infected we have.
+
+	//If 75% of the crew are already infected with something, maybe a sentient disease isn't the best choice.
+	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
+		if(candidate.stat == DEAD)
+			continue
+		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//We're only checking crew here.
+			continue
+
+
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"
 
