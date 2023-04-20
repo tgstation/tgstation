@@ -268,7 +268,8 @@
 	. = ..()
 	if(!GLOB.pill_names.len)
 		var/json = file("data/pill_names.json")
-		GLOB.pill_names = json_decode(file2text(json))
+		if(json)
+			GLOB.pill_names = json_decode(file2text(json))
 
 	var/drug_word = pick(GLOB.pill_names)
 	if(prob(10))
