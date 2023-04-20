@@ -1141,9 +1141,9 @@
 		return FALSE
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
-	var/time_needed = 4 SECONDS
-	var/brute_damage = 1
-	var/burn_damage = 2.5
+	var/time_needed = 10 SECONDS
+	var/brute_damage = 5 + 1.5 // Augments reduce damage by 5.
+	var/burn_damage = 4 + 2.5 // As above, but it's 4.
 
 	if(severity == EMP_HEAVY)
 		time_needed *= 2

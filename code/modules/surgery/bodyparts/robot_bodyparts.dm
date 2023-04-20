@@ -104,7 +104,7 @@
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
-	owner.Knockdown(severity == EMP_HEAVY ? 8 SECONDS : 4 SECONDS)
+	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
@@ -143,7 +143,7 @@
 	. = ..()
 	if(!.) // other emp effects handled in parent
 		return
-	owner.Knockdown(severity == EMP_HEAVY ? 8 SECONDS : 4 SECONDS)
+	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return
 	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
@@ -185,11 +185,11 @@
 		return
 	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
 	if(severity == EMP_HEAVY)
-		owner.Stun(4 SECONDS)
+		owner.Stun(6 SECONDS)
 		owner.Shake(pixelshiftx = 5, pixelshifty = 2, duration = 4 SECONDS)
 		return
 
-	owner.Stun(2.5 SECONDS)
+	owner.Stun(3 SECONDS)
 	owner.Shake(pixelshiftx = 3, pixelshifty = 0, duration = 2.5 SECONDS)
 
 /obj/item/bodypart/chest/robot/get_cell()
@@ -312,38 +312,11 @@
 		return
 	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
 
-	var/list/matrix_list_identity =	list(/*R*/ 1,0,0, /*G*/ 0,1,0, /*B*/ 0,0,1)
-	var/list/matrix_list_red = list(/*R*/ 1,0,0, /*G*/ 0,0.5,0.5, /*B*/ 0,0.5,0.5)
-	var/list/matrix_list_green = list(/*R*/ 0.5,0,0.5, /*G*/ 0,1,0, /*B*/ 0.5,0,0.5)
-	var/list/matrix_list_blue =	list(/*R*/ 0.5,0,0.5, /*G*/ 0.5,0,0.5, /*B*/ 0,0,1)
+	var/glitch_duration = severity == EMP_HEAVY ? 15 SECONDS : 7.5 SECONDS
 
-	var/glitch_duration = severity == EMP_LIGHT ? 5 SECONDS : 10 SECONDS
+	owner.add_client_colour(/datum/client_colour/malfunction)
 
-	owner.funk_out(matrix_list_identity, matrix_list_red, matrix_list_green, matrix_list_blue, FILTER_COLOR_HSL, EMP_GLITCH, glitch_duration)
-
-///Alternates the colors seen by the mob through the assorted color matrices. Extremely clunky to use if you don't know matrices.
-/mob/proc/funk_out(list/matrix_list_identity, list/matrix_list_red, list/matrix_list_green, list/matrix_list_blue, filter_color = FILTER_COLOR_HSL, filter_name = "funkin'", funk_duration = 10 SECONDS)
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	if(length(game_plane_master_controller.get_filters(filter_name)))
-		return // already's got it
-
-	game_plane_master_controller.add_filter(filter_name, 10, color_matrix_filter(matrix_list_red, filter_color))
-
-	for(var/filter in game_plane_master_controller.get_filters(filter_name))
-		animate(filter, color = matrix_list_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
-		animate(color = matrix_list_green, time = 4 SECONDS)
-		animate(color = matrix_list_blue, time = 4 SECONDS)
-		animate(color = matrix_list_red, time = 4 SECONDS)
-
-	addtimer(CALLBACK(src, PROC_REF(end_funk), filter_name), funk_duration)
-
-/mob/proc/end_funk(filter_name = "funkin'")
-	if(!hud_used)
-		return
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	game_plane_master_controller.remove_filter(filter_name)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
 
 #undef EMP_GLITCH
 
