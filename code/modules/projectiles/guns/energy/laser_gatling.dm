@@ -45,6 +45,7 @@
 					armed = FALSE
 					to_chat(user, span_warning("You need a free hand to hold the gun!"))
 					return
+				playsound(src, 'sound/weapons/gun/l6/l6_rack.ogg', 25)
 				update_appearance()
 				user.update_worn_back()
 		else
@@ -83,12 +84,15 @@
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
 	return ..()
+/obj/item/minigunpack/proc/drain_power()
+	return //This is here for the mod suit just so the normal one doesn't error out
 
 /obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)
 		gun = new(src)
 	gun.forceMove(src)
 	armed = FALSE
+	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 25)
 	if(user)
 		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
 	else
@@ -115,12 +119,23 @@
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/energy/minigun/Initialize(mapload)
-	if(!istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
-		return INITIALIZE_HINT_QDEL //No pack, no gun
-	ammo_pack = loc
-	AddElement(/datum/element/update_icon_blocker)
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
-	return ..()
+	if(istype(loc, /obj/item/minigunpack)) 
+		ammo_pack = loc
+		AddElement(/datum/element/update_icon_blocker)
+		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+		return ..()
+	else if(istype(loc, /obj/item/mod/module/minigun))
+		ammo_pack = loc
+		AddElement(/datum/element/update_icon_blocker)
+		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+		return ..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/item/gun/energy/minigun/mod
+	name = "laser gatling gun"
+	desc = "An advanced laser cannon with an incredible rate of fire. Requires power from the MODsuit to use."
+
+
 
 /obj/item/gun/energy/minigun/Destroy()
 	if(!QDELETED(ammo_pack))
@@ -143,6 +158,7 @@
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
 	..()
+	ammo_pack.drain_power(15)
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
@@ -151,7 +167,7 @@
 
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
-	if(!ammo_pack || ammo_pack.loc != user)
+	if(!istype(ammo_pack, /obj/item/minigunpack)&&!istype(ammo_pack, /obj/item/mod/module/minigun/))
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 
