@@ -111,6 +111,8 @@
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
+	///Exclude posters of this type from being added to the random pool
+	var/random_blacklisted_basetype
 	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
 	var/printable = FALSE
 
@@ -149,7 +151,9 @@
 	return .
 
 /obj/structure/sign/poster/proc/randomise(base_type)
-	var/list/poster_types = subtypesof(base_type) - typesof(/obj/structure/sign/poster/traitor)
+	var/list/poster_types = subtypesof(base_type)
+	if(random_blacklisted_basetype)
+		poster_types -= typesof(random_blacklisted_basetype)
 	var/list/approved_types = list()
 	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
 		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
@@ -290,6 +294,7 @@
 	icon_state = "random_anything"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
+	random_blacklisted_basetype = /obj/structure/sign/poster/traitor
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 
