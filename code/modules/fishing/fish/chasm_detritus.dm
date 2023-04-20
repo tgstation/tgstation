@@ -68,7 +68,7 @@
 		for (var/thing as anything in storage.contents)
 			if(ismob(thing))
 				var/mob/fallen_mob = thing
-				if(fallen_mob.client)
+				if(fallen_mob.mind)
 					chasm_contents += list(fallen_mob = 90) // we want to priotitize sentient mobs over say, a bunch of legion skeletons
 					continue
 			chasm_contents += list(thing = 10)
