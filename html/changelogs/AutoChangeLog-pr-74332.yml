@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "cycler shotguns' inhand sprites will no longer float ominously by their wielder's side"

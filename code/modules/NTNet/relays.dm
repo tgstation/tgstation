@@ -68,13 +68,13 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 	icon_state = "bus[is_operational ? null : "_off"]"
 	return ..()
 
-/obj/machinery/ntnet_relay/process(delta_time)
+/obj/machinery/ntnet_relay/process(seconds_per_tick)
 	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 
 	if(dos_overload > 0)
-		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
+		dos_overload = max(0, dos_overload - dos_dissipate * seconds_per_tick)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)

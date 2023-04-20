@@ -5,7 +5,7 @@
 ****************************************************/
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/handle_blood(delta_time, times_fired)
+/mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
 
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
@@ -29,38 +29,38 @@
 				nutrition_ratio = 1
 		if(satiety > 80)
 			nutrition_ratio *= 1.25
-		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
-		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
+		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
 		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
 		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(delta_time)
+			blooddeficiency.lose_blood(seconds_per_tick)
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
 	switch(blood_volume)
 		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(DT_PROB(7.5, delta_time))
+			if(SPT_PROB(7.5, seconds_per_tick))
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(src, span_warning("You feel terribly bloated."))
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(src, span_warning("You feel [word]."))
-			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
+			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
-			if(DT_PROB(2.5, delta_time))
+			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 1))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				set_eye_blur_if_lower(12 SECONDS)
 				to_chat(src, span_warning("You feel very [word]."))
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			adjustOxyLoss(2.5 * delta_time)
-			if(DT_PROB(7.5, delta_time))
+			adjustOxyLoss(2.5 * seconds_per_tick)
+			if(SPT_PROB(7.5, seconds_per_tick))
 				Unconscious(rand(20,60))
 				to_chat(src, span_warning("You feel extremely [word]."))
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
@@ -72,7 +72,7 @@
 	//Bleeding out
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
-		temp_bleed += iter_bleed_rate * delta_time
+		temp_bleed += iter_bleed_rate * seconds_per_tick
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
 			iter_part.adjustBleedStacks(-1, 0)

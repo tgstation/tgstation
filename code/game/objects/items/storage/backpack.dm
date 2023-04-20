@@ -233,6 +233,41 @@
 	. = ..()
 	atom_storage.max_total_storage = 26
 
+// MEAT MEAT MEAT MEAT MEAT
+
+/obj/item/storage/backpack/meat
+	name = "\improper MEAT"
+	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
+	icon_state = "meatmeatmeat"
+	inhand_icon_state = "meatmeatmeat"
+	force = 15
+	throwforce = 15
+	attack_verb_continuous = list("MEATS", "MEAT MEATS")
+	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	///Sounds used in the squeak component
+	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	///Reagents added to the edible component, ingested when you EAT the MEAT
+	var/list/meat_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
+	///The food types of the edible component
+	var/foodtypes = MEAT | RAW
+	///How our MEAT tastes. It tastes like MEAT
+	var/list/tastes = list("MEAT" = 1)
+	///Eating verbs when consuming the MEAT
+	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
+
+/obj/item/storage/backpack/meat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible,\
+		initial_reagents = meat_reagents,\
+		foodtypes = foodtypes,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+	)
+	AddComponent(/datum/component/squeak, meat_sounds)
+
 /*
  * Satchel Types
  */
@@ -330,12 +365,12 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
-	for(var/i in 1 to 2)
-		var/ctype = pick(C.contains)
-		new ctype(src)
+	var/datum/supply_pack/imports/contraband/smuggled_goods = new
+	for(var/items in 1 to 2)
+		var/smuggled_goods_type = pick(smuggled_goods.contains)
+		new smuggled_goods_type(src)
 
-	qdel(C)
+	qdel(smuggled_goods)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)

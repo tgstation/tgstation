@@ -45,9 +45,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "an" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -61,9 +59,7 @@
 /turf/closed/wall,
 /area/shuttle/transport)
 "aq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/vending/clothing,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -97,9 +93,7 @@
 /area/shuttle/transport)
 "aC" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "aD" = (
@@ -216,9 +210,7 @@
 /area/shuttle/transport)
 "bc" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)

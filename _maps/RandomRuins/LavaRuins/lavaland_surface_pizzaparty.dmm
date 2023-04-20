@@ -1,647 +1,1307 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
+"ab" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"c" = (
+"ac" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"d" = (
+"ad" = (
 /turf/closed/wall,
 /area/ruin/unpowered)
-"e" = (
+"ah" = (
+/obj/structure/sink/directional/north,
+/obj/structure/mirror/directional/south,
+/obj/item/instrument/saxophone,
+/obj/item/clothing/head/helmet/skull,
+/turf/open/floor/iron/freezer/lavaland,
+/area/ruin/unpowered)
+"aq" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"aW" = (
+/obj/item/shard{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/obj/structure/sign/clock/directional/south,
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"f" = (
+"bg" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"bj" = (
+/obj/structure/chair/sofa/right/brown,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"bz" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/cups,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/item/flashlight/lamp/green{
+	pixel_x = -4;
+	pixel_y = 11
 	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"g" = (
+"bE" = (
+/obj/structure/sink/kitchen/directional/east,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"cb" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 10
+	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"cF" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/fireblossom,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"da" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"dI" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"dR" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"en" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ff" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/fluff{
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "television";
+	name = "old tv";
+	desc = "A modern plasma display boxed in by a rustic wooden frame and mock antenna. Just like the old, old, old days."
+	},
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"fk" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/shoes/cookflops,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"fx" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/plate,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 9
+	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"fD" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"gp" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/lipstick/random,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"hL" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/storage/box/cups,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"hQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"is" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/glowshroom/single,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"iB" = (
+/obj/structure/glowshroom/single,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"iF" = (
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"jt" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"kD" = (
+/obj/structure/chair/wood/wings,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"lB" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/grill,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"lE" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"mc" = (
+/obj/structure/flora/tree/stump,
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"my" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"nq" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/small/directional/north,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Saint Nick's Helpful Associate"
+	},
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"nI" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"nQ" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"og" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"oO" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"oS" = (
+/obj/item/chair/wood/wings{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"pD" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"qU" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kitchen/fork{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"sa" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"sA" = (
+/obj/item/chair/wood/wings,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"tj" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/clothing/head/costume/festive{
+	desc = "A festive party hat with the name 'jojo' scribbled on the front.";
+	name = "party hat"
+	},
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"tp" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer/lavaland,
+/area/ruin/unpowered)
+"ts" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"tx" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/plate{
+	pixel_x = 8
+	},
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"uG" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/food/cake/birthday,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/knife/kitchen{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"uO" = (
+/obj/structure/chair/wood/wings,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"vc" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/glowshroom/single,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"vx" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/structure/sign/clock/directional/west,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"wt" = (
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"wF" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/freezer/lavaland,
+/area/ruin/unpowered)
+"xf" = (
+/obj/item/kirbyplants/fern,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"xj" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"xm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/structure/rack,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/storage/toolbox/mechanical/old,
+/obj/item/a_gift{
+	contains_type = /obj/item/gun/ballistic/automatic/toy/unrestricted
+	},
+/obj/item/a_gift{
+	contains_type = /obj/item/gun/ballistic/automatic/pistol/toy
+	},
+/obj/item/ammo_box/foambox,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/paint,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/unlocked,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"xP" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/plate,
+/obj/item/food/pizzaslice/mushroom,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"yA" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/obj/effect/turf_decal/siding/thinplating,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"yJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"yN" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/kitchen/fork,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"yP" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"yT" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/glowshroom/single,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"zf" = (
+/obj/structure/chair/sofa/left/brown,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"zj" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"zl" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"zS" = (
+/obj/machinery/oven,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"Ae" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/glowshroom/single,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"Bt" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"Cn" = (
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	pixel_x = 12
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"CH" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"CP" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Fg" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"FF" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"HZ" = (
+/obj/item/plate{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/kitchen/fork{
+	pixel_x = 12
+	},
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Jt" = (
+/obj/item/stack/sheet/iron,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"KA" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/obj/item/a_gift{
+	contains_type = /obj/item/toy/plush/goatplushie;
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/structure/sign/clock/directional/south,
+/obj/item/a_gift{
+	contains_type = /obj/item/toy/plush/ratplush;
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Mu" = (
+/obj/item/chair/wood/wings{
+	pixel_y = -9
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Ns" = (
+/obj/item/chair/wood/wings,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"Nt" = (
+/obj/machinery/smartfridge/food,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/calendar/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"NM" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"Oa" = (
+/obj/structure/glowshroom/single,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/north,
+/obj/structure/sign/poster/party_game{
+	pixel_y = 32
+	},
+/obj/item/tail_pin,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Pl" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"PA" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"PS" = (
+/obj/item/shard{
+	pixel_x = -2;
+	pixel_y = -11
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"PV" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/iron/freezer/lavaland,
+/area/ruin/unpowered)
+"QP" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"RP" = (
+/obj/item/clothing/under/shorts/blue,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"RV" = (
+/obj/structure/girder,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"Sb" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/blue/lavaland,
+/area/ruin/unpowered)
+"Sg" = (
+/obj/structure/girder,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"Sz" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"SQ" = (
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"SW" = (
+/obj/structure/flora/ash/seraka,
+/turf/open/floor/grass/lavaland,
+/area/lavaland/surface/outdoors)
+"Te" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron/diagonal/lavaland,
+/area/ruin/unpowered)
+"Tl" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/structure/reagent_dispensers/water_cooler{
 	name = "punch cooler";
 	reagent_id = /datum/reagent/consumable/ethanol/bacchus_blessing
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"h" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"i" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"j" = (
-/obj/item/food/pizzaslice/mushroom,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"k" = (
-/obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/pizzaparty,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"l" = (
-/obj/machinery/light/directional/east,
-/obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/pizzaparty,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"m" = (
-/obj/item/chair/wood/wings,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"n" = (
-/obj/structure/glowshroom/single,
+"Uf" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
+/obj/effect/turf_decal/siding/thinplating,
+/turf/open/floor/iron/lavaland,
+/area/ruin/unpowered)
+"VB" = (
+/turf/open/misc/dirt{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
-"o" = (
-/obj/item/plate,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"p" = (
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"q" = (
-/obj/item/chair/wood/wings,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"r" = (
-/obj/structure/chair/wood/wings,
-/obj/effect/decal/remains/human,
-/obj/item/clothing/head/costume/festive{
-	desc = "A festive party hat with the name 'timmy' scribbled on the front.";
-	name = "party hat"
-	},
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"s" = (
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"t" = (
-/obj/structure/chair/wood/wings,
-/obj/effect/decal/remains/human,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"u" = (
-/obj/structure/glowshroom/single,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"v" = (
-/obj/structure/lattice,
-/obj/item/chair/wood/wings,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"w" = (
-/obj/item/kitchen/fork,
+"Ww" = (
+/obj/item/chair/wood/wings{
+	pixel_x = 16
+	},
+/obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"x" = (
-/obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/pizzaparty,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+"Xv" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ash/fireblossom,
+/turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
-"y" = (
-/obj/structure/table/wood,
-/obj/item/plate,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+"XK" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
-"z" = (
-/obj/structure/table/wood,
+"YA" = (
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /obj/structure/glowshroom/single,
-/obj/item/a_gift,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"A" = (
-/obj/structure/table/wood,
-/obj/item/plate,
-/obj/item/kitchen/fork,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
+"YU" = (
+/obj/item/chair/wood/wings{
+	pixel_x = -3;
+	pixel_y = -8
 	},
-/area/ruin/unpowered)
-"C" = (
-/obj/structure/chair/wood/wings{
-	dir = 4
-	},
+/obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
-"D" = (
-/obj/structure/table/wood,
-/obj/item/food/pizzaslice/margherita,
-/obj/item/plate,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
+"YV" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/item/a_gift{
+	contains_type = /obj/item/toy/figure/wizard
 	},
+/turf/open/floor/iron/diagonal/lavaland,
 /area/ruin/unpowered)
-"E" = (
-/obj/structure/table/wood,
-/obj/item/food/pizzaslice/meat,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"F" = (
-/obj/structure/table/wood,
-/obj/item/food/cake/birthday,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"G" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"H" = (
-/obj/item/chair/wood/wings,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"I" = (
-/obj/item/kitchen/fork,
+"Zy" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
 	},
-/area/ruin/unpowered)
-"J" = (
-/obj/structure/glowshroom/single,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"K" = (
-/obj/structure/chair/wood/wings{
-	dir = 1
-	},
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"L" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/a_gift,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"N" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"O" = (
-/obj/item/knife/kitchen,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"P" = (
-/obj/machinery/light/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
-"Q" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/lavaland,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
-a
-a
-b
-b
-a
-a
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-c
-c
-b
-b
-b
-b
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
 "}
 (3,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
-c
-c
-e
-e
-c
-c
-b
-b
-b
-a
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+mc
+VB
+VB
+ab
+ab
+ab
+ab
+aa
+aa
 "}
 (4,1,1) = {"
-b
-b
-b
-b
-d
-b
-c
-c
-e
-h
-h
-e
-Q
-e
-d
-b
-b
-a
+aa
+aa
+aa
+ab
+ab
+ab
+RP
+ab
+ab
+ab
+VB
+iF
+ab
+PA
+iF
+iF
+iF
+ab
+ab
+ab
+ab
+aa
+aa
 "}
 (5,1,1) = {"
-a
-b
-b
-b
-d
-b
-m
-e
-w
-h
-w
-h
-h
-e
-d
-b
-b
-b
+aa
+aa
+ab
+ab
+ab
+hQ
+Fg
+ab
+ab
+VB
+iF
+my
+PA
+PA
+VB
+VB
+iF
+iF
+ab
+ab
+ab
+aa
+aa
 "}
 (6,1,1) = {"
-a
-b
-b
-b
-d
-f
-n
-h
-h
-c
-e
-M
-e
-c
-b
-b
-b
-b
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+SQ
+VB
+PA
+iF
+iF
+iF
+iF
+SW
+my
+iF
+iF
+ab
+ab
+ab
+ab
 "}
 (7,1,1) = {"
-b
-b
-b
-b
-d
-g
-o
-h
-h
-C
-J
-h
-d
-b
-b
-b
-b
-b
+aa
+aa
+ab
+ab
+VB
+ab
+ab
+iF
+my
+iF
+iF
+my
+VB
+fx
+pD
+Zy
+Bt
+cb
+iF
+VB
+ab
+ab
+ab
 "}
 (8,1,1) = {"
-b
-b
-b
-b
-e
-h
-p
-q
-x
-D
-K
-M
-d
-b
-b
-b
-b
-b
+aa
+aa
+ab
+ab
+iF
+VB
+iF
+my
+iF
+VB
+my
+my
+iF
+lE
+lB
+fk
+jt
+Uf
+VB
+iF
+ab
+ab
+ab
 "}
 (9,1,1) = {"
-b
-b
-b
-c
-e
-i
-h
-r
-y
-E
-h
-h
-c
-b
-b
-b
-b
-b
+aa
+ab
+ab
+ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+en
+ad
+ad
+ad
+jt
+bg
+yA
+ab
+ab
+ab
+ab
+ab
 "}
 (10,1,1) = {"
-b
-b
-b
-c
-e
-j
-h
-s
-z
-F
-q
-N
-c
-b
-b
-b
-b
-b
+ab
+ab
+ac
+ac
+ad
+wF
+ah
+ad
+Pl
+vx
+zS
+bE
+hL
+YV
+ad
+ad
+zj
+Cn
+ad
+ab
+ab
+ab
+aa
 "}
 (11,1,1) = {"
-b
-b
-b
-b
-e
-e
-h
-t
-A
-G
-q
-h
-c
-b
-b
-b
-b
-b
+ab
+ab
+Jt
+ac
+Sg
+gp
+tp
+ad
+Pl
+tx
+dR
+yN
+YA
+oO
+ad
+nq
+PS
+CP
+ad
+ab
+ab
+ab
+aa
 "}
 (12,1,1) = {"
-b
-b
-b
-b
-d
-k
-h
-s
-s
-H
-h
-O
-d
-b
-b
-b
-b
-b
+ab
+ab
+ac
+ac
+ad
+ad
+PV
+ad
+Nt
+dR
+dR
+Te
+xP
+ts
+ad
+da
+wt
+aW
+ad
+VB
+ab
+ab
+aa
 "}
 (13,1,1) = {"
-b
-b
-b
-b
-d
-k
-h
-u
-s
-s
-o
-n
-d
-b
-b
-b
-b
-a
+ab
+ac
+ac
+ac
+CH
+Sb
+iB
+fD
+xj
+yT
+kD
+tj
+dR
+oS
+dI
+aq
+zl
+wt
+ad
+my
+iF
+ab
+aa
 "}
 (14,1,1) = {"
-b
-b
-b
-b
-d
-l
-i
-h
-e
-I
-L
-P
-d
-b
-b
-b
-b
-a
+ab
+ab
+ac
+ab
+ac
+Ae
+Sb
+ad
+Tl
+FF
+dR
+Ns
+dR
+dR
+ad
+bz
+zl
+xf
+ad
+my
+ab
+ab
+aa
 "}
 (15,1,1) = {"
-b
-b
-b
-b
-d
-d
-e
-e
-N
-e
-e
-d
-d
-b
-b
-b
-b
-a
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ad
+ad
+og
+ad
+ad
+ad
+ad
+ad
+bj
+NM
+ff
+ad
+ab
+ab
+ab
+ab
 "}
 (16,1,1) = {"
-a
-b
-b
-b
-b
-b
-c
-v
-b
-c
-b
-b
-b
-b
-b
-b
-b
-a
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ad
+nQ
+zl
+wt
+xf
+ad
+xm
+ad
+zf
+yJ
+is
+QP
+ab
+ab
+ab
+ab
 "}
 (17,1,1) = {"
-a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
+aa
+aa
+ab
+ab
+Jt
+ab
+ab
+ad
+Oa
+YU
+HZ
+Mu
+ad
+nI
+ad
+ad
+Ae
+yJ
+RV
+ab
+ab
+ab
+ab
 "}
 (18,1,1) = {"
-a
-a
-a
-a
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-a
-a
-a
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+QP
+uO
+qU
+Sb
+KA
+ad
+XK
+ab
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+"}
+(19,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+yP
+sA
+uG
+vc
+Xv
+sa
+yJ
+ac
+ab
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+yJ
+Xv
+Ww
+cF
+is
+yJ
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ab
+ac
+ab
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+Sz
+ac
+ab
+Sz
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

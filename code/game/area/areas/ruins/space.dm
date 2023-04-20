@@ -207,6 +207,11 @@
 /area/ruin/space/has_grav/dangerous_research/maint
 	name = "\improper ASRC Maintenance"
 
+//Interdyne Ruin
+
+/area/ruin/space/has_grav/interdyne
+	name = "\improper Interdyne Research Base"
+
 //Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/ancientstation
@@ -562,7 +567,6 @@
 /area/ruin/space/has_grav/spinwardsmoothies
 	name = "Spinward Smoothies"
 
-
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
@@ -572,6 +576,10 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+// Space Ghost Kitchen
+/area/ruin/space/space_ghost_restaurant
+	name = "\improper Space Ghost Restaurant"
+
 //Mass-driver hub ruin
 /area/ruin/space/massdriverhub
 	name = "\improper Mass Driver Router"
@@ -580,6 +588,17 @@
 // The abandoned capsule 'The Traveler's Rest'
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
+
+// Botnanical Haven
+/area/ruin/space/has_grav/powered/botanical_haven
+	name = "\improper Botanical Haven"
+
+// Ruin of Derelict Construction
+/area/ruin/space/has_grav/derelictconstruction
+	name = "\improper Derelict Construction Site"
+
+/// The Atmos Asteroid Ruin, has a subtype for rapid identification since this has some unique atmospherics properties and we can easily detect it if something goes wonky.
+/area/ruin/space/has_grav/atmosasteroid
 
 // Ruin of Waystation
 /area/ruin/space/has_grav/waystation
@@ -608,3 +627,32 @@
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
+
+// Ruin of The All-American Diner
+/area/ruin/space/has_grav/allamericandiner
+	name = "\improper The All-American Diner"
+
+// Transit Booth
+/area/ruin/space/has_grav/transit_booth
+	name = "transit_booth"
+	icon = 'icons/area/areas_ruins.dmi'
+	icon_state = "ruins"
+	requires_power = FALSE
+	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+
+// the outlet
+/area/ruin/space/has_grav/the_outlet/storefront
+	name = "\improper outlet storefront"
+
+/area/ruin/space/has_grav/the_outlet/employeesection
+	name = "\improper outlet employees only"
+
+/area/ruin/space/has_grav/the_outlet/researchrooms
+	name = "\improper outlet research rooms"
+
+/area/ruin/space/has_grav/the_outlet/cultinfluence
+	name = "\improper outlet cult corruption"
+
+//SYN-C Brutus, derelict frigate
+/area/ruin/space/has_grav/infested_frigate
+	name = "SYN-C Brutus"

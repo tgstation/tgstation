@@ -271,7 +271,7 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 			areas_with_multiple_APCs.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/airalarm/AA in GLOB.machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.air_alarms)
 		var/area/A = get_area(AA)
 		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
 			dat += "Skipped over [AA] in invalid location, [AA.loc].<br>"
@@ -650,7 +650,7 @@ ADMIN_VERB(place_ruin, "Spawn Ruin", "Attemp to randomly place a specific ruin."
 		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
 ADMIN_VERB(unload_ctf, "Unload CTF", "Despawn CTF.", R_DEBUG, VERB_CATEGORY_DEBUG)
-	toggle_id_ctf(user.mob, unload=TRUE)
+	toggle_id_ctf(user.mob, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
 
 ADMIN_VERB(run_empty_queries, "Run Empty Query", "Run empty queries.", R_DEBUG, VERB_CATEGORY_DEBUG, amount as num)
 	var/list/queries = list()

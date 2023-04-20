@@ -167,10 +167,9 @@
 /obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	worn_icon_state = "marisa"
 	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_marisa
-	greyscale_config_worn = null
+	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
 	strip_delay = 5
 	equip_delay_other = 50
 	can_be_tied = FALSE

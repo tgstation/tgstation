@@ -104,7 +104,7 @@
 	name = "pile of bear armor"
 	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bear_armor_upgrade"
 
 /obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
@@ -150,11 +150,11 @@
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
 	return //You cannot grow a real bear from butter.
 
-/mob/living/simple_animal/hostile/bear/butter/Life(delta_time = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
+/mob/living/simple_animal/hostile/bear/butter/Life(seconds_per_tick = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
 	if(stat)
 		return
 	if(health < maxHealth)
-		heal_overall_damage(5 * delta_time) //Fast life regen, makes it hard for you to get eaten to death.
+		heal_overall_damage(5 * seconds_per_tick) //Fast life regen, makes it hard for you to get eaten to death.
 
 /mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	..()

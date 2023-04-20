@@ -137,3 +137,12 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
+
+/obj/vehicle/sealed/mecha/marauder/add_cell()
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_scanmod()
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_capacitor()
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

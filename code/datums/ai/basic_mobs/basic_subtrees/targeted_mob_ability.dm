@@ -6,8 +6,10 @@
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Behaviour to perform using ability
 	var/use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability
+	/// If true we terminate planning after trying to use the ability.
+	var/finish_planning = TRUE
 
-/datum/ai_planning_subtree/targeted_mob_ability/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/targeted_mob_ability/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!ability_key)
 		CRASH("You forgot to tell this mob where to find its ability")
 
@@ -22,4 +24,5 @@
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if (finish_planning)
+		return SUBTREE_RETURN_FINISH_PLANNING

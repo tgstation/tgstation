@@ -11,7 +11,7 @@
 /datum/element/rust/Attach(atom/target, rust_icon = 'icons/effects/rust_overlay.dmi', rust_icon_state = "rust_default")
 	. = ..()
 	if(!isatom(target))
-		return COMPONENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 	if(!rust_overlay)
 		rust_overlay = image(rust_icon, rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
