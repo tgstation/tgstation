@@ -127,7 +127,6 @@ ADMIN_VERB_CONTEXT_MENU(grant_full_access, "Grant Full Access", R_DEBUG, mob/liv
 
 	if(!isnull(worn))
 		if(istype(worn, /obj/item/modular_computer/pda))
-			var/obj/item/modular_computer/pda/pda = worn
 			worn.InsertID(id, target)
 
 		else if(istype(worn, /obj/item/storage/wallet))

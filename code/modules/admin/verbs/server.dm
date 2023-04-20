@@ -19,7 +19,6 @@ ADMIN_VERB(toggle_hub, "Toggle Hub", "Toggles public visibility for the server."
 #define RESTART_TGS "Server Restart (Kill and Restart DD)"
 
 ADMIN_VERB(restart, "Reboot World", "Restarts the world immediately.", R_SERVER, VERB_CATEGORY_SERVER)
-	var/localhost_addresses = list("127.0.0.1", "::1")
 	var/list/options = list(
 		RESTART_NORMAL,
 		RESTART_DELAYED,

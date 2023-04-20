@@ -13,4 +13,4 @@
 
 /client/proc/is_localhost()
 	var/static/list/localhost_addresses = list("localhost", "127.0.0.1", "::1")
-	return (src.address in localhost_addresses)
+	return isnull(address) || (address in localhost_addresses)
