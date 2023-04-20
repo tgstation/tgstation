@@ -97,7 +97,7 @@
 
 	return chasm_contents
 
-/// Body detritus is selected in favor of bodies beloning to sentient mobs
+/// Body detritus is selected in favor of bodies belonging to sentient mobs
 /// The first sentient body found in the list of contents is returned, otherwise 
 /// if none are sentient choose randomly.
 /obj/item/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
