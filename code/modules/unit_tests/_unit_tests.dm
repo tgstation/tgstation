@@ -179,7 +179,6 @@
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
 #include "resist.dm"
-#include "rev_conversion.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"

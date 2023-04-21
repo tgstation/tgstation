@@ -163,13 +163,8 @@
 GLOBAL_VAR_INIT(icon_holographic_wall, init_holographic_wall())
 GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
-// `initial` does not work here. Neither does instantiating a wall/whatever
-// and referencing that. I don't know why.
 /proc/init_holographic_wall()
-	return getHologramIcon(
-		icon('icons/turf/walls/wall.dmi', "wall-0"),
-		opacity = 1,
-	)
+	return icon('icons/turf/walls/wall.dmi', "wall-0")
 
 /proc/init_holographic_window()
 	var/icon/grille_icon = icon('icons/obj/structures.dmi', "grille")
@@ -177,7 +172,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	grille_icon.Blend(window_icon, ICON_OVERLAY)
 
-	return getHologramIcon(grille_icon)
+	return grille_icon
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
@@ -223,6 +218,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		var/obj/effect/rcd_hologram/hologram = new(surrounding_turf)
 		hologram.icon = hologram_icon
+		hologram.makeHologram()
 		animate(hologram, alpha = 0, time = fade_time, easing = CIRCULAR_EASING | EASE_IN)
 
 /obj/effect/rcd_hologram
@@ -460,7 +456,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return data
 
-/obj/item/construction/rcd/ui_act(action, params)
+/obj/item/construction/rcd/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

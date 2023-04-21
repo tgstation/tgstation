@@ -19,7 +19,7 @@
 	. = ..()
 	to_chat(M, span_warning("I feel like your vibrating to much, my body can't handle this."))
 
-/datum/reagent/shakeium/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/shakeium/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	. = ..()
 	M.adjustBruteLoss(damage_amount)
 	if(intensity > 15)

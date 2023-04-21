@@ -4,9 +4,6 @@
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	register_context()
 
-	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
-	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-
 	GLOB.carbon_list += src
 	AddComponent(/datum/component/carbon_sprint)
 	var/static/list/loc_connections = list(

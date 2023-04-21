@@ -68,29 +68,29 @@
 		)
 	return ..()
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/jelly/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
 
 	if(!H.blood_volume)
-		H.blood_volume += JELLY_REGEN_RATE_EMPTY * delta_time
-		H.adjustBruteLoss(2.5 * delta_time)
+		H.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		H.adjustBruteLoss(2.5 * seconds_per_tick)
 		to_chat(H, span_danger("You feel empty!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += JELLY_REGEN_RATE * delta_time
+			H.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
 			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
-				H.adjust_nutrition(-1.25 * delta_time)
+				H.adjust_nutrition(-1.25 * seconds_per_tick)
 
 	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
 	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
 		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
 		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(delta_time)
+			blooddeficiency.lose_blood(seconds_per_tick)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
-		if(DT_PROB(2.5, delta_time))
+		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(H, span_danger("You feel drained!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
@@ -238,15 +238,15 @@
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-		if(DT_PROB(2.5, delta_time))
+		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(H, span_notice("You feel very bloated!"))
 
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 1.5 * delta_time
+		H.blood_volume += 1.5 * seconds_per_tick
 		if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION)
-			H.adjust_nutrition(-1.25 * delta_time)
+			H.adjust_nutrition(-1.25 * seconds_per_tick)
 
 	..()
 

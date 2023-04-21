@@ -74,7 +74,7 @@
 	soundloop.start()
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/item/gravity_gun/process(delta_time)
+/obj/item/gravity_gun/process(seconds_per_tick)
 	if(!picked_owner.client || picked_owner.incapacitated(IGNORE_GRAB))
 		clear_grab()
 		return

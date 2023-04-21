@@ -1,6 +1,7 @@
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
+	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
@@ -224,18 +225,18 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
-/obj/machinery/hydroponics/process(delta_time)
+/obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
 	if(self_sustaining)
-		adjustNutri(rand(1,2) * delta_time * 0.5)
-		adjustWater(rand(1,2) * delta_time * 0.5)
-		adjustWeeds(-0.5 * delta_time)
-		adjustPests(-0.5 * delta_time)
-		adjustToxic(-0.5 * delta_time)
+		adjustNutri(rand(1,2) * seconds_per_tick * 0.5)
+		adjustWater(rand(1,2) * seconds_per_tick * 0.5)
+		adjustWeeds(-0.5 * seconds_per_tick)
+		adjustPests(-0.5 * seconds_per_tick)
+		adjustToxic(-0.5 * seconds_per_tick)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -417,6 +418,13 @@
 		return
 	set_light(0)
 
+/obj/machinery/hydroponics/update_name(updates)
+	. = ..()
+	if(myseed)
+		name = "[initial(name)] ([myseed.plantname])"
+	else
+		name = initial(name)
+
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
@@ -466,6 +474,8 @@
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
 	update_appearance()
+	if(isnull(myseed))
+		particles = null
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -637,7 +647,6 @@
 	set_weedlevel(0, update_icon = FALSE) // Reset
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
-	TRAY_NAME_UPDATE
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
@@ -701,9 +710,9 @@
  * Called after plant mutation, update the appearance of the tray content and send a visible_message()
  */
 /obj/machinery/hydroponics/proc/after_mutation(message)
-		update_appearance()
-		visible_message(message)
-		TRAY_NAME_UPDATE
+	visible_message(message)
+	update_appearance()
+
 /**
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
@@ -804,7 +813,6 @@
 			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			set_seed(O)
-			TRAY_NAME_UPDATE
 			age = 1
 			set_plant_health(myseed.endurance)
 			lastcycle = world.time
@@ -897,7 +905,7 @@
 			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
-	else if(istype(O, /obj/item/shovel/spade))
+	else if(O.tool_behaviour == TOOL_SHOVEL)
 		if(!myseed && !weedlevel)
 			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
 			return
@@ -910,8 +918,6 @@
 				set_plant_health(0, update_icon = FALSE, forced = TRUE)
 				lastproduce = 0
 				set_seed(null)
-				name = initial(name)
-				desc = initial(desc)
 			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
@@ -976,8 +982,6 @@
 	else if(plant_status == HYDROTRAY_PLANT_DEAD)
 		to_chat(user, span_notice("You remove the dead plant from [src]."))
 		set_seed(null)
-		update_appearance()
-		TRAY_NAME_UPDATE
 	else
 		if(user)
 			user.examinate(src)
@@ -1001,7 +1005,6 @@
 		set_seed(null)
 		name = initial(name)
 		desc = initial(desc)
-		TRAY_NAME_UPDATE
 	else
 		set_plant_status(HYDROTRAY_PLANT_GROWING)
 	update_appearance()
@@ -1061,9 +1064,9 @@
  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/simple_animal/hostile/killertomato)
 	var/chosen = pick(livingplants)
-	var/mob/living/simple_animal/hostile/C = new chosen(get_turf(src))
+	var/mob/living/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)
 
 /obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
