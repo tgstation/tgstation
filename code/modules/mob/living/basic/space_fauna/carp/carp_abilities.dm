@@ -37,10 +37,10 @@
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "rift"
 	desc = "Open a rift through the carp stream, allowing passage to somewhere close by."
-	cooldown_time = 15 SECONDS
+	cooldown_time = 3 MINUTES
 	melee_cooldown_time = 0 SECONDS // Handled by rift
 	/// How far away can you place a rift?
-	var/max_range = 3
+	var/max_range = 4
 
 /datum/action/cooldown/mob_cooldown/lesser_carp_rift/Activate(atom/target_atom)
 	if (get_dist(get_turf(owner), target_atom) > max_range)

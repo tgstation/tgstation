@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 				continue
 			if(movable_atom.anchored)
 				continue
-			do_teleport(movable_atom, get_turf(picked))
+			do_teleport(movable_atom, get_turf(picked), no_effects = TRUE)
 		COOLDOWN_START(src, teleporter_cooldown, 5 SECONDS)
 		COOLDOWN_START(picked, teleporter_cooldown, 5 SECONDS)
 		return TRUE

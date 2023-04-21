@@ -23,6 +23,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	/// This mob's Grand Ritual ability
 	var/datum/action/cooldown/grand_ritual/ritual
 
+/datum/antagonist/wizard/antag_token(datum/mind/hosts_mind)
+	hosts_mind.make_wizard()
+
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
 	antagpanel_category = "Wizard Federation"

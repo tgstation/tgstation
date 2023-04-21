@@ -4,3 +4,7 @@
 	var/sprinting = FALSE
 	///How many tiles we have continuously moved in the same direction
 	var/sustained_moves = 0
+	/// How many food buffs we have at once
+	var/applied_food_buffs = 0
+	//Max amount of food buffs
+	var/max_food_buffs = 2

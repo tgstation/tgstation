@@ -8,6 +8,7 @@
 	)
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 	/// type is spawned 5 at a time and replaces this cake when processed by cutting tool
 	var/obj/item/food/cakeslice/slice_type
 	/// changes yield of sliced cake, default for cake is 5
@@ -30,6 +31,7 @@
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_STAM_REGEN_SMALL
 
 /obj/item/food/cake/plain
 	name = "plain cake"
@@ -80,6 +82,7 @@
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
 	slice_type = /obj/item/food/cakeslice/brain
+	food_buffs = STATUS_EFFECT_FOOD_STAM_LARGE
 
 /obj/item/food/cakeslice/brain
 	name = "brain cake slice"
@@ -93,6 +96,7 @@
 	)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
+	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
 
 /obj/item/food/cake/cheese
 	name = "cheese cake"
@@ -208,6 +212,7 @@
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD | SUGAR
 	slice_type = /obj/item/food/cakeslice/birthday
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_LARGE
 
 /obj/item/food/cake/birthday/make_microwaveable() // super sekrit club
 	AddElement(/datum/element/microwavable, /obj/item/clothing/head/utility/hardhat/cakehat)
@@ -223,6 +228,7 @@
 	)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD | SUGAR
+	food_buffs = STATUS_EFFECT_FOOD_HEALTH_MEDIUM
 
 /obj/item/food/cake/birthday/energy
 	name = "energy cake"
@@ -400,6 +406,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/cakeslice/pound_cake_slice
 	yield = 7
+	food_buffs = STATUS_EFFECT_FOOD_JOB_MINER
 
 /obj/item/food/cakeslice/pound_cake_slice
 	name = "pound cake slice"
@@ -411,6 +418,7 @@
 	)
 	tastes = list("cake" = 5, "sweetness" = 5, "batter" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR | JUNKFOOD
+	food_buffs = STATUS_EFFECT_FOOD_JOB_MINER
 
 /obj/item/food/cake/hardware_cake
 	name = "hardware cake"
@@ -478,6 +486,7 @@
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	slice_type = /obj/item/food/cakeslice/clown_slice
+	food_buffs = STATUS_EFFECT_FOOD_WACKY
 
 /obj/item/food/cakeslice/clown_slice
 	name = "clown cake slice"
@@ -490,6 +499,7 @@
 	)
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtypes = GRAIN | SUGAR | DAIRY
+	food_buffs = STATUS_EFFECT_FOOD_SLIDE
 
 /obj/item/food/cake/trumpet
 	name = "spaceman's cake"

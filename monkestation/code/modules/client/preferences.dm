@@ -10,12 +10,15 @@
 	///the amount of metacoins currently possessed
 	var/metacoins
 
-	///the stored patreon rank of this user
-	var/patreon_rank = NO_RANK
-
 	///sound storage
 	var/datum/ui_module/volume_mixer/pref_mixer
 
 	var/list/channel_volume = list(
 		"1019" = 100,
+	)
+
+	var/list/saved_tokens = list(
+		"high_threat" = 0,
+		"medium_threat" = 0,
+		"low_threat" = 0,
 	)

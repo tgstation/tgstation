@@ -35,6 +35,18 @@
 	message_mime = "acts out a burp."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
+
+/datum/emote/living/burp/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_FOOD_FIRE_BURPS))
+		if(ishuman(user))
+			var/mob/living/carbon/owner = user
+			var/datum/status_effect/food/fire_burps/Holder = owner.has_status_effect(STATUS_EFFECT_FOOD_FIREBURPS)
+			if(!Holder)
+				owner.has_status_effect(STATUS_EFFECT_FOOD_FIREBURPS)
+			if(Holder)
+				Holder.Burp()
+
 /datum/emote/living/choke
 	key = "choke"
 	key_third_person = "chokes"

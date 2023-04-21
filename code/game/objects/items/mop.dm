@@ -39,7 +39,7 @@
 /obj/item/mop/proc/attack_on_liquids_turf(obj/item/mop/the_mop, turf/T, mob/user, obj/effect/abstract/liquid_turf/liquids)
 	if(!user.Adjacent(T))
 		return FALSE
-	var/free_space = the_mop.reagents.maximum_volume - the_mop.reagents.total_volume
+	var/free_space = max_reagent_volume - src.reagents.total_volume
 	var/looping = TRUE
 	var/speed_mult = 1
 	var/datum/liquid_group/targeted_group = T.liquids.liquid_group

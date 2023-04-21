@@ -590,6 +590,9 @@ DEFAULT_VIEW_SQUARE 15x15
 ## See above, but for non-urgent ahelps
 #REGULAR_ADMINHELP_WEBHOOK_URL
 
+##See above, but for non-urgent mhelps
+#REGULAR_MENTORHELP_WEBHOOK_URL
+
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300
 

@@ -64,7 +64,7 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn( atom/A, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -119,7 +119,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE, modifiers)
+		UnarmedAttack(A, FALSE)
 		return
 
 	if(throw_mode)
@@ -148,7 +148,7 @@
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 
-			UnarmedAttack(A, FALSE, modifiers)
+			UnarmedAttack(A, FALSE)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -159,7 +159,7 @@
 	var/obj/item/item_atom = A
 	if(istype(item_atom))
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
-			UnarmedAttack(item_atom, TRUE, modifiers)
+			UnarmedAttack(item_atom, TRUE)
 
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
@@ -168,7 +168,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1,modifiers)
+			UnarmedAttack(A,1)
 	else
 		if(W)
 			if((istate & ISTATE_SECONDARY))

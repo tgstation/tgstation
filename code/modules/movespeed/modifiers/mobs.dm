@@ -120,6 +120,9 @@
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
 	flags = IGNORE_NOSLOW
 
+/datum/movespeed_modifier/belly_slide
+	multiplicative_slowdown = -0.5
+
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
 	flags = IGNORE_NOSLOW

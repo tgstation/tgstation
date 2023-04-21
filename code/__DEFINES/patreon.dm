@@ -1,5 +1,12 @@
 #define NO_RANK "None"
-#define ASSISTANT_RANK "Assistant Tier"
-#define COMMAND_RANK "Command Staff"
-#define TRAITOR_RANK "Traitor Tier"
-#define NUKIE_RANK "Nukie Tier"
+#define THANKS_RANK "9641441"
+#define ASSISTANT_RANK "9641458"
+#define COMMAND_RANK "9641523"
+#define TRAITOR_RANK "Traitor Tier" //muh defines
+#define NUKIE_RANK "9641543"
+
+#define ACCESS_THANKS_RANK 1
+#define ACCESS_ASSISTANT_RANK 2
+#define ACCESS_COMMAND_RANK 3
+#define ACCESS_TRAITOR_RANK 4
+#define ACCESS_NUKIE_RANK 5

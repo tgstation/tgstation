@@ -29,19 +29,30 @@
 	metacoins = text2num(mc_count)
 
 
-/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE)
+/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE)
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")
 	query_inc_metacoins.warn_execute()
+
+	if(amount > 0 && donator_multipler)
+		switch(parent.patreon.access_rank)
+			if(ACCESS_COMMAND_RANK)
+				amount *= 1.5
+			if(ACCESS_TRAITOR_RANK)
+				amount *= 1.75
+			if(ACCESS_NUKIE_RANK)
+				amount *= 2
+
+	amount = round(amount, 1)
 	metacoins += amount
 	qdel(query_inc_metacoins)
 	if(announces)
 		if(reason)
-			to_chat(src, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")
+			to_chat(parent, "<span class='rose bold'>[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")
 		else
-			to_chat(src, "<span class='rose bold'>[abs(amount)] [CONFIG_GET(string/metacurrency_name)]\s have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account!</span>")
+			to_chat(parent, "<span class='rose bold'>[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account!</span>")
 	return TRUE
 
 /datum/preferences/proc/has_coins(amount)
