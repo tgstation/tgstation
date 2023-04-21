@@ -9894,7 +9894,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = "surg_a_privacy";
+	id = "surg_b_privacy";
 	name = "Surgery Privacy Shutters"
 	},
 /turf/open/floor/plating,
@@ -11904,6 +11904,12 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
+"cXu" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/circuitboard/machine/telecomms/bus,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "cXC" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
@@ -19278,7 +19284,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = "surg_b_privacy";
+	id = "surg_a_privacy";
 	name = "Surgery Privacy Shutters"
 	},
 /turf/open/floor/plating,
@@ -21601,10 +21607,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
-"fKz" = (
-/obj/machinery/telecomms/message_server/preset,
-/turf/open/floor/circuit/green/telecomms,
-/area/station/tcommsat/server)
 "fKA" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/computer/department_orders/service{
@@ -39880,9 +39882,7 @@
 /area/station/science/research/abandoned)
 "kJd" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/circuitboard/machine/telecomms/receiver,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
@@ -78383,7 +78383,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/west{
-	id = "surg_a_shutters";
+	id = "surg_b_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
@@ -85448,7 +85448,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/button/door/directional/west{
-	id = "surg_b_shutters";
+	id = "surg_a_privacy";
 	name = "Surgery Privacy Shutters";
 	req_access = list("medical")
 	},
@@ -85530,6 +85530,8 @@
 /area/station/security/prison/garden)
 "wQu" = (
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/turf_decal/trimline/blue,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -126779,7 +126781,7 @@ xWl
 nPN
 nzb
 mNh
-fKz
+xqs
 pCb
 mHz
 ess
@@ -128325,7 +128327,7 @@ qkL
 kJd
 kpq
 wVs
-xqs
+cXu
 kzE
 aIV
 aIV

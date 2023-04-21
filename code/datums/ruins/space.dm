@@ -496,8 +496,14 @@
 	description = "A waytation for a backwater subsector of Spinward gets attacked by the syndicate due to bad luck."
 	ignore = TRUE
 
-/datum/map_template/ruin/space/mimesvsclowns
-	id = "mimesvsclowns"
+/datum/map_template/ruin/space/allamericandiner
+	id = "allamericandiner"
+	suffix = "allamericandiner.dmm"
+	name = "The All-American Diner"
+	description = "A mothballed \"Restaurant\" station of the popular \"The All-American Diner\" franchise."
+
+/datum/map_template/ruin/space/mimesvclowns
+	id = "mimesvclowns"
 	suffix = "mimesvsclowns.dmm"
 	name = "Abandoned Mime Outpost"
 	description = "When you fight mimes, you better bring more than slips."
