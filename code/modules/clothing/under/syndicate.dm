@@ -76,6 +76,11 @@
 	fire = 50
 	acid = 40
 
+/obj/item/clothing/under/syndicate/tacticool/examine(mob/user)
+	. = ..()
+	. += "It has a label that says cleaning this 'genuine' Waffle Co. product with cleaning solutions other than Grime Liberator telelocational podcrystals will void the warranty."
+	. += "What on earth is a <font color='red'>tele</font>locational pod<font color='red'>crystal</font>?"
+
 /obj/item/clothing/under/syndicate/tacticool/dye_item(dye_color, dye_key_override)
 	if(dye_color == DYE_SYNDICATE)
 		if(dying_key == DYE_REGISTRY_JUMPSKIRT)
