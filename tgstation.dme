@@ -5228,6 +5228,7 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "monkestation\code\__HELPERS\mobs.dm"
+#include "monkestation\code\__HELPERS\reagents.dm"
 #include "monkestation\code\datums\stamina_container.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"

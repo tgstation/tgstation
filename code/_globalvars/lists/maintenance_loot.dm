@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
+		/obj/item/reagent_containers/pill/maintenance/achievement = 5, //monkestation edit: from 1 to 5
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/knife/kitchen = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
 		/obj/item/pen/survival = 1,
-		/obj/item/restraints/handcuffs = 1,
+//		/obj/item/restraints/handcuffs = 1, //monkestation edit
 		/obj/item/shield/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
@@ -305,7 +305,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//equipment
 		/obj/item/clothing/glasses/hud/security = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-		/obj/item/clothing/gloves/color/black = 1,
+//		/obj/item/clothing/gloves/color/black = 1, //monkestation edit
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 1,
@@ -336,6 +336,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 1,
+		/obj/item/storage/pill_bottle/maintenance_pill/full = 1, //monkestation edit
 		) = 1,
 
 	list(//misc
@@ -368,14 +369,16 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			/obj/item/instrument/trumpet/spectral = 1,
 			) = 1,
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
+		/obj/item/gun/magic/wand/polymorph = 1, //monkestation edit
+		/obj/item/organ/internal/butt/atomic = 1, //monkestation edit
 	))
 
 //Maintenance loot spawner pools
 #define maint_trash_weight 4500
-#define maint_common_weight 4500
+#define maint_common_weight 4497 //monkestation edit: from 4500 to 4497
 #define maint_uncommon_weight 900
 #define maint_rarity_weight 99
-#define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
+#define maint_oddity_weight 10000//4 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg, monkestation edit: from 1 to 4
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
 //Loot pool used by default maintenance loot spawners
