@@ -132,9 +132,8 @@
 			return
 		else if(istype(target, /obj/machinery/disposal/))
 			src.visible_message(span_warning("[src] starts rummaging through [target]."),span_notice("You rummage through [target]..."))
-			if(!do_after(src, 2 SECONDS, target, interaction_key = "regalrat"))
-				return
-			SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+			if(do_after(src, 2 SECONDS, target, interaction_key = "regalrat"))
+				SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 			return
 		else if(istype(target, /obj/structure/cable/) || istype(target, /obj/item/food/cheese))
 			SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
