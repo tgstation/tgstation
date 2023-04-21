@@ -101,7 +101,7 @@
 /// The first sentient body found in the list of contents is returned, otherwise 
 /// if none are sentient choose randomly.
 /obj/item/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
-	for(var/mob/fallen_mob in chasm_stuff)	
+	for(var/mob/fallen_mob as anything in chasm_stuff)	
 		if(fallen_mob.mind)
 			return fallen_mob
 	return ..()
