@@ -16,7 +16,7 @@
 
 /obj/item/onetankbomb/Initialize(mapload)
 	. = ..()
-	times = list("1" = 1, "-1" = 1, "15" = 7, "[rand(30,90)]" = 3) // instant, dud, normal fuse, long random fuse
+	times = list("1" = 1, "-1" = 1, "15" = 7, "[rand(20,50)]" = 3) // instant, dud, normal fuse, long random fuse
 
 /obj/item/onetankbomb/Destroy()
 	bombassembly = null
