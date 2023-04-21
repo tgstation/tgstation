@@ -245,7 +245,7 @@
 	update_appearance()
 
 
-/obj/machinery/biogenerator/process(delta_time)
+/obj/machinery/biogenerator/process(seconds_per_tick)
 	if(!processing)
 		return
 
@@ -265,7 +265,7 @@
 
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * delta_time)
+	use_power(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)

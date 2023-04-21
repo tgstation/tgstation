@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "the rescue hook has a much greater chance at catching actual fallen player bodies as opposed to generic skeletons/other npc corpses"

@@ -49,7 +49,7 @@
 		return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change
@@ -60,7 +60,7 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * delta_time)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * seconds_per_tick)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
 			nutrition_change += consumption_amount * consumable.nutriment_factor
@@ -68,7 +68,7 @@
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.25 * delta_time)
+		adjustBruteLoss(0.25 * seconds_per_tick)
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)

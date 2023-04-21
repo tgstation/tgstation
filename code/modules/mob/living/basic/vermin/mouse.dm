@@ -378,7 +378,7 @@
 
 /datum/ai_planning_subtree/flee_target/mouse
 
-/datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/datum/weakref/hunting_weakref = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	var/atom/hunted_cheese = hunting_weakref?.resolve()
 	if (!isnull(hunted_cheese))
