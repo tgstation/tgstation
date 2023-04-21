@@ -7,11 +7,15 @@
 	var/list/emote_see = list()
 	///Possible lines of speech the AI can have
 	var/list/speak = list()
+	///The sound effects associated with this speech, if any
+	var/list/sound = list()
 
 /datum/ai_planning_subtree/random_speech/New()
 	. = ..()
 	if(speak)
 		speak = string_list(speak)
+	if(sound)
+		sound = string_list(sound)
 	if(emote_hear)
 		emote_hear = string_list(emote_hear)
 	if(emote_see)
@@ -32,7 +36,10 @@
 		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
 			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
-			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
+			if(sound.len)
+				controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), pick(sound))
+			else
+				controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
@@ -83,6 +90,7 @@
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
+	sound = list('sound/creatures/cow.ogg')
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
 
@@ -93,6 +101,7 @@
 /datum/ai_planning_subtree/random_speech/cow/wisdom/New()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
+	sound = list()
 
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
