@@ -112,7 +112,7 @@
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
 	///Exclude posters of these types from being added to the random pool
-	var/list/blacklisted_types
+	var/list/blacklisted_types = list()
 	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
 	var/printable = FALSE
 
