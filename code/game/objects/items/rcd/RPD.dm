@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Color of the device we are going to spawn
 	var/paint_color = "green"
 	///Speed of building atmos devices
-	var/atmos_build_speed = 0.3 SECONDS
+	var/atmos_build_speed = 0.4 SECONDS
 	///Speed of building disposal devices
 	var/disposal_build_speed = 0.5 SECONDS
 	///Speed of building transit devices
