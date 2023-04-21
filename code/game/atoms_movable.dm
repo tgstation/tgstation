@@ -128,8 +128,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(src, render_target)
-			contents.Remove(em_block) // we don't want these to end up in the atom's contents
+			em_block = new(null, render_target)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -232,6 +231,7 @@
 		if(!em_block && !QDELETED(src))
 			render_target = ref(src)
 			em_block = new(src, render_target)
+		SET_PLANE(em_block, PLANE_TO_TRUE(em_block.plane), src)
 		return em_block
 
 /// Generates a space underlay for a turf
