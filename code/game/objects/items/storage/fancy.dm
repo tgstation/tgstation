@@ -174,6 +174,9 @@
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
+/obj/item/storage/fancy/candle_box/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/flashlight/flare/candle))
 
 ////////////
 //CIG PACK//
@@ -534,6 +537,7 @@
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
 	custom_materials = list(/datum/material/wood = 1000)
+	resistance_flags = FLAMMABLE
 	foldable_result = /obj/item/stack/sheet/mineral/wood
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE

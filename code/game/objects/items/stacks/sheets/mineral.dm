@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 /obj/item/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("diamond tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20, category = CAT_TILES),  \
+	new/datum/stack_recipe("diamond tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20, check_density = FALSE, category = CAT_TILES),  \
 	))
 
 /obj/item/stack/sheet/mineral/diamond/get_main_recipes()
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 
 GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/uranium/get_main_recipes()
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 
 GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/plasma/get_main_recipes()
@@ -197,9 +197,9 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 
 GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20, category = CAT_TILES), \
-	new/datum/stack_recipe("blank plaque", /obj/item/plaque, 1, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/costume/crown, 5, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new/datum/stack_recipe("blank plaque", /obj/item/plaque, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/costume/crown, 5, check_density = FALSE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/mineral/gold/get_main_recipes()
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/silver/get_main_recipes()
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/bananium
 
 GLOBAL_LIST_INIT(bananium_recipes, list ( \
-	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/bananium/get_main_recipes()
@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/titanium
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
-	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	new/datum/stack_recipe("shuttle seat", /obj/structure/chair/comfy/shuttle, 2, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	))
 
@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/plastitanium
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
-	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/plastitanium/get_main_recipes()
@@ -341,8 +341,8 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("snow wall", /turf/closed/wall/mineral/snow, 5, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("snowball", /obj/item/toy/snowball, 1, category = CAT_WEAPON_RANGED), \
-	new/datum/stack_recipe("snow tile", /obj/item/stack/tile/mineral/snow, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("snowball", /obj/item/toy/snowball, 1, check_density = FALSE, category = CAT_WEAPON_RANGED), \
+	new/datum/stack_recipe("snow tile", /obj/item/stack/tile/mineral/snow, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 ))
 
 /obj/item/stack/sheet/mineral/snow/get_main_recipes()
@@ -420,7 +420,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	new/datum/stack_recipe("alien table frame", /obj/structure/table_frame/abductor, 1, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("alien airlock assembly", /obj/structure/door_assembly/door_assembly_abductor, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	null, \
-	new/datum/stack_recipe("alien floor tile", /obj/item/stack/tile/mineral/abductor, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("alien floor tile", /obj/item/stack/tile/mineral/abductor, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/abductor/get_main_recipes()
@@ -463,10 +463,10 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 //Metal Hydrogen
 GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
-	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, category = CAT_ROBOT),
-	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, category = CAT_CLOTHING),
-	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, category = CAT_CLOTHING),
-	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, category = CAT_WEAPON_MELEE),
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=20, res_amount=1, check_density = FALSE, category = CAT_ROBOT),
+	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),
+	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),
+	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, check_density = FALSE, category = CAT_WEAPON_MELEE),
 	))
 
 /obj/item/stack/sheet/mineral/metal_hydrogen

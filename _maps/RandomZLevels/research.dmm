@@ -38,26 +38,22 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "am" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/awaymission/research/interior/engineering)
 "an" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "ao" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/awaymission/research/interior/engineering)
 "ap" = (
@@ -278,7 +274,8 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/power/apc/highcap/ten_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
@@ -475,9 +472,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cb" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	name = "Gateway APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -501,12 +497,12 @@
 /area/awaymission/research/interior/maint)
 "ci" = (
 /obj/machinery/light/directional/west,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cj" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -520,7 +516,7 @@
 /area/awaymission/research/interior/gateway)
 "cl" = (
 /obj/machinery/light/directional/east,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -1194,9 +1190,8 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/east{
-	name = "Vault APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -2179,9 +2174,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kp" = (
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Dorms APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -2378,7 +2372,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lc" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -2434,7 +2428,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lo" = (
@@ -2582,8 +2577,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lN" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /obj/machinery/airalarm/directional/east,
@@ -2828,27 +2822,24 @@
 /area/awaymission/research/interior/escapepods)
 "mK" = (
 /obj/structure/flora/bush/flowers_br/style_random,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mL" = (
 /obj/structure/flora/bush/ferny/style_random,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mM" = (
 /obj/structure/flora/bush/grassy/style_random,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/open/floor/grass,
@@ -3067,9 +3058,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "rh" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
@@ -3126,7 +3115,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "sM" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/landmark/awaystart,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -3348,9 +3337,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "BN" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
@@ -3417,7 +3404,8 @@
 "DC" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "DO" = (
@@ -3510,9 +3498,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "Ge" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
@@ -3628,9 +3614,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
 "Kd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/carbon/human,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
@@ -3761,7 +3745,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "Or" = (
@@ -3827,9 +3812,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "Qg" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,

@@ -92,7 +92,7 @@
 "nh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)

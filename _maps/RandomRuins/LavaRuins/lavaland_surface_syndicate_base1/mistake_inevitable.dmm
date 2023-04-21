@@ -9,9 +9,8 @@
 /area/ruin/syndicate_lava_base/testlab)
 "be" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	req_access = list("syndicate")
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "bs" = (
@@ -175,7 +174,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "oV" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -263,7 +262,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "Ce" = (
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},

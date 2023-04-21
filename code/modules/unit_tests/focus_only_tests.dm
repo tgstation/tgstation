@@ -35,3 +35,6 @@
 
 /// Ensures qdel() is not called on atoms before they're initialized (after SSmapping starts up)
 /datum/unit_test/focus_only/pre_init_qdel_post_mapping
+
+/// Checks for bad icon / icon state setups in cooking crafting menu
+/datum/unit_test/focus_only/bad_cooking_crafting_icons

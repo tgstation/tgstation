@@ -28,9 +28,7 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ai" = (
@@ -52,10 +50,8 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "am" = (
@@ -78,9 +74,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ap" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aq" = (
@@ -185,16 +179,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aK" = (
@@ -213,9 +203,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aM" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
@@ -266,9 +254,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aX" = (
@@ -292,9 +278,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bb" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/barricade/wooden,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -345,20 +329,14 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bn" = (
