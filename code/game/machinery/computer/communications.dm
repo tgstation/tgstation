@@ -848,7 +848,7 @@
 			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
 			if(!pirate_event)
 				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
-			addtimer(CALLBACK(pirate_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), FALSE, null, FALSE, "[hacker] hacking a communications console"), rand(20 SECONDS, 1 MINUTES))
+			addtimer(CALLBACK(pirate_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "[hacker] hacking a communications console"), rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
@@ -859,7 +859,7 @@
 			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
 			if(!fugitive_event)
 				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
-			addtimer(CALLBACK(fugitive_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), FALSE, null, FALSE, "[hacker] hacking a communications console"), rand(20 SECONDS, 1 MINUTES))
+			addtimer(CALLBACK(fugitive_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "[hacker] hacking a communications console"), rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(

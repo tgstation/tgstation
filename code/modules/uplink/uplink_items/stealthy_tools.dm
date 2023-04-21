@@ -105,7 +105,7 @@
 
 /datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/round_event_control/event = locate(/datum/round_event_control/communications_blackout) in SSevents.control
-	event.runEvent(event_cause = "a syndicate virus")
+	event.run_event(event_cause = "a syndicate virus")
 	return source //For log icon
 
 /datum/uplink_item/stealthy_tools/blackout
@@ -121,5 +121,5 @@
 
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/round_event_control/event = locate(/datum/round_event_control/grid_check) in SSevents.control
-	event.runEvent(event_cause = "a syndicate virus")
+	event.run_event(event_cause = "a syndicate virus")
 	return source //For log icon
