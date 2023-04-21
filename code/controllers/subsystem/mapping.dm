@@ -1,3 +1,6 @@
+// Must be the same as /datum/map_config/var/space_ruin_levels
+#define DEFAULT_SPACE_RUIN_LEVELS 7
+
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
@@ -252,8 +255,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
-		var/default_ruin_amount = 7
-		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / default_ruin_amount))
+		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
@@ -916,3 +918,5 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
+
+#undef DEFAULT_SPACE_RUIN_LEVELS
