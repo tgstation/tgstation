@@ -138,7 +138,6 @@
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
-
 /obj/structure/hoop/CtrlClick(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		return

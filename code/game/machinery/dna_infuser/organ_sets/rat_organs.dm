@@ -140,7 +140,7 @@
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/tongue/rat/modify_speech(datum/source, list/speech_args)

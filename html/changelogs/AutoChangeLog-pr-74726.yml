@@ -1,4 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes:
-  - bugfix: "Colossuses are now actually able to trigger their final attack - be careful when they drop below 10% HP!"

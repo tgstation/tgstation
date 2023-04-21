@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "IV drip flow rate can be changed without the container or object attached"
+  - bugfix: "IV drip animation states fixed"

@@ -1,3 +1,13 @@
+///A list of the possible mutations for a vine
+GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
+
+/proc/init_vine_mutation_list()
+	var/list/mutation_list = list()
+	init_subtypes(/datum/spacevine_mutation/, mutation_list)
+	for(var/datum/spacevine_mutation/mutation as anything in mutation_list)
+		mutation_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
+	return mutation_list
+
 /datum/spacevine_controller
 	///Canonical list of all the vines we "own"
 	var/list/obj/structure/spacevine/vines
@@ -9,8 +19,6 @@
 	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
 	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
-	///A list of the possible mutations for a vine
-	var/static/list/vine_mutations_list
 	///The chance that we will develop a new mutation
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
@@ -26,11 +34,6 @@
 	if(event)
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
-	if(!vine_mutations_list)
-		vine_mutations_list = list()
-		init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-		for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
-			vine_mutations_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
@@ -66,20 +69,24 @@
 	growth_queue += vine
 	vines += vine
 	vine.master = src
-	for(var/datum/spacevine_mutation/mutation in muts)
-		mutation.add_mutation_to_vinepiece(vine)
+	for(var/mutation_type in muts)
+		for(var/datum/spacevine_mutation/mutation in GLOB.vine_mutations_list)
+			if(istype(mutation, mutation_type))
+				mutation.add_mutation_to_vinepiece(vine)
+				break
 	if(parent)
 		vine.mutations |= parent.mutations
 		vine.trait_flags |= parent.trait_flags
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
-			var/total_severity = random_mutate.severity
-			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
-				total_severity += mutation.severity
-			if(total_severity <= max_mutation_severity)
-				random_mutate.add_mutation_to_vinepiece(vine)
+			var/datum/spacevine_mutation/random_mutate = pick_weight(GLOB.vine_mutations_list - vine.mutations)
+			if(!isnull(random_mutate)) //If this vine has every single mutation don't attempt to add a null mutation.
+				var/total_severity = random_mutate.severity
+				for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
+					total_severity += mutation.severity
+				if(total_severity <= max_mutation_severity)
+					random_mutate.add_mutation_to_vinepiece(vine)
 
 	for(var/datum/spacevine_mutation/mutation in vine.mutations)
 		mutation.on_birth(vine)
