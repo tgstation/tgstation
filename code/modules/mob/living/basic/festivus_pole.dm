@@ -63,7 +63,7 @@
 
 /mob/living/basic/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return
 	visible_message(span_warning("[src] crackles with static electricity!"))
 	for(var/atom/affected in range(2, get_turf(src)))

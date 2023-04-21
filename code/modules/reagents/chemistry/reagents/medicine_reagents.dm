@@ -842,12 +842,12 @@
 	if(affected_mob.losebreath < 0)
 		affected_mob.losebreath = 0
 	affected_mob.stamina.adjust(0.5 * REM * seconds_per_tick, 0)
-	if(DT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	if(DT_PROB(18, REM * seconds_per_tick))
+	if(SPT_PROB(18, REM * seconds_per_tick))
 		affected_mob.stamina.adjust(-2.5, 0)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
@@ -1120,7 +1120,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	if(DT_PROB(18, seconds_per_tick))
+	if(SPT_PROB(18, seconds_per_tick))
 		affected_mob.stamina.adjust(-2.5, FALSE)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
@@ -1252,7 +1252,7 @@
 		affected_mob.stamina.adjust(3 * REM * seconds_per_tick, FALSE)
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * seconds_per_tick, 1 MINUTES)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, 150, affected_organtype)
-		if(DT_PROB(5, seconds_per_tick))
+		if(SPT_PROB(5, seconds_per_tick))
 			affected_mob.say(return_hippie_line(), forced = /datum/reagent/medicine/earthsblood)
 	affected_mob.adjust_drugginess_up_to(20 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
 	..()
@@ -1459,7 +1459,7 @@
 			affected_mob.adjust_jitter_up_to(2 SECONDS * REM * seconds_per_tick, 40 SECONDS)
 			affected_mob.adjust_stutter_up_to(2 SECONDS * REM * seconds_per_tick, 40 SECONDS)
 			affected_mob.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
-			if(DT_PROB(30, seconds_per_tick))
+			if(SPT_PROB(30, seconds_per_tick))
 				affected_mob.losebreath++
 			if(SPT_PROB(10, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("You have a sudden fit!"))

@@ -64,7 +64,7 @@
 		if(SPT_PROB(40, seconds_per_tick))
 			human_in_range.set_jitter_if_lower(10 SECONDS)
 
-		if(human_in_range.stamina.loss_as_percent <= 85 && DT_PROB(30, seconds_per_tick))
+		if(human_in_range.stamina.loss_as_percent <= 85 && SPT_PROB(30, seconds_per_tick))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.stamina.adjust(-10)
 

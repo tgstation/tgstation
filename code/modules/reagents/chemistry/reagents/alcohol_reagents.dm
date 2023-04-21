@@ -1020,7 +1020,7 @@
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		. = TRUE
 		drinker.stamina.adjust(10 * REM * seconds_per_tick)
-		if(DT_PROB(10, seconds_per_tick))
+		if(SPT_PROB(10, seconds_per_tick))
 			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
 		if(SPT_PROB(5, seconds_per_tick))
 			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
@@ -2007,7 +2007,7 @@
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
-	if(DT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		drinker.stamina.adjust(-10)
 		drinker.drop_all_held_items()
 		to_chat(drinker, span_notice("You cant feel your hands!"))

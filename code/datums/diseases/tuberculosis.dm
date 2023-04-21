@@ -43,7 +43,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]"))
 				affected_mob.stamina.adjust(-70, FALSE)
-			if(DT_PROB(5, seconds_per_tick))
+			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.stamina.adjust(-100, FALSE)
 				affected_mob.visible_message(span_warning("[affected_mob] faints!"), span_userdanger("You surrender yourself and feel at peace..."))
 				affected_mob.AdjustSleeping(100)

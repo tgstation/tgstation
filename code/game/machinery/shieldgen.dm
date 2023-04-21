@@ -55,9 +55,9 @@
 /obj/structure/emergency_shield/regenerating/emp_act(severity)
 	return
 
-/obj/structure/emergency_shield/regenerating/process(delta_time)
-	if(get_integrity() < max_integrity) 
-		repair_damage(5 * delta_time)
+/obj/structure/emergency_shield/regenerating/process(seconds_per_tick)
+	if(get_integrity() < max_integrity)
+		repair_damage(5 * seconds_per_tick)
 
 /obj/structure/emergency_shield/cult
 	name = "cult barrier"

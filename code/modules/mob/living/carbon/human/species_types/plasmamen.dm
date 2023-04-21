@@ -146,7 +146,7 @@
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
 		H.stamina.adjust(-7.5 * REM * seconds_per_tick, 0)
 		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
-		if(DT_PROB(10, seconds_per_tick))
+		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)

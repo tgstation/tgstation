@@ -232,11 +232,11 @@
 		myseed.forceMove(src)
 
 	if(self_sustaining)
-		adjustNutri(rand(1,2) * delta_time * 0.5)
-		adjustWater(rand(1,2) * delta_time * 0.5)
-		adjustWeeds(-0.5 * delta_time)
-		adjustPests(-0.5 * delta_time)
-		adjustToxic(-0.5 * delta_time)
+		adjustNutri(rand(1,2) * seconds_per_tick * 0.5)
+		adjustWater(rand(1,2) * seconds_per_tick * 0.5)
+		adjustWeeds(-0.5 * seconds_per_tick)
+		adjustPests(-0.5 * seconds_per_tick)
+		adjustToxic(-0.5 * seconds_per_tick)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -1005,7 +1005,6 @@
 		set_seed(null)
 		name = initial(name)
 		desc = initial(desc)
-		TRAY_NAME_UPDATE
 	else
 		set_plant_status(HYDROTRAY_PLANT_GROWING)
 	update_appearance()

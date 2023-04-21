@@ -189,7 +189,7 @@
 	affected_mob.stamina.adjust(2 * REM * seconds_per_tick, FALSE)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organtype = affected_organtype)
-	if(DT_PROB(2.5, seconds_per_tick))
+	if(SPT_PROB(2.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch", "shiver"))
 	..()
 	. = TRUE
@@ -273,7 +273,7 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.stamina.adjust(18 * REM * seconds_per_tick, FALSE)
 	affected_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	if(DT_PROB(30, seconds_per_tick))
+	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.losebreath++
 		affected_mob.adjustOxyLoss(1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	..()
@@ -365,7 +365,7 @@
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath++
 		affected_mob.stamina.adjust(-4, FALSE)
-	if(DT_PROB(7.5, seconds_per_tick))
+	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.adjustToxLoss(2, FALSE, required_biotype = affected_biotype)
 	..()
 
