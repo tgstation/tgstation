@@ -65,15 +65,17 @@ GLOBAL_LIST_EMPTY(shared_particle_holders)
 
 ///Give a particle effect to an atom from a global list. Use this if you have a lot of particle holders on someones
 ///screen and client performance is a problem. This way it's only calculated x amount of times and you can replicate it without putting too much extra burden on clients
-/proc/get_shared_particle_effect(atom/atom, pool_size, particle_effect)
-	if(!(particle_effect in GLOB.shared_particle_holders)) //no particles yet so make them
+/proc/get_shared_particle_effect(atom/atom, pool_size, particle_effect, particle_flags = NONE)
+	var/list/effect_pool = GLOB.shared_particle_holders[particle_effect]
+	if(!effect_pool) //no particles yet so make them
 		var/list/particles = list()
 		for(var/i in 1 to pool_size)
 			particles += new /obj/effect/abstract/particle_holder_shared(null, particle_effect)
 
 		GLOB.shared_particle_holders[particle_effect] = particles
+		effect_pool = particles
 
-	var/obj/effect/abstract/particle_holder_shared/holder = pick(GLOB.shared_particle_holders[particle_effect])
+	var/obj/effect/abstract/particle_holder_shared/holder = pick(effect_pool)
 	holder.apply_particles_to(atom)
 
 ///Many particle slow? Have one or two particle and copy paste everywhere. Similair to particle_holder but meant for having multiple vis_locs
