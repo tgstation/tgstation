@@ -1,4 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "generic air tank mounted onto pneumatic cannon now has working sprite."

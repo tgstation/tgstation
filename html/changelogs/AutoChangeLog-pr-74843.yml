@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "AIs now get their proper lawset, and an objective related to said lawset, on Nations"
