@@ -103,7 +103,7 @@
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/meteor_wave/dust_storm
-	announce_chance = 65
+	announce_chance = 85
 	wave_name = "space dust"
 
 /datum/round_event/meteor_wave/dust_storm/announce(fake)
