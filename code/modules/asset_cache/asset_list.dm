@@ -62,6 +62,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/proc/should_refresh()
 	return !cross_round_cachable || !CONFIG_GET(flag/cache_assets)
 
+#ifdef SAVE_SPRITESHEETS
+/// Simply takes any generated file and saves it to the round-specific /logs folder. Useful for debugging potential issues with spritesheet generation/display.
+/// Only called when SAVE_SPRITESHEETS is defined.
+/datum/asset/proc/save_to_logs(file_name, file_location)
+	var/asset_path = "[GLOB.log_directory]/generated_assets/[file_name]"
+	fdel(asset_path) // just in case, sadly we can't use rust_g stuff here.
+	fcopy(file_location, asset_path)
+#endif
+
 /// If you don't need anything complicated.
 /datum/asset/simple
 	_abstract = /datum/asset/simple
@@ -199,6 +208,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	fdel(fname)
 	text2file(generate_css(), fname)
 	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
+
+#ifdef SAVE_SPRITESHEETS
+	save_to_logs(file_name = res_name, file_location = fname)
+#endif
+
 	fdel(fname)
 
 	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
@@ -288,9 +302,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		replaced_css = replacetext(replaced_css, find_background_urls.match, "background:url('[asset_url]')")
 		LAZYADD(cached_spritesheets_needed, asset_id)
 
-	var/replaced_css_filename = "data/spritesheets/spritesheet_[name].css"
+	var/finalized_name = "spritesheet_[name].css"
+	var/replaced_css_filename = "data/spritesheets/[finalized_name]"
 	rustg_file_write(replaced_css, replaced_css_filename)
-	SSassets.transport.register_asset("spritesheet_[name].css", replaced_css_filename)
+	SSassets.transport.register_asset(finalized_name, replaced_css_filename)
+
+#ifdef SAVE_SPRITESHEETS
+	save_to_logs(file_name = finalized_name, file_location = replaced_css_filename)
+#endif
 
 	fdel(replaced_css_filename)
 
