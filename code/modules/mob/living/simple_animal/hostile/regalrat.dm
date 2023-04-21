@@ -139,9 +139,6 @@
 		else if(istype(target, /obj/structure/cable/) || istype(target, /obj/item/food/cheese))
 			SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 			return
-
-	// if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // prevents attacking while performing other interactions (e.g. disposal rummaging)
-	// 	return
 	return ..()
 
 #undef REGALRAT_INTERACTION
