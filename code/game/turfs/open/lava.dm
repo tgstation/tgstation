@@ -53,7 +53,7 @@
 		update_appearance()
 
 	if(x % particle_space_x == 0 && y % particle_space_y == 0)
-		get_shared_particle_effect(src, pool_size = 1, particle_effect = particle_type)
+		get_shared_particle_effect(src, /obj/effect/abstract/particle_holder_shared/lava)
 
 /turf/open/lava/update_overlays()
 	. = ..()

@@ -65,32 +65,35 @@ GLOBAL_LIST_EMPTY(shared_particle_holders)
 
 ///Give a particle effect to an atom from a global list. Use this if you have a lot of particle holders on someones
 ///screen and client performance is a problem. This way it's only calculated x amount of times and you can replicate it without putting too much extra burden on clients
-/proc/get_shared_particle_effect(atom/atom, pool_size, particle_effect, particle_flags = NONE)
-	var/list/effect_pool = GLOB.shared_particle_holders[particle_effect]
+/proc/get_shared_particle_effect(atom/atom, obj/effect/abstract/particle_holder_shared/holder_type)
+	var/list/effect_pool = GLOB.shared_particle_holders[holder_type]
 	if(!effect_pool) //no particles yet so make them
 		var/list/particles = list()
-		for(var/i in 1 to pool_size)
-			particles += new /obj/effect/abstract/particle_holder_shared(null, particle_effect)
+		for(var/i in 1 to initial(holder_type.pool_size))
+			particles += new holder_type()
 
-		GLOB.shared_particle_holders[particle_effect] = particles
+		GLOB.shared_particle_holders[holder_type] = particles
 		effect_pool = particles
 
-	var/obj/effect/abstract/particle_holder_shared/holder = pick(effect_pool)
-	holder.apply_particles_to(atom)
+	var/obj/effect/abstract/particle_holder_shared/holder_instance = pick(effect_pool)
+	holder_instance.apply_particles_to(atom)
 
 ///Many particle slow? Have one or two particle and copy paste everywhere. Similair to particle_holder but meant for having multiple vis_locs
+///If using: make a subtype with a set particle and pool_size for the amount of instances you want to randomly pick from
 /obj/effect/abstract/particle_holder_shared
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_ALL_MOB_LAYER
 	vis_flags = VIS_INHERIT_PLANE
 
-/obj/effect/abstract/particle_holder_shared/Initialize(mapload, particle_path = /particles/smoke)
-	. = ..()
-
-	src.particle_flags = particle_flags
-	particles = new particle_path
+	///Amount of instances we can pick instances of us from
+	var/pool_size = 1
 
 ///Apply the particle effect to x obj. Turfs are also fine ignore the typecasting HAHAHHAHAHAHAH i hate byond
 /obj/effect/abstract/particle_holder_shared/proc/apply_particles_to(atom/movable/add_to)
 	add_to.vis_contents += src
+
+///Particle holder used for the lavaland lava turfs
+/obj/effect/abstract/particle_holder_shared/lava
+	particles = new /particles/lava ()
+	pool_size = 1
