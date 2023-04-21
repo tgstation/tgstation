@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		var/size = sizes[size_id]
 		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/css_name = "spritesheet_[name].css"
-	var/file_directory = "data/spritesheets/[res_name]"
+	var/file_directory = "data/spritesheets/[css_name]"
 	fdel(file_directory)
 	text2file(generate_css(), file_directory)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory))
@@ -260,19 +260,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 		// save flattened version
 		var/png_name = "[name]_[size_id].png"
-		var/full_file_name = "data/spritesheets/[png_name]"
-		fcopy(size[SPRSZ_ICON], full_file_name)
-		var/error = rustg_dmi_strip_metadata(full_file_name)
+		var/file_directory = "data/spritesheets/[png_name]"
+		fcopy(size[SPRSZ_ICON], file_directory)
+		var/error = rustg_dmi_strip_metadata(file_directory)
 		if(length(error))
 			stack_trace("Failed to strip [png_name]: [error]")
-		size[SPRSZ_STRIPPED] = icon(full_file_name)
+		size[SPRSZ_STRIPPED] = icon(file_directory)
 
 // this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
 #ifdef SAVE_SPRITESHEETS
-	save_to_logs(file_name = png_name, file_location = full_file_name)
+		save_to_logs(file_name = png_name, file_location = file_directory)
 #endif
 
-		fdel(fname)
+		fdel(file_directory)
 
 /datum/asset/spritesheet/proc/generate_css()
 	var/list/out = list()
