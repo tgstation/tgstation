@@ -33,3 +33,10 @@
 			qdel(src)
 		else
 			energy -= 1
+
+
+/obj/machinery/the_singularitygen/tesla
+	name = "Tesla Singularity Generator"
+	icon = 'icons/obj/engine/tesla_generator.dmi'
+	icon_state = "TheSingGen"
+	creation_type = /obj/energy_ball

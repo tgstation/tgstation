@@ -17,6 +17,5 @@
 	leader.put_in_active_hand(converter, forced = TRUE)
 	leader.ClickOn(peasant)
 
-	TEST_ASSERT(peasant.IsParalyzed(), "Peasant was not paralyzed after being flashed by the leader") // Flash paralyze
-	TEST_ASSERT(peasant.IsStun(), "Peasant was not stunned after being converted by the leader") // Conversion stun
+	TEST_ASSERT(peasant.IsDisoriented(), "Peasant was not disoriented after being flashed by the leader") // Flash paralyze
 	TEST_ASSERT_EQUAL(length(revolution.members), 2, "Expected revolution to have 2 members after the leader flashes the peasant.")

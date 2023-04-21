@@ -40,6 +40,8 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = 50
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
+	///The buffs these foods give when eaten
+	var/food_buffs
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -51,6 +53,7 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
 	bite_consumption = 2,
 	junkiness,
+	food_buffs,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -65,6 +68,7 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
+	src.food_buffs = food_buffs
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
@@ -125,6 +129,7 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs,
 	bite_consumption,
 	junkiness,
+	food_buffs,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -176,6 +181,8 @@ Behavior that's still missing from this component that original food items had t
 		src.eat_time = eat_time
 	if(!isnull(junkiness))
 		src.junkiness = junkiness
+	if(!isnull(food_buffs))
+		src.food_buffs = food_buffs
 	if(!isnull(after_eat))
 		src.after_eat = after_eat
 	if(!isnull(on_consume))
@@ -528,6 +535,14 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
 	on_consume?.Invoke(eater, feeder)
+
+	if(food_buffs && ishuman(eater))
+		var/mob/living/carbon/consumer = eater
+		if(consumer.applied_food_buffs < consumer.max_food_buffs)
+			eater.apply_status_effect(food_buffs)
+			consumer.applied_food_buffs ++
+		else if(food_buffs in consumer.status_effects)
+			eater.apply_status_effect(food_buffs)
 
 	to_chat(feeder, span_warning("There is nothing left of [parent], oh no!"))
 	if(isturf(parent))

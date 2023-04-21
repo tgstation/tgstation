@@ -4,6 +4,8 @@
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 
+GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
 	record_nuke_disk_location()
@@ -215,6 +217,8 @@
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
+		if(C && C.prefs)
+			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 		C?.playtitlemusic(40)
 		if(speed_round)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
@@ -229,8 +233,6 @@
 	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
 		for(var/mob/player as anything in GLOB.player_list)
 			antagonist_hud.show_to(player)
-			if(player.client && player.client?.prefs)
-				player.client.prefs.adjust_metacoins(player.client.ckey, 75, "Played a Round")
 
 	CHECK_TICK
 
@@ -283,7 +285,55 @@
 
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
+	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
+	send2roundend_webhook(embed)
 	standard_reboot()
+
+/datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
+	var/datum/discord_embed/embed = new()
+	embed.title = "Round End"
+	embed.description = "Join Server! <byond://[world.internet_address]:[world.port]>"
+	embed.author = "Round Controller"
+	if(GLOB.round_end_images.len)
+		embed.image = pick(GLOB.round_end_images)
+	var/round_state = "Round has ended"
+
+	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
+	embed.fields = list(
+		"PLAYERS" = player_count,
+		"ROUND STATE" = round_state,
+		"ROUND ID" = GLOB.round_id,
+		"ROUND TIME" = ROUND_TIME(),
+		"MESSAGE" = message,
+	)
+	return embed
+
+/datum/controller/subsystem/ticker/proc/send2roundend_webhook(message_or_embed)
+	var/webhook = CONFIG_GET(string/regular_roundend_webhook_url)
+
+	if(!webhook)
+		return
+	var/list/webhook_info = list()
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
+	if(CONFIG_GET(string/mentorhelp_webhook_name))
+		webhook_info["username"] = CONFIG_GET(string/roundend_webhook_name)
+	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
+		webhook_info["avatar_url"] = CONFIG_GET(string/roundend_webhook_pfp)
+	// Uncomment when servers are moved to TGS4
+	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
+	request.begin_async()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)

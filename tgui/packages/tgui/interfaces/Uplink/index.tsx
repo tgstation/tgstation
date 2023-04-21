@@ -190,8 +190,6 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const hasEnoughProgression =
-        progression_points >= item.progression_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -233,10 +231,7 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled:
-          !canBuy ||
-          (has_progression && !hasEnoughProgression) ||
-          (item.lock_other_purchases && purchased_items > 0),
+        disabled: !canBuy || (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
         },

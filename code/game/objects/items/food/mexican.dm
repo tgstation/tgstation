@@ -74,6 +74,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
+	food_buffs = STATUS_EFFECT_FOOD_FIREBURPS
 
 /obj/item/food/nachos
 	name = "nachos"
@@ -117,6 +118,7 @@
 	tastes = list("nachos" = 2, "hot pepper" = 1)
 	foodtypes = VEGETABLES | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_FIREBURPS
 
 /obj/item/food/taco
 	name = "classic taco"

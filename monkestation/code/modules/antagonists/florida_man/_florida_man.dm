@@ -52,3 +52,7 @@
 		floridan.fully_replace_character_name(null, "Florida Man")
 	else
 		floridan.fully_replace_character_name(null, "Tony Brony")
+
+/datum/antagonist/florida_man/antag_token(datum/mind/hosts_mind)
+	. = ..()
+	hosts_mind.add_antag_datum(/datum/antagonist/florida_man)

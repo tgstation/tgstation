@@ -123,3 +123,26 @@
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has ninja'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has ninja'ed [key_name(new_owner)].")
+
+/datum/antagonist/ninja/antag_token(datum/mind/hosts_mind)
+	hosts_mind.current.unequip_everything()
+	new /obj/effect/holy(hosts_mind.current.loc)
+	QDEL_IN(hosts_mind.current, 20)
+
+	var/list/spawn_locs = list()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+
+	var/key = hosts_mind.key
+
+	//spawn the ninja and assign the candidate
+	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
+	ninja.key = key
+	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
+
