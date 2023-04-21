@@ -1,7 +1,7 @@
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
 	icon = 'icons/obj/weapons/hand.dmi'
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM

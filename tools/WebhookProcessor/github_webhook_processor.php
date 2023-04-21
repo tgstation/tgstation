@@ -705,15 +705,9 @@ function checkchangelog($payload) {
 					$tags[] = 'Quality of Life';
 				}
 				break;
-			case 'soundadd':
-				if($item != 'added a new sound thingy') {
+			case 'sound':
+				if($item != 'added/modified/removed audio or sound effects') {
 					$tags[] = 'Sound';
-				}
-				break;
-			case 'sounddel':
-				if($item != 'removed an old sound thingy') {
-					$tags[] = 'Sound';
-					$tags[] = 'Removal';
 				}
 				break;
 			case 'add':
@@ -730,15 +724,9 @@ function checkchangelog($payload) {
 					$tags[] = 'Removal';
 				}
 				break;
-			case 'imageadd':
-				if($item != 'added some icons and images') {
+			case 'image':
+				if($item != 'added/modified/removed some icons or images') {
 					$tags[] = 'Sprites';
-				}
-				break;
-			case 'imagedel':
-				if($item != 'deleted some icons and images') {
-					$tags[] = 'Sprites';
-					$tags[] = 'Removal';
 				}
 				break;
 			case 'typo':

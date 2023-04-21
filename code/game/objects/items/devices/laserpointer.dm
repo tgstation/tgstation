@@ -120,8 +120,7 @@
 		var/mob/living/silicon/S = target
 		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
-		if(prob(effectchance * diode.rating))
-			S.flash_act(affect_silicon = 1)
+		if(prob(effectchance * diode.rating) && S.flash_act(affect_silicon = TRUE))
 			S.Paralyze(rand(100,200))
 			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
@@ -194,11 +193,11 @@
 	targloc.flick_overlay_view(I, 10)
 	icon_state = "pointer"
 
-/obj/item/laser_pointer/process(delta_time)
+/obj/item/laser_pointer/process(seconds_per_tick)
 	if(!diode)
 		recharging = FALSE
 		return PROCESS_KILL
-	if(DT_PROB(10 + diode.rating*10 - recharge_locked*1, delta_time)) //t1 is 20, 2 40
+	if(SPT_PROB(10 + diode.rating*10 - recharge_locked*1, seconds_per_tick)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

@@ -411,8 +411,8 @@
 			for(var/mob/living/carbon/human/user in users)
 				user.visible_message("[src] starts pecking at the floor, it must be hungry.")
 
-/obj/item/food/egg/process(delta_time)
-	amount_grown += rand(3,6) * delta_time
+/obj/item/food/egg/process(seconds_per_tick)
+	amount_grown += rand(3,6) * seconds_per_tick
 	if(amount_grown >= 100)
 		pre_hatch()
 

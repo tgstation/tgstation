@@ -60,7 +60,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -72,7 +72,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 

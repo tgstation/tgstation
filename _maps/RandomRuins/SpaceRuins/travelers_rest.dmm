@@ -100,9 +100,9 @@
 /obj/machinery/power/apc/auto_name/directional/east{
 	environ = 0;
 	equipment = 0;
-	lighting = 0;
-	locked = 0
+	lighting = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4

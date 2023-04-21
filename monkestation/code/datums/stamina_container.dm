@@ -27,16 +27,16 @@
 	STOP_PROCESSING(SSstamina, src)
 	return ..()
 
-/datum/stamina_container/proc/update(delta_time)
-	if(delta_time && is_regenerating)
-		current = min(current + (regen_rate*delta_time), maximum)
-	if(delta_time && decrement)
-		current = max(current + (-decrement*delta_time), 0)
+/datum/stamina_container/proc/update(seconds_per_tick)
+	if(seconds_per_tick && is_regenerating)
+		current = min(current + (regen_rate*seconds_per_tick), maximum)
+	if(seconds_per_tick && decrement)
+		current = max(current + (-decrement*seconds_per_tick), 0)
 	loss = maximum - current
 	loss_as_percent = loss ? (loss == maximum ? 0 : loss / maximum * 100) : 0
 
 	if(datum_flags & DF_ISPROCESSING)
-		if(delta_time && current == maximum)
+		if(seconds_per_tick && current == maximum)
 			STOP_PROCESSING(SSstamina, src)
 	else if(!(current == maximum))
 		START_PROCESSING(SSstamina, src)
