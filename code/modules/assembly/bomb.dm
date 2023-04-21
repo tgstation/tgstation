@@ -84,7 +84,7 @@
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	var/detonation_time = text2num(pick_weight(times))
 	if(detonation_time < 0)
-		audible_message(span_warning("[icon2html(src, hearers(src))] *buzz*"))
+		audible_message(span_warning("[icon2html(src, hearers(src))] *beep*"))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 		return
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
