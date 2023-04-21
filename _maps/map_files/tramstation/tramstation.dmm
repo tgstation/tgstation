@@ -15386,13 +15386,14 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "eaI" = (
-/obj/machinery/door/poddoor/lift{
-	id = "tram_cargo_lift"
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_linked_id = "tram_cargo_lift";
+	elevator_mode = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eaJ" = (
@@ -19513,9 +19514,6 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/lift{
-	id = "tram_lower_center_lift"
-	},
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -21193,15 +21191,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "gqo" = (
-/obj/machinery/door/poddoor/lift{
-	density = 0;
-	icon_state = "open";
-	id = "tram_cargo_lift"
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_linked_id = "tram_cargo_lift";
+	elevator_mode = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "gqL" = (
@@ -24608,13 +24605,14 @@
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "hMb" = (
-/obj/machinery/door/poddoor/lift{
-	id = "tram_dorm_lift"
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_linked_id = "tram_dorm_lift";
+	elevator_status = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hMd" = (
@@ -32176,13 +32174,14 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit)
 "kDN" = (
-/obj/machinery/door/poddoor/lift{
-	id = "tram_upper_center_lift"
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "kDS" = (
@@ -33533,6 +33532,10 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/window/elevator/left/directional/south{
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "kYs" = (
@@ -37561,12 +37564,11 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/obj/machinery/door/poddoor/lift{
-	density = 0;
-	icon_state = "open";
-	id = "tram_dorm_lift"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/east{
+	elevator_linked_id = "tram_dorm_lift";
+	elevator_status = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "mxR" = (
@@ -44022,15 +44024,14 @@
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "pbc" = (
-/obj/machinery/door/poddoor/lift{
-	density = 0;
-	icon_state = "open";
-	id = "tram_upper_center_lift"
-	},
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_mode = 1;
+	elevator_linked_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "pbf" = (
@@ -49591,6 +49592,10 @@
 	},
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/window/elevator/left/directional/south{
+	elevator_linked_id = "tram_perma_lift";
+	elevator_mode = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "raP" = (
@@ -53803,12 +53808,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/machinery/door/poddoor/lift{
-	density = 0;
-	icon_state = "open";
-	id = "tram_sci_lift"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_linked_id = "tram_sci_lift";
+	elevator_status = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "sFw" = (
@@ -54492,11 +54496,6 @@
 /area/station/commons/vacant_room/office)
 "sQj" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/machinery/door/poddoor/lift{
-	density = 0;
-	icon_state = "open";
-	id = "tram_lower_center_lift"
-	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
@@ -59708,8 +59707,9 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/lift{
-	id = "tram_sci_lift"
+/obj/machinery/door/window/elevator/left/directional/west{
+	elevator_linked_id = "tram_sci_lift";
+	elevator_status = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
