@@ -227,7 +227,7 @@
 		pai_card.set_personality(src)
 	forceMove(pai_card)
 	card = pai_card
-	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
+	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
@@ -238,8 +238,8 @@
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/process(delta_time)
-	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * delta_time)), -50, HOLOCHASSIS_MAX_HEALTH)
+/mob/living/silicon/pai/process(seconds_per_tick)
+	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()

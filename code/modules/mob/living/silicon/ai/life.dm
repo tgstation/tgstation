@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/silicon/ai/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if (stat == DEAD)
 		return
 	//Being dead doesn't mean your temperature never changes
@@ -31,7 +31,7 @@
 	if(!lacks_power())
 		var/area/home = get_area(src)
 		if(home.powered(AREA_USAGE_EQUIP))
-			home.use_power(500 * delta_time, AREA_USAGE_EQUIP)
+			home.use_power(500 * seconds_per_tick, AREA_USAGE_EQUIP)
 
 		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 			ai_restore_power()

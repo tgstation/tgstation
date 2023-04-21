@@ -1,9 +1,9 @@
-/datum/ai_planning_subtree/monkey_shenanigans/SelectBehaviors(datum/ai_controller/monkey/controller, delta_time)
+/datum/ai_planning_subtree/monkey_shenanigans/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
 
 	if(prob(5))
 		controller.queue_behavior(/datum/ai_behavior/use_in_hand)
 
-	if(!DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
+	if(!SPT_PROB(MONKEY_SHENANIGAN_PROB, seconds_per_tick))
 		return
 
 	if(!controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET])
@@ -24,7 +24,7 @@
 	controller.TryFindWeapon()
 
 ///monkey combat subtree.
-/datum/ai_planning_subtree/monkey_combat/SelectBehaviors(datum/ai_controller/monkey/controller, delta_time)
+/datum/ai_planning_subtree/monkey_combat/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 

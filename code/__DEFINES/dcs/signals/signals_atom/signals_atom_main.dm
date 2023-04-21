@@ -40,6 +40,8 @@
 	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE UPDATE_ICON_STATE
 	/// If returned from [COMSIG_ATOM_UPDATE_ICON] it prevents the atom from updating its overlays.
 	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS UPDATE_OVERLAYS
+///from base of [atom/update_inhand_icon]: (/mob)
+#define COMSIG_ATOM_UPDATE_INHAND_ICON "atom_update_inhand_icon"
 ///from base of [atom/update_icon_state]: ()
 #define COMSIG_ATOM_UPDATE_ICON_STATE "atom_update_icon_state"
 ///from base of [/atom/update_overlays]: (list/new_overlays)
@@ -74,8 +76,10 @@
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
 #define COMSIG_ATOM_PROCESSED "atom_processed"
-///called when teleporting into a protected turf: (channel, turf/origin)
-#define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
+///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
+#define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
+///called after teleporting into a protected turf: (channel, turf/origin)
+#define COMSIG_ATOM_INTERCEPT_TELEPORTED "intercept_teleported"
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"

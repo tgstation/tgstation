@@ -65,7 +65,7 @@
 		if(length(used_tray?.contents))
 			. += emissive_appearance(icon, "[base_icon_state]_light_mask", src, alpha = src.alpha)
 
-/obj/machinery/oven/process(delta_time)
+/obj/machinery/oven/process(seconds_per_tick)
 	if(!appears_active())
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		update_baking_audio()
@@ -77,7 +77,7 @@
 	var/worst_cooked_food_state = 0
 	for(var/obj/item/baked_item in used_tray.contents)
 
-		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PROCESS, src, delta_time)
+		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PROCESS, src, seconds_per_tick)
 
 		if(signal_result & COMPONENT_HANDLED_BAKING) //This means something responded to us baking!
 			if(signal_result & COMPONENT_BAKING_GOOD_RESULT && worst_cooked_food_state < OVEN_SMOKE_STATE_GOOD)
@@ -89,7 +89,7 @@
 		worst_cooked_food_state = OVEN_SMOKE_STATE_BAD
 		baked_item.fire_act(1000) //Hot hot hot!
 
-		if(DT_PROB(10, delta_time))
+		if(SPT_PROB(10, seconds_per_tick))
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()

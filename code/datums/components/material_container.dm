@@ -62,6 +62,14 @@
 			mat_amt = 0
 		materials[mat_ref] += mat_amt
 
+	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
+		return
+
+	var/atom/atom_target = parent
+	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+
+	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
 /datum/component/material_container/Destroy(force, silent)
 	materials = null
 	allowed_materials = null
@@ -448,3 +456,34 @@
 		))
 
 	return data
+
+/**
+ * Adds context sensitivy directly to the material container file for screentips
+ * Arguments:
+ * * source - refers to item that will display its screentip
+ * * context - refers to, in this case, an item in the users hand hovering over the material container, such as an autolathe
+ * * held_item - refers to the item that has materials accepted by the material container
+ * * user - refers to user who will see the screentip when the proper context and tool are there
+ */
+/datum/component/material_container/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(isnull(held_item))
+		return NONE
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+		return NONE
+	if(held_item.item_flags & ABSTRACT)
+		return NONE
+	if((held_item.flags_1 & HOLOGRAM_1) || (held_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(held_item, allowed_item_typecache)))
+		return NONE
+	var/list/item_materials = held_item.get_material_composition(mat_container_flags)
+	if(!length(item_materials))
+		return NONE
+	for(var/material in item_materials)
+		if(can_hold_material(material))
+			continue
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Insert"
+
+	return CONTEXTUAL_SCREENTIP_SET

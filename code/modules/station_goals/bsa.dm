@@ -46,6 +46,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	desc = "Generates cannon pulse. Needs to be linked with a fusor."
 	icon_state = "power_box"
 
+/obj/machinery/bsa/back/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
@@ -58,6 +62,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "Bluespace Artillery Bore"
 	desc = "Do not stand in front of cannon during operation. Needs to be linked with a fusor."
 	icon_state = "emitter_center"
+
+/obj/machinery/bsa/front/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
@@ -73,6 +81,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_state = "fuel_chamber"
 	var/datum/weakref/back_ref
 	var/datum/weakref/front_ref
+
+/obj/machinery/bsa/middle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))
@@ -336,7 +348,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(istype(target, /area))
+	if(obj_flags & EMAGGED)
+		return get_turf(src)
+	else if(istype(target, /area))
 		return pick(get_area_turfs(target))
 	else if(istype(target, /datum/component/gps))
 		var/datum/component/gps/G = target
@@ -351,7 +365,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		notice = "Cannon unpowered!"
 		return
 	notice = null
-	cannon.fire(user, get_impact_turf())
+	var/turf/target_turf = get_impact_turf()
+	cannon.fire(user, target_turf)
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
 	var/obj/machinery/bsa/full/prebuilt = locate() in range(7) //In case of adminspawn
@@ -374,3 +389,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	QDEL_NULL(centerpiece.back_ref)
 	qdel(centerpiece)
 	return cannon
+/obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out."))

@@ -39,9 +39,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/syndicate3)
 "dt" = (
@@ -321,11 +319,8 @@
 "Jm" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/syndicate{
-	dir = 8;
-	name = "Syndicate Drop Ship APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,

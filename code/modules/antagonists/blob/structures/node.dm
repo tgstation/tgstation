@@ -53,8 +53,8 @@
 		overmind.node_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/node/process(delta_time)
+/obj/structure/blob/special/node/process(seconds_per_tick)
 	if(overmind)
 		pulse_area(overmind, claim_range, pulse_range, expand_range)
-		reinforce_area(delta_time)
+		reinforce_area(seconds_per_tick)
 		produce_spores()

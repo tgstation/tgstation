@@ -156,11 +156,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * delta_time) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /*
 Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
@@ -192,13 +192,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, delta_time)
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * delta_time)
+	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
@@ -218,7 +218,7 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	return
 
 /// Called when an overdose starts
