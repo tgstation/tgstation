@@ -29,8 +29,8 @@ export const MarkdownViewer = (props: any, context: any) => {
 export class MarkdownViewerImpl extends Component<MarkdownViewerData> {
   render() {
     return (
-      <Window title={this.props.title}>
-        <Window.Content>
+      <Window title={this.props.title} theme="paper">
+        <Window.Content backgroundColor={'#FFFFFF'}>
           <div id="markdown-viewer-content" />
         </Window.Content>
       </Window>
