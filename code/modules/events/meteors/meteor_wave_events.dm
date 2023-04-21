@@ -95,7 +95,7 @@
 
 /datum/round_event_control/meteor_wave/dust_storm
 	name = "Major Space Dust"
-	typepath = /datum/round_event/space_dust/major_dust
+	typepath = /datum/round_event/meteor_wave/dust_storm
 	weight = 14
 	description = "The station is pelted by sand."
 	earliest_start = 15 MINUTES

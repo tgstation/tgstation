@@ -288,7 +288,7 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = NONE
 	weight = 2
-	event_control_path = /datum/round_event_control/space_dust/major_dust
+	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
 	max_occurrences_modifier = 3
 
