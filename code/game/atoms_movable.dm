@@ -236,7 +236,7 @@
 				em_block = new(src, render_target)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
-	 // EMISSIVE_BLOCK_GENERIC == 0
+	// EMISSIVE_BLOCK_GENERIC == 0
 	else
 		return fast_emissive_blocker(src)
 
