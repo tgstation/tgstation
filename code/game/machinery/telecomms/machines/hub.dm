@@ -52,8 +52,8 @@
 /obj/machinery/telecomms/hub/Destroy()
 	GLOB.telecomms_list -= src
 	QDEL_NULL(soundloop)
-	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
-		remove_link(comm)
+	for(var/obj/machinery/telecomms/machine in GLOB.telecomms_list)
+		remove_link(machine)
 	links = list()
 	return ..()
 
