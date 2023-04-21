@@ -11904,6 +11904,12 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
+"cXu" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/circuitboard/machine/telecomms/bus,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "cXC" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
@@ -21601,10 +21607,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
-"fKz" = (
-/obj/machinery/telecomms/message_server/preset,
-/turf/open/floor/circuit/green/telecomms,
-/area/station/tcommsat/server)
 "fKA" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/computer/department_orders/service{
@@ -39880,9 +39882,7 @@
 /area/station/science/research/abandoned)
 "kJd" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/circuitboard/machine/telecomms/receiver,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
@@ -126781,7 +126781,7 @@ xWl
 nPN
 nzb
 mNh
-fKz
+xqs
 pCb
 mHz
 ess
@@ -128327,7 +128327,7 @@ qkL
 kJd
 kpq
 wVs
-xqs
+cXu
 kzE
 aIV
 aIV
