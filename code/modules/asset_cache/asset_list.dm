@@ -62,14 +62,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/proc/should_refresh()
 	return !cross_round_cachable || !CONFIG_GET(flag/cache_assets)
 
-#ifdef SAVE_SPRITESHEETS
 /// Simply takes any generated file and saves it to the round-specific /logs folder. Useful for debugging potential issues with spritesheet generation/display.
 /// Only called when SAVE_SPRITESHEETS is defined.
 /datum/asset/proc/save_to_logs(file_name, file_location)
 	var/asset_path = "[GLOB.log_directory]/generated_assets/[file_name]"
 	fdel(asset_path) // just in case, sadly we can't use rust_g stuff here.
 	fcopy(file_location, asset_path)
-#endif
 
 /// If you don't need anything complicated.
 /datum/asset/simple
@@ -209,9 +207,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	text2file(generate_css(), file_directory)
 	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory))
 
-#ifdef SAVE_SPRITESHEETS
-	save_to_logs(file_name = css_name, file_location = file_directory)
-#endif
+	if(CONFIG_GET(flag/save_spritesheets))
+		save_to_logs(file_name = css_name, file_location = file_directory)
 
 	fdel(file_directory)
 
@@ -267,10 +264,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			stack_trace("Failed to strip [png_name]: [error]")
 		size[SPRSZ_STRIPPED] = icon(file_directory)
 
-// this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
-#ifdef SAVE_SPRITESHEETS
-		save_to_logs(file_name = png_name, file_location = file_directory)
-#endif
+		// this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
+		if(CONFIG_GET(flag/save_spritesheets))
+			save_to_logs(file_name = png_name, file_location = file_directory)
 
 		fdel(file_directory)
 
@@ -314,9 +310,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	rustg_file_write(replaced_css, replaced_css_filename)
 	SSassets.transport.register_asset(finalized_name, replaced_css_filename)
 
-#ifdef SAVE_SPRITESHEETS
-	save_to_logs(file_name = finalized_name, file_location = replaced_css_filename)
-#endif
+	if(CONFIG_GET(flag/save_spritesheets))
+		save_to_logs(file_name = finalized_name, file_location = replaced_css_filename)
 
 	fdel(replaced_css_filename)
 

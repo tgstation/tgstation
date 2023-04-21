@@ -76,11 +76,6 @@
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
-/// If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
-/// Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
-/// Will only seek to waste disk space if ran on production.
-// #define SAVE_SPRITESHEETS
-
 /// If this is uncommented, will profile mapload atom initializations
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
