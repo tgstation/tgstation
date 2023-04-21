@@ -32,3 +32,6 @@
 
 /// Checks that no light shares a tile/pixel offsets with another
 /datum/unit_test/focus_only/stacked_lights
+
+/// Ensures qdel() is not called on atoms before they're initialized (after SSmapping starts up)
+/datum/unit_test/focus_only/pre_init_qdel_post_mapping

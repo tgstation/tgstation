@@ -89,6 +89,9 @@ SUBSYSTEM_DEF(mapping)
 	/// list of lazy templates that have been loaded
 	var/list/loaded_lazy_templates
 
+	/// If we've started loading yet or not
+	var/system_started = FALSE
+
 /datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
@@ -106,6 +109,7 @@ SUBSYSTEM_DEF(mapping)
 		if(!config || config.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to Meta Station."))
 			config = old_config
+	system_started = TRUE
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
 	plane_to_offset = list()

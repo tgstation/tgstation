@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(garbage)
 #endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
-	
+
 	var/list/queue = queues[level]
 
 	queue[++queue.len] = list(queue_time, refid, D.gc_destroyed) // not += for byond reasons
@@ -350,6 +350,14 @@ SUBSYSTEM_DEF(garbage)
 	if(!istype(D))
 		del(D)
 		return
+
+	/// Tries to provide a stack trace for qdel() in/after New() (you know that runtime in InitAtom())
+	/// I can't hit everything that I'd like to here, since there are some valid cases of deleting before creation
+	/// This is a pretty good spread tho, most atoms are created in SSmapping
+	if(PERFORM_ALL_TESTS(focus_only/pre_init_qdel_post_mapping) && SSmapping.system_started && isatom(D))
+		var/atom/attempting_qdel = D
+		if(!(attempting_qdel.flags_1 & INITIALIZED_1))
+			stack_trace("Tried to delete [attempting_qdel] before it was initialized, you doing this off New()?")
 
 	var/datum/qdel_item/I = SSgarbage.items[D.type]
 	if (!I)
