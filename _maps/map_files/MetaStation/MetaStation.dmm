@@ -1322,9 +1322,6 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aAb" = (
@@ -4927,9 +4924,6 @@
 	name = "CO2 to Pure"
 	},
 /obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/window,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -9589,12 +9583,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"dES" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/research)
 "dEV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14612,6 +14600,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "fyL" = (
@@ -18699,6 +18690,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "gZD" = (
@@ -21735,9 +21729,6 @@
 	name = "Plasma to Pure"
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/window,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -21964,9 +21955,6 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ijZ" = (
@@ -23305,9 +23293,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/window,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -23953,10 +23938,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window,
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/window,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iMQ" = (
@@ -25395,6 +25380,12 @@
 	dir = 1;
 	name = "N2 to Pure"
 	},
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "jln" = (
@@ -26124,9 +26115,6 @@
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jwW" = (
@@ -36129,6 +36117,12 @@
 	name = "Inner Pipe Access";
 	req_access = list("atmospherics")
 	},
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "nbJ" = (
@@ -42728,6 +42722,22 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"pxE" = (
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Inner Pipe Access";
+	req_access = list("atmospherics")
+	},
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "pxN" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
@@ -43557,6 +43567,9 @@
 "pME" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/reagent_dispensers/fueltank,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "pMH" = (
@@ -50081,9 +50094,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "sbK" = (
@@ -50467,6 +50477,12 @@
 /obj/machinery/atmospherics/components/binary/pump/off{
 	dir = 1;
 	name = "O2 To Pure"
+	},
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -54550,9 +54566,6 @@
 	name = "N2O to Pure"
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/window,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -62224,9 +62237,6 @@
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wkv" = (
@@ -63294,6 +63304,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
+	},
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -67351,9 +67367,6 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "yci" = (
@@ -106353,7 +106366,7 @@ hye
 tUn
 tUn
 tUn
-dES
+gFQ
 gFQ
 gFQ
 aHR
@@ -114562,7 +114575,7 @@ jtf
 rdv
 lxt
 nnD
-nbx
+pxE
 oIM
 lAh
 lMJ
