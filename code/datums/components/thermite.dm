@@ -80,7 +80,8 @@
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_FIRE_ACT,
-		COMSIG_PARENT_QDELETING))
+		COMSIG_PARENT_QDELETING,
+	))
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
 
