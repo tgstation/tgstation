@@ -66,7 +66,8 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS|RESET_TRANSFORM
 
-/atom/movable/render_step/emissive_blocker/Initialize(mapload, atom/movable/source)
+/atom/movable/render_step/emissive_blocker/Initialize(mapload, source)
 	. = ..()
 	src.color = GLOB.em_block_color
-	SET_PLANE_EXPLICIT(src, plane, source)
+	var/atom/movable/source_atom = locate(source)
+	SET_PLANE_EXPLICIT(src, plane, source_atom)
