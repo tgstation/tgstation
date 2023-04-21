@@ -12,11 +12,6 @@
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
-	var/list/times
-
-/obj/item/onetankbomb/Initialize(mapload)
-	. = ..()
-	times = list("1" = 1, "-1" = 1, "15" = 7, "[rand(30,90)]" = 3) // instant, dud, normal fuse, long random fuse
 
 /obj/item/onetankbomb/Destroy()
 	bombassembly = null
@@ -27,9 +22,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
-	. = bombtank.examine(user)
-	. += span_warning("It looks rather unreliable, you can't tell when it will explode!")
-	return .
+	return bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon(updates)
 	icon = bombtank?.icon || initial(icon)
@@ -82,16 +75,9 @@
 	return
 
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	var/detonation_time = text2num(pick_weight(times))
-	if(detonation_time < 0)
-		audible_message(span_warning("[icon2html(src, hearers(src))] *beep*"))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-		return
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(detonate)), detonation_time)
-
-/obj/item/onetankbomb/proc/detonate()
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	if(status)
@@ -120,6 +106,9 @@
 	. = ..()
 	if(bombassembly)
 		bombassembly.dropped()
+
+
+
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
