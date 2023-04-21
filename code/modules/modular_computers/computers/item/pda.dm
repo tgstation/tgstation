@@ -272,6 +272,7 @@
 		msg.invisible = TRUE
 
 /obj/item/modular_computer/pda/ui_state(mob/user)
+	. = ..()
 	for(var/obj/item/inhand as anything in user.held_items)
 		if(inhand == src)
 			return GLOB.horizontal_state
