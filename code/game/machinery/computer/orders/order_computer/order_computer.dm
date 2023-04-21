@@ -91,7 +91,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"name" = item.name,
 			"amt" = grocery_list[item],
 		))
-
 	if(!isliving(user))
 		return data
 	var/mob/living/living_user = user
