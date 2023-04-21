@@ -728,3 +728,7 @@
 #undef HEAD_UPDATE_PERIOD
 #undef REVOLUTION_VICTORY
 #undef STATION_VICTORY
+
+/datum/antagonist/rev/head/antag_token(datum/mind/hosts_mind)
+	. = ..()
+	hosts_mind.make_rev()

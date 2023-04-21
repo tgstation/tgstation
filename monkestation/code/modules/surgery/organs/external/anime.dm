@@ -50,7 +50,7 @@
 	icon_state = "antennae"
 
 	zone = BODY_ZONE_PRECISE_GROIN
-	slot = ORGAN_SLOT_EXTERNAL_TAIL
+	slot = ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM
 
 	preference = "feature_anime_bottom"
 

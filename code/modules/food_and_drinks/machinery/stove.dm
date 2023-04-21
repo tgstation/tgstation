@@ -27,7 +27,7 @@
 // - Tasting the pot to learn its exact contents w/o sci goggles (chef skillchip?)
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
-	desc = "A tall soup designed to mix and cook all kinds of soup."
+	desc = "A tall soup pot designed to mix and cook all kinds of soup."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"

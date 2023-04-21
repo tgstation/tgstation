@@ -257,3 +257,13 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 6
 /// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
+
+#define FUSION_TEMPERATURE_THRESHOLD	    10000
+#define FUSION_TRITIUM_MOLES_USED  			1
+#define FUSION_MOLE_THRESHOLD				250 	//Mole count required (carbon dioxide/plasma) to start a fusion reaction
+#define PLASMA_BINDING_ENERGY  				20000000
+#define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
+#define PARTICLE_CHANCE_CONSTANT 			(-20000000)
+#define TOROID_VOLUME_BREAKEVEN			1000
+#define INSTABILITY_GAS_POWER_FACTOR 		0.003
+#define FUSION_RAD_COEFFICIENT				(-1000)

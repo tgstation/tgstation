@@ -290,8 +290,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_limit = 1e14
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
+	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/plasma][MOLES] = 1000
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 1000
 	air_contents.gases[/datum/gas/tritium][MOLES] = 300
 	air_contents.temperature = 10000
 	SSair.start_processing_machine(src)

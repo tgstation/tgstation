@@ -226,6 +226,11 @@
 			candidates.Remove(candidate_player)
 			continue
 
+		if(candidate_player.mind)
+			if(candidate_player.mind.assigned_role.title in restricted_roles) // Does their job allow it?
+				candidates.Remove(candidate_player)
+				continue
+
 		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(candidate_player)
 			continue

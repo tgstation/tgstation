@@ -93,6 +93,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
+	var/list/random_engine_templates = list()
+	var/list/random_engine_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -349,6 +351,8 @@ Used by the AI doomsday and the self-destruct nuke.
 	holodeck_templates = SSmapping.holodeck_templates
 	areas_in_z = SSmapping.areas_in_z
 
+	random_engine_templates = SSmapping.random_engine_templates
+
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
@@ -431,6 +435,27 @@ Used by the AI doomsday and the self-destruct nuke.
 	random_room_spawners = null
 	INIT_ANNOUNCE("Loaded Random Rooms in [(REALTIMEOFDAY - start_time)/10]s!")
 
+/datum/controller/subsystem/mapping/proc/load_random_engines()
+	var/start_time = REALTIMEOFDAY
+	for(var/obj/effect/spawner/random_engines/engine_spawner as() in random_engine_spawners)
+		var/list/possible_engine_templates = list()
+		var/datum/map_template/random_engines/engine_candidate
+		shuffle_inplace(random_engine_templates)
+		for(var/ID in random_engine_templates)
+			engine_candidate = random_engine_templates[ID]
+			if(config.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
+				engine_candidate = null
+				continue
+			possible_engine_templates[engine_candidate] = engine_candidate.weight
+		if(possible_engine_templates.len)
+			var/datum/map_template/random_engines/template = pick_weight(possible_engine_templates)
+			template.stationinitload(get_turf(engine_spawner), centered = template.centerspawner)
+		SSmapping.random_engine_spawners -= engine_spawner
+		qdel(engine_spawner)
+	random_engine_spawners = null
+	INIT_ANNOUNCE("Loaded Random Engine in [(REALTIMEOFDAY - start_time)/10]s!")
+/// New Random Bars and Engines Spawning - MonkeStation Edit End
+
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
@@ -445,6 +470,8 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	LoadStationRoomTemplates()
 	LoadStationRooms()
+
+	load_random_engines()
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -608,6 +635,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/random_room/R = new room_type()
 		random_room_templates[R.room_id] = R
 		map_templates[R.room_id] = R
+
+	for(var/item in subtypesof(/datum/map_template/random_engines))
+		var/datum/map_template/random_engines/room_type = item
+		if(!(initial(room_type.mappath)))
+			message_admins("Engine Template [initial(room_type.name)] found without mappath. Yell at coders")
+			continue
+		var/datum/map_template/random_engines/E = new room_type()
+		random_engine_templates[E.room_id] = E
+		map_templates[E.room_id] = E
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename

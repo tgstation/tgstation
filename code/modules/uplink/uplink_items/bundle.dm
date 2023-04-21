@@ -101,8 +101,6 @@
 			continue
 		if(!uplink_item.surplus)
 			continue
-		if(handler.not_enough_reputation(uplink_item))
-			continue
 		possible_items += uplink_item
 	return possible_items
 

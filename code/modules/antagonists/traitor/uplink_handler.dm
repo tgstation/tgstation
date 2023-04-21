@@ -58,10 +58,6 @@
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
 
-/// Checks if traitor has enough reputation to purchase an item
-/datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
-	return FALSE
-
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if((to_purchase in extra_purchasable))
@@ -91,7 +87,7 @@
 
 	var/current_stock = item_stock[to_purchase.stock_key]
 	var/stock = current_stock != null? current_stock : INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
+	if(telecrystals < to_purchase.cost || stock <= 0)
 		return FALSE
 
 	return TRUE

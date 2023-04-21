@@ -84,7 +84,8 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 	if(istype(created_item, /obj/item/effect_granter))
 		var/obj/item/effect_granter/granting_time = created_item
 		if(granting_time.human_only && iscarbon(new_player_mob_living))
-			granting_time.grant_effect(new_player_mob_living)
+			spawn(4 SECONDS)
+				granting_time.grant_effect(new_player_mob_living)
 		else
 			ui_close()
 			qdel(new_player_mob.client.readied_store)
@@ -93,6 +94,6 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
-	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost))
+	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost), donator_multipler = FALSE)
 	ui_close()
 	qdel(new_player_mob.client.readied_store)

@@ -850,9 +850,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(target))
 		return
-	
+
 	target.update_held_items()
-	
+
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
 
 /// Handles updates to greyscale value updates.
@@ -1024,6 +1024,8 @@
  * Default behaviour is to send [COMSIG_ATOM_SING_PULL] and return
  */
 /atom/proc/singularity_pull(obj/singularity/singularity, current_size)
+	if(current_size <= 3 && (/obj/effect/shield in singularity.loc.contents)) //this is kinda ghetto
+		return
 	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, singularity, current_size)
 
 
