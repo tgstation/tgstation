@@ -60,7 +60,7 @@
 	)
 	//needs to be chemid unit checked at some point
 
-/datum/round_event/scrubber_overflow/announce_deadchat(random)
+/datum/round_event/scrubber_overflow/announce_deadchat(random, cause)
 	if(!forced_reagent_type)
 		//nothing out of the ordinary, so default announcement
 		return ..()
