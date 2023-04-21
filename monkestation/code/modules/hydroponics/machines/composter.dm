@@ -25,7 +25,8 @@
 
 /obj/machinery/composters/update_desc()
 	. = ..()
-	. += "Biomatter: [biomatter]"
+	desc = "Just insert your bio degradable materials and it will produce compost."
+	desc += "\nBiomatter: [biomatter]"
 
 /obj/machinery/composters/proc/compost(atom/composter)
 	if(istype(composter, /obj/item/seeds))
