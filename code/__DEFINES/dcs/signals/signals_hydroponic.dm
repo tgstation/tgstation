@@ -33,3 +33,5 @@
 ///from base of /obj/machinery/hydroponics/plantdies()
 #define COMSIG_HYDROTRAY_PLANT_DEATH "hydrotray_plant_death"
 ///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
+
+#define COMSIG_BOTANY_FINAL_GROWTH "hydroponics_final_stage"

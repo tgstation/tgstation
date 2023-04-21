@@ -11,8 +11,6 @@
 		var/datum/reagent/chem = c
 		chem.on_hydroponics_apply(myseed, reagents, src, user)
 
-	reagents.clear_reagents()
-
 
 /obj/machinery/hydroponics/proc/mutation_roll(mob/user)
 	switch(rand(100))

@@ -7750,6 +7750,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cXw" = (
@@ -15541,6 +15542,12 @@
 /obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"fWk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/bot,
+/obj/machinery/mother_tree,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "fWm" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/item/toy/plush/beeplushie{
@@ -17407,6 +17414,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gFL" = (
@@ -102205,7 +102213,7 @@ wFM
 xgD
 rMz
 xwP
-xwP
+fWk
 nDO
 dsI
 tUn

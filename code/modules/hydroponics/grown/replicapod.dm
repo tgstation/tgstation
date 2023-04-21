@@ -16,8 +16,9 @@
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/replicapod)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/replica_pod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	harvest_age =100
 
 /obj/item/food/grown/cabbage
 	seed = /obj/item/seeds/cabbage

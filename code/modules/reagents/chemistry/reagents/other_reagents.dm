@@ -25,8 +25,7 @@
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustPests(rand(2,4))
+		mytray.adjust_pestlevel(rand(2,3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
@@ -294,11 +293,8 @@
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -462,6 +458,11 @@
 	taste_description = "cherry" // by popular demand
 	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/lube/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	myseed.process_trait_gain(/datum/plant_gene/trait/slip, chems.get_reagent_amount(src.type) * 0.25)
+	myseed.adjust_endurance(chems.get_reagent_amount(src.type) * 0.08)
 
 /datum/reagent/lube/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -1006,10 +1007,9 @@
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.75))
-		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustWeeds(-rand(1,2))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.75))
+		mytray.adjust_waterlevel(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1112,12 +1112,25 @@
 	if(!QDELETED(glow))
 		glow.reagents.add_reagent(type, reac_volume)
 
+/datum/reagent/uranium/generate_infusion_values(datum/reagents/chems)
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["damage"] = amount * rand(8, 22) * 0.1
+		generated_values["maturation_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["production_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["potency_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["yield_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["lifespan_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["endurance_change"] = amount * rand(-10, 10) * 0.1
+		return generated_values
+
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 1))
 		plant_mutation_reagent_apply(chems, mytray, user, mr = 10, hm = 5)
 
 
@@ -1132,13 +1145,26 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/uranium/radium/generate_infusion_values(datum/reagents/chems)
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["damage"] = amount * rand(8, 22) * 0.1
+		generated_values["maturation_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["production_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["potency_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["yield_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["lifespan_change"] = amount * rand(-10, 10) * 0.1
+		generated_values["endurance_change"] = amount * rand(-10, 10) * 0.1
+		return generated_values
+
 /datum/reagent/uranium/radium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!myseed)
 		return
 
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 3))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 1))
 		plant_mutation_reagent_apply(chems, mytray, user, mr = 10, hm = 5)
 
 /datum/reagent/bluespace
@@ -1407,15 +1433,25 @@
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/ammonia/generate_infusion_values(datum/reagents/chems)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["damage"] = (amount * rand(13, 27) * 0.1)
+		generated_values["maturation_change"] = (amount * rand(5, 10) * 0.1)
+		generated_values["production_change"] = (amount * rand(2, 5) * 0.1)
+		return generated_values
+
 /datum/reagent/ammonia/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!check_tray(chems, mytray))
 		return
 	// Ammonia is bad ass.
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
-		if(myseed)
-			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.04))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.12))
+		if(myseed && prob(10))
+			myseed.adjust_yield(1)
+			myseed.adjust_maturation(round(chems.get_reagent_amount(src.type) * 0.12))
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1429,11 +1465,10 @@
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_pestlevel(-rand(1,2))
 		if(myseed)
-			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.02))
-		mytray.adjustPests(-rand(1,2))
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1642,7 +1677,6 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 1
 		mytray.mutmod = 1
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1656,7 +1690,6 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 0
 		mytray.mutmod = 2
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1665,12 +1698,24 @@
 	tox_prob = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/plantnutriment/robustharvestnutriment/generate_infusion_values(datum/reagents/chems)
+
+	. = ..()
+
+	if(chems.has_reagent(src.type, 1))
+
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["yield_change"] = (amount * (rand(1, 4) * 0.1))
+		generated_values["damage"] = (amount * (rand(3, 7) * 0.1))
+		generated_values["lifespan_change"] = (amount * (rand(-2, 0) * 0.1))
+		return generated_values
+
 /datum/reagent/plantnutriment/robustharvestnutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 1.3
 		mytray.mutmod = 0
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) *1 ))
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -2027,9 +2072,8 @@
 /datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.25))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustWeeds(-1)
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_weedlevel(-1)
 
 /datum/reagent/acetone
 	name = "Acetone"
@@ -2195,15 +2239,25 @@
 	ph = 11.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/saltpetre/generate_infusion_values(datum/reagents/chems)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["potency_change"] = (amount * (rand(2, 8) * 0.1))
+		generated_values["damage"] = (amount * (rand(3, 7) * 0.1))
+		generated_values["yield_change"] = (amount * (rand(0,2) * 0.1))
+		return generated_values
+
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 /datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
 		var/salt = chems.get_reagent_amount(src.type)
-		mytray.adjustHealth(round(salt * 0.25))
+		mytray.adjust_plant_health(round(salt * 0.18))
 		if(myseed)
-			myseed.adjust_production(-round(salt/10)-prob(salt%10))
-			myseed.adjust_potency(round(salt*0.5))
+			myseed.adjust_production(-round(salt * 0.1)-prob(salt%10))
+			myseed.adjust_potency(round(salt*0.2))
 
 /datum/reagent/lye
 	name = "Lye"
@@ -2881,11 +2935,12 @@
 	if(!check_tray(chems, mytray))
 		return
 
-	mytray.adjust_weedlevel(-1)
-	mytray.adjust_pestlevel(-1)
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	myseed?.adjust_potency(round(chems.get_reagent_amount(type) * 0.5))
-
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_weedlevel(-1)
+		mytray.adjust_pestlevel(-1)
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		if(myseed)
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
 // I made this food....with love.
 // Reagent added to food by chef's with a chef's kiss. Makes people happy.
 /datum/reagent/love

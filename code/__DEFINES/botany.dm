@@ -1,10 +1,10 @@
 /// -- Botany plant stat defines. --
 /// MAXES:
-#define MAX_PLANT_YIELD 10
-#define MAX_PLANT_LIFESPAN 100
-#define MAX_PLANT_ENDURANCE 100
-#define MAX_PLANT_PRODUCTION 10
-#define MAX_PLANT_POTENCY 100
+#define MAX_PLANT_YIELD 1e31
+#define MAX_PLANT_LIFESPAN 1e31
+#define MAX_PLANT_ENDURANCE 1e31
+#define MAX_PLANT_PRODUCTION 1e31
+#define MAX_PLANT_POTENCY 1e31
 #define MAX_PLANT_INSTABILITY 100
 #define MAX_PLANT_WEEDRATE 10
 #define MAX_PLANT_WEEDCHANCE 67
@@ -50,10 +50,6 @@
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.
 #define MUTATE_EARLY (1<<0)
 
-/// -- Flags for traits. --
-/// Caps the plant's yield at 5 instead of 10.
-#define TRAIT_HALVES_YIELD (1<<0)
-
 /// -- Trait IDs. Plants that match IDs cannot be added to the same plant. --
 /// Plants that glow.
 #define GLOW_ID (1<<0)
@@ -69,6 +65,16 @@
 #define REAGENT_TRANSFER_ID (1<<5)
 /// Plants that have a unique effect on attack_self.
 #define ATTACK_SELF_ID (1<<6)
+/// Plants that override harvest
+#define HARVEST_OVERRIDE (1<<7)
+
+/// -- Flags for traits. --
+/// When acclimed halves the yield of the plant
+#define TRAIT_HALVES_YIELD (1<<0)
+#define TRAIT_HALVES_PRODUCTION (1<<1)
+#define TRAIT_HALVES_POTENCY (1<<2)
+#define TRAIT_HALVES_ENDURANCE (1<<3)
+#define TRAIT_HALVES_LIFESPAN (1<<4)
 
 #define GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR 10
 #define GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM 0.2

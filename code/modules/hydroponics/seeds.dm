@@ -60,6 +60,18 @@
 	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
 
+	var/blooming_stage = 0
+	///the age at which the plant should be harvested at
+	var/harvest_age = 120
+	///list of all mutations that are generated via stats
+	var/list/possible_mutations = list()
+	///list of all traits currently being trained
+	var/list/traits_in_progress = list()
+	///list of infusion_mutations checked on infusion for requirements and moved to possible_mutations
+	var/list/infusion_mutations = list()
+	///infusion damage
+	var/infusion_damage = 0
+
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-8, 8)
@@ -74,6 +86,18 @@
 	if(!icon_harvest && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && yield != -1)
 		icon_harvest = "[species]-harvest"
 
+	var/list/generated_mutations = list()
+	for(var/datum/hydroponics/plant_mutation/listed_item as anything in possible_mutations)
+		var/datum/hydroponics/plant_mutation/created_list_item = new listed_item
+		generated_mutations += created_list_item
+	possible_mutations = generated_mutations
+
+	var/list/generated_infusions = list()
+	for(var/datum/hydroponics/plant_mutation/infusion/listed_item as anything in infusion_mutations)
+		var/datum/hydroponics/plant_mutation/infusion/created_list_item = new listed_item
+		generated_mutations += created_list_item
+	infusion_mutations = generated_infusions
+
 	if(!nogenes) // not used on Copy()
 		genes += new /datum/plant_gene/core/lifespan(lifespan)
 		genes += new /datum/plant_gene/core/endurance(endurance)
@@ -82,6 +106,7 @@
 		if(yield != -1)
 			genes += new /datum/plant_gene/core/yield(yield)
 			genes += new /datum/plant_gene/core/production(production)
+			genes += new /datum/plant_gene/core/maturation(maturation)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
 
@@ -147,6 +172,8 @@
 		copied_gene.on_new_seed(copy_seed)
 
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
+	copy_seed.harvest_age = harvest_age
+
 	return copy_seed
 
 /obj/item/seeds/proc/get_gene(typepath)
@@ -228,24 +255,38 @@
 	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
 	var/product_count = getYield()
 
+	if(product_count >= 10)
+		product_count = 10 + log(1.4) * (getYield() - 1)
+
 	while(t_amount < product_count)
-		var/obj/item/food/grown/t_prod = new product(output_loc, src)
-		if(parent.myseed.plantname != initial(parent.myseed.plantname))
-			t_prod.name = lowertext(parent.myseed.plantname)
-		if(productdesc)
-			t_prod.desc = productdesc
-		t_prod.seed.name = parent.myseed.name
-		t_prod.seed.desc = parent.myseed.desc
-		t_prod.seed.plantname = parent.myseed.plantname
-		result.Add(t_prod) // User gets a consumable
-		if(!t_prod)
-			return
-		t_amount++
-		product_name = parent.myseed.plantname
+		if(prob(30))
+			var/obj/item/seeds/seed_prod
+			if(prob(10) && has_viable_mutations())
+				seed_prod = create_valid_mutation(output_loc, TRUE)
+			else
+				seed_prod = src.Copy_drop(output_loc)
+			result.Add(seed_prod) // User gets a consumable
+			t_amount++
+		else
+			var/obj/item/food/grown/t_prod
+			if(prob(10) && has_viable_mutations())
+				t_prod = create_valid_mutation(output_loc)
+			else
+				t_prod = new product(output_loc, src)
+			if(parent.myseed.plantname != initial(parent.myseed.plantname))
+				t_prod.name = parent.myseed.plantname
+			t_prod.seed.name = parent.myseed.name
+			t_prod.seed.desc = parent.myseed.desc
+			t_prod.seed.plantname = parent.myseed.plantname
+			result.Add(t_prod) // User gets a consumable
+			if(!t_prod)
+				return
+			t_amount++
+			product_name = t_prod.seed.plantname
 	if(product_count >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
 	parent.update_tray(user, product_count)
-
+	parent.update_status_light_overlays()
 	return result
 
 /**
@@ -347,6 +388,11 @@
 		return
 	potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
 
+/obj/item/seeds/proc/adjust_maturation(adjustamt)
+	if(maturation == -1)
+		return
+	maturation = maturation + adjustamt
+
 /**
  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
  */
@@ -399,6 +445,10 @@
 		return
 	production = clamp(adjustamt, 1, MAX_PLANT_PRODUCTION)
 
+/obj/item/seeds/proc/set_maturation(adjustamt)
+	if(yield == -1)
+		return
+	maturation = adjustamt
 /**
  * Sets the plant's potency stat to the value of adjustamt. (Max 100)
  */

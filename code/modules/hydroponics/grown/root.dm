@@ -11,7 +11,7 @@
 	yield = 5
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	mutatelist = list(/obj/item/seeds/carrot/parsnip)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/parsnip)
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/carrot
@@ -43,7 +43,7 @@
 	plantname = "Parsnip"
 	product = /obj/item/food/grown/parsnip
 	icon_dead = "carrot-dead"
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/aluminium = 0.05)
 
 /obj/item/food/grown/parsnip
@@ -69,7 +69,7 @@
 	yield = 6
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
-	mutatelist = list(/obj/item/seeds/redbeet)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/redbeet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/sugar = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/whitebeet

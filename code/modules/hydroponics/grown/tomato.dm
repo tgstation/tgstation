@@ -11,7 +11,7 @@
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/blue_tomato, /datum/hydroponics/plant_mutation/blood_tomato, /datum/hydroponics/plant_mutation/killer_tomato)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/squash
 
@@ -34,7 +34,7 @@
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
 	product = /obj/item/food/grown/tomato/blood
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/blood = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
@@ -59,7 +59,7 @@
 	product = /obj/item/food/grown/tomato/blue
 	yield = 2
 	icon_grow = "bluetomato-grow"
-	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/bluespace_tomato)
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
@@ -83,7 +83,7 @@
 	plantname = "Bluespace Tomato Plants"
 	product = /obj/item/food/grown/tomato/blue/bluespace
 	yield = 2
-	mutatelist = null
+	possible_mutations = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/bluespace)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/bluespace = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 50
@@ -112,7 +112,7 @@
 	icon_grow = "killertomato-grow"
 	icon_harvest = "killertomato-harvest"
 	icon_dead = "killertomato-dead"
-	mutatelist = null
+	possible_mutations = list()
 	rarity = 30
 
 /obj/item/food/grown/tomato/killer

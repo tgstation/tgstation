@@ -24,7 +24,7 @@
 	potency = 5
 	icon_dead = "ambrosia-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/ambrosia/deus)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/ambrosia_deus)
 	reagents_add = list(/datum/reagent/medicine/c2/aiuri = 0.1, /datum/reagent/medicine/c2/libital = 0.1 ,/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/toxin = 0.1)
 
 /obj/item/food/grown/ambrosia/vulgaris
@@ -41,7 +41,7 @@
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
 	product = /obj/item/food/grown/ambrosia/deus
-	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/ambrosia_gaia)
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.15, /datum/reagent/medicine/synaptizine = 0.15, /datum/reagent/drug/space_drugs = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 	rarity = 40
 
@@ -60,7 +60,7 @@
 	species = "ambrosia_gaia"
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/food/grown/ambrosia/gaia
-	mutatelist = list(/obj/item/seeds/ambrosia/deus)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/ambrosia_deus)
 	reagents_add = list(/datum/reagent/medicine/earthsblood = 0.05, /datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/nutriment/vitamin = 0.05)
 	rarity = 30 //These are some pretty good plants right here
 	genes = list()

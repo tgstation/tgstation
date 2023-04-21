@@ -248,6 +248,10 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.1))
 
+/datum/reagent/proc/generate_infusion_values(datum/reagents/chems)
+	if(!chems)
+		return
+
 /// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
 /datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	ASSERT(mytray)
