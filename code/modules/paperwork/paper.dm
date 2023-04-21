@@ -373,6 +373,7 @@
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
 	fire_act(attacking_item.get_temperature())
+	return TRUE
 
 /obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
