@@ -637,7 +637,7 @@
 	set_weedlevel(0, update_icon = FALSE) // Reset
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
-	TRAY_NAME_UPDATE
+
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
@@ -720,7 +720,7 @@
 /obj/machinery/hydroponics/proc/after_mutation(message)
 		update_appearance()
 		visible_message(message)
-		TRAY_NAME_UPDATE
+
 /**
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
@@ -825,7 +825,7 @@
 			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			set_seed(O)
-			TRAY_NAME_UPDATE
+
 			age = 1
 			growth += 3
 			set_plant_health(myseed.endurance)
@@ -1000,7 +1000,7 @@
 		to_chat(user, span_notice("You remove the dead plant from [src]."))
 		set_seed(null)
 		update_appearance()
-		TRAY_NAME_UPDATE
+
 	else
 		if(user)
 			user.examinate(src)
@@ -1024,7 +1024,7 @@
 		set_seed(null)
 		name = initial(name)
 		desc = initial(desc)
-		TRAY_NAME_UPDATE
+
 		growth = 0
 		repeated_harvest = 0
 	else
@@ -1087,7 +1087,7 @@
  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/simple_animal/hostile/killertomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)
