@@ -203,17 +203,17 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
-	var/res_name = "spritesheet_[name].css"
-	var/fname = "data/spritesheets/[res_name]"
-	fdel(fname)
-	text2file(generate_css(), fname)
-	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
+	var/css_name = "spritesheet_[name].css"
+	var/file_directory = "data/spritesheets/[res_name]"
+	fdel(file_directory)
+	text2file(generate_css(), file_directory)
+	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory))
 
 #ifdef SAVE_SPRITESHEETS
-	save_to_logs(file_name = res_name, file_location = fname)
+	save_to_logs(file_name = css_name, file_location = file_directory)
 #endif
 
-	fdel(fname)
+	fdel(file_directory)
 
 	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
 		write_to_cache()
@@ -259,12 +259,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			continue
 
 		// save flattened version
-		var/fname = "data/spritesheets/[name]_[size_id].png"
-		fcopy(size[SPRSZ_ICON], fname)
-		var/error = rustg_dmi_strip_metadata(fname)
+		var/png_name = "[name]_[size_id].png"
+		var/full_file_name = "data/spritesheets/[png_name]"
+		fcopy(size[SPRSZ_ICON], full_file_name)
+		var/error = rustg_dmi_strip_metadata(full_file_name)
 		if(length(error))
-			stack_trace("Failed to strip [name]_[size_id].png: [error]")
-		size[SPRSZ_STRIPPED] = icon(fname)
+			stack_trace("Failed to strip [png_name]: [error]")
+		size[SPRSZ_STRIPPED] = icon(full_file_name)
+
+// this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
+#ifdef SAVE_SPRITESHEETS
+	save_to_logs(file_name = png_name, file_location = full_file_name)
+#endif
+
 		fdel(fname)
 
 /datum/asset/spritesheet/proc/generate_css()
