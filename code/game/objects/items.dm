@@ -881,7 +881,7 @@
 /obj/item/proc/get_temperature()
 	. = heat
 	if(resistance_flags & ON_FIRE)
-		. = max(., FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		. = max(., BURNING_ITEM_MINIMUM_TEMPERATURE)
 
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.
 /obj/item/proc/get_sharpness()
