@@ -210,6 +210,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	food_buffs = STATUS_EFFECT_FOOD_SLIDE
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"

@@ -47,6 +47,9 @@
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
 
+	///The food buffs the food has
+	var/food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+
 /obj/item/food/Initialize(mapload)
 	. = ..()
 	if(food_reagents)
@@ -78,6 +81,7 @@
 		eatverbs = eatverbs,\
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
+		food_buffs = food_buffs,\
 	)
 
 

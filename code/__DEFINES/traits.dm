@@ -642,6 +642,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLOWN_ENJOYER "clown_enjoyer"
 #define TRAIT_MIME_FAN "mime_fan"
 #define TRAIT_VORACIOUS "voracious"
+#define TRAIT_GOURMAND "gourmand"
 #define TRAIT_SELF_AWARE "self_aware"
 #define TRAIT_FREERUNNING "freerunning"
 #define TRAIT_SKITTISH "skittish"
@@ -1077,3 +1078,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEAKING_FROM_TONGUE "tongue"
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
+
+///FOOD TRAITS
+///Trait for Fire Burps
+#define TRAIT_FOOD_FIRE_BURPS "food_buff_fire_burps"
+///Traut for fast sliding
+#define FOOD_SLIDE "food_slide_buff"
+///Trait for hand picked crops to be of a higher stats (ignores cap)
+#define FOOD_JOB_BOTANIST "food_job_botanist"
+///Trait for rocks to randomly drop ore
+#define FOOD_JOB_MINER "food_job_miner"

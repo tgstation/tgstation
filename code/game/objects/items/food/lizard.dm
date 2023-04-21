@@ -153,6 +153,7 @@
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_SLIDE
 
 /obj/item/food/fried_blood_sausage
 	name = "fried blood sausage"
@@ -226,6 +227,7 @@
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_buffs = STATUS_EFFECT_FOOD_FIREBURPS
 
 /obj/item/food/nectar_larvae
 	name = "nectar larvae"
@@ -335,6 +337,7 @@
 	)
 	tastes = list("garlic" = 1, "oil" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
+	food_buffs = STATUS_EFFECT_FOOD_JOB_MINER
 
 /obj/item/food/spaghetti/demit_nizaya
 	name = "demit nizaya"

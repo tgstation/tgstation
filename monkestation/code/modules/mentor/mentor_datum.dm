@@ -25,7 +25,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	if(owner)
 		owner.mentor_datum = src
 		owner.add_mentor_verbs()
-		if(!check_rights_for(owner, R_ADMIN,0)) // don't add admins to mentor list.
+		if(!check_rights_for(owner, R_ADMIN)) // don't add admins to mentor list.
 			GLOB.mentors += owner
 
 /datum/mentors/proc/CheckMentorHREF(href, href_list)

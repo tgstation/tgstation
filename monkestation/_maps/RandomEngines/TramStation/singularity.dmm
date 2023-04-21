@@ -1,0 +1,973 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"au" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"by" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/field/generator,
+/turf/open/floor/plating,
+/area/space/nearstation)
+"cK" = (
+/obj/structure/particle_accelerator/end_cap,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"er" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"eI" = (
+/obj/structure/particle_accelerator/fuel_chamber,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"ix" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"iY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"jH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"jT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/window/plasma/spawner/directional/south,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"lf" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
+"lq" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"lG" = (
+/obj/structure/cable,
+/obj/machinery/power/rad_collector,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"mz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"oy" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"oA" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"oM" = (
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"qQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/obj/machinery/power/rad_collector,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"qR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - Engine Room North-West";
+	network = list("ss13","engine","engineering")
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"ro" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"se" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"tY" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"ud" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"vK" = (
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/plating,
+/area/space/nearstation)
+"vP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/machinery/power/rad_collector,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"vY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/the_singularitygen/tesla,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"wh" = (
+/obj/machinery/power/rad_collector,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"wi" = (
+/obj/structure/table,
+/obj/structure/window/plasma/spawner/directional/east,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"wL" = (
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"wX" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space/nearstation)
+"xd" = (
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"yp" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space/nearstation)
+"yN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"zz" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
+"zB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"zH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
+"AI" = (
+/obj/structure/lattice,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"AP" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/obj/structure/window/plasma/spawner/directional/south,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"DD" = (
+/obj/machinery/the_singularitygen,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"DV" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
+"EU" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"FU" = (
+/turf/open/floor/plating,
+/area/space/nearstation)
+"Gn" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"Gr" = (
+/obj/structure/particle_accelerator/particle_emitter/center,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Hk" = (
+/obj/structure/particle_accelerator/particle_emitter/right,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Ho" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
+"HO" = (
+/obj/machinery/particle_accelerator/control_box,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"JE" = (
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"JI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/space/basic,
+/area/space/nearstation)
+"Lt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"LM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"Mj" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"Ms" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"NO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Om" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Ou" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space/nearstation)
+"OY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering - Engine Room North-West";
+	network = list("ss13","engine","engineering")
+	},
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"Pi" = (
+/obj/machinery/power/apc/sm_apc/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"Pp" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"PM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
+"QT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Rb" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"RT" = (
+/obj/structure/particle_accelerator/particle_emitter/left,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Sb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
+"SQ" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"ST" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"TA" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"TZ" = (
+/turf/template_noop,
+/area/template_noop)
+"Ul" = (
+/turf/closed/wall,
+/area/station/engineering/supermatter/room)
+"Vm" = (
+/obj/structure/lattice,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space/nearstation)
+"Wk" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"WI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space/nearstation)
+"Xo" = (
+/obj/structure/cable,
+/obj/structure/table,
+/obj/structure/window/plasma/spawner/directional/east,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"XF" = (
+/obj/structure/particle_accelerator/power_box,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"Ys" = (
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"YU" = (
+/obj/structure/table,
+/obj/structure/window/plasma/spawner/directional/south,
+/obj/structure/window/plasma/spawner/directional/east,
+/turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"Zh" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"ZS" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+
+(1,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(2,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(3,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(4,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(5,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(6,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(7,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(8,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+TZ
+TA
+Ul
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(9,1,1) = {"
+TZ
+TZ
+TZ
+TZ
+Ul
+SQ
+Ul
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(10,1,1) = {"
+Ho
+Ho
+Ho
+Ho
+Ho
+Wk
+Ho
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(11,1,1) = {"
+Ho
+Pi
+Mj
+Ys
+AP
+JE
+Ho
+Ho
+Ho
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(12,1,1) = {"
+Ho
+Ms
+LM
+Lt
+jT
+Pp
+er
+ST
+oA
+WI
+WI
+WI
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+"}
+(13,1,1) = {"
+Ho
+Ms
+wi
+Xo
+YU
+JE
+Ho
+Ho
+Ho
+zz
+zz
+iY
+WI
+Ou
+Ou
+Ou
+WI
+iY
+zz
+zz
+"}
+(14,1,1) = {"
+Ho
+ix
+JE
+Pp
+JE
+JE
+wL
+Ho
+Zh
+zz
+zz
+by
+ZS
+FU
+FU
+FU
+ZS
+by
+zz
+zz
+"}
+(15,1,1) = {"
+Ho
+qR
+mz
+Pp
+JE
+JE
+JE
+tY
+Zh
+zz
+zz
+ZS
+yp
+ZS
+zz
+ZS
+yp
+ZS
+zz
+zz
+"}
+(16,1,1) = {"
+Om
+Ms
+au
+HO
+se
+RT
+JE
+tY
+Zh
+zz
+zz
+ZS
+ZS
+zz
+ZS
+zz
+ZS
+ZS
+zz
+zz
+"}
+(17,1,1) = {"
+lq
+zB
+cK
+eI
+XF
+Gr
+JE
+tY
+Zh
+zz
+zz
+ZS
+zz
+ZS
+vK
+ZS
+zz
+ZS
+zz
+zz
+"}
+(18,1,1) = {"
+Om
+ud
+yN
+QT
+NO
+Hk
+JE
+tY
+Zh
+zz
+zz
+ZS
+ZS
+zz
+ZS
+zz
+ZS
+ZS
+zz
+zz
+"}
+(19,1,1) = {"
+Ho
+ud
+Sb
+Pp
+JE
+JE
+JE
+tY
+Zh
+zz
+zz
+Vm
+yp
+ZS
+zz
+AI
+yp
+ZS
+zz
+zz
+"}
+(20,1,1) = {"
+Ho
+DV
+Ho
+lf
+tY
+Rb
+Ho
+Ho
+Zh
+zz
+zz
+by
+ZS
+FU
+FU
+FU
+ZS
+by
+zz
+zz
+"}
+(21,1,1) = {"
+Ho
+OY
+wh
+lG
+wh
+Gn
+Ho
+Ho
+Ho
+zz
+zz
+oy
+WI
+Ou
+Ou
+Ou
+WI
+oy
+zz
+zz
+"}
+(22,1,1) = {"
+Ho
+vY
+PM
+vP
+qQ
+qQ
+EU
+jH
+ro
+wX
+WI
+WI
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+zz
+"}
+(23,1,1) = {"
+Ho
+DD
+xd
+oM
+xd
+xd
+Ho
+Ho
+Ho
+JI
+JI
+JI
+JI
+JI
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}
+(24,1,1) = {"
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+zH
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+"}

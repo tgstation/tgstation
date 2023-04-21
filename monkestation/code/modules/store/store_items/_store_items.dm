@@ -24,7 +24,7 @@
 	if(!buyers_preferences.has_coins(item_cost))
 		to_chat(buyer, span_warning("You don't have the funds to buy the [name]"))
 		return FALSE
-	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost)
+	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost,donator_multipler = FALSE)
 
 	if(!one_time_buy)
 		finalize_purchase(buyer)
@@ -68,7 +68,7 @@
 	var/mob/buyer_mob = get_mob_by_ckey(buyer.ckey)
 
 	if(!isliving(buyer_mob))
-		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, reason = "Spawned as Non-Living, Unable to utilize items")
+		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", TRUE, FALSE)
 		return
 
 	var/obj/item/created_item = new item_path

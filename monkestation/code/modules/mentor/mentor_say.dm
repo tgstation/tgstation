@@ -15,7 +15,7 @@
 
 	log_mentor("MSAY: [key_name(src)] : [msg]")
 	msg = keywords_lookup(msg)
-	if(check_rights_for(src, R_ADMIN,0))
+	if(check_rights_for(src, R_ADMIN))
 		msg = "[span_mentorsay("[span_prefix("MENTOR:")] <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <font color'#8A2BE2'><span class='message linkify'>[msg]")]</span></font>"
 	else
 		msg = "[span_mentorsay("[span_prefix("MENTOR:")] <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <font color='#E236D8'><span class='message linkify'>[msg]")]</span></font>"

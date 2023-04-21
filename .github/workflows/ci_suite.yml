@@ -159,6 +159,15 @@ jobs:
       map: ${{ matrix.setup.map }}
       major: ${{ matrix.setup.major }}
       minor: ${{ matrix.setup.minor }}
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+
+  check_alternate_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
+    name: Check Alternate Tests
+    needs: [run_alternate_tests]
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo Alternate tests passed.
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

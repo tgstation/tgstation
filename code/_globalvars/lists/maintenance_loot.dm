@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance/achievement = 5, //monkestation edit: from 1 to 5
+		/obj/item/reagent_containers/pill/maintenance/achievement = 8,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -158,6 +158,9 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/flashlight = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
+	list(//pills
+		/obj/item/reagent_containers/pill/maintenance/achievement = 8,
+	) = 8,
 	))
 
 

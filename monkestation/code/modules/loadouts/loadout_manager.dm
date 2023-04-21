@@ -78,7 +78,7 @@
 
 		if("select_item")
 			//Here we will perform basic checks to ensure there are no exploits happening
-			if(interacted_item.donator_only && !GLOB.donator_list[owner.ckey] && !is_admin(owner))
+			if(interacted_item.donator_only && !owner.patreon?.is_donator() && !is_admin(owner))
 				message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [owner.ckey] tried loading [interacted_item.item_path], but this is donator only.")
 				return
 
@@ -123,7 +123,7 @@
 			owner?.prefs?.character_preview_view.update_body()
 
 		if("donator_explain")
-			if(GLOB.donator_list[owner.ckey])
+			if(owner.patreon?.is_donator())
 				to_chat(owner, examine_block("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
 			else
 				to_chat(owner, examine_block(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))
@@ -257,7 +257,7 @@
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
 	data["selected_loadout"] = all_selected_paths
-	data["user_is_donator"] = !!(GLOB.donator_list[owner.ckey] || is_admin(owner))
+	data["user_is_donator"] = !!(owner.patreon?.is_donator() || is_admin(owner))
 	data["mob_name"] = owner.prefs.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(owner.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
 	data["preivew_options"] = list(PREVIEW_PREF_JOB, PREVIEW_PREF_LOADOUT, PREVIEW_PREF_NAKED)
@@ -320,7 +320,7 @@
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
-			if(!GLOB.donator_list[owner.ckey] && !is_admin(owner))
+			if(!owner.patreon?.is_donator() && !is_admin(owner))
 				formatted_list.len--
 				continue
 

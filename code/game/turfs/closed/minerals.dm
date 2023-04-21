@@ -138,6 +138,26 @@
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(HAS_TRAIT(H, FOOD_JOB_MINER))
+			var/obj/item/stack/ore/picked_ore
+			if(prob(20))
+				switch(rand(122))
+					if(0 to 70)
+						picked_ore = /obj/item/stack/ore/iron
+					if(71 to 85)
+						picked_ore = /obj/item/stack/ore/plasma
+					if(86 to 105)
+						picked_ore = /obj/item/stack/ore/silver
+					if(106 to 120)
+						picked_ore = /obj/item/stack/ore/gold
+					if(121)
+						picked_ore = /obj/item/stack/ore/diamond
+					if(122)
+						picked_ore = /obj/item/stack/ore/bluespace_crystal
+			if(picked_ore)
+				new picked_ore(src, 1)
+				SSblackbox.record_feedback("tally", "ore_mined", 1, picked_ore)
+
 		if(give_exp)
 			if (mineralType && (mineralAmt > 0))
 				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)

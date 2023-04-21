@@ -100,3 +100,51 @@
 		explanation_text = "Free Objective"
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
+
+
+/datum/antagonist/paradox_clone/antag_token(datum/mind/hosts_mind)
+	hosts_mind.current.unequip_everything()
+	new /obj/effect/holy(hosts_mind.current.loc)
+	QDEL_IN(hosts_mind.current, 20)
+
+	var/list/possible_spawns = list()
+	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
+		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
+			possible_spawns += warp_point
+	if(!possible_spawns.len)
+		message_admins("No valid spawn locations found for Paradox Clone token , aborting...")
+		return MAP_ERROR
+
+
+	var/datum/mind/player_mind = new /datum/mind(hosts_mind.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/clone_victim = find_original()
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+
+	player_mind.transfer_to(clone)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+
+	var/datum/antagonist/paradox_clone/new_datum = player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+	new_datum.original_ref = WEAKREF(clone_victim.mind)
+	new_datum.setup_clone()
+
+	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
+	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
+
+	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
+	clone.log_message("was spawned as a Paradox Clone of [key_name(clone)] by the midround ruleset.", LOG_GAME)
+
+/datum/antagonist/paradox_clone/proc/find_original()
+	var/list/possible_targets = list()
+
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || player.stat)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		possible_targets += player
+
+	if(possible_targets.len)
+		return pick(possible_targets)
+	return FALSE

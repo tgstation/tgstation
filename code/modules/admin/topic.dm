@@ -1758,3 +1758,20 @@
 
 		web_sound(usr, link_url)
 
+	else if(href_list["approve_token"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/atom/movable/target = locate(href_list["approve_token"])
+		if(!IS_CLIENT_OR_MOCK(target))
+			return
+		var/client/user_client = target
+		user_client.saved_tokens.approve_token()
+
+	else if(href_list["reject_token"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/atom/movable/target = locate(href_list["reject_token"])
+		if(!IS_CLIENT_OR_MOCK(target))
+			return
+		var/client/user_client = target
+		user_client.saved_tokens.reject_token()

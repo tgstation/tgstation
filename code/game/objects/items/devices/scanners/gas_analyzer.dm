@@ -179,6 +179,7 @@
 		var/temperature = air.return_temperature()
 		var/heat_capacity = air.heat_capacity()
 		var/thermal_energy = air.thermal_energy()
+		var/cached_scan_results = air.analyzer_results
 
 		if(total_moles > 0)
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
@@ -196,9 +197,26 @@
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
 
+		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
+			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
+			var/tier = fusionpower2text(fusion_power)
+
+			message += span_bold("Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.")
+			message += span_notice("Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.")
 	// we let the join apply newlines so we do need handholding
 	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE
+
+/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
+	switch(power)
+		if(0 to 5)
+			return "low"
+		if(5 to 20)
+			return "mid"
+		if(20 to 50)
+			return "high"
+		if(50 to INFINITY)
+			return "super"
 
 /obj/item/analyzer/ranged
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."

@@ -496,7 +496,7 @@
 	desc = "You are an anime enjoyer! Show your enthusiasm with some fashionable attire."
 	mob_trait = TRAIT_ANIME
 	value = 0
-	icon = "teddy-bear"
+	icon = "cat"
 	quirk_flags = QUIRK_CHANGES_APPEARANCE
 
 	var/list/anime_list = list(

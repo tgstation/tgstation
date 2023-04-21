@@ -15,11 +15,6 @@
 	. = ..()
 	MC_ADD_INPUT("flush", flush)
 
-/obj/item/mcobject/flusher/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/item/mcobject/flusher/default_unfasten_wrench(mob/user, obj/item/wrench, time)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)

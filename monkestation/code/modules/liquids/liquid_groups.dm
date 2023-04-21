@@ -203,6 +203,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			member.liquids.set_new_liquid_state(group_overlay_state)
 			member.liquid_height = expected_turf_height + member.turf_height
 
+/datum/liquid_group/proc/process_member(turf/member)
+	if(!(member in members))
+		return
+	reagents.expose(member, TOUCH, liquid = TRUE)
+
 /datum/liquid_group/proc/process_turf_disperse()
 	if(!total_reagent_volume)
 		for(var/turf/member in members)
@@ -816,7 +821,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/datum/gas_mixture/gas = member_open.air
 	if(!gas)
 		return
+
 	gas.temperature = cached_temperature_shift
+	if(group_temperature != cached_temperature_shift)
+		group_temperature = cached_temperature_shift
+		reagents.chem_temp = cached_temperature_shift
 
 	current_temperature_queue -= member
 	if(!length(current_temperature_queue))

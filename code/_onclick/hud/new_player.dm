@@ -260,6 +260,20 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 
+/atom/movable/screen/lobby/button/patreon_link
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "patreon"
+	base_icon_state = "patreon"
+	screen_loc = "TOP:-126,CENTER:86"
+
+/atom/movable/screen/lobby/button/patreon_link/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(!CONFIG_GET(string/patreon_link_website))
+		return
+	hud.mymob.client << link("[CONFIG_GET(string/patreon_link_website)]?ckey=[hud.mymob.client.ckey]")
+
 /atom/movable/screen/lobby/button/intents
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "intents"

@@ -9,7 +9,7 @@
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
 	desc = "A device which uses radiation and plasma to produce power."
-	icon = 'monkestation/icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE
@@ -182,7 +182,6 @@
 		update_appearance()
 
 /obj/machinery/power/rad_collector/rad_act(intensity)
-	. = ..()
 	if(loaded_tank && active && intensity > RAD_COLLECTOR_EFFICIENCY)
 		stored_energy += (intensity-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 

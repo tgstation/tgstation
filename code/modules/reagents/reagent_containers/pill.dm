@@ -260,7 +260,6 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
 	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
@@ -268,9 +267,30 @@
 	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with get_random_reagent_id_unrestricted_non_ethanol()
 	list_reagents = list(get_random_reagent_id_unrestricted_non_ethanol() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
-	name = pick(names)
+	if(!GLOB.pill_names.len)
+		var/json = file("strings/pill_names.json")
+		GLOB.pill_names = json_decode(file2text(json))
+
+	var/drug_word = pick(GLOB.pill_names)
+	if(prob(10))
+		drug_word = "[pick("The", "All-Natural", "Kilgor's Favorite", "Tasty", "New & Improved", "Radical", "Double", "Triple", "Quad")] [drug_word]"
+	else
+		drug_word = "[drug_word] [pick(GLOB.pill_names)]"
+	if(prob(25))
+		drug_word = "[drug_word]'s"
+	if(!drug_word)
+		name = "Floorpill"
+	else
+		name = "[drug_word]"
+
 	if(prob(30))
 		desc = pick(descs)
+	if(prob(10))
+		icon = 'monkestation/icons/obj/pills.dmi'
+		icon_state = "mdma_wario"
+		transform.Scale(0.5 ,0.5)
+	else
+		icon_state = "pill[rand(1,21)]"
 
 /obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
 	. = ..()
