@@ -63,13 +63,13 @@
 ///Stores an index of particles and their instances for reusing : list(particle_type = list(INSTANCES BABEEYYYY))
 GLOBAL_LIST_EMPTY(shared_particle_holders)
 
-///Give a particle effect to an atom (or turf the definition is a lie) from a global list. Use this if you have a lot of particle holders on someones
+///Give a particle effect to an atom from a global list. Use this if you have a lot of particle holders on someones
 ///screen and client performance is a problem. This way it's only calculated x amount of times and you can replicate it without putting too much extra burden on clients
-/proc/get_shared_particle_effect(atom/atom, pool_size, particle_effect, particle_flags = NONE)
+/proc/get_shared_particle_effect(atom/atom, pool_size, particle_effect)
 	if(!(particle_effect in GLOB.shared_particle_holders)) //no particles yet so make them
 		var/list/particles = list()
 		for(var/i in 1 to pool_size)
-			particles += new /obj/effect/abstract/particle_holder_shared(null, particle_effect, particle_flags)
+			particles += new /obj/effect/abstract/particle_holder_shared(null, particle_effect)
 
 		GLOB.shared_particle_holders[particle_effect] = particles
 
@@ -83,11 +83,7 @@ GLOBAL_LIST_EMPTY(shared_particle_holders)
 	layer = ABOVE_ALL_MOB_LAYER
 	vis_flags = VIS_INHERIT_PLANE
 
-	/// Holds info about how this particle emitter works
-	/// See \code\__DEFINES\particles.dm
-	var/particle_flags = NONE
-
-/obj/effect/abstract/particle_holder_shared/Initialize(mapload, particle_path = /particles/smoke, particle_flags = NONE)
+/obj/effect/abstract/particle_holder_shared/Initialize(mapload, particle_path = /particles/smoke)
 	. = ..()
 
 	src.particle_flags = particle_flags
@@ -96,9 +92,3 @@ GLOBAL_LIST_EMPTY(shared_particle_holders)
 ///Apply the particle effect to x obj. Turfs are also fine ignore the typecasting HAHAHHAHAHAHAH i hate byond
 /obj/effect/abstract/particle_holder_shared/proc/apply_particles_to(atom/movable/add_to)
 	add_to.vis_contents += src
-	RegisterSignal(add_to, COMSIG_PARENT_QDELETING, PROC_REF(on_del))
-
-/obj/effect/abstract/particle_holder_shared/proc/on_del(atom/movable/remove_from)
-	SIGNAL_HANDLER
-
-	remove_from.vis_contents -= src

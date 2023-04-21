@@ -40,6 +40,10 @@
 	var/mask_state = "lava-lightmask"
 	///Cool particles that we put on the lava
 	var/particle_type = /particles/lava
+	///Every x tiles, we give the lava tile particles. Good for performance
+	var/particle_space_x = 5
+	///Every y tiles, we give the lava tile particles. Good for performance
+	var/particle_space_y = 5
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -48,8 +52,8 @@
 	if(!smoothing_flags)
 		update_appearance()
 
-	if(x % 5 == 0 && y % 5 == 0)
-		get_shared_particle_effect(src, amount = 1, particle_effect = particle_type)
+	if(x % particle_space_x == 0 && y % particle_space_y == 0)
+		get_shared_particle_effect(src, pool_size = 1, particle_effect = particle_type)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -335,7 +339,7 @@
 	grow = 0.01
 	friction = 0.03
 	velocity = list(0, 2)
-	position = generator(square, 320, 0, NORMAL_RAND)
+	position = generator(GEN_SQUARE, 320, 0, NORMAL_RAND)
 	drift = generator(GEN_SPHERE, 0.1, 0, NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), UNIFORM_RAND)
 	rotation = 30
