@@ -64,22 +64,22 @@
 	return ..()
 
 /datum/component/thermite/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(on_fire_act))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
-	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
 
 /datum/component/thermite/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_FIRE_ACT,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_PARENT_ATTACKBY,
-		COMSIG_ATOM_FIRE_ACT,
+		COMSIG_PARENT_EXAMINE,
 		COMSIG_PARENT_QDELETING,
 	))
 	var/turf/turf_parent = parent
@@ -158,10 +158,12 @@
  * * exposed_temperature - The temperature of the flame hitting the thermite
  * * exposed_volume - The volume of the flame
  */
-/datum/component/thermite/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
+/datum/component/thermite/proc/on_fire_act(datum/source, exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
 
-	if(exposed_temperature > 1922) // This is roughly the real life requirement to ignite thermite
+	// This is roughly the real life requirement to ignite thermite
+	// (honestly not really sure what the point of this is, considering a god damn lighter can ignite this)
+	if(exposed_temperature >= 1922)
 		thermite_melt()
 
 /**
@@ -176,7 +178,7 @@
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(thing.get_temperature())
+	if(thing.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		thermite_melt(user)
 
 /// Signal handler for COMSIG_PARENT_QDELETING, necessary because turfs can be weird with qdel()
