@@ -1,0 +1,6 @@
+author: "MrStonedOne"
+delete-after: True
+changes:
+  - config: "database configs have been updated for better control over the connection pool"
+  - server: "BSQL_THREAD_LIMIT has been renamed to POOLING_MAX_SQL_CONNECTIONS, old configs will whine but still work."
+  - bugfix: "fixed rare race condition that could lead to a sql query being ran twice during world shutdown."

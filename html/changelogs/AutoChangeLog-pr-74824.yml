@@ -1,0 +1,4 @@
+author: "the-og-gear"
+delete-after: True
+changes:
+  - code_imp: "Update active alarm monitor computers only when alarms are actually changed instead of every program tick"

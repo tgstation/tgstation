@@ -1176,6 +1176,8 @@
 	..()
 	cameraFollow = null
 
+/// Checks if this mob can be actively tracked by cameras / AI.
+/// Can optionally be passed a user, which is the mob tracking.
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
@@ -1187,9 +1189,9 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user.faction))
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
-	if(user != null && src == user)
+	if(!isnull(user) && src == user)
 		return FALSE
 	if(invisibility || alpha == 0)//cloaked
 		return FALSE

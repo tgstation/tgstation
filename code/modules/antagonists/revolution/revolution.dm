@@ -31,6 +31,24 @@
 		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE
 
+/datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
+	// No revolution exists which means admin adding this will create a new revolution team
+	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
+	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
+		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
+			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
+			Are you sure?", "Be Wary", list("Yes", "No"))
+		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
+			return
+
+	go_through_with_admin_add(new_owner, admin)
+
+/datum/antagonist/rev/proc/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has rev'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has rev'ed [key_name(new_owner)].")
+	to_chat(new_owner.current, span_userdanger("You are a member of the revolution!"))
+
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
@@ -110,7 +128,7 @@
 	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
 	log_admin("[key_name(admin)] has head-rev'ed [O].")
 
-/datum/antagonist/rev/head/admin_add(datum/mind/new_owner,mob/admin)
+/datum/antagonist/rev/head/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
