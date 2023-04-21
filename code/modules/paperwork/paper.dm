@@ -358,7 +358,6 @@
 	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
 		return FALSE
-	. = TRUE
 	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
 							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
