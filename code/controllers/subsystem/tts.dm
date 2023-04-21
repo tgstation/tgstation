@@ -1,6 +1,6 @@
 #define TARGET_INDEX 1
 #define IDENTIFIER_INDEX 2
-#define TIMEOUT_INDEX 3
+#define START_TIME_INDEX 3
 #define REQUEST_INDEX 4
 #define MESSAGE_INDEX 5
 #define EXTRA_TARGETS_INDEX 6
@@ -38,10 +38,19 @@ SUBSYSTEM_DEF(tts)
 
 	var/max_concurrent_requests = 20
 
+	/// Used to calculate the average time it takes for a tts message to be received from the http server
+	/// For tts messages which time out, it won't keep tracking the tts message and will just assume that the message took
+	/// 7 seconds (or whatever the value of message_timeout is) to receive back a response.
+	var/average_tts_messages_time = 0
+
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
 	if(NAMEOF(src, tts_enabled) == var_name)
 		return FALSE
+	return ..()
+
+/datum/controller/subsystem/tts/stat_entry(msg)
+	msg = "Active:[length(in_process_tts_messages)]|Standby:[length(queued_tts_messages)]|Avg:[average_tts_messages_time]"
 	return ..()
 
 /datum/controller/subsystem/tts/Initialize()
@@ -96,9 +105,10 @@ SUBSYSTEM_DEF(tts)
 			)
 
 /datum/controller/subsystem/tts/proc/handle_request(list/entry)
-	var/time_left = entry[TIMEOUT_INDEX]
-	if(time_left < world.time)
+	var/timeout_time = entry[START_TIME_INDEX] + message_timeout
+	if(timeout_time < world.time)
 		cached_voices -= entry[IDENTIFIER_INDEX]
+		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, message_timeout)
 		return
 	var/datum/http_request/request = entry[REQUEST_INDEX]
 	request.begin_async()
@@ -120,9 +130,11 @@ SUBSYSTEM_DEF(tts)
 	while(processing_messages.len)
 		var/current_message = processing_messages[processing_messages.len]
 		processing_messages.len--
-		if(current_message[TIMEOUT_INDEX] < world.time)
+		var/timeout_time = current_message[START_TIME_INDEX] + message_timeout
+		if(timeout_time < world.time)
 			in_process_tts_messages -= list(current_message)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
+			average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, message_timeout)
 			continue
 
 		var/datum/http_request/request = current_message[REQUEST_INDEX]
@@ -131,6 +143,7 @@ SUBSYSTEM_DEF(tts)
 
 		var/datum/http_response/response = request.into_response()
 		in_process_tts_messages -= list(current_message)
+		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_message[START_TIME_INDEX])
 		if(response.errored)
 			cached_voices -= current_message[IDENTIFIER_INDEX]
 			continue
@@ -184,8 +197,8 @@ SUBSYSTEM_DEF(tts)
 		target,
 		// IDENTIFIER_INDEX = 2
 		identifier,
-		// TIMEOUT_INDEX = 3
-		world.time + message_timeout,
+		// START_TIME_INDEX = 3
+		world.time,
 		// REQUEST_INDEX = 4
 		request,
 		// MESSAGE_INDEX = 5
@@ -202,7 +215,7 @@ SUBSYSTEM_DEF(tts)
 
 #undef TARGET_INDEX
 #undef IDENTIFIER_INDEX
-#undef TIMEOUT_INDEX
+#undef START_TIME_INDEX
 #undef REQUEST_INDEX
 #undef MESSAGE_INDEX
 #undef EXTRA_TARGETS_INDEX

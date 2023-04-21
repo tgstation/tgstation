@@ -19,8 +19,11 @@ with open("./tts_voices_mapping.json", "r") as file:
 
 voice_name_mapping_reversed = {v: k for k, v in voice_name_mapping.items()}
 
+request_count = 0
+
 @app.route("/generate-tts")
 def text_to_speech():
+	global request_count
 	text = request.json.get("text", "")
 	voice = request.json.get("voice", "")
 	if use_voice_name_mapping:
@@ -31,6 +34,7 @@ def text_to_speech():
 		with torch.no_grad():
 			tts.tts_to_file(text=text, speaker=voice, file_path=data_bytes)
 		result = send_file(io.BytesIO(data_bytes.getvalue()), mimetype="audio/wav")
+	request_count += 1
 	return result
 
 @app.route("/tts-voices")
@@ -45,7 +49,9 @@ def voices_list():
 @app.route("/health-check")
 def tts_health_check():
 	gc.collect()
-	return f"OK", 200
+	if request_count > 2048:
+		return f"EXPIRED: {request_count}", 500
+	return f"OK: {request_count}", 200
 
 if __name__ == "__main__":
 	if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":
