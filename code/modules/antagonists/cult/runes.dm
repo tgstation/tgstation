@@ -1040,13 +1040,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		switch(outcome)
 			if(1 to 10)
 				var/datum/round_event_control/disease_outbreak/covid_2562_event = locate() in SSevents.control
-				INVOKE_ASYNC(covid_2562_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(covid_2562_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 				var/datum/round_event_control/mice_migration/stuart_big_event = locate() in SSevents.control
-				INVOKE_ASYNC(stuart_big_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(stuart_big_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(11 to 20)
 				var/datum/round_event_control/radiation_storm/my_skin_feels_funny_event = locate() in SSevents.control
-				INVOKE_ASYNC(my_skin_feels_funny_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(my_skin_feels_funny_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(21 to 30)
 				var/datum/round_event_control/brand_intelligence/product_placement_gone_rogue_event = locate() in SSevents.control
@@ -1054,37 +1054,37 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 			if(31 to 40)
 				var/datum/round_event_control/immovable_rod/huge_rod_event = locate() in SSevents.control //you've
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //got
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //a
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //huge...
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune") //got
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune") //a
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune") //huge...
 
 			if(41 to 50)
 				var/datum/round_event_control/meteor_wave/dinosaur_purge_event = locate() in SSevents.control
-				INVOKE_ASYNC(dinosaur_purge_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(dinosaur_purge_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(51 to 60)
 				var/datum/round_event_control/spider_infestation/creepy_crawly_event = locate() in SSevents.control
-				INVOKE_ASYNC(creepy_crawly_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(creepy_crawly_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(61 to 70)
 				var/datum/round_event_control/anomaly/anomaly_flux/flux_event = locate() in SSevents.control
-				INVOKE_ASYNC(flux_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(flux_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 				var/datum/round_event_control/anomaly/anomaly_grav/grav_event = locate() in SSevents.control
-				INVOKE_ASYNC(grav_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(grav_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 				var/datum/round_event_control/anomaly/anomaly_pyro/pyro_event = locate() in SSevents.control
-				INVOKE_ASYNC(pyro_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(pyro_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 				var/datum/round_event_control/anomaly/anomaly_vortex/vortex_event = locate() in SSevents.control
-				INVOKE_ASYNC(vortex_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(vortex_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(71 to 80)
 				var/datum/round_event_control/spacevine/ivy_event = locate() in SSevents.control
-				INVOKE_ASYNC(ivy_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(ivy_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 				var/datum/round_event_control/grey_tide/grey_tide_nation_wide = locate() in SSevents.control
-				INVOKE_ASYNC(grey_tide_nation_wide, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(grey_tide_nation_wide, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 			if(81 to 100)
 				var/datum/round_event_control/portal_storm_narsie/total_not_a_xen_storm_event = locate() in SSevents.control
-				INVOKE_ASYNC(total_not_a_xen_storm_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				INVOKE_ASYNC(total_not_a_xen_storm_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an apocalypse rune")
 
 	qdel(src)
 

@@ -162,7 +162,7 @@
 			var/datum/round_event_control/dark_matteor/dark_matteor_event = locate() in SSevents.control
 			if(!dark_matteor_event)
 				CRASH("meteor shields tried to spawn a dark matteor, but there was no dark matteor event in SSevents.control?")
-			INVOKE_ASYNC(dark_matteor_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+			INVOKE_ASYNC(dark_matteor_event, TYPE_PROC_REF(/datum/round_event_control, runEvent), event_cause = "an array of tampered meteor satellites")
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
 	// Update the weight of all meteor events
