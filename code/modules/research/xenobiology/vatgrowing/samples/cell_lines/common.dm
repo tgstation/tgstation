@@ -419,7 +419,7 @@
 	suppressive_reagents = list(/datum/reagent/toxin/plantbgone = -8)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/hostile/tree = 1)
+	resulting_atoms = list(/mob/living/basic/tree = 1)
 
 /datum/micro_organism/cell_line/vat_beast
 	desc = "Hypergenic xenocytes"

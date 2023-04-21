@@ -651,3 +651,84 @@
   zxaber:
   - balance: Cyborg Rechargers now restock with metal and glass from the ore silo,
       and no longer grant the materials for free.
+2023-04-19:
+  ATHATH:
+  - bugfix: Laser pointers will no longer disable borgs that have somehow been made
+      immune to flashes.
+  BlueMemesauce:
+  - bugfix: Fixed a bug where additonal receivers wouldn't work if the first one was
+      on but disconnected
+  Dawnseer:
+  - bugfix: The rolling table actually plays the rolling sound, as the lord intended.
+  Helg2:
+  - qol: Reflectors now have better rotating menu. Changed from alt-click to just
+      lmb.
+  Iamgoofball:
+  - bugfix: PDA messaging is now more immersive based on age
+  JohnFulpWillard:
+  - bugfix: Plague doctor hats no longer give you an FOV.
+  - refactor: '[Mafia] All Mafia abilities have been overhauled in the backend, it''s
+      now much easier to understand what each role''s ability can do and how it works.'
+  - admin: '[Mafia] Admin setup of Mafia is now in TGUI'
+  - balance: '[Mafia] Doctors/Officers can protect themselves once per game. Be careful
+      around them!'
+  - bugfix: '[Mafia] Thoughtfeeder''s UI buttons at night won''t overlap with eachother.'
+  - bugfix: '[Mafia] HoP''s votes now actually matter, instead of being purely visual.'
+  - qol: '[Mafia] Lawyers, Wardens, etc. now perform their night ability at night,
+      instead of the day prior.'
+  - qol: '[Mafia] Night time now lasts 40 seconds instead of 45.'
+  - admin: Secret buttons for Engineering/Brig maint accesses should now work more
+      consistently.
+  Melbert:
+  - qol: Hydroponics trays should update more snappily now
+  Mey-Ha-Zah:
+  - imageadd: Updated Wrapping Icons.
+  Supermichael777:
+  - bugfix: ' Plastitanium glass no longer always creates stacks of 50'
+  Tattle:
+  - bugfix: Nightmares will once again spawn
+  carlarctg:
+  - qol: Shoe storage can now fit box cutters, pills, and toy pistol magazines.
+  vinylspiders:
+  - bugfix: candles can now be used to light other candles, cigarettes, and anything
+      else that needs lighting in a pinch.
+  - bugfix: flashlights that have directional lights now have directional sprites
+      to match
+  - bugfix: candles can now be snuffed again
+  - imageadd: adds new inhand sprites for most flashlights in the game, including
+      animated flares and candles
+  - refactor: cleaned up flashlight.dm's unnecessary bits and made some slight improvements
+2023-04-20:
+  BlueMemesauce:
+  - bugfix: You can no longer log syndicate comms (or any other banned frequencies)
+      with a telecomms server
+  - bugfix: You can no longer use tcomms buses to change messages to banned frequencies
+  LemonInTheDark:
+  - rscadd: Holograms glow now, pokes at the lighting for holocalls in general a bit
+      to make em nicer.
+  - qol: You can no longer accidentally end a holocall (as a non ai) by leaving the
+      area. Felt like garbage
+  - bugfix: Fixes static rendering improperly if viewed by a non ai
+  Singul0:
+  - bugfix: Surgery room ID's in NorthStar are now properly ID-ed
+  - bugfix: Fixes missing APC in 2nd deck aft hallway of Northstar.
+  - rscadd: Due to an influx of syndicate activities near the station, A number of
+      businesses in the nearby sector of space have been closed down. One of which
+      being a themed old-style american diner. Can you find it?
+  SmoSmoSmoSmok:
+  - refactor: refactors trees into basic mobs
+  - refactor: refactors poles into basic mobs
+  - rscadd: If trees now see you holding a chainsaw, hatchet, or some wood they will
+      get angry and knock you out for longer
+  - rscadd: Poles will run around giving some of their charge to  APCs they find along
+      the way
+  - bugfix: cells charged by the pole will now have their icon correctly updated to
+      reflect their charge
+  iain0:
+  - bugfix: Fixes an error in health analyzers which would cut off the top of the
+      health scan if the player was deaf.
+  tralezab:
+  - bugfix: DNA infusers now properly give felinid tails and other external organs
+  - qol: made dna infusers less confusing to use by removing the "must be opened"
+      check
+  - bugfix: fixed up gondola mutants and how to obtain them

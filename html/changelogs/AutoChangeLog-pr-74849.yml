@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Overheating Oculine will flash people nearby, as was intended 2 years ago (never worked)"
