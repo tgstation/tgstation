@@ -366,7 +366,7 @@
 			user.dropItemToGround(attacking_item)
 		user.adjust_fire_stacks(attacking_item)
 		user.ignite_mob()
-		return
+		return TRUE
 
 	if(user.is_holding(src)) //no TK shit here.
 		user.dropItemToGround(src)
