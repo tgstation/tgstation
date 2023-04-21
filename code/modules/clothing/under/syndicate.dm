@@ -76,6 +76,15 @@
 	fire = 50
 	acid = 40
 
+/obj/item/clothing/under/syndicate/tacticool/dye_item(dye_color, dye_key_override)
+	if(dye_color == DYE_SYNDICATE)
+		if(dying_key == DYE_REGISTRY_JUMPSKIRT)
+			return ..(dye_color, DYE_TACTICOOL_SPECIAL_SKIRT)
+		else
+			return ..(dye_color, DYE_TACTICOOL_SPECIAL)
+	else
+		return ..()
+
 /obj/item/clothing/under/syndicate/tacticool/skirt
 	name = "tacticool skirtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
