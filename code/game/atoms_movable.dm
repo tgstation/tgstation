@@ -231,7 +231,8 @@
 		if(!em_block && !QDELETED(src))
 			render_target = ref(src)
 			em_block = new(src, render_target)
-		SET_PLANE(em_block, PLANE_TO_TRUE(em_block.plane), src)
+		if(em_block)
+			SET_PLANE(em_block, PLANE_TO_TRUE(em_block.plane), src)
 		return em_block
 
 /// Generates a space underlay for a turf
