@@ -251,7 +251,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark/smooth_edge{
@@ -630,7 +629,6 @@
 /area/mine/laborcamp/production)
 "eq" = (
 /obj/structure/table,
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
@@ -2001,7 +1999,6 @@
 /area/lavaland/surface/outdoors)
 "lT" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
@@ -2718,6 +2715,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "pg" = (
@@ -2973,7 +2971,6 @@
 /area/lavaland/surface/outdoors)
 "qs" = (
 /obj/structure/table/wood,
-/obj/machinery/light/directional/east,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -3;
 	pixel_y = 7
@@ -3075,7 +3072,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/edge{
 	dir = 1
@@ -3142,6 +3138,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/mine/lounge)
 "rF" = (
@@ -3344,7 +3341,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
@@ -3938,6 +3934,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = 32
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -4409,7 +4406,6 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "zW" = (
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -4423,7 +4419,6 @@
 /area/mine/storage/public)
 "zX" = (
 /obj/structure/rack,
-/obj/machinery/light/small/directional/north,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
 /obj/item/mining_scanner,
@@ -4593,7 +4588,6 @@
 "BE" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -4758,7 +4752,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/item/radio/intercom/prison/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -4768,6 +4762,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "CM" = (
@@ -4823,8 +4818,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -5070,7 +5065,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -5085,17 +5079,6 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
-"EU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
-	},
-/area/mine/production)
 "EX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -5453,7 +5436,6 @@
 /area/mine/maintenance/service)
 "HH" = (
 /obj/machinery/telecomms/relay/preset/mining,
-/obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -5557,6 +5539,14 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/mine/living_quarters)
+"Ip" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "gulag"
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/mine/laborcamp/production)
 "Is" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5680,6 +5670,7 @@
 "IZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "Je" = (
@@ -5869,6 +5860,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -6295,7 +6287,6 @@
 /area/mine/living_quarters)
 "MG" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
@@ -6359,7 +6350,6 @@
 /turf/open/floor/carpet/executive,
 /area/mine/lounge)
 "MT" = (
-/obj/machinery/light/directional/north,
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -6628,10 +6618,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/item/radio/intercom/prison/directional/south,
 /turf/open/floor/iron,
 /area/mine/lounge)
 "OH" = (
@@ -6875,6 +6865,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/storage/public)
 "Qw" = (
@@ -6934,7 +6925,6 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "QK" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -7358,6 +7348,7 @@
 /obj/machinery/conveyor{
 	id = "mining_internal"
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/mine/production)
 "TQ" = (
@@ -7505,6 +7496,7 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Ux" = (
@@ -8344,6 +8336,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -24040,7 +24033,7 @@ Nz
 Ez
 pQ
 uq
-jU
+Ip
 ff
 Gc
 RV
@@ -46902,11 +46895,11 @@ cc
 ov
 Rh
 Xj
-EU
 GL
 GL
 GL
-EU
+GL
+GL
 GL
 Jl
 rv
