@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"desc" = item.desc,
 			"cat" = item.category_index,
 			"ref" = REF(item),
-			"cost" = FLOOR(item.cost_per_order * cargo_cost_multiplier, 1),
+			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
 			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
 		))
 	return data
@@ -209,7 +209,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * returns TRUE if we can afford, FALSE otherwise.
  */
 /obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, express = FALSE)
-	var/final_cost = get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier)
+	var/final_cost = round(get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier))
 	var/failure_message = !express ? "Sorry, but you do not have enough [credit_type]." : " Remember, Express upcharges the cost!"
 	if(subtract_points(final_cost, card))
 		return TRUE
