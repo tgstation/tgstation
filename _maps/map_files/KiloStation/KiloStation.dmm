@@ -27871,9 +27871,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
-"jbZ" = (
-/turf/open/space/basic,
-/area/station/maintenance/starboard/aft)
 "jca" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/stripes/line{
@@ -111108,7 +111105,7 @@ qZX
 qZX
 hjj
 jjs
-jbZ
+qZX
 cry
 cry
 cry
@@ -111365,7 +111362,7 @@ vLG
 cuV
 sOJ
 aov
-jbZ
+qZX
 cry
 cry
 cry
