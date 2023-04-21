@@ -353,7 +353,7 @@ multiple modular subtrees with behaviors
  */
 #define TRACK_AI_DATUM_TARGET(tracked_datum, key) do { \
 	if(isweakref(tracked_datum)) { \
-		var/datum/_bad_weakref = tracked_datum
+		var/datum/weakref/_bad_weakref = tracked_datum; \
 		stack_trace("Weakref (Actual datum: [_bad_weakref.resolve()]) found in ai datum blackboard! \
 			This is an outdated method of ai reference handling, please remove it."); \
 	}; \
