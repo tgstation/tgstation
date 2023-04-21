@@ -1,6 +1,3 @@
-// Must be the same as /datum/map_config/var/space_ruin_levels
-#define DEFAULT_SPACE_RUIN_LEVELS 7
-
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
@@ -918,5 +915,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
-
-#undef DEFAULT_SPACE_RUIN_LEVELS
