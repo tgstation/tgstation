@@ -1330,7 +1330,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(owner.istate & ISTATE_SECONDARY)
 		if(istype(owner.client?.imode, /datum/interaction_mode/intents3))
-			var/datum/interaction_mode/intents3/clients_interaction = client.imode
+			var/datum/interaction_mode/intents3/clients_interaction = owner.client.imode
 			if(clients_interaction.intent != INTENT_DISARM)
 				return // early end because of intent type
 		disarm(owner, target, attacker_style)
