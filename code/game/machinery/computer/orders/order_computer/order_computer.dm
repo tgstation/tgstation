@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
  * card - The ID card we retrive these points from
  */
 /obj/machinery/computer/order_console/proc/retrive_points(obj/item/card/id/id_card)
-	return FLOOR(id_card.registered_account?.account_balance, 1)
+	return round(id_card.registered_account?.account_balance)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = list()
