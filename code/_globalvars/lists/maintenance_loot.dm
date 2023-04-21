@@ -295,7 +295,6 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/knife/kitchen = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
 		/obj/item/pen/survival = 1,
-//		/obj/item/restraints/handcuffs = 1, //monkestation edit
 		/obj/item/shield/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
@@ -305,7 +304,6 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//equipment
 		/obj/item/clothing/glasses/hud/security = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-//		/obj/item/clothing/gloves/color/black = 1, //monkestation edit
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 1,
