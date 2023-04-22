@@ -69,11 +69,6 @@
 		return data
 
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
-	data["pai"] = inserted_pai
-	data["has_light"] = has_light
-	data["light_on"] = light_on
-	data["comp_light_color"] = comp_light_color
-
 	return data
 
 /obj/item/modular_computer/ui_data(mob/user)
@@ -81,6 +76,11 @@
 	if(active_program)
 		data += active_program.ui_data(user)
 		return data
+
+	data["pai"] = inserted_pai
+	data["has_light"] = has_light
+	data["light_on"] = light_on
+	data["comp_light_color"] = comp_light_color
 
 	data["login"] = list(
 		IDName = saved_identification || "Unknown",
