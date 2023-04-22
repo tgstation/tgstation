@@ -301,14 +301,14 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = TRUE
-		return
-
-	for(var/current_path in pathlist)
-		for(var/subpath in typesof(current_path))
-			.[subpath] = TRUE
-
-	if(ignore_root_path)
-		. -= pathlist
+	else if(ignore_root_path)
+		for(var/current_path in pathlist)
+			for(var/subtype in subtypesof(current_path))
+				.[subtype] = TRUE
+	else
+		for(var/current_path in pathlist)
+			for(var/subpath in typesof(current_path))
+				.[subpath] = TRUE
 
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
@@ -350,21 +350,14 @@
 	if(only_root_path)
 		for(var/current_path in pathlist)
 			.[current_path] = pathlist[current_path]
-
-		if(!clear_nulls)
-			return
-
-		for(var/cached_path in .)
-			if (isnull(.[cached_path]))
-				. -= cached_path
-		return
-
-	for(var/current_path in pathlist)
-		for(var/subpath in typesof(current_path))
-			.[subpath] = pathlist[current_path]
-
-	if(ignore_root_path)
-		. -= pathlist
+	else if(ignore_root_path)
+		for(var/current_path in pathlist)
+			for(var/subtype in subtypesof(current_path))
+				.[subtype] = pathlist[current_path]
+	else
+		for(var/current_path in pathlist)
+			for(var/subpath in typesof(current_path))
+				.[subpath] = pathlist[current_path]
 
 	if(!clear_nulls)
 		return
