@@ -93,7 +93,7 @@
 	name = "operative toolkit care package"
 	desc = "A small parcel. It contains a few items every operative needs."
 	w_class =  WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/wrapping.dmi'
 	icon_state = "deliverypackage2"
 
 /obj/item/tool_parcel/attack_self(mob/user)
@@ -142,14 +142,14 @@
 /obj/item/storage/box/mime
 	name = "invisible box"
 	desc = "Unfortunately not large enough to trap the mime."
-	foldable = null
+	foldable_result = null
 	icon_state = "box"
 	inhand_icon_state = null
 	alpha = 0
 
 /obj/item/storage/box/mime/attack_hand(mob/user, list/modifiers)
 	..()
-	if(user.mind.miming)
+	if(HAS_TRAIT(user, TRAIT_MIMING))
 		alpha = 255
 
 /obj/item/storage/box/mime/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -162,7 +162,7 @@
 	desc = "A special box for sensitive people."
 	icon_state = "hugbox"
 	illustration = "heart"
-	foldable = null
+	foldable_result = null
 
 /obj/item/storage/box/hug/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all.."))
@@ -219,7 +219,7 @@
 	desc = "A special box for sensitive people."
 	icon_state = "hugbox"
 	illustration = "heart"
-	foldable = null
+	foldable_result = null
 	mask_type = null
 
 //Mime survival box
@@ -247,6 +247,31 @@
 	for(var/i in 1 to 7)
 		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
+
+/obj/item/storage/box/survival/mining/bonus
+	mask_type = null
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/mining/bonus/PopulateContents()
+	..()
+	new /obj/item/gps/mining(src)
+	new /obj/item/t_scanner/adv_mining_scanner(src)
+
+/obj/item/storage/box/miner_modkits
+	name = "miner modkit/trophy box"
+	desc = "Contains every modkit and trophy in the game."
+
+/obj/item/storage/box/miner_modkits/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.numerical_stacking = TRUE
+
+/obj/item/storage/box/miner_modkits/PopulateContents()
+	for(var/trophy in subtypesof(/obj/item/crusher_trophy))
+		new trophy(src)
+	for(var/modkit in subtypesof(/obj/item/borg/upgrade/modkit))
+		for(var/i in 1 to 10) //minimum cost ucrrently is 20, and 2 pkas, so lets go with that
+			new modkit(src)
 
 /obj/item/storage/box/skillchips
 	name = "box of skillchips"

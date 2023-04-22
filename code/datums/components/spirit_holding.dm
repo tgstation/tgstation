@@ -74,15 +74,30 @@
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
 	bound_spirit.update_atom_languages()
 	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-	var/input = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
-	if(parent && input)
-		parent = input
-		bound_spirit.fully_replace_character_name(null, "The spirit of [input]")
 
 	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
 	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
+
+	// Now that all of the important things are in place for our spirit, it's time for them to choose their name.
+	var/valid_input_name = custom_name(awakener)
+	if(valid_input_name)
+		bound_spirit.fully_replace_character_name(null, "The spirit of [valid_input_name]")
+
 	attempting_awakening = FALSE
+
+/**
+ * custom_name : Simply sends a tgui input text box to the blade asking what name they want to be called, and retries it if the input is invalid.
+ *
+ * Arguments:
+ * * awakener: user who interacted with the blade
+ */
+/datum/component/spirit_holding/proc/custom_name(mob/awakener)
+	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
+	if(!chosen_name) // with the way that sanitize_name works, it'll actually send the error message to the awakener as well.
+		to_chat(awakener, span_warning("Your blade did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
+		return custom_name(awakener)
+	return chosen_name
 
 ///signal fired from a mob moving inside the parent
 /datum/component/spirit_holding/proc/block_buckle_message(datum/source, mob/living/user, direction)

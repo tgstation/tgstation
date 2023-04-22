@@ -504,11 +504,11 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/cell/high,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cf" = (
@@ -551,12 +551,6 @@
 /area/shuttle/syndicate/hallway)
 "cs" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate/engineering)
-"ct" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
 "cu" = (
@@ -820,14 +814,14 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/hos/cap/syndicate,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
@@ -896,7 +890,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -949,10 +943,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/red,
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "Ed" = (
@@ -1016,11 +1010,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "KB" = (
-/obj/effect/turf_decal/tile/red/half{
-	dir = 4
-	},
 /obj/structure/chair/office/tactical{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -1052,7 +1046,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
 "Nr" = (
-/obj/machinery/computer/secure_data/laptop/syndie,
+/obj/machinery/computer/records/security/laptop/syndie,
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
@@ -1523,7 +1517,7 @@ bi
 bi
 ch
 Ed
-ct
+cs
 cy
 cF
 "}

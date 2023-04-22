@@ -169,11 +169,14 @@
 	if(light_on)
 		. += "[icon_state]_lit"
 
+/obj/item/kinetic_crusher/compact //for admins
+	name = "compact kinetic crusher"
+	w_class = WEIGHT_CLASS_NORMAL
+
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
-	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
@@ -300,7 +303,6 @@
 		marker.name = "heated [marker.name]"
 		marker.icon_state = "lava"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		deadly_shot = FALSE
 
 //icewing watcher
@@ -417,7 +419,6 @@
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		marker.speed = 2
 		deadly_shot = FALSE
 

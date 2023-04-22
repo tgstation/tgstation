@@ -30,5 +30,5 @@ GLOBAL_LIST_EMPTY(string_lists)
 	icon = 'icons/turf/walls/baseturfs_fuck.dmi'
 	icon_state = "fucked_baseturfs"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS

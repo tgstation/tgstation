@@ -1,16 +1,30 @@
+///The rate at which slimes regenerate their jelly normally
+#define JELLY_REGEN_RATE 1.5
+///The rate at which slimes regenerate their jelly when they completely run out of it and start taking damage, usually after having cannibalized all their limbs already
+#define JELLY_REGEN_RATE_EMPTY 2.5
+///The blood volume at which slimes begin to start losing nutrition -- so that IV drips can work for blood deficient slimes
+#define BLOOD_VOLUME_LOSE_NUTRITION 550
+
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+	)
 	inherent_traits = list(
 		TRAIT_TOXINLOVER,
+		TRAIT_NOBLOOD,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
+	mutanteyes = /obj/item/organ/internal/eyes/jelly
+	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
+	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT | BUGS
 	toxic_food = NONE
@@ -19,7 +33,7 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_factions = list("slime")
+	inherent_factions = list(FACTION_SLIME)
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
@@ -32,35 +46,51 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(old_jellyperson)
-	old_jellyperson.RemoveElement(/datum/element/soft_landing)
-	..()
-
-/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
-	..()
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load)
+	. = ..()
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(new_jellyperson)
+		update_mail_goodies(new_jellyperson)
 	new_jellyperson.AddElement(/datum/element/soft_landing)
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/jelly/on_species_loss(mob/living/carbon/former_jellyperson, datum/species/new_species, pref_load)
+	if(regenerate_limbs)
+		regenerate_limbs.Remove(former_jellyperson)
+	former_jellyperson.RemoveElement(/datum/element/soft_landing)
+
+	return ..()
+
+/datum/species/jelly/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/toxin
+		)
+	return ..()
+
+/datum/species/jelly/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
 
 	if(!H.blood_volume)
-		H.blood_volume += 2.5 * delta_time
-		H.adjustBruteLoss(2.5 * delta_time)
+		H.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		H.adjustBruteLoss(2.5 * seconds_per_tick)
 		to_chat(H, span_danger("You feel empty!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 1.5 * delta_time
-			H.adjust_nutrition(-1.25 * delta_time)
+			H.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
+			if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+				H.adjust_nutrition(-1.25 * seconds_per_tick)
+
+	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
+	if(HAS_TRAIT(H, TRAIT_BLOOD_DEFICIENCY))
+		var/datum/quirk/blooddeficiency/blooddeficiency = H.get_quirk(/datum/quirk/blooddeficiency)
+		if(!isnull(blooddeficiency))
+			blooddeficiency.lose_blood(seconds_per_tick)
 
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
-		if(DT_PROB(2.5, delta_time))
+		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(H, span_danger("You feel drained!"))
 
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
@@ -83,7 +113,7 @@
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
-// Slimes have both NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
 /datum/species/jelly/create_pref_blood_perks()
 	var/list/to_add = list()
@@ -147,10 +177,11 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	mutanteyes = /obj/item/organ/internal/eyes
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
@@ -207,14 +238,15 @@
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-		if(DT_PROB(2.5, delta_time))
+		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(H, span_notice("You feel very bloated!"))
 
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 1.5 * delta_time
-		H.adjust_nutrition(-1.25 * delta_time)
+		H.blood_volume += 1.5 * seconds_per_tick
+		if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION)
+			H.adjust_nutrition(-1.25 * seconds_per_tick)
 
 	..()
 
@@ -282,7 +314,7 @@
 	var/datum/species/jelly/slime/spare_datum = spare.dna.species
 	spare_datum.bodies = origin_datum.bodies
 
-	H.transfer_trait_datums(spare)
+	H.transfer_quirk_datums(spare)
 	H.mind.transfer_to(spare)
 	spare.visible_message("<span class='warning'>[H] distorts as a new body \
 		\"steps out\" of [H.p_them()].</span>",
@@ -428,7 +460,7 @@
 			span_notice("You stop moving this body..."))
 	else
 		to_chat(M.current, span_notice("You abandon this body..."))
-	M.current.transfer_trait_datums(dupe)
+	M.current.transfer_quirk_datums(dupe)
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
@@ -452,6 +484,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/luminescent,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
 	)
+	mutanteyes = /obj/item/organ/internal/eyes
 	/// How strong is our glow
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	/// Internal dummy used to glow (very cool)
@@ -530,7 +563,7 @@
 
 /datum/action/innate/integrate_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/integrate_extract/proc/locate_extract()
@@ -600,7 +633,7 @@
 
 /datum/action/innate/use_extract/New(Target)
 	. = ..()
-	AddComponent(/datum/component/action_item_overlay, CALLBACK(src, PROC_REF(locate_extract)))
+	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(locate_extract)))
 
 /// Callback for /datum/component/action_item_overlay to find the slime extract from within the species
 /datum/action/innate/use_extract/proc/locate_extract()
@@ -780,3 +813,7 @@
 		return FALSE
 
 	return TRUE
+	
+#undef JELLY_REGEN_RATE
+#undef JELLY_REGEN_RATE_EMPTY
+#undef BLOOD_VOLUME_LOSE_NUTRITION

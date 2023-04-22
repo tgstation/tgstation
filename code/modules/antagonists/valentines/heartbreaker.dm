@@ -5,7 +5,7 @@
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR LONELINESS!!"
 
-/datum/antagonist/heartbreaker/proc/forge_objectives()
+/datum/antagonist/heartbreaker/forge_objectives()
 	var/datum/objective/martyr/normiesgetout = new
 	normiesgetout.owner = owner
 	objectives += normiesgetout

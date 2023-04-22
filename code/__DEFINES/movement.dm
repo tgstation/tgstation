@@ -34,6 +34,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<1)
 ///Should we override the loop's glide?
 #define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
+///Should we not update our movables dir on move?
+#define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<3)
 
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1
@@ -107,5 +109,12 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_MAGIC "magic"
 /// Cult teleportation, does whatever it wants (unless there's holiness)
 #define TELEPORT_CHANNEL_CULT "cult"
+/// Eigenstate teleportation, can do most things (that aren't in a teleport-prevented zone)
+#define TELEPORT_CHANNEL_EIGENSTATE "eigenstate"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
+
+///Return values for moveloop Move()
+#define MOVELOOP_FAILURE 0
+#define MOVELOOP_SUCCESS 1
+#define MOVELOOP_NOT_READY 2

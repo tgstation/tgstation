@@ -31,7 +31,7 @@
 	history["demand"] = list()
 
 
-/datum/computer_file/program/power_monitor/process_tick(delta_time)
+/datum/computer_file/program/power_monitor/process_tick(seconds_per_tick)
 	if(!get_powernet())
 		search()
 	else
@@ -78,8 +78,8 @@
 			demand.Cut(1, 2)
 
 /datum/computer_file/program/power_monitor/ui_data()
+	var/list/data = list()
 	var/datum/powernet/connected_powernet = get_powernet()
-	var/list/data = get_header_data()
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10
 	data["attached"] = connected_powernet ? TRUE : FALSE

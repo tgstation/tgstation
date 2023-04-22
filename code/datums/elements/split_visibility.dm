@@ -50,6 +50,8 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		CRASH("We tried to splitvis [target.type] without bitmask smoothing. What?")
 
 	target_atom.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target_atom, GAME_PLANE))
+	// We draw a copy to the wall plane so we can use it to mask byond darkness, that's all
+	target_atom.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target_atom, WALL_PLANE))
 	// Ensures when you try to click on a turf, you actually click on the turf, and not the adjacent things holding it
 	target_atom.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_clickcatcher", WALL_CLICKCATCH_LAYER, target_atom, GAME_PLANE))
 

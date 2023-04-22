@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/combat/phazon
+/obj/vehicle/sealed/mecha/phazon
 	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge bluespace technology and expensive materials."
 	name = "\improper Phazon"
 	icon_state = "phazon"
@@ -6,8 +6,11 @@
 	movedelay = 2
 	step_energy_drain = 3
 	max_integrity = 200
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
+	armor_type = /datum/armor/mecha_phazon
 	max_temperature = 25000
+	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	destruction_sleep_duration = 40
+	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/phazon
 	mech_type = EXOSUIT_MODULE_PHAZON
 	force = 15
@@ -18,7 +21,16 @@
 	)
 	phase_state = "phazon-phase"
 
-/obj/vehicle/sealed/mecha/combat/phazon/generate_actions()
+/datum/armor/mecha_phazon
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100
+
+/obj/vehicle/sealed/mecha/phazon/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_phasing)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_switch_damtype)

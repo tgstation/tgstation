@@ -67,7 +67,7 @@
 		. += span_notice("<b>Not Linked.</b> Use on another quantum spin inverter to establish a quantum link.")
 
 /obj/item/swapper/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	to_chat(user, span_notice("You break the current quantum link."))
 	if(!QDELETED(linked_swapper))

@@ -9,7 +9,7 @@
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
+	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -70,6 +70,14 @@
 
 	var/contents_initialized = FALSE
 
+/datum/armor/structure_closet
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 70
+	acid = 60
+
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
@@ -84,6 +92,7 @@
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
@@ -216,17 +225,36 @@
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
-	if(welded)
-		. += span_notice("It's welded shut.")
-	if(anchored)
-		. += span_notice("It is <b>bolted</b> to the ground.")
-	if(opened && cutting_tool == /obj/item/weldingtool)
-		. += span_notice("The parts are <b>welded</b> together.")
-	else if(secure && !opened)
-		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
+
+	. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
+
+/obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		if(secure && !broken)
+			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
+		if(!welded)
+			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
+		if(opened)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -341,7 +369,8 @@
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)
-				if(++mobs_stored >= mob_storage_capacity)
+				mobs_stored++
+				if(mobs_stored >= mob_storage_capacity)
 					return FALSE
 		L.stop_pulling()
 
@@ -481,7 +510,6 @@
 		var/obj/item/electronics/airlock/electronics_ref
 		if (!electronics)
 			electronics_ref = new /obj/item/electronics/airlock(loc)
-			gen_access()
 			if (req_one_access.len)
 				electronics_ref.one_access = 1
 				electronics_ref.accesses = req_one_access
@@ -537,13 +565,12 @@
 	else if(!isitem(O))
 		return
 	var/turf/T = get_turf(src)
-	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
 		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
 		span_hear("You hear clanging."))
 	if(actuallyismob)
-		if(do_after_mob(user, targets, 40))
+		if(do_after(user, 4 SECONDS, O))
 			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
 				span_notice("You stuff [O] into [src]."), \
 				span_hear("You hear a loud metal bang."))
@@ -555,6 +582,7 @@
 			else
 				O.forceMove(T)
 				close()
+			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
 	return 1
@@ -606,7 +634,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
@@ -669,7 +697,7 @@
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !isturf(loc))
+	if(!user.can_perform_action(src) || !isturf(loc))
 		return
 
 	if(!opened && secure)
@@ -681,14 +709,15 @@
 		if(allowed(user))
 			if(iscarbon(user))
 				add_fingerprint(user)
+			balloon_alert_to_viewers(locked ? "unlocked" : "locked")
 			locked = !locked
 			user.visible_message(span_notice("[user] [locked ? null : "un"]locks [src]."),
 							span_notice("You [locked ? null : "un"]lock [src]."))
 			update_appearance()
 		else if(!silent)
-			to_chat(user, span_alert("Access Denied."))
+			balloon_alert(user, "access denied!")
 	else if(secure && broken)
-		to_chat(user, span_warning("\The [src] is broken!"))
+		balloon_alert(user, "broken!")
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
@@ -756,10 +785,17 @@
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (locker/crate)")
+	if(target == shover)
+		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
+			null,
+			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(shover, span_notice("You shove yourself into [src]!"))
+	else
+		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+			span_userdanger("You're shoved into [src] by [shover.name]!"),
+			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+		to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.

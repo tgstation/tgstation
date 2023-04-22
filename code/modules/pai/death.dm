@@ -9,4 +9,11 @@
 	* life. This new mind causes problems down the line if it's not deleted here.
 	*/
 	ghostize()
+
+	if (!QDELETED(card) && loc != card)
+		card.forceMove(drop_location())
+		card.pai = null
+		card.emotion_icon = initial(card.emotion_icon)
+		card.update_appearance()
+
 	qdel(src)

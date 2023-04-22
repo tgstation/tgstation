@@ -6,14 +6,14 @@
 	base_icon_state = "window_frame_normal"
 	plane = OVER_TILE_PLANE //otherwise they will mask windows
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_OBJ
-	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FRAMES)
-	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FRAMES)
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FRAMES
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FRAMES
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	opacity = FALSE
 	density = TRUE
 	rad_insulation = null
 	frill_icon = null // we dont have a frill, our window does
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/window_frame
 	max_integrity = 50
 	anchored = TRUE
 
@@ -39,6 +39,16 @@
 
 	var/sheet_type = /obj/item/stack/sheet/iron
 	var/sheet_amount = 2
+
+/datum/armor/window_frame
+	melee = 50
+	bullet = 70
+	laser = 70
+	energy = 100
+	bomb = 10
+	bio = 100
+	fire = 0
+	acid = 0
 
 /obj/structure/window_frame/Initialize(mapload)
 	. = ..()
@@ -291,9 +301,16 @@
 /obj/structure/window_frame/reinforced
 	name = "reinforced window frame"
 	window_type = /obj/item/stack/sheet/rglass
-	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/window_frame_reinforced
 	max_integrity = 150
 	damage_deflection = 11
+
+/datum/armor/window_frame_reinforced
+	melee = 80
+	bomb = 25
+	bio = 100
+	fire = 80
+	acid = 100
 
 /obj/structure/window_frame/reinforced/grille_and_window
 	has_grille = TRUE

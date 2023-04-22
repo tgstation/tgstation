@@ -17,6 +17,8 @@
 	allowAtomsOnSpace = TRUE
 
 /datum/map_generator_module/reload_station_map/generate()
+	set waitfor = FALSE
+
 	if(!istype(mother, /datum/map_generator/repair/reload_station_map))
 		return
 	var/datum/map_generator/repair/reload_station_map/mother1 = mother
@@ -36,18 +38,18 @@
 
 	require_area_resort()
 
-	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
-						locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)))
-		set waitfor = FALSE
-		var/turf/B = L
-		atoms += B
-		for(var/A in B)
-			atoms += A
-			if(istype(A,/obj/structure/cable))
-				cables += A
+	var/list/generation_turfs = block(
+		locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
+		locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1))
+	for(var/turf/gen_turf as anything in generation_turfs)
+		atoms += gen_turf
+		for(var/atom in gen_turf)
+			atoms += atom
+			if(istype(atom, /obj/structure/cable))
+				cables += atom
 				continue
-			if(istype(A,/obj/machinery/atmospherics))
-				atmos_machines += A
+			if(istype(atom, /obj/machinery/atmospherics))
+				atmos_machines += atom
 
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)

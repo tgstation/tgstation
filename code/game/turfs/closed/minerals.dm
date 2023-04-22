@@ -36,8 +36,8 @@
 
 
 /turf/closed/mineral/Initialize(mapload)
-	var/static/list/smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
-	var/static/list/canSmoothWith = list(SMOOTH_GROUP_MINERAL_WALLS)
+	var/static/list/smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
+	var/static/list/canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
 
 	// The cost of the list() being in the type def is very large for something as common as minerals
 	src.smoothing_groups = smoothing_groups
@@ -231,7 +231,6 @@
 			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 			T.flags_1 |= stored_flags
 
-			T.baseturfs = src.baseturfs
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
@@ -332,6 +331,12 @@
 		/turf/closed/mineral/gibtonite/volcanic = 4,
 	)
 
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/random/volcanic/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
 	// wallening todo mountain walls
@@ -339,7 +344,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -366,6 +371,12 @@
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
+
+/// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/closed/mineral/random/snow/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -441,7 +452,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -570,7 +581,7 @@
 	icon_state = "rock2"
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/ashplanet/wateryrock
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
@@ -583,7 +594,7 @@
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	baseturfs = /turf/open/misc/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
 	turf_type = /turf/open/misc/asteroid/snow
@@ -593,6 +604,12 @@
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/// This snowy mountain will never be scraped away for any reason what so ever.
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable
+	turf_flags = IS_SOLID | NO_CLEARING
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
 
 /turf/closed/mineral/snowmountain/cavern
 	name = "ice cavern rock"

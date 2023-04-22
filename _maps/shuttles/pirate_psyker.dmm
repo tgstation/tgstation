@@ -112,12 +112,22 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/ammo_box/c38/match{
-	pixel_x = -2;
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -1;
 	pixel_y = 4
 	},
 /obj/item/ammo_box/c38/match{
 	pixel_x = 3;
 	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -8
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -4
 	},
 /obj/item/ammo_box/c38/match,
 /turf/open/floor/iron/white/diagonal,
@@ -358,7 +368,7 @@
 /turf/open/floor/glass,
 /area/shuttle/pirate)
 "tT" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/psyker{
 	dir = 4
 	},
 /obj/effect/turf_decal/box/white,
@@ -397,7 +407,14 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
 /obj/item/storage/box/lethalshot{
-	pixel_y = 4
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_y = 2
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = 2
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
@@ -537,6 +554,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
+/obj/structure/sign/departments/security/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Ck" = (
@@ -733,6 +751,13 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/pirate)
+"NL" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/box/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/engineering/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/pirate)
 "NO" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers,
 /obj/machinery/light/floor,
@@ -807,6 +832,7 @@
 "PT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
+/obj/structure/sign/departments/restroom/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "QI" = (
@@ -1494,7 +1520,7 @@ cM
 uy
 Ik
 Te
-Te
+NL
 bK
 Gv
 Rs

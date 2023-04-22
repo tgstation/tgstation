@@ -130,7 +130,7 @@
 	icon_state = "clockwork_helmet_old"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/costume_bronze
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
@@ -160,6 +160,15 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/datum/armor/costume_bronze
+	melee = 5
+	laser = -5
+	energy = -15
+	bomb = 10
+	fire = 20
+	acid = 20
+
+#warn yeet?
 /*
 /obj/item/clothing/head/costume/tv_head/fov_less
 	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."

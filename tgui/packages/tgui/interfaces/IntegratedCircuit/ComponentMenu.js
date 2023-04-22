@@ -74,8 +74,8 @@ export class ComponentMenu extends Component {
         if (currentSearch !== '') {
           const result = val.name
             .toLowerCase()
-            .search(currentSearch.toLowerCase());
-          return result !== -1;
+            .includes(currentSearch.toLowerCase());
+          return result !== false;
         }
         return selectedTab === 'All' || selectedTab === val.category;
       }

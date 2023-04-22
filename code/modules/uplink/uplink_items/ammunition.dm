@@ -1,5 +1,3 @@
-// File ordered by progression
-
 /datum/uplink_category/ammo
 	name = "Ammunition"
 	weight = 7
@@ -7,8 +5,6 @@
 /datum/uplink_item/ammo
 	category = /datum/uplink_category/ammo
 	surplus = 40
-
-// No progression cost
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"
@@ -19,8 +15,6 @@
 	illegal_tech = FALSE
 	purchasable_from = ~UPLINK_NUKE_OPS
 
-// Low progression cost
-
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
@@ -29,8 +23,6 @@
 	cost = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
-
-// Medium progression cost
 
 /datum/uplink_item/ammo/pistolap
 	name = "9mm Armour Piercing Magazine"

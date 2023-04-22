@@ -24,7 +24,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
-	light_color = LIGHT_COLOR_YELLOW
+	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
@@ -85,10 +85,10 @@
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
 	efficiency = 0
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		efficiency += M.rating
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		max_n_of_items = 10 * M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		efficiency += micro_laser.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		max_n_of_items = 10 * matter_bin.tier
 		break
 
 /obj/machinery/microwave/examine(mob/user)
@@ -306,6 +306,7 @@
 				ingredients += S
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+			update_appearance()
 		return
 
 	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
@@ -324,17 +325,17 @@
 	return ..()
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
-	if(user.canUseTopic(src, !issilicon(usr)))
+	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
 		if(!length(ingredients))
 			balloon_alert(user, "it's empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		cook()
+		cook(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(isAI(user) && (machine_stat & NOPOWER))
 		return
@@ -349,7 +350,7 @@
 	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(isAI(user) && (machine_stat & NOPOWER))
 		return
@@ -382,6 +383,9 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
+		muck()
+		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
@@ -467,12 +471,16 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
+	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(5))
+		spark()
+		broken = REALLY_BROKEN
+		explosion(src, light_impact_range = 2, flame_range = 1)
+
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(prob(max(metal_amount / 2, 33)))
+		if(HAS_TRAIT(cooker, TRAIT_CURSED) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-
 	else
 		dump_inventory_contents()
 

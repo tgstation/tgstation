@@ -198,7 +198,7 @@
 
 /datum/chemical_reaction/drink/singulo
 	results = list(/datum/reagent/consumable/ethanol/singulo = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/uranium/radium = 1, /datum/reagent/consumable/ethanol/wine = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/liquid_dark_matter = 1, /datum/reagent/consumable/ethanol/wine = 5)
 
 /datum/chemical_reaction/drink/alliescocktail
 	results = list(/datum/reagent/consumable/ethanol/alliescocktail = 2)
@@ -234,6 +234,10 @@
 /datum/chemical_reaction/drink/pina_colada
 	results = list(/datum/reagent/consumable/ethanol/pina_colada = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_coconut = 1, /datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/limejuice = 1)
+
+/datum/chemical_reaction/drink/pina_olivada
+	results = list(/datum/reagent/consumable/ethanol/pina_olivada = 5)
+	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/quality_oil = 1)
 
 /datum/chemical_reaction/drink/sbiten
 	results = list(/datum/reagent/consumable/ethanol/sbiten = 10)
@@ -389,7 +393,7 @@
 
 /datum/chemical_reaction/drink/quintuplesec
 	results = list(/datum/reagent/consumable/ethanol/quintuple_sec = 15)
-	required_reagents = list(/datum/reagent/consumable/ethanol/quadruple_sec = 5, /datum/reagent/consumable/clownstears = 5, /datum/reagent/consumable/ethanol/syndicatebomb = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/quadruple_sec = 5, /datum/reagent/consumable/nutriment/soup/clown_tears = 5, /datum/reagent/consumable/ethanol/syndicatebomb = 5)
 	mix_message = "Judgement is upon you."
 	mix_sound = 'sound/items/airhorn2.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER

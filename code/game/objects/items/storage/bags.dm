@@ -39,7 +39,7 @@
 	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	slot_flags = null
+	storage_type = /datum/storage/trash
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -49,6 +49,23 @@
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
+	atom_storage.supports_smart_equip = FALSE
+	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
+
+/// If you dump a trash bag into something, anything that doesn't get inserted will spill out onto your feet
+/obj/item/storage/bag/trash/proc/post_insertion(datum/storage/source, atom/dest_object, mob/user)
+	SIGNAL_HANDLER
+	// If there's no item in there, don't do anything
+	if(!(locate(/obj/item) in src))
+		return
+
+	// Otherwise, we're gonna dump into the dest object
+	var/turf/dump_onto = get_turf(dest_object)
+	user.visible_message(
+		span_notice("[user] dumps the contents of [src] all out on \the [dump_onto]"),
+		span_notice("The remaining trash in \the [src] falls out onto \the [dump_onto]"),
+	)
+	source.remove_all(dump_onto)
 
 /obj/item/storage/bag/trash/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))

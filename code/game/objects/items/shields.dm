@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/item_shield
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -26,9 +26,15 @@
 	/// baton bash cooldown
 	COOLDOWN_DECLARE(baton_bash)
 
+/datum/armor/item_shield
+	melee = 50
+	bullet = 50
+	laser = 50
+	bomb = 30
+	fire = 80
+	acid = 70
+
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!breakable_by_damage)
-		return FALSE
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -55,6 +61,8 @@
 	new shield_break_leftover(get_turf(src))
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+	if(!breakable_by_damage)
+		return TRUE
 	if (atom_integrity <= damage)
 		var/turf/owner_turf = get_turf(owner)
 		owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))
@@ -88,7 +96,7 @@
 /obj/item/shield/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
 	block_chance = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/none
 	max_integrity = 30
 
 /obj/item/shield/riot
