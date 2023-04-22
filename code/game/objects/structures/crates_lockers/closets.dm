@@ -535,8 +535,6 @@
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
-		if(card_reader_installed)
-			new /obj/item/stock_parts/card_reader(drop_location())
 
 /obj/structure/closet/CheckParts(list/parts_list)
 	for(var/obj/item/electronics/airlock/access_control in parts_list)
@@ -559,7 +557,7 @@
 
 /// sets the access for the closets from the swiped ID card
 /obj/structure/closet/proc/set_access(list/accesses)
-	if (length(req_one_access))
+	if(length(req_one_access))
 		req_one_access = accesses
 		req_access = null
 	else
