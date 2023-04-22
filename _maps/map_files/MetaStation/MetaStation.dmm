@@ -5276,6 +5276,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bWP" = (

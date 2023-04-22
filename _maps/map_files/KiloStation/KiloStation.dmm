@@ -8461,10 +8461,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "cXg" = (
-/obj/structure/reagent_dispensers/watertank/high,
 /obj/structure/railing,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cXh" = (
@@ -17088,6 +17088,9 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "fLd" = (
@@ -53506,8 +53509,6 @@
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "rLs" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -53515,6 +53516,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rLy" = (
@@ -63135,6 +63137,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"uTF" = (
+/obj/machinery/mother_tree,
+/turf/open/floor/glass,
+/area/station/service/hydroponics)
 "uTG" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -68946,6 +68952,7 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/bot,
+/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wGD" = (
@@ -108742,7 +108749,7 @@ rLs
 lFt
 rJS
 xHP
-fLv
+uTF
 dfU
 lJJ
 cAu
