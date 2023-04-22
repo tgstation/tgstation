@@ -207,7 +207,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()
 	QDEL_NULL(alarm_manager)
 	if(occupier)
@@ -218,7 +218,9 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+
 	return ..()
+
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
@@ -284,15 +286,18 @@
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-	if(!(machine_stat & BROKEN))
-		set_broken()
-	if(opened != APC_COVER_REMOVED)
-		opened = APC_COVER_REMOVED
-		coverlocked = FALSE
-		visible_message(span_warning("The APC cover is knocked down!"))
-		update_appearance()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(loc, 2)
+		if((has_electronics & APC_ELECTRONICS_INSTALLED) || (has_electronics & APC_ELECTRONICS_SECURED))
+			new /obj/item/electronics/apc(loc)
+		if(!QDELETED(cell))
+			cell.forceMove(drop_location())
+			cell = null
+		if(!QDELETED(terminal))
+			new /obj/item/stack/cable_coil(loc, 10)
+	if(!QDELETED(terminal))
+		QDEL_NULL(terminal)
+	qdel(src)
 
 /obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
