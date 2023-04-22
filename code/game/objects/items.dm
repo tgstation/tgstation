@@ -689,6 +689,7 @@
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(user, COMSIG_HUMAN_EQUIPPING_ITEM, src, slot)
 	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
@@ -878,6 +879,8 @@
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
+	if(resistance_flags & ON_FIRE)
+		return max(heat, BURNING_ITEM_MINIMUM_TEMPERATURE)
 	return heat
 
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.
