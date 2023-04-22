@@ -142,7 +142,7 @@
 /obj/effect/throw_bounce_visual/Initialize(mapload, datum/component/throw_bounce/owning_component, obj/item/owning_component_parent, list/possible_targets)
 	. = ..()
 	if(!(owning_component) || !(owning_component_parent))
-		CRASH("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
+		message_admins("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
 	src.owning_component = WEAKREF(owning_component)
 	src.owning_component_parent = WEAKREF(owning_component_parent)
 	for(var/mob/living/entry_mob in possible_targets)

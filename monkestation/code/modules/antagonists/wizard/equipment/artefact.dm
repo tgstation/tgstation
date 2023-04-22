@@ -34,6 +34,7 @@
 	desc = "A reactive talisman for the reactive mage."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "memento_mori"
+	worn_icon_state = "memento"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | UNACIDABLE
 	hit_reaction_chance = 50
 	//weakref to whomever the talisman is bound to
