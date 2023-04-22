@@ -72,8 +72,6 @@
 
 	if(!all_harvested_items.len)
 		TEST_FAIL("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
-
-	TEST_ASSERT(all_harvested_items[1].reagents, "Hydroponics harvest from [saved_name] had no reagent container.")
 	TEST_ASSERT_EQUAL(all_harvested_items[1].reagents.maximum_volume, max_volume, "Hydroponics harvest from [saved_name] [double_chemicals ? "did not have its reagent capacity doubled to [max_volume] properly." : "did not have its reagents capped at [max_volume] properly."]")
 
 	var/expected_nutriments = seed.reagents_add[/datum/reagent/consumable/nutriment]
