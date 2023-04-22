@@ -30009,11 +30009,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"iav" = (
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/cable,
-/turf/open/floor/pod/light,
-/area/station/maintenance/floor1/port/aft)
 "iaz" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 1
@@ -137276,7 +137271,7 @@ ixD
 vFE
 xWv
 khQ
-iav
+snf
 vcr
 xbz
 bCM
