@@ -102,9 +102,6 @@
 /datum/computer_file/program/messenger/ui_state(mob/user)
 	if(issilicon(user))
 		return GLOB.reverse_contained_state
-	for(var/obj/item/inhand in user.held_items)
-		if(istype(inhand, /obj/item/modular_computer/pda))
-			return GLOB.horizontal_state
 	return GLOB.default_state
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
