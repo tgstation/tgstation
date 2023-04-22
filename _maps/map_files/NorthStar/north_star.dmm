@@ -42238,7 +42238,7 @@
 "loe" = (
 /obj/machinery/airalarm/kitchen_cold_room{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -64430,7 +64430,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/machinery/airalarm/mixingchamber{
 	dir = 8;
-	pixel_x = -26
+	pixel_x = -28
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/burnchamber)
@@ -74101,7 +74101,7 @@
 /area/station/maintenance/floor2/port/aft)
 "tPq" = (
 /obj/machinery/airalarm/engine{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/engine,

@@ -649,7 +649,7 @@
 /obj/item/pipe_dispenser,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/item/wrench,
 /turf/open/floor/plating,

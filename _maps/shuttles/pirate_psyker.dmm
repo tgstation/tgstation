@@ -843,7 +843,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/robot_debris/up,

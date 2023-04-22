@@ -3809,7 +3809,7 @@
 	},
 /obj/machinery/airalarm/mixingchamber{
 	dir = 4;
-	pixel_x = 25
+	pixel_x = 28
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -16289,7 +16289,7 @@
 	},
 /obj/machinery/airalarm/kitchen_cold_room{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
@@ -25474,7 +25474,7 @@
 	},
 /obj/machinery/airalarm/mixingchamber{
 	dir = 8;
-	pixel_x = -26
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -29619,7 +29619,7 @@
 "kOq" = (
 /obj/machinery/airalarm/server{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
@@ -33478,7 +33478,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/airalarm/engine{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -39232,7 +39232,7 @@
 "oox" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,

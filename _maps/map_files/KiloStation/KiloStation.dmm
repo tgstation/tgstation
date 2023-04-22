@@ -17357,7 +17357,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/airalarm/engine{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -21432,7 +21432,7 @@
 /obj/effect/turf_decal/bot/left,
 /obj/machinery/airalarm/kitchen_cold_room{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/freezer,
@@ -45035,7 +45035,7 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/mixingchamber{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/showroomfloor,

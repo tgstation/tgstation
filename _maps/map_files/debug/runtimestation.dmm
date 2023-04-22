@@ -64,7 +64,7 @@
 "ar" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/structure/closet/secure_closet/engineering_welding{
 	locked = 0
@@ -77,7 +77,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -327,7 +327,7 @@
 "bs" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/iron,
@@ -383,7 +383,7 @@
 "bG" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/table,
@@ -451,7 +451,7 @@
 "bP" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -482,7 +482,7 @@
 "bU" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -780,7 +780,7 @@
 "cW" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/corner,
@@ -822,7 +822,7 @@
 "dd" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -1221,7 +1221,7 @@
 "eG" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -1251,7 +1251,7 @@
 "eM" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 4;
-	pixel_x = 23
+	pixel_x = 28
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -1711,7 +1711,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/airalarm/unlocked{
 	dir = 4;
-	pixel_x = 32
+	pixel_x = 28
 	},
 /obj/structure/cable,
 /obj/machinery/computer/shuttle/mining,
@@ -2127,7 +2127,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -2160,7 +2160,7 @@
 "AE" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
@@ -2413,7 +2413,7 @@
 "Sp" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 28
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)

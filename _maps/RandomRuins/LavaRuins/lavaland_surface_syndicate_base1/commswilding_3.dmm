@@ -116,7 +116,7 @@
 "z" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;

@@ -14728,7 +14728,7 @@
 /obj/effect/turf_decal/box/red,
 /obj/machinery/airalarm/mixingchamber{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/burnchamber)
@@ -31206,7 +31206,7 @@
 "jZg" = (
 /obj/machinery/airalarm/kitchen_cold_room{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/coldroom,
@@ -38921,7 +38921,7 @@
 /obj/machinery/meter,
 /obj/machinery/airalarm/mixingchamber{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/freezerchamber)
@@ -47316,7 +47316,7 @@
 "oZA" = (
 /obj/machinery/airalarm/engine{
 	dir = 8;
-	pixel_x = -23
+	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -68044,7 +68044,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,

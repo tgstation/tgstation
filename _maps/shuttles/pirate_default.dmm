@@ -6,7 +6,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -85,7 +85,7 @@
 "ak" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -142,7 +142,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -456,7 +456,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -555,7 +555,7 @@
 "bC" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -831,7 +831,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -843,7 +843,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
@@ -957,7 +957,7 @@
 "OD" = (
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -977,7 +977,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{

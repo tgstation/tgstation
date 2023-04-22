@@ -9,7 +9,7 @@
 "ad" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/structure/closet/crate/secure/freezer/commsagent,
 /turf/open/floor/plating,
@@ -72,7 +72,7 @@
 /obj/item/crowbar/red,
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
@@ -357,7 +357,7 @@
 "tm" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/machinery/computer/message_monitor{
 	dir = 8

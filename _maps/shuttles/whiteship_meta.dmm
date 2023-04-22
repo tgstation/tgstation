@@ -336,7 +336,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -399,7 +399,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /obj/machinery/light/small/built/directional/south,
 /obj/effect/decal/cleanable/blood,
@@ -526,7 +526,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -706,7 +706,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -739,7 +739,7 @@
 /obj/structure/table,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/folder/blue{
@@ -1045,7 +1045,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1067,7 +1067,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/processor,
@@ -1113,7 +1113,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/machinery/light/small/built/directional/north,
 /obj/structure/cable,
@@ -1570,7 +1570,7 @@
 /obj/machinery/light/small/built/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -24
+	pixel_y = -28
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line,
@@ -1630,7 +1630,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -1689,7 +1689,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -28
 	},
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -2036,7 +2036,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 24
+	pixel_y = 28
 	},
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2126,7 +2126,7 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 28
 	},
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /obj/effect/turf_decal/tile/green/half/contrasted,
