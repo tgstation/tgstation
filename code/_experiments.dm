@@ -3,7 +3,6 @@
 // Any flag you see here can be flipped with the `-D` CLI argument.
 // For example, if you want to enable EXPERIMENT_MY_COOL_FEATURE, compile with -DEXPERIMENT_MY_COOL_FEATURE
 // If you're looking to run these, make sure you don't have the regular debug info enabled in compile_options.dm
-// Except for unit_tests
 
 // EXPERIMENT_515_QDEL_HARD_REFERENCE
 // - Hold a hard reference for qdeleted items, and check ref_count, rather than using refs. Requires 515+.
