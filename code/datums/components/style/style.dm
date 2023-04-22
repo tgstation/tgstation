@@ -37,6 +37,11 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
+	/// Weakref to the added projectile parry component
+	var/datum/weakref/projectile_parry
+	/// What rank, minimum, the user needs to be to hotswap items
+	var/hotswap_rank = STYLE_ABSOLUTE
+
 
 /datum/component/style/Initialize()
 	if(!ismob(parent))
@@ -45,7 +50,7 @@
 	meter = new()
 	meter_image = new()
 	meter.vis_contents += meter_image
-	meter_image.add_filter("meter_mask", 1, list(type="alpha",icon=icon('icons/hud/style_meter.dmi', "style_meter"),flags=MASK_INVERSE))
+	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
 	meter.update_appearance()
 	meter_image.update_appearance()
 	update_screen()
@@ -55,6 +60,7 @@
 	START_PROCESSING(SSdcs, src)
 
 /datum/component/style/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
@@ -68,12 +74,21 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
-	ADD_TRAIT(parent, PROJECTILE_PARRY_TRAIT, "style-component")
+	projectile_parry = WEAKREF(parent.AddComponentFrom(\
+		src,\
+		/datum/component/projectile_parry,\
+		list(\
+			/obj/projectile/colossus,\
+			/obj/projectile/temp/basilisk,\
+			/obj/projectile/kinetic,\
+			/obj/projectile/bileworm_acid,\
+			/obj/projectile/herald)\
+	))
 
 /datum/component/style/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
-	UnregisterSignal(parent, list(COMSIG_MOB_MINED))
-	UnregisterSignal(parent, list(COMSIG_MOB_APPLY_DAMAGE))
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_MOB_MINED)
+	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, list(COMSIG_MOB_EMOTED("flip"), COMSIG_MOB_EMOTED("spin")))
 	UnregisterSignal(parent, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
@@ -82,7 +97,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
-	REMOVE_TRAIT(parent, PROJECTILE_PARRY_TRAIT, "style-component")
+	qdel(projectile_parry?.resolve())
 
 
 /datum/component/style/Destroy(force, silent)
@@ -248,6 +263,30 @@
 		if(ACTION_GEYSER_MARKED)
 			return "#364866"
 
+/// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
+/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
+	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
+		return
+
+	var/obj/item/item_target = target
+
+	if(!(item_target.item_flags & IN_STORAGE))
+		return
+
+	var/datum/storage/atom_storage = item_target.loc.atom_storage
+
+	if(!atom_storage.can_insert(weapon, source, messages = FALSE))
+		source.balloon_alert(source, "unable to hotswap!")
+		return
+
+	atom_storage.attempt_insert(weapon, source, override = TRUE)
+	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
+	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+
+
+
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
@@ -264,7 +303,7 @@
 /datum/component/style/proc/on_attack(mob/living/attacking_person, mob/living/attacked_mob)
 	SIGNAL_HANDLER
 
-	if(!attacked_mob.stat)
+	if(attacked_mob.stat)
 		return
 
 	var/mob/living/simple_animal/hostile/attacked_hostile = attacked_mob
@@ -295,7 +334,7 @@
 	if(rock.mineralType)
 		if(give_exp)
 			add_action(ACTION_ORE_MINED, 40)
-		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.3) - 0.5))) // You start out getting 20% less ore, but it goes up to 100% more at S-tier
+		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
 	else if(give_exp)
 		add_action(ACTION_ROCK_MINED, 25)

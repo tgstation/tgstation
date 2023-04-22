@@ -392,22 +392,26 @@
 /obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(user, PROJECTILE_PARRY_TRAIT) && isliving(user) && !parried)
+	if(parried)
+		return FALSE
+
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
 		on_parry(user, modifiers)
+		return TRUE
+
+	return FALSE
 
 
 /// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 17 degrees and increasing the bullet's stats.
 /obj/projectile/proc/on_parry(mob/user, list/modifiers)
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
+		return
+
 	parried = TRUE
-	set_angle(dir2angle(user.dir) + rand(-8, 8))
+	set_angle(dir2angle(user.dir) + rand(-3, 3))
 	speed *= 0.8 // Go 20% faster when parried
 	damage *= 1.15 // And do 15% more damage
 	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
-	SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src)
-	user.playsound_local(get_turf(src), 'sound/machines/clockcult/ark_damage.ogg', 50, TRUE)
-	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	user.visible_message(span_warning("[user] expertly parries [src] with [user.p_their()] bare hand!"), span_warning("You parry [src] with your hand!"))
 
 
 /**
