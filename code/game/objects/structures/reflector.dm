@@ -297,6 +297,12 @@
 		ui = new(user, src, "Reflector")
 		ui.open()
 
+/obj/structure/reflector/attack_robot(mob/user)
+	if(user.Adjacent(src))
+		ui_interact(user)
+		return
+	return ..()
+
 /obj/structure/reflector/ui_data(mob/user)
 	var/list/data = list()
 	data["rotation_angle"] = rotation_angle
