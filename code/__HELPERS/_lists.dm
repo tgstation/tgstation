@@ -304,8 +304,8 @@
 		return
 
 	for(var/current_path in pathlist)
-		for(var/subtype in typesof(current_path))
-			.[subtype] = TRUE
+		for(var/subpath in typesof(current_path))
+			.[subpath] = TRUE
 
 	if(ignore_root_path)
 		. -= pathlist
