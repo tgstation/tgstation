@@ -144,7 +144,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	icon_state = "extinguisher"
 
 	if(!stored_extinguisher)
-		icon_state += "_empty"
+		icon_state += ""
 	else if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
 		icon_state += "_mini"
 	else if(istype(stored_extinguisher, /obj/item/extinguisher/advanced))
