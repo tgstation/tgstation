@@ -303,22 +303,12 @@
 			.[current_path] = TRUE
 		return
 
-	// We're basically just feeding the passed in paths into typesof(), and then associating all their subtypes with TRUE
-	// The messy part here is me unrolling that loop slightly. See typesof() will accept any amount of types to get the subtypes of
-	// It's faster (very slightly but still) to pass in groups of types rather then 1 at a time
-	// That's what is going on here, we divide the pathlist into groups of 5, and if we go out of its size we just pass in null (which does nothing)
-	// This tactic would typically be done by a compiler, but old byond she doesn't think that hard
-	// It's only barely worth it but I think it's kinda fun
-	var/pathlen = length(pathlist)
-	for(var/i in 1 to ROUND_UP(pathlen / 5))
-		for(var/subpath in typesof(pathlist[i], (i + 1 <= pathlen) ? pathlist[i + 1] : null, \
-			(i + 2 <= pathlen) ? pathlist[i + 2] : null, (i + 3 <= pathlen) ? pathlist[i + 3] : null, \
-			(i + 4 <= pathlen) ? pathlist[i + 4] : null))
+	for(var/current_path in pathlist)
+		for(var/subpath in typesof(current_path))
 			.[subpath] = TRUE
 
 	if(ignore_root_path)
-		for(var/current_path in pathlist)
-			. -= current_path
+		. -= pathlist
 
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
@@ -369,31 +359,9 @@
 				. -= cached_path
 		return
 
-	// In order to support the later on slightly faster stupid shit, we're gonna break our arguments into chunks of values
-	// This way we can easily iterate over them later on without breaking the promise of this proc
-	var/list/groups = list()
-	var/list/current_group = list()
-	var/current = null
-	for(var/grouping_path in pathlist)
-		if(current != pathlist[grouping_path])
-			current = pathlist[grouping_path]
-			current_group = list()
-			groups += list(current_group)
-		current_group += grouping_path
-
-	for(var/list/working as anything in groups)
-		var/value = pathlist[working[1]]
-		var/pathlen = length(working)
-		// We're basically just feeding the passed in paths into typesof(), and then associating all their subtypes with TRUE
-		// The messy part here is me unrolling that loop slightly. See typesof() will accept any amount of types to get the subtypes of
-		// It's faster (very slightly but still) to pass in groups of types rather then 1 at a time
-		// That's what is going on here, we divide the pathlist into groups of 5, and if we go out of its size we just pass in null (which does nothing)
-		// This tactic would typically be done by a compiler, but old byond she doesn't think that hard
-		// It's only barely worth it but I think it's kinda fun
-		for(var/i in 1 to ROUND_UP(pathlen / 4))
-			for(var/subpath in typesof(working[i], (i + 1 <= pathlen) ? working[i + 1] : null, \
-				(i + 2 <= pathlen) ? working[i + 2] : null, (i + 3 <= pathlen) ? working[i + 3] : null))
-				.[subpath] = value
+	for(var/current_path in pathlist)
+		for(var/subpath in typesof(current_path))
+			.[subpath] = pathlist[current_path]
 
 	if(ignore_root_path)
 		. -= pathlist
