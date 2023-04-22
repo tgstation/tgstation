@@ -7,11 +7,15 @@
 	var/list/emote_see = list()
 	///Possible lines of speech the AI can have
 	var/list/speak = list()
+	///The sound effects associated with this speech, if any
+	var/list/sound = list()
 
 /datum/ai_planning_subtree/random_speech/New()
 	. = ..()
 	if(speak)
 		speak = string_list(speak)
+	if(sound)
+		sound = string_list(sound)
 	if(emote_hear)
 		emote_hear = string_list(emote_hear)
 	if(emote_see)
@@ -32,7 +36,7 @@
 		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
 			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
-			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
+			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), length(sound) > 0 ? pick(sound) : null)
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
@@ -60,6 +64,7 @@
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
+	sound = list('sound/creatures/sheep1.ogg', 'sound/creatures/sheep2.ogg', 'sound/creatures/sheep3.ogg')
 	emote_hear = list("bleats.")
 	emote_see = list("shakes her head.", "stares into the distance.")
 
@@ -94,6 +99,7 @@
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
+	sound = list('sound/creatures/cow.ogg')
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
 
@@ -104,6 +110,7 @@
 /datum/ai_planning_subtree/random_speech/cow/wisdom/New()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
+	sound = list()
 
 /datum/ai_planning_subtree/random_speech/deer
 	speech_chance = 1
@@ -141,6 +148,9 @@
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
 	speak = list("oink?","oink","snurf")
+	emote_hear = list("snorts.")
+	emote_see = list("sniffs around.")
+	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
 
@@ -184,7 +194,7 @@
 	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
 	if(isnull(speech_lines))
 		return ..()
-	
+
 	speak = speech_lines[BB_EMOTE_SAY] ? speech_lines[BB_EMOTE_SAY] : initial(speak)
 	emote_see = speech_lines[BB_EMOTE_SEE] ? speech_lines[BB_EMOTE_SEE] : initial(emote_see)
 	emote_hear = speech_lines[BB_EMOTE_HEAR] ? speech_lines[BB_EMOTE_HEAR] : initial(emote_hear)
