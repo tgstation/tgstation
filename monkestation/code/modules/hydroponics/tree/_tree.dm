@@ -147,7 +147,7 @@
 	icon_state = "trunk_1"
 
 /obj/effect/tree/leaf
-	icon_state = "leaf_1_4"
+	icon_state = "none"
 
 /obj/effect/tree/fruit
 	var/list/stored_images

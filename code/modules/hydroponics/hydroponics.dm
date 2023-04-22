@@ -82,6 +82,8 @@
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()
 
+	connected_tree = locate() in range(5)
+
 /obj/machinery/hydroponics/add_context(
 	atom/source,
 	list/context,
