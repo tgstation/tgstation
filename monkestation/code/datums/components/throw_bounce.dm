@@ -143,6 +143,7 @@
 	. = ..()
 	if(!(owning_component) || !(owning_component_parent))
 		message_admins("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
+		return qdel(src)
 	src.owning_component = WEAKREF(owning_component)
 	src.owning_component_parent = WEAKREF(owning_component_parent)
 	for(var/mob/living/entry_mob in possible_targets)
