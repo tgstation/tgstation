@@ -36,7 +36,7 @@
 		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
 			controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
-			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), sound.len > 0 ? pick(sound) : null)
+			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak), length(sound) > 0 ? pick(sound) : null)
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
