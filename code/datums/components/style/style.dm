@@ -40,7 +40,7 @@
 	/// Weakref to the added projectile parry component
 	var/datum/weakref/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
-	var/hotswap_rank = STYLE_ABSOLUTE
+	var/hotswap_rank = STYLE_BRUTAL
 
 
 /datum/component/style/Initialize()
@@ -162,6 +162,15 @@
 		timerid = null
 		if(rank_changed == point_to_rank())
 			go_back = rank > rank_changed ? 100 : 0
+
+			if((rank < hotswap_rank) && (rank_changed >= hotswap_rank))
+				var/mob/mob_parent = parent
+				mob_parent.balloon_alert(mob_parent, "hotswapping enabled")
+
+			else if((rank >= hotswap_rank) && (rank_changed < hotswap_rank))
+				var/mob/mob_parent = parent
+				mob_parent.balloon_alert(mob_parent, "hotswapping disabled")
+
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
 	meter.maptext_y = 100 - 9 * length(actions)
@@ -291,7 +300,7 @@
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
 
-	if(!proximity || !punching_person.combat_mode)
+	if(!proximity || !punching_person.combat_mode || !istype(attacked_atom, /mob/living/simple_animal/hostile))
 		return
 
 	var/mob/living/simple_animal/hostile/disrespected = attacked_atom

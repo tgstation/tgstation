@@ -36,4 +36,4 @@
 	living_parent.playsound_local(get_turf(parried_projectile), 'sound/effects/parry.ogg', 50, TRUE)
 	living_parent.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
 	addtimer(CALLBACK(living_parent, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	living_parent.visible_message(span_warning("[living_parent] expertly parries [src] with [living_parent.p_their()] bare hand!"), span_warning("You parry [src] with your hand!"))
+	living_parent.visible_message(span_warning("[living_parent] expertly parries [parried_projectile] with [living_parent.p_their()] bare hand!"), span_warning("You parry [parried_projectile] with your hand!"))
