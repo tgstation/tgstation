@@ -36,18 +36,21 @@
 
 /obj/machinery/telecomms/hub/update_power()
 	var/old_on = on
-	if(toggled)
-		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
-			on = FALSE
-			soundloop.stop()
-		else
-			on = TRUE
-			soundloop.start()
-	else
+	if (toggled && (machine_stat & (BROKEN|NOPOWER|EMPED)))
 		on = FALSE
+		soundloop.stop()
+	else
+		on = TRUE
 		soundloop.stop()
 	if(old_on != on)
 		update_appearance()
+
+/obj/machinery/telecomms/hub/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, on)
+	GLOB.telecomms_list += src
+	if(mapload && autolinkers.len)
+		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/hub/Destroy()
 	GLOB.telecomms_list -= src
@@ -56,13 +59,6 @@
 		remove_link(machine)
 	links = list()
 	return ..()
-
-/obj/machinery/telecomms/hub/Initialize(mapload)
-	. = ..()
-	soundloop = new(src, on)
-	GLOB.telecomms_list += src
-	if(mapload && autolinkers.len)
-		return INITIALIZE_HINT_LATELOAD
 
 //Preset HUB
 
