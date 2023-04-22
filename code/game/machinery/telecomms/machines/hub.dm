@@ -41,23 +41,16 @@
 		soundloop.stop()
 	else
 		on = TRUE
-		soundloop.stop()
+		soundloop.start()
 	if(old_on != on)
 		update_appearance()
 
 /obj/machinery/telecomms/hub/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, on)
-	GLOB.telecomms_list += src
-	if(mapload && autolinkers.len)
-		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/hub/Destroy()
-	GLOB.telecomms_list -= src
 	QDEL_NULL(soundloop)
-	for(var/obj/machinery/telecomms/machine in GLOB.telecomms_list)
-		remove_link(machine)
-	links = list()
 	return ..()
 
 //Preset HUB
