@@ -2,7 +2,7 @@
 // but that we want to be able to easily flip as well as run on CI.
 // Any flag you see here can be flipped with the `-D` CLI argument.
 // For example, if you want to enable EXPERIMENT_MY_COOL_FEATURE, compile with -DEXPERIMENT_MY_COOL_FEATURE
-// If you're looking to run these, make sure you don't have the regular debug info enbaled in compile_options.dm
+// If you're looking to run these, make sure you don't have the regular debug info enabled in compile_options.dm
 // Except for unit_tests
 
 // EXPERIMENT_515_QDEL_HARD_REFERENCE
