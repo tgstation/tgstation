@@ -787,6 +787,7 @@
 "ajh" = (
 /obj/structure/closet/wardrobe/grey,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
 "ajq" = (
@@ -3689,6 +3690,7 @@
 "aTu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "aTy" = (
@@ -4239,6 +4241,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/first)
 "aZW" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/port/aft)
 "baa" = (
@@ -24473,6 +24476,7 @@
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "gxE" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/starboard/aft)
 "gxH" = (
@@ -30009,6 +30013,11 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"iav" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor1/port)
 "iaz" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 1
@@ -50422,6 +50431,8 @@
 /obj/effect/spawner/random/trash/graffiti{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/maintenance,
+/obj/structure/grille/broken,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "nmw" = (
@@ -68287,7 +68298,7 @@
 "scP" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/table,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/facehugger/toy,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
 "sde" = (
@@ -74747,6 +74758,10 @@
 	dir = 4
 	},
 /area/station/hallway/floor1/aft)
+"tTu" = (
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/floor1/port)
 "tTw" = (
 /obj/effect/turf_decal/trimline/purple/warning{
 	dir = 8
@@ -84392,6 +84407,7 @@
 /area/station/science/circuits)
 "wxj" = (
 /obj/effect/spawner/random/engineering/material_cheap,
+/obj/structure/grille/broken,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "wxw" = (
@@ -120039,7 +120055,7 @@ wwm
 irK
 xgH
 xgH
-xfT
+tTu
 xSl
 xgH
 dxS
@@ -122625,7 +122641,7 @@ kzE
 kzE
 kzE
 kzE
-eVk
+pur
 wVn
 xgH
 qGp
@@ -132906,7 +132922,7 @@ eVk
 aTu
 xgH
 xdN
-eVk
+iav
 aKt
 dEc
 dEc
