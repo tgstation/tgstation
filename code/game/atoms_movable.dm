@@ -233,7 +233,7 @@
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			if(em_block)
 				SET_PLANE(em_block, PLANE_TO_TRUE(em_block.plane), src)
-			else if(!em_block && !QDELETED(src))
+			else if(!QDELETED(src))
 				render_target = ref(src)
 				em_block = new(null, render_target)
 			return em_block
