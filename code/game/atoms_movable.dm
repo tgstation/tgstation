@@ -236,7 +236,6 @@
 			else if(!em_block && !QDELETED(src))
 				render_target = ref(src)
 				em_block = new(null, render_target)
-
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
 	// EMISSIVE_BLOCK_GENERIC == 0
