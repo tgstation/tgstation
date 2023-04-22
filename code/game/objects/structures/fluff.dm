@@ -92,6 +92,7 @@
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
 	icon = 'icons/obj/bus.dmi'
+	icon_state = null
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
@@ -144,6 +145,7 @@
 /obj/structure/fluff/divine
 	name = "Miracle"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon_state = "error"
 	anchored = TRUE
 	density = TRUE
 
@@ -199,7 +201,7 @@
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	density = FALSE
 	anchored = TRUE
@@ -232,6 +234,7 @@
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
 	icon = 'icons/obj/fluff.dmi'
+	icon_state = "error"
 	deconstructible = FALSE
 
 /obj/structure/fluff/clockwork/alloy_shards
@@ -272,7 +275,7 @@
 	icon = 'icons/obj/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
 	deconstructible = TRUE
 
 /obj/structure/fluff/tram_rail/floor

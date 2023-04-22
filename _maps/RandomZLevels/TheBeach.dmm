@@ -807,10 +807,8 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cI" = (
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/sand,
+/obj/machinery/barsign/all_access/directional/north,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cJ" = (

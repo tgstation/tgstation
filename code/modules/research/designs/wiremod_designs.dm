@@ -436,6 +436,16 @@
 	id = "comp_access_checker"
 	build_path = /obj/item/circuit_component/compare/access
 
+/datum/design/component/list_pick
+	name = "List Pick Component"
+	id = "comp_list_pick"
+	build_path = /obj/item/circuit_component/list_pick
+
+/datum/design/component/list_pick_assoc
+	name = "Associative List Pick Component"
+	id = "comp_assoc_list_pick"
+	build_path = /obj/item/circuit_component/list_pick/assoc
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."

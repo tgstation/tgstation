@@ -11,5 +11,5 @@
 	spell_requirements = NONE
 
 	summon_radius = 3
-	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
+	summon_type = list(/mob/living/basic/creature)
 	summon_amount = 10

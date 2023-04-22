@@ -122,8 +122,8 @@
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_CLOCK_WALLS)
-	canSmoothWith = list(SMOOTH_GROUP_CLOCK_WALLS)
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOCK_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_CLOCK_WALLS
 
 /turf/closed/wall/rock
 	name = "reinforced rock"
@@ -145,13 +145,22 @@
 /turf/closed/wall/space
 	name = "illusionist wall"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
+	icon_state = "space"
 	plane = PLANE_SPACE
 	turf_flags = NO_RUST
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
 
-/turf/closed/wall/space/Initialize(mapload)
+/turf/closed/wall/material/meat
+	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/material/meat/Initialize(mapload)
 	. = ..()
-	icon_state = SPACE_ICON_STATE(x, y, z)
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = MINERAL_MATERIAL_AMOUNT))
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless

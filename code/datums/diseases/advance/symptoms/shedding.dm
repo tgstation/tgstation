@@ -9,6 +9,7 @@
 /datum/symptom/shedding
 	name = "Alopecia"
 	desc = "The virus causes rapid shedding of head and body hair."
+	illness = "Thin Skinned"
 	stealth = 0
 	resistance = 1
 	stage_speed = 2

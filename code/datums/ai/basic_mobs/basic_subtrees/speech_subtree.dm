@@ -17,8 +17,8 @@
 	if(emote_see)
 		emote_see = string_list(emote_see)
 
-/datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	if(DT_PROB(speech_chance, delta_time))
+/datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(SPT_PROB(speech_chance, seconds_per_tick))
 		var/audible_emotes_length = emote_hear?.len
 		var/non_audible_emotes_length = emote_see?.len
 		var/speak_lines_length = speak?.len
@@ -34,7 +34,7 @@
 		else
 			controller.queue_behavior(/datum/ai_behavior/perform_speech, pick(speak))
 
-/datum/ai_planning_subtree/random_speech/cockroach
+/datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
 	emote_hear = list("chitters.")
 
@@ -47,6 +47,10 @@
 	speak = list("Squeak!", "SQUEAK!", "Squeak?")
 	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
+
+/datum/ai_planning_subtree/random_speech/frog
+	speech_chance = 3
+	emote_see = list("jumps in a circle.", "shakes.")
 
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
@@ -93,7 +97,7 @@
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
 
-/datum/ai_planning_subtree/random_speech/dog/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/random_speech/dog/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!isdog(controller.pawn))
 		return
 
@@ -102,3 +106,17 @@
 	dog_pawn.update_dog_speech(src)
 
 	return ..()
+
+/datum/ai_planning_subtree/random_speech/faithless
+	speech_chance = 1
+	emote_see = list("wails.")
+
+/datum/ai_planning_subtree/random_speech/garden_gnome
+	speech_chance = 5
+	speak = list("Gnot a gnelf!", "Gnot a gnoblin!", "Howdy chum!")
+	emote_hear = list("snores.", "burps.")
+	emote_see = list("blinks.")
+
+/datum/ai_planning_subtree/random_speech/tree
+	speech_chance = 3
+	emote_see = list("photosynthesizes angirly.")

@@ -370,7 +370,7 @@
 	)
 
 /datum/component/construction/mecha/gygax
-	result = /obj/vehicle/sealed/mecha/combat/gygax
+	result = /obj/vehicle/sealed/mecha/gygax
 	base_icon = "gygax"
 
 	circuit_control = /obj/item/circuitboard/mecha/gygax/main
@@ -384,7 +384,9 @@
 	outer_plating_amount=1
 
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	return INVOKE_ASYNC(src, PROC_REF(check_step), used_atom,user)
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
+		. = check_step(used_atom, user)
+	return .
 
 //CLARKE
 /datum/component/construction/unordered/mecha_chassis/clarke
@@ -461,7 +463,7 @@
 	)
 
 /datum/component/construction/mecha/honker
-	result = /obj/vehicle/sealed/mecha/combat/honker
+	result = /obj/vehicle/sealed/mecha/honker
 	steps = list(
 		list(
 			"key" = /obj/item/bikehorn,
@@ -582,7 +584,7 @@
 	)
 
 /datum/component/construction/mecha/durand
-	result = /obj/vehicle/sealed/mecha/combat/durand
+	result = /obj/vehicle/sealed/mecha/durand
 	base_icon = "durand"
 
 	circuit_control = /obj/item/circuitboard/mecha/durand/main
@@ -608,7 +610,7 @@
 	)
 
 /datum/component/construction/mecha/phazon
-	result = /obj/vehicle/sealed/mecha/combat/phazon
+	result = /obj/vehicle/sealed/mecha/phazon
 	base_icon = "phazon"
 
 	circuit_control = /obj/item/circuitboard/mecha/phazon/main
@@ -744,7 +746,7 @@
 	)
 
 /datum/component/construction/mecha/savannah_ivanov
-	result = /obj/vehicle/sealed/mecha/combat/savannah_ivanov
+	result = /obj/vehicle/sealed/mecha/savannah_ivanov
 	base_icon = "savannah_ivanov"
 
 	circuit_control = /obj/item/circuitboard/mecha/savannah_ivanov/main
@@ -770,7 +772,7 @@
 	)
 
 /datum/component/construction/mecha/odysseus
-	result = /obj/vehicle/sealed/mecha/medical/odysseus
+	result = /obj/vehicle/sealed/mecha/odysseus
 	base_icon = "odysseus"
 
 	circuit_control = /obj/item/circuitboard/mecha/odysseus/main

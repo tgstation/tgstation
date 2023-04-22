@@ -7,7 +7,7 @@
  * Grasp of Ash
  * Ashen Passage
  * > Sidepaths:
- *   Priest's Ritual
+ *   Scorching Shark
  *   Ashen Eyes
  *
  * Mark of Ash
@@ -15,14 +15,14 @@
  * Fire Blast
  * Mask of Madness
  * > Sidepaths:
- *   Curse of Corrosion
+ *   Space Phase
  *   Curse of Paralysis
  *
  * Fiery Blade
  * Nightwatcher's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
- *   Rusted Ritual
+ *   Eldritch Coin
  *
  * Ashlord's Rite
  */
@@ -61,12 +61,12 @@
 	if(target.is_blind())
 		return
 
-	if(!target.getorganslot(ORGAN_SLOT_EYES))
+	if(!target.get_organ_slot(ORGAN_SLOT_EYES))
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
 	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
-	target.blur_eyes(10)
+	target.set_eye_blur_if_lower(20 SECONDS)
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
@@ -75,7 +75,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
-		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/medallion,
 	)
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
@@ -130,14 +130,14 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
-		/obj/item/candle = 4,
+		/obj/item/flashlight/flare/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
@@ -168,7 +168,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/eldritch_coin,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
@@ -177,7 +177,7 @@
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
 	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transumation rune to complete the ritual. \
+		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
@@ -224,5 +224,5 @@
 		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	for(var/trait in traits_to_apply)
-		ADD_TRAIT(user, trait, MAGIC_TRAIT)
+	if(length(traits_to_apply))
+		user.add_traits(traits_to_apply, MAGIC_TRAIT)

@@ -27,7 +27,7 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
-	. += "There's [charging ? "a" : "no"] cell in the charger."
+	. += "There's [charging ? "\a [charging]" : "no cell"] in the charger."
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
@@ -127,17 +127,17 @@
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
 	charge_rate = 250
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		charge_rate *= C.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		charge_rate *= capacitor.tier
 
-/obj/machinery/cell_charger/process(delta_time)
+/obj/machinery/cell_charger/process(seconds_per_tick)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
 
 	if(charging.percent() >= 100)
 		return
 
-	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	var/main_draw = use_power_from_net(charge_rate * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
 	if(!main_draw)
 		return
 	charging.give(main_draw)

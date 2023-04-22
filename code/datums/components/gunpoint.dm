@@ -1,5 +1,3 @@
-/// How many tiles around the target the shooter can roam without losing their shot
-#define GUNPOINT_SHOOTER_STRAY_RANGE 2
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define GUNPOINT_DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
@@ -40,7 +38,7 @@
 	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
 		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[shooter] aims [weapon] point blank at you!"))
-	add_memory_in_range(target, 7, MEMORY_GUNPOINT, list(DETAIL_PROTAGONIST = target, DETAIL_DEUTERAGONIST = shooter, DETAIL_WHAT_BY = weapon), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+	add_memory_in_range(target, 7, /datum/memory/held_at_gunpoint, protagonist = target, deuteragonist = shooter, antagonist = weapon)
 
 	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
 	target.apply_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))

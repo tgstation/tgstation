@@ -34,7 +34,13 @@
 			continue
 		victim.playsound_local(victim_turf, 'sound/magic/charge.ogg')
 		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
-			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
+			var/message = ""
+			var/location = victim.loc
+			if(istype(location, /obj/structure/disposalholder)) // sometimes your loc can be a disposalsholder when you're inside a disposals type, so let's just pass a message that makes sense.
+				message = "You hear a lot of rattling in the disposal pipes around you as reality itself distorts. Yet, you feel safe."
+			else
+				message = "You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."
+			to_chat(victim, span_boldannounce(message))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
 		if (isliving(victim))
@@ -62,7 +68,7 @@
 		var/current_spawn = rand(5 SECONDS, 10 SECONDS)
 		var/next_spawn = rand(5 SECONDS, 10 SECONDS)
 		var/extended_spawn = 0
-		if(DT_PROB(1, next_spawn))
+		if(SPT_PROB(1, next_spawn))
 			extended_spawn = rand(5 MINUTES, 15 MINUTES)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(supermatter_anomaly_gen), anomaly_location, anomaly_to_spawn, TRUE), current_spawn + extended_spawn)
 	return TRUE

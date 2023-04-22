@@ -30,7 +30,7 @@
 	/// Overlay we add to each grabbed atom.
 	var/mutable_appearance/kinesis_icon
 	/// Our mouse movement catcher.
-	var/atom/movable/screen/fullscreen/kinesis/kinesis_catcher
+	var/atom/movable/screen/fullscreen/cursor_catcher/kinesis/kinesis_catcher
 	/// The sounds playing while we grabbed an object.
 	var/datum/looping_sound/gravgen/kinesis/soundloop
 	/// The cooldown between us hitting objects with kinesis.
@@ -66,16 +66,13 @@
 		var/mob/living/grabbed_mob = grabbed_atom
 		grabbed_mob.Stun(mob_stun_time)
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
-	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
+	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
 	grabbed_atom.add_overlay(kinesis_icon)
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
-	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
-	kinesis_catcher.kinesis_user = mod.wearer
-	kinesis_catcher.view_list = getviewsize(mod.wearer.client.view)
-	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/fullscreen/kinesis, on_move))
-	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, TYPE_PROC_REF(/atom/movable/screen/fullscreen/kinesis, on_viewdata_update))
-	kinesis_catcher.calculate_params()
+	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/cursor_catcher/kinesis, 0)
+	kinesis_catcher.assign_to_mob(mod.wearer)
 	soundloop.start()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -85,7 +82,7 @@
 		return
 	clear_grab(playsound = !deleting)
 
-/obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
+/obj/item/mod/module/anomaly_locked/kinesis/process(seconds_per_tick)
 	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
 		clear_grab()
 		return
@@ -93,13 +90,12 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	kinesis_catcher.calculate_params()
-	if(!kinesis_catcher.given_turf)
-		clear_grab()
-		return
 	drain_power(use_power_cost/10)
+	if(kinesis_catcher.mouse_params)
+		kinesis_catcher.calculate_params()
+	if(!kinesis_catcher.given_turf)
+		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
-	grabbed_atom.set_glide_size()
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
 		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
 			return //spare us redrawing if we are standing still
@@ -109,7 +105,7 @@
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
-	if(grabbed_atom.Move(next_turf))
+	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
 			clear_grab()
@@ -228,50 +224,8 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
 
-/atom/movable/screen/fullscreen/kinesis
+/atom/movable/screen/fullscreen/cursor_catcher/kinesis
 	icon_state = "kinesis"
-	plane = HUD_PLANE
-	mouse_opacity = MOUSE_OPACITY_ICON
-	var/mob/kinesis_user
-	var/list/view_list
-	var/given_x
-	var/given_y
-	var/turf/given_turf
-	var/mouse_params
-
-/atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
-	SIGNAL_HANDLER
-
-	if(given_turf)
-		var/x_offset = source.loc.x - oldloc.x
-		var/y_offset = source.loc.y - oldloc.y
-		given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
-
-/atom/movable/screen/fullscreen/kinesis/proc/on_viewdata_update(datum/source, view)
-	SIGNAL_HANDLER
-
-	view_list = getviewsize(view)
-
-/atom/movable/screen/fullscreen/kinesis/MouseEntered(location, control, params)
-	. = ..()
-	MouseMove(location, control, params)
-	if(usr == kinesis_user)
-		calculate_params()
-
-/atom/movable/screen/fullscreen/kinesis/MouseMove(location, control, params)
-	if(usr != kinesis_user)
-		return
-	mouse_params = params
-
-/atom/movable/screen/fullscreen/kinesis/proc/calculate_params()
-	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
-	var/our_x = round(icon_x / world.icon_size)
-	var/our_y = round(icon_y / world.icon_size)
-	given_turf = locate(kinesis_user.x+our_x-round(view_list[1]/2),kinesis_user.y+our_y-round(view_list[2]/2),kinesis_user.z)
-	given_x = round(icon_x - world.icon_size * our_x, 1)
-	given_y = round(icon_y - world.icon_size * our_y, 1)
 
 /obj/item/mod/module/anomaly_locked/kinesis/plus
 	name = "MOD kinesis+ module"

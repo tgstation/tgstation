@@ -1,6 +1,3 @@
-#define REVOLUTION_VICTORY 1
-#define STATION_VICTORY 2
-
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	// If you want to change this variable name, the force latejoin/midround rulesets
@@ -84,6 +81,9 @@
 	/// Written as a linear equation--ceil(x/denominator) + offset, or as a fixed constant.
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
+
+	/// A list, or null, of templates that the ruleset depends on to function correctly
+	var/list/ruleset_lazy_templates
 
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
@@ -173,6 +173,11 @@
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	return check_candidates()
 
+/// This should always be called before ready is, to ensure that the ruleset can locate map/template based landmarks as needed
+/datum/dynamic_ruleset/proc/load_templates()
+	for(var/template in ruleset_lazy_templates)
+		SSmapping.lazy_load_template(template)
+
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
 /datum/dynamic_ruleset/proc/clean_up()
@@ -244,7 +249,7 @@
 			for(var/role in exclusive_roles)
 				var/datum/job/job = SSjob.GetJob(role)
 
-				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE) == JOB_AVAILABLE)
 					exclusive_candidate = TRUE
 					break
 

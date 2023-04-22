@@ -46,7 +46,7 @@
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/polarbear/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
@@ -69,7 +69,7 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 
 /obj/item/crusher_trophy/bear_paw
 	name = "polar bear paw"

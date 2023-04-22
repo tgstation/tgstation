@@ -5,6 +5,8 @@
 	var/account_holder = "Rusty Venture"
 	///How many credits are currently held in the bank account.
 	var/account_balance = 0
+	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
+	var/mining_points = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.

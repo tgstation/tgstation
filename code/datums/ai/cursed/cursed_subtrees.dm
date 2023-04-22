@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/cursed/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/cursed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/obj/item/item_pawn = controller.pawn
 
 	//make sure we have a target
@@ -11,5 +11,4 @@
 	if(get_dist(curse_target, item_pawn) > CURSED_VIEW_RANGE)
 		controller.blackboard[BB_CURSE_TARGET] = null
 		return
-	controller.set_movement_target(curse_target)
-	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/ghostly/cursed)
+	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/ghostly/cursed, BB_CURSE_TARGET)

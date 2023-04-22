@@ -13,7 +13,7 @@
 	var/rel_y = observed_atom.y - my_turf.y
 
 	// Handling nearsightnedness
-	if(is_nearsighted())
+	if(is_nearsighted_currently())
 		if(abs(rel_x) >= NEARSIGHTNESS_BLINDNESS || abs(rel_y) >= NEARSIGHTNESS_BLINDNESS)
 			return FALSE
 	return TRUE

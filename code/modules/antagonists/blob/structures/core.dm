@@ -4,7 +4,7 @@
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	max_integrity = BLOB_CORE_MAX_HP
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 75, ACID = 90)
+	armor_type = /datum/armor/special_core
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
@@ -17,6 +17,10 @@
 	max_spores = BLOB_CORE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
+/datum/armor/special_core
+	fire = 75
+	acid = 90
+
 /obj/structure/blob/special/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
@@ -28,6 +32,7 @@
 		overmind.blobstrain.on_gain()
 		update_appearance()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+	AddElement(/datum/element/blocks_explosives)
 	return ..()
 
 /obj/structure/blob/special/core/Destroy()
@@ -63,7 +68,7 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
-/obj/structure/blob/special/core/process(delta_time)
+/obj/structure/blob/special/core/process(seconds_per_tick)
 	if(QDELETED(src))
 		return
 	if(!overmind)
@@ -72,7 +77,7 @@
 		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
-	reinforce_area(delta_time)
+	reinforce_area(seconds_per_tick)
 	produce_spores()
 	..()
 

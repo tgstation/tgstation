@@ -34,6 +34,11 @@
 	tickets.Cut()
 	return ..()
 
+/obj/machinery/ticket_machine/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/ticket_machine(loc)
+	qdel(src)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/examine(mob/user)
@@ -62,6 +67,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			qdel(ticket)
 		tickets.Cut()
 	update_appearance()
+
+/obj/item/wallframe/ticket_machine
+	name = "ticket machine frame"
+	desc = "An unmounted ticket machine. Attach it to a wall to use."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "ticketmachine_off"
+	result_path = /obj/machinery/ticket_machine
+	pixel_shift = 32
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -141,19 +154,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
-/obj/machinery/ticket_machine/update_icon()
-	..()
+/obj/machinery/ticket_machine/update_icon_state()
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "ticketmachine_off"
-		return
 	else if(ticket_number == max_number)
 		icon_state = "ticketmachine_nopaper"
 	else
 		icon_state = "ticketmachine"
-	cut_overlays()
-	write_number()
+	return ..()
 
-/obj/machinery/ticket_machine/proc/write_number()
+/obj/machinery/ticket_machine/update_overlays()
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+
 	var/number_string = "[current_number]"
 	var/textLen = length(number_string)
 	var/startX = 12 - (2*textLen)
@@ -163,14 +177,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		number_overlay.blend_mode = BLEND_SUBTRACT
 		number_overlay.pixel_x = startX
 		number_overlay.pixel_y = -14
-		add_overlay(number_overlay)
+		. += number_overlay
 		startX = startX + 4
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice("[src] refuses [I]! There [max_number-ticket_number==1 ? "is" : "are"] still [max_number-ticket_number] ticket\s left!"))
+			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
 			return
 		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
 		if(do_after(user, 30, target = src))

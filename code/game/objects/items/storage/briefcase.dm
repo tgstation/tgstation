@@ -1,6 +1,7 @@
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "briefcase"
 	inhand_icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -65,9 +66,9 @@
 
 /obj/item/storage/briefcase/sniperbundle/PopulateContents()
 	..() // in case you need any paperwork done after your rampage
-	new /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate(src)
+	new /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/suppressor/specialoffer(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
+	new /obj/item/suppressor(src)

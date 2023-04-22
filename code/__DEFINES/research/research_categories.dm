@@ -84,6 +84,7 @@
 #define RND_SUBCATEGORY_EQUIPMENT_ATMOSPHERICS "/Atmospherics Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_SCIENCE "/Science Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS "/Gas Tanks"
+#define RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT "/Gas Tank Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY "/Xenobiology Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_GENETICS "/Genetics Equipment"
 #define RND_SUBCATEGORY_EQUIPMENT_JANITOR "/Janitorial Equipment"
@@ -92,9 +93,11 @@
 
 #define RND_CATEGORY_AI "/Artificial Intelligence"
 #define RND_SUBCATEGORY_AI_CORE "/AI Construction"
-#define RND_SUBCATEGORY_AI_LAW_MANIPULATION "/AI Law Manipulation"
 #define RND_SUBCATEGORY_AI_CORE_MODULES "/Core AI Modules"
 #define RND_SUBCATEGORY_AI_DANGEROUS_MODULES "/Dangerous AI Modules"
+#define RND_SUBCATEGORY_AI_LAW_MANIPULATION "/AI Law Manipulation"
+#define RND_SUBCATEGORY_AI_MISC "/Miscellaneous AI Items"
+#define RND_SUBCATEGORY_AI_UPGRADES "/AI Upgrades"
 
 #define RND_CATEGORY_MODULAR_COMPUTERS "/Modular Computers"
 #define RND_SUBCATEGORY_MODULAR_COMPUTERS_FRAMES "/Frames"
@@ -171,12 +174,17 @@
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY "/Supply Modules"
 #define RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE "/Service Modules"
 
-
 #define RND_CATEGORY_CYBERNETICS "/Cybernetics"
-#define RND_SUBCATEGORY_CYBERNETICS_ORGANS "/Cybernetic Organs"
-#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS "/Cybernetic Implants"
-
-#define RND_SUBCATEGORY_IMPLANTS "/Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_ORGANS_1 "/Tier 1 Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_ORGANS_2 "/Tier 2 Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_ORGANS_3 "/Tier 3 Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT "/Combat Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC "/Miscellaneous Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT "/Cybernetic Combat Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH "/Cybernetic Health Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS "/Cybernetic Implanting Tools"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY "/Cybernetic Utility Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC "/Cybernetic Miscellaneous Implants"
 
 // Limb Categories
 #define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"
@@ -190,5 +198,4 @@
 // Meta categories
 #define RND_CATEGORY_INITIAL "initial"
 #define RND_CATEGORY_HACKED "hacked"
-#define RND_CATEGORY_EMAGGED "emagged"
 #define RND_CATEGORY_IMPORTED "/Imported Designs"

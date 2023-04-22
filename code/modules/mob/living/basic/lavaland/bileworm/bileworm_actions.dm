@@ -23,7 +23,7 @@
 	burrower.invisibility = INVISIBILITY_MAXIMUM
 	burrower.forceMove(unburrow_turf)
 	//not that it's gonna die with godmode but still
-	SLEEP_CHECK_DEATH(rand(0.75 SECONDS, 1.25 SECONDS), burrower)
+	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(unburrow_turf)
 	burrower.status_flags &= ~GODMODE
@@ -108,7 +108,7 @@
 	devourer.invisibility = INVISIBILITY_MAXIMUM
 	devourer.forceMove(devour_turf)
 	//not that it's gonna die with godmode but still
-	SLEEP_CHECK_DEATH(rand(0.75 SECONDS, 1.25 SECONDS), devourer)
+	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), devourer)
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(devour_turf)
 	devourer.status_flags &= ~GODMODE

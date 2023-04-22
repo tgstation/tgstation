@@ -15,7 +15,7 @@
 	maxHealth = 100
 	health = 100
 	speed = 0
-	faction = list("illusion")
+	faction = list(FACTION_ILLUSION)
 	var/life_span = INFINITY //how long until they despawn
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
@@ -23,7 +23,7 @@
 	death_message = "vanishes into thin air! It was a fake!"
 
 
-/mob/living/simple_animal/hostile/illusion/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/illusion/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(world.time > life_span)
 		death()
@@ -38,7 +38,7 @@
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
-	faction -= "neutral"
+	faction -= FACTION_NEUTRAL
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y

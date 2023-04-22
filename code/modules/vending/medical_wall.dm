@@ -3,7 +3,7 @@
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
-	panel_type = "panel-wall"
+	panel_type = "wallmed-panel"
 	density = FALSE
 	products = list(
 		/obj/item/reagent_containers/syringe = 3,

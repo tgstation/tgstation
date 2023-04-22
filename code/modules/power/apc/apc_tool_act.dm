@@ -22,10 +22,9 @@
 		return
 
 	if(terminal)
-		balloon_alert(user, "disconnect the wires first!")
+		balloon_alert(user, "disconnect wires first!")
 		return
 	crowbar.play_tool_sound(src)
-	balloon_alert(user, "removing the board")
 	if(!crowbar.use_tool(src, user, 50))
 		return
 	if(has_electronics != APC_ELECTRONICS_INSTALLED)
@@ -59,10 +58,10 @@
 	//You can only touch the electronics if the panel and tray are open, and the terminal is yoten
 	if(!opened || !panel_open || terminal)
 		if(obj_flags & EMAGGED)
-			balloon_alert(user, "the interface is broken!")
+			balloon_alert(user, "interface is broken!")
 			return
-		panel_open = !panel_open
-		balloon_alert(user, "wires are [panel_open ? "exposed" : "unexposed"]")
+		toggle_panel_open()
+		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
 		update_appearance()
 		return
 
@@ -99,7 +98,7 @@
 	balloon_alert(user, "welding the APC frame")
 	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
 		return
-	if((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
+	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] apart with [welder]."))
 		balloon_alert(user, "disassembled the broken frame")
@@ -118,20 +117,21 @@
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
 			return FALSE
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
 
 	if(!cell)
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 50, "cost" = 10) //16 for a wall
+		return list("mode" = RCD_WALLFRAME, "delay" = 50, "cost" = 10)
 
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
 
 /obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(!(passed_mode & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS) || passed_mode != RCD_WALLFRAME)
 		return FALSE
+
 	if(!has_electronics)
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
@@ -163,12 +163,12 @@
 		return
 
 	if(opened)
-		balloon_alert(user, "must close the cover to swipe!")
+		balloon_alert(user, "close the cover first!")
 		return
-	if(panel_open)
-		balloon_alert(user, "must close the panel first!")
+	else if(panel_open)
+		balloon_alert(user, "close the panel first!")
 		return
-	if(machine_stat & (BROKEN|MAINT))
+	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 		return
 	var/image/overlay = image(icon, src, "sparks_flick", layer, dir)
@@ -201,13 +201,13 @@
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "interface is broken!")
 	else if(opened)
-		balloon_alert(user, "must close the cover to swipe!")
+		balloon_alert(user, "close the cover first!")
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else
 		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack && !remote_control_user)
 			locked = !locked
-			balloon_alert(user, "APC [ locked ? "locked" : "unlocked"]")
+			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
 			if(!locked)
 				ui_interact(user)

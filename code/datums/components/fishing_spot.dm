@@ -59,4 +59,6 @@
 
 /datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)
 	if(success)
+		var/obj/item/fish/caught = source.reward_path
+		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 		fish_source.dispense_reward(source.reward_path, user)

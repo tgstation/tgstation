@@ -97,6 +97,8 @@
 			return
 	if(arrived.movement_type & (FLYING|FLOATING) || !arrived.has_gravity())
 		return
+	if(ismob(arrived) && !arrived.density) // Prevents 10 overlapping mice from making an unholy sound while moving
+		return
 	var/atom/current_parent = parent
 	if(isturf(current_parent?.loc))
 		play_squeak()

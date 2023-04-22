@@ -44,6 +44,7 @@
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
+	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0 && scrubber.clogged)
@@ -64,8 +65,9 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	var/static/list/mob_list = list(
-				/mob/living/basic/mouse,
 				/mob/living/basic/cockroach,
+				/mob/living/basic/giant_spider/maintenance,
+				/mob/living/basic/mouse,
 				/mob/living/simple_animal/butterfly,
 	)
 	return pick(mob_list)
@@ -85,7 +87,7 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt)
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -128,6 +130,7 @@
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)
 
+	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
@@ -137,6 +140,8 @@
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
 	description = "Dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
@@ -147,7 +152,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/basic/giant_spider,
 	)
 	return pick(mob_list)
 
@@ -162,6 +167,8 @@
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
 	description = "Really dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -175,7 +182,7 @@
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)
@@ -187,6 +194,8 @@
 	weight = 5
 	max_occurrences = 1
 	description = "Strange mobs climb out of a scrubber, harmfulness varies."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/scrubber_clog/strange
 	maximum_spawns = 3

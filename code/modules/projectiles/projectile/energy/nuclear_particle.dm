@@ -27,7 +27,7 @@
 
 /obj/projectile/energy/nuclear_particle/on_hit(atom/target, blocked, pierce_hit)
 	if (ishuman(target))
-		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
+		SSradiation.irradiate(target)
 
 	..()
 

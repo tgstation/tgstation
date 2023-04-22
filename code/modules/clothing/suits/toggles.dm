@@ -28,13 +28,18 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING)
+	if(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 		return TRUE
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(!(slot & ITEM_SLOT_OCLOTHING))
+	if(!(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK))
 		RemoveHood()
 	return ..()
+
+/obj/item/clothing/suit/hooded/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	if(visuals_only)
+		MakeHood()
+	ToggleHood()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
@@ -62,7 +67,7 @@
 		if(!ishuman(loc))
 			return
 		var/mob/living/carbon/human/H = loc
-		if(H.wear_suit != src)
+		if(H.is_holding(src))
 			to_chat(H, span_warning("You must be wearing [src] to put up the hood!"))
 			return
 		if(H.head)
