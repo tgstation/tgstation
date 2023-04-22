@@ -622,9 +622,13 @@
 /turf/open/space,
 /area/space/nearstation)
 "EM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/structure/cable,
-/obj/machinery/power/apc/sm_apc/directional/east,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/apc/worn_out/directional/east,
+/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "EU" = (
 /obj/structure/cable,
@@ -1132,7 +1136,7 @@ bY
 cT
 Bx
 Vn
-Bx
+EM
 cP
 NS
 Mt
@@ -1509,7 +1513,7 @@ MT
 SS
 SS
 oW
-EM
+Jc
 SS
 kJ
 MT
