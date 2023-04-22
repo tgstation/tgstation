@@ -143,15 +143,15 @@
 	. = ..()
 	if(!(owning_component) || !(owning_component_parent))
 		message_admins("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
-		return qdel(src)
-	src.owning_component = WEAKREF(owning_component)
-	src.owning_component_parent = WEAKREF(owning_component_parent)
+	if(owning_component && owning_component_parent)
+		src.owning_component = WEAKREF(owning_component)
+		src.owning_component_parent = WEAKREF(owning_component_parent)
+		src.name = owning_component_parent.name //set the basic vars like name, desc, and icon to those of the parent item
+		src.desc = owning_component_parent.desc
+		src.icon = owning_component_parent.icon
+		src.icon_state = owning_component_parent.icon_state
 	for(var/mob/living/entry_mob in possible_targets)
 		src.possible_targets += WEAKREF(entry_mob)
-	src.name = owning_component_parent.name //set the basic vars like name, desc, and icon to those of the parent item
-	src.desc = owning_component_parent.desc
-	src.icon = owning_component_parent.icon
-	src.icon_state = owning_component_parent.icon_state
 
 	move_to_timer = world.time + FORCED_MOVE_TO_OWNER_TIME
 
