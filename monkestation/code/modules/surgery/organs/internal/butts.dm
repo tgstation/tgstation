@@ -300,6 +300,7 @@
 			butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		var/joined_text = jointext(split_message, " ")
 		if(!findtext(joined_text, "butt")) //We must butt, or else.
+			cooling_down = FALSE
 			return
 		say(joined_text)
 		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE)
