@@ -3,6 +3,7 @@ import { Icon, Stack, Tabs } from '../../components';
 import { RequestsData, RequestTabs } from './Types';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
+import { AnnouncementTab } from './AnnouncementTab';
 
 export const RequestMainScreen = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
@@ -23,13 +24,23 @@ export const RequestMainScreen = (props, context) => {
             </Tabs.Tab>
             <Tabs.Tab
               selected={tab === RequestTabs.MESSAGE_WRITE}
-              onClick={() => setTab(RequestTabs.MESSAGE_WRITE)}>
+              onClick={() => {
+                if (tab === RequestTabs.MESSAGE_VIEW) {
+                  act('clear_new_message_priority');
+                }
+                setTab(RequestTabs.MESSAGE_WRITE);
+              }}>
               Write Message <Icon name="pencil" />
             </Tabs.Tab>
             {!!can_send_announcements && (
               <Tabs.Tab
                 selected={tab === RequestTabs.ANNOUNCE}
-                onClick={() => setTab(RequestTabs.ANNOUNCE)}>
+                onClick={() => {
+                  if (tab === RequestTabs.MESSAGE_VIEW) {
+                    act('clear_new_message_priority');
+                  }
+                  setTab(RequestTabs.ANNOUNCE);
+                }}>
                 Make Announcement <Icon name="bullhorn" />
               </Tabs.Tab>
             )}
@@ -45,9 +56,4 @@ export const RequestMainScreen = (props, context) => {
       </Stack>
     </Stack.Item>
   );
-};
-
-export const AnnouncementTab = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
-  return 'Announcement';
 };
