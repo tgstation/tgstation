@@ -285,20 +285,6 @@
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
 
-/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		if((has_electronics & APC_ELECTRONICS_INSTALLED) || (has_electronics & APC_ELECTRONICS_SECURED))
-			new /obj/item/electronics/apc(loc)
-		if(!QDELETED(cell))
-			cell.forceMove(drop_location())
-			cell = null
-		if(!QDELETED(terminal))
-			new /obj/item/stack/cable_coil(loc, 10)
-	if(!QDELETED(terminal))
-		QDEL_NULL(terminal)
-	qdel(src)
-
 /obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

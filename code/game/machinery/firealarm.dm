@@ -421,7 +421,7 @@
 	. = ..()
 	if(.) //damage received
 		if(atom_integrity > 0 && !(machine_stat & BROKEN) && buildstage != 0)
-			if(prob(33))
+			if(prob(33) && buildstage == 2) //require fully wired electronics to set of the alarms
 				alarm()
 
 /obj/machinery/firealarm/singularity_pull(S, current_size)
@@ -437,11 +437,12 @@
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, 1)
-		if(!(machine_stat & BROKEN))
+		if(buildstage > 0)
 			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
 				item.update_integrity(item.max_integrity * 0.5)
-		new /obj/item/stack/cable_coil(loc, 3)
+		if(buildstage > 1)
+			new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
 // Allows users to examine the state of the thermal sensor
