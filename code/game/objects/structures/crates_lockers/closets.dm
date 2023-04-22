@@ -557,11 +557,14 @@
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
 	return TRUE
 
+/// sets the access for the closets from the swiped ID card
 /obj/structure/closet/proc/set_access(list/accesses)
-	if(length(req_one_access))
+	if (length(req_one_access))
 		req_one_access = accesses
+		req_access = null
 	else
 		req_access = accesses
+		req_one_access = null
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
