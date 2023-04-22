@@ -298,10 +298,11 @@
 		ui.open()
 
 /obj/structure/reflector/attack_robot(mob/user)
-	if(user.Adjacent(src))
-		ui_interact(user)
-		return
-	return ..()
+	ui_interact(user)
+	return
+
+/obj/structure/reflector/ui_state(mob/user)
+	return GLOB.physical_state //Prevents borgs from adjusting this at range
 
 /obj/structure/reflector/ui_data(mob/user)
 	var/list/data = list()
