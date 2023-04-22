@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Ingredients which fail to react in soup reactions drop when the reaction finishes as intended"
