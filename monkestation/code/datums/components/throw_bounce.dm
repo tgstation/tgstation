@@ -141,8 +141,6 @@
 
 /obj/effect/throw_bounce_visual/Initialize(mapload, datum/component/throw_bounce/owning_component, obj/item/owning_component_parent, list/possible_targets)
 	. = ..()
-	if(!(owning_component) || !(owning_component_parent))
-		message_admins("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
 	if(owning_component && owning_component_parent)
 		src.owning_component = WEAKREF(owning_component)
 		src.owning_component_parent = WEAKREF(owning_component_parent)
@@ -150,6 +148,8 @@
 		src.desc = owning_component_parent.desc
 		src.icon = owning_component_parent.icon
 		src.icon_state = owning_component_parent.icon_state
+	else
+		message_admins("No provided owning_component or owning_component_parent provided for a throw_bounce_visual")
 	for(var/mob/living/entry_mob in possible_targets)
 		src.possible_targets += WEAKREF(entry_mob)
 
@@ -203,6 +203,8 @@
 	SIGNAL_HANDLER
 	if(!istype(crossed, /mob/living)) //dont interact if crossed is not a mob
 		return
+	if(!(owning_component) || !(owning_component_parent))
+		return qdel(src)
 
 	var/datum/component/throw_bounce/owning_ref = owning_component?.resolve()
 	var/mob/living/thrower_ref = owning_ref.item_thrower?.resolve()
