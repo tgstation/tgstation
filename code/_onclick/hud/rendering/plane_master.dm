@@ -365,7 +365,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FLOOR_LAYER, relay_color = GLOB.em_block_color)
 
-#warn do we like, need the wall plane?
 /atom/movable/screen/plane_master/wall
 	name = "Wall"
 	documentation = "Holds a mirror of all walls. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
