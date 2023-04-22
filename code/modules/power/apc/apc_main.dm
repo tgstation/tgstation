@@ -143,10 +143,10 @@
 	switch(dir)
 		if(NORTH)
 			offset_old = pixel_y
-			pixel_y = APC_PIXEL_OFFSET
+			pixel_z = APC_PIXEL_OFFSET
 		if(SOUTH)
 			offset_old = pixel_y
-			pixel_y = -APC_PIXEL_OFFSET
+			pixel_z = -APC_PIXEL_OFFSET
 		if(EAST)
 			offset_old = pixel_x
 			pixel_x = APC_PIXEL_OFFSET

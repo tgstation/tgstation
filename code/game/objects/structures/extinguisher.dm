@@ -10,8 +10,6 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
-
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
