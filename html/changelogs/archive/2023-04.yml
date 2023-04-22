@@ -732,3 +732,68 @@
   - qol: made dna infusers less confusing to use by removing the "must be opened"
       check
   - bugfix: fixed up gondola mutants and how to obtain them
+2023-04-21:
+  Chlorotrifluoride:
+  - imageadd: flat satchel sprite re-palette
+  ChungusGamer666:
+  - balance: 'The following structures are now flammable: Picture frame, fermenting
+      barrel, drying rack, sandals, painting frames, paintings, spirit board, notice
+      board, dresser, displaycase chassis, wooden barricade'
+  - balance: 'The following items are now flammable: Baseball bat, rolling pin, mortar,
+      coffee condiments display, sandals, wooden hatchet, gohei, popsicle stick, rifle
+      stock'
+  Helg2:
+  - bugfix: generic air tank mounted onto pneumatic cannon now has working sprite.
+  Jacquerel:
+  - imagedel: you can no longer tell if someone is wearing a PDA by looking at them
+  Melbert:
+  - bugfix: Fixes a runtime with Spontaneous Combustion
+  - bugfix: Overheating Oculine will flash people nearby, as was intended 2 years
+      ago (never worked)
+  - bugfix: Fixes a runtime with pirate Data Siphon while emp-ing the station's rnd
+      servers
+  - admin: Adds a warning that spawning revs via traitor panel will not function as
+      expected.
+  - bugfix: Runtime from tracking mobs on the syndicate base
+  - bugfix: AIs now get their proper lawset, and an objective related to said lawset,
+      on Nations
+  MrStonedOne:
+  - config: database configs have been updated for better control over the connection
+      pool
+  - server: BSQL_THREAD_LIMIT has been renamed to POOLING_MAX_SQL_CONNECTIONS, old
+      configs will whine but still work.
+  - bugfix: fixed rare race condition that could lead to a sql query being ran twice
+      during world shutdown.
+  SyncIt21:
+  - bugfix: order consoles cancelling order's less than 200 but still subtracting
+      money, mining points from the player
+  - code_imp: multiplier for all shipments made through cargo
+  - refactor: 2 new procs retrive_points() &  subtract_points() to dela with different
+      types
+  Tattle:
+  - soundadd: increased the volume of the clownana rustle
+  mc-oofert:
+  - rscadd: Adds the Hug Relaxation Shuttle as an emergency shuttle
+  the-og-gear:
+  - code_imp: Update active alarm monitor computers only when alarms are actually
+      changed instead of every program tick
+  tralezab:
+  - bugfix: Fixes DNA Infuser Book UI, removing the button that crashes it and fixes
+      not showing threshold descriptions
+  - rscadd: Added new berets to the vendor
+2023-04-22:
+  BlueMemesauce:
+  - bugfix: Removed extra messaging server in North Star tcomms
+  ChungusGamer666:
+  - qol: Thermited walls now get an examine message telling you they are, in fact,
+      thermited.
+  - rscadd: Burning items are now actually considered to be at a minimum, 150 degrees
+      celsius by the game.
+  MTandi:
+  - qol: IV drip flow rate can be changed without the container or object attached
+  - bugfix: IV drip animation states fixed
+  vinylspiders:
+  - qol: the rescue hook has a much greater chance at catching actual fallen player
+      bodies as opposed to generic skeletons/other npc corpses
+  - bugfix: traitor objective posters will no longer be able to spawn from general
+      random poster spawners.
