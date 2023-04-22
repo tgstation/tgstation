@@ -985,7 +985,8 @@
 /area/shuttle/escape)
 "oI" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 1pixel_y = 28;
+	dir = 1;
+	pixel_y = 28;
 	
 	},
 /turf/open/floor/iron/dark,
