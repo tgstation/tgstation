@@ -144,10 +144,10 @@
 	var/list/offsets_for_sprites
 
 /obj/effect/tree/trunk
-	icon_state = "tree_trunk_1"
+	icon_state = "trunk_1"
 
 /obj/effect/tree/leaf
-	icon_state = "tree_leaf_1"
+	icon_state = "leaf_1_4"
 
 /obj/effect/tree/fruit
 	var/list/stored_images
