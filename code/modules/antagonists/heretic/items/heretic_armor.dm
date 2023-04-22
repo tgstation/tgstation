@@ -95,10 +95,6 @@
 
 	create_storage(storage_type = /datum/storage/pockets/void_cloak)
 
-/obj/item/clothing/suit/hooded/cultrobes/void/AltClick(mob/user)
-	return FALSE // We don't want to call parent, we just don't want to do anything, since we don't want them to cheese it by zipping this and making it disappear.
-
-
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
 	make_visible()
