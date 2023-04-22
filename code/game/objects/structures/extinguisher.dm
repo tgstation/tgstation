@@ -141,16 +141,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		update_appearance()
 
 /obj/structure/extinguisher_cabinet/update_icon_state()
-	if(!opened)
-		icon_state = "extinguisher_closed"
-		return ..()
+	icon_state = "extinguisher"
+
 	if(!stored_extinguisher)
-		icon_state = "extinguisher_empty"
-		return ..()
-	if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
-		icon_state = "extinguisher_mini"
-		return ..()
-	icon_state = "extinguisher_full"
+		icon_state += "_empty"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
+		icon_state += "_mini"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/advanced))
+		icon_state += "_advanced"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/crafted))
+		icon_state += "_crafted"
+	else
+		icon_state += "_full"
+
+	if(!opened)
+		icon_state += "_closed"
+
 	return ..()
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
