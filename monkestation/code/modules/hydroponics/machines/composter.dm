@@ -6,7 +6,7 @@
 	density = TRUE
 
 	//current biomatter level
-	var/biomatter = 250
+	var/biomatter = 80
 
 /obj/machinery/composters/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
