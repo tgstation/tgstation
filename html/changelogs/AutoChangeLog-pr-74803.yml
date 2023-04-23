@@ -1,0 +1,6 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - rscadd: "Burning items now get (small) smoke particles. Sick."
+  - bugfix: "Burning objects now clear their burning overlay properly."
+  - qol: "Examining burning objects will always tell you that they are burning."
