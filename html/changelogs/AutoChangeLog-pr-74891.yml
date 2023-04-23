@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "balloon alert adding timer on deleted mod core after construction causing runtime."
