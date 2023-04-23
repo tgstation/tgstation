@@ -89,4 +89,5 @@
 		// -- All done, apply the template --
 		output += include_template("Autowiki/SoupRecipeTemplate", template_list)
 
-	return output
+	// All that gets wrapped in another template which formats it into a table
+	return include_template("Autowiki/SoupRecipeTableTemplate", list("content" = output))
