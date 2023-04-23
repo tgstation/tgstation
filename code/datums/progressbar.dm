@@ -99,6 +99,11 @@
 			progress_bar.bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
 			var/dist_to_travel = 32 + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
 			animate(progress_bar.bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+			animate(progress_bar.border, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+			if(progress_bar.shown_image)
+				animate(progress_bar.shown_image, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+			if(progress_bar.border_look_accessory)
+				animate(progress_bar.border_look_accessory, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
 		user = null
@@ -154,24 +159,25 @@
 
 ///Adds a smoothly-appearing progress bar image to the player's screen.
 /datum/progressbar/proc/add_prog_bar_image_to_client()
+	var/stored_index = listindex - 1
 	bar.pixel_y = -32
 	bar.alpha = 0
 	user_client.images += bar
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 	border.pixel_y = -32
 	border.alpha = 0
 	user_client.images += border
-	animate(border, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+	animate(border, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 	if(shown_image)
 		shown_image.pixel_y = -32
 		shown_image.alpha = 0
 		user_client.images += shown_image
-		animate(shown_image, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+		animate(shown_image, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 	if(border_look_accessory)
 		src.border_look_accessory.pixel_y = -32
 		src.border_look_accessory.alpha = 0
 		user_client.images += border_look_accessory
-		animate(src.border_look_accessory, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+		animate(src.border_look_accessory, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 ///Updates the progress bar image visually.
 /datum/progressbar/proc/update(progress)

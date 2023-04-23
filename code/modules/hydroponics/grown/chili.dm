@@ -7,8 +7,8 @@
 	plantname = "Chili Plants"
 	product = /obj/item/food/grown/chili
 	lifespan = 20
-	maturation = 5
-	production = 5
+	maturation = 20
+	production = 20
 	yield = 4
 	potency = 20
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'

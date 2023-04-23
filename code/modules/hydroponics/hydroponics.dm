@@ -422,10 +422,48 @@
 	. = ..()
 	if(myseed)
 		. += update_plant_overlay()
-		. += update_status_light_overlays()
 
 	if(self_sustaining && self_sustaining_overlay_icon_state)
 		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
+
+/obj/machinery/hydroponics/constructable/update_overlays()
+	. = ..()
+
+	var/filled = clamp(waterlevel / maxwater, 0, 1) * 100
+	var/water_state
+	switch(filled)
+		if(0 to 20)
+			water_state = 5
+		if(21 to 40)
+			water_state = 4
+		if(40 to 60)
+			water_state = 3
+		if(61 to 80)
+			water_state = 2
+		if(81 to 100)
+			water_state = 1
+	. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_water_[water_state]", offset_spokesman = src)
+
+
+	if(reagents.total_volume <= 2)
+		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_nutriment", offset_spokesman = src)
+	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
+		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_pests", offset_spokesman = src)
+	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+		. += mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_harvest", offset_spokesman = src)
+
+
+	if(myseed)
+		var/mutable_appearance/health_overlay = mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_health", offset_spokesman = src)
+		if(plant_health < (myseed.endurance * 0.3))
+			health_overlay.color = "#FF3300"
+		else if(plant_health < (myseed.endurance * 0.5))
+			health_overlay.color = "#FFFF00"
+		else if(plant_health < (myseed.endurance * 0.7))
+			health_overlay.color = "#99FF66"
+		else
+			health_overlay.color = "#66FFFA"
+		. += (health_overlay)
 
 /obj/machinery/hydroponics/proc/update_plant_overlay()
 	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
@@ -442,42 +480,6 @@
 			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
 	plant_overlay.pixel_y = myseed.plant_icon_offset
 	return plant_overlay
-
-/obj/machinery/hydroponics/proc/update_status_light_overlays()
-	. = list()
-	var/filled = clamp(waterlevel / maxwater, 0, 1) * 100
-	var/water_state
-	switch(filled)
-		if(0 to 20)
-			water_state = 5
-		if(21 to 40)
-			water_state = 4
-		if(40 to 60)
-			water_state = 3
-		if(61 to 80)
-			water_state = 2
-		if(81 to 100)
-			water_state = 1
-	add_overlay(mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_water_[water_state]", offset_spokesman = src))
-
-	if(myseed)
-		var/mutable_appearance/health_overlay = mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_health", offset_spokesman = src)
-		if(plant_health < (myseed.endurance * 0.3))
-			health_overlay.color = "#FF3300"
-		else if(plant_health < (myseed.endurance * 0.5))
-			health_overlay.color = "#FFFF00"
-		else if(plant_health < (myseed.endurance * 0.7))
-			health_overlay.color = "#99FF66"
-		else
-			health_overlay.color = "#66FFFA"
-		add_overlay(health_overlay)
-
-	if(reagents.total_volume <= 2)
-		add_overlay(mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_nutriment", offset_spokesman = src))
-	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		add_overlay(mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_pests", offset_spokesman = src))
-	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		add_overlay(mutable_appearance('monkestation/icons/obj/machines/hydroponics.dmi', "hydrotray_harvest", offset_spokesman = src))
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -1127,9 +1129,6 @@
 	. = ..()
 	if(self_sustaining)
 		add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
-
-/obj/machinery/hydroponics/soil/update_status_light_overlays()
-	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
