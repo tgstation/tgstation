@@ -7,6 +7,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	var/obj/effect/abstract/chasm_storage/storage
 	var/fall_message = "GAH! Ah... where are you?"
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
+	///Will we try to drop anything that falls into us down a z-level, or do they just get sent to the pit.
+	var/respect_zlevel = TRUE
 
 	/// List of refs to falling objects -> how many levels deep we've fallen
 	var/static/list/falling_atoms = list()
@@ -131,7 +133,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	if(falling_atoms[falling_ref] > 1)
 		return // We're already handling this
 
-	if(below_turf)
+	if(below_turf && respect_zlevel)
 		// send to the turf below
 		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
 		below_turf.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
@@ -207,6 +209,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 /datum/component/chasm/proc/left_chasm(atom/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
+
+///A type of chasm that bypasses the check to drop objects down a z-level, throwing whatever falls straight into the chasm contents.
+/datum/component/chasm/offstage
+	respect_zlevel = FALSE
 
 #define CHASM_TRAIT "chasm trait"
 
