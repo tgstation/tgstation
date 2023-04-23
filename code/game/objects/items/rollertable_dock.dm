@@ -2,7 +2,7 @@
 	name = "rolling table dock"
 	desc = "A collapsed roller table that can be ejected for service on the go. Must be collected or replaced after use."
 	icon = 'icons/obj/medical/rollerbed.dmi'
-	icon_state = "folded""
+	icon_state = "folded"
 	var/obj/structure/table/rolling/loaded = null
 
 /obj/item/rollingtable_dock/Initialize(mapload)
