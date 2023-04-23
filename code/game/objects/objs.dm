@@ -35,8 +35,10 @@
 	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
 	var/list/req_one_access
 
-	/// Custom fire overlay icon
+	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
+	/// Particles this obj uses when burning, if any
+	var/burning_particles
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
@@ -45,9 +47,6 @@
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
-	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
-	/// broadcasted to as long as the other guys network is on the same branch or above.
-	var/network_id = null
 
 	uses_integrity = TRUE
 

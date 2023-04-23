@@ -520,6 +520,7 @@
 			/obj/item/clothing/head/utility/chefhat,
 			/obj/item/clothing/head/costume/papersack,
 			/obj/item/clothing/head/caphat/beret,
+			/obj/item/clothing/head/helmet/space/beret,
 			))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()

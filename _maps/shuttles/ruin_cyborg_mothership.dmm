@@ -193,9 +193,9 @@
 /obj/machinery/power/apc/auto_name/directional/south{
 	environ = 0;
 	equipment = 0;
-	locked = 0;
 	lighting = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "mc" = (

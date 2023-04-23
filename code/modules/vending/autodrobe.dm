@@ -90,7 +90,7 @@
 				/obj/item/clothing/under/rank/civilian/clown/purple = 1,
 				/obj/item/clothing/mask/gas/sexyclown = 1,
 				/obj/item/clothing/under/rank/civilian/clown/sexy = 1,
-				/obj/item/clothing/head/beret = 3,
+				/obj/item/clothing/head/beret = 6,
 				/obj/item/clothing/mask/gas/sexymime = 1,
 				/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 				/obj/item/clothing/under/rank/civilian/mime/skirt = 1,

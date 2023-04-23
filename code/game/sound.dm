@@ -201,7 +201,7 @@
 			if (SFX_PUNCH)
 				soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
 			if (SFX_CLOWN_STEP)
-				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+				soundin = pick('sound/effects/footstep/clownstep1.ogg','sound/effects/footstep/clownstep2.ogg')
 			if (SFX_SUIT_STEP)
 				soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
 			if (SFX_SWING_HIT)
