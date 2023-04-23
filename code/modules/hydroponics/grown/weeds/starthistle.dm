@@ -53,7 +53,7 @@
 	product = /obj/item/food/grown/galaxythistle
 	lifespan = 70
 	endurance = 40
-	maturation = 3
+	maturation = 30
 	production = 2
 	yield = 2
 	potency = 25

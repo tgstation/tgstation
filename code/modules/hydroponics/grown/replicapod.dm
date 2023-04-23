@@ -10,7 +10,7 @@
 	product = /obj/item/food/grown/cabbage
 	lifespan = 50
 	endurance = 25
-	maturation = 3
+	maturation = 30
 	production = 5
 	yield = 4
 	growthstages = 1

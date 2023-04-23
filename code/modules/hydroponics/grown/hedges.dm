@@ -7,7 +7,7 @@
 	product = /obj/item/grown/shrub
 	lifespan = 40
 	endurance = 30
-	maturation = 4
+	maturation = 12
 	production = 6
 	yield = 2
 	growthstages = 3

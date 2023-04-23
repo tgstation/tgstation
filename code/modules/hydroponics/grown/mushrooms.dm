@@ -148,7 +148,7 @@
 	product = /obj/item/food/grown/mushroom/walkingmushroom
 	lifespan = 30
 	endurance = 30
-	maturation = 5
+	maturation = 22
 	yield = 1
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -334,7 +334,7 @@
 	icon_dead = "odiouspuffball-dead"
 	icon_harvest = "odiouspuffball-harvest"
 	plantname = "Odious Puffballs"
-	maturation = 3
+	maturation = 30
 	production = 8
 	potency = 30
 	growthstages = 3

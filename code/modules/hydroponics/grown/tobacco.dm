@@ -7,7 +7,7 @@
 	plantname = "Tobacco Plant"
 	product = /obj/item/food/grown/tobacco
 	lifespan = 20
-	maturation = 5
+	maturation = 35
 	production = 5
 	yield = 10
 	growthstages = 3

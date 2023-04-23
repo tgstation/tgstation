@@ -37,7 +37,7 @@
 	plantname = "Chilly Pepper Plants"
 	product = /obj/item/food/grown/icepepper
 	lifespan = 25
-	maturation = 4
+	maturation = 12
 	production = 4
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/chem_cooling)

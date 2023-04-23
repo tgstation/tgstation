@@ -10,7 +10,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
-	maturation = 3
+	maturation = 30
 	yield = 4
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)

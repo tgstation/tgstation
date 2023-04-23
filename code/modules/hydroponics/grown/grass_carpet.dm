@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/grass
 	lifespan = 40
 	endurance = 40
-	maturation = 2
+	maturation = 80
 	production = 5
 	yield = 5
 	growthstages = 2

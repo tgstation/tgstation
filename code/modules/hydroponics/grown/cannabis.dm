@@ -7,7 +7,7 @@
 	species = "cannabis"
 	plantname = "Cannabis Plant"
 	product = /obj/item/food/grown/cannabis
-	maturation = 8
+	maturation = 40
 	potency = 20
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'

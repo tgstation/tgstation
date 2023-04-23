@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/cherries
 	lifespan = 35
 	endurance = 35
-	maturation = 5
+	maturation = 40
 	production = 5
 	growthstages = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'

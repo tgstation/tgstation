@@ -35,8 +35,8 @@
 	species = "goldapple"
 	plantname = "Golden Apple Tree"
 	product = /obj/item/food/grown/apple/gold
-	maturation = 10
-	production = 10
+	maturation = 30
+	production = 30
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	harvest_age = 400
 	possible_mutations = list()

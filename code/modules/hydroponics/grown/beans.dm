@@ -6,7 +6,7 @@
 	species = "soybean"
 	plantname = "Soybean Plants"
 	product = /obj/item/food/grown/soybeans
-	maturation = 4
+	maturation = 12
 	production = 4
 	potency = 15
 	growthstages = 4
@@ -58,7 +58,7 @@
 	species = "greenbean"
 	plantname = "Green Bean Plants"
 	product = /obj/item/food/grown/greenbeans
-	maturation = 4
+	maturation = 12
 	production = 3
 	potency = 10
 	growthstages = 4

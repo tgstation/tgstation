@@ -31,9 +31,9 @@
 	/// Amount of health the plant has.
 	var/endurance = 15
 	/// Used to determine which sprite to switch to when growing.
-	var/maturation = 6
+	var/maturation = 25
 	/// Changes the amount of time needed for a plant to become harvestable.
-	var/production = 6
+	var/production = 25
 	/// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
 	var/yield = 3
 	/// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.

@@ -7,7 +7,7 @@
 	plantname = "Berry Bush"
 	product = /obj/item/food/grown/berries
 	lifespan = 20
-	maturation = 5
+	maturation = 25
 	production = 5
 	yield = 2
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -116,7 +116,7 @@
 	product = /obj/item/food/grown/grapes
 	lifespan = 50
 	endurance = 25
-	maturation = 3
+	maturation = 30
 	production = 5
 	yield = 4
 	growthstages = 2
@@ -169,7 +169,7 @@
 	plantname = "Töchtaüse Bush"
 	product = /obj/item/food/grown/toechtauese
 	lifespan = 20
-	maturation = 5
+	maturation = 25
 	production = 5
 	yield = 2
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'

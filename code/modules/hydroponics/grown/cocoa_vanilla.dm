@@ -7,8 +7,8 @@
 	plantname = "Cocao Tree"
 	product = /obj/item/food/grown/cocoapod
 	lifespan = 20
-	maturation = 5
-	production = 5
+	maturation = 25
+	production = 25
 	yield = 2
 	growthstages = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -59,7 +59,7 @@
 	plantname = "Bungo Tree"
 	product = /obj/item/food/grown/bungofruit
 	lifespan = 30
-	maturation = 4
+	maturation = 12
 	yield = 3
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

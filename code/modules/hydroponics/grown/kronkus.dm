@@ -9,7 +9,7 @@
 	//shitty stats, because botany is easy
 	lifespan = 60
 	endurance = 10
-	maturation = 8
+	maturation = 12
 	production = 4
 	yield = 3
 	growthstages = 3
