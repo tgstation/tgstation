@@ -1148,6 +1148,50 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_rollingtable
+	name = "Rolling Table Dock"
+	id = "borg_upgrade_rollingtable"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rollingtable
+	materials = list(/datum/material/iron = 20000, /datum/material/titanium = 750) //steeper price than a regular rolling table, with some added titanium to make up for the relative rarity of regular rolling tables
+	construction_time = 40
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+	
+/datum/design/borg_upgrade_condimentsynthesizer
+	name = "Condiment Synthesizer"
+	id = "borg_upgrade_condimentsynthesizer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/condimentsynthesizer
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/plasma = 8000, /datum/material/uranium = 8000) //Same price as an expanded hypo for medical borg
+	construction_time = 40
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_siliconknife
+	name = "Silicon Knife"
+	id = "borg_upgrade_siliconknife"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/siliconknife
+	materials = list(/datum/material/iron = 12000, /datum/material/gold = 1000) //Cost of a kitchen knife with some added gold. It is a silicon knife after all
+	construction_time = 40
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+	
+/datum/design/borg_upgrade_rollingpin
+	name = "Rolling Pin"
+	id = "borg_upgrade_rollingpin"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rollingpin
+	materials = list(/datum/material/iron = 12000)
+	construction_time = 40
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
 /datum/design/borg_upgrade_expand
 	name = "Expand Module"
 	id = "borg_upgrade_expand"

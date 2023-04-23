@@ -102,6 +102,16 @@
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
+/obj/item/knife/kitchen/silicon
+	name= "Silicon Knife"
+	icon_state = "knife"
+	desc = "A breakthrough in synthetic engineering, this knife is programmed to dull when not used for cooking purposes."
+	force = 0
+	throwforce = 0
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
+	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
+	
 /obj/item/kitchen/rollingpin
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."

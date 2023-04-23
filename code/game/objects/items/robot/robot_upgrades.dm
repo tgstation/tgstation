@@ -750,6 +750,111 @@
 	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
 	if (BR)
 		R.model.remove_module(BR, TRUE)
+		
+/obj/item/borg/upgrade/condimentsynthesizer
+	name = "Service Cyborg Condiment Synthesiser"
+	desc = "An upgrade to the service model cyborg, allowing it \
+		to produce solid condiments."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/condimentsynthesizer/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/reagent_containers/borghypo/condimentsynthesizer/CS = locate() in R.model.modules
+		if(CS)
+			to_chat(user, span_warning("This unit has no room for another condiment synthesizer!"))
+			return FALSE
+		CS = new(R.model)
+		R.model.basic_modules += CS
+		R.model.add_module(CS, FALSE, TRUE)
+
+/obj/item/borg/upgrade/condimentsynthesizer/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/reagent_containers/borghypo/condimentsynthesizer/CS = locate() in R.model.modules
+		if (CS)
+			R.model.remove_module(CS, TRUE)
+			
+/obj/item/borg/upgrade/siliconknife
+	name = "Service Cyborg silicon Knife"
+	desc = "An upgrade to the service model cyborg, to help process foods"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+			
+/obj/item/borg/upgrade/siliconknife/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/knife/kitchen/silicon/SK = locate() in R.model.modules
+		if(SK)
+			to_chat(user, span_warning("This unit has no room for another silicon knife!"))
+			return FALSE
+		SK = new(R.model)
+		R.model.basic_modules += SK
+		R.model.add_module(SK, FALSE, TRUE)
+
+/obj/item/borg/upgrade/siliconknife/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/knife/kitchen/silicon/SK = locate() in R.model.modules
+		if (SK)
+			R.model.remove_module(SK, TRUE)
+			
+/obj/item/borg/upgrade/rollingpin
+	name = "Service Cyborg Rolling Pin"
+	desc = "An upgrade to the service model cyborg, to help process foods"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE			
+			
+/obj/item/borg/upgrade/rollingpin/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/kitchen/rollingpin/RP = locate() in R.model.modules
+		if(RP)
+			to_chat(user, span_warning("This unit has no room for another rolling pin!"))
+			return FALSE
+		RP = new(R.model)
+		R.model.basic_modules += RP
+		R.model.add_module(RP, FALSE, TRUE)
+
+/obj/item/borg/upgrade/rollingpin/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/kitchen/rollingpin/RP = locate() in R.model.modules
+		if (RP)
+			R.model.remove_module(RP, TRUE)
+			
+/obj/item/borg/upgrade/rollingtable
+	name = "Service Cyborg Rolling Table Dock"
+	desc = "An upgrade to the service model cyborg, to help provide mobile service"
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE			
+			
+/obj/item/borg/upgrade/rollingtable/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/rollingtable_dock/RT = locate() in R.model.modules
+		if(RT)
+			to_chat(user, span_warning("This unit has no room for another rolling table dock!"))
+			return FALSE
+		RT = new(R.model)
+		R.model.basic_modules += RT
+		R.model.add_module(RT, FALSE, TRUE)
+
+/obj/item/borg/upgrade/rollingtable/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/rollingtable_dock/RT = locate() in R.model.modules
+		if (RT)
+			R.model.remove_module(RT, TRUE)			
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

@@ -36,6 +36,11 @@ RSF
 								/obj/item/storage/dice = 200,
 								/obj/item/pen = 50,
 								/obj/item/clothing/mask/cigarette = 10,
+								/obj/item/plate = 70,
+								/obj/item/reagent_containers/cup/bowl = 70,
+								/obj/item/kitchen/fork/plastic = 30,
+								/obj/item/knife/plastic = 30,
+								/obj/item/kitchen/spoon/plastic = 30,
 								)
 	///An associated list of fuel and it's value
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
