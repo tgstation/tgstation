@@ -786,7 +786,7 @@
 		bio_boosted = TRUE
 		addtimer(CALLBACK(src, PROC_REF(end_boost)), attacked_cube.total_duration)
 		to_chat(user, span_notice("The [attacked_cube.name] dissolves boosting the growth of plants for [attacked_cube.total_duration * 0.1] seconds."))
-		qdel(bio_cube)
+		qdel(attacked_cube)
 
 	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O

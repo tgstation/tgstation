@@ -67,11 +67,11 @@
 	. = ..()
 	if(istype(attacking_item, /obj/item/bio_cube))
 		var/obj/item/bio_cube/attacking_cube = attacking_item
-		scale_multipler += (attacking_cube.scale_multiplier - 0.5)
+		scale_multiplier += (attacking_cube.scale_multiplier - 0.5)
 		total_duration += attacking_cube.total_duration
 		to_chat(user, span_notice("You smash the two bio cubes together making a bigger bio cube that lasts longer."))
 		update_desc()
-		bio_cube.transform = bio_cube.transform.Scale(scale_multiplier, scale_multiplier)
+		transform = transform.Scale(scale_multiplier, scale_multiplier)
 		qdel(attacking_cube)
 
 /obj/item/bio_cube/update_desc(updates)
