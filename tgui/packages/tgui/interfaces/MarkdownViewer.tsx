@@ -1,9 +1,3 @@
-/**
- * @file MarkdownViewer.tsx
- * @author ZephyrTFA
- * @license MIT
- */
-
 import { Component } from 'inferno';
 import { marked } from 'marked';
 import { useBackend } from '../backend';
@@ -29,7 +23,7 @@ export const MarkdownViewer = (_: any, context: any) => {
 
 type MarkdownRendererProps = {
   content: string;
-  nosanitize?: boolean;
+  sanitize?: boolean = true;
 };
 
 export class MarkdownRenderer extends Component<MarkdownRendererProps> {
@@ -39,7 +33,7 @@ export class MarkdownRenderer extends Component<MarkdownRendererProps> {
 
   renderMarkdown() {
     let rendered_content = marked(this.props.content);
-    if (!this.props.nosanitize) {
+    if (this.props.sanitize) {
       rendered_content = sanitizeText(rendered_content, false);
     }
 
@@ -55,11 +49,7 @@ export class MarkdownRenderer extends Component<MarkdownRendererProps> {
     this.renderMarkdown();
   }
 
-  componentDidUpdate(
-    _prevProps: MarkdownRendererProps,
-    _prevState: {},
-    _snapshot: any
-  ): void {
+  componentDidUpdate() {
     this.renderMarkdown();
   }
 }
