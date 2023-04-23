@@ -18,8 +18,6 @@
 
 /datum/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
-	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
-		return
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	var/escaped =  QDELETED(target) || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
 	if (escaped)
@@ -45,5 +43,4 @@
 
 /datum/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	. = ..()
-	if (clear_failed_targets)
-		controller.clear_blackboard_key(target_key)
+	controller.clear_blackboard_key(target_key)

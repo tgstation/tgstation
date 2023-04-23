@@ -164,6 +164,7 @@
 		growth_probability = 100,\
 		lower_growth_value = 0.5,\
 		upper_growth_value = 1,\
+		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 	)
 
