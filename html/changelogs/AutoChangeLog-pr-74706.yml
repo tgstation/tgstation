@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes hostile mobs sometimes being able to target an atom that has been marked for deletion and then becoming confused, and in a similar vein fixes mobs sometimes still running their AI while being marked for deletion."
