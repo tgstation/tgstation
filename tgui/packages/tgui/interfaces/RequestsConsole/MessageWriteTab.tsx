@@ -12,7 +12,7 @@ export const MessageWriteTab = (props, context) => {
   } = data;
   const resetMessage = () => {
     setMessageText('');
-    setRecipient('Pick a Recipient');
+    setRecipient('');
     setPriority(RequestPriority.NORMAL);
     setRequestType(RequestType.ASSISTANCE);
   };
@@ -31,11 +31,7 @@ export const MessageWriteTab = (props, context) => {
     'priority',
     RequestPriority.NORMAL
   );
-  const [recipient, setRecipient] = useLocalState(
-    context,
-    'recipient',
-    'Pick a Recipient'
-  );
+  const [recipient, setRecipient] = useLocalState(context, 'recipient', '');
   return (
     <Section>
       <Section>
@@ -46,7 +42,7 @@ export const MessageWriteTab = (props, context) => {
               content={'Request Assistance'}
               selected={requestType === RequestType.ASSISTANCE}
               onClick={() => {
-                setRecipient('Pick a Recipient');
+                setRecipient('');
                 setRequestType(RequestType.ASSISTANCE);
               }}
             />
@@ -57,7 +53,7 @@ export const MessageWriteTab = (props, context) => {
               content={'Request Supplies'}
               selected={requestType === RequestType.SUPPLIES}
               onClick={() => {
-                setRecipient('Pick a Recipient');
+                setRecipient('');
                 setRequestType(RequestType.SUPPLIES);
               }}
             />
@@ -68,7 +64,7 @@ export const MessageWriteTab = (props, context) => {
               content={'Relay Information'}
               selected={requestType === RequestType.INFORMATION}
               onClick={() => {
-                setRecipient('Pick a Recipient');
+                setRecipient('');
                 setRequestType(RequestType.INFORMATION);
               }}
             />
@@ -81,6 +77,7 @@ export const MessageWriteTab = (props, context) => {
             width="100%"
             options={assistance_consoles.map((recipient) => recipient)}
             selected={recipient}
+            displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -89,6 +86,7 @@ export const MessageWriteTab = (props, context) => {
             width="100%"
             options={supply_consoles.map((recipient) => recipient)}
             selected={recipient}
+            displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -97,6 +95,7 @@ export const MessageWriteTab = (props, context) => {
             width="100%"
             options={information_consoles.map((recipient) => recipient)}
             selected={recipient}
+            displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}
           />
         )}
