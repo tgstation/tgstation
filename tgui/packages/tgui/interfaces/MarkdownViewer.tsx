@@ -23,7 +23,7 @@ export const MarkdownViewer = (_: any, context: any) => {
 
 type MarkdownRendererProps = {
   content: string;
-  sanitize?: boolean = true;
+  sanitize?: boolean;
 };
 
 export class MarkdownRenderer extends Component<MarkdownRendererProps> {
@@ -33,7 +33,7 @@ export class MarkdownRenderer extends Component<MarkdownRendererProps> {
 
   renderMarkdown() {
     let rendered_content = marked(this.props.content);
-    if (this.props.sanitize) {
+    if (this.props.sanitize === undefined || this.props.sanitize) {
       rendered_content = sanitizeText(rendered_content, false);
     }
 
