@@ -137,19 +137,3 @@
 	if(uses_integrity)
 		return clamp(PENETRATE_ARMOUR(get_armor_rating(impacting_projectile.armor_flag), impacting_projectile.armour_penetration), 0, 100)
 	return 0
-
-/**
- * Should be called when the atom is destroyed by fire
- * This proc is terrible. I do not know why it exists.
- * Please remove it at some point.
- */
-/atom/proc/burn()
-	return
-
-/**
- * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
- * Can be hooked onto for extra behavior.
- */
-/atom/proc/extinguish()
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)
