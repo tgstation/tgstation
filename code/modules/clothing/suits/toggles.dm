@@ -8,34 +8,13 @@
 	var/alternative_mode = FALSE
 	///Whether the hood is flipped up
 	var/hood_up = FALSE
-	/// Are we zipped?
+	/// Are we zipped? Mostly relevant for wintercoats, leaving this here to simplify logic and so someone else can extend it if they ever wish to.
 	var/zipped = FALSE
 
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
-
-
-/obj/item/clothing/suit/hooded/examine(mob/user)
-	. = ..()
-
-	. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
-
-
-/obj/item/clothing/suit/hooded/AltClick(mob/user)
-	. = ..()
-
-	if (. == FALSE) // Direct check for FALSE, because that's the specific case we want to propagate, not just null.
-		return FALSE
-
-	zipped = !zipped
-	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
-	to_chat(user, span_notice("You [zipped ? "" : "un"]zip [src]."))
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/wearer = loc
-		wearer.update_worn_oversuit()
 
 
 /obj/item/clothing/suit/hooded/Destroy()
