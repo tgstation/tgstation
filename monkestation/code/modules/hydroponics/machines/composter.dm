@@ -6,11 +6,11 @@
 	density = TRUE
 
 	//current biomatter level
-	var/biomatter = 0
+	var/biomatter = 250
 
-	var/list/chem_choices = list("Saltpetre (5 Biomatter/U)")
-	var/list/cost_list = list("Saltpetre (5 Biomatter/U)" = 5)
-	var/list/name_to_chem = list("Saltpetre (5 Biomatter/U)" = /datum/reagent/saltpetre)
+	var/list/chem_choices = list("Saltpetre (5 Biomatter/U)", "Ammonia (3 Biomatter/U)")
+	var/list/cost_list = list("Saltpetre (5 Biomatter/U)" = 5, "Ammonia (3 Biomatter/U)" = 3)
+	var/list/name_to_chem = list("Saltpetre (5 Biomatter/U)" = /datum/reagent/saltpetre, "Ammonia (3 Biomatter/U)" = /datum/reagent/ammonia)
 
 /obj/machinery/composters/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
@@ -34,6 +34,7 @@
 		qdel(composter)
 	if(istype(composter, /obj/item/food/grown))
 		biomatter += 4
+		qdel(composter)
 	update_desc()
 
 /obj/machinery/composters/proc/attempt_fill(obj/item/reagent_containers/cup/filler, mob/user)

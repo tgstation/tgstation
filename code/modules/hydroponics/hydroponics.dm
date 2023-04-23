@@ -64,7 +64,7 @@
 	create_reagents(20)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
-	update_status_light_overlays()
+	update_overlays()
 
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
@@ -82,7 +82,13 @@
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/hydroponics/LateInitialize()
+	. = ..()
 	connected_tree = locate() in range(5)
+	if(connected_tree)
+		connected_tree.attached_component.connected_trays |= src
 
 /obj/machinery/hydroponics/add_context(
 	atom/source,
@@ -396,7 +402,7 @@
 		else if(prob(50))	//25%
 			hardmutate()
 		else if(prob(50))	//12.5%
-			mutatespecie()
+			mutatespecie_new()
 		return
 	return
 
@@ -533,7 +539,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_PLANT_STATUS, new_plant_status)
 	plant_status = new_plant_status
-	update_status_light_overlays()
+	update_overlays()
 
 // The following procs adjust the hydroponics tray variables, and make sure that the stat doesn't go out of bounds.
 
@@ -757,6 +763,8 @@
 			connected_tree = null
 		else
 			connected_tree = locate() in range(5)
+			if(connected_tree)
+				connected_tree.attached_component.connected_trays |= src
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
@@ -1015,7 +1023,7 @@
  * * User - The mob who clears the tray.
  */
 /obj/machinery/hydroponics/proc/update_tray(mob/user, product_count)
-	growth -= max((growth * 2) * (1.01 ** -myseed.production), 0)
+	growth -= max((growth* 1.5) * (1.01 ** -myseed.production), 0)
 	if(istype(myseed, /obj/item/seeds/replicapod))
 		to_chat(user, span_notice("You harvest from the [myseed.plantname]."))
 	else if(product_count <= 0)

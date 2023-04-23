@@ -286,7 +286,7 @@
 	if(product_count >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
 	parent.update_tray(user, product_count)
-	parent.update_status_light_overlays()
+	parent.update_overlays()
 	return result
 
 /**

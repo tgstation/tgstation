@@ -56,7 +56,7 @@
 	if(chems.has_reagent(src.type, 3))
 		switch(rand(0, 100))
 			if(66  to 100)
-				mytray.mutatespecie()
+				mytray.mutatespecie_new()
 			if(33 to 65)
 				mytray.mutateweed()
 			if(1   to 32)

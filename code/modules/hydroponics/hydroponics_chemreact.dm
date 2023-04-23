@@ -19,7 +19,7 @@
 			visible_message(span_warning("\The [myseed.plantname] starts to wilt and burn!"))
 			return
 		if(81 to 90)
-			mutatespecie()
+			mutatespecie_new()
 			return
 		if(66 to 80)
 			hardmutate()

@@ -41,9 +41,9 @@
 		yield_amount = 10 + log(1.4) * (getYield() - 1)
 	while(t_amount < yield_amount)
 		var/picked_object = pick(produce_list)
-		if(prob(30))
+		if(prob(10))
 			var/obj/item/seeds/seed_prod
-			if(prob(10) && special_mutations.len)
+			if(prob(30) && special_mutations.len)
 				var/datum/hydroponics/plant_mutation/spliced_mutation/picked_mutation =  pick(special_mutations)
 				var/obj/item/seeds/created_seed = picked_mutation.created_seed
 				seed_prod = new created_seed(output_loc)
@@ -66,7 +66,7 @@
 			product_name = t_prod.seed.plantname
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
-	parent.update_tray(user)
+	parent.update_tray(user, t_amount)
 
 	return result
 
