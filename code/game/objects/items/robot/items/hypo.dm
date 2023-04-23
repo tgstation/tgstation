@@ -380,7 +380,6 @@
 	desc = "An advanced condiment synthesizer"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "flour"
-	inhand_icon_state = "carton"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
