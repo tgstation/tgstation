@@ -193,3 +193,20 @@
 	materials = list(/datum/material/biomass = 2000)
 	build_path = /obj/item/seeds/random
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_MATERIALS)
+
+
+/datum/design/saltpetre
+	name = "Saltpetre"
+	id = "saltpetre"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 0.3)
+	make_reagent = /datum/reagent/saltpetre
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
+
+/datum/design/ammonia
+	name = "Ammonia"
+	id = "ammonia"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 0.2)
+	make_reagent = /datum/reagent/ammonia
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
