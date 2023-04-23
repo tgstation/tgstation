@@ -781,7 +781,7 @@
 	var/busy = FALSE
 
 	/// Name of the author for the book, set by scanning your ID.
-	var/scanned_id
+	var/scanned_name
 
 /obj/machinery/bookbinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -795,7 +795,7 @@
 
 	if(isidcard(hitby))
 		var/obj/item/card/id/idcard = hitby
-		scanned_id = idcard.registered_name
+		scanned_name = idcard.registered_name
 		balloon_alert(user, "scanned")
 		return TRUE
 
@@ -809,8 +809,8 @@
 		to_chat(user, span_warning("The book binder is busy. Please wait for completion of previous operation."))
 		return
 
-	if(!scanned_id)
-		scanned_id = "unknown author"
+	if(!scanned_name)
+		scanned_name = "unknown author"
 		say("No ID detected. Please scan your ID if you would like to be credited for this book. Otherwise please enter your paper again.")
 		return
 
@@ -836,10 +836,10 @@
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 	var/obj/item/book/bound_book = new(loc)
 	bound_book.book_data.set_content_using_paper(draw_from)
-	bound_book.book_data.set_author(scanned_id, trusted = FALSE)
+	bound_book.book_data.set_author(scanned_name, trusted = FALSE)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
-	scanned_id = null
+	scanned_name = null
 
 	qdel(draw_from)
 
