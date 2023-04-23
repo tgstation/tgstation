@@ -91,12 +91,11 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"name" = item.name,
 			"amt" = grocery_list[item],
 		))
-	if(!isliving(user))
-		return data
-	var/mob/living/living_user = user
-	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-	if(id_card)
-		data["points"] = retrive_points(id_card)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+		if(id_card)
+			data["points"] = retrive_points(id_card)
 
 	return data
 
