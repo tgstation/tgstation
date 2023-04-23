@@ -281,6 +281,7 @@
 	ingredient_reagent_multiplier = 1
 	percentage_of_nutriment_converted = 0
 
+	/// Custom recipes will not start mixing until at least this many solid ingredients are present
 	var/num_ingredients_needed = 3
 
 /datum/chemical_reaction/food/soup/custom/pre_reaction_other_checks(datum/reagents/holder)
@@ -293,16 +294,12 @@
 		return FALSE // Not a lot here to go off of
 	return TRUE
 
-/// Adds text to the requirements list of the recipe
-/// Return a list of strings, each string will be a new line in the requirements list
 /datum/chemical_reaction/food/soup/custom/describe_recipe_details()
 	return list(
 		"Created when burning soup with at least [num_ingredients_needed] ingredients present",
 		"Any solid ingredient counts"
 	)
 
-/// Adds text to the results list of the recipe
-/// Return a list of strings, each string will be a new line in the results list
 /datum/chemical_reaction/food/soup/custom/describe_result()
 	return list("Whatever's in the pot")
 
@@ -749,7 +746,7 @@
 	)
 	percentage_of_nutriment_converted = 0.33 // Full of garbage
 
-	/// Number of reagents added as a bonus
+	/// Number of units of bonus reagent added
 	var/num_bonus = 10
 	/// A list of reagent types we can randomly gain in the soup on creation
 	var/list/extra_reagent_types = list(
