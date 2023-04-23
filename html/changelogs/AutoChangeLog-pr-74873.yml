@@ -1,0 +1,5 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - rscadd: "Books can now be burned just like any other paper item."
+  - rscadd: "You can cut pages out of books with any sharp item, not just knives or wirecutters."
