@@ -1,5 +1,3 @@
-#define MINING_SHIPPING_MULTIPLIER 0.65
-#define GET_MINING_SHIPPING_MULTIPLIER(cost) round(cost * MINING_SHIPPING_MULTIPLIER, 5)
 #define CREDIT_TYPE_MINING "mp"
 
 /obj/machinery/computer/order_console/mining
@@ -10,14 +8,13 @@
 	icon_keyboard = null
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining
-
 	cooldown_time = 10 SECONDS //just time to let you know your order went through.
+	cargo_cost_multiplier = 0.65
 	express_cost_multiplier = 1
 	purchase_tooltip = @{"Your purchases will arrive at cargo,
 	and hopefully get delivered by them.
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
-
 	credit_type = CREDIT_TYPE_MINING
 
 	order_categories = list(
@@ -28,15 +25,10 @@
 	)
 	blackbox_key = "mining"
 
-/obj/machinery/computer/order_console/mining/purchase_items(obj/item/card/id/card, express = FALSE)
-	var/final_cost = get_total_cost()
-	var/failure_message = "Sorry, but you do not have enough mining points."
-	if(!express)
-		final_cost = GET_MINING_SHIPPING_MULTIPLIER(final_cost)
+/obj/machinery/computer/order_console/mining/subtract_points(final_cost, obj/item/card/id/card)
 	if(final_cost <= card.registered_account.mining_points)
 		card.registered_account.mining_points -= final_cost
 		return TRUE
-	say(failure_message)
 	return FALSE
 
 /obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
@@ -67,32 +59,13 @@
 	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 	SSshuttle.shopping_list += new_order
 
-/obj/machinery/computer/order_console/mining/ui_data(mob/user)
-	var/list/data = ..()
-	var/cost = get_total_cost()
-	data["total_cost"] = "[GET_MINING_SHIPPING_MULTIPLIER(cost)] (Express: [cost]) "
-	if(!isliving(user))
-		return data
-	var/mob/living/living_user = user
-	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-	if(id_card)
-		data["points"] = id_card.registered_account.mining_points
-
-	return data
+/obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
+	return round(id_card.registered_account.mining_points)
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
-
-/obj/machinery/computer/order_console/mining/ui_static_data(mob/user)
-	var/list/data = ..()
-	for(var/list/order in data["order_datums"])
-		var/cost = order["cost"]
-		if(isnull(cost)) //sanity check
-			continue
-		order["cost"] = GET_MINING_SHIPPING_MULTIPLIER(cost) // change costs to reflect mining shipping instead
-	return data
 
 /obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mining_voucher))
@@ -210,5 +183,3 @@
 #undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID
-#undef MINING_SHIPPING_MULTIPLIER
-#undef GET_MINING_SHIPPING_MULTIPLIER

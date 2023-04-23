@@ -20,7 +20,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
-	var/smoketime = 10 SECONDS
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
@@ -29,6 +28,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// Whether this match has burnt out.
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
+	var/smoketime = 10 SECONDS
 
 /obj/item/match/process(seconds_per_tick)
 	smoketime -= seconds_per_tick * (1 SECONDS)

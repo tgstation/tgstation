@@ -696,3 +696,5 @@
 
 	for(var/department_type in department_types)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
+
+	GLOB.round_default_lawset = /datum/ai_laws/united_nations
