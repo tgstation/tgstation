@@ -117,6 +117,14 @@
 		pulse()
 
 /datum/component/botany_tree/proc/pulse()
+	if(!connected_trays)
+		for(var/located_hydroponics in range(5, parent))
+			if(!istype(located_hydroponics, /obj/machinery/hydroponics))
+				continue
+			var/obj/machinery/hydroponics/tray = located_hydroponics
+			tray.connected_tree = src
+			connected_trays |= tray
+
 	var/list/affected_plants = list()
 	for(var/obj/machinery/hydroponics/listed_tray in connected_trays)
 		if(listed_tray.myseed)

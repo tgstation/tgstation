@@ -43,14 +43,6 @@
 	AddComponent(/datum/component/botany_tree)
 	attached_component = src.GetComponent(/datum/component/botany_tree)
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/mother_tree/LateInitialize()
-	. = ..()
-	for(var/obj/machinery/hydroponics/located_hydroponics in range(attached_component.pulse_range))
-		located_hydroponics.connected_tree = src
-		attached_component.connected_trays |= located_hydroponics
-
 /obj/machinery/mother_tree/update_overlays()
 	. = ..()
 	if(attached_component.current_level + 1 >= 5)

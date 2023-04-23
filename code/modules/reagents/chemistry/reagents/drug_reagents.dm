@@ -475,6 +475,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
+/datum/reagent/drug/mushroomhallucinogen/generate_infusion_values(datum/reagents/chems)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["damage"] = (amount * rand(4, 9) * 0.1)
+		generated_values["endurance_change"] = (amount * rand(3, 7) * 0.1)
+		generated_values["lifespan_change"] = (amount * rand(2, 5) * 0.1)
+		return generated_values
+
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, times_fired)
 	psychonaut.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
 
