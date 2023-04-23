@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Added TGUI mobility check bypass"
+  - qol: "You can now use your PDA while laying down"
