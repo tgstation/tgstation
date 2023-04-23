@@ -4,16 +4,14 @@
 
 /datum/ai_behavior/stop_and_stare/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/movable/target = weak_target?.resolve()
+	var/atom/movable/target = controller.blackboard[target_key]
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	// i don't really like doing this but we wanna make sure that the cooldown is pertinent to what we need for this specific controller before we invoke parent
 	action_cooldown = controller.blackboard[BB_STATIONARY_COOLDOWN]
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/movable/target = weak_target?.resolve()
+	var/atom/movable/target = controller.blackboard[target_key]
 	if(!ismovable(target) || !isturf(target.loc)) // just to make sure that nothing funky happened between setup and perform
 		return
 

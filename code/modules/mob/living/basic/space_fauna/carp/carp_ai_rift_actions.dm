@@ -47,14 +47,8 @@
  */
 /datum/ai_behavior/make_carp_rift
 
-/*
 /datum/ai_behavior/make_carp_rift/setup(datum/ai_controller/controller, ability_key, target_key)
-	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
-	if (!ability)
-		return FALSE
-
-	return controller.blackboard[target_key]
-*/
+	return controller.blackboard[ability_key] && controller.blackboard[target_key]
 
 /datum/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
