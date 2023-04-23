@@ -781,3 +781,29 @@
   - bugfix: Fixes DNA Infuser Book UI, removing the button that crashes it and fixes
       not showing threshold descriptions
   - rscadd: Added new berets to the vendor
+2023-04-22:
+  BlueMemesauce:
+  - bugfix: Removed extra messaging server in North Star tcomms
+  ChungusGamer666:
+  - qol: Thermited walls now get an examine message telling you they are, in fact,
+      thermited.
+  - rscadd: Burning items are now actually considered to be at a minimum, 150 degrees
+      celsius by the game.
+  MTandi:
+  - qol: IV drip flow rate can be changed without the container or object attached
+  - bugfix: IV drip animation states fixed
+  vinylspiders:
+  - qol: the rescue hook has a much greater chance at catching actual fallen player
+      bodies as opposed to generic skeletons/other npc corpses
+  - bugfix: traitor objective posters will no longer be able to spawn from general
+      random poster spawners.
+2023-04-23:
+  LemonInTheDark:
+  - bugfix: Things that block glow will now like, do that again
+  Melbert:
+  - bugfix: Ingredients which fail to react in soup reactions drop when the reaction
+      finishes as intended
+  Tattle:
+  - qol: basicmobs can now make sounds when their speech is triggered
+  - qol: pigs will now make sounds and emote on their own
+  - sound: cows, pigs, and sheep have new sound effects!
