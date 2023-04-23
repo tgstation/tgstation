@@ -8,11 +8,14 @@
 	var/alternative_mode = FALSE
 	///Whether the hood is flipped up
 	var/hood_up = FALSE
+	/// Are we zipped? Mostly relevant for wintercoats, leaving this here to simplify logic and so someone else can extend it if they ever wish to.
+	var/zipped = FALSE
 
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
+
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -42,7 +45,9 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
-	src.icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)]"
+	worn_icon_state = icon_state
+	zipped = FALSE
 	hood_up = FALSE
 
 	if(hood)
@@ -82,6 +87,8 @@
 				return
 			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
+			worn_icon_state = icon_state
+			zipped = TRUE // Just to maintain the same behavior, and so we avoid any bugs that otherwise relied on this behavior of zipping the jacket when bringing up the hood
 			H.update_worn_oversuit()
 			H.update_mob_action_buttons()
 	else
