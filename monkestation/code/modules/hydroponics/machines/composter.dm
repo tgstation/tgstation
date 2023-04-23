@@ -8,10 +8,6 @@
 	//current biomatter level
 	var/biomatter = 250
 
-	var/list/chem_choices = list("Saltpetre (5 Biomatter/U)", "Ammonia (3 Biomatter/U)")
-	var/list/cost_list = list("Saltpetre (5 Biomatter/U)" = 5, "Ammonia (3 Biomatter/U)" = 3)
-	var/list/name_to_chem = list("Saltpetre (5 Biomatter/U)" = /datum/reagent/saltpetre, "Ammonia (3 Biomatter/U)" = /datum/reagent/ammonia)
-
 /obj/machinery/composters/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
 	if(istype(attacking_item, /obj/item/seeds))
@@ -20,8 +16,13 @@
 	if(istype(attacking_item, /obj/item/food/grown))
 		compost(attacking_item)
 
-	if(istype(attacking_item, /obj/item/reagent_containers/cup))
-		attempt_fill(attacking_item, user)
+/obj/machinery/composters/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(biomatter < 40)
+		to_chat(user, span_notice("No enough biomatter to produce Bio-Cube"))
+		return
+	new /obj/item/bio_cube(get_turf(src))
+	biomatter -= 40
 
 /obj/machinery/composters/update_desc()
 	. = ..()
@@ -37,20 +38,6 @@
 		qdel(composter)
 	update_desc()
 
-/obj/machinery/composters/proc/attempt_fill(obj/item/reagent_containers/cup/filler, mob/user)
-	var/max_capacity = (filler.volume - filler.reagents.total_volume)
-	var/chem_choice = tgui_input_list(user, "Choose a reagent to fill", "[name]", chem_choices)
-	if(!chem_choice)
-		return
-	var/cost = cost_list[chem_choice]
-
-	var/max_amount = min(max_capacity, round(biomatter / cost))
-	var/amount = tgui_input_number(user, "Choose an amount", "[name]", 0, max_amount, 0)
-	if(!amount)
-		return
-
-	filler.reagents.add_reagent(name_to_chem[chem_choice], amount)
-
 /obj/item/seeds/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
 	if(istype(over, /obj/machinery/composters))
@@ -64,3 +51,30 @@
 		var/obj/machinery/composters/dropped = over
 		for(var/obj/item/food/grown/grown in src_location)
 			dropped.compost(grown)
+
+
+/obj/item/bio_cube
+	name = "Bio Cube"
+	desc = "A cube made of pure biomatter does wonders on plant trays"
+	icon = 'monkestation/icons/obj/misc.dmi'
+	icon_state = "bio_cube"
+
+	var/total_duration = 60 SECONDS
+	var/scale_multiplier = 1
+
+
+/obj/item/bio_cube/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(istype(attacking_item, /obj/item/bio_cube))
+		var/obj/item/bio_cube/attacking_cube = attacking_item
+		scale_multipler += (attacking_cube.scale_multiplier - 0.5)
+		total_duration += attacking_cube.total_duration
+		to_chat(user, span_notice("You smash the two bio cubes together making a bigger bio cube that lasts longer."))
+		update_desc()
+		bio_cube.transform = bio_cube.transform.Scale(scale_multiplier, scale_multiplier)
+		qdel(attacking_cube)
+
+/obj/item/bio_cube/update_desc(updates)
+	. = ..()
+	. += "A cube made of pure biomatter does wonders on plant trays"
+	. += "Lasts a total of [total_duration *0.1] Seconds"

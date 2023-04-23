@@ -59,6 +59,8 @@
 	var/repeated_harvest = 0
 	//growth after converted to age
 	var/growth = 0
+	///are we currently bio boosted?
+	var/bio_boosted = TRUE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -239,7 +241,7 @@
 		myseed.forceMove(src)
 
 	update_appearance()
-	if(world.time > (lastcycle + cycledelay) && waterlevel > 10 && reagents.total_volume > 2 && pestlevel < 10 && weedlevel < 10)
+	if((world.time > (lastcycle + cycledelay) && waterlevel > 10 && reagents.total_volume > 2 && pestlevel < 10 && weedlevel < 10) || bio_boosted)
 		lastcycle = world.time
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
 			// Advance age
@@ -254,7 +256,10 @@
  */
 			apply_chemicals(lastuser?.resolve())
 			// Nutrients deplete slowly
-			adjust_plant_nutriments((reagents.total_volume * (nutriment_drain_precent * 0.01)))
+			if(bio_boosted)
+				adjust_plant_nutriments((reagents.total_volume * ((nutriment_drain_precent * 0.2) * 0.01)))
+			else
+				adjust_plant_nutriments((reagents.total_volume * (nutriment_drain_precent * 0.01)))
 
 /**
  * Photosynthesis
@@ -275,7 +280,8 @@
  * Water
  */
 			// Drink random amount of water
-			adjust_waterlevel(-rand(1,6) / rating)
+			if(!bio_boosted)
+				adjust_waterlevel(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
@@ -363,10 +369,10 @@
 					set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 				else
 					lastproduce = age
-			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
+			if(prob(5) && !bio_boosted)  // On each tick, there's a 5 percent chance the pest population will increase
 				adjust_pestlevel(1 / rating)
 		else
-			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
+			if((waterlevel > 10 && nutrilevel > 0 && prob(10)) && !bio_boosted)  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
@@ -770,8 +776,18 @@
 				connected_tree.attached_component.connected_trays |= src
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/hydroponics/proc/end_boost()
+	bio_boosted = FALSE
+
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
+	if(istype(O, /obj/item/bio_cube))
+		var/obj/item/bio_cube/attacked_cube = O
+		bio_boosted = TRUE
+		addtimer(CALLBACK(src, PROC_REF(end_boost)), attacked_cube.total_duration)
+		to_chat(user, span_notice("The [attacked_cube.name] dissolves boosting the growth of plants for [attacked_cube.total_duration * 0.1] seconds."))
+		qdel(bio_cube)
+
 	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
 
