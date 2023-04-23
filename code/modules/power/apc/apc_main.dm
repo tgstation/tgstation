@@ -221,7 +221,6 @@
 
 	return ..()
 
-
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
 		return
@@ -284,6 +283,17 @@
 
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
+
+/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(!(machine_stat & BROKEN))
+		set_broken()
+	if(opened != APC_COVER_REMOVED)
+		opened = APC_COVER_REMOVED
+		coverlocked = FALSE
+		visible_message(span_warning("The APC cover is knocked down!"))
+		update_appearance()
 
 /obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

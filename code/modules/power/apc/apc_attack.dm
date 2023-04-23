@@ -169,24 +169,6 @@
 
 	return ..()
 
-/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		if((has_electronics & APC_ELECTRONICS_INSTALLED) || (has_electronics & APC_ELECTRONICS_SECURED))
-			var/obj/item/electronics/apc/apc_electronics = new (loc)
-			if(!disassembled)
-				apc_electronics.take_damage(apc_electronics.max_integrity * 0.5, sound_effect = FALSE)
-		if(!QDELETED(cell))
-			if(!disassembled)
-				cell.take_damage(cell.max_integrity * 0.5, sound_effect = FALSE)
-			cell.forceMove(loc)
-			cell = null
-		if(!QDELETED(terminal))
-			new /obj/item/stack/cable_coil(loc, 10)
-	if(!QDELETED(terminal))
-		QDEL_NULL(terminal)
-	qdel(src)
-
 /obj/machinery/power/apc/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!can_interact(user))
