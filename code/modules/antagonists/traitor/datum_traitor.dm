@@ -373,6 +373,6 @@
 #undef FLAVOR_FACTION_SYNDICATE
 #undef FLAVOR_FACTION_NANOTRASEN
 
-/datum/antagonist/tratior/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/traitor/antag_token(datum/mind/hosts_mind)
 	. = ..()
 	hosts_mind.make_traitor()
