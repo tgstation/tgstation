@@ -61,6 +61,7 @@
 	if(device)
 		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
 		QDEL_NULL(device)
+
 	return ..()
 
 /obj/item/mod/module/examine(mob/user)
@@ -258,9 +259,14 @@
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
 	SIGNAL_HANDLER
 
+	if(QDELETED(src))
+		return
+
 	if(source == device)
+		contents -= device
 		device = null
 		qdel(src)
+
 
 /// Adds the worn overlays to the suit.
 /obj/item/mod/module/proc/add_module_overlay(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
