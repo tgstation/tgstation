@@ -1,0 +1,6 @@
+author: "GoldenAlpharex, ChatGPT for the first changelog entry (slightly edited)"
+delete-after: True
+changes:
+  - qol: "Zipped and unzipped through alt-click, winter coats can now be. Hmm, stylishly warm, you shall be. Feel like a Spaceman, you will. Use the Force, to zip and unzip, you must. Look cool, you will. Yes, hmmm."
+  - image: "Winter coats no longer have their hood baked into their jacket's sprite, both in item form and when worn."
+  - bugfix: "Updated the Icebox EVA winter coats (the Endotherm winter coats) to use the same sprites as the regular winter coats."
