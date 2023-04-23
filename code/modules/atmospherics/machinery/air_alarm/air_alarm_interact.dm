@@ -183,4 +183,4 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
-	pixel_shift = 28
+	pixel_shift = 27
