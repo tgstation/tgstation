@@ -45,7 +45,7 @@
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/rods))
 	var/datum/action/cooldown/mob_cooldown/charge_apc/charge_ability = new(src)
 	charge_ability.Grant(src)
-	ai_controller.set_blackboard_key(B_FESTIVE_APC, charge_ability)
+	ai_controller.set_blackboard_key(BB_FESTIVE_APC, charge_ability)
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
