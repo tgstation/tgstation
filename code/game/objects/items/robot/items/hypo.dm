@@ -375,7 +375,6 @@
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return .
 	
-
 /obj/item/reagent_containers/borghypo/condimentsynthesizer // Solids! Condiments! The borger uprising!
 	name = "Condiment Synthesizer"
 	desc = "An advanced condiment synthesizer"
@@ -411,9 +410,7 @@
 	data["reagents"] = condiments
 	data["selectedReagent"] = selected_reagent?.name
 	return data
-	
-
-			
+		
 /obj/item/reagent_containers/borghypo/condimentbag/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
@@ -441,9 +438,6 @@
 		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return .
-	
-
-
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
