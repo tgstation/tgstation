@@ -376,13 +376,12 @@
 			if(blood_id != /datum/reagent/blood) // special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				blood_type = R ? R.name : blood_id
-			var/blood_volume_message = "[blood_percent] %, [carbontarget.blood_volume] cl, type: [blood_type]"
 			if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_volume_message]</span>\n"
+				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [carbontarget.blood_volume]</span> cl, type: [blood_type]\n"
 			else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_volume_message]</b></span>\n"
+				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent] %, [carbontarget.blood_volume]</span> cl, type: [blood_type]</b></span>\n"
 			else
-				render_list += "<span class='info ml-1'>Blood level: [blood_volume_message]</span>\n"
+				render_list += "<span class='info ml-1'>Blood level: [blood_percent] %, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
 
 	// Cybernetics
 	if(iscarbon(target))
