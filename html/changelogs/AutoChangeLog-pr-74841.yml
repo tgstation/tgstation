@@ -1,0 +1,5 @@
+author: "BlueMemesauce"
+delete-after: True
+changes:
+  - bugfix: "Maps now spawn the correct amount of space levels. The bug caused them to spawn 1 less in each category"
+  - code_imp: "The space ruins budget is now proportional to the amount of ruin levels. This has no effect on the current default maps, but added maps with less than the default amount of ruin levels will see less ruins."
