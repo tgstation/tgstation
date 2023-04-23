@@ -307,6 +307,9 @@
 /obj/effect/world_progressbar/Destroy()
 	owner = null
 	bar_loc?:vis_contents -= src
+	qdel(bar)
+	qdel(border_accessory)
+	qdel(additional_image)
 	cut_overlays()
 	return ..()
 
