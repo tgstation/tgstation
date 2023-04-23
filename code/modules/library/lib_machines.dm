@@ -796,7 +796,7 @@
 	if(isidcard(hitby))
 		var/obj/item/card/id/idcard = hitby
 		scanned_id = idcard.registered_name
-		to_chat(user, span_notice("You scan your ID."))
+		balloon_alert(user, "scanned")
 		return TRUE
 
 	return ..()
