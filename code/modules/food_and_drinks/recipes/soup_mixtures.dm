@@ -295,10 +295,7 @@
 	return TRUE
 
 /datum/chemical_reaction/food/soup/custom/describe_recipe_details()
-	return list(
-		"Created when burning soup with at least [num_ingredients_needed] ingredients present",
-		"Any solid ingredient counts"
-	)
+	return list("Created from burning soup with at least [num_ingredients_needed] ingredients present")
 
 /datum/chemical_reaction/food/soup/custom/describe_result()
 	return list("Whatever's in the pot")
@@ -766,9 +763,11 @@
 	holder.add_reagent(pick(extra_reagent_types), num_bonus)
 
 /datum/chemical_reaction/food/soup/mysterysoup/describe_result()
-	. = list("Will also contain [num_bonus] units of one randomly:")
+	var/list/extra_sublist = list()
 	for(var/datum/reagent/extra_type as anything in extra_reagent_types)
-		. += initial(extra_type.name)
+		extra_sublist += "[initial(extra_type.name)]"
+
+	return list("Will also contain [num_bonus] units of one randomly: [jointext(extra_sublist, ", ")]")
 
 // Monkey Soup
 /datum/reagent/consumable/nutriment/soup/monkey

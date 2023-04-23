@@ -24,46 +24,37 @@
 		var/filename = "soup/[SANITIZE_FILENAME(escape_value(format_text(result_soup.name)))]"
 
 		// -- Compiles a list of required reagents and food items --
-		var/list/reagents_needed = list()
+		var/list/all_needs_text = list()
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.required_reagents)
 			var/num_needed = soup_recipe.required_reagents[reagent_type]
-			reagents_needed += "[num_needed] units [initial(reagent_type.name)]"
+			all_needs_text += "[num_needed] units [initial(reagent_type.name)]"
 
-		var/list/food_items_needed = list()
 		for(var/obj/item/food_type as anything in soup_recipe.required_ingredients)
 			var/num_needed = soup_recipe.required_ingredients[food_type]
 			// Instantiating this so we can do plurality correctly.
 			// We can use initial but it'll give us stuff like "eyballss".
 			var/obj/item/food = new food_type()
-			food_items_needed += "[num_needed] [food.name]\s"
+			all_needs_text += "[num_needed] [food.name]\s"
 			qdel(food)
 
-		var/compiled_requirements = jointext(reagents_needed, ", ")
-		if(length(food_items_needed))
-			if(compiled_requirements)
-				compiled_requirements += ", "
-			compiled_requirements += jointext(food_items_needed, ", ")
-
-		var/additional_requirements = soup_recipe.describe_recipe_details()
-		if(length(additional_requirements))
-			if(additional_requirements)
-				compiled_requirements += ", "
-			compiled_requirements += jointext(additional_requirements, ", ")
-
-		compiled_requirements += ", at temperature [soup_recipe.required_temp]K"
+		all_needs_text += soup_recipe.describe_recipe_details()
+		all_needs_text += "At temperature [soup_recipe.required_temp]K"
+		var/compiled_requirements = ""
+		for(var/req_text in all_needs_text)
+			if(length(req_text))
+				compiled_requirements += "<li>[req_text]</li>"
 
 		// -- Compiles a list of resulting reagents --
-		var/list/resulting_reagents_list = list()
+		var/list/all_results_text = list()
 		for(var/datum/reagent/reagent_type as anything in soup_recipe.results)
 			var/num_given = soup_recipe.results[reagent_type]
-			resulting_reagents_list += "[num_given] units [initial(reagent_type.name)]"
+			all_results_text += "[num_given] units [initial(reagent_type.name)]"
 
-		var/compiled_results = jointext(resulting_reagents_list, ", ")
-		var/additional_results = soup_recipe.describe_result()
-		if(length(additional_results))
-			if(compiled_results)
-				compiled_results += ", "
-			compiled_results += jointext(additional_results, ", ")
+		all_results_text += soup_recipe.describe_result()
+		var/compiled_results = ""
+		for(var/res_text in all_results_text)
+			if(length(res_text))
+				compiled_results += "<li>[res_text]</li>"
 
 		// -- Assemble the template list --
 		var/list/template_list = list()
@@ -76,10 +67,10 @@
 			template_list["description"] = "A custom soup recipe, allowing you to throw whatever you want in the pot."
 
 		else
-			var/foodtypes_readable = jointext(bitfield_to_list(soup_style.drink_type, FOOD_FLAGS_IC), ", ")
+			var/foodtypes_readable = jointext(bitfield_to_list(soup_style.drink_type, FOOD_FLAGS_IC), ", ") || "None"
 			var/tastes_actual = result_soup.get_taste_description()
 			template_list["name"] = escape_value(result_soup.name)
-			template_list["taste"] = escape_value(length(tastes_actual) ? jointext(tastes_actual, ", ") : "No taste")
+			template_list["taste"] = escape_value(length(tastes_actual) ? capitalize(jointext(tastes_actual, ", ")) : "No taste")
 			template_list["foodtypes"] = escape_value(foodtypes_readable)
 			template_list["description"] = escape_value(result_soup.description)
 
