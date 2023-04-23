@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - admin: "Admins can now control the spawn location, potency, production and starting mutations of the space vines event."
-  - bugfix: "The space vine event will now correctly give vines mutations when they spawn rather than always being mutation free."
-  - code_imp: "Checkbox tgui inputs now support setting a minimum number of inputs rather than it being hardcoded to 1."
