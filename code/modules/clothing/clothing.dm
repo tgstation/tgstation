@@ -23,6 +23,9 @@
 
 	var/can_be_bloody = TRUE
 
+	///Prevents the article of clothing from gaining the mood boost from washing. Used for the tacticool turtleneck.
+	var/stubborn_stains = FALSE
+
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
@@ -397,13 +400,16 @@
 // you just dont get the same feeling with handwashed clothes
 /obj/item/clothing/machine_wash()
 	. = ..()
-	var/fresh_mood = AddComponent( \
-		/datum/component/onwear_mood, \
-		saved_event_type = /datum/mood_event/fresh_laundry, \
-		examine_string = "[src] looks crisp and pristine.", \
-	)
+	if(stubborn_stains) //Just can't make it feel right
+		return
+	else
+		var/fresh_mood = AddComponent( \
+			/datum/component/onwear_mood, \
+			saved_event_type = /datum/mood_event/fresh_laundry, \
+			examine_string = "[src] looks crisp and pristine.", \
+		)
 
-	QDEL_IN(fresh_mood, 2 MINUTES)
+		QDEL_IN(fresh_mood, 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
