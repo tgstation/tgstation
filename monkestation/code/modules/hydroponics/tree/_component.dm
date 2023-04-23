@@ -117,7 +117,7 @@
 		pulse()
 
 /datum/component/botany_tree/proc/pulse()
-	if(!connected_trays)
+	if(!connected_trays.len)
 		for(var/located_hydroponics in range(5, parent))
 			if(!istype(located_hydroponics, /obj/machinery/hydroponics))
 				continue

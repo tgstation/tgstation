@@ -15,7 +15,7 @@
 	///How many units of nutrients will be drained in the tray.
 	var/nutrilevel = 10
 	///The maximum nutrient of water in the tray
-	var/maxnutri = 20
+	var/maxnutri = 40
 	///The amount of pests in the tray (max 10)
 	var/pestlevel = 0
 	///The amount of weeds in the tray (max 10)
@@ -61,7 +61,7 @@
 	var/growth = 0
 
 /obj/machinery/hydroponics/Initialize(mapload)
-	create_reagents(20)
+	create_reagents(40)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
 	update_overlays()
@@ -238,6 +238,7 @@
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
+	update_appearance()
 	if(world.time > (lastcycle + cycledelay) && waterlevel > 10 && reagents.total_volume > 2 && pestlevel < 10 && weedlevel < 10)
 		lastcycle = world.time
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
