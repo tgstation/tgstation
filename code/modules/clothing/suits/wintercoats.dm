@@ -48,7 +48,7 @@
 
 	zipped = !zipped
 	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
-	balloon_alert(user, "[zipped ? "" : "un"]zipped [src]")
+	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
