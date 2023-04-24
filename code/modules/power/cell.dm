@@ -215,7 +215,7 @@
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
 	if(QDELETED(src))
-		return
+		return FALSE
 
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -224,6 +224,8 @@
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				corrupt()
+
+	return TRUE
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(ishuman(user))

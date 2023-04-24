@@ -131,6 +131,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/ex_act(severity, target)
 	if(severity)
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
@@ -283,6 +286,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
+	return TRUE
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
@@ -326,6 +330,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
+		return TRUE
+
+	return FALSE
 
 
 /*****************************Coin********************************/

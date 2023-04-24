@@ -133,7 +133,8 @@
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	. = ..()
 	if(!. || QDELETED(src))
-		return
+		return FALSE
+
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			ex_act_devastate()
@@ -141,6 +142,8 @@
 			ex_act_heavy()
 		if (EXPLODE_LIGHT)
 			ex_act_light()
+
+	return TRUE
 
 /// Called when a devastating explosive acts on this mob
 /mob/living/simple_animal/proc/ex_act_devastate()

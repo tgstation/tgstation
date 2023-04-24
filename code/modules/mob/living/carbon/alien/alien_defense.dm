@@ -98,13 +98,12 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	. = ..()
 	if(!. || QDELETED(src))
-		return
+		return FALSE
 
 	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
-			return
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
@@ -117,6 +116,9 @@ In all, this is a lot like the monkey code. /N
 				Unconscious(20)
 			if(ears)
 				ears.adjustEarDamage(15,60)
+
+	return TRUE
+
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0

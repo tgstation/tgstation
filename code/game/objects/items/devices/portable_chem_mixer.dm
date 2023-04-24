@@ -37,6 +37,8 @@
 	if(severity > EXPLODE_LIGHT)
 		return ..()
 
+	return FALSE
+
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
 	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I

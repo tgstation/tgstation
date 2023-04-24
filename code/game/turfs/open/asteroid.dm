@@ -63,7 +63,7 @@
 	return
 
 /turf/open/misc/asteroid/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
 	. = ..()
