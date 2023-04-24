@@ -618,7 +618,8 @@
 		. += span_warning("It's filled with weeds!")
 	if(pestlevel >= 5)
 		. += span_warning("It's filled with tiny worms!")
-
+	if(connected_tree)
+		. += span_notice("Its connected to a Mother Tree it will recieve its blessings.")
 /**
  * What happens when a tray's weeds grow too large.
  * Plants a new weed in an empty tray, then resets the tray.
