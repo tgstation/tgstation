@@ -10,7 +10,7 @@ type MarkdownViewerData = {
 };
 
 export const MarkdownViewer = (_: any, context: any) => {
-  let { data } = useBackend<MarkdownViewerData>(context);
+  const { data } = useBackend<MarkdownViewerData>(context);
   return (
     <Window theme="paper" title={data.title}>
       <Window.Content scrollable backgroundColor={'#FFFFFF'}>
@@ -30,7 +30,7 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
 
   content = marked(content);
   if (sanitize) {
-    content = sanitizeText(content, false);
+    content = sanitizeText(content, /* advHtml = */ false);
   }
 
   // eslint-disable-next-line react/no-danger
