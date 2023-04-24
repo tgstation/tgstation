@@ -147,7 +147,7 @@
 
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight/, on_color_change))  //update light color when color changes
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
 	register_context()
 
 /obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, is_dark_color)
