@@ -254,7 +254,7 @@
 	star_gazer_mob.health = INFINITY
 	user.AddElement(/datum/element/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
-	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, clone_damage = 0.05, simple_damage = 0.5, has_owner = user)
+	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 4, burn_damage = 0.5, clone_damage = 0.05, simple_damage = 0.5, has_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)
