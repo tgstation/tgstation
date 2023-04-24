@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - rscadd: "Say emote prefixes are no longer forced to be lowercase. This includes radio emotes!"
