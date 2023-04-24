@@ -8,9 +8,15 @@
 	var/alien_ear_damage = 0
 
 /datum/unit_test/explosion_action/Run()
-	// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
-	// that may be done on the subtype-to-subtype basis. Any time we use an explicit subtype is to test that framework, so if you update that for some reason, you should also update this test.
-	// Like, if you balance aliens to take more ear damage and this test fails, just update the test to reflect that. That's it.
+	// We split up this `Run()` into two parts: one for `/mob` and one for `/obj`. This is because both of them have different core implementations of `EX_ACT()`, and we want to test both.
+	// Both procs also have varying levels of bulkiness to them, and it's valuable to have this level of organization because otherwise it would blend all-together and be an entangled mess.
+	execute_mob_tests()
+
+/// Tests the EX_ACT macro on several different types of mobs to ensure that it still works as expected.
+/// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
+/// that may be done on the subtype-to-subtype basis. Any time we use an explicit subtype is to test that framework, so if you update that for some reason, you should also update this test.
+/// Like, if you balance aliens to take more ear damage and this test fails, just update the test to reflect that. That's it.
+/datum/unit_test/explosion_action/proc/execute_mob_tests()
 
 	// You may delete this entire section of the test when the entire `simple_animal` framework needs to be scrapped.
 	var/mob/living/simple_animal/test_simple_animal = allocate(/mob/living/simple_animal)
@@ -30,6 +36,7 @@
 
 	EX_ACT(test_simple_animal, EXPLODE_DEVASTATE) // this should gib.
 	TEST_ASSERT(QDELETED(test_simple_animal), "EX_ACT() with EXPLODE_DEVASTATE severity should have gibbed a simple animal!")
+	// End of the simple-animal checks. No more simple animals beyond this point.
 
 	// Now let's be safe and check basic mobs (they're the future, man)
 	var/mob/living/basic/test_basic_animal = allocate(/mob/living/basic)
