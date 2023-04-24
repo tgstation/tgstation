@@ -1,18 +1,66 @@
 /// Abstract holder for golem status effects, you should never have more than one of these active
 /datum/status_effect/golem
 	id = "golem_status"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 30 SECONDS
+	duration = 5 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/golem_status
 	/// Icon state prefix for overlay to display on golem limbs
 	var/overlay_state_prefix
-	/// Maximum time to extend buff for
-	var/max_duration = 5 MINUTES
 	/// Name of the mineral we ate to get this
 	var/mineral_name = ""
 	/// Text to display on buff application
 	var/applied_fluff = ""
 	/// Overlays we have applied to our mob
 	var/list/active_overlays = list()
+	/// Icon used to represent the alert
+	var/alert_icon = 'icons/obj/stack_objects.dmi'
+	/// Icon state to display to represent the alert
+	var/alert_icon_state = "sheet-monkey"
+	/// Tooltip to display when hovering over the alert
+	var/alert_desc = "Something went wrong and this tooltip is not displaying correctly."
+
+/atom/movable/screen/alert/status_effect/golem_status
+	name = "Metamorphic %SOMETHING%"
+	desc = "You've enjoyed a tasty meal and are now experiencing a bug."
+	icon_state = "template"
+	/// Overlay we show on top of the template icon
+	var/mutable_appearance/mineral_overlay
+	/// When we reach this much remaining time we will start animating as a warning
+	var/early_expiry_warning = 30 SECONDS
+	/// When we reach this much remaining time we will start animating more urgently as a warning
+	var/imminent_expiry_warning = 5 SECONDS
+
+/// Set up how the alert ACTUALLY looks, based on the effect applied
+/atom/movable/screen/alert/status_effect/golem_status/proc/update_details(buff_time)
+	var/datum/status_effect/golem/golem_effect = attached_effect
+	if (!istype(golem_effect))
+		CRASH("Golem status alert attached to invalid status effect.")
+	name = replacetext(name, "%SOMETHING%", golem_effect.mineral_name)
+	desc = golem_effect.alert_desc
+	mineral_overlay = mutable_appearance(golem_effect.alert_icon, golem_effect.alert_icon_state)
+	update_appearance(UPDATE_ICON)
+
+	if (buff_time > early_expiry_warning)
+		addtimer(CALLBACK(src, PROC_REF(early_warning)), buff_time - early_expiry_warning, TIMER_DELETE_ME)
+	if (buff_time > imminent_expiry_warning)
+		addtimer(CALLBACK(src, PROC_REF(imminent_warning)), buff_time - imminent_expiry_warning, TIMER_DELETE_ME)
+
+/// Animate to indicate effect is expiring soon
+/atom/movable/screen/alert/status_effect/golem_status/proc/early_warning()
+	animate(src, alpha = 75, time = 1 SECONDS, loop = -1)
+	animate(alpha = 255, time = 1 SECONDS, loop = -1)
+
+/// Animate to indicate effect is expiring very soon
+/atom/movable/screen/alert/status_effect/golem_status/proc/imminent_warning()
+	animate(src, alpha = 25, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 200, time = 0.5 SECONDS, loop = -1)
+
+/atom/movable/screen/alert/status_effect/golem_status/update_overlays()
+	. = ..()
+	. += mineral_overlay
+
+/atom/movable/screen/alert/status_effect/golem_status/Destroy()
+	QDEL_NULL(mineral_overlay)
+	return ..()
 
 /datum/status_effect/golem/on_apply()
 	. = ..()
@@ -32,11 +80,15 @@
 		overlay.add_to_bodypart(overlay_state_prefix, part)
 		active_overlays += overlay
 	golem_owner.update_body_parts()
+
 	return TRUE
 
-// Add 30 seconds up until we reach 5 minutess
-/datum/status_effect/golem/refresh(effect)
-	duration = min(duration + initial(duration), world.time + max_duration)
+/datum/status_effect/golem/on_creation(mob/living/new_owner)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
+	status_alert?.update_details(buff_time = initial(duration))
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
@@ -71,6 +123,8 @@
 	overlay_state_prefix = "uranium"
 	mineral_name = "uranium"
 	applied_fluff = "Glowing crystals sprout from your body. You feel energised!"
+	alert_icon_state = "sheet-uranium"
+	alert_desc = "Internal radiation is providing all of your nutritional needs."
 
 /datum/status_effect/golem/uranium/on_apply()
 	. = ..()
@@ -90,6 +144,8 @@
 	overlay_state_prefix = "silver"
 	mineral_name = "silver"
 	applied_fluff = "Shining plates grace your shoulders. You feel holy!"
+	alert_icon_state = "sheet-silver"
+	alert_desc = "Your body repels supernatural influences."
 
 /datum/status_effect/golem/silver/on_apply()
 	. = ..()
@@ -107,6 +163,8 @@
 	overlay_state_prefix = "plasma"
 	mineral_name = "plasma"
 	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
+	alert_icon_state = "sheet-plasma"
+	alert_desc = "You are protected from high pressure and can convert heat damage into power."
 	/// What do we multiply our damage by to convert it into power?
 	var/power_multiplier = 5
 	/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
@@ -158,6 +216,8 @@
 	overlay_state_prefix = "iron"
 	mineral_name = "plasteel"
 	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
+	alert_icon_state = "sheet-plasteel"
+	alert_desc = "You are sealed against the cold, and against low pressure environments."
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
@@ -175,6 +235,8 @@
 	overlay_state_prefix = "gold"
 	mineral_name = "gold"
 	applied_fluff = "Shining plates form across your body. You feel reflective!"
+	alert_icon_state = "sheet-gold_2"
+	alert_desc = "Your shining body reflects energy weapons."
 
 /datum/status_effect/golem/gold/on_apply()
 	. = ..()
@@ -193,6 +255,8 @@
 	mineral_name = "diamonds"
 	applied_fluff = "Sparkling gems bend light around you. You feel stealthy!"
 	tick_interval = 0.25 SECONDS
+	alert_icon_state = "sheet-diamond"
+	alert_desc = "Light is bending around you, making you hard to see while still and faster while moving."
 	/// Alpha to remove per second while stood still
 	var/alpha_per_tick = 25
 	/// Alpha to apply while moving
@@ -254,6 +318,8 @@
 	overlay_state_prefix = "platinum"
 	mineral_name = "titanium"
 	applied_fluff = "Titanium rings burst from your arms. You feel ready to take on the world!"
+	alert_icon_state = "sheet-titanium"
+	alert_desc = "You are more resistant to physical blows, and pack more of a punch yourself."
 	/// Amount to reduce brute damage by
 	var/brute_modifier = 0.7
 	/// How much extra damage do we do with our fists?
@@ -314,6 +380,9 @@
 	overlay_state_prefix = "banana"
 	mineral_name = "bananium"
 	applied_fluff = "Bananium veins ooze from your crags. You feel a little funny!"
+	alert_icon_state = "sheet-bananium"
+	alert_desc = "You feel kind of funny."
+	/// The slipperiness component which we have applied
 	var/datum/component/slippery/slipperiness
 
 /datum/status_effect/golem/bananium/on_apply()
