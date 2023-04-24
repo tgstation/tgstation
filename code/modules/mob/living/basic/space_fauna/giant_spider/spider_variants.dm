@@ -19,6 +19,29 @@
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /**
+ * ### Spider Scout
+ * A subtype of the giant spider which is faster, has phermone detection, but less health and damage.
+ * This spider is only slightly faster than a human.
+ */
+/mob/living/basic/giant_spider/scout
+	name = "hunter spider"
+	desc = "Furry and blueish black, it makes you shudder to look at it. This one has sparkling blue eyes."
+	icon_state = "scout"
+	icon_living = "scout"
+	icon_dead = "scout_dead"
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	poison_per_bite = 0
+	speed = 2.5
+	player_speed_modifier = -3.1
+	sight = SEE_SELF|SEE_MOBS
+	menu_description = "Fast spider variant specializing in scouting and alerting of prey ,with the ability to travel in vents."
+
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+
+/**
  * ### Spider Nurse
  *
  * A subtype of the giant spider which specializes in support skills.
