@@ -1,6 +1,5 @@
 #define COMP_TIMEPIECE_TWENTYFOUR_HOUR "24-Hour"
 #define COMP_TIMEPIECE_TWELVE_HOUR "12-Hour"
-#define COMP_TIMEPIECE_SECONDS "Seconds"
 #define COMP_TIMEPIECE_MINUTES "Minutes"
 #define COMP_TIMEPIECE_HOURS "Hours"
 
@@ -37,7 +36,6 @@
 	var/static/unit_options = list(
 		COMP_TIMEPIECE_HOURS,
 		COMP_TIMEPIECE_MINUTES,
-		COMP_TIMEPIECE_SECONDS,
 	)
 	time_unit = add_option_port("Unit of Time", unit_options)
 
@@ -46,24 +44,21 @@
 
 	switch(format.value)
 		if(COMP_TIMEPIECE_TWENTYFOUR_HOUR)
-			time = station_time_timestamp()
+			time = SSday_night.get_twentyfourhour_timestamp()
 		if(COMP_TIMEPIECE_TWELVE_HOUR)
-			time = time_to_twelve_hour(station_time())
+			time = SSday_night.get_twelvehour_timestamp()
 
 	text_output.set_output(time)
 
 	switch(time_unit.value)
 		if(COMP_TIMEPIECE_HOURS)
-			time = round(station_time() / (1 HOURS))
+			time = SSday_night.current_hour
 		if(COMP_TIMEPIECE_MINUTES)
-			time = round(station_time() / (1 MINUTES))
-		if(COMP_TIMEPIECE_SECONDS)
-			time = round(station_time() / (1 SECONDS))
+			time = SSday_night.current_minute
 
 	num_output.set_output(time)
 
 #undef COMP_TIMEPIECE_TWENTYFOUR_HOUR
 #undef COMP_TIMEPIECE_TWELVE_HOUR
-#undef COMP_TIMEPIECE_SECONDS
 #undef COMP_TIMEPIECE_MINUTES
 #undef COMP_TIMEPIECE_HOURS

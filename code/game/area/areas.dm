@@ -646,18 +646,21 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/turf/iterating_turf as anything in adjacent_day_night_turf_cache)
 		iterating_turf.underlays -= adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE]
 		var/mutable_appearance/appearance_to_add = mutable_appearance(
-			'icons/effects/daynight_blend.dmi',
-			"[adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_BITFIELD]]",
-			DAY_NIGHT_LIGHTING_LAYER,
-			LIGHTING_PLANE,
-			incoming_controller.current_light_alpha,
-			RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			)
+			icon = 'icons/effects/daynight_blend.dmi',
+			icon_state = "[adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_BITFIELD]]",
+			layer = DAY_NIGHT_LIGHTING_LAYER,
+			offset_spokesman = iterating_turf,
+			plane = LIGHTING_PLANE,
+			alpha = incoming_controller.current_light_alpha,
+			appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		)
 		appearance_to_add.color = incoming_controller.current_light_color
 		if(incoming_controller.current_luminosity)
 			iterating_turf.luminosity = incoming_controller.current_luminosity
 		iterating_turf.underlays += appearance_to_add
 		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE] = appearance_to_add
+
+		CHECK_TICK
 
 /**
  * Used to update the area regarding day and night adjacency turfs.

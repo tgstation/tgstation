@@ -11,22 +11,6 @@
 		wtime = world.time
 	return time2text(wtime - GLOB.timezoneOffset, format)
 
-/proc/station_time(display_only = FALSE, wtime=world.time)
-	return ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
-
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(TRUE, wtime), format)
-
-/proc/station_time_debug(force_set)
-	if(isnum(force_set))
-		SSticker.gametime_offset = force_set
-		return
-	SSticker.gametime_offset = rand(0, 864000) //hours in day * minutes in hour * seconds in minute * deciseconds in second
-	if(prob(50))
-		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 3600)
-	else
-		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
-
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
 	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss")
