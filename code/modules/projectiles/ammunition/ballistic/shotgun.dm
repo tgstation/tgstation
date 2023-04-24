@@ -82,7 +82,7 @@
 	pellets = 6
 	variance = 25
 
-obj/item/ammo_casing/shotgun/buckshot/spent
+/obj/item/ammo_casing/shotgun/buckshot/spent
 	projectile_type = null
 
 /obj/item/ammo_casing/shotgun/rubbershot
