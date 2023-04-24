@@ -92,8 +92,6 @@
 
 	// Humans have a lot of prob() checks and stuff (e.g. delimbing) and it's really complicated, so let's just test the basic stuff here. if you want to test this further should really go into its own unit test.
 	var/mob/living/carbon/human/test_human = allocate(/mob/living/carbon/human/consistent)
-	test_human.maxHealth = MAX_LIVING_HEALTH
-	test_human.health = MAX_LIVING_HEALTH
 
 	ADD_TRAIT(test_human, TRAIT_BOMBIMMUNE, REF(src))
 	EX_ACT(test_human, EXPLODE_DEVASTATE) // we're bomb immune, so we shouldn't gib.
