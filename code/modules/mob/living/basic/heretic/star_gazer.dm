@@ -84,10 +84,9 @@
 /datum/ai_behavior/basic_melee_attack/star_gazer
 	action_cooldown = 0.6 SECONDS
 
-/datum/ai_behavior/basic_melee_attack/star_gazer/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/star_gazer/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 
 	if(!isliving(target))

@@ -31,10 +31,10 @@
 	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/meteor/dark_matteor/process(delta_time)
+/obj/effect/meteor/dark_matteor/process(seconds_per_tick)
 	//meteor's warp quickly contracts then slowly expands it's ring
-	animate(warp, time = delta_time*3, transform = matrix().Scale(0.5,0.5))
-	animate(time = delta_time*7, transform = matrix())
+	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
+	animate(time = seconds_per_tick*7, transform = matrix())
 
 /obj/effect/meteor/dark_matteor/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
