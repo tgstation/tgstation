@@ -61,14 +61,14 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 	get_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH, "EX_ACT() with EXPLODE_NONE severity should not affect the overall health of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT(alien_brute_loss == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the brute loss of an alien! Something has gone terribly wrong!")
-	TEST_ASSET(alien_burn_loss == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the burn loss of an alien! Something has gone terribly wrong!")
+	TEST_ASSERT(alien_burn_loss == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the burn loss of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT(alien_ear_damage == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the ear damage of an alien! Something has gone terribly wrong!")
 
 	EX_ACT(test_alien, EXPLODE_LIGHT) // should do 30 brute overall and 15 organ damage to the ears.
 	get_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH - 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 overall damage to an alien!")
 	TEST_ASSERT(alien_brute_loss == 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 brute damage to an alien!")
-	TEST_ASSET(alien_burn_loss == 0, "EX_ACT() with EXPLODE_LIGHT severity should not affect the burn loss of an alien!")
+	TEST_ASSERT(alien_burn_loss == 0, "EX_ACT() with EXPLODE_LIGHT severity should not affect the burn loss of an alien!")
 	TEST_ASSERT(alien_ear_damage == 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 ear damage to an alien!")
 	test_alien.revive(ADMIN_HEAL_ALL)
 
@@ -76,7 +76,7 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 	get_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH - 120, "EX_ACT() with EXPLODE_HEAVY severity should have done 120 overall damage to an alien!")
 	TEST_ASSERT(alien_brute_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 brute damage to an alien!")
-	TEST_ASSET(alien_burn_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
+	TEST_ASSERT(alien_burn_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
 	TEST_ASSERT(alien_ear_damage == 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
 	test_alien.revive(ADMIN_HEAL_ALL)
 
@@ -99,7 +99,7 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 	TEST_ASSERT(!QDELETED(test_dog), "EX_ACT() with EXPLODE_DEVASTATE severity should NOT have gibbed a corgi with an immune helmet and vest!")
 	TEST_ASSERT(test_dog.health <= -100, "EX_ACT() with EXPLODE_DEVASTATE severity should have killed a corgi with an immune helmet and vest!")
 
-	// Humans have a lot of prob() checks and stuff and it's really complicated, so let's just test the basic stuff here.
+	// Humans have a lot of prob() checks and stuff (e.g. delimbing) and it's really complicated, so let's just test the basic stuff here. if you want to test this further should really go into its own unit test.
 	var/mob/living/carbon/human/test_human = allocate(/mob/living/carbon/human/consistent)
 	test_human.maxHealth = MAX_LIVING_HEALTH
 	test_human.health = MAX_LIVING_HEALTH
@@ -115,16 +115,16 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 /// Sets up a fully armored corgi for testing purposes. Split out into its own proc as to not clutter up the main test.
 /datum/unit_test/explosion_action/proc/set_up_test_dog()
 	var/mob/living/basic/pet/dog/corgi/returnable_dog = allocate(/mob/living/basic/pet/dog/corgi)
-	test_dog.maxHealth = MAX_LIVING_HEALTH
-	test_dog.health = MAX_LIVING_HEALTH
+	returnable_dog.maxHealth = MAX_LIVING_HEALTH
+	returnable_dog.health = MAX_LIVING_HEALTH
 
 	var/obj/item/clothing/head/helmet/invincible_hat = allocate(/obj/item/clothing/head/helmet)
 	invincible_hat.set_armor(/datum/armor/immune)
-	test_dog.inventory_head = invincible_hat
+	returnable_dog.inventory_head = invincible_hat
 
 	var/obj/item/clothing/suit/armor/vest/invincible_vest = allocate(/obj/item/clothing/suit/armor/vest)
 	invincible_vest.set_armor(/datum/armor/immune)
-	test_dog.inventory_chest = invincible_vest
+	returnable_dog.inventory_back = invincible_vest
 
 	return returnable_dog
 
