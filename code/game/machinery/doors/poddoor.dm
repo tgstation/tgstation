@@ -21,7 +21,7 @@
 	/// The door's ID (used for buttons, etc to control the door)
 	var/id = 1
 	/// The sound that plays when the door opens/closes
-	var/opening_sound = 'sound/machines/blastdoor.ogg'
+	var/animation_sound = 'sound/machines/blastdoor.ogg'
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -137,10 +137,10 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, opening_sound, 50, TRUE)
+			playsound(src, animation_sound, 50, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, opening_sound, 50, TRUE)
+			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
