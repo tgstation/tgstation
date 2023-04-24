@@ -8,10 +8,11 @@
 	var/alien_ear_damage = 0
 
 /datum/unit_test/explosion_action/Run()
-	// We split up this `Run()` into two parts: one for `/mob` and one for `/obj`. This is because both of them have different core implementations of `EX_ACT()`, and we want to test both.
-	// Both procs also have varying levels of bulkiness to them, and it's valuable to have this level of organization because otherwise it would blend all-together and be an entangled mess.
+	// We split up this `Run()` into multiple parts based on the over-arching parent type. This is because all of them have different core implementations of `EX_ACT()`, and we want to test all.
+	// All procs also have varying levels of bulkiness to them, and it's valuable to have this level of organization because otherwise it would blend all-together and be an entangled mess.
 	execute_mob_tests()
-	execute_inanimate_tests()
+	execute_turf_tests()
+	execute_obj_tests()
 
 /// Tests the EX_ACT macro on several different types of mobs to ensure that it still works as expected.
 /// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
@@ -112,8 +113,8 @@
 #define OPEN_FLOOR_TYPE /turf/open/floor
 #define CLOSED_FLOOR_TYPE /turf/closed/wall
 
-/// Tests the `EX_ACT()` macro on different types of "inanimate" objects, like turfs and objs.
-/datum/unit_test/explosion_action/proc/execute_inanimate_tests()
+/// Tests the `EX_ACT()` macro on turf subtypes to ensure some level of the underlying framework still functions.
+/datum/unit_test/explosion_action/proc/execute_turf_tests()
 	var/turf/open/test_open_turf = run_loc_floor_bottom_left // we'll clean this up later like Create and Destroy dw
 	var/original_open_turf_type = test_open_turf.type
 	var/original_open_baseturfs = islist(test_open_turf.baseturfs) ? test_open_turf.baseturfs.Copy() : test_open_turf.baseturfs
@@ -129,7 +130,7 @@
 	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs)
 
 	var/turf/open/test_closed_turf = run_loc_floor_top_right
-	var/original_closed_turf_type = test_closed_turf.type
+	var/original_closed_turf_type = test_closed_turf.type // should just be /turf/open/floor but lets be hardy against changes to the map template should they arise
 	var/original_closed_baseturfs = islist(test_closed_turf.baseturfs) ? test_closed_turf.baseturfs.Copy() : test_closed_turf.baseturfs
 
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
@@ -152,13 +153,37 @@
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
 	EX_ACT(test_closed_turf, EXPLODE_DEVASTATE) // yeah we're definitely not seeing the wall anymore
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have eviscerated the wall, but instead saw zero changes!")
-
-
-	test_closed_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs) // we're done with turf checks.
-
+	test_closed_turf.ChangeTurf(original_closed_turf_type, original_open_baseturfs) // we're done with turf checks, clean up time
 
 #undef OPEN_FLOOR_TYPE
 #undef CLOSED_FLOOR_TYPE
+
+/// From the base implementation of `/atom`, [var/max_integrity].
+#define MAX_INTEGRITY_VALUE 500
+
+/// Tests the `EX_ACT()` macro on objs to ensure some level of the underlying framework still functions.
+/datum/unit_test/explosion_action/proc/execute_obj_tests()
+	// we're using the abstract type here because we don't need anything stronger for this test.
+	var/obj/test_object = allocate(/obj)
+
+	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+
+	EX_ACT(test_object, EXPLODE_NONE)
+	TEST_ASSERT_EQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_NONE severity should not have altered the integrity of the target, but instead saw a change!")
+	test_object.update_integrity(MAX_INTEGRITY_VALUE) // just here for cleanliness
+
+	EX_ACT(test_object, EXPLODE_LIGHT) // can do anywhere from 10 to 90 damage, let's just care if it's not equal or not
+	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_LIGHT severity should have altered the integrity of the target, but instead saw no change!")
+	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+
+	EX_ACT(test_object, EXPLODE_HEAVY) // can do anywhere from 100 to 250 damage
+	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_HEAVY severity should have altered the integrity of the target, but instead saw no change!")
+	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+
+	EX_ACT(test_object, EXPLODE_DEVASTATE) // does an INFINITE amount of damage, will trigger a qdel()
+	TEST_ASSERT(QDELETED(test_object), "EX_ACT() with EXPLODE_DEVASTATE severity should have deleted the target, but instead saw no change!")
+
+#undef MAX_INTEGRITY_VALUE
 
 /// Sets up a fully armored corgi for testing purposes. Split out into its own proc as to not clutter up the main test.
 /datum/unit_test/explosion_action/proc/set_up_test_dog()
