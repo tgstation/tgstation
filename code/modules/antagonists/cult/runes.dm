@@ -527,8 +527,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
-	pixel_w = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_z = -32
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
@@ -540,6 +540,25 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
+	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
+	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
+	add_overlay(bottom)
+	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	middle.pixel_y = 32
+	middle.pixel_z = -32
+	// Mask out everything but the middle
+	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
+	add_overlay(middle)
+	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	top.pixel_y = 64
+	top.pixel_z = -64
+	// Mask out everything but the top
+	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
+	add_overlay(top)
+
+	icon_state = ""
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
@@ -838,7 +857,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/manifest/Initialize(mapload)
 	. = ..()
 
-
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
 		to_chat(user, "<span class='cult italic'>You must be standing on [src]!</span>")
@@ -962,12 +980,33 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
-	pixel_w = -32
-	pixel_z = -32
-	plane = FLOOR_PLANE
+	pixel_x = -32
+	pixel_y = -32
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100
+
+/obj/effect/rune/apocalypse/Initialize()
+	. = ..()
+	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
+	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
+	add_overlay(bottom)
+	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	middle.pixel_y = 32
+	middle.pixel_z = -32
+	// Mask out everything but the middle
+	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
+	add_overlay(middle)
+	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	top.pixel_y = 64
+	top.pixel_z = -64
+	// Mask out everything but the top
+	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
+	add_overlay(top)
+
+	icon_state = ""
 
 /obj/effect/rune/apocalypse/invoke(list/invokers)
 	if(rune_in_use)

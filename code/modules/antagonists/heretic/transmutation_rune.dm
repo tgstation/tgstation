@@ -184,7 +184,7 @@
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_w = -33 //So the big ol' 96x96 sprite shows up right
+	pixel_x = -33 //So the big ol' 96x96 sprite shows up right
 	pixel_z = -32
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
@@ -192,13 +192,32 @@
 	. = ..()
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
+	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
+	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
+	add_overlay(bottom)
+	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	middle.pixel_y = 32
+	middle.pixel_z = -32
+	// Mask out everything but the middle
+	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
+	add_overlay(middle)
+	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	top.pixel_y = 64
+	top.pixel_z = -64
+	// Mask out everything but the top
+	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
+	add_overlay(top)
+	
+	icon_state = ""
 
 /obj/effect/temp_visual/drawing_heretic_rune
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_w = -33
-	pixel_z = -32
+	pixel_x = -33
+	pixel_y = -32
 	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune

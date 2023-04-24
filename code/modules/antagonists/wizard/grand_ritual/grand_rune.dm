@@ -15,7 +15,7 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
-	pixel_w = -28
+	pixel_x = -28
 	pixel_z = -33
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
@@ -71,6 +71,26 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
+	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
+	bottom.add_filter("mask", 1, alpha_mask_filter(y = -66, icon = icon(icon, "row_mask")))
+	add_overlay(bottom)
+	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	middle.pixel_y = 33
+	middle.pixel_z = -33
+	// Mask out everything but the middle
+	middle.add_filter("mask", 1, alpha_mask_filter(y = -33, icon = icon(icon, "row_mask")))
+	add_overlay(middle)
+	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
+	// Shift physical position up a bit
+	top.pixel_y = 66
+	top.pixel_z = -66
+	// Mask out everything but the top
+	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
+	add_overlay(top)
+
+	icon_state = ""
+
 	announce_rune()
 
 /// I cast Summon Security
