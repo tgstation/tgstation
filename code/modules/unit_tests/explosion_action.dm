@@ -129,7 +129,7 @@
 	TEST_ASSERT_NOTEQUAL(test_open_turf.type, OPEN_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have scraped away the floor, but instead saw zero changes!")
 	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs)
 
-	var/turf/open/test_closed_turf = run_loc_floor_top_right
+	var/turf/closed/test_closed_turf = run_loc_floor_top_right
 	var/original_closed_turf_type = test_closed_turf.type // should just be /turf/open/floor but lets be hardy against changes to the map template should they arise
 	var/original_closed_baseturfs = islist(test_closed_turf.baseturfs) ? test_closed_turf.baseturfs.Copy() : test_closed_turf.baseturfs
 
