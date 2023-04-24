@@ -115,9 +115,6 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
-"I" = (
-/turf/closed/indestructible/opshuttle,
-/area/ruin/space/prison_shuttle)
 "J" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/tiled/airless,
@@ -297,7 +294,7 @@ r
 h
 h
 z
-I
+h
 h
 O
 T
