@@ -623,6 +623,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/admin_rank = holder?.rank_names() || "Player"
 	if (!holder && !GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 		return
+
+	if(CONFIG_GET(flag/minimum_account_age))
+		var/minimum_age = CONFIG_GET(number/minimum_age)
+		if(account_age < minimum_age)
+			to_chat_immediate(src, "Sorry the server is currently only allowing accounts above the age of [minimum_age] days old to connect.")
+			qdel(src)
+			return
+
 	var/new_player
 	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",

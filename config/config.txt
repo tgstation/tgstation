@@ -650,3 +650,8 @@ TOAST_NOTIFICATION_ON_INIT
 
 ## Causes configuration errors to spit out runtimes
 CONFIG_ERRORS_RUNTIME
+
+## If on only allows accounts above the age defined below to exist
+#MINIMUM_ACCOUNT_AGE
+## The age in days if minimum account age is on
+#MINIMUM_AGE
