@@ -455,7 +455,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user, params)
 	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
 
