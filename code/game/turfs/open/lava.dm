@@ -52,8 +52,9 @@
 	if(!smoothing_flags)
 		update_appearance()
 
+	//Only add the particles everyx tiles or so for performance (its very wide particles to make up for it)
 	if(x % particle_space_x == 0 && y % particle_space_y == 0)
-		get_shared_particle_effect(src, /obj/effect/abstract/particle_holder_shared/lava)
+		apply_particles_to(src, /particles/lava, holder_type = PARTICLES_SHARED, pool_size = 1)
 
 /turf/open/lava/update_overlays()
 	. = ..()

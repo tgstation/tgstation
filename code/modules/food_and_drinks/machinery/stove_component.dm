@@ -12,7 +12,7 @@
 	/// A reference to the current soup pot overtop
 	VAR_FINAL/obj/item/container
 	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
-	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
+	VAR_FINAL/obj/effect/abstract/particle_holder/solo/soup_smoke
 	/// Typepath of particles to use for the particle holder.
 	VAR_FINAL/particle_type = /particles/smoke/steam/mild
 	/// The color of the flames around the burner.
@@ -237,7 +237,7 @@
 			if(isnull(particle_type))
 				return
 			// this gets badly murdered by sidemap
-			soup_smoke = new(parent, particle_type)
+			soup_smoke = apply_particles_to(parent, particle_type)
 			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
 		return
 

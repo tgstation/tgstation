@@ -180,7 +180,7 @@
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
 	if(on_fire)
 		if(!particle_effect)
-			particle_effect = new(owner, /particles/embers)
+			particle_effect = apply_particles_to(owner, /particles/embers)
 		if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
 			particle_effect.particles.spawning = 5
 		else

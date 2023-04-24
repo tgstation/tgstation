@@ -23,7 +23,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	src.fire_overlay = fire_overlay
 	if(fire_particles)
-		particle_effect = new(atom_parent, fire_particles)
+		particle_effect = apply_particles_to(atom_parent, fire_particles)
 	atom_parent.resistance_flags |= ON_FIRE
 	START_PROCESSING(SSfire_burning, src)
 
