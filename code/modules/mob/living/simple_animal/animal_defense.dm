@@ -131,11 +131,8 @@
 		return TRUE
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return FALSE
-
 	. = ..()
-	if(QDELETED(src))
+	if(!. || QDELETED(src))
 		return
 	switch (severity)
 		if (EXPLODE_DEVASTATE)

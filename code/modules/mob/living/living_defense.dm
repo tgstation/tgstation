@@ -380,8 +380,8 @@
 	return TRUE
 
 /mob/living/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return FALSE
+	if(!(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src)))
+		return TRUE
 	return ..()
 
 /mob/living/acid_act(acidpwr, acid_volume)
