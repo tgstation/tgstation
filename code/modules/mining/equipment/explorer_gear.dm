@@ -126,6 +126,7 @@
 		/obj/item/spear,
 		/obj/item/tank/internals,
 		)
+	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/cloak_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
