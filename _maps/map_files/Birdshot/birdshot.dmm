@@ -678,6 +678,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/item/storage/lockbox/medal,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
 "aoT" = (
@@ -8036,7 +8037,6 @@
 	name = "Brig Cells"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig)
@@ -69131,7 +69131,6 @@
 	id_tag = "outerbrig";
 	name = "Brig Cells"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig)
@@ -70473,7 +70472,6 @@
 	name = "Brig Cells"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig)
