@@ -823,6 +823,9 @@
 	light_range = 1
 	light_power = 0.07
 
+/obj/item/flashlight/eyelight/glow
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+
 #undef FAILURE 
 #undef SUCCESS 
 #undef NO_FUEL 

@@ -52,8 +52,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
 	ignore += typesof(/obj/projectile/hallucination)
 	ignore += typesof(/obj/item/hallucinated)
-	//Can't pass in a thing to glow
-	ignore += typesof(/obj/effect/abstract/eye_lighting)
 	//We don't have a pod
 	ignore += typesof(/obj/effect/pod_landingzone_effect)
 	ignore += typesof(/obj/effect/pod_landingzone)
