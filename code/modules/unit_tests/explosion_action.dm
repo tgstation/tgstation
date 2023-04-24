@@ -11,6 +11,7 @@
 	// We split up this `Run()` into two parts: one for `/mob` and one for `/obj`. This is because both of them have different core implementations of `EX_ACT()`, and we want to test both.
 	// Both procs also have varying levels of bulkiness to them, and it's valuable to have this level of organization because otherwise it would blend all-together and be an entangled mess.
 	execute_mob_tests()
+	execute_inanimate_tests()
 
 /// Tests the EX_ACT macro on several different types of mobs to ensure that it still works as expected.
 /// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
@@ -107,6 +108,57 @@
 
 	EX_ACT(test_human, EXPLODE_DEVASTATE) // we should gib now.
 	TEST_ASSERT(QDELETED(test_human), "EX_ACT() with EXPLODE_DEVASTATE severity should have gibbed a human!")
+
+#define OPEN_FLOOR_TYPE /turf/open/floor
+#define CLOSED_FLOOR_TYPE /turf/closed/wall
+
+/// Tests the `EX_ACT()` macro on different types of "inanimate" objects, like turfs and objs.
+/datum/unit_test/explosion_action/proc/execute_inanimate_tests()
+	var/turf/open/test_open_turf = run_loc_floor_bottom_left // we'll clean this up later like Create and Destroy dw
+	var/original_open_turf_type = test_open_turf.type
+	var/original_open_baseturfs = islist(test_open_turf.baseturfs) ? test_open_turf.baseturfs.Copy() : test_open_turf.baseturfs
+
+	test_open_turf.ChangeTurf(OPEN_FLOOR_TYPE)
+	EX_ACT(test_open_turf, EXPLODE_NONE, test_open_turf) // regardless of severity, this should scrape away the floor
+	TEST_ASSERT_NOTEQUAL(test_open_turf.type, OPEN_FLOOR_TYPE, "EX_ACT() with EXPLODE_NONE severity should have scraped away the floor, but instead saw zero changes!")
+	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs) // clean it up just to be polite
+
+	test_open_turf.ChangeTurf(OPEN_FLOOR_TYPE)
+	EX_ACT(test_open_turf, EXPLODE_DEVASTATE) // we should scrape away to space here, devestation severity has no probability of altering what it does.
+	TEST_ASSERT_NOTEQUAL(test_open_turf.type, OPEN_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have scraped away the floor, but instead saw zero changes!")
+	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs)
+
+	var/turf/open/test_closed_turf = run_loc_floor_top_right
+	var/original_closed_turf_type = test_closed_turf.type
+	var/original_closed_baseturfs = islist(test_closed_turf.baseturfs) ? test_closed_turf.baseturfs.Copy() : test_closed_turf.baseturfs
+
+	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	EX_ACT(test_closed_turf, EXPLODE_NONE, test_closed_turf) // regardless of severity, this should dismantle the wall
+	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_NONE severity (setting itself as the target) should have eviscerated the wall, but instead saw zero changes!")
+	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
+
+	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	test_closed_turf.hardness = 100 // we'll set the hardness to 100 so we don't get errant failures
+	EX_ACT(test_closed_turf, EXPLODE_LIGHT)
+	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_LIGHT severity should have dismantled the wall, but instead saw zero changes!")
+	test_closed_turf.hardness = initial(test_closed_turf.hardness) // clean up juust in case
+	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
+
+	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	EX_ACT(test_closed_turf, EXPLODE_HEAVY) // wall will be dismantled at the very least
+	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_HEAVY severity should have dismantled the wall, but instead saw zero changes!")
+	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
+
+	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	EX_ACT(test_closed_turf, EXPLODE_DEVASTATE) // yeah we're definitely not seeing the wall anymore
+	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have eviscerated the wall, but instead saw zero changes!")
+
+
+	test_closed_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs) // we're done with turf checks.
+
+
+#undef OPEN_FLOOR_TYPE
+#undef CLOSED_FLOOR_TYPE
 
 /// Sets up a fully armored corgi for testing purposes. Split out into its own proc as to not clutter up the main test.
 /datum/unit_test/explosion_action/proc/set_up_test_dog()
