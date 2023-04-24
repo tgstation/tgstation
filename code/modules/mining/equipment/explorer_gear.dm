@@ -169,6 +169,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
+	resistance_flags = FIRE_PROOF
 
 /datum/armor/cloakhood_goliath
 	melee = 35
