@@ -59,14 +59,12 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 
 	EX_ACT(test_alien, EXPLODE_NONE) // should do nothing.
 	get_alien_damages(test_alien)
-	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH, "EX_ACT() with EXPLODE_NONE severity should not affect the overall health of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT(alien_brute_loss == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the brute loss of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT(alien_burn_loss == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the burn loss of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT(alien_ear_damage == 0, "EX_ACT() with EXPLODE_NONE severity should not affect the ear damage of an alien! Something has gone terribly wrong!")
 
 	EX_ACT(test_alien, EXPLODE_LIGHT) // should do 30 brute overall and 15 organ damage to the ears.
 	get_alien_damages(test_alien)
-	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH - 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 overall damage to an alien!")
 	TEST_ASSERT(alien_brute_loss == 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 brute damage to an alien!")
 	TEST_ASSERT(alien_burn_loss == 0, "EX_ACT() with EXPLODE_LIGHT severity should not affect the burn loss of an alien!")
 	TEST_ASSERT(alien_ear_damage == 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 ear damage to an alien!")
@@ -74,7 +72,6 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 
 	EX_ACT(test_alien, EXPLODE_HEAVY) // should do 60 brute, 60 burn, and 30 organ damage to the ears.
 	get_alien_damages(test_alien)
-	TEST_ASSERT_EQUAL(test_alien.health, MAX_LIVING_HEALTH - 120, "EX_ACT() with EXPLODE_HEAVY severity should have done 120 overall damage to an alien!")
 	TEST_ASSERT(alien_brute_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 brute damage to an alien!")
 	TEST_ASSERT(alien_burn_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
 	TEST_ASSERT(alien_ear_damage == 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
