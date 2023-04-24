@@ -10041,7 +10041,7 @@
 /area/station/security/lockers)
 "cxg" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "General Population"
+	name = "Holding Area"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /obj/machinery/door/firedoor,
@@ -11892,6 +11892,12 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
+"cXu" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/circuitboard/machine/telecomms/bus,
+/turf/open/floor/circuit/green/telecomms,
+/area/station/tcommsat/server)
 "cXC" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
@@ -21582,10 +21588,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
-"fKz" = (
-/obj/machinery/telecomms/message_server/preset,
-/turf/open/floor/circuit/green/telecomms,
-/area/station/tcommsat/server)
 "fKA" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/computer/department_orders/service{
@@ -33034,7 +33036,6 @@
 "iVh" = (
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/tile/red/half,
-/obj/item/card/id/advanced/prisoner/four,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "iVH" = (
@@ -39851,9 +39852,7 @@
 /area/station/science/research/abandoned)
 "kJd" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/machine/telecomms/processor,
 /obj/item/circuitboard/machine/telecomms/receiver,
 /turf/open/floor/circuit/green/telecomms,
 /area/station/tcommsat/server)
@@ -40622,7 +40621,6 @@
 "kTh" = (
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/tile/red/anticorner,
-/obj/item/card/id/advanced/prisoner/six,
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -49238,7 +49236,6 @@
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/red/half,
-/obj/item/card/id/advanced/prisoner/five,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "ncu" = (
@@ -51088,7 +51085,6 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
 	},
-/obj/item/card/id/advanced/prisoner/three,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -78192,16 +78188,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
-"uXP" = (
-/obj/structure/closet/secure_closet/brig/genpop,
-/obj/effect/turf_decal/tile/red/half{
-	dir = 1
-	},
-/obj/item/card/id/advanced/prisoner/two,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
-/area/station/security/brig)
 "uXR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/mapping_helpers/ianbirthday,
@@ -81595,7 +81581,6 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
-/obj/item/card/id/advanced/prisoner,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -126733,7 +126718,7 @@ xWl
 nPN
 nzb
 mNh
-fKz
+xqs
 pCb
 mHz
 ess
@@ -128279,7 +128264,7 @@ qkL
 kJd
 kpq
 wVs
-xqs
+cXu
 kzE
 aIV
 aIV
@@ -322827,7 +322812,7 @@ fVw
 sVV
 xVJ
 ffe
-uXP
+vTj
 uwA
 jsH
 ncs
