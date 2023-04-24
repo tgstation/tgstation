@@ -1,5 +1,3 @@
-import { Component } from 'inferno';
-import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
@@ -26,30 +24,16 @@ type MarkdownRendererProps = {
   sanitize?: boolean;
 };
 
-export class MarkdownRenderer extends Component<MarkdownRendererProps> {
-  render() {
-    return <div id="markdown-viewer-content" />;
+export const MarkdownRenderer = (props: MarkdownRendererProps) => {
+  let { content, sanitize } = props;
+  if (sanitize) {
+    content = sanitizeText(content, false);
   }
 
-  renderMarkdown() {
-    let rendered_content = marked(this.props.content);
-    if (this.props.sanitize === undefined || this.props.sanitize) {
-      rendered_content = sanitizeText(rendered_content, false);
-    }
+  // eslint-disable-next-line react/no-danger
+  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+};
 
-    let render_target = document.getElementById('markdown-viewer-content');
-    if (render_target) {
-      render_target.innerHTML = rendered_content;
-    } else {
-      throw new Error('Unable to find render target');
-    }
-  }
-
-  componentDidMount() {
-    this.renderMarkdown();
-  }
-
-  componentDidUpdate() {
-    this.renderMarkdown();
-  }
-}
+MarkdownRenderer.defaultProps = {
+  sanitize: true,
+};
