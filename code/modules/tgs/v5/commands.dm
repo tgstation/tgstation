@@ -36,10 +36,10 @@
 		var/datum/tgs_message_content/response = sc.Run(u, params)
 		response = UpgradeDeprecatedCommandResponse(response, command)
 		
-		var/list/topic_response = list()
+		var/list/topic_response = TopicResponse()
 		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = response?.text
 		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE] = response?._interop_serialize()
-		return json_encode(topic_response)
+		return topic_response
 	return TopicResponse("Unknown custom chat command: [command]!")
 
 // Common proc b/c it's used by the V3/V4 APIs

@@ -8,11 +8,13 @@
 #define MIN_IV_TRANSFER_RATE 0
 ///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
+///Default IV drip transfer rate in units per second
+#define DEFAULT_IV_TRANSFER_RATE 5
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -27,8 +29,8 @@
 	var/atom/attached
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
-	///whether we feed slower
-	var/transfer_rate = MAX_IV_TRANSFER_RATE
+	///The chemicals flow speed
+	var/transfer_rate = DEFAULT_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -50,12 +52,13 @@
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
-	update_appearance(UPDATE_ICON)
 	if(use_internal_storage)
 		create_reagents(internal_volume_maximum, TRANSPARENT)
 		if(internal_list_reagents)
 			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+	register_context()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -72,6 +75,24 @@
 	if(!ui)
 		ui = new(user, src, "IVDrip", name)
 		ui.open()
+
+/obj/machinery/iv_drip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(attached)
+		context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
+	else if(reagent_container && !use_internal_storage)
+		context[SCREENTIP_CONTEXT_RMB] = "Eject container"
+	else if(!inject_only)
+		context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+
+	if(istype(src, /obj/machinery/iv_drip/plumbing))
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to min"
+	else
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to max"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
@@ -121,15 +142,20 @@
 
 /// Sets the transfer rate to the provided value
 /obj/machinery/iv_drip/proc/set_transfer_rate(new_rate)
-	if(!use_internal_storage && !reagent_container)
-		return
-	if(!attached)
+	if(inject_from_plumbing && mode == IV_INJECTING)
 		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
 
+/// Toggles transfer rate between min and max rate
+/obj/machinery/iv_drip/proc/toggle_transfer_rate()
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	else
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
+
 /obj/machinery/iv_drip/update_icon_state()
-	if(transfer_rate > 0)
+	if(transfer_rate > 0 && attached)
 		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
 	else
 		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
@@ -201,22 +227,12 @@
 		return FALSE
 	if(istype(src, /obj/machinery/iv_drip/plumbing)) // AltClick is used for rotation there
 		return FALSE
-	if(!attached)
-		return FALSE
-	if(!get_reagents())
-		return FALSE
 	return TRUE
 
 /obj/machinery/iv_drip/AltClick(mob/user)
 	if(!can_use_alt_click(user))
 		return ..()
-	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		set_transfer_rate(MIN_IV_TRANSFER_RATE)
-	else
-		set_transfer_rate(MAX_IV_TRANSFER_RATE)
-	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
-	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
-	update_appearance(UPDATE_ICON)
+	toggle_transfer_rate()
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -280,7 +296,6 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 		detach_iv()
-		return
 	else if(reagent_container)
 		eject_beaker(user)
 	else
@@ -310,8 +325,8 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
-	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	attached = null
+	update_appearance(UPDATE_ICON)
 
 /// Get the reagents used by IV drip
 /obj/machinery/iv_drip/proc/get_reagents()
@@ -350,18 +365,14 @@
 	if(usr.incapacitated())
 		return
 	if(inject_only)
-		if(!mode)
-			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	// Prevent blood draining from non-living
 	if(attached && !isliving(attached))
-		if(!mode)
-			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	mode = !mode
-	set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	update_appearance(UPDATE_ICON)
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
 
 /obj/machinery/iv_drip/examine(mob/user)

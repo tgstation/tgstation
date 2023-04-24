@@ -480,6 +480,13 @@
 	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
 	credit_cost = CARGO_CRATE_VALUE * 25
 
+/datum/map_template/shuttle/emergency/hugcage
+	suffix = "hugcage"
+	name = "Hug Relaxation Shuttle"
+	description = "A small cozy shuttle with plenty of beds for tired or sensitive spacemen, and a box for pillow-fights."
+	admin_notes = "Has a sentience fun balloon for pets."
+	credit_cost = CARGO_CRATE_VALUE * 16
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"

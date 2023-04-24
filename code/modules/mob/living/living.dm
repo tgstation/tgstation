@@ -1176,6 +1176,8 @@
 	..()
 	cameraFollow = null
 
+/// Checks if this mob can be actively tracked by cameras / AI.
+/// Can optionally be passed a user, which is the mob tracking.
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
@@ -1187,9 +1189,9 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user.faction))
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
-	if(user != null && src == user)
+	if(!isnull(user) && src == user)
 		return FALSE
 	if(invisibility || alpha == 0)//cloaked
 		return FALSE
@@ -2452,12 +2454,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (faction.Find(friend_ref))
 		return FALSE
 	faction |= friend_ref
-	if (ai_controller)
-		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
-		if (!friends)
-			friends = list()
-		friends[WEAKREF(new_friend)] = TRUE
-		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, new_friend)
+
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
 	return TRUE
 
@@ -2468,12 +2466,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (!faction.Find(friend_ref))
 		return FALSE
 	faction -= friend_ref
-	if (ai_controller)
-		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
-		if (!friends)
-			return
-		friends[WEAKREF(old_friend)] = FALSE
-		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, old_friend)
+
 	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
 	return TRUE
 
