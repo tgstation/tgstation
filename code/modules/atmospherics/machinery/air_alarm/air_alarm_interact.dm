@@ -93,7 +93,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, 2)
 		if((buildstage & AIR_ALARM_BUILD_NO_WIRES) || (buildstage & AIR_ALARM_BUILD_COMPLETE))
-			var/obj/item/alarm = new /obj/item/electronics/airalarm(loc)
+			var/obj/item/electronics/airalarm/alarm = new (loc)
 			if(!disassembled)
 				alarm.take_damage(alarm.max_integrity * 0.5, sound_effect = FALSE)
 		if((buildstage & AIR_ALARM_BUILD_COMPLETE))
