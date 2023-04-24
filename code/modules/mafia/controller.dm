@@ -786,7 +786,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 					to_chat(usr, span_notice("You are no longer voting to start the game early."))
 				else
 					GLOB.mafia_early_votes[C.ckey] = C
-					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [FLOOR(round(length(GLOB.mafia_signup) / 2), MAFIA_MIN_PLAYER_COUNT)])."))
+					to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
 					if(check_start_votes()) //See if we have enough votes to start
 						forced_setup()
 				return TRUE
@@ -935,8 +935,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/check_start_votes()
 	check_signups() //Same as before. What a useful proc.
 
-	if(length(GLOB.mafia_early_votes) < MAFIA_MIN_PLAYER_COUNT)
-		return FALSE //Bare minimum is 3, otherwise the game instantly ends. Also prevents people from randomly starting games for no reason.
+	if(length(GLOB.mafia_signup) < MAFIA_MIN_PLAYER_COUNT)
+		return FALSE //Make sure we have the minimum playercount to host a game first.
 
 	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup) / 2))
 		return FALSE

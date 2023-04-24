@@ -101,6 +101,12 @@
 	speak = GLOB.wisdoms //Done here so it's setup properly
 	sound = list()
 
+/datum/ai_planning_subtree/random_speech/deer
+	speech_chance = 1
+	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
+
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
 

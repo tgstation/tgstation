@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "New event weight station trait -- Dust Stormfront."
+  - balance: "Space Weather Forecast -- Expect more frequent Major Space Dust storms in the foreseeable future."
+  - code_imp: "The Major Space Dust event is once again returned to being a meteor_wave event instead of a Space Dust subtype."
