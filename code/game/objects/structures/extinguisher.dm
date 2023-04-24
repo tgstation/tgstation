@@ -1,7 +1,7 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/wal lmounts.dmi'
 	icon_state = "extinguisher_closed"
 	anchored = TRUE
 	density = FALSE
@@ -143,7 +143,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/structure/extinguisher_cabinet/update_icon_state()
 	icon_state = "extinguisher"
 
-	if(!stored_extinguisher)
+	if(isnull(stored_extinguisher))
 		icon_state += ""
 	else if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
 		icon_state += "_mini"
@@ -151,8 +151,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		icon_state += "_advanced"
 	else if(istype(stored_extinguisher, /obj/item/extinguisher/crafted))
 		icon_state += "_crafted"
-	else
-		icon_state += "_full"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher))
+		icon_state += "_default"
 
 	if(!opened)
 		icon_state += "_closed"
