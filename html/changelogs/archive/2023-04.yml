@@ -797,3 +797,82 @@
       bodies as opposed to generic skeletons/other npc corpses
   - bugfix: traitor objective posters will no longer be able to spawn from general
       random poster spawners.
+2023-04-23:
+  LemonInTheDark:
+  - bugfix: Things that block glow will now like, do that again
+  Melbert:
+  - bugfix: Ingredients which fail to react in soup reactions drop when the reaction
+      finishes as intended
+  Tattle:
+  - qol: basicmobs can now make sounds when their speech is triggered
+  - qol: pigs will now make sounds and emote on their own
+  - sound: cows, pigs, and sheep have new sound effects!
+2023-04-24:
+  BlueMemesauce:
+  - spellcheck: Fixes Explosive Holoparasite description mentioning a removed ability
+  - bugfix: Maps now spawn the correct amount of space levels. The bug caused them
+      to spawn 1 less in each category
+  - code_imp: The space ruins budget is now proportional to the amount of ruin levels.
+      This has no effect on the current default maps, but added maps with less than
+      the default amount of ruin levels will see less ruins.
+  Borisvanmemes:
+  - balance: Bulldogs now hit 20% harder with their projectiles!
+  Cheshify:
+  - qol: telecomms is quieter and less ear-damaging.
+  - sound: modified tcomms sound to remove high-tones.
+  - bugfix: the telecomms sound only comes from the server hub machine.
+  ChungusGamer666:
+  - rscadd: Burning items now get (small) smoke particles. Sick.
+  - bugfix: Burning objects now clear their burning overlay properly.
+  - qol: Examining burning objects will always tell you that they are burning.
+  - rscadd: Books can now be burned just like any other paper item.
+  - rscadd: You can cut pages out of books with any sharp item, not just knives or
+      wirecutters.
+  Dawnseer:
+  - bugfix: Anti-glow actually bringing some darkness instead of just a light glow.
+  Fikou:
+  - rscdel: prisoner spawns from the north star asylum
+  GoldenAlpharex, ChatGPT for the first changelog entry (slightly edited):
+  - qol: Zipped and unzipped through alt-click, winter coats can now be. Hmm, stylishly
+      warm, you shall be. Feel like a Spaceman, you will. Use the Force, to zip and
+      unzip, you must. Look cool, you will. Yes, hmmm.
+  - image: Winter coats no longer have their hood baked into their jacket's sprite,
+      both in item form and when worn.
+  - bugfix: Updated the Icebox EVA winter coats (the Endotherm winter coats) to use
+      the same sprites as the regular winter coats.
+  LT3:
+  - code_imp: Added TGUI mobility check bypass
+  - qol: You can now use your PDA while laying down
+  Melbert:
+  - refactor: Mob ai refactored once again
+  - balance: Cameras can only see vertically upwards if the turf above them is transparent.
+      But hey, the North Star (and other multi-z maps) will now perform wayyy better
+      (less time dilation)
+  Rhials:
+  - bugfix: The mafia early vote counter will now properly display.
+  Ryll/Shaps:
+  - bugfix: Yawning will now have a chance of making people near you yawn as well,
+      and is guaranteed to make them yawn if they examined you in the last 2 seconds.
+      It was supposed to already do that, but now it'll actually do that
+  SmoSmoSmoSmok:
+  - bugfix: fixes produce console bluescreening when viewing it as ghost
+  SyncIt21:
+  - qol: rewords "Total Cost" to just "Total" so text does not overflow to the next
+      line and improves readability
+  - qol: just one failure message if you don't have enough credits for cargo/express
+      mode to keep it consistent
+  - refactor: rounds the total cost of your produce console order so you don't have
+      decimal values left in your bank account
+  - bugfix: balloon alert adding timer on deleted mod core after construction causing
+      runtime.
+  Wallem, Imaginos:
+  - image: Updates the IV drip sprites
+  carlarctg:
+  - qol: When failing to teleport with the veil shifter it tells you with text and
+      spooky ghost sfx, and doesn't use up a charge or have any unintended vfx.
+  san7890:
+  - rscadd: If you ever happen upon a wild deer, try not to ride your fancy vehicles
+      too close to it as it'll freeze up like a... you know where I'm going with this.
+  zxaber:
+  - bugfix: Restores ability for borgs to adjust reflector angles. This is now a left-click
+      with nothing selected, similar to humans' left-click with an empty hand.
