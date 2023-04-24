@@ -210,15 +210,7 @@
 
 /obj/effect/spawner/structure/window/reinforced/damaged
 	name = "damaged reinforced window spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/damaged)
-
-/obj/structure/window/reinforced/fulltile/damaged
-	var/integrity_min_factor = 0.2
-	var/integrity_max_factor = 0.8
-
-/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
-	. = ..()
-	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
+	spawn_list = list(/obj/structure/window_frame/reinforced/damaged/grille_and_window)
 
 /obj/item/petri_dish/oldstation
 	name = "molly's biopsy"

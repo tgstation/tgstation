@@ -316,6 +316,22 @@
 	has_grille = TRUE
 	start_with_window = TRUE
 
+/obj/structure/window_frame/reinforced/damaged
+	var/integrity_min_factor = 0.2
+	var/integrity_max_factor = 0.8
+
+/obj/structure/window_frame/reinforced/damaged/Initialize(mapload)
+	. = ..()
+	var/obj/structure/window/our_window = locate(/obj/structure/window) in get_turf(src)
+	if(!our_window)
+		return
+
+	our_window.update_integrity(rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor))
+
+/obj/structure/window_frame/reinforced/damaged/grille_and_window
+	has_grille = TRUE
+	start_with_window = TRUE
+
 /obj/structure/window_frame/titanium
 	name = "shuttle window frame"
 	icon = 'icons/obj/smooth_structures/window_frames/window_frame_shuttle.dmi'
@@ -329,6 +345,9 @@
 /obj/structure/window_frame/titanium/grille_and_window
 	has_grille = TRUE
 	start_with_window = TRUE
+
+/obj/structure/window_frame/titanium/grille
+	has_grille = TRUE
 
 /obj/structure/window_frame/plastitanium
 	name = "plastitanium window frame"

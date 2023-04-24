@@ -68,6 +68,14 @@
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
+/obj/structure/window/reinforced/fulltile/damaged
+	var/integrity_min_factor = 0.2
+	var/integrity_max_factor = 0.8
+
+/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
+	. = ..()
+	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
+
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/windows/tinted_window.dmi'
 	icon_state = "window_tinted-0"
@@ -126,6 +134,14 @@
 
 /obj/structure/window/reinforced/shuttle/unanchored
 	anchored = FALSE
+
+/obj/structure/window/reinforced/shuttle/indestructible
+	name = "hardened shuttle window"
+	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
@@ -253,6 +269,7 @@
 	anchored = FALSE
 
 /obj/structure/window/bronze/fulltile
+	icon = 'icons/obj/smooth_structures/windows/bronze_window.dmi'
 	icon_state = "clockwork_window-0"
 	base_icon_state = "clockwork_window"
 	smoothing_flags = SMOOTH_BITMASK

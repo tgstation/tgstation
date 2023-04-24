@@ -87,7 +87,7 @@ again.
 /obj/effect/spawner/structure/window/reinforced
 	name = "reinforced window spawner"
 	icon_state = "rwindow_spawner"
-	spawn_list = list(/obj/structure/window_frame/grille_and_window)
+	spawn_list = list(/obj/structure/window_frame/reinforced/grille_and_window)
 
 /obj/effect/spawner/structure/window/hollow/reinforced
 	name = "hollow reinforced window spawner"
@@ -155,20 +155,19 @@ again.
 /obj/effect/spawner/structure/window/bronze
 	name = "bronze window spawner"
 	icon_state = "bronzewindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/bronze/fulltile)
-
+	spawn_list = list(/obj/structure/window_frame/bronze, /obj/structure/window/bronze/fulltile)
 
 //shuttle window
 
 /obj/effect/spawner/structure/window/reinforced/shuttle
 	name = "shuttle window spawner"
 	icon_state = "swindow_spawner"
-	spawn_list = list(/obj/structure/window_frame/titanium/grille_and_window, /obj/structure/window/reinforced/shuttle)
+	spawn_list = list(/obj/structure/window_frame/titanium/grille_and_window)
 
 /obj/effect/spawner/structure/window/reinforced/shuttle/indestructible
 	name = "indestructible shuttle window spawner"
 	icon_state = "swindow_spawner"
-	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/shuttle/indestructible)
+	spawn_list = list(/obj/structure/window_frame/titanium/grille, /obj/structure/window/reinforced/shuttle/indestructible)
 
 //plastitanium window
 
@@ -191,7 +190,7 @@ again.
 /obj/effect/spawner/structure/window/survival_pod
 	name = "pod window spawner"
 	icon_state = "podwindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/shuttle/survival_pod)
+	spawn_list = list(/obj/structure/window_frame/iron, /obj/structure/window/reinforced/shuttle/survival_pod)
 
 /obj/effect/spawner/structure/window/hollow/survival_pod
 	name = "hollow pod window spawner"
