@@ -1175,7 +1175,7 @@
 	id = "borg_upgrade_siliconknife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/siliconknife
-	materials = list(/datum/material/iron = 15000, /datum/material/gold = 1000, datum/material/silver = 1000,)
+	materials = list(/datum/material/iron = 15000, /datum/material/gold = 1000, /datum/material/silver = 1000,)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE

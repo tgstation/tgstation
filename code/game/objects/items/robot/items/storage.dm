@@ -304,7 +304,7 @@
 /obj/item/borg/apparatus/service
 	name = "Service apparatus"
 	desc = "A special apparatus for carrying food and oven trays"
-	icon_state = "borg_hardware_apparatus"
+	icon_state = "borg_service_apparatus"
 	storable = list(/obj/item/plate/oven_tray,
 				/obj/item/food)
 
