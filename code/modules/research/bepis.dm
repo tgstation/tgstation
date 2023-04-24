@@ -278,7 +278,7 @@
 		return
 	if(gauss_real <= -1) //Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-		new /mob/living/simple_animal/deer(dropturf, 1)
+		new /mob/living/basic/deer(dropturf, 1)
 		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
 		return
 	//Minor Failure

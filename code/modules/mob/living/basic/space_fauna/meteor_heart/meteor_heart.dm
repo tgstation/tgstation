@@ -40,11 +40,11 @@
 
 	spikes = new(src)
 	spikes.Grant(src)
-	ai_controller.blackboard[BB_METEOR_HEART_GROUND_SPIKES] = WEAKREF(spikes)
+	ai_controller.set_blackboard_key(BB_METEOR_HEART_GROUND_SPIKES, spikes)
 
 	traps = new(src)
 	traps.Grant(src)
-	ai_controller.blackboard[BB_METEOR_HEART_SPINE_TRAPS] = WEAKREF(traps)
+	ai_controller.set_blackboard_key(BB_METEOR_HEART_SPINE_TRAPS, traps)
 
 	ai_controller.set_ai_status(AI_STATUS_OFF)
 
