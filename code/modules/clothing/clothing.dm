@@ -402,14 +402,14 @@
 	. = ..()
 	if(stubborn_stains) //Just can't make it feel right
 		return
-	else
-		var/fresh_mood = AddComponent( \
-			/datum/component/onwear_mood, \
-			saved_event_type = /datum/mood_event/fresh_laundry, \
-			examine_string = "[src] looks crisp and pristine.", \
-		)
 
-		QDEL_IN(fresh_mood, 2 MINUTES)
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+		examine_string = "[src] looks crisp and pristine.", \
+	)
+
+	QDEL_IN(fresh_mood, 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)

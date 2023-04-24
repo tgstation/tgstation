@@ -90,8 +90,7 @@
 			special_wash(/obj/item/clothing/under/syndicate)
 		qdel(src)
 		return
-	else
-		return ..()
+	return ..()
 
 /obj/item/clothing/under/syndicate/tacticool/proc/special_wash(obj/item/clothing/under/syndicate/our_jumpsuit)
 	new our_jumpsuit(loc)
