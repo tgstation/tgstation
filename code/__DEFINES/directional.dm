@@ -21,11 +21,11 @@
 #define INVERT_MAPPING_DIRECTIONAL_HELPERS(path, offset) \
 ##path/directional/north {\
 	dir = SOUTH; \
-	pixel_z = offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = offset; \
 } \
 ##path/directional/south {\
 	dir = NORTH; \
-	pixel_z = -offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = -offset; \
 } \
 ##path/directional/east {\
 	dir = WEST; \
@@ -36,15 +36,36 @@
 	pixel_x = -offset; \
 }
 
+/// Directional helpers for things that use the wall_mount element
+#define WALL_MOUNT_DIRECTIONAL_HELPERS(path) \
+##path/directional/north {\
+	dir = SOUTH; \
+	MAP_SWITCH(pixel_z, pixel_y) = 35; \
+} \
+##path/directional/south {\
+	dir = NORTH; \
+	MAP_SWITCH(pixel_z, pixel_y) = -8; \
+} \
+##path/directional/east {\
+	dir = WEST; \
+	pixel_x = 11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/west {\
+	dir = EAST; \
+	pixel_x = -11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+}
+
 /// Create directional subtypes for a path to simplify mapping.
 
 #define MAPPING_DIRECTIONAL_HELPERS(path, offset) ##path/directional/north {\
 	dir = NORTH; \
-	pixel_z = offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = offset; \
 } \
 ##path/directional/south {\
 	dir = SOUTH; \
-	pixel_z = -offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = -offset; \
 } \
 ##path/directional/east {\
 	dir = EAST; \

@@ -161,11 +161,12 @@
 	/// What's in the urinal
 	var/obj/item/hidden_item
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hidden_item = new /obj/item/food/urinalcake
+	AddElement(/datum/element/wall_mount)
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

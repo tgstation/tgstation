@@ -33,7 +33,9 @@
 
 	var/processing = FALSE
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Initialize()
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller)
+
+/obj/machinery/airlock_controller/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 

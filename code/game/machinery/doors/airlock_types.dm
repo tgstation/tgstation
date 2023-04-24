@@ -724,10 +724,10 @@
 	desc = "I can only imagine the amount of hate this will get if this isn't like... actually perfect."
 	icon = 'icons/obj/doors/airlocks/greyscale_template.dmi'
 	greyscale_config = /datum/greyscale_config/airlocks
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff"
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff"
 
 /obj/machinery/door/airlock/greyscale/red
-	greyscale_colors = "#d40808#d40808#d40808#d40808#ffffff#ffffff#808080"
+	greyscale_colors = "#d40808#d40808#d40808#d40808#808080"
 
 /obj/machinery/door/airlock/greyscale/green
-	greyscale_colors = "#00c41a#00c41a#00c41a#00c41a#ffffff#ffffff#808080"
+	greyscale_colors = "#00c41a#00c41a#00c41a#00c41a#808080"

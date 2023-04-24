@@ -199,11 +199,11 @@
 	density = FALSE
 	has_door = TRUE
 
-/obj/item/storage/secure/safe/Initialize()
+/obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe)
 
 /obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
@@ -225,7 +225,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 0)
 /obj/item/storage/secure/safe/hos
 	name = "head of security's safe"
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/hos, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/hos)
 
 /**
  * This safe is meant to be damn robust. To break in, you're supposed to get creative, or use acid or an explosion.
@@ -246,7 +246,7 @@ It remains quite flush against the wall, and there only seems to be enough room 
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare)
 
 /datum/armor/safe_caps_spare
 	melee = 100

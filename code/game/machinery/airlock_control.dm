@@ -60,7 +60,7 @@
 	var/on = TRUE
 	var/alert = FALSE
 
-/obj/machinery/airlock_sensor/Initialize()
+/obj/machinery/airlock_sensor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 

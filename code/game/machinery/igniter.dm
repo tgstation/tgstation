@@ -33,6 +33,8 @@
 	fire = 100
 	acid = 70
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/igniter)
+
 /obj/machinery/igniter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -76,7 +78,7 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/sparker)
 
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
@@ -86,6 +88,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	spark_system.attach(src)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)

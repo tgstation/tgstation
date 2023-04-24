@@ -181,7 +181,7 @@
 	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -200,9 +200,6 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 	icon_state = "intercom_command"
 	freerange = TRUE
 
-// Wallening todo: These likely need to be done explicitly
-// Because the offsets are NOT consistent
-// That or change the sprite? or make the macro better unsure
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command)

@@ -523,6 +523,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
+	use_splitvis = FALSE
 
 #undef NO_ADJ_FOUND
 #undef ADJ_FOUND

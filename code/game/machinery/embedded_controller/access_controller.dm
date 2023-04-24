@@ -48,7 +48,9 @@
 	var/obj/machinery/door_buttons/airlock_controller/controller
 	var/busy
 
-/obj/machinery/door_buttons/access_button/Initialize()
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/access_button)
+
+/obj/machinery/door_buttons/access_button/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
@@ -116,7 +118,9 @@
 	var/busy
 	var/lostPower
 
-/obj/machinery/door_buttons/airlock_controller/Initialize()
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/airlock_controller)
+
+/obj/machinery/door_buttons/airlock_controller/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 

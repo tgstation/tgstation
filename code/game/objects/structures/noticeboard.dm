@@ -11,7 +11,7 @@
 	/// Current number of a pinned notices
 	var/notices = 0
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()

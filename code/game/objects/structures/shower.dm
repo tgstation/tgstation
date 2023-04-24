@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///How far to shift the sprite when placing.
 	var/pixel_shift = 16
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -92,6 +92,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()

@@ -32,7 +32,7 @@
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed)
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

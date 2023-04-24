@@ -32,7 +32,7 @@
 	///needed to send messages to sec radio
 	var/obj/item/radio/sec_radio
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/door_timer, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/door_timer)
 
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()

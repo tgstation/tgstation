@@ -38,6 +38,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		/turf/open/water,
 	))
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom)
+
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
@@ -49,6 +51,10 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
 	icon_state = "shadowshroom"
 	myseed = /obj/item/seeds/glowshroom/shadowshroom
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
+
+/obj/structure/glowshroom/single
 
 /obj/structure/glowshroom/single/Spread()
 	return

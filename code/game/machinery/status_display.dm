@@ -68,7 +68,7 @@
 		TEXT_WEST = list(-18, -4),
 	)
 
-/obj/machinery/status_display/Initialize()
+/obj/machinery/status_display/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
@@ -476,7 +476,7 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
@@ -629,7 +629,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	)
 
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai)
 
 /obj/machinery/status_display/ai/Initialize(mapload)
 	. = ..()

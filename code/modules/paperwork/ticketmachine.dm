@@ -27,6 +27,7 @@
 /obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/ticket_machine/Destroy()
 	for(var/obj/item/ticket_machine_ticket/ticket in tickets)
@@ -39,7 +40,7 @@
 		new /obj/item/wallframe/ticket_machine(loc)
 	qdel(src)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 
 /obj/machinery/ticket_machine/examine(mob/user)
 	. = ..()

@@ -93,62 +93,62 @@
 
 // -------- Directional presets
 // The directions are backwards on the lights we have now
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light)
 
 // ---- Broken tube
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/broken, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/broken)
 
 // ---- Tube construct
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/light_construct, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/light_construct)
 
 // ---- Tube frames
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/built, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/built)
 
 // ---- No nightlight tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/no_nightlight, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/no_nightlight)
 
 // ---- Warm light tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/warm)
 
 // ---- No nightlight warm light tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/no_nightlight, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/warm/no_nightlight)
 
 // ---- Cold light tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/cold)
 
 // ---- No nightlight cold light tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/no_nightlight, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/cold/no_nightlight)
 
 // ---- Red tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/red, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/red)
 
 // ---- Red dim tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/red/dim, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/red/dim)
 
 // ---- Blacklight tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/blacklight, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/blacklight)
 
 // ---- Dim tubes
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/dim, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/dim)
 
 
 // -------- Bulb lights
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small)
 
 // ---- Bulb construct
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/light_construct/small, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/light_construct/small)
 
 // ---- Bulb frames
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/built, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small/built)
 
 // ---- Broken bulbs
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken)
 
 // ---- Red bulbs
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red)
 
 // ---- Red dim bulbs
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red/dim, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red/dim)
 
 // ---- Blacklight bulbs
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/blacklight, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/small/blacklight)

@@ -21,7 +21,7 @@
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
@@ -58,7 +58,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen, 
 	icon_state = "entertainment_blank"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
@@ -118,7 +118,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 	name = "\improper Research Director's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/rd
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd)
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
@@ -130,7 +130,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/r
 	name = "research telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/research
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research)
 
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
@@ -142,7 +142,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/r
 	name = "\improper Chief Engineer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ce
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce)
 
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
@@ -154,7 +154,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/c
 	name = "\improper Chief Engineer'stelescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
@@ -166,7 +166,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/c
 	name = "vault telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/vault
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault)
 
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
@@ -178,7 +178,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/v
 	name = "bomb test site telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ordnance
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance)
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
@@ -190,7 +190,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/o
 	name = "engine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine)
 
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
@@ -202,7 +202,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 	name = "turbine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/turbine
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine)
 
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
@@ -214,7 +214,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/t
 	name = "interrogation telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/interrogation
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation)
 
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
@@ -226,7 +226,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/i
 	name = "prison telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/prison
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison)
 
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
@@ -238,7 +238,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/p
 	name = "auxiliary base telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/auxbase
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase)
 
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
@@ -250,7 +250,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/a
 	name = "minisat telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/minisat
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat)
 
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
@@ -262,7 +262,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/m
 	name = "\improper AI upload telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/aiupload
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload)
 
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
@@ -274,7 +274,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/a
 	name = "bar telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/bar
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime

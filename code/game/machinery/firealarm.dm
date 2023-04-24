@@ -476,7 +476,7 @@
 	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
 	user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/firealarm)
 
 /*
  * Return of Party button

@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/sc_ssafe, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/sc_ssafe)
 
 /obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
 	. = ..()

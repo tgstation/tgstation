@@ -5,5 +5,5 @@
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/worn_out, APC_PIXEL_OFFSET)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/worn_out)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name)

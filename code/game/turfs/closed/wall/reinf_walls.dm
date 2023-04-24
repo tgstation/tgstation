@@ -259,6 +259,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	smoothing_flags = NONE
+	use_splitvis = FALSE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"

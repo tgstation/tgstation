@@ -19,14 +19,6 @@
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-// Wallening todo: figure out how to make a lying xeno not hide smaller mobs
-/mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
-	. = ..()
-
-/mob/living/carbon/alien/adult/royal/on_standing_up(new_lying_angle)
-	. = ..()
-	SET_PLANE_IMPLICIT(src, initial(plane))
-
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 

@@ -45,6 +45,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	energy = 100
 	fire = 90
 	acid = 30
+	
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
@@ -518,4 +520,3 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)

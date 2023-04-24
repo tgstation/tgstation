@@ -5,8 +5,8 @@
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK
-	canSmoothWith = null
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_WALLS
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
@@ -49,6 +49,7 @@
 	canSmoothWith = null
 	smoothing_groups = null
 	rcd_memory = null
+	use_splitvis = FALSE
 
 /turf/closed/wall/vault/rock
 	name = "rocky wall"
@@ -70,7 +71,6 @@
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
 	hardness = 35

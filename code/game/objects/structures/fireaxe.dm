@@ -21,7 +21,7 @@
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 
 /datum/armor/structure_fireaxecabinet
 	melee = 50
@@ -212,7 +212,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 
 /obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

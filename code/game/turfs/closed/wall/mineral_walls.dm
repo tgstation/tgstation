@@ -302,6 +302,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	smoothing_flags = NONE
+	use_splitvis = FALSE
 
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
@@ -364,6 +365,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
 	smoothing_flags = NONE
+	use_splitvis = FALSE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"

@@ -233,7 +233,7 @@
 	name = "Marisa Sneakers"
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
-	
+
 /datum/greyscale_config/sneakers_marisa/worn
 	name = "Worn Marisa Sneakers"
 	icon_file = 'icons/mob/clothing/feet.dmi'
@@ -522,6 +522,7 @@
 	name = "Airlock with Decorations"
 	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'
 
+// Wallening todo: why do material airlocks uh, not look like current airlocks?
 /datum/greyscale_config/material_airlock
 	name = "Material Airlock"
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'

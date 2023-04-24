@@ -43,11 +43,11 @@
 	/// A copy of the last paper object that was shown to this camera.
 	var/obj/item/paper/last_shown_paper
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 
 /datum/armor/machinery_camera
 	melee = 50

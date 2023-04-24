@@ -8,12 +8,13 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		atom_break(null, mapload)
+	AddElement(/datum/element/wall_mount)
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()

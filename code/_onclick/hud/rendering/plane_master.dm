@@ -397,8 +397,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/hidden_walls/show_to(mob/mymob)
 	. = ..()
+	if(!.)
+		return
+
 	handle_sight(mymob, mymob.sight, NONE)
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
+
+/atom/movable/screen/plane_master/hidden_walls/hide_from(mob/oldmob)
+	. = ..()
+	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
 
 /atom/movable/screen/plane_master/hidden_walls/proc/handle_sight(mob/source, new_sight, old_sight)
 	if(new_sight & (SEE_TURFS|SEE_THRU))

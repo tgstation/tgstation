@@ -1,5 +1,4 @@
 /// Sets the direction of the mecha and all of its occcupents
-/// Wallening todo: this was required for fov, should we keep it?
 /obj/vehicle/sealed/mecha/setDir(newdir)
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)

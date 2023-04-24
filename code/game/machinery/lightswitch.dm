@@ -13,7 +13,7 @@
 	///Range of the light emitted when powered, but off
 	var/light_on_range = 1
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()

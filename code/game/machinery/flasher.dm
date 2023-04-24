@@ -24,7 +24,7 @@
 	var/on_wall = TRUE
 
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it

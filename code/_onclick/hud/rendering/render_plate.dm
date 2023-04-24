@@ -231,6 +231,8 @@
 	if(offset != 0)
 		add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
 
+// Wallening todo: the light mask plane needs to be rethought, it doesn't do everything you might want it to
+// And cuts off stuff created by split vis
 /atom/movable/screen/plane_master/rendering_plate/light_mask
 	name = "Light Mask"
 	documentation = "Any part of this plane that is transparent will be black below it on the game rendering plate.\
@@ -241,7 +243,8 @@
 	plane = LIGHT_MASK_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	// Fullwhite where there's anything, no color otherwise
-	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0)
+	// Wallening edit: makes this fullwhite all the time until the above todo is addressed
+	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = LIGHT_MASK_RENDER_TARGET
 	// We blend against the game plane, so she's gotta multiply!

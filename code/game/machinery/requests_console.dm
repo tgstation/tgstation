@@ -175,6 +175,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	Radio = new /obj/item/radio(src)
 	Radio.set_listening(FALSE)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
@@ -521,8 +522,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/requests_console)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name)
 
 /obj/item/wallframe/requests_console
 	name = "requests console"

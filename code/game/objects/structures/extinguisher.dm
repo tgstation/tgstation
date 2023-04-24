@@ -10,6 +10,8 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
+
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -168,18 +170,6 @@
 		. +=  "cabinet_door_open"
 	else
 		. += "cabinet_door_closed"
-
-/obj/structure/extinguisher_cabinet/directional/north
-	pixel_y = 32
-
-/obj/structure/extinguisher_cabinet/directional/south
-	pixel_y = -32
-
-/obj/structure/extinguisher_cabinet/directional/east
-	pixel_x = 26
-
-/obj/structure/extinguisher_cabinet/directional/west
-	pixel_x = -26
 
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"

@@ -168,13 +168,6 @@
 	fire = 20
 	acid = 20
 
-#warn yeet?
-/*
-/obj/item/clothing/head/costume/tv_head/fov_less
-	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
-used to be here. curious if we use it at all
-*/
-
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
 	desc = "Even in space, you can't avoid the tax collectors."

@@ -51,7 +51,7 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor)
 
 /datum/armor/machinery_bluespace_vendor
 	energy = 100
