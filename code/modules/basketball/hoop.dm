@@ -56,8 +56,6 @@
 	if(dir & NORTH)
 		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
-	cut_overlays()
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
