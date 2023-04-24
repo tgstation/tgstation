@@ -162,7 +162,7 @@
 
 /// change light color during operation
 /obj/machinery/power/floodlight/proc/update_light_state()
-	var/light_color =  -99999 //same as NONSENSICAL_VALUE defined in set_light()
+	var/light_color =  NONSENSICAL_VALUE
 	if(!isnull(color))
 		light_color = color
 	set_light(light_setting_list[setting], light_power, light_color)
