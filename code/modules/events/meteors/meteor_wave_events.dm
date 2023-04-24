@@ -109,7 +109,7 @@
 /datum/round_event/meteor_wave/dust_storm/announce(fake)
 	var/list/reasons = list()
 
-	reasons +=	"[station_name()] is passing through a debris cloud, expect minor damage \
+	reasons += "[station_name()] is passing through a debris cloud, expect minor damage \
 		to external fittings and fixtures."
 
 	reasons += "Nanotrasen Superweapons Division is testing a new prototype \
