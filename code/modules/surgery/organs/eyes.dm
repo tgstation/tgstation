@@ -415,10 +415,10 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/assume_rgb(newcolor)
 	current_color_string = newcolor
-	eye_color_left = sanitize_hexcolor(current_color_string)
-	eye_color_right = eye_color_left
 	eye.set_light_color(newcolor)
 	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
+		eye_color_left = sanitize_hexcolor(current_color_string)
+		eye_color_right = eye_color_left
 		owner.dna.species.handle_body(owner)
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/cycle_mob_overlay()
