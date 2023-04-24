@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - balance: "removes fov from the SWAT mask"
