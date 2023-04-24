@@ -49,7 +49,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton
 	name = "pirate remains"
-	desc = "Some unanimated bones. They feel like they could spring to life at any moment!"
+	desc = "Some inanimate bones. They feel like they could spring to life at any moment!"
 	density = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
