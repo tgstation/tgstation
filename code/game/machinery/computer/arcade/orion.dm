@@ -553,8 +553,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/datum/component/singularity/singularity = singularity_component.resolve()
 	singularity?.grav_pull = 1
 
-/obj/singularity/orion/process(delta_time)
-	if(DT_PROB(0.5, delta_time))
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
 		mezzer()
 
 #undef ORION_TRAIL_WINTURN

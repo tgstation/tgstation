@@ -29,7 +29,8 @@
 		/obj/item/stack/sheet/mineral/gold = 5,
 		/obj/item/stack/sheet/mineral/uranium = 4,
 		/obj/item/stack/sheet/mineral/diamond = 3,
-		/obj/item/gun/ballistic/rifle/boltaction = 1
+		/obj/item/gun/ballistic/rifle/boltaction = 1,
+		/obj/item/gun/ballistic/automatic/wt550 = 1,
 	)
 	rpg_title = "Merchantman"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN

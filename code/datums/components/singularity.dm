@@ -133,9 +133,9 @@
 		COMSIG_PARENT_ATTACKBY,
 	))
 
-/datum/component/singularity/process(delta_time)
+/datum/component/singularity/process(seconds_per_tick)
 	// We want to move and eat once a second, but want to process our turf consume queue the rest of the time
-	time_since_last_eat += delta_time
+	time_since_last_eat += seconds_per_tick
 	digest()
 	if(TICK_CHECK)
 		return

@@ -240,11 +240,10 @@
 /area/awaymission/bmpship/aft)
 "lx" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 0;
-	pixel_y = 25
+/obj/machinery/power/apc/auto_name/directional/north{
+	environ = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/midship)
 "lG" = (
@@ -908,9 +907,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},

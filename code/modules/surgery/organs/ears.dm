@@ -28,7 +28,7 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
-/obj/item/organ/internal/ears/on_life(delta_time, times_fired)
+/obj/item/organ/internal/ears/on_life(seconds_per_tick, times_fired)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
 		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
@@ -41,8 +41,8 @@
 	if((organ_flags & ORGAN_FAILING))
 		deaf = max(deaf, 1) // if we're failing we always have at least 1 deaf stack (and thus deafness)
 	else // only clear deaf stacks if we're not failing
-		deaf = max(deaf - (0.5 * delta_time), 0)
-		if((damage > low_threshold) && DT_PROB(damage / 60, delta_time))
+		deaf = max(deaf - (0.5 * seconds_per_tick), 0)
+		if((damage > low_threshold) && SPT_PROB(damage / 60, seconds_per_tick))
 			adjustEarDamage(0, 4)
 			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
 
