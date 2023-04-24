@@ -7,8 +7,6 @@
 	/// aliens get a bit of damage done to their ears when exploded, so check that too.
 	var/alien_ear_damage = 0
 
-TEST_FOCUS(/datum/unit_test/explosion_action)
-
 /datum/unit_test/explosion_action/Run()
 	// Throughout this test, we use the "abstract" type of a `/mob/living` to ensure that the raw framework will still work and remain hardy against any `ex_act()` overrides
 	// that may be done on the subtype-to-subtype basis. Any time we use an explicit subtype is to test that framework, so if you update that for some reason, you should also update this test.
