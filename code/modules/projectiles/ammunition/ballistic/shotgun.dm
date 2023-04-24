@@ -82,6 +82,15 @@
 	pellets = 6
 	variance = 25
 
+obj/item/ammo_casing/shotgun/buckshot/spent
+	name = "buckshot shell"
+	desc = "A 12 gauge buckshot shell."
+	icon_state = "gshell"
+	projectile_type = null
+	pellets = 6
+	variance = 25
+
+
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"
 	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
