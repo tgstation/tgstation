@@ -24,7 +24,7 @@
 	// Process behavior - this will execute the "locate the cable" behavior
 	biter.ai_controller.process(fake_dt)
 	// Check that the cable was found
-	TEST_ASSERT(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET] == WEAKREF(wire), "Mouse, after executing find, did not set the cable as a target.")
+	TEST_ASSERT(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET] == wire, "Mouse, after executing find, did not set the cable as a target.")
 	// Select behavior - this will queue hunting
 	biter.ai_controller.SelectBehaviors(fake_dt)
 	// Process behavior - this will execute the hunt for the cable and cause a bite (as we're in the min range)
