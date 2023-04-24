@@ -44,7 +44,7 @@
 	connect_to_network()
 	var/level_controller = SSday_night.get_controller(z)
 	if(level_controller)
-		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/update_day_night_exposure)
+		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, PROC_REF(update_day_night_exposure))
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer

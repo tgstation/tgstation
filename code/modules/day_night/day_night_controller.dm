@@ -60,7 +60,7 @@
 	if(area_to_register in area_cache)
 		return FALSE
 	area_cache += area_to_register
-	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, .proc/unregister_affected_area)
+	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, PROC_REF(unregister_affected_area))
 	return TRUE
 
 /**
@@ -85,9 +85,9 @@
 		return FALSE
 	unaffected_area_cache += area_to_register
 	area_to_register.update_day_night_turfs(TRUE, FALSE, src)
-	area_to_register.RegisterSignal(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, /area.proc/apply_day_night_turfs)
-	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, .proc/unregister_unaffected_area)
-	RegisterSignal(area_to_register, COMSIG_AREA_AFTER_SHUTTLE_MOVE, .proc/after_shuttle_move)
+	area_to_register.RegisterSignal(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, TYPE_PROC_REF(/area, apply_day_night_turfs))
+	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, PROC_REF(unregister_unaffected_area))
+	RegisterSignal(area_to_register, COMSIG_AREA_AFTER_SHUTTLE_MOVE, PROC_REF(after_shuttle_move))
 	return TRUE
 
 /**

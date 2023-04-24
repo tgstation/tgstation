@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			continue
 		adjacent_day_night_turf_cache[iterating_turf] = list(DAY_NIGHT_TURF_INDEX_BITFIELD, DAY_NIGHT_TURF_INDEX_APPEARANCE)
 		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_BITFIELD] = bitfield
-		RegisterSignal(iterating_turf, COMSIG_PARENT_QDELETING, .proc/clear_adjacent_turf)
+		RegisterSignal(iterating_turf, COMSIG_PARENT_QDELETING, PROC_REF(clear_adjacent_turf))
 		if(iterating_turf.lighting_object)
 			iterating_turf.lighting_object.day_night_area = src
 
@@ -659,8 +659,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			iterating_turf.luminosity = incoming_controller.current_luminosity
 		iterating_turf.underlays += appearance_to_add
 		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE] = appearance_to_add
-
-		CHECK_TICK
 
 /**
  * Used to update the area regarding day and night adjacency turfs.
