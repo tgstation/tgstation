@@ -218,7 +218,8 @@
 		if(feedback)
 			to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
 		return SPELL_INVOCATION_FAIL
-	else return SPELL_INVOCATION_SUCCESS
+
+	return SPELL_INVOCATION_SUCCESS
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
