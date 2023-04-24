@@ -255,6 +255,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
 	icon_state = "fake_door"
 	use_splitvis = FALSE
+	smoothing_flags = NONE
+	canSmoothWith = null
+	smoothing_groups = null
 
 /turf/closed/indestructible/fakedoor/maintenance
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
