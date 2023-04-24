@@ -3705,6 +3705,7 @@
 #include "code\modules\lighting\static_lighting_area.dm"
 #include "code\modules\logging\log_category.dm"
 #include "code\modules\logging\log_holder.dm"
+#include "code\modules\logging\categories\log_category_silo.dm"
 #include "code\modules\logging\categories\log_category_target_zone_switch.dm"
 #include "code\modules\mafia\_defines.dm"
 #include "code\modules\mafia\controller.dm"
