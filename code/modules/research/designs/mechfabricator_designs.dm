@@ -1171,7 +1171,7 @@
 	)
 
 /datum/design/borg_upgrade_siliconknife
-	name = "Silicon Knife"
+	name = "Kitchen toolset"
 	id = "borg_upgrade_siliconknife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/siliconknife

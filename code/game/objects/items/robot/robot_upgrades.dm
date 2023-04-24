@@ -779,7 +779,7 @@
 			R.model.remove_module(CS, TRUE)
 			
 /obj/item/borg/upgrade/siliconknife
-	name = "Service Cyborg silicon Knife"
+	name = "Service Cyborg Kitchen Toolset"
 	desc = "An upgrade to the service model cyborg, to help process foods"
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
@@ -791,7 +791,7 @@
 	if(.)
 		var/obj/item/knife/kitchen/silicon/SK = locate() in R.model.modules
 		if(SK)
-			to_chat(user, span_warning("This unit has no room for another silicon knife!"))
+			to_chat(user, span_warning("This unit has no room for another Kitchen toolset!"))
 			return FALSE
 		SK = new(R.model)
 		R.model.basic_modules += SK

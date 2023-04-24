@@ -103,9 +103,9 @@
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/knife/kitchen/silicon
-	name= "Silicon Knife"
+	name= "Kitchen Toolset"
 	icon_state = "SiliKnife"	
-	desc = "A breakthrough in synthetic engineering, this cyborg tool is programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
+	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
 	sharpness = SHARP_EDGED
