@@ -10041,7 +10041,7 @@
 /area/station/security/lockers)
 "cxg" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Holding Area"
+	name = "Gen Pop"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /obj/machinery/door/firedoor,
@@ -16637,6 +16637,16 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
+"emV" = (
+/obj/structure/closet/secure_closet/brig/genpop,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/obj/item/card/id/advanced/prisoner/two,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/security/brig)
 "emZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -33036,6 +33046,7 @@
 "iVh" = (
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/tile/red/half,
+/obj/item/card/id/advanced/prisoner/four,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "iVH" = (
@@ -40621,6 +40632,7 @@
 "kTh" = (
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/effect/turf_decal/tile/red/anticorner,
+/obj/item/card/id/advanced/prisoner/six,
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -49236,6 +49248,7 @@
 /obj/structure/closet/secure_closet/brig/genpop,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/red/half,
+/obj/item/card/id/advanced/prisoner/five,
 /turf/open/floor/iron/dark/side,
 /area/station/security/brig)
 "ncu" = (
@@ -51085,6 +51098,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
 	},
+/obj/item/card/id/advanced/prisoner/three,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -81581,6 +81595,7 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
+/obj/item/card/id/advanced/prisoner/one,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -322812,7 +322827,7 @@ fVw
 sVV
 xVJ
 ffe
-vTj
+emV
 uwA
 jsH
 ncs
