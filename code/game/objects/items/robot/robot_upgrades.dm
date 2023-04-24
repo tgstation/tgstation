@@ -804,29 +804,29 @@
 		if (SK)
 			R.model.remove_module(SK, TRUE)
 			
-/obj/item/borg/upgrade/rollingpin
-	name = "Service Cyborg Rolling Pin"
-	desc = "An upgrade to the service model cyborg, to help process foods"
+/obj/item/borg/upgrade/serviceapparatus
+	name = "Service Cyborg Service Apparatus"
+	desc = "An upgrade to the service model cyborg, to help handle foods"
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE			
 			
-/obj/item/borg/upgrade/rollingpin/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/serviceapparatus/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/kitchen/rollingpin/RP = locate() in R.model.modules
+		var/obj/item/borg/apparatus/service/RP = locate() in R.model.modules
 		if(RP)
-			to_chat(user, span_warning("This unit has no room for another rolling pin!"))
+			to_chat(user, span_warning("This unit has no room for another service apparatus!"))
 			return FALSE
 		RP = new(R.model)
 		R.model.basic_modules += RP
 		R.model.add_module(RP, FALSE, TRUE)
 
-/obj/item/borg/upgrade/rollingpin/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/serviceapparatus/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/kitchen/rollingpin/RP = locate() in R.model.modules
+		var/obj/item/borg/apparatus/service/RP = locate() in R.model.modules
 		if (RP)
 			R.model.remove_module(RP, TRUE)
 			

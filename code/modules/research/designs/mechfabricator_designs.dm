@@ -1164,7 +1164,7 @@
 	id = "borg_upgrade_condimentsynthesizer"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/condimentsynthesizer
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/plasma = 8000, /datum/material/uranium = 8000) //Same price as an expanded hypo for medical borg
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 12000, /datum/material/plasma = 6000, /datum/material/uranium = 6000) //a bit cheaper than an expanded hypo for medical borg,
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
@@ -1175,18 +1175,18 @@
 	id = "borg_upgrade_siliconknife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/siliconknife
-	materials = list(/datum/material/iron = 12000, /datum/material/gold = 1000) //Cost of a kitchen knife with some added gold. It is a silicon knife after all
+	materials = list(/datum/material/iron = 15000, /datum/material/gold = 1000, datum/material/silver = 1000,)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 	
-/datum/design/borg_upgrade_rollingpin
-	name = "Rolling Pin"
-	id = "borg_upgrade_rollingpin"
+/datum/design/borg_upgrade_serviceapparatus
+	name = "Service apparatus"
+	id = "borg_upgrade_serviceapparatus"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/rollingpin
-	materials = list(/datum/material/iron = 12000)
+	build_path = /obj/item/borg/upgrade/serviceapparatus
+	materials = list(/datum/material/iron = 5000)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
