@@ -60,7 +60,7 @@
 	//growth after converted to age
 	var/growth = 0
 	///are we currently bio boosted?
-	var/bio_boosted = TRUE
+	var/bio_boosted = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
