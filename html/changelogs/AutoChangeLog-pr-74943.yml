@@ -1,0 +1,4 @@
+author: "DaydreamIQ"
+delete-after: True
+changes:
+  - bugfix: "Swat crate's description now lists the correct kind of gloves"
