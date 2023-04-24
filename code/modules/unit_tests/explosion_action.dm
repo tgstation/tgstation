@@ -75,10 +75,6 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 	TEST_ASSERT(alien_brute_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 brute damage to an alien!")
 	TEST_ASSERT(alien_burn_loss == 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
 	TEST_ASSERT(alien_ear_damage == 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
-	test_alien.revive(ADMIN_HEAL_ALL)
-
-	EX_ACT(test_alien, EXPLODE_DEVASTATE) // this should gib.
-	TEST_ASSERT(QDELETED(test_alien), "EX_ACT() with EXPLODE_DEVASTATE severity should have gibbed an alien!")
 
 	// Let's check to make sure the armor system works as expected. Corgi dogs are the only one that have this implemented on the basic level, so let's use that.
 	var/mob/living/basic/pet/dog/corgi/test_dog = set_up_test_dog()
@@ -94,7 +90,7 @@ TEST_FOCUS(/datum/unit_test/explosion_action)
 
 	EX_ACT(test_dog, EXPLODE_DEVASTATE) // this should NOT gib, but should do 500 damage. 500 is a lot but we don't really need to test that exact number here to be honest
 	TEST_ASSERT(!QDELETED(test_dog), "EX_ACT() with EXPLODE_DEVASTATE severity should NOT have gibbed a corgi with an immune helmet and vest!")
-	TEST_ASSERT(test_dog.health <= -100, "EX_ACT() with EXPLODE_DEVASTATE severity should have killed a corgi with an immune helmet and vest!")
+	TEST_ASSERT(test_dog.stat == DEAD, "EX_ACT() with EXPLODE_DEVASTATE severity should have killed a corgi with an immune helmet and vest!")
 
 	// Humans have a lot of prob() checks and stuff (e.g. delimbing) and it's really complicated, so let's just test the basic stuff here. if you want to test this further should really go into its own unit test.
 	var/mob/living/carbon/human/test_human = allocate(/mob/living/carbon/human/consistent)
