@@ -119,4 +119,4 @@
 	desc = "There's nothing at the bottom. Absolutely nothing."
 
 /turf/open/chasm/true/apply_components()
-	AddComponent(/datum/component/chasm/offstage)
+	AddComponent(/datum/component/chasm) //Don't pass anything for below_turf.
