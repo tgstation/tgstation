@@ -1,3 +1,4 @@
+import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
@@ -26,6 +27,8 @@ type MarkdownRendererProps = {
 
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   let { content, sanitize } = props;
+
+  content = marked(content);
   if (sanitize) {
     content = sanitizeText(content, false);
   }
