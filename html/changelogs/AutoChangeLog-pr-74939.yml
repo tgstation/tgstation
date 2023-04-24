@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Biogenerators now display the accurate price of their products after having been upgraded, as they no longer visually apply the efficiency discount twice."
