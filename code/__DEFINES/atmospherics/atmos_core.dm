@@ -96,7 +96,7 @@
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
 #define EXCITED_GROUP_BREAKDOWN_CYCLES 5
 /// number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
-#define EXCITED_GROUP_DISMANTLE_CYCLES (EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1 //Reset after 2 breakdowns
+#define EXCITED_GROUP_DISMANTLE_CYCLES ((EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1) //Reset after 2 breakdowns
 /// Ratio of air that must move to/from a tile to reset group processing
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.1
 /// Minimum ratio of air that must move to/from a tile
@@ -131,6 +131,8 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD (150+T0C)
 ///Minimum temperature for fire to exist on a turf (100 °C or 373 K)
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST (100+T0C)
+///Minimum temperature for items on fire
+#define BURNING_ITEM_MINIMUM_TEMPERATURE (150+T0C)
 ///Multiplier for the temperature shared to other turfs
 #define FIRE_SPREAD_RADIOSITY_SCALE 0.85
 ///Helper for small fires to grow

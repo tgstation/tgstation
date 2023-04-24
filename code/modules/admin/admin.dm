@@ -24,7 +24,7 @@
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
-				dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
+				dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
 	dat += "<hr/>"
@@ -119,49 +119,6 @@
 
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/toggletintedweldhelmets()
-	set category = "Debug"
-	set desc="Reduces view range when wearing welding helmets"
-	set name="Toggle tinted welding helmes"
-	GLOB.tinted_weldhelh = !( GLOB.tinted_weldhelh )
-	if (GLOB.tinted_weldhelh)
-		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>", confidential = TRUE)
-	else
-		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>", confidential = TRUE)
-	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
-	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Tinted Welding Helmets", "[GLOB.tinted_weldhelh ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/output_ai_laws()
-	var/ai_number = 0
-	for(var/i in GLOB.silicon_mobs)
-		var/mob/living/silicon/S = i
-		ai_number++
-
-		var/message = ""
-
-		if(isAI(S))
-			message += "<b>AI [key_name(S, usr)]'s laws:</b>"
-		else if(iscyborg(S))
-			var/mob/living/silicon/robot/R = S
-			message += "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [key_name(R.connected_ai)])":"(Independent)"]: laws:</b>"
-		else if (ispAI(S))
-			message += "<b>pAI [key_name(S, usr)]'s laws:</b>"
-		else
-			message += "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
-
-		message += "<br>"
-
-		if (S.laws == null)
-			message += "[key_name(S, usr)]'s laws are null?? Contact a coder."
-		else
-			message += jointext(S.laws.get_law_list(include_zeroth = TRUE), "<br>")
-
-		to_chat(usr, message, confidential = TRUE)
-
-	if(!ai_number)
-		to_chat(usr, "<b>No AIs located</b>" , confidential = TRUE)
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"

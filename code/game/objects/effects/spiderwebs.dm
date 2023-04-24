@@ -25,7 +25,7 @@
 	. = ..()
 
 /obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
+	return exposed_temperature > 350
 
 /obj/structure/spider/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0, 0)
@@ -43,8 +43,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.visible_message(span_notice("[user] begins weaving [src] into cloth."), span_notice("You begin weaving [src] into cloth."))
+	user.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
+		user.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -61,15 +62,15 @@
 		return
 	if(sealed)
 		return FALSE
-	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
+	if(isspider(mover))
 		return TRUE
 	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
+		if(istype(mover.pulledby, /mob/living/basic/giant_spider))
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		return prob(30)
 
 /obj/structure/spider/stickyweb/sealed
@@ -95,9 +96,9 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
+			balloon_alert(mover, "stuck in web!")
 			return FALSE
-	else if(istype(mover, /obj/projectile))
+	else if(isprojectile(mover))
 		return prob(30)
 
 /obj/structure/spider/spiderling
@@ -112,7 +113,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/directive = "" //Message from the mother
-	var/list/faction = list("spiders")
+	var/list/faction = list(FACTION_SPIDER)
 
 /obj/structure/spider/spiderling/Destroy()
 	new/obj/item/food/spiderling(get_turf(src))
@@ -126,19 +127,19 @@
 	AddComponent(/datum/component/swarming)
 
 /obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
 
 /obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/nurse
+	grow_as = /mob/living/basic/giant_spider/nurse
 
 /obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/midwife
+	grow_as = /mob/living/basic/giant_spider/midwife
 
 /obj/structure/spider/spiderling/viper
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/viper
+	grow_as = /mob/living/basic/giant_spider/viper
 
 /obj/structure/spider/spiderling/tarantula
-	grow_as = /mob/living/simple_animal/hostile/giant_spider/tarantula
+	grow_as = /mob/living/basic/giant_spider/tarantula
 
 /obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -157,7 +158,7 @@
 
 	forceMove(exit_vent)
 	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(do_vent_move), exit_vent, travel_time), travel_time)
 
 /obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
 	if(QDELETED(exit_vent) || exit_vent.welded)
@@ -167,7 +168,7 @@
 	if(prob(50))
 		audible_message(span_hear("You hear something scampering through the ventilation ducts."))
 
-	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+	addtimer(CALLBACK(src, PROC_REF(finish_vent_move), exit_vent), travel_time)
 
 /obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
 	if(QDELETED(exit_vent) || exit_vent.welded)
@@ -195,7 +196,7 @@
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
 								span_hear("You hear something scampering through the ventilation ducts."))
 
-			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(20,60))
+			addtimer(CALLBACK(src, PROC_REF(vent_move), exit_vent), rand(20,60))
 
 	//=================
 
@@ -218,10 +219,10 @@
 		if(amount_grown >= 100)
 			if(!grow_as)
 				if(prob(3))
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider/tarantula, /mob/living/simple_animal/hostile/giant_spider/viper, /mob/living/simple_animal/hostile/giant_spider/midwife)
+					grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
 				else
-					grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+					grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+			var/mob/living/basic/giant_spider/S = new grow_as(src.loc)
 			S.faction = faction.Copy()
 			S.directive = directive
 			qdel(src)

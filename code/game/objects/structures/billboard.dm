@@ -3,11 +3,17 @@
 	desc = "A blank billboard, with space for all kinds of advertising."
 	icon = 'icons/obj/billboard.dmi'
 	icon_state = "billboard_blank"
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 1000
 	bound_width = 96
-	bound_height = 64
+	bound_height = 32
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/billboard/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_BILLBOARD)
 
 /obj/structure/billboard/donk_n_go
 	name = "\improper Donk-n-Go billboard"
@@ -81,5 +87,15 @@
 
 /obj/structure/billboard/smoothies
 	name = "\improper Spinward Smoothies billboard"
-	desc = "A billboard advertising Spinward Smoothies. "
+	desc = "A billboard advertising Spinward Smoothies."
 	icon_state = "billboard_smoothies"
+
+/obj/structure/billboard/fortune_telling
+	name = "\improper Fortune Teller billboard"
+	desc = "A billboard advertising Fortune Telling. Apparently it's done by real psykers!"
+	icon_state = "billboard_fortune_tell"
+
+/obj/structure/billboard/american_diner
+	name = "\improper All-American Diner billboard"
+	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
+	icon_state = "billboard_american_diner"

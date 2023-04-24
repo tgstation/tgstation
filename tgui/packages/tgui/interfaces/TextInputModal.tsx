@@ -15,6 +15,14 @@ type TextInputData = {
   title: string;
 };
 
+export const sanitizeMultiline = (toSanitize: string) => {
+  return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
+};
+
+export const removeAllSkiplines = (toSanitize: string) => {
+  return toSanitize.replace(/[\r\n]+/, '');
+};
+
 export const TextInputModal = (props, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
@@ -35,13 +43,18 @@ export const TextInputModal = (props, context) => {
     if (value === input) {
       return;
     }
-    setInput(value);
+    const sanitizedInput = multiline
+      ? sanitizeMultiline(value)
+      : removeAllSkiplines(value);
+    setInput(sanitizedInput);
   };
+
+  const visualMultiline = multiline || input.length >= 30;
   // Dynamically changes the window height based on the message.
   const windowHeight =
     135 +
     (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
-    (multiline || input.length >= 30 ? 75 : 0) +
+    (visualMultiline ? 75 : 0) +
     (message.length && large_buttons ? 5 : 0);
 
   return (
@@ -50,7 +63,7 @@ export const TextInputModal = (props, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER) {
+          if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
             act('submit', { entry: input });
           }
           if (keyCode === KEY_ESCAPE) {
@@ -84,6 +97,8 @@ const InputArea = (props, context) => {
   const { max_length, multiline } = data;
   const { input, onType } = props;
 
+  const visualMultiline = multiline || input.length >= 30;
+
   return (
     <TextArea
       autoFocus
@@ -92,8 +107,11 @@ const InputArea = (props, context) => {
       maxLength={max_length}
       onEscape={() => act('cancel')}
       onEnter={(event) => {
-        act('submit', { entry: input });
+        if (visualMultiline && event.shiftKey) {
+          return;
+        }
         event.preventDefault();
+        act('submit', { entry: input });
       }}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."

@@ -11,7 +11,7 @@ on:
       - completed
 jobs:
   show_screenshot_test_results:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && github.event.workflow_run.run_attempt == 1"
     name: Show Screenshot Test Results
     runs-on: ubuntu-20.04
     steps:
@@ -22,7 +22,7 @@ jobs:
         run: |
           unset SECRET_EXISTS
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
-          echo "::set-output name=SECRETS_ENABLED::$SECRET_EXISTS"
+          echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: actions/checkout@v3

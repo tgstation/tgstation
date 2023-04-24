@@ -5,7 +5,7 @@
  */
 GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
-/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+/client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "gz"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
 	switch(root_type)

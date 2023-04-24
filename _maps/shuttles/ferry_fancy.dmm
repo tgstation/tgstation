@@ -14,16 +14,16 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "e" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "g" = (
@@ -38,12 +38,10 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "k" = (
@@ -64,21 +62,17 @@
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 13;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	preferred_direction = 4;
-	width = 5
+	preferred_direction = 4
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "o" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
 /turf/open/floor/plating/airless,

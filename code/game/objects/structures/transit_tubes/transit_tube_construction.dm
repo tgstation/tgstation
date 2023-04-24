@@ -12,11 +12,10 @@
 	var/flipped = FALSE
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
-	var/base_icon
 
 /obj/structure/c_transit_tube/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 
 /obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
 	var/turf/source_turf = get_turf(loc)
@@ -37,7 +36,7 @@
 			build_type = flipped_build_type
 		else
 			build_type = initial(build_type)
-		icon_state = "[base_icon][flipped]"
+		icon_state = "[base_icon_state][flipped]"
 
 /obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -45,7 +44,7 @@
 		return
 	to_chat(user, span_notice("You start attaching the [name]..."))
 	add_fingerprint(user)
-	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
+	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, PROC_REF(can_wrench_in_loc), user)))
 		to_chat(user, span_notice("You attach the [name]."))
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)
@@ -61,7 +60,7 @@
 	icon_state = "closed_station0"
 	build_type = /obj/structure/transit_tube/station
 	flipped_build_type = /obj/structure/transit_tube/station/flipped
-	base_icon = "closed_station"
+	base_icon_state = "closed_station"
 
 /obj/structure/c_transit_tube/station/flipped
 	icon_state = "closed_station1"
@@ -76,7 +75,7 @@
 	icon_state = "closed_terminus0"
 	build_type = /obj/structure/transit_tube/station/reverse
 	flipped_build_type = /obj/structure/transit_tube/station/reverse/flipped
-	base_icon = "closed_terminus"
+	base_icon_state = "closed_terminus"
 
 /obj/structure/c_transit_tube/station/reverse/flipped
 	icon_state = "closed_terminus1"
@@ -91,7 +90,7 @@
 	name = "unattached dispenser station"
 	build_type = /obj/structure/transit_tube/station/dispenser
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/flipped
-	base_icon = "open_dispenser"
+	base_icon_state = "open_dispenser"
 
 /obj/structure/c_transit_tube/station/dispenser/flipped
 	icon_state = "open_dispenser1"
@@ -106,7 +105,7 @@
 	icon_state = "open_terminusdispenser0"
 	build_type = /obj/structure/transit_tube/station/dispenser/reverse
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
-	base_icon = "open_terminusdispenser"
+	base_icon_state = "open_terminusdispenser"
 
 /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
 	icon_state = "open_terminusdispenser1"
@@ -134,7 +133,7 @@
 	icon_state = "curved0"
 	build_type = /obj/structure/transit_tube/curved
 	flipped_build_type = /obj/structure/transit_tube/curved/flipped
-	base_icon = "curved"
+	base_icon_state = "curved"
 
 /obj/structure/c_transit_tube/curved/flipped
 	icon_state = "curved1"
@@ -147,7 +146,7 @@
 	icon_state = "junction0"
 	build_type = /obj/structure/transit_tube/junction
 	flipped_build_type = /obj/structure/transit_tube/junction/flipped
-	base_icon = "junction"
+	base_icon_state = "junction"
 
 
 /obj/structure/c_transit_tube/junction/flipped

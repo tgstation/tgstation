@@ -20,13 +20,19 @@
 /obj/structure/closet/emcloset/anchored
 	anchored = TRUE
 
+/obj/structure/closet/emcloset/Initialize(mapload)
+	. = ..()
+
+	if (prob(1))
+		return INITIALIZE_HINT_QDEL
+
 /obj/structure/closet/emcloset/PopulateContents()
 	..()
 
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pick_weight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pick_weight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -48,10 +54,7 @@
 
 		if ("nothing")
 			// doot
-
-		// teehee //Fuck you
-		if ("delete")
-			qdel(src)
+			pass()
 
 /*
  * Fire Closet
@@ -68,7 +71,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/tank/internals/oxygen/red(src)
 	new /obj/item/extinguisher(src)
-	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/clothing/head/utility/hardhat/red(src)
 	new /obj/item/crowbar/large/emergency(src)
 
 /obj/structure/closet/firecloset/full/PopulateContents()
@@ -77,7 +80,7 @@
 	new /obj/item/flashlight(src)
 	new /obj/item/tank/internals/oxygen/red(src)
 	new /obj/item/extinguisher(src)
-	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/clothing/head/utility/hardhat/red(src)
 	new /obj/item/crowbar/large/emergency(src)
 
 /*
@@ -120,7 +123,7 @@
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
-		new /obj/item/clothing/head/hardhat(src)
+		new /obj/item/clothing/head/utility/hardhat(src)
 
 
 /*
@@ -136,7 +139,7 @@
 	..()
 	new /obj/item/geiger_counter(src)
 	new /obj/item/clothing/suit/utility/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/head/utility/radiation(src)
 
 /*
  * Bombsuit closet
@@ -151,19 +154,19 @@
 	new /obj/item/clothing/suit/utility/bomb_suit(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/bomb_hood(src)
+	new /obj/item/clothing/head/utility/bomb_hood(src)
 
 /obj/structure/closet/bombcloset/security/PopulateContents()
 	new /obj/item/clothing/suit/utility/bomb_suit/security(src)
 	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/bomb_hood/security(src)
+	new /obj/item/clothing/head/utility/bomb_hood/security(src)
 
 /obj/structure/closet/bombcloset/white/PopulateContents()
 	new /obj/item/clothing/suit/utility/bomb_suit/white(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/bomb_hood/white(src)
+	new /obj/item/clothing/head/utility/bomb_hood/white(src)
 
 /*
  * Ammunition

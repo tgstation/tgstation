@@ -15,7 +15,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/carbon/C = parent
-	E = C.getorganslot(ORGAN_SLOT_EYES)
+	E = C.get_organ_slot(ORGAN_SLOT_EYES)
 
 	if(E)
 		START_PROCESSING(SSdcs, src)
@@ -29,11 +29,11 @@
 	return ..()
 
 /datum/component/manual_blinking/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
-	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
-	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
+	RegisterSignal(parent, COMSIG_MOB_EMOTE, PROC_REF(check_emote))
+	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
+	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_removed_organ))
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(restart))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(pause))
 
 /datum/component/manual_blinking/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
@@ -60,7 +60,7 @@
 			to_chat(C, span_userdanger("Your eyes begin to wither, you need to blink!"))
 			warn_dying = TRUE
 
-		E.applyOrganDamage(damage_rate)
+		E.apply_organ_damage(damage_rate)
 	else if(world.time > (last_blink + check_every))
 		if(!warn_grace)
 			to_chat(C, span_danger("You feel a need to blink!"))

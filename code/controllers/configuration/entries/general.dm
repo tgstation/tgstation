@@ -76,6 +76,9 @@
 /// log prayers
 /datum/config_entry/flag/log_prayer
 
+///Log Music Requests
+/datum/config_entry/flag/log_internet_request
+
 /// log silicons
 /datum/config_entry/flag/log_silicon
 
@@ -102,6 +105,9 @@
 
 /// log voting
 /datum/config_entry/flag/log_vote
+
+/// log manual zone switching
+/datum/config_entry/flag/log_zone_switch
 
 /// log client whisper
 /datum/config_entry/flag/log_whisper
@@ -164,6 +170,14 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
+/// allow players to vote to re-do the map vote
+/datum/config_entry/flag/allow_rock_the_vote
+
+/// the number of times we allow players to rock the vote
+/datum/config_entry/number/max_rocking_votes
+	default = 1
+	min_val = 1
+
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
 	default = 6000
@@ -176,8 +190,8 @@
 	integer = FALSE
 	min_val = 0
 
-/// If disabled, no-voters will automatically have their votes added to certain vote options
-/// (For eample: restart votes will default to "no restart", map votes will default to their preferred map / default map)
+/// If disabled, non-voters will automatically have their votes added to certain vote options
+/// (For example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.
@@ -343,7 +357,14 @@
 /datum/config_entry/string/invoke_youtubedl
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
+/datum/config_entry/flag/request_internet_sound
+
+/datum/config_entry/string/request_internet_allowed
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/show_irc_name
+
+/datum/config_entry/flag/no_default_techweb_link
 
 /datum/config_entry/flag/see_own_notes //Can players see their own admin notes
 
@@ -455,6 +476,10 @@
 	default = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_build
+	default = null
+	min_val = 0
+
 /datum/config_entry/string/client_warn_message
 	default = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
@@ -504,16 +529,29 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
-	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+	deprecated_by = /datum/config_entry/string/channel_announce_new_game
 
 /datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/chat_announce_new_game
+	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+
+/datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
+	return "" //default broadcast
+
+/datum/config_entry/string/channel_announce_new_game
+	default = null
+
+/datum/config_entry/string/channel_announce_end_game
 	default = null
 
 /datum/config_entry/string/chat_new_game_notifications
 	default = null
+
+/// validate ownership of admin flags for chat commands
+/datum/config_entry/flag/secure_chat_commands
+	default = FALSE
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -626,3 +664,17 @@
 /datum/config_entry/flag/forbid_all_profiling
 
 /datum/config_entry/flag/forbid_admin_profiling
+
+
+/datum/config_entry/flag/morgue_cadaver_disable_nonhumans
+	default = FALSE
+
+/datum/config_entry/number/morgue_cadaver_other_species_probability
+	default = 50
+
+/datum/config_entry/string/morgue_cadaver_override_species
+
+/datum/config_entry/flag/toast_notification_on_init
+
+/datum/config_entry/flag/config_errors_runtime
+	default = FALSE

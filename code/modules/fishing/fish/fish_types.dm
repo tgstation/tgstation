@@ -181,6 +181,21 @@
 	fillet_type = /obj/item/food/fishmeat/armorfish
 	fish_ai_type = FISH_AI_SLOW
 
+//Chasm fish
+/obj/item/fish/chasm_crab
+	name = "chasm chrab"
+	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
+	icon_state = "chrab"
+	dedicated_in_aquarium_icon_state = "chrab_small"
+	sprite_height = 9
+	sprite_width = 8
+	source_height = 9
+	source_width = 8
+	stable_population = 4
+	feeding_frequency = 15 MINUTES
+	random_case_rarity = FISH_RARITY_RARE
+	fillet_type = /obj/item/food/meat/slab/rawcrab
+
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"
 
@@ -205,17 +220,17 @@
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
 
-/obj/item/fish/emulsijack/process(delta_time)
+/obj/item/fish/emulsijack/process(seconds_per_tick)
 	var/emulsified = FALSE
 	var/obj/structure/aquarium/aquarium = loc
 	if(istype(aquarium))
 		for(var/obj/item/fish/victim in aquarium)
 			if(istype(victim, /obj/item/fish/emulsijack))
 				continue //no team killing
-			victim.adjust_health((victim.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
+			victim.adjust_health((victim.health - 3) * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 			emulsified = TRUE
 	if(emulsified)
-		adjust_health((health + 3) * delta_time)
+		adjust_health((health + 3) * seconds_per_tick)
 		last_feeding = world.time //emulsijack feeds on the emulsion!
 	..()
 

@@ -25,10 +25,10 @@
 				target.Stun(50)
 			if(2)
 				to_chat(target, span_warning("You hear an annoying buzz in your head."))
-				target.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+				target.adjust_confusion(15 SECONDS)
 				target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
-				target.hallucination += 60
+				target.adjust_hallucinations(120 SECONDS)
 
 /obj/item/organ/internal/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
@@ -50,14 +50,14 @@
 		to_chat(target_human, span_mind_control("[command]"))
 
 		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]")
-		log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]")
+		user.log_message("broadcasted an abductor mind control message from [key_name(owner)] to [key_name(target_human)]: [command]", LOG_GAME)
 
 		var/atom/movable/screen/alert/mind_control/mind_alert = target_human.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 		mind_alert.command = command
 
 	if(LAZYLEN(broadcasted_mobs))
 		active_mind_control = TRUE
-		addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
+		addtimer(CALLBACK(src, PROC_REF(clear_mind_control)), mind_control_duration)
 
 	update_gland_hud()
 	return TRUE

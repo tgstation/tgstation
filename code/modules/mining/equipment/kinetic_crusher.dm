@@ -30,11 +30,11 @@
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
 
-/obj/item/kinetic_crusher/ComponentInitialize()
+/obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 6 SECONDS, \
-	effectiveness = 110, \
+		speed = 6 SECONDS, \
+		effectiveness = 110, \
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
@@ -144,7 +144,7 @@
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/Recharge), charge_time)
+	addtimer(CALLBACK(src, PROC_REF(Recharge)), charge_time)
 
 /obj/item/kinetic_crusher/proc/Recharge()
 	if(!charged)
@@ -169,11 +169,14 @@
 	if(light_on)
 		. += "[icon_state]_lit"
 
+/obj/item/kinetic_crusher/compact //for admins
+	name = "compact kinetic crusher"
+	w_class = WEIGHT_CLASS_NORMAL
+
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
-	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
@@ -223,21 +226,20 @@
 	else
 		..()
 
-/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/H, mob/living/user)
-	for(var/t in H.trophies)
-		var/obj/item/crusher_trophy/T = t
-		if(istype(T, denied_type) || istype(src, T.denied_type))
-			to_chat(user, span_warning("You can't seem to attach [src] to [H]. Maybe remove a few trophies?"))
+/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)
+		if(istype(trophy, denied_type) || istype(src, trophy.denied_type))
+			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
 			return FALSE
-	if(!user.transferItemToLoc(src, H))
+	if(!user.transferItemToLoc(src, crusher))
 		return
-	H.trophies += src
-	to_chat(user, span_notice("You attach [src] to [H]."))
+	crusher.trophies += src
+	to_chat(user, span_notice("You attach [src] to [crusher]."))
 	return TRUE
 
-/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
-	forceMove(get_turf(H))
-	H.trophies -= src
+/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	forceMove(get_turf(crusher))
+	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user
@@ -301,7 +303,6 @@
 		marker.name = "heated [marker.name]"
 		marker.icon_state = "lava"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		deadly_shot = FALSE
 
 //icewing watcher
@@ -360,7 +361,7 @@
 			continue
 		playsound(L, 'sound/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(L.loc)
-		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
+		addtimer(CALLBACK(src, PROC_REF(pushback), L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustFireLoss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
@@ -418,13 +419,12 @@
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_value
-		marker.nodamage = FALSE
 		marker.speed = 2
 		deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE
-	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE

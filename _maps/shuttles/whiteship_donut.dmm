@@ -13,13 +13,10 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 8;
-	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2;
-	width = 9
+	port_direction = 2
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -64,13 +61,13 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "am" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "an" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -90,10 +87,10 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "as" = (
@@ -286,9 +283,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aX" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
 /turf/open/floor/plating/airless,
@@ -296,13 +292,10 @@
 "aY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/sheet/iron,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -337,18 +330,15 @@
 /area/shuttle/abandoned)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "be" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bf" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bg" = (
@@ -356,11 +346,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/west,
 /obj/item/folder/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -368,11 +355,10 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/cell_charger,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bi" = (
@@ -401,12 +387,8 @@
 /obj/item/paper_bin{
 	total_paper = 20
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -422,31 +404,21 @@
 /area/shuttle/abandoned)
 "bn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bo" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bp" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -460,10 +432,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/disk/holodisk/donutstation/whiteship,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bs" = (
@@ -471,10 +440,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bt" = (
@@ -482,10 +448,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bu" = (

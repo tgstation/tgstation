@@ -21,10 +21,7 @@ GLOBAL_PROTECT(href_token)
 
 	var/spamcooldown = 0
 
-	var/admincaster_screen = 0 //TODO: remove all these 5 variables, they are completly unacceptable
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message
-	var/datum/wanted_message/admincaster_wanted_message = new /datum/wanted_message
-	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
+	///Randomly generated signature used for security records authorization name.
 	var/admin_signature
 
 	var/href_token
@@ -35,7 +32,9 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
+	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test = new
+	var/datum/plane_master_debug/plane_debug
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
@@ -45,6 +44,8 @@ GLOBAL_PROTECT(href_token)
 
 	/// A lazylist of tagged datums, for quick reference with the View Tags verb
 	var/list/tagged_datums
+
+	var/given_profiling = FALSE
 
 /datum/admins/New(list/datum/admin_rank/ranks, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -66,9 +67,6 @@ GLOBAL_PROTECT(href_token)
 	src.ranks = ranks
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
-	if(!CONFIG_GET(flag/forbid_admin_profiling))
-		if(rank_flags() & R_DEBUG) //grant profile access, assuming admin profile access is enabled
-			world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
@@ -76,6 +74,7 @@ GLOBAL_PROTECT(href_token)
 		activate()
 	else
 		deactivate()
+	plane_debug = new(src)
 
 /datum/admins/Destroy()
 	if(IsAdminAdvancedProcCall())
@@ -94,6 +93,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
+	QDEL_NULL(plane_debug)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
@@ -114,6 +114,7 @@ GLOBAL_PROTECT(href_token)
 		disassociate()
 		add_verb(client, /client/proc/readmin)
 		client.disable_combo_hud()
+		client.update_special_keybinds()
 
 /datum/admins/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())
@@ -139,7 +140,8 @@ GLOBAL_PROTECT(href_token)
 
 		return
 	else if (blocked_by_2fa)
-		sync_lastadminrank(client.ckey, client.key)
+		//previously blocked by 2fa but has now verified, sync the lastadminrank column on the player table.
+		sync_lastadminrank(client.ckey, client.key, src)
 
 	blocked_by_2fa = FALSE
 
@@ -153,7 +155,10 @@ GLOBAL_PROTECT(href_token)
 	owner.add_admin_verbs()
 	remove_verb(owner, /client/proc/readmin)
 	owner.init_verbs() //re-initialize the verb list
+	owner.update_special_keybinds()
 	GLOB.admins |= client
+
+	try_give_profiling()
 
 /datum/admins/proc/disassociate()
 	if(IsAdminAdvancedProcCall())
@@ -164,7 +169,6 @@ GLOBAL_PROTECT(href_token)
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
-		owner.init_verbs()
 		owner.holder = null
 		owner = null
 
@@ -194,6 +198,9 @@ GLOBAL_PROTECT(href_token)
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
 	qdel(feedback_query)
+
+	if (cached_feedback_link == NO_FEEDBACK_LINK) // Because we don't want to send fake clickable links.
+		return null
 
 	return cached_feedback_link
 
@@ -383,6 +390,19 @@ GLOBAL_PROTECT(href_token)
 		combined_flags |= rank.can_edit_rights
 
 	return combined_flags
+
+/datum/admins/proc/try_give_profiling()
+	if (CONFIG_GET(flag/forbid_admin_profiling))
+		return
+
+	if (given_profiling)
+		return
+
+	if (!(rank_flags() & R_DEBUG))
+		return
+
+	given_profiling = TRUE
+	world.SetConfig("APP/admin", owner.ckey, "role=admin")
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

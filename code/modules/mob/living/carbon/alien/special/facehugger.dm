@@ -11,7 +11,7 @@
 /obj/item/clothing/mask/facehugger
 	name = "alien"
 	desc = "It has some sort of a tube at the end of its tail."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "facehugger"
 	base_icon_state = "facehugger"
 	inhand_icon_state = "facehugger"
@@ -36,10 +36,12 @@
 /obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, PROC_REF(react_to_mob))
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
@@ -48,6 +50,12 @@
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
 	return O.attack_atom(src, user, params)
+
+/obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+		if(Leap(user))
+			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -101,7 +109,7 @@
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[base_icon_state]_thrown"
-		addtimer(CALLBACK(src, .proc/clear_throw_icon_state), 15)
+		addtimer(CALLBACK(src, PROC_REF(clear_throw_icon_state)), 15)
 
 /obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
 	if(icon_state == "[base_icon_state]_thrown")
@@ -147,7 +155,7 @@
 						span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
-	if(target.is_mouth_covered(head_only = TRUE))
+	if(target.is_mouth_covered(ITEM_SLOT_HEAD))
 		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
 							span_userdanger("[src] smashes against your [target.head]!"))
 		Die()
@@ -170,7 +178,7 @@
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
-	addtimer(CALLBACK(src, .proc/detach), MAX_IMPREGNATION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 
 
 	if(!sterile)
@@ -179,7 +187,7 @@
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
@@ -202,10 +210,12 @@
 		worn_icon_state = "[base_icon_state]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
-		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
 			new /obj/item/organ/internal/body_egg/alien_embryo(target)
-			var/turf/T = get_turf(target)
-			log_game("[key_name(target)] was impregnated by a facehugger at [loc_name(T)]")
+			target.log_message("was impregnated by a facehugger", LOG_GAME)
+			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
+			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.
+				target.apply_status_effect(/datum/status_effect/nest_sustenance)
 
 	else
 		target.visible_message(span_danger("[src] violates [target]'s face!"), \
@@ -227,7 +237,7 @@
 	icon_state = "[base_icon_state]_inactive"
 	worn_icon_state = "[base_icon_state]_inactive"
 
-	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
+	addtimer(CALLBACK(src, PROC_REF(GoActive)), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -245,12 +255,12 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+	if(M.get_organ_by_type(/obj/item/organ/internal/alien/hivenode))
 		return FALSE
 	var/mob/living/carbon/C = M
-	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))
+	if(ishuman(C) && !(C.dna.species.no_equip_flags & ITEM_SLOT_MASK))
 		var/mob/living/carbon/human/H = C
-		if(H.is_mouth_covered(head_only = 1))
+		if(H.is_mouth_covered(ITEM_SLOT_HEAD))
 			return FALSE
 		return TRUE
 	return FALSE
@@ -268,7 +278,7 @@
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
+	inhand_icon_state = null
 	worn_icon_state = "facehugger_impregnated"
 	stat = DEAD
 

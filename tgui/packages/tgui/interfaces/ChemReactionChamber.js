@@ -1,16 +1,11 @@
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const [reagentName, setReagentName] = useLocalState(
-    context,
-    'reagentName',
-    ''
-  );
   const [reagentQuantity, setReagentQuantity] = useLocalState(
     context,
     'reagentQuantity',
@@ -176,11 +171,15 @@ export const ChemReactionChamber = (props, context) => {
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item grow>
-                      <Input
-                        fluid
-                        value=""
-                        placeholder="Reagent Name"
-                        onInput={(e, value) => setReagentName(value)}
+                      <Button
+                        content="Add Reagent"
+                        color="good"
+                        icon="plus"
+                        onClick={() =>
+                          act('add', {
+                            amount: reagentQuantity,
+                          })
+                        }
                       />
                     </Stack.Item>
                     <Stack.Item>
@@ -194,17 +193,6 @@ export const ChemReactionChamber = (props, context) => {
                         onDrag={(e, value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        icon="plus"
-                        onClick={() =>
-                          act('add', {
-                            chem: reagentName,
-                            amount: reagentQuantity,
-                          })
-                        }
-                      />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>

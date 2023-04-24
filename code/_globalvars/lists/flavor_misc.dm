@@ -224,8 +224,8 @@ GLOBAL_LIST_INIT(backpacklist, list(
 GLOBAL_LIST_EMPTY(female_clothing_icons)
 
 GLOBAL_LIST_INIT(scarySounds, list(
-	'sound/effects/clownstep1.ogg',
-	'sound/effects/clownstep2.ogg',
+	'sound/effects/footstep/clownstep1.ogg',
+	'sound/effects/footstep/clownstep2.ogg',
 	'sound/effects/glassbr1.ogg',
 	'sound/effects/glassbr2.ogg',
 	'sound/effects/glassbr3.ogg',
@@ -335,3 +335,19 @@ GLOBAL_LIST_INIT(admiral_messages, list(
 ))
 
 GLOBAL_LIST_INIT(junkmail_messages, world.file2list("strings/junkmail.txt"))
+
+// All valid inputs to status display post_status
+GLOBAL_LIST_INIT(status_display_approved_pictures, list(
+	"blank",
+	"shuttle",
+	"default",
+	"biohazard",
+	"lockdown",
+	"redalert",
+))
+
+// Members of status_display_approved_pictures that are actually states and not alert values
+GLOBAL_LIST_INIT(status_display_state_pictures, list(
+	"blank",
+	"shuttle",
+))

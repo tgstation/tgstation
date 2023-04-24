@@ -46,10 +46,8 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/power/apc/syndicate{
-	name = "Telecommunications APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -120,7 +118,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/modular_computer/tablet/pda/chameleon/broken{
+/obj/item/modular_computer/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
 	},

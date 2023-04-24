@@ -1,20 +1,22 @@
 /obj/item/storage
 	name = "storage"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
 	/// SANTA IS EVIL
 	var/preload = FALSE
+	/// What storage type to use for this item
+	var/datum/storage/storage_type = /datum/storage
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
 
-	create_storage()
-	
+	create_storage(storage_type = storage_type)
+
 	PopulateContents()
-	
+
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
 

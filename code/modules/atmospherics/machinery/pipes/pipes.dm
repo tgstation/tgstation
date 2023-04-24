@@ -15,8 +15,6 @@
 	buckle_requires_restraints = TRUE
 	buckle_lying = NO_BUCKLE_LYING
 
-	vis_flags = VIS_INHERIT_PLANE
-
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
@@ -107,9 +105,9 @@
 	icon_state = "[bitfield]_[piping_layer]"
 
 /obj/machinery/atmospherics/pipe/update_icon()
-	. = ..()
 	update_pipe_icon()
 	update_layer()
+	return ..()
 
 /obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)
@@ -124,7 +122,7 @@
 /obj/machinery/atmospherics/pipe/paint(paint_color)
 	if(paintable)
 		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = paint_color
+		set_pipe_color(pipe_color)
 		update_node_icon()
 	return paintable
 

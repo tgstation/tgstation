@@ -9,6 +9,7 @@
 /datum/symptom/confusion
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."
+	illness = "Shattered Reality"
 	stealth = 1
 	resistance = -1
 	stage_speed = -3
@@ -56,7 +57,7 @@
 				to_chat(infected_mob, span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"))
 		else
 			to_chat(infected_mob, span_userdanger("You can't think straight!"))
-			infected_mob.adjust_timed_status_effect(16 SECONDS * power, /datum/status_effect/confusion)
+			infected_mob.adjust_confusion(16 SECONDS * power)
 			if(brain_damage)
 				infected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				infected_mob.updatehealth()

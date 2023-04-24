@@ -24,4 +24,4 @@
 	if(!istype(shell) || get_dist(shell, target_atom) > 1 || shell.z != target_atom.z)
 		return
 
-	INVOKE_ASYNC(shell, /atom/movable.proc/start_pulling, target_atom)
+	INVOKE_ASYNC(shell, TYPE_PROC_REF(/atom/movable, start_pulling), target_atom)

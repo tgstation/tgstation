@@ -1,5 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { createSearch } from 'common/string';
+import { Box, Button, Dimmer, Icon, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
 const NoIDDimmer = (props, context) => {
@@ -29,13 +30,20 @@ const NoIDDimmer = (props, context) => {
 
 export const NtosMessenger = (props, context) => {
   const { act, data } = useBackend(context);
+  const { viewing_messages } = data;
+  if (viewing_messages) {
+    return <MessageListScreen />;
+  }
+  return <ContactsScreen />;
+};
+
+const ContactsScreen = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     owner,
-    messages = [],
     ringer_status,
     sending_and_receiving,
     messengers = [],
-    viewing_messages,
     sortByJob,
     canSpam,
     isSilicon,
@@ -43,56 +51,13 @@ export const NtosMessenger = (props, context) => {
     virus_attach,
     sending_virus,
   } = data;
-  if (viewing_messages) {
-    return (
-      <NtosWindow width={600} height={800}>
-        <NtosWindow.Content>
-          <Stack vertical>
-            <Section fill>
-              <Button
-                icon="arrow-left"
-                content="Back"
-                onClick={() => act('PDA_viewMessages')}
-              />
-              <Button
-                icon="trash"
-                content="Clear Messages"
-                onClick={() => act('PDA_clearMessages')}
-              />
-            </Section>
-            {messages.map((message) => (
-              <Stack vertical key={message} mt={1}>
-                <Section fill textAlign="left">
-                  <Box italic opacity={0.5}>
-                    {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
-                  </Box>
-                  {message.outgoing ? (
-                    <Box bold>{message.name + ' (' + message.job + ')'}</Box>
-                  ) : (
-                    <Button
-                      transparent
-                      content={message.name + ' (' + message.job + ')'}
-                      onClick={() =>
-                        act('PDA_sendMessage', {
-                          name: message.name,
-                          job: message.job,
-                          ref: message.ref,
-                        })
-                      }
-                    />
-                  )}
-                </Section>
-                <Section mt={-1}>
-                  <Box italic>{message.contents}</Box>
-                  {!!message.photo && <Box as="img" src={message.photo} />}
-                </Section>
-              </Stack>
-            ))}
-          </Stack>
-        </NtosWindow.Content>
-      </NtosWindow>
-    );
-  }
+  const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+  const search = createSearch(
+    searchUser,
+    (messengers) => messengers.name + messengers.job
+  );
+  let users =
+    searchUser.length > 0 ? data.messengers.filter(search) : messengers;
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
@@ -100,7 +65,7 @@ export const NtosMessenger = (props, context) => {
           <Section fill textAlign="center">
             <Box bold>
               <Icon name="address-card" mr={1} />
-              SpaceMessenger V6.4.7
+              SpaceMessenger V6.4.8
             </Box>
             <Box italic opacity={0.3}>
               Bringing you spy-proof communications since 2467.
@@ -139,6 +104,13 @@ export const NtosMessenger = (props, context) => {
                 content={`Sort by: ${sortByJob ? 'Job' : 'Name'}`}
                 onClick={() => act('PDA_changeSortStyle')}
               />
+              {!!isSilicon && (
+                <Button
+                  icon="camera"
+                  content="Attach Photo"
+                  onClick={() => act('PDA_selectPhoto')}
+                />
+              )}
               {!!virus_attach && (
                 <Button
                   icon="bug"
@@ -167,12 +139,21 @@ export const NtosMessenger = (props, context) => {
           <Section fill textAlign="center">
             <Icon name="address-card" mr={1} />
             Detected Messengers
+            <Input
+              width="220px"
+              placeholder="Search by name or job..."
+              value={searchUser}
+              onInput={(e, value) => setSearchUser(value)}
+              mx={1}
+              ml={27}
+            />
           </Section>
         </Stack>
         <Stack vertical mt={1}>
           <Section fill>
             <Stack vertical>
-              {messengers.map((messenger) => (
+              {users.length === 0 && 'No users found'}
+              {users.map((messenger) => (
                 <Button
                   key={messenger.ref}
                   fluid
@@ -198,6 +179,61 @@ export const NtosMessenger = (props, context) => {
           </Section>
         </Stack>
         {!owner && !isSilicon && <NoIDDimmer />}
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+const MessageListScreen = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { messages = [] } = data;
+  return (
+    <NtosWindow width={600} height={800}>
+      <NtosWindow.Content scrollable>
+        <Stack vertical>
+          <Section fill>
+            <Button
+              icon="arrow-left"
+              content="Back"
+              onClick={() => act('PDA_viewMessages')}
+            />
+            <Button
+              icon="trash"
+              content="Clear Messages"
+              onClick={() => act('PDA_clearMessages')}
+            />
+          </Section>
+          {messages.map((message) => (
+            <Stack vertical key={message} mt={1}>
+              <Section textAlign="left">
+                <Box italic opacity={0.5} mb={1}>
+                  {message.outgoing ? '(OUTGOING)' : '(INCOMING)'}
+                </Box>
+                {message.outgoing ? (
+                  <Box bold>{message.target_details}</Box>
+                ) : (
+                  <Button
+                    transparent
+                    content={message.name + ' (' + message.job + ')'}
+                    onClick={() =>
+                      act('PDA_sendMessage', {
+                        name: message.name,
+                        job: message.job,
+                        ref: message.ref,
+                      })
+                    }
+                  />
+                )}
+              </Section>
+              <Section fill mt={-1}>
+                <Box italic>{message.contents}</Box>
+                {!!message.photo && (
+                  <Box as="img" src={message.photo_path} mt={1} />
+                )}
+              </Section>
+            </Stack>
+          ))}
+        </Stack>
       </NtosWindow.Content>
     </NtosWindow>
   );

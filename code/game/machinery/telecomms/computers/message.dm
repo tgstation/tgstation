@@ -60,7 +60,7 @@
 		// Will help make emagging the console not so easy to get away with.
 		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
 		var/time = 100 * length(linkedServer.decryptkey)
-		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+		addtimer(CALLBACK(src, PROC_REF(UnmagConsole)), time)
 		message = rebootmsg
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
@@ -345,7 +345,7 @@
 				hacking = TRUE
 				screen = MSG_MON_SCREEN_HACKED
 				//Time it takes to bruteforce is dependant on the password length.
-				addtimer(CALLBACK(src, .proc/finish_bruteforce, usr), 100*length(linkedServer.decryptkey))
+				addtimer(CALLBACK(src, PROC_REF(finish_bruteforce), usr), 100*length(linkedServer.decryptkey))
 
 		//Delete the log.
 		if (href_list["delete_logs"])
@@ -393,8 +393,11 @@
 					if("Recepient")
 						// Get out list of viable tablets
 						var/list/viewable_tablets = list()
-						for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
-							if(!tablet.saved_identification || tablet.invisible)
+						for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
+							var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
+							if(!message_app || message_app.invisible)
+								continue
+							if(!tablet.saved_identification)
 								continue
 							viewable_tablets += tablet
 						if(length(viewable_tablets) > 0)
@@ -429,7 +432,6 @@
 							"message" = html_decode(custommessage),
 							"ref" = REF(src),
 							"targets" = list(customrecepient),
-							"emojis" = FALSE,
 							"rigged" = FALSE,
 							"automated" = FALSE,
 						))

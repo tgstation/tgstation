@@ -104,19 +104,19 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, on)
 	GLOB.telecomms_list += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/LateInitialize()
 	..()
-	for(var/obj/machinery/telecomms/T in (long_range_link ? GLOB.telecomms_list : urange(20, src, 1)))
-		add_automatic_link(T)
+
+	for(var/obj/machinery/telecomms/telecomms_machine in GLOB.telecomms_list)
+		if (long_range_link || IN_GIVEN_RANGE(src, telecomms_machine, 20))
+			add_automatic_link(telecomms_machine)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src
-	QDEL_NULL(soundloop)
 	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		remove_link(comm)
 	links = list()
@@ -139,27 +139,27 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	icon_state = "[initial(icon_state)][panel_open ? "_o" : null][on ? null : "_off"]"
 	return ..()
 
-/obj/machinery/telecomms/proc/update_power()
+/obj/machinery/telecomms/on_set_panel_open(old_value)
+	update_appearance()
+	return ..()
 
+/obj/machinery/telecomms/proc/update_power()
+	var/old_on = on
 	if(toggled)
 		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
-			soundloop.stop()
 		else
 			on = TRUE
-			soundloop.start()
 	else
 		on = FALSE
-		soundloop.stop()
+	if(old_on != on)
+		update_appearance()
 
-/obj/machinery/telecomms/process(delta_time)
+/obj/machinery/telecomms/process(seconds_per_tick)
 	update_power()
 
-	// Update the icon
-	update_appearance()
-
 	if(traffic > 0)
-		traffic -= netspeed * delta_time
+		traffic -= netspeed * seconds_per_tick
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(prob(100/severity) && !(machine_stat & EMPED))
 		set_machine_stat(machine_stat | EMPED)
 		var/duration = (300 * 10)/severity
-		addtimer(CALLBACK(src, .proc/de_emp), rand(duration - 20, duration + 20))
+		addtimer(CALLBACK(src, PROC_REF(de_emp)), rand(duration - 20, duration + 20))
 
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)

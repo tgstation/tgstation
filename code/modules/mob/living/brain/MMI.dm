@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -84,7 +84,7 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
+		var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
@@ -107,7 +107,7 @@
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
-		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -132,7 +132,7 @@
 		brainmob.emp_damage = 0
 		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		brain.brainmob = brainmob //Set the brain to use the brainmob
-		log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
+		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
 		brainmob = null //Set mmi brainmob var to null
 	brain.forceMove(drop_location())
 	if(Adjacent(user))
@@ -154,7 +154,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.get_organ_by_type(/obj/item/organ/internal/brain)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -179,15 +179,12 @@
 	brainmob = new_brainmob
 	if(new_brainmob)
 		if(mecha)
-			REMOVE_TRAIT(new_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-			REMOVE_TRAIT(new_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+			new_brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 		else
-			ADD_TRAIT(new_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-			ADD_TRAIT(new_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+			new_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	if(.)
 		var/mob/living/brain/old_brainmob = .
-		ADD_TRAIT(old_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-		ADD_TRAIT(old_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+		old_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 
 /// Proc to hook behavior associated to the change in value of the [obj/vehicle/sealed/var/mecha] variable.
@@ -198,11 +195,9 @@
 	mecha = new_mecha
 	if(new_mecha)
 		if(!. && brainmob) // There was no mecha, there now is, and we have a brain mob that is no longer unaided.
-			REMOVE_TRAIT(brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-			REMOVE_TRAIT(brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+			brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	else if(. && brainmob) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
-		ADD_TRAIT(brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-		ADD_TRAIT(brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+		brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 
 /obj/item/mmi/proc/replacement_ai_name()
@@ -275,7 +270,7 @@
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
 		return FALSE
-	if(B.suiciding || brain?.suicided)
+	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
 		if(user)
 			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
 		return FALSE

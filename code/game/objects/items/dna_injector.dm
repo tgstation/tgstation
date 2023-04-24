@@ -1,8 +1,9 @@
 /obj/item/dnainjector
 	name = "\improper DNA injector"
 	desc = "A cheap single use autoinjector that injects the user with DNA."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "dnainjector"
+	inhand_icon_state = "dnainjector"
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -17,35 +18,53 @@
 
 	var/used = FALSE
 
+/obj/item/dnainjector/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	if(used)
+		update_appearance()
+
+/obj/item/dnainjector/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, used))
+		update_appearance()
+
+/obj/item/dnainjector/update_icon_state()
+	. = ..()
+	icon_state = inhand_icon_state = "[initial(icon_state)][used ? "0" : null]"
+
+/obj/item/dnainjector/update_desc(updates)
+	. = ..()
+	desc = "[initial(desc)][used ? "This one is used up." : null]"
 
 /obj/item/dnainjector/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/target, mob/user)
-	if(target.has_dna() && !HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		for(var/removed_mutation in remove_mutations)
-			target.dna.remove_mutation(removed_mutation)
-		for(var/added_mutation in add_mutations)
-			if(added_mutation == /datum/mutation/human/race)
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
-			if(target.dna.mutation_in_sequence(added_mutation))
-				target.dna.activate_mutation(added_mutation)
-			else
-				target.dna.add_mutation(added_mutation, MUT_EXTRA)
-		if(fields)
-			if(fields["name"] && fields["UE"] && fields["blood_type"])
-				target.real_name = fields["name"]
-				target.dna.unique_enzymes = fields["UE"]
-				target.name = target.real_name
-				target.dna.blood_type = fields["blood_type"]
-			if(fields["UI"]) //UI+UE
-				target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
-			if(fields["UF"])
-				target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
-			if(fields["UI"] || fields["UF"])
-				target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-		return TRUE
-	return FALSE
+	if(!target.can_mutate())
+		return FALSE
+	for(var/removed_mutation in remove_mutations)
+		target.dna.remove_mutation(removed_mutation)
+	for(var/added_mutation in add_mutations)
+		if(added_mutation == /datum/mutation/human/race)
+			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
+		if(target.dna.mutation_in_sequence(added_mutation))
+			target.dna.activate_mutation(added_mutation)
+		else
+			target.dna.add_mutation(added_mutation, MUT_EXTRA)
+	if(fields)
+		if(fields["name"] && fields["UE"] && fields["blood_type"])
+			target.real_name = fields["name"]
+			target.dna.unique_enzymes = fields["UE"]
+			target.name = target.real_name
+			target.dna.blood_type = fields["blood_type"]
+		if(fields["UI"]) //UI+UE
+			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
+		if(fields["UF"])
+			target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
+		if(fields["UI"] || fields["UF"])
+			target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	return TRUE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
@@ -63,7 +82,7 @@
 	if(target != user)
 		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
 			span_userdanger("[user] is trying to inject you with [src]!"))
-		if(!do_mob(user, target) || used)
+		if(!do_after(user, 3 SECONDS, target) || used)
 			return
 		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
 						span_userdanger("[user] injects you with the syringe with [src]!"))
@@ -77,8 +96,7 @@
 		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
 
 	used = TRUE
-	icon_state = "dnainjector0"
-	desc += " This one is used up."
+	update_appearance()
 
 /obj/item/dnainjector/timed
 	var/duration = 600
@@ -87,52 +105,50 @@
 	if(target.stat == DEAD) //prevents dead people from having their DNA changed
 		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
 		return FALSE
-
-	if(target.has_dna() && !(HAS_TRAIT(target, TRAIT_BADDNA)))
-		var/endtime = world.time + duration
-		for(var/mutation in remove_mutations)
-			if(mutation == /datum/mutation/human/race)
-				if(!ismonkey(target))
-					continue
-				target = target.dna.remove_mutation(mutation)
-			else
-				target.dna.remove_mutation(mutation)
-		for(var/mutation in add_mutations)
-			if(target.dna.get_mutation(mutation))
-				continue //Skip permanent mutations we already have.
-			if(mutation == /datum/mutation/human/race && !ismonkey(target))
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
-				target = target.dna.add_mutation(mutation, MUT_OTHER, endtime)
-			else
-				target.dna.add_mutation(mutation, MUT_OTHER, endtime)
-		if(fields)
-			if(fields["name"] && fields["UE"] && fields["blood_type"])
-				if(!target.dna.previous["name"])
-					target.dna.previous["name"] = target.real_name
-				if(!target.dna.previous["UE"])
-					target.dna.previous["UE"] = target.dna.unique_enzymes
-				if(!target.dna.previous["blood_type"])
-					target.dna.previous["blood_type"] = target.dna.blood_type
-				target.real_name = fields["name"]
-				target.dna.unique_enzymes = fields["UE"]
-				target.name = target.real_name
-				target.dna.blood_type = fields["blood_type"]
-				target.dna.temporary_mutations[UE_CHANGED] = endtime
-			if(fields["UI"]) //UI+UE
-				if(!target.dna.previous["UI"])
-					target.dna.previous["UI"] = target.dna.unique_identity
-				target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
-				target.dna.temporary_mutations[UI_CHANGED] = endtime
-			if(fields["UF"]) //UI+UE
-				if(!target.dna.previous["UF"])
-					target.dna.previous["UF"] = target.dna.unique_features
-				target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
-				target.dna.temporary_mutations[UF_CHANGED] = endtime
-			if(fields["UI"] || fields["UF"])
-				target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-		return TRUE
-	else
+	if(!target.can_mutate())
 		return FALSE
+	var/endtime = world.time + duration
+	for(var/mutation in remove_mutations)
+		if(mutation == /datum/mutation/human/race)
+			if(!ismonkey(target))
+				continue
+			target = target.dna.remove_mutation(mutation)
+		else
+			target.dna.remove_mutation(mutation)
+	for(var/mutation in add_mutations)
+		if(target.dna.get_mutation(mutation))
+			continue //Skip permanent mutations we already have.
+		if(mutation == /datum/mutation/human/race && !ismonkey(target))
+			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
+			target = target.dna.add_mutation(mutation, MUT_OTHER, endtime)
+		else
+			target.dna.add_mutation(mutation, MUT_OTHER, endtime)
+	if(fields)
+		if(fields["name"] && fields["UE"] && fields["blood_type"])
+			if(!target.dna.previous["name"])
+				target.dna.previous["name"] = target.real_name
+			if(!target.dna.previous["UE"])
+				target.dna.previous["UE"] = target.dna.unique_enzymes
+			if(!target.dna.previous["blood_type"])
+				target.dna.previous["blood_type"] = target.dna.blood_type
+			target.real_name = fields["name"]
+			target.dna.unique_enzymes = fields["UE"]
+			target.name = target.real_name
+			target.dna.blood_type = fields["blood_type"]
+			target.dna.temporary_mutations[UE_CHANGED] = endtime
+		if(fields["UI"]) //UI+UE
+			if(!target.dna.previous["UI"])
+				target.dna.previous["UI"] = target.dna.unique_identity
+			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
+			target.dna.temporary_mutations[UI_CHANGED] = endtime
+		if(fields["UF"]) //UI+UE
+			if(!target.dna.previous["UF"])
+				target.dna.previous["UF"] = target.dna.unique_features
+			target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
+			target.dna.temporary_mutations[UF_CHANGED] = endtime
+		if(fields["UI"] || fields["UF"])
+			target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	return TRUE
 
 /obj/item/dnainjector/timed/hulk
 	name = "\improper DNA injector (Hulk)"
@@ -153,24 +169,23 @@
 	var/crispr_charge = FALSE // Look for viruses, look at symptoms, if research and Dormant DNA Activator or Viral Evolutionary Acceleration, set to true
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/target, mob/user)
-	if(target.has_dna() && !HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		for(var/mutation in add_mutations)
-			var/datum/mutation/human/added_mutation = mutation
-			if(istype(added_mutation, /datum/mutation/human))
-				mutation = added_mutation.type
-			if(!target.dna.activate_mutation(added_mutation))
-				if(doitanyway)
-					target.dna.add_mutation(added_mutation, MUT_EXTRA)
-			else if(research && target.client)
-				filled = TRUE
-
-			for(var/datum/disease/advance/disease in target.diseases)
-				for(var/datum/symptom/symp in disease.symptoms)
-					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
-						crispr_charge = TRUE
-			log_combat(user, target, "[!doitanyway ? "failed to inject" : "injected"]", "[src] ([mutation])[crispr_charge ? " with CRISPR charge" : ""]")
-		return TRUE
-	return FALSE
+	if(!target.can_mutate())
+		return FALSE
+	for(var/mutation in add_mutations)
+		var/datum/mutation/human/added_mutation = mutation
+		if(istype(added_mutation, /datum/mutation/human))
+			mutation = added_mutation.type
+		if(!target.dna.activate_mutation(added_mutation))
+			if(doitanyway)
+				target.dna.add_mutation(added_mutation, MUT_EXTRA)
+		else if(research && target.client)
+			filled = TRUE
+		for(var/datum/disease/advance/disease in target.diseases)
+			for(var/datum/symptom/symp in disease.symptoms)
+				if((symp.type == /datum/symptom/genetic_mutation) || (symp.type == /datum/symptom/viralevolution))
+					crispr_charge = TRUE
+		log_combat(user, target, "[!doitanyway ? "failed to inject" : "injected"]", "[src] ([mutation])[crispr_charge ? " with CRISPR charge" : ""]")
+	return TRUE
 
 /// DNA INJECTORS
 
@@ -559,3 +574,11 @@
 /obj/item/dnainjector/antiwebbing
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(/datum/mutation/human/webbing)
+
+/obj/item/dnainjector/clever
+	name = "\improper DNA injector (Clever)"
+	add_mutations = list(/datum/mutation/human/clever)
+
+/obj/item/dnainjector/anticlever
+	name = "\improper DNA injector (Anti-Clever)"
+	remove_mutations = list(/datum/mutation/human/clever)

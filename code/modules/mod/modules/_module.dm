@@ -41,10 +41,8 @@
 	var/used_signal
 	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
-	/// If we're allowed to use this module while phased out.
-	var/allowed_in_phaseout = FALSE
-	/// If we're allowed to use this module while the suit is disabled.
-	var/allowed_inactive = FALSE
+	/// flags that let the module ability be used in odd circumstances
+	var/allow_flags = NONE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -55,8 +53,8 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_QDELETING, .proc/on_device_deletion)
-		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+		RegisterSignal(device, COMSIG_PARENT_QDELETING, PROC_REF(on_device_deletion))
+		RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
@@ -73,7 +71,7 @@
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
-	if(((!mod.active || mod.activating) && !allowed_inactive) || module_type == MODULE_PASSIVE)
+	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
@@ -94,7 +92,7 @@
 	if(!mod.active || mod.activating || !mod.get_charge())
 		balloon_alert(mod.wearer, "unpowered!")
 		return FALSE
-	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
+	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
 		return FALSE
@@ -107,8 +105,8 @@
 		if(device)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
-				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
+				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
+				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey))
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
@@ -149,21 +147,21 @@
 	if(!check_power(use_power_cost))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
-	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
+	if(!(allow_flags & MODULE_ALLOW_PHASEOUT) && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_clothing, mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
-	if(mod.wearer.incapacitated(IGNORE_GRAB))
+	if(!(allow_flags & MODULE_ALLOW_INCAPACITATED) && mod.wearer.incapacitated(IGNORE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
 	if(!on_use())
@@ -177,18 +175,18 @@
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process
-/obj/item/mod/module/proc/on_process(delta_time)
+/obj/item/mod/module/proc/on_process(seconds_per_tick)
 	if(active)
-		if(!drain_power(active_power_cost * delta_time))
+		if(!drain_power(active_power_cost * seconds_per_tick))
 			on_deactivation()
 			return FALSE
-		on_active_process(delta_time)
+		on_active_process(seconds_per_tick)
 	else
-		drain_power(idle_power_cost * delta_time)
+		drain_power(idle_power_cost * seconds_per_tick)
 	return TRUE
 
 /// Called on the MODsuit's process if it is an active module
-/obj/item/mod/module/proc/on_active_process(delta_time)
+/obj/item/mod/module/proc/on_active_process(seconds_per_tick)
 	return
 
 /// Called from MODsuit's install() proc, so when the module is installed.
@@ -264,6 +262,12 @@
 		device = null
 		qdel(src)
 
+/// Adds the worn overlays to the suit.
+/obj/item/mod/module/proc/add_module_overlay(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+	SIGNAL_HANDLER
+
+	overlays += generate_worn_overlay(standing)
+
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
@@ -290,10 +294,13 @@
 			mod.selected_module.used_signal = COMSIG_MOB_MIDDLECLICKON
 		if(ALT_CLICK)
 			mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
-	RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
+	RegisterSignal(mod.wearer, mod.selected_module.used_signal, TYPE_PROC_REF(/obj/item/mod/module, on_special_click))
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
+	if(module_type == MODULE_PASSIVE)
+		return
+
 	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
 	if(existing_action)
 		mod.remove_item_action(existing_action)
@@ -354,12 +361,12 @@
 		return
 	return ..()
 
-/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_process(seconds_per_tick)
 	. = ..()
 	if(!core)
 		return FALSE
 
-/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_active_process(seconds_per_tick)
 	if(!core)
 		return FALSE
 	return TRUE

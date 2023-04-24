@@ -1,6 +1,3 @@
-#define REVOLUTION_VICTORY 1
-#define STATION_VICTORY 2
-
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	// If you want to change this variable name, the force latejoin/midround rulesets
@@ -31,7 +28,12 @@
 	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list()
+	var/list/enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
@@ -80,6 +82,9 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
+	/// A list, or null, of templates that the ruleset depends on to function correctly
+	var/list/ruleset_lazy_templates
+
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
@@ -104,15 +109,15 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
+		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
 		return FALSE
 
 	if(maximum_players > 0 && population > maximum_players)
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
+		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
 		return FALSE
 
 	if (threat_level < requirements[indice_pop])
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
+		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
 		return FALSE
 
 	return TRUE
@@ -168,6 +173,11 @@
 /datum/dynamic_ruleset/proc/ready(forced = 0)
 	return check_candidates()
 
+/// This should always be called before ready is, to ensure that the ruleset can locate map/template based landmarks as needed
+/datum/dynamic_ruleset/proc/load_templates()
+	for(var/template in ruleset_lazy_templates)
+		SSmapping.lazy_load_template(template)
+
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
 /datum/dynamic_ruleset/proc/clean_up()
@@ -189,7 +199,7 @@
 	if (required_candidates <= candidates.len)
 		return TRUE
 
-	log_game("DYNAMIC: FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
+	log_dynamic("FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
 	return FALSE
 
 /// Here you can remove candidates that do not meet your requirements.
@@ -239,7 +249,7 @@
 			for(var/role in exclusive_roles)
 				var/datum/job/job = SSjob.GetJob(role)
 
-				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE) == JOB_AVAILABLE)
 					exclusive_candidate = TRUE
 					break
 

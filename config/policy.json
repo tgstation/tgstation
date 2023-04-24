@@ -1,1 +1,5 @@
-{}
+{
+	"How do I set policy?": "Policy is set in this file. It's simply setting the key to the text to show up.",
+	"Where is policy shown?": "Most, but not all policy text, is displayed when releveant, such as on gaining a role.",
+	"What can I all set policy of?": "Antagonist typepaths, mob typepaths, species typepaths, special roles, and some extra special policy keys are all valid. Consult the code."
+}

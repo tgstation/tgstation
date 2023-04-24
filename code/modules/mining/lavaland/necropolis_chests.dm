@@ -28,7 +28,7 @@
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
-			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/reagent_containers/cup/bottle/potion/flight(src)
 		if(6)
 			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
@@ -106,7 +106,13 @@
 	new /obj/item/crusher_trophy/tail_spike(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum
-	name = "bubblegum chest"
+	name = "\improper Ancient Sarcophagus"
+	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
+	icon_state = "necro_bubblegum"
+	lid_icon_state = "necro_bubblegum_lid"
+	lid_x = -26
+	lid_y = 2
+
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)

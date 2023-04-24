@@ -1,13 +1,13 @@
 #define PAINTINGS_DATA_FORMAT_VERSION 2
 
 // Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
-#define PATRONAGE_OK_FRAME PAYCHECK_CREW * 3 // 150 credits, as of march 2022
-#define PATRONAGE_NICE_FRAME PATRONAGE_OK_FRAME * 2.5
-#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME * 2
-#define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2
-#define PATRONAGE_AMAZING_FRAME PATRONAGE_EXCELLENT_FRAME * 2
-#define PATRONAGE_SUPERB_FRAME PATRONAGE_AMAZING_FRAME * 2
-#define PATRONAGE_LEGENDARY_FRAME PATRONAGE_SUPERB_FRAME * 2
+#define PATRONAGE_OK_FRAME (PAYCHECK_CREW * 3) // 150 credits, as of march 2022
+#define PATRONAGE_NICE_FRAME (PATRONAGE_OK_FRAME * 2.5)
+#define PATRONAGE_GREAT_FRAME (PATRONAGE_NICE_FRAME * 2)
+#define PATRONAGE_EXCELLENT_FRAME (PATRONAGE_GREAT_FRAME * 2)
+#define PATRONAGE_AMAZING_FRAME (PATRONAGE_EXCELLENT_FRAME * 2)
+#define PATRONAGE_SUPERB_FRAME (PATRONAGE_AMAZING_FRAME * 2)
+#define PATRONAGE_LEGENDARY_FRAME (PATRONAGE_SUPERB_FRAME * 2)
 
 /*
 {
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"supermatter" = PATRONAGE_LEGENDARY_FRAME
 			)
 
-/datum/controller/subsystem/persistent_paintings/Initialize(start_timeofday)
+/datum/controller/subsystem/persistent_paintings/Initialize()
 	var/json_file = file("data/paintings.json")
 	if(fexists(json_file))
 		var/list/raw_data = update_format(json_decode(file2text(json_file)))
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.load_persistent()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Generates painting data ready to be consumed by ui.
@@ -305,6 +305,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
 
+#undef PAINTINGS_DATA_FORMAT_VERSION
 #undef PATRONAGE_OK_FRAME
 #undef PATRONAGE_NICE_FRAME
 #undef PATRONAGE_GREAT_FRAME

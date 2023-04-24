@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(economy)
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
 
-/datum/controller/subsystem/economy/Initialize(timeofday)
+/datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(economy)
 			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/Recover()
 	generated_accounts = SSeconomy.generated_accounts
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(economy)
 #define ECON_PRICE_UPDATE_STEP "econ_prc_stp"
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	var/delta_time = wait / (5 MINUTES)
+	var/seconds_per_tick = wait / (5 MINUTES)
 
 	if(!resumed)
 		temporary_total = 0
@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(economy)
 			return
 
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
+	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(economy)
  * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
  */
 /datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
-	if(!account || !price_to_use || !vendor)
+	if(!account || isnull(price_to_use) || !vendor)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(
@@ -227,3 +227,7 @@ SUBSYSTEM_DEF(economy)
 		"cost" = price_to_use,
 		"vendor" = vendor,
 	))
+
+#undef ECON_DEPARTMENT_STEP
+#undef ECON_ACCOUNT_STEP
+#undef ECON_PRICE_UPDATE_STEP

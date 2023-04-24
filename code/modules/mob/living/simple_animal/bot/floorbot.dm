@@ -1,8 +1,16 @@
+#define HULL_BREACH 1
+#define LINE_SPACE_MODE 2
+#define FIX_TILE 3
+#define AUTO_TILE 4
+#define PLACE_TILE 5
+#define REPLACE_TILE 6
+#define TILE_EMAG 7
+
 //Floorbot
 /mob/living/simple_animal/bot/floorbot
 	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "floorbot0"
 	density = FALSE
 	health = 25
@@ -23,18 +31,9 @@
 	var/obj/item/stack/tile/tilestack
 	var/fixfloors = TRUE
 	var/autotile = FALSE
-	var/max_targets = 50
 	var/turf/target
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
-
-	#define HULL_BREACH 1
-	#define LINE_SPACE_MODE 2
-	#define FIX_TILE 3
-	#define AUTO_TILE 4
-	#define PLACE_TILE 5
-	#define REPLACE_TILE 6
-	#define TILE_EMAG 7
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
@@ -73,7 +72,6 @@
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
 	target = null
-	ignore_list = list()
 	toggle_magnet(FALSE)
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
@@ -228,7 +226,6 @@
 	if(target)
 		if(loc == target || loc == get_turf(target))
 			if(check_bot(target)) //Target is not defined at the parent
-				shuffle = TRUE
 				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
@@ -240,19 +237,19 @@
 				toggle_magnet()
 				mode = BOT_REPAIRING
 				if(isplatingturf(F))
-					F.ReplaceWithLattice()
+					F.attempt_lattice_replacement()
 				else
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 				audible_message(span_danger("[src] makes an excited booping sound."))
-				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(go_idle)), 0.5 SECONDS)
 			path = list()
 			return
 		if(!length(path))
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, max_distance=30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, max_distance=30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -414,3 +411,11 @@
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
+
+#undef HULL_BREACH
+#undef LINE_SPACE_MODE
+#undef FIX_TILE
+#undef AUTO_TILE
+#undef PLACE_TILE
+#undef REPLACE_TILE
+#undef TILE_EMAG

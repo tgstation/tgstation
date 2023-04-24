@@ -6,7 +6,7 @@
 	icon_state = "stasis"
 	base_icon_state = "stasis"
 	density = FALSE
-	obj_flags = NO_BUILD
+	obj_flags = BLOCKS_CONSTRUCTION
 	can_buckle = TRUE
 	buckle_lying = 90
 	circuit = /obj/item/circuitboard/machine/stasis
@@ -39,7 +39,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(world.time >= stasis_can_toggle && user.canUseTopic(src, !issilicon(user)))
+	if(world.time >= stasis_can_toggle && user.can_perform_action(src, ALLOW_SILICON_REACH))
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
@@ -88,6 +88,11 @@
 		var/easing_direction = _running ? EASE_OUT : EASE_IN
 		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
+/obj/machinery/stasis/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	SET_PLANE(mattress_on, PLANE_TO_TRUE(mattress_on.plane), new_turf)
+	return ..()
 
 /obj/machinery/stasis/atom_break(damage_flag)
 	. = ..()

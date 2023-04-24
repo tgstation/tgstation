@@ -43,6 +43,14 @@
 #define SHOCK (1<<3)
 #define SAFE (1<<4)
 
+//defines to be used with the door's open()/close() procs in order to discriminate what type of open is being done. The door will never open if it's been physically disabled (i.e. welded, sealed, etc.).
+/// We should go through the door's normal opening procedure, no overrides.
+#define DEFAULT_DOOR_CHECKS 0
+/// We're not going through the door's normal opening procedure, we're forcing it open. Can still fail if it's emagged or something. Costs power.
+#define FORCING_DOOR_CHECKS 1
+/// We are getting this door open if it has not been physically held shut somehow. Play a special sound to signify this level of opening.
+#define BYPASS_DOOR_CHECKS 2
+
 //used in design to specify which machine can build it
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
@@ -59,66 +67,8 @@
 #define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
-//Modular computer/NTNet defines
-
-//Modular computer part defines
-#define MC_HDD "HDD"
-#define MC_SDD "SDD"
-#define MC_CARD "CARD"
-#define MC_CARD2 "CARD2"
-#define MC_NET "NET"
-#define MC_PRINT "PRINT"
-#define MC_CELL "CELL"
-#define MC_CHARGE "CHARGE"
-#define MC_AI "AI"
-
-//NTNet stuff, for modular computers
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
-#define NTNET_SOFTWAREDOWNLOAD 1 // Downloads of software from NTNet
-#define NTNET_PEERTOPEER 2 // P2P transfers of files between devices
-#define NTNET_COMMUNICATION 3 // Communication (messaging)
-#define NTNET_SYSTEMCONTROL 4 // Control of various systems, RCon, air alarm control, etc.
-
-//NTNet transfer speeds, used when downloading/uploading a file/program.
-#define NTNETSPEED_LOWSIGNAL 0.5 // GQ/s transfer speed when the device is wirelessly connected and on Low signal
-#define NTNETSPEED_HIGHSIGNAL 1 // GQ/s transfer speed when the device is wirelessly connected and on High signal
-#define NTNETSPEED_ETHERNET 2 // GQ/s transfer speed when the device is using wired connection
-
-//Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
-#define MAX_NTNET_LOGS 300
-#define MIN_NTNET_LOGS 10
-
-//Program bitflags
-#define PROGRAM_ALL (~0)
-#define PROGRAM_CONSOLE (1<<0)
-#define PROGRAM_LAPTOP (1<<1)
-#define PROGRAM_TABLET (1<<2)
-//Program states
-#define PROGRAM_STATE_KILLED 0
-#define PROGRAM_STATE_BACKGROUND 1
-#define PROGRAM_STATE_ACTIVE 2
-//Program categories
-#define PROGRAM_CATEGORY_CREW "Crew"
-#define PROGRAM_CATEGORY_ENGI "Engineering"
-#define PROGRAM_CATEGORY_SUPL "Supply"
-#define PROGRAM_CATEGORY_SCI  "Science"
-#define PROGRAM_CATEGORY_MISC "Other"
-
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2
-
-#define DETOMATIX_RESIST_MINOR 1
-#define DETOMATIX_RESIST_MAJOR 2
-
-// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
-#define SUPERMATTER_ERROR -1 // Unknown status, shouldn't happen but just in case.
-#define SUPERMATTER_INACTIVE 0 // No or minimal energy
-#define SUPERMATTER_NORMAL 1 // Normal operation
-#define SUPERMATTER_NOTIFY 2 // Ambient temp > 80% of CRITICAL_TEMPERATURE
-#define SUPERMATTER_WARNING 3 // Ambient temp > CRITICAL_TEMPERATURE OR integrity damaged
-#define SUPERMATTER_DANGER 4 // Integrity < 50%
-#define SUPERMATTER_EMERGENCY 5 // Integrity < 25%
-#define SUPERMATTER_DELAMINATING 6 // Pretty obvious.
 
 #define HYPERTORUS_INACTIVE 0 // No or minimal energy
 #define HYPERTORUS_NOMINAL 1 // Normal operation
@@ -177,19 +127,22 @@
 //game begins to have a chance to warn sec and med
 #define ORION_GAMER_REPORT_THRESHOLD 2
 
-// Air alarm [/obj/machinery/airalarm/buildstage]
-/// Air alarm missing circuit
-#define AIRALARM_BUILD_NO_CIRCUIT 0
-/// Air alarm has circuit but is missing wires
-#define AIRALARM_BUILD_NO_WIRES 1
-/// Air alarm has all components but isn't completed
-#define AIRALARM_BUILD_COMPLETE 2
+/// What's the minimum duration of a syndie bomb (in seconds)
+#define SYNDIEBOMB_MIN_TIMER_SECONDS 90
 
-///TLV datums wont check limits set to this
-#define TLV_DONT_CHECK -1
-///the gas mixture is within the bounds of both warning and hazard limits
-#define TLV_NO_DANGER 0
-///the gas value is outside the warning limit but within the hazard limit, the air alarm will go into warning mode
-#define TLV_OUTSIDE_WARNING_LIMIT 1
-///the gas is outside the hazard limit, the air alarm will go into hazard mode
-#define TLV_OUTSIDE_HAZARD_LIMIT 2
+// Camera upgrade bitflags.
+#define CAMERA_UPGRADE_XRAY (1<<0)
+#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
+#define CAMERA_UPGRADE_MOTION (1<<2)
+
+/// Max length of a status line in the status display
+#define MAX_STATUS_LINE_LENGTH 40
+
+/// Blank Status Display
+#define SD_BLANK 0
+/// Shows the emergency shuttle timer
+#define SD_EMERGENCY 1
+/// Shows an arbitrary message, user-set
+#define SD_MESSAGE 2
+/// Shows an alert picture (e.g. red alert, radiation, etc.)
+#define SD_PICTURE 3

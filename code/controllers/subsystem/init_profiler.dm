@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(init_profiler)
 /datum/controller/subsystem/init_profiler/Initialize()
 	if(CONFIG_GET(flag/auto_profile))
 		write_init_profile()
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/init_profiler/proc/write_init_profile()
 	var/current_profile_data = world.Profile(PROFILE_REFRESH, format = "json")
@@ -24,3 +24,5 @@ SUBSYSTEM_DEF(init_profiler)
 		fdel(prof_file)
 	WRITE_FILE(prof_file, current_profile_data)
 	world.Profile(PROFILE_CLEAR) //Now that we're written this data out, dump it. We don't want it getting mixed up with our current round data
+
+#undef INIT_PROFILE_NAME

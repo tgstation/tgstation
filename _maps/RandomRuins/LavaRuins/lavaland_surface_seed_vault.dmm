@@ -36,10 +36,10 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "ai" = (
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -201,7 +201,7 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/machinery/light/directional/west,
 /turf/open/floor/vault,
@@ -304,11 +304,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aT" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -341,7 +341,7 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/vault,
@@ -484,7 +484,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/pale/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/misc/grass/lavaland,
@@ -527,7 +527,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bs" = (
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
@@ -539,7 +539,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,

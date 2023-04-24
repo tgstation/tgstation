@@ -1,14 +1,16 @@
 /datum/round_event_control/scrubber_clog
-	name = "Minor Scrubber Clog"
+	name = "Scrubber Clog: Minor"
 	typepath = /datum/round_event/scrubber_clog
 	weight = 25
 	max_occurrences = 3
 	earliest_start = 5 MINUTES
+	category = EVENT_CATEGORY_JANITORIAL
+	description = "Harmless mobs climb out of a scrubber."
 
 /datum/round_event/scrubber_clog
-	announceWhen = 10
-	startWhen = 5
-	endWhen = 600
+	announce_when = 10
+	start_when = 5
+	end_when = 600
 
 	///Scrubber selected for the event.
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
@@ -32,16 +34,17 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	spawned_mob = get_mob()
-	endWhen = rand(300, 600)
+	end_when = rand(300, 600)
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10, 15)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
+	announce_to_ghosts(scrubber)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
 	if(activeFor % spawn_delay == 0 && scrubber.clogged)
@@ -62,8 +65,9 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	var/static/list/mob_list = list(
-				/mob/living/simple_animal/mouse,
 				/mob/living/basic/cockroach,
+				/mob/living/basic/giant_spider/maintenance,
+				/mob/living/basic/mouse,
 				/mob/living/simple_animal/butterfly,
 	)
 	return pick(mob_list)
@@ -82,6 +86,16 @@
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			scrubber_list += scrubber
 	return pick(scrubber_list)
+
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE)
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+		var/turf/scrubber_turf = get_turf(scrubber)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+			return TRUE //make sure we have a valid scrubber to spawn from.
+	return FALSE
 
 /**
  * Checks which mobs in the mob spawn list are alive.
@@ -111,19 +125,23 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)
 
+	announce_to_ghosts(scrubber)
 	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
-	name = "Major Scrubber Clog"
+	name = "Scrubber Clog: Major"
 	typepath = /datum/round_event/scrubber_clog/major
 	weight = 12
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
+	description = "Dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 4
 
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
@@ -132,9 +150,9 @@
 
 /datum/round_event/scrubber_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/rat,
+		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/basic/giant_spider,
 	)
 	return pick(mob_list)
 
@@ -142,12 +160,15 @@
 	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)] area.", "Infestation Alert")
 
 /datum/round_event_control/scrubber_clog/critical
-	name = "Critical Scrubber Clog"
+	name = "Scrubber Clog: Critical"
 	typepath = /datum/round_event/scrubber_clog/critical
 	weight = 8
 	min_players = 15
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
+	description = "Really dangerous mobs climb out of a scrubber."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -161,24 +182,27 @@
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)
 	return pick(mob_list)
 
 /datum/round_event_control/scrubber_clog/strange
-	name = "Strange Scrubber Clog"
+	name = "Scrubber Clog: Strange"
 	typepath = /datum/round_event/scrubber_clog/strange
 	weight = 5
 	max_occurrences = 1
+	description = "Strange mobs climb out of a scrubber, harmfulness varies."
+	min_wizard_trigger_potency = 0
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/scrubber_clog/strange
 	maximum_spawns = 3
 
 /datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
-	endWhen = rand(600, 720)
+	end_when = rand(600, 720)
 	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()

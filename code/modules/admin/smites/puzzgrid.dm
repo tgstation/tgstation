@@ -54,8 +54,7 @@
 
 	name = "[victim]'s fiendish curse"
 
-	ADD_TRAIT(victim, TRAIT_HANDS_BLOCKED, "[type]")
-	ADD_TRAIT(victim, TRAIT_IMMOBILIZED, "[type]")
+	victim.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	add_puzzgrid_component(puzzgrid)
 
@@ -68,8 +67,8 @@
 		/datum/component/puzzgrid, \
 		puzzgrid = puzzgrid, \
 		timer = timer, \
-		on_victory_callback = CALLBACK(src, .proc/on_victory), \
-		on_fail_callback = CALLBACK(src, gib_on_loss ? .proc/loss_gib : .proc/loss_restart), \
+		on_victory_callback = CALLBACK(src, PROC_REF(on_victory)), \
+		on_fail_callback = CALLBACK(src, gib_on_loss ? PROC_REF(loss_gib) : PROC_REF(loss_restart)), \
 	)
 
 /obj/structure/puzzgrid_effect/proc/on_victory()
@@ -80,7 +79,7 @@
 		span_notice("You are unshackled from your fiendish prison!"),
 	)
 
-	remove_traits()
+	victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 
 	victim = null
 
@@ -103,7 +102,7 @@
 		victim.forceMove(loc)
 		victim.Paralyze(5 SECONDS)
 		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
-		remove_traits()
+		victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 		qdel(src)
 		victim = null
 		return
@@ -111,8 +110,4 @@
 	visible_message(span_danger("The fiendishly hard puzzle shapeshifts into a different, equally as challenging puzzle!"))
 
 	// Defer until after the fail proc finishes, since that will qdel the component.
-	addtimer(CALLBACK(src, .proc/add_puzzgrid_component, puzzgrid), 0)
-
-/obj/structure/puzzgrid_effect/proc/remove_traits()
-	REMOVE_TRAIT(victim, TRAIT_HANDS_BLOCKED, "[type]")
-	REMOVE_TRAIT(victim, TRAIT_IMMOBILIZED, "[type]")
+	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)

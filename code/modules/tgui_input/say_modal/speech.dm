@@ -44,6 +44,9 @@
 		if(OOC_CHANNEL)
 			client.ooc(entry)
 			return TRUE
+		if(ADMIN_CHANNEL)
+			client.cmd_admin_say(entry)
+			return TRUE
 	return FALSE
 
 /**
@@ -65,6 +68,7 @@
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
+	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY)
 
 /**
  * Handles text entry and forced speech.

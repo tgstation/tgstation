@@ -16,15 +16,15 @@ SUBSYSTEM_DEF(lag_switch)
 	/// Cooldown between say verb uses when slowmode is enabled
 	var/slowmode_cooldown = 3 SECONDS
 
-/datum/controller/subsystem/lag_switch/Initialize(start_timeofday)
+/datum/controller/subsystem/lag_switch/Initialize()
 	for(var/i in 1 to measures.len)
 		measures[i] = FALSE
 	var/auto_switch_pop = CONFIG_GET(number/auto_lag_switch_pop)
 	if(auto_switch_pop)
 		auto_switch = TRUE
 		trigger_pop = auto_switch_pop
-		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
-	return ..()
+		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, PROC_REF(client_connected))
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/lag_switch/proc/client_connected(datum/source, client/connected)
 	SIGNAL_HANDLER
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(lag_switch)
 
 	auto_switch = FALSE
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
-	veto_timer_id = addtimer(CALLBACK(src, .proc/set_all_measures, TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
+	veto_timer_id = addtimer(CALLBACK(src, PROC_REF(set_all_measures), TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
 	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
 	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
 
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(lag_switch)
 /datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
 	auto_switch = !auto_switch
 	if(auto_switch)
-		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
+		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, PROC_REF(client_connected))
 	else
 		UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 

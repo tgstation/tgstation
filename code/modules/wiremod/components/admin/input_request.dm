@@ -53,7 +53,7 @@
 	if(!istype(player))
 		return
 
-	INVOKE_ASYNC(src, .proc/request_input_from_player, player)
+	INVOKE_ASYNC(src, PROC_REF(request_input_from_player), player)
 
 /obj/item/circuit_component/input_request/proc/request_input_from_player(mob/player)
 	var/new_option = input_options.value

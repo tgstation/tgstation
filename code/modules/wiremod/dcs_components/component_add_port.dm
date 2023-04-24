@@ -40,9 +40,9 @@
 			port_list += add_port()
 
 /datum/component/circuit_component_add_port/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION, .proc/on_action)
-	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_SAVE_DATA, .proc/on_data_saved)
-	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_LOAD_DATA, .proc/on_data_loaded)
+	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION, PROC_REF(on_action))
+	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_SAVE_DATA, PROC_REF(on_data_saved))
+	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_LOAD_DATA, PROC_REF(on_data_loaded))
 
 /datum/component/circuit_component_add_port/UnregisterFromParent()
 	UnregisterSignal(parent, list(

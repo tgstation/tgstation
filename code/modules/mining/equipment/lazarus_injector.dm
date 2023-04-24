@@ -9,7 +9,7 @@
 /obj/item/lazarus_injector
 	name = "lazarus injector"
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -29,30 +29,16 @@
 	. = ..()
 	if(!loaded || !(isliving(target) && proximity_flag) )
 		return
-	if(!isanimal(target))
-		to_chat(user, span_info("[src] is only effective on lesser beings."))
-		return
 
-	var/mob/living/simple_animal/target_animal = target
-	if(target_animal.sentience_type != revive_type)
-		to_chat(user, span_info("[src] does not work on this sort of creature."))
+	var/mob/living/target_animal = target
+	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
+		balloon_alert(user, "invalid creature!")
 		return
 	if(target_animal.stat != DEAD)
-		to_chat(user, span_info("[src] is only effective on the dead."))
+		balloon_alert(user, "it's not dead!")
 		return
 
-	target_animal.faction = list("neutral")
-	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
-	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/target_hostile = target_animal
-		if(malfunctioning)
-			target_hostile.faction |= list("lazarus", "[REF(user)]")
-			target_hostile.robust_searching = TRUE
-			target_hostile.friends += user
-			target_hostile.attack_same = TRUE
-			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
-		else
-			target_hostile.attack_same = FALSE
+	target_animal.lazarus_revive(user, malfunctioning)
 	loaded = FALSE
 	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)

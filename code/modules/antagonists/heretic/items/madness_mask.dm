@@ -1,9 +1,9 @@
 // The spooky "void" / "abyssal" / "madness" mask for heretics.
 /obj/item/clothing/mask/madness_mask
 	name = "Abyssal Mask"
-	desc = "A mask created from the suffering of existance. Looking down it's eyes, you notice something gazing back at you."
+	desc = "A mask created from the suffering of existence. Looking down it's eyes, you notice something gazing back at you."
 	icon_state = "mad_mask"
-	inhand_icon_state = "mad_mask"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/mask/madness_mask/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
+	if(!(slot & ITEM_SLOT_MASK))
 		return
 	if(!ishuman(user) || !user.mind)
 		return
@@ -45,7 +45,7 @@
 	REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 	return ..()
 
-/obj/item/clothing/mask/madness_mask/process(delta_time)
+/obj/item/clothing/mask/madness_mask/process(seconds_per_tick)
 	if(!local_user)
 		return PROCESS_KILL
 
@@ -53,22 +53,20 @@
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 	for(var/mob/living/carbon/human/human_in_range in view(local_user))
-		if(IS_HERETIC_OR_MONSTER(human_in_range))
-			continue
-		if(human_in_range.is_blind())
+		if(IS_HERETIC_OR_MONSTER(human_in_range) || human_in_range.is_blind())
 			continue
 
-		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
+		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
 
-		if(DT_PROB(60, delta_time))
-			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
+		if(SPT_PROB(60, seconds_per_tick))
+			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 240 SECONDS)
 
-		if(DT_PROB(40, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		if(SPT_PROB(40, seconds_per_tick))
+			human_in_range.set_jitter_if_lower(10 SECONDS)
 
-		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
+		if(human_in_range.getStaminaLoss() <= 85 && SPT_PROB(30, seconds_per_tick))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
-		if(DT_PROB(25, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		if(SPT_PROB(25, seconds_per_tick))
+			human_in_range.set_dizzy_if_lower(10 SECONDS)

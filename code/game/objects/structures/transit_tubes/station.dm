@@ -9,6 +9,7 @@
 /obj/structure/transit_tube/station
 	name = "station tube station"
 	icon_state = "closed_station0"
+	base_icon_state = "station0"
 	desc = "The lynchpin of the transit system."
 	exit_delay = 1
 	enter_delay = 2
@@ -18,7 +19,6 @@
 	var/cooldown_delay = 50
 	var/launch_cooldown = 0
 	var/reverse_launch = FALSE
-	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
 /obj/structure/transit_tube/station/Initialize(mapload)
@@ -106,14 +106,14 @@
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(open_status == STATION_TUBE_CLOSED)
-		icon_state = "opening_[base_icon]"
+		icon_state = "opening_[base_icon_state]"
 		open_status = STATION_TUBE_OPENING
-		addtimer(CALLBACK(src, .proc/finish_animation), OPEN_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(finish_animation)), OPEN_DURATION)
 
 /obj/structure/transit_tube/station/proc/finish_animation()
 	switch(open_status)
 		if(STATION_TUBE_OPENING)
-			icon_state = "open_[base_icon]"
+			icon_state = "open_[base_icon_state]"
 			open_status = STATION_TUBE_OPEN
 			for(var/obj/structure/transit_tube_pod/pod in loc)
 				for(var/thing in pod)
@@ -124,14 +124,14 @@
 					var/atom/movable/movable_content = thing
 					movable_content.forceMove(loc) //Everything else is moved out of.
 		if(STATION_TUBE_CLOSING)
-			icon_state = "closed_[base_icon]"
+			icon_state = "closed_[base_icon_state]"
 			open_status = STATION_TUBE_CLOSED
 
 /obj/structure/transit_tube/station/proc/close_animation()
 	if(open_status == STATION_TUBE_OPEN)
-		icon_state = "closing_[base_icon]"
+		icon_state = "closing_[base_icon_state]"
 		open_status = STATION_TUBE_CLOSING
-		addtimer(CALLBACK(src, .proc/finish_animation), CLOSE_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(finish_animation)), CLOSE_DURATION)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	if(launch_cooldown >= world.time)
@@ -153,7 +153,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = TRUE
-	addtimer(CALLBACK(src, .proc/start_stopped, pod), 5)
+	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 5)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
 	if(QDELETED(pod))
@@ -162,7 +162,7 @@
 		pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 	launch_cooldown = world.time + cooldown_delay
 	open_animation()
-	addtimer(CALLBACK(src, .proc/finish_stopped, pod), OPEN_DURATION + 2)
+	addtimer(CALLBACK(src, PROC_REF(finish_stopped), pod), OPEN_DURATION + 2)
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
@@ -187,7 +187,7 @@
 
 /obj/structure/transit_tube/station/flipped
 	icon_state = "closed_station1"
-	base_icon = "station1"
+	base_icon_state = "station1"
 	tube_construction = /obj/structure/c_transit_tube/station/flipped
 
 /obj/structure/transit_tube/station/flipped/init_tube_dirs()
@@ -200,7 +200,7 @@
 	tube_construction = /obj/structure/c_transit_tube/station/reverse
 	reverse_launch = TRUE
 	icon_state = "closed_terminus0"
-	base_icon = "terminus0"
+	base_icon_state = "terminus0"
 
 /obj/structure/transit_tube/station/reverse/init_tube_dirs()
 	switch(dir)
@@ -216,7 +216,7 @@
 
 /obj/structure/transit_tube/station/reverse/flipped
 	icon_state = "closed_terminus1"
-	base_icon = "terminus1"
+	base_icon_state = "terminus1"
 	tube_construction = /obj/structure/c_transit_tube/station/reverse/flipped
 
 /obj/structure/transit_tube/station/reverse/flipped/init_tube_dirs()
@@ -231,7 +231,7 @@
 	desc = "The lynchpin of a GOOD transit system."
 	enter_delay = 1
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser
-	base_icon = "dispenser0"
+	base_icon_state = "dispenser0"
 	open_status = STATION_TUBE_OPEN
 
 /obj/structure/transit_tube/station/dispenser/close_animation()
@@ -267,7 +267,7 @@
 
 /obj/structure/transit_tube/station/dispenser/flipped
 	icon_state = "open_dispenser1"
-	base_icon = "dispenser1"
+	base_icon_state = "dispenser1"
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/flipped
 
 /obj/structure/transit_tube/station/dispenser/flipped/init_tube_dirs()
@@ -279,7 +279,7 @@
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse
 	reverse_launch = TRUE
 	icon_state = "open_terminusdispenser0"
-	base_icon = "terminusdispenser0"
+	base_icon_state = "terminusdispenser0"
 
 /obj/structure/transit_tube/station/dispenser/reverse/init_tube_dirs()
 	switch(dir)
@@ -295,7 +295,7 @@
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped
 	icon_state = "open_terminusdispenser1"
-	base_icon = "terminusdispenser1"
+	base_icon_state = "terminusdispenser1"
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped/init_tube_dirs()

@@ -1,5 +1,3 @@
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -26,16 +24,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/taste_description = "metaphorical salt"
 	///how this taste compares to others. Higher values means it is more noticable
 	var/taste_mult = 1
-	/// use for specialty drinks.
-	var/glass_name = "glass of ...what?"
-	/// desc applied to glasses with this reagent
-	var/glass_desc = "You can't really tell what this is."
-	/// Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
-	var/glass_icon_state = null
-	/// used for shot glasses, mostly for alcohol
-	var/shot_glass_icon_state = null
-	/// fallback icon if  the reagent has no glass or shot glass icon state. Used for restaurants.
-	var/fallback_icon_state = null
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
@@ -92,9 +80,31 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/burning_volume = 0.5
 	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
+	/// The affected bodytype, if the reagent damages/heals bodyparts (Brute/Fire) of an affected mob.
+	/// See "Bodytype defines" in /code/_DEFINES/mobs.dm
+	var/affected_bodytype = BODYTYPE_ORGANIC
+	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
+	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
+	var/affected_biotype = MOB_ORGANIC
+	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
+	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
+	var/affected_respiration_type = ALL
+	/// The affected organtype, if the reagent damages/heals organ damage of an affected mob.
+	/// See "Organ defines for carbon mobs" in /code/_DEFINES/mobs.dm
+	var/affected_organtype = ORGAN_ORGANIC
+
+	///The default reagent container for the reagent, used for icon generation
+	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+
+	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
-
+	/// Icon for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
+	var/fallback_icon
+	/// Icon state for fallback item displayed in a tourist's thought bubble for if this reagent had no associated glass_style datum.
+	var/fallback_icon_state
+	/// When ordered in a restaurant, what custom order do we create?
+	var/restaurant_order = /datum/custom_order/reagent/drink
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -146,11 +156,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * delta_time) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /*
 Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
@@ -170,7 +180,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
+	L.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
@@ -182,13 +192,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, delta_time)
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * delta_time)
+	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
@@ -208,13 +218,13 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
 	return
 
 /// Called when an overdose starts
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
+	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /**
@@ -223,8 +233,15 @@ Primarily used in reagents/reaction_agents
  * Can affect plant's health, stats, or cause the plant to react in certain ways.
  */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray)
-		return
+
+/// Proc is used by [/datum/reagent/proc/on_hydroponics_apply] to see if the tray and the reagents inside is in a valid state to apply reagent effects
+/datum/reagent/proc/check_tray(datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	ASSERT(mytray)
+	// Check if we have atleast a single amount of the reagent
+	if(!chems.has_reagent(type, 1))
+		return FALSE
+
+	return TRUE
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
@@ -245,12 +262,50 @@ Primarily used in reagents/reaction_agents
 		creation_purity = src.creation_purity
 	return creation_purity / normalise_num_to
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/**
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ *
+ * Arguments
+ * * purity - Overrides the purity used for determining the inverse purity.
+ */
+/datum/reagent/proc/get_inverse_purity(purity)
+	if(!inverse_chem || !inverse_chem_val)
+		return
+	if(!purity)
+		purity = src.purity
+	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+/**
+ * Input a reagent_list, outputs pretty readable text!
+ * Default output will be formatted as
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
+ *
+ * * names_only will remove the amount displays, showing
+ * * water | silicon | soup | space lube
+ *
+ * * join_text will alter the text between reagents
+ * * setting to ", " will result in
+ * * water, 5, silicon, 6, soup, 4, space lube, 8
+ *
+ * * final_and should be combined with the above. will format as
+ * * water, 5, silicon, 6, soup, 4, and space lube, 8
+ *
+ * * capitalize_names will result in
+ * * Water, 5 | Silicon, 6 | Soup, 4 | Space lube, 8
+ *
+ * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
+ * * * Water, Silicon, Soup, and Space Lube
+ */
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
-	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+	var/list/reagent_strings = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			reagent_strings += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+		else
+			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
-	return rs.Join(" | ")
-
-
+	return reagent_strings.Join(join_text)

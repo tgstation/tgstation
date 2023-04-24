@@ -11,7 +11,7 @@
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(!SSticker.HasRoundStarted())
 		to_chat(user, "You cannot attack people before the game has started.")
 		return
@@ -42,6 +42,7 @@
 /mob/living/silicon/ai/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)

@@ -101,7 +101,7 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.3
 
@@ -147,10 +147,10 @@
 	if(!occupant || !mod_unit || busy)
 		return
 	set_busy(TRUE, "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"), 2.5 SECONDS)
-	addtimer(CALLBACK(src, .proc/play_install_sound), 2.5 SECONDS)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"), 5 SECONDS)
-	addtimer(CALLBACK(src, .proc/complete_process), 7.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_active"), 2.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(play_install_sound)), 2.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_falling"), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(complete_process)), 7.5 SECONDS)
 
 /obj/machinery/mod_installer/proc/complete_process()
 	set_busy(FALSE)
@@ -173,17 +173,17 @@
 	mod_unit = null
 	open_machine()
 
-/obj/machinery/mod_installer/open_machine()
+/obj/machinery/mod_installer/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 	..()
 	return TRUE
 
-/obj/machinery/mod_installer/close_machine(mob/living/carbon/user)
+/obj/machinery/mod_installer/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 	..()
-	addtimer(CALLBACK(src, .proc/start_process), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)
 	return TRUE
 
 /obj/machinery/mod_installer/relaymove(mob/living/user, direction)
@@ -234,7 +234,7 @@
 	sample.sample_color = COLOR_SAMPLE_BROWN
 	update_appearance()
 
-/obj/item/reagent_containers/glass/beaker/oldstation
+/obj/item/reagent_containers/cup/beaker/oldstation
 	name = "cultivation broth"
 	amount_per_transfer_from_this = 50
 	list_reagents = list(
@@ -247,7 +247,7 @@
 		/datum/reagent/yuck = 5,
 		/datum/reagent/consumable/vitfro = 5,
 		// Supplementary for CELL_LINE_TABLE_GRAPE
-		/datum/reagent/liquidgibs = 5
+		/datum/reagent/consumable/liquidgibs = 5
 	)
 
 /obj/machinery/computer/old

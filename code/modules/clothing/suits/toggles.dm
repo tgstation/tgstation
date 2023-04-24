@@ -8,11 +8,14 @@
 	var/alternative_mode = FALSE
 	///Whether the hood is flipped up
 	var/hood_up = FALSE
+	/// Are we zipped? Mostly relevant for wintercoats, leaving this here to simplify logic and so someone else can extend it if they ever wish to.
+	var/zipped = FALSE
 
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
+
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -28,30 +31,37 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_OCLOTHING)
-		return 1
+	if(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
+		return TRUE
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != ITEM_SLOT_OCLOTHING)
+	if(!(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK))
 		RemoveHood()
-	..()
+	return ..()
+
+/obj/item/clothing/suit/hooded/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	if(visuals_only)
+		MakeHood()
+	ToggleHood()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
-	src.icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)]"
+	worn_icon_state = icon_state
+	zipped = FALSE
 	hood_up = FALSE
 
 	if(hood)
 		if(ishuman(hood.loc))
 			var/mob/living/carbon/human/H = hood.loc
 			H.transferItemToLoc(hood, src, TRUE)
-			H.update_inv_wear_suit()
+			H.update_worn_oversuit()
 		else
 			hood.forceMove(src)
 
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -62,7 +72,7 @@
 		if(!ishuman(loc))
 			return
 		var/mob/living/carbon/human/H = loc
-		if(H.wear_suit != src)
+		if(H.is_holding(src))
 			to_chat(H, span_warning("You must be wearing [src] to put up the hood!"))
 			return
 		if(H.head)
@@ -77,8 +87,10 @@
 				return
 			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
-			H.update_inv_wear_suit()
-			update_action_buttons()
+			worn_icon_state = icon_state
+			zipped = TRUE // Just to maintain the same behavior, and so we avoid any bugs that otherwise relied on this behavior of zipping the jacket when bringing up the hood
+			H.update_worn_oversuit()
+			H.update_mob_action_buttons()
 	else
 		RemoveHood()
 
@@ -97,7 +109,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != ITEM_SLOT_HEAD)
+	if(!(slot & ITEM_SLOT_HEAD))
 		if(suit)
 			suit.RemoveHood()
 		else

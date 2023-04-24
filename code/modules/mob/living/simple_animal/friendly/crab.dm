@@ -33,7 +33,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/crab/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)
@@ -52,6 +52,11 @@
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
 	gender = FEMALE
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/crab/jon //holodeck crab
+	name = "Jon"
+	real_name = "Jon"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil

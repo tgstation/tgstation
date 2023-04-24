@@ -55,16 +55,16 @@
 			overlaystate = "blueOverlay"
 
 	var/image/I = image('icons/turf/overlays.dmi', T, overlaystate)
-	I.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE(I, ABOVE_LIGHTING_PLANE, T)
 	preview += I
 	BM.holder.images += preview
 	return T
 
 /datum/buildmode_mode/proc/highlight_region(region)
 	BM.holder.images -= preview
-	for(var/t in region)
-		var/image/I = image('icons/turf/overlays.dmi', t, "redOverlay")
-		I.plane = ABOVE_LIGHTING_PLANE
+	for(var/turf/member as anything in region)
+		var/image/I = image('icons/turf/overlays.dmi', member, "redOverlay")
+		SET_PLANE(I, ABOVE_LIGHTING_PLANE, member)
 		preview += I
 	BM.holder.images += preview
 

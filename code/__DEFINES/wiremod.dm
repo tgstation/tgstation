@@ -77,7 +77,7 @@
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
 // Clock component
-#define COMP_CLOCK_DELAY 0.9 SECONDS
+#define COMP_CLOCK_DELAY (0.9 SECONDS)
 
 // Shells
 
@@ -119,6 +119,8 @@
 #define CIRCUIT_FLAG_INSTANT (1<<4)
 /// This circuit component can't be loaded in module component. Saves us some headaches.
 #define CIRCUIT_FLAG_REFUSE_MODULE (1<<5)
+/// This circuit component cannot be inserted into the same circuit multiple times. Only use this for major headaches.
+#define CIRCUIT_NO_DUPLICATES (1<<6)
 
 // Datatype flags
 /// The datatype supports manual inputs

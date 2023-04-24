@@ -3,7 +3,7 @@
 /obj/item/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
@@ -13,6 +13,7 @@
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
+	return . | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
@@ -54,7 +55,7 @@
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
 		if(I.loc.atom_storage) //in a container.
-			I.loc.atom_storage.attempt_remove(I, src)
+			I.loc.atom_storage.remove_single(user, I, src)
 		if(!user.dropItemToGround(I))
 			return
 

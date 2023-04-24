@@ -4,12 +4,11 @@
  * Used for paper bins.
  */
 /datum/element/drag_pickup
-	element_flags = ELEMENT_DETACH
 
 /datum/element/drag_pickup/Attach(datum/target)
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/pick_up)
+	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, PROC_REF(pick_up))
 	return ..()
 
 /datum/element/drag_pickup/Detach(datum/source)
@@ -23,7 +22,7 @@
 		return
 
 	if(over == picker)
-		INVOKE_ASYNC(picker, /mob/.proc/put_in_hands, source)
+		INVOKE_ASYNC(picker, TYPE_PROC_REF(/mob/, put_in_hands), source)
 	else if(istype(over, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/Selected_hand = over
 		picker.putItemFromInventoryInHandIfPossible(source, Selected_hand.held_index)

@@ -29,7 +29,7 @@
 
 /obj/docking_port/stationary/laborcamp_home
 	name = "SS13: Labor Shuttle Dock"
-	id = "laborcamp_home"
+	shuttle_id = "laborcamp_home"
 	roundstart_template = /datum/map_template/shuttle/labour/delta
 	width = 9
 	dwidth = 2

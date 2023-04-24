@@ -26,7 +26,7 @@
 	. = ..()
 	for(var/mutation in mutations_to_add)
 		cast_on.dna.add_mutation(mutation)
-	addtimer(CALLBACK(src, .proc/remove_mutations, cast_on), mutation_duration, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(remove_mutations), cast_on), mutation_duration, TIMER_DELETE_ME)
 
 /// Removes the mutations we added from casting our spell
 /datum/action/cooldown/spell/apply_mutations/proc/remove_mutations(mob/living/carbon/human/cast_on)

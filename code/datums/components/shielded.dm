@@ -23,6 +23,8 @@
 	var/shield_inhand = FALSE
 	/// Should the shield lose charges equal to the damage dealt by a hit?
 	var/lose_multiple_charges = FALSE
+	/// Should the shield's alpha change to show its remaining charge
+	var/show_charge_as_alpha = FALSE
 	/// The item we use for recharging
 	var/recharge_path
 	/// The cooldown tracking when we were last hit
@@ -32,7 +34,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, show_charge_as_alpha = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -41,11 +43,12 @@
 	src.charge_increment_delay = charge_increment_delay
 	src.charge_recovery = charge_recovery
 	src.lose_multiple_charges = lose_multiple_charges
+	src.show_charge_as_alpha = show_charge_as_alpha
 	src.recharge_path = recharge_path
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand
-	src.on_hit_effects = run_hit_callback || CALLBACK(src, .proc/default_run_hit_callback)
+	src.on_hit_effects = run_hit_callback || CALLBACK(src, PROC_REF(default_run_hit_callback))
 	if(isnull(starting_charges))
 		current_charges = max_charges
 	else
@@ -63,10 +66,10 @@
 	return ..()
 
 /datum/component/shielded/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
-	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(lost_wearer))
+	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, PROC_REF(on_hit_react))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(check_recharge_rune))
 	var/atom/shield = parent
 	if(ismob(shield.loc))
 		var/mob/holder = shield.loc
@@ -81,7 +84,7 @@
 		lost_wearer(src, wearer)
 
 // Handle recharging, if we want to
-/datum/component/shielded/process(delta_time)
+/datum/component/shielded/process(seconds_per_tick)
 	if(current_charges >= max_charges)
 		STOP_PROCESSING(SSdcs, src)
 		return
@@ -107,7 +110,7 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(slot == ITEM_SLOT_HANDS && !shield_inhand)
+	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
 		lost_wearer(source, user)
 		return
 	set_wearer(source, user)
@@ -123,8 +126,8 @@
 
 /datum/component/shielded/proc/set_wearer(mob/user)
 	wearer = user
-	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
+	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, PROC_REF(lost_wearer))
 	if(current_charges)
 		wearer.update_appearance(UPDATE_ICON)
 
@@ -132,7 +135,10 @@
 /datum/component/shielded/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
+	var/mutable_appearance/shield_appearance = mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
+	if(show_charge_as_alpha)
+		shield_appearance.alpha = (current_charges/max_charges)*255
+	overlays += shield_appearance
 
 /**
  * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.
@@ -154,7 +160,7 @@
 
 	adjust_charge(-charge_loss)
 
-	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
+	INVOKE_ASYNC(src, PROC_REF(actually_run_hit_callback), owner, attack_text, current_charges)
 
 	if(!recharge_start_delay) // if recharge_start_delay is 0, we don't recharge
 		return

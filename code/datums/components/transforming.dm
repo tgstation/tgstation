@@ -36,6 +36,8 @@
 	var/clumsy_check
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
+	/// Dictate whether we change inhands or not
+	var/inhand_icon_change
 	/// Cooldown in between transforms
 	COOLDOWN_DECLARE(transform_cooldown)
 
@@ -51,6 +53,7 @@
 		clumsy_check = TRUE,
 		list/attack_verb_continuous_on,
 		list/attack_verb_simple_on,
+		inhand_icon_change = TRUE,
 		)
 
 	if(!isitem(parent))
@@ -66,6 +69,7 @@
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
 	src.clumsy_check = clumsy_check
+	src.inhand_icon_change = inhand_icon_change
 
 	if(attack_verb_continuous_on)
 		src.attack_verb_continuous_on = attack_verb_continuous_on
@@ -80,12 +84,19 @@
 /datum/component/transforming/RegisterWithParent()
 	var/obj/item/item_parent = parent
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	if(item_parent.sharpness || sharpness_on)
-		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
+		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
+
+	RegisterSignal(parent, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
 /datum/component/transforming/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DETECTIVE_SCANNED))
+
+/datum/component/transforming/proc/on_scan(datum/source, mob/user, list/extra_data)
+	SIGNAL_HANDLER
+	LAZYADD(extra_data[DETSCAN_CATEGORY_NOTES], "Readings suggest some form of state changing.")
+
 
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
@@ -140,7 +151,8 @@
  * user - the mob transforming the item
  */
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
-	source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
+	if(user)
+		source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
 	playsound(user ? user : source.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /*
@@ -180,6 +192,9 @@
 	source.hitsound = hitsound_on
 	source.w_class = w_class_on
 	source.icon_state = "[source.icon_state]_on"
+	if(inhand_icon_change && source.inhand_icon_state)
+		source.inhand_icon_state = "[source.inhand_icon_state]_on"
+	source.update_inhand_icon()
 
 /*
  * Set our transformed item into its inactive state.
@@ -205,6 +220,10 @@
 	source.hitsound = initial(source.hitsound)
 	source.w_class = initial(source.w_class)
 	source.icon_state = initial(source.icon_state)
+	source.inhand_icon_state = initial(source.inhand_icon_state)
+	if(ismob(source.loc))
+		var/mob/loc_mob = source.loc
+		loc_mob.update_held_items()
 
 /*
  * If [clumsy_check] is set to TRUE, attempt to cause a side effect for clumsy people activating this item.

@@ -10,8 +10,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/glass = 1000)
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
@@ -19,11 +19,14 @@
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
+	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
+	var/specific_parts = FALSE
 
 /obj/item/circuitboard/Initialize(mapload)
 	if(name_extension)
 		name = "[initial(name)] [name_extension]"
-	set_greyscale(new_config = /datum/greyscale_config/circuit)
+	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
+		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
@@ -90,7 +93,13 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
-			machine.component_parts += new comp_path(machine, comp_amt)
+			continue
+		else if (ispath(comp_path, /datum/stock_part))
+			var/stock_part_datum = GLOB.stock_part_datums[comp_path]
+			if (isnull(stock_part_datum))
+				CRASH("[comp_path] didn't have a matching stock part datum")
+			for (var/_ in 1 to comp_amt)
+				machine.component_parts += stock_part_datum
 		else
 			for(var/component in 1 to comp_amt)
 				machine.component_parts += new comp_path(machine)
@@ -104,22 +113,33 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		return .
 
 	var/list/nice_list = list()
-	for(var/atom/component_path as anything in req_components)
+	for(var/component_path in req_components)
 		if(!ispath(component_path))
 			continue
 
-		var/component_name = initial(component_path.name)
+		var/component_name
 		var/component_amount = req_components[component_path]
 
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
 			if(initial(stack_path.singular_name))
 				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
-
+		else if(ispath(component_path, /obj/item/stock_parts) && !specific_parts)
+			var/obj/item/stock_parts/stock_part = component_path
+			component_name = initial(stock_part.base_name) || initial(stock_part.name)
 		else if(ispath(component_path, /obj/item/stock_parts))
 			var/obj/item/stock_parts/stock_part = component_path
-			if(initial(stock_part.base_name))
-				component_name = initial(stock_part.base_name)
+			component_name = initial(stock_part.name)
+		else if(ispath(component_path, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_path
+			var/obj/item/stock_parts/physical_object_type = initial(stock_part.physical_object_type)
+			component_name = initial(physical_object_type.base_name) || initial(physical_object_type.name)
+		else if(ispath(component_path, /atom))
+			var/atom/stock_part = component_path
+			component_name = initial(stock_part.name)
+
+		if (isnull(component_name))
+			stack_trace("[component_path] was an invalid component")
 
 		nice_list += list("[component_amount] [component_name]\s")
 

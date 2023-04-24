@@ -1,7 +1,3 @@
-#define SCIPAPER_COOPERATION_INDEX 1
-#define SCIPAPER_FUNDING_INDEX 2
-#define SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER 0.01
-
 /// Scientific paper datum for retrieval and re-reading. A lot of the variables are there for fluff & flavor.
 /datum/scientific_paper
 	/// The title of our paper.
@@ -119,7 +115,7 @@
 /datum/scientific_paper/proc/allowed_to_publish(datum/techweb/techweb_to_check)
 	if(!tier || !gains || !partner_path || (0 in gains))
 		return FALSE
-	return techweb_to_check.published_papers[experiment_path][tier] ? FALSE : TRUE
+	return !techweb_to_check.published_papers[experiment_path][tier]
 
 /datum/scientific_paper/proc/publish_paper(datum/techweb/techweb_to_publish)
 	autofill()
@@ -128,7 +124,7 @@
 	if(istype(techweb_to_publish, /datum/techweb/science))
 		var/datum/bank_account/dept_budget = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(dept_budget)
-			dept_budget.adjust_money(gains[SCIPAPER_FUNDING_INDEX] * 1000)
+			dept_budget.adjust_money(gains[SCIPAPER_FUNDING_INDEX] * SCIPAPER_GAIN_TO_MONEY)
 
 /**
  * Clones into a new paper type.
@@ -210,16 +206,10 @@
 			var/datum/data/tachyon_record/record_to_check = papers.explosion_record
 			if(explosion_record.explosion_identifier == record_to_check.explosion_identifier)
 				return FALSE
-	. = ..()
+	return ..()
 
 /datum/scientific_paper/explosive/set_experiment(ex_path = null, variable = null, data = null)
-	var/invalid = FALSE
-
-	invalid = invalid || !ispath(ex_path, /datum/experiment/ordnance/explosive)
-	invalid = invalid || !variable
-	invalid = invalid || !istype(data, /datum/data/tachyon_record)
-
-	if(invalid)
+	if(!ispath(ex_path, /datum/experiment/ordnance/explosive) || !variable || !istype(data, /datum/data/tachyon_record))
 		experiment_path = null
 		tracked_variable = null
 		explosion_record = null
@@ -288,6 +278,7 @@
 
 /// Various informations on companies/scientific programs/journals etc that the players can sign on to.
 /datum/scientific_partner
+	/// Name of the partner, shown in the Science program's UI.
 	var/name
 	/// Brief explanation of the associated program. Can be used for lore.
 	var/flufftext
@@ -314,42 +305,3 @@
 	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boosted_nodes[node_id])) // Already bought or we have a bigger discount
 		return FALSE
 	return TRUE
-
-/datum/computer_file/data/ordnance
-	/// List of experiments filtered by doppler array or populated by the tank compressor. Experiment path as key, score as value.
-	var/list/possible_experiments
-	size = 4
-	filetype = "ORD"
-
-/datum/computer_file/data/ordnance/proc/return_data()
-	return null
-
-/datum/computer_file/data/ordnance/clone()
-	var/datum/computer_file/data/ordnance/temp = ..()
-	temp.possible_experiments = possible_experiments
-	return temp
-
-/datum/computer_file/data/ordnance/explosive
-	/// Tachyon record, used for an explosive experiment.
-	var/datum/data/tachyon_record/explosion_record
-	filetype = "DOP"
-
-/datum/computer_file/data/ordnance/explosive/return_data()
-	return explosion_record
-
-/datum/computer_file/data/ordnance/explosive/clone()
-	var/datum/computer_file/data/ordnance/explosive/temp = ..()
-	temp.explosion_record = explosion_record
-	return temp
-
-/datum/computer_file/data/ordnance/gaseous
-	var/datum/data/compressor_record/gas_record
-	filetype = "COM"
-
-/datum/computer_file/data/ordnance/gaseous/return_data()
-	return gas_record
-
-/datum/computer_file/data/ordnance/gaseous/clone()
-	var/datum/computer_file/data/ordnance/gaseous/temp = ..()
-	temp.gas_record = gas_record
-	return temp

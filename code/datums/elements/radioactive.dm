@@ -3,7 +3,7 @@
 /// This atom will regularly pulse radiation.
 /// As this is only applied on uranium objects for now, this defaults to uranium constants.
 /datum/element/radioactive
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 	var/list/radioactive_objects = list()
 
@@ -20,7 +20,7 @@
 
 	return ..()
 
-/datum/element/radioactive/process(delta_time)
+/datum/element/radioactive/process(seconds_per_tick)
 	for (var/radioactive_object in radioactive_objects)
 		if (world.time - radioactive_objects[radioactive_object] < DELAY_BETWEEN_RADIATION_PULSES)
 			continue

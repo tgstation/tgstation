@@ -1,7 +1,7 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
-#define PANEL_Y_OFFSET 13
-#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
+#define PANEL_Z_OFFSET 13
+#define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
 #define SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER 100
 #define SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER 200
 
@@ -37,12 +37,11 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
-	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Z_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Z_OFFSET)
 
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
 	var/level_controller = SSday_night.get_controller(z)
 	if(level_controller)
 		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/update_day_night_exposure)
@@ -50,6 +49,18 @@
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
+	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
+
+/obj/effect/overlay/solar_panel
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	appearance_flags = TILE_BOUND
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 /obj/machinery/power/solar/proc/update_day_night_exposure(datum/source, light_color, light_alpha)
 	SIGNAL_HANDLER
@@ -59,14 +70,11 @@
 	else
 		light_level_too_low = FALSE
 
-/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
-	var/obj/effect/overlay/overlay = new()
-	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	overlay.appearance_flags = TILE_BOUND
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
+	var/obj/effect/overlay/solar_panel/overlay = new(src)
 	overlay.icon_state = icon_state
-	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
-	overlay.pixel_y = y_offset
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
 
@@ -240,6 +248,12 @@
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
 		return
+	// space vines block out sunlight
+	var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+	if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+		unset_control()
+		return
+
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
 	if(needs_to_turn)
@@ -274,8 +288,8 @@
 	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
@@ -317,7 +331,10 @@
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
 		set_anchored(!anchored)
-		user.visible_message(span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly into place."), span_notice("You [anchored ? null : "un"]wrench the solar assembly into place."))
+		user.visible_message(
+			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
+			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
+		)
 		W.play_tool_sound(src, 75)
 		return TRUE
 
@@ -391,7 +408,7 @@
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
@@ -408,6 +425,11 @@
 	if(powernet)
 		for(var/obj/machinery/power/M in powernet.nodes)
 			if(istype(M, /obj/machinery/power/solar))
+				// space vines block out sunlight
+				var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
+				if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
+					continue
+
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
 					S.set_control(src)
@@ -566,6 +588,7 @@
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
-#undef PANEL_Y_OFFSET
-#undef PANEL_EDGE_Y_OFFSET
+#undef PANEL_Z_OFFSET
+#undef PANEL_EDGE_Z_OFFSET
 #undef SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER
+#undef SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER

@@ -27,8 +27,8 @@
 			control.connected = null
 	return ..()
 
-/obj/machinery/mass_driver/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/mass_driver/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER))

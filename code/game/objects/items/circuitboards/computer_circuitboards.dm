@@ -203,11 +203,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
-/obj/item/circuitboard/computer/powermonitor/secret
-	name = "Outdated Power Monitor" //Variant used on ruins to prevent them from showing up on PDA's.
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/monitor/secret
-
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -354,7 +349,7 @@
 /obj/item/circuitboard/computer/med_data
 	name = "Medical Records Console"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/computer/med_data
+	build_path = /obj/machinery/computer/records/medical
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer"
@@ -453,7 +448,7 @@
 /obj/item/circuitboard/computer/secure_data
 	name = "Security Records Console"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
-	build_path = /obj/machinery/computer/secure_data
+	build_path = /obj/machinery/computer/records/security
 
 /obj/item/circuitboard/computer/warrant
 	name = "Security Warrant Viewer"
@@ -471,11 +466,10 @@
 	build_path = /obj/machinery/computer/camera_advanced/syndie
 
 //Service
-
-/obj/item/circuitboard/computer/chef_order
+/obj/item/circuitboard/computer/order_console
 	name = "Produce Orders Console"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/chef_order
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/computer/order_console/cook
 
 //Supply
 
@@ -532,6 +526,15 @@
 	name = "Supply Request Console"
 	build_path = /obj/machinery/computer/cargo/request
 
+/obj/item/circuitboard/computer/order_console/mining
+	name = "Mining Vending Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/order_console/mining
+
+/obj/item/circuitboard/computer/order_console/mining/golem
+	name = "Golem Ship Equipment Vendor Console"
+	build_path = /obj/machinery/computer/order_console/mining/golem
+
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -555,6 +558,11 @@
 /obj/item/circuitboard/computer/mining_shuttle/common
 	name = "Lavaland Shuttle"
 	build_path = /obj/machinery/computer/shuttle/mining/common
+
+/obj/item/circuitboard/computer/emergency_pod
+	name = "Emergency Pod Controls"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/computer/shuttle/pod
 
 /obj/item/circuitboard/computer/exoscanner_console
 	name = "Scanner Array Control Console"

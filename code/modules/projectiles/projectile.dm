@@ -4,7 +4,7 @@
 
 /obj/projectile
 	name = "projectile"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
@@ -145,7 +145,7 @@
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
+
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
@@ -164,7 +164,8 @@
 	var/immobilize = 0
 	var/unconscious = 0
 	var/eyeblur = 0
-	var/drowsy = 0
+	/// Drowsiness applied on projectile hit
+	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
 	var/jitter = 0 SECONDS
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
@@ -175,6 +176,7 @@
 	var/slur = 0 SECONDS
 
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/catastropic_dismemberment = FALSE //If TRUE, this projectile deals its damage to the chest if it dismembers a limb.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 	/// We ignore mobs with these factions.
@@ -193,7 +195,7 @@
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -263,7 +265,7 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
+	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
@@ -302,7 +304,7 @@
 		var/limb_hit = hit_limb
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
-		if(suppressed==SUPPRESSED_VERY)
+		if(suppressed == SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
 			playsound(loc, hitsound, 5, TRUE, -1)
@@ -313,19 +315,29 @@
 				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			if(L.is_blind())
+				to_chat(L, span_userdanger("You feel something hit you[organ_hit_text]!"))
 		L.on_hit(src)
 
 	var/reagent_note
 	if(reagents?.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += "[R.name] ([num2text(R.volume)])"
+		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
-	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		return BULLET_ACT_HIT
 
+	if(isvehicle(firer))
+		var/obj/vehicle/firing_vehicle = firer
+
+		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
+		if(!LAZYLEN(logging_mobs))
+			logging_mobs = firing_vehicle.return_drivers()
+		for(var/mob/logged_mob as anything in logging_mobs)
+			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		return BULLET_ACT_HIT
+
+	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -488,15 +500,14 @@
 	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
 		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
-			considering += iter_possible_target
-	if(considering.len)
-		var/mob/living/hit_living = pick(considering)
-		return hit_living.lowest_buckled_mob()
+			considering |= iter_possible_target
+	if(length(considering))
+		return pick(considering)
 	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
 			considering += i
-	if(considering.len)
+	if(length(considering))
 		return pick(considering)
 	// 5. turf
 	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
@@ -532,17 +543,18 @@
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
 	else
-		var/mob/living/L = target
+		var/mob/living/living_target = target
 		if(direct_target)
 			return TRUE
-		if(L.stat == DEAD)
+		if(living_target.stat == DEAD)
 			return FALSE
-		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
+		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
 		if(!hit_prone_targets)
-			if(!L.density)
+			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
+			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
 				return FALSE
-			if(L.body_position != LYING_DOWN)
+			if(living_target.body_position != LYING_DOWN)
 				return TRUE
 	return TRUE
 
@@ -691,11 +703,14 @@
 	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
+	if(firer)
+		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type && LAZYLEN(embedding))
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
+			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
@@ -1060,3 +1075,23 @@
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
 		projectile_payload = shrapnel_type)
 	return TRUE
+
+/**
+ * Is this projectile considered "hostile"?
+ *
+ * By default all projectiles which deal damage or impart crowd control effects (including stamina) are hostile
+ *
+ * This is NOT used for pacifist checks, that's handled by [/obj/item/ammo_casing/var/harmful]
+ * This is used in places such as AI responses to determine if they're being threatened or not (among other places)
+ */
+/obj/projectile/proc/is_hostile_projectile()
+	if(damage > 0 || stamina > 0)
+		return TRUE
+
+	if(paralyze + stun + immobilize + knockdown > 0 SECONDS)
+		return TRUE
+
+	return FALSE
+
+#undef MOVES_HITSCAN
+#undef MUZZLE_EFFECT_PIXEL_INCREMENT

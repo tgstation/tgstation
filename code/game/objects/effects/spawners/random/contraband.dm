@@ -55,7 +55,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/paper/fluff/jobs/prisoner/letter,
 		/obj/item/storage/wallet/random,
-		/obj/item/modular_computer/tablet/pda,
+		/obj/item/modular_computer/pda,
 		/obj/item/radio/off,
 	)
 
@@ -90,4 +90,15 @@
 		/obj/item/food/grown/cannabis/death = 45, //i mean, it's been there for a while?
 		/obj/item/food/grown/cannabis/rainbow = 15,
 		/obj/item/food/grown/cannabis/ultimate = 1,
+	)
+
+/obj/effect/spawner/random/contraband/landmine
+	name = "landmine spawner"
+	loot = list(
+		/obj/effect/mine/explosive/light = 10,
+		/obj/effect/mine/explosive/flame = 10,
+		/obj/effect/mine/explosive/flash = 15,
+		/obj/effect/mine/explosive = 2,
+		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
+		/obj/effect/mine/shrapnel = 5,
 	)

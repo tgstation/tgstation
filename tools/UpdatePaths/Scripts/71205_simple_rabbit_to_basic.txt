@@ -1,0 +1,3 @@
+# transforms simple rabbit animals to the new basic animal subtype
+
+/mob/living/simple_animal/rabbit/@SUBTYPES : /mob/living/basic/rabbit/@SUBTYPES{@OLD}

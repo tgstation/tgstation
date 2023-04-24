@@ -3,12 +3,7 @@
 /// The probability to replace an existing law with an ion law instead of adding a new ion law.
 #define REPLACE_LAW_WITH_ION_PROB 10
 
-//////////////////////////////////////////////
-//                                          //
-//            MIDROUND RULESETS             //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Rulesets
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = "Midround"
 	var/midround_ruleset_style
@@ -23,10 +18,13 @@
 
 	/// The minimum round time before this ruleset will show up
 	var/minimum_round_time = 0
+	/// Abstract root value
+	var/abstract_type = /datum/dynamic_ruleset/midround
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
+	abstract_type = /datum/dynamic_ruleset/midround/from_ghosts
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 	/// The rule needs this many applicants to be properly executed.
@@ -80,8 +78,8 @@
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
 
-// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
-// (see /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE) for example)
+// IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players
+// subtype your midround with /from_ghosts or /from_living to get candidate checking. Or check yourself by subtyping from neither
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (forced)
 		return TRUE
@@ -117,19 +115,17 @@
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
-	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	log_dynamic("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
+	mode.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	candidates = poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
-		mode.dynamic_log("The ruleset [name] received no applications.")
+		mode.log_dynamic_and_announce("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
 		attempt_replacement()
 		return
 
-	message_admins("[candidates.len] players volunteered for the ruleset [name].")
-	log_dynamic("[candidates.len] players volunteered for [name].")
+	mode.log_dynamic_and_announce("[candidates.len] players volunteered for [name].")
 	review_applications()
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
@@ -183,7 +179,7 @@
 
 /// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
-	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
+	var/datum/dynamic_ruleset/midround/from_living/autotraitor/sleeper_agent = new
 
 	mode.configure_ruleset(sleeper_agent)
 
@@ -192,13 +188,19 @@
 
 	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
-//////////////////////////////////////////////
-//                                          //
-//           SYNDICATE TRAITORS             //
-//                                          //
-//////////////////////////////////////////////
+///subtype to handle checking players
+/datum/dynamic_ruleset/midround/from_living
+	weight = 0
+	abstract_type = /datum/dynamic_ruleset/midround/from_living
 
-/datum/dynamic_ruleset/midround/autotraitor
+/datum/dynamic_ruleset/midround/from_living/ready(forced)
+	if(!check_candidates())
+		return FALSE
+	return ..()
+
+
+/// Midround Traitor Ruleset (From Living)
+/datum/dynamic_ruleset/midround/from_living/autotraitor
 	name = "Syndicate Sleeper Agent"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/traitor
@@ -224,38 +226,28 @@
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
-	for(var/mob/living/player in living_players)
+	candidates = living_players
+	for(var/mob/living/player in candidates)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
-			living_players -= player
+			candidates -= player
 		else if(is_centcom_level(player.z))
-			living_players -= player // We don't autotator people in CentCom
+			candidates -= player // We don't autotator people in CentCom
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			living_players -= player // We don't autotator people with roles already
+			candidates -= player // We don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
-	if (required_candidates > living_players.len)
-		log_dynamic("FAIL: [src] does not have enough candidates, using living_players ([required_candidates] needed, [living_players.len] found)")
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/autotraitor/execute()
-	var/mob/M = pick(living_players)
+/datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
+	var/mob/M = pick(candidates)
 	assigned += M
-	living_players -= M
+	candidates -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_dynamic("[key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//         Malfunctioning AI                //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Malf AI Ruleset (From Living)
 /datum/dynamic_ruleset/midround/malf
 	name = "Malfunctioning AI"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
@@ -311,35 +303,25 @@
 			new_malf_ai.add_ion_law(generate_ion_law())
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//              WIZARD (GHOST)              //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Wizard Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD_MIDROUND
 	antag_flag_override = ROLE_WIZARD
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 1
 	cost = 10
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (!check_candidates())
+	if(!check_candidates())
 		return FALSE
-	if(GLOB.wizardstart.len == 0)
+	if(!length(GLOB.wizardstart))
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
@@ -349,12 +331,7 @@
 	..()
 	new_character.forceMove(pick(GLOB.wizardstart))
 
-//////////////////////////////////////////////
-//                                          //
-//          NUCLEAR OPERATIVES (MIDROUND)   //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Nuclear Operatives Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear
 	name = "Nuclear Assault"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
@@ -375,10 +352,12 @@
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	flags = HIGH_IMPACT_RULESET
+
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	/// The nuke ops team datum.
 	var/datum/team/nuclear/nuke_team
-	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -409,23 +388,12 @@
 		return
 	return ..()
 
-//////////////////////////////////////////////
-//                                          //
-//              BLOB (GHOST)                //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Blob Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/blob
 	name = "Blob"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 35 MINUTES
@@ -438,8 +406,8 @@
 	var/body = applicant.become_overmind()
 	return body
 
-/// Infects a random player, making them explode into a blob.
-/datum/dynamic_ruleset/midround/blob_infection
+/// Midround Blob Infection Ruleset (From Living)
+/datum/dynamic_ruleset/midround/from_living/blob_infection
 	name = "Blob Infection"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob/infection
@@ -458,12 +426,6 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 35 MINUTES
@@ -472,7 +434,7 @@
 	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/blob_infection/trim_candidates()
 	..()
 	candidates = living_players
 	for(var/mob/living/player as anything in candidates)
@@ -484,7 +446,7 @@
 		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
 			candidates -= player
 
-/datum/dynamic_ruleset/midround/blob_infection/execute()
+/datum/dynamic_ruleset/midround/from_living/blob_infection/execute()
 	if(!candidates || !candidates.len)
 		return FALSE
 	var/mob/living/carbon/human/blob_antag = pick_n_take(candidates)
@@ -492,23 +454,12 @@
 	blob_antag.mind.special_role = antag_flag
 	return ..()
 
-//////////////////////////////////////////////
-//                                          //
-//           XENOMORPH (GHOST)              //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Xenomorph Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 40 MINUTES
@@ -545,76 +496,49 @@
 	log_dynamic("[key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
 	return new_xeno
 
-//////////////////////////////////////////////
-//                                          //
-//           NIGHTMARE (GHOST)              //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Nightmare Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare
 	name = "Nightmare"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/nightmare
 	antag_flag = ROLE_NIGHTMARE
 	antag_flag_override = ROLE_ALIEN
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
 	cost = 5
 	minimum_players = 15
 	repeatable = TRUE
-	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
-	for(var/X in GLOB.xeno_spawn)
-		var/turf/T = X
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			spawn_locs += T
-	if(!spawn_locs.len)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat = 0)
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
+	if(!spawn_loc)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/carbon/human/S = new (pick(spawn_locs))
-	player_mind.transfer_to(S)
+	var/mob/living/carbon/human/new_nightmare = new (find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	player_mind.transfer_to(new_nightmare)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
 	player_mind.special_role = ROLE_NIGHTMARE
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	S.set_species(/datum/species/shadow/nightmare)
+	new_nightmare.set_species(/datum/species/shadow/nightmare)
 
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
-	log_dynamic("[key_name(S)] was spawned as a Nightmare by the midround ruleset.")
-	return S
+	playsound(new_nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(new_nightmare)] has been made into a Nightmare by the midround ruleset.")
+	log_dynamic("[key_name(new_nightmare)] was spawned as a Nightmare by the midround ruleset.")
+	return new_nightmare
 
-//////////////////////////////////////////////
-//                                          //
-//           SPACE DRAGON (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Space Dragon Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon
 	name = "Space Dragon"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/space_dragon
 	antag_flag = ROLE_SPACE_DRAGON
 	antag_flag_override = ROLE_SPACE_DRAGON
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -647,24 +571,11 @@
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S
 
-//////////////////////////////////////////////
-//                                          //
-//           ABDUCTORS    (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/abductor
 	antag_flag = ROLE_ABDUCTOR
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
@@ -672,6 +583,8 @@
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
+
 	var/datum/team/abductor_team/new_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
@@ -690,31 +603,20 @@
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
 
-#undef ABDUCTOR_MAX_TEAMS
-
-//////////////////////////////////////////////
-//                                          //
-//            SPACE NINJA (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Space Ninja Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
 	name = "Space Ninja"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/ninja
 	antag_flag = ROLE_NINJA
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 8
 	minimum_players = 30
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
+
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
@@ -737,23 +639,12 @@
 	log_dynamic("[key_name(ninja)] was spawned as a Space Ninja by the midround ruleset.")
 	return ninja
 
-//////////////////////////////////////////////
-//                                          //
-//            SPIDERS     (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
+/// Midround Spiders Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/spiders
 	name = "Spiders"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_SPIDER
 	required_type = /mob/dead/observer
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 3
@@ -766,18 +657,12 @@
 	create_midwife_eggs(spawncount)
 	return ..()
 
-/// Revenant ruleset
+/// Midround Revenant Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/revenant
 	antag_flag = ROLE_REVENANT
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -818,7 +703,7 @@
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
 	return revenant
 
-/// Sentient Disease ruleset
+/// Midround Sentient Disease Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
@@ -833,41 +718,57 @@
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	virus.key = applicant.key
-	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
+	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
 	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
 	return virus
 
-/// Space Pirates ruleset
+/// Midround Space Pirates Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/pirates
 	name = "Space Pirates"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
-	weight = 4
+	weight = 3
 	cost = 8
-	minimum_players = 27
+	minimum_players = 20
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
-	if (!SSmapping.empty_space)
+	if (SSmapping.is_planetary() || GLOB.light_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat()
+	send_pirate_threat(GLOB.light_pirate_gangs)
 	return ..()
 
-/// Obsessed ruleset
-/datum/dynamic_ruleset/midround/obsessed
+/// Dangerous Space Pirates ruleset
+/datum/dynamic_ruleset/midround/dangerous_pirates
+	name = "Dangerous Space Pirates"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
+	antag_flag = "Space Pirates"
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 8
+	minimum_players = 25
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat=0)
+	if (SSmapping.is_planetary() || GLOB.heavy_pirate_gangs.len == 0)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/dangerous_pirates/execute()
+	send_pirate_threat(GLOB.heavy_pirate_gangs)
+	return ..()
+
+/// Midround Obsessed Ruleset (From Living)
+/datum/dynamic_ruleset/midround/from_living/obsessed
 	name = "Obsessed"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/obsessed
@@ -877,24 +778,18 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
 	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/obsessed/trim_candidates()
+/datum/dynamic_ruleset/midround/from_living/obsessed/trim_candidates()
 	..()
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
 		if( \
-			!candidate.getorgan(/obj/item/organ/internal/brain) \
+			!candidate.get_organ_by_type(/obj/item/organ/internal/brain) \
 			|| candidate.mind.has_antag_datum(/datum/antagonist/obsessed) \
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
@@ -902,69 +797,98 @@
 		)
 			candidates -= candidate
 
-/datum/dynamic_ruleset/midround/obsessed/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
+/datum/dynamic_ruleset/midround/from_living/obsessed/execute()
 	var/mob/living/carbon/human/obsessed = pick_n_take(candidates)
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
-	return ..()
+	return TRUE
 
-/// Thief ruleset
-/datum/dynamic_ruleset/midround/opportunist
-	name = "Opportunist"
+/// Midround Space Changeling Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+	name = "Space Changeling"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/thief
-	antag_flag = ROLE_OPPORTUNIST
-	antag_flag_override = ROLE_THIEF
-	protected_roles = list(
+	antag_datum = /datum/antagonist/changeling/space
+	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag_override = ROLE_CHANGELING
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 7
+	minimum_players = 15
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+	var/body = generate_changeling_meteor(applicant)
+	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
+	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
+	return body
+
+/// Midround Paradox Clone Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
+	name = "Paradox Clone"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/paradox_clone
+	antag_flag = ROLE_PARADOX_CLONE
+	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
-		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
 	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-		ROLE_POSITRONIC_BRAIN,
-	)
+	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
 	required_candidates = 1
-	weight = 2
-	cost = 3 //Worth less than obsessed, but there's more of them.
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	weight = 4
+	cost = 3
 	repeatable = TRUE
+	var/list/possible_spawns = list() ///places the antag can spawn
 
-/datum/dynamic_ruleset/midround/opportunist/trim_candidates()
-	..()
-	candidates = living_players
-	for(var/mob/living/carbon/human/candidate in candidates)
-		if( \
-			//no bigger antagonists getting smaller role
-			candidate.mind && (candidate.mind.special_role || candidate.mind.antag_datums?.len > 0) \
-			//no dead people
-			|| candidate.stat == DEAD \
-			//no people who don't want it
-			|| !(ROLE_OPPORTUNIST in candidate.client?.prefs?.be_special) \
-			//no non-station crew
-			|| candidate.mind.assigned_role.faction != FACTION_STATION \
-			//stops thief being added to admins messing around on centcom
-			|| is_centcom_level(candidate.z) \
-		)
-			candidates -= candidate
-
-/datum/dynamic_ruleset/midround/opportunist/execute()
-	if(!candidates || !candidates.len)
-		return FALSE
-	var/mob/living/carbon/human/thief = pick_n_take(candidates)
-	thief.mind.add_antag_datum(antag_datum)
-	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
-	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
+	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!possible_spawns.len)
+		return MAP_ERROR
 	return ..()
 
-/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/clone_victim = find_original()
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+
+	player_mind.transfer_to(clone)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+
+	var/datum/antagonist/paradox_clone/new_datum = player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+	new_datum.original_ref = WEAKREF(clone_victim.mind)
+	new_datum.setup_clone()
+
+	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
+	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
+
+	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
+	clone.log_message("was spawned as a Paradox Clone of [key_name(clone)] by the midround ruleset.", LOG_GAME)
+
+	return clone
+
+/**
+ * Trims through GLOB.player_list and finds a target
+ * Returns a single human victim, if none is possible then returns null.
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_original()
+	var/list/possible_targets = list()
+
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(!player.client || !player.mind || player.stat)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		possible_targets += player
+
+	if(possible_targets.len)
+		return pick(possible_targets)
+	return FALSE
+
 #undef MALF_ION_PROB
-/// The probability to replace an existing law with an ion law instead of adding a new ion law.
 #undef REPLACE_LAW_WITH_ION_PROB

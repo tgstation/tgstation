@@ -97,7 +97,54 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-### Signal Handlers
+### RegisterSignal()
+
+#### PROC_REF Macros
+When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF, TYPE_PROC_REF and GLOBAL_PROC_REF macros. 
+They ensure compilation fails if the reffered to procs change names or get removed.
+The macro to be used depends on how the proc you're in relates to the proc you want to use:
+
+PROC_REF if the proc you want to use is defined on the current proc type or any of it's ancestor types.
+Example:
+```
+/mob/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/very_funny()
+	to_chat(world,"who's there?")
+
+/mob/subtype/proc/do_something()
+	// Proc on our own type
+	RegisterSignal(x, COMSIG_OTHER_FAKE, PROC_REF(very_funny))
+	// Proc on ancestor type, /mob is parent type of /mob/subtype
+	RegisterSignal(x, COMSIG_FAKE, PROC_REF(funny))
+```
+
+TYPE_PROC_REF if the proc you want to use is defined on a different unrelated type
+Example:
+```
+/obj/thing/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/do_something()
+	var/obj/thing/x = new()
+	// we're referring to /obj/thing proc inside /mob/subtype proc
+	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny)) 
+```
+
+GLOBAL_PROC_REF if the proc you want to use is a global proc.
+Example:
+```
+/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/do_something()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(funny)), 100))
+```
+
+Note that the same rules go for verbs too! We have VERB_REF() and TYPE_VERB_REF() as you need it in these same cases. GLOBAL_VERB_REF() isn't a thing however, as verbs are not global.
+
+#### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
@@ -108,6 +155,16 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
+
+#### `override`
+
+Each atom can only register a signal on the same object once, or else you will get a runtime. Overriding signals is usually a bug, but if you are confident that it is not, you can silence this runtime with `override = TRUE`.
+
+```dm
+RegisterSignal(fork, COMSIG_FORK_STAB, PROC_REF(on_fork_stab), override = TRUE)
+```
+
+If you decide to do this, you should make it clear with a comment explaining why it is necessary. This helps us to understand that the signal override is not a bug, and may help us to remove it in the future if the assumptions change.
 
 ### Enforcing parent calling
 
@@ -157,7 +214,7 @@ In a lot of our older code, `process()` is frame dependent. Here's some example 
 	var/health = 100
 	var/health_loss = 4 //We want to lose 2 health per second, so 4 per SSmobs process
 
-/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+/mob/testmob/process(seconds_per_tick) //SSmobs runs once every 2 seconds
 	health -= health_loss
 ```
 
@@ -172,11 +229,11 @@ How do we solve this? By using delta-time. Delta-time is the amount of seconds y
 	var/health = 100
 	var/health_loss = 2 //Health loss every second
 
-/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
-	health -= health_loss * delta_time
+/mob/testmob/process(seconds_per_tick) //SSmobs runs once every 2 seconds
+	health -= health_loss * seconds_per_tick
 ```
 
-In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * delta_time, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
+In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * seconds_per_tick, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 

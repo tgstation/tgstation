@@ -5,6 +5,6 @@
 
 	client.perspective = EYE_PERSPECTIVE
 	if(holoform)
-		client.eye = src
+		client.set_eye(src)
 	else
-		client.eye = card
+		client.set_eye(card)

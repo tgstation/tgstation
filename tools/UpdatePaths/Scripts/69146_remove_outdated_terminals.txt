@@ -1,0 +1,1 @@
+/obj/machinery/computer/monitor/secret : /obj/machinery/computer/monitor{@OLD}

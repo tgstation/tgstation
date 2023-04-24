@@ -16,7 +16,7 @@
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))
 			var/mob/living/carbon/target_mob = target
-			target_mob.adjustBruteLoss(150, 0)
+			target_mob.apply_damage(150)
 		return BULLET_ACT_HIT
 
 /obj/item/ammo_box/magazine/recharge/ctf
@@ -198,7 +198,7 @@
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
 	icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
+	armor_type = /datum/armor/none
 	allowed = null
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
@@ -206,9 +206,19 @@
 
 	///Icon state to be fed into the shielded component
 	var/team_shield_icon = "shield-old"
+	var/max_charges = 150
+	var/recharge_start_delay = 20 SECONDS
+	var/charge_increment_delay = 1 SECONDS
+	var/charge_recovery = 30
+	var/lose_multiple_charges = TRUE
+	var/show_charge_as_alpha = TRUE
 
-/obj/item/clothing/suit/armor/vest/ctf/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+/obj/item/clothing/suit/armor/vest/ctf/equipped(mob/user, slot)
+	. = ..()
+	if(!slot || slot & ITEM_SLOT_HANDS)
+		return
+	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, show_charge_as_alpha = show_charge_as_alpha, shield_icon = team_shield_icon)
 
 // LIGHT SHIELDED VEST
 
@@ -220,8 +230,7 @@
 	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25
 
-/obj/item/clothing/suit/armor/vest/ctf/light/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+	max_charges = 30
 
 // RED TEAM GUNS
 
@@ -485,14 +494,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/red
 	name = "red shielded vest"
-	inhand_icon_state = "ert_security"
+	inhand_icon_state = null
 	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/red
 	name = "light red shielded vest"
-	inhand_icon_state = "ert_security"
+	inhand_icon_state = null
 	team_shield_icon = "shield-red"
 	greyscale_colors = COLOR_VIVID_RED
 
@@ -501,14 +510,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/blue
 	name = "blue shielded vest"
-	inhand_icon_state = "ert_command"
+	inhand_icon_state = null
 	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/blue
 	name = "light blue shielded vest"
-	inhand_icon_state = "ert_command"
+	inhand_icon_state = null
 	team_shield_icon = "shield-old"
 	greyscale_colors = COLOR_DARK_CYAN
 
@@ -517,14 +526,14 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/green
 	name = "green shielded vest"
-	inhand_icon_state = "ert_green"
+	inhand_icon_state = null
 	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/green
 	name = "light green shielded vest"
-	inhand_icon_state = "ert_green"
+	inhand_icon_state = null
 	team_shield_icon = "shield-green"
 	greyscale_colors = COLOR_LIME
 
@@ -533,13 +542,13 @@
 // Regular
 /obj/item/clothing/suit/armor/vest/ctf/yellow
 	name = "yellow shielded vest"
-	inhand_icon_state = "ert_engineer"
+	inhand_icon_state = null
 	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW
 
 // Light
 /obj/item/clothing/suit/armor/vest/ctf/light/yellow
 	name = "light yellow shielded vest"
-	inhand_icon_state = "ert_engineer"
+	inhand_icon_state = null
 	team_shield_icon = "shield-yellow"
 	greyscale_colors = COLOR_VIVID_YELLOW

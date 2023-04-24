@@ -120,7 +120,7 @@
 	game.food = rand(10,80) / rand(1,2)
 	game.fuel = rand(10,60) / rand(1,2)
 	if(game.electronics)
-		addtimer(CALLBACK(src, .proc/revert_random, game, oldfood, oldfuel), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(revert_random), game, oldfood, oldfuel), 1 SECONDS)
 
 /datum/orion_event/electronic_part/proc/revert_random(obj/machinery/computer/arcade/orion_trail/game, oldfood, oldfuel)
 	if(oldfuel > game.fuel && oldfood > game.food)
@@ -166,7 +166,7 @@
 		smashed.ScrapeAway()
 	game.say("Something slams into the floor around [game], exposing it to space!")
 	if(game.hull)
-		addtimer(CALLBACK(src, .proc/fix_floor, game), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(fix_floor), game), 1 SECONDS)
 
 /datum/orion_event/hull_part/proc/fix_floor(obj/machinery/computer/arcade/orion_trail/game)
 	game.say("A new floor suddenly appears around [game]. What the hell?")
@@ -260,7 +260,7 @@
 /datum/orion_event/raiders/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(50-gamer_skill))
 		to_chat(usr, span_userdanger("You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?"))
-		gamer.hallucination += 30
+		gamer.adjust_hallucinations(60 SECONDS)
 	else
 		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
 		gamer.take_bodypart_damage(30)
@@ -438,7 +438,7 @@
 		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 		var/black_hole = new /obj/singularity/orion(gamer.loc)
-		addtimer(CALLBACK(game, /atom/movable/proc/say, "[black_hole] winks out, just as suddenly as it appeared."), 50)
+		addtimer(CALLBACK(game, TYPE_PROC_REF(/atom/movable, say), "[black_hole] winks out, just as suddenly as it appeared."), 50)
 		QDEL_IN(black_hole, 5 SECONDS)
 
 #define BUTTON_DOCK "Dock"
@@ -525,8 +525,25 @@
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i in 1 to 3)
-					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
-					spaceport_security.GiveTarget(usr)
+					var/mob/living/basic/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
+					spaceport_security.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, usr)
 	game.fuel += fuel
 	game.food += food
 
+#undef BUTTON_A_GOOD_FIND
+#undef BUTTON_CONTINUE
+#undef BUTTON_CONTINUE_TRAVELS
+#undef BUTTON_DOCK
+#undef BUTTON_EXPLORE_SHIP
+#undef BUTTON_FIX_ENGINE
+#undef BUTTON_GO_AROUND
+#undef BUTTON_KEEP_SPEED
+#undef BUTTON_LEAVE_THE_DERELICT
+#undef BUTTON_OH
+#undef BUTTON_REPAIR_ELECTRONICS
+#undef BUTTON_RESTORE_HULL
+#undef BUTTON_SLOW_DOWN
+#undef BUTTON_SPEED_PAST
+#undef BUTTON_WAIT
+#undef BUTTON_WELCOME_ABOARD
+#undef BUTTON_WHERE_DID_YOU_GO

@@ -1,6 +1,9 @@
 
 // Cleaning flags
 
+///Whether we should not attempt to clean.
+#define DO_NOT_CLEAN "do_not_clean"
+
 // Different kinds of things that can be cleaned.
 // Use these when overriding the wash proc or registering for the clean signals to check if your thing should be cleaned
 /// Cleans blood off of the cleanable atom.

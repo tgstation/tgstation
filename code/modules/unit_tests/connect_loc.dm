@@ -63,7 +63,7 @@
 	. = ..()
 
 	var/static/list/connections = list(
-		COMSIG_MOCK_SIGNAL = .proc/on_receive_mock_signal,
+		COMSIG_MOCK_SIGNAL = PROC_REF(on_receive_mock_signal),
 	)
 
 	AddElement(/datum/element/connect_loc, connections)

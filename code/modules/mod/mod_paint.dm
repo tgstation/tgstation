@@ -11,7 +11,7 @@
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
 	var/obj/item/mod/control/editing_mod
-	var/atom/movable/screen/color_matrix_proxy_view/proxy_view
+	var/atom/movable/screen/map_view/proxy_view
 	var/list/current_color
 
 /obj/item/mod/paint/Initialize(mapload)
@@ -43,9 +43,11 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	editing_mod = mod
 	proxy_view = new()
+	proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
+
 	proxy_view.appearance = editing_mod.appearance
 	proxy_view.color = null
-	proxy_view.register_to_client(user.client)
+	proxy_view.display_to(user)
 	ui_interact(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -144,7 +146,7 @@
 	var/list/skins = list()
 	for(var/mod_skin in mod.theme.skins)
 		skins[mod_skin] = image(icon = mod.icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, .proc/check_menu, mod, user), require_near = TRUE)
+	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), mod, user), require_near = TRUE)
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
 		return

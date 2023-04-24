@@ -58,16 +58,16 @@
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
 	var/dat = ""
-	dat += "<b>Label:</b> <a href='?src=\ref[src];edit_label=1'>[maptext ? maptext : "No label set!"]</a><br>"
+	dat += "<b>Label:</b> <a href='?src=[text_ref(src)];edit_label=1'>[maptext ? maptext : "No label set!"]</a><br>"
 	dat += "<br>"
-	dat += "<b>Sound File:</b> <a href='?src=\ref[src];edit_sound_file=1'>[sound_file ? sound_file : "No file chosen!"]</a><br>"
-	dat += "<b>Volume:</b> <a href='?src=\ref[src];edit_volume=1'>[sound_volume]%</a><br>"
+	dat += "<b>Sound File:</b> <a href='?src=[text_ref(src)];edit_sound_file=1'>[sound_file ? sound_file : "No file chosen!"]</a><br>"
+	dat += "<b>Volume:</b> <a href='?src=[text_ref(src)];edit_volume=1'>[sound_volume]%</a><br>"
 	dat += "<br>"
-	dat += "<b>Mode:</b> <a href='?src=\ref[src];edit_mode=1'>[motus_operandi]</a><br>"
+	dat += "<b>Mode:</b> <a href='?src=[text_ref(src)];edit_mode=1'>[motus_operandi]</a><br>"
 	if(motus_operandi != SOUND_EMITTER_LOCAL)
-		dat += "<b>Range:</b> <a href='?src=\ref[src];edit_range=1'>[emitter_range]</a>[emitter_range == SOUND_EMITTER_RADIUS ? "<a href='?src=\ref[src];edit_radius=1'>[play_radius]-tile radius</a>" : ""]<br>"
+		dat += "<b>Range:</b> <a href='?src=[text_ref(src)];edit_range=1'>[emitter_range]</a>[emitter_range == SOUND_EMITTER_RADIUS ? "<a href='?src=[text_ref(src)];edit_radius=1'>[play_radius]-tile radius</a>" : ""]<br>"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];play=1'>Play Sound</a> (interrupts other sound emitter sounds)"
+	dat += "<a href='?src=[text_ref(src)];play=1'>Play Sound</a> (interrupts other sound emitter sounds)"
 	var/datum/browser/popup = new(user, "emitter", "", 500, 600)
 	popup.set_content(dat)
 	popup.open()
@@ -138,7 +138,7 @@
 		if(SOUND_EMITTER_GLOBAL)
 			hearing_mobs = GLOB.player_list.Copy()
 	for(var/mob/M in hearing_mobs)
-		if(M.client.prefs.toggles & SOUND_MIDI)
+		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
 		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")

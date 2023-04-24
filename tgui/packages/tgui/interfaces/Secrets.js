@@ -279,12 +279,13 @@ const FunTab = (props, context) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="flag"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
+              content="CTF Instagib Mode"
+              onClick={() => act('ctf_instagib')}
+            />
           </Stack.Item>
           <Stack.Item>
             <NoticeBox
@@ -484,26 +485,30 @@ const FunForYouTab = (props, context) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        <NoticeBox danger mb={0}>
-          <Button
-            color="red"
-            icon="hand-lizard"
-            fluid
-            content="Change everyone's species"
-            onClick={() => act('allspecies')}
-          />
-        </NoticeBox>
-      </Stack.Item>
-      <Stack.Item>
-        <NoticeBox danger mb={0}>
-          <Button
-            color="black"
-            icon="paw"
-            fluid
-            content="Turn all humans into monkeys (DANGEROUS: worst species)"
-            onClick={() => act('monkey')}
-          />
-        </NoticeBox>
+        <Stack>
+          <Stack.Item>
+            <NoticeBox danger mb={0} width={19.6}>
+              <Button
+                color="red"
+                icon="hand-lizard"
+                fluid
+                content="Change everyone's species"
+                onClick={() => act('allspecies')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="paw"
+                fluid
+                content="Change everyone to monkeys"
+                onClick={() => act('monkey')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger mb={0}>
@@ -574,6 +579,32 @@ const FunForYouTab = (props, context) => {
                 fluid
                 content="Shatter the Immersion"
                 onClick={() => act('unmassimmerse')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack fill>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="comment-slash"
+                fluid
+                content="Tower of Babel"
+                onClick={() => act('towerOfBabel')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
+            <NoticeBox info width={19.6} mb={0}>
+              <Button
+                color="blue"
+                icon="comment"
+                fluid
+                content="Undo Tower of Babel"
+                onClick={() => act('cureTowerOfBabel')}
               />
             </NoticeBox>
           </Stack.Item>

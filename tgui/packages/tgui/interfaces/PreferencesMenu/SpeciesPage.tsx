@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { useBackend } from '../../backend';
 import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from '../../components';
-import { CharacterPreview } from './CharacterPreview';
+import { CharacterPreview } from '../common/CharacterPreview';
 import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -11,6 +11,7 @@ const FOOD_ICONS = {
   [Food.Dairy]: 'cheese',
   [Food.Fried]: 'bacon',
   [Food.Fruit]: 'apple-alt',
+  [Food.Gore]: 'skull',
   [Food.Grain]: 'bread-slice',
   [Food.Gross]: 'trash',
   [Food.Junkfood]: 'pizza-slice',
@@ -29,6 +30,7 @@ const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
   [Food.Dairy]: 'Dairy',
   [Food.Fried]: 'Fried food',
   [Food.Fruit]: 'Fruit',
+  [Food.Gore]: 'Gore',
   [Food.Grain]: 'Grain',
   [Food.Gross]: 'Gross food',
   [Food.Junkfood]: 'Junk food',

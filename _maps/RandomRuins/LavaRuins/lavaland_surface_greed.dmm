@@ -38,8 +38,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "k" = (
-/obj/machinery/computer/arcade/battle{
-	set_obj_flags = "EMAGGED"
+/obj/machinery/computer/arcade/battle,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/computer/arcade/battle
 	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)

@@ -13,4 +13,3 @@
 	randomize_human(owner)
 	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/moth, /datum/species/fly))
 	owner.set_species(species)
-	owner.dna.update_dna_identity()

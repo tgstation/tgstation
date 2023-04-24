@@ -1,6 +1,6 @@
 /obj/item/storage/belt
-	name = "belt"
-	desc = "Can hold various things."
+	name = "not actually a toolbelt"
+	desc = "Can hold various things. This is the base type of /belt, are you sure you should have this?"
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utility"
 	inhand_icon_state = "utility"
@@ -28,6 +28,7 @@
 
 /obj/item/storage/belt/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/attack_equip)
 	update_appearance()
 
 /obj/item/storage/belt/utility
@@ -41,7 +42,7 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
-/obj/item/storage/belt/utility/Initialize()
+/obj/item/storage/belt/utility/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -52,6 +53,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
 		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -72,7 +74,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		))
+	))
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -205,7 +207,7 @@
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
 
-/obj/item/storage/belt/medical/Initialize()
+/obj/item/storage/belt/medical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -240,8 +242,8 @@
 		/obj/item/radio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -260,30 +262,30 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
-		))
+	))
 
 /obj/item/storage/belt/medical/paramedic
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
-	SSwardrobe.provide_type(/obj/item/pinpointer/crew/prox, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
-	SSwardrobe.provide_type(/obj/item/reagent_containers/glass/bottle/formaldehyde, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
-	to_preload += /obj/item/pinpointer/crew/prox
 	to_preload += /obj/item/stack/medical/gauze/twelve
-	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
-	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
+	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
+	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
@@ -294,7 +296,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -318,7 +320,7 @@
 	worn_icon_state = "security"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/security/Initialize()
+/obj/item/storage/belt/security/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 5
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -338,7 +340,7 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		))
+	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -357,7 +359,7 @@
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
 
-/obj/item/storage/belt/security/webbing/Initialize()
+/obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 
@@ -369,7 +371,7 @@
 	worn_icon_state = "explorer1"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/mining/Initialize()
+/obj/item/storage/belt/mining/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -381,16 +383,17 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
 		/obj/item/gps,
+		/obj/item/mining_stabilizer,
 		/obj/item/key/lasso,
 		/obj/item/knife,
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/internal/regenerative_core,
+		/obj/item/organ/internal/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/reagent_containers/cup/glass/bottle,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/resonator,
@@ -412,16 +415,25 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
-		))
+	))
 
 
-/obj/item/storage/belt/mining/vendor
-	contents = newlist(/obj/item/survivalcapsule)
+/obj/item/storage/belt/mining/vendor/PopulateContents()
+	new /obj/item/survivalcapsule(src)
 
 /obj/item/storage/belt/mining/alt
 	icon_state = "explorer2"
 	inhand_icon_state = "explorer2"
 	worn_icon_state = "explorer2"
+
+/obj/item/storage/belt/mining/healing/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival/luxury(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
+	for(var/i in 1 to 2)
+		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
+		core.preserve()
 
 /obj/item/storage/belt/mining/primitive
 	name = "hunter's belt"
@@ -430,7 +442,7 @@
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
 
-/obj/item/storage/belt/mining/primitive/Initialize()
+/obj/item/storage/belt/mining/primitive/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 5
 
@@ -441,12 +453,12 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/soulstone/Initialize()
+/obj/item/storage/belt/soulstone/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
-		/obj/item/soulstone
-		))
+		/obj/item/soulstone,
+	))
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -464,19 +476,12 @@
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=400)
 
-/obj/item/storage/belt/champion/Initialize()
+/obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/luchador
-		))
-
-/obj/item/storage/belt/cummerbund
-	name = "cummerbund"
-	desc = "A pleated sash that pairs well with a suit jacket."
-	icon_state = "cummerbund"
-	inhand_icon_state = "cummerbund"
-	worn_icon_state = "cummerbund"
+		/obj/item/clothing/mask/luchador,
+	))
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -486,7 +491,7 @@
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/storage/belt/military/Initialize()
+/obj/item/storage/belt/military/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
@@ -497,42 +502,43 @@
 	. = ..()
 	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
-
-/obj/item/storage/belt/military/snack/Initialize()
-	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.set_holdable(list(
 		/obj/item/food,
-		/obj/item/reagent_containers/food/drinks
-		))
+		/obj/item/reagent_containers/cup/glass,
+	))
 
+/obj/item/storage/belt/military/snack/full
+
+/obj/item/storage/belt/military/snack/full/Initialize(mapload)
+	. = ..()
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/food/candy,
-		/obj/item/food/cheesiehonkers,
-		/obj/item/food/cheesynachos,
-		/obj/item/food/chips,
-		/obj/item/food/cubannachos,
-		/obj/item/food/donkpocket,
-		/obj/item/food/nachos,
-		/obj/item/food/nugget,
-		/obj/item/food/rofflewaffles,
-		/obj/item/food/sosjerky,
-		/obj/item/food/spacetwinkie,
-		/obj/item/food/spaghetti/pastatomato,
-		/obj/item/food/syndicake,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola,
-		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
+			/obj/item/food/candy,
+			/obj/item/food/cheesiehonkers,
+			/obj/item/food/cheesynachos,
+			/obj/item/food/chips,
+			/obj/item/food/cubannachos,
+			/obj/item/food/donkpocket,
+			/obj/item/food/nachos,
+			/obj/item/food/nugget,
+			/obj/item/food/rofflewaffles,
+			/obj/item/food/sosjerky,
+			/obj/item/food/spacetwinkie,
+			/obj/item/food/spaghetti/pastatomato,
+			/obj/item/food/syndicake,
+			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+			/obj/item/reagent_containers/cup/glass/dry_ramen,
+			/obj/item/reagent_containers/cup/soda_cans/cola,
+			/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
+			/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
+			/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+			/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
+			/obj/item/reagent_containers/cup/soda_cans/space_up,
+			/obj/item/reagent_containers/cup/soda_cans/starkist,
 		))
 		new rig_snacks(src)
 
@@ -568,7 +574,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 
-/obj/item/storage/belt/military/assault/Initialize()
+/obj/item/storage/belt/military/assault/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 
@@ -585,7 +591,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "grenadebeltnew"
 
-/obj/item/storage/belt/grenade/Initialize()
+/obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 30
 	atom_storage.numerical_stacking = TRUE
@@ -598,9 +604,9 @@
 		/obj/item/grenade/c4,
 		/obj/item/lighter,
 		/obj/item/multitool,
-		/obj/item/reagent_containers/food/drinks/bottle/molotov,
+		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
-		))
+	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
@@ -624,12 +630,12 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/wands/Initialize()
+/obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
-		/obj/item/gun/magic/wand
-		))
+		/obj/item/gun/magic/wand,
+	))
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -650,7 +656,7 @@
 	inhand_icon_state = "janibelt"
 	worn_icon_state = "janibelt"
 
-/obj/item/storage/belt/janitor/Initialize()
+/obj/item/storage/belt/janitor/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
@@ -669,7 +675,8 @@
 		/obj/item/pushbroom,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		))
+		/obj/item/wirebrush,
+	))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -685,7 +692,7 @@
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 
-/obj/item/storage/belt/bandolier/Initialize()
+/obj/item/storage/belt/bandolier/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 18
 	atom_storage.max_total_storage = 18
@@ -693,18 +700,18 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/a762,
 		/obj/item/ammo_casing/shotgun,
-		))
+	))
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
-	inhand_icon_state = "fannypack_leather"
+	inhand_icon_state = null
 	worn_icon_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_CREW * 2
 
-/obj/item/storage/belt/fannypack/Initialize()
+/obj/item/storage/belt/fannypack/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
@@ -712,62 +719,59 @@
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
 	icon_state = "fannypack_black"
-	inhand_icon_state = "fannypack_black"
 	worn_icon_state = "fannypack_black"
 
 /obj/item/storage/belt/fannypack/red
 	name = "red fannypack"
 	icon_state = "fannypack_red"
-	inhand_icon_state = "fannypack_red"
 	worn_icon_state = "fannypack_red"
 
 /obj/item/storage/belt/fannypack/purple
 	name = "purple fannypack"
 	icon_state = "fannypack_purple"
-	inhand_icon_state = "fannypack_purple"
 	worn_icon_state = "fannypack_purple"
 
 /obj/item/storage/belt/fannypack/blue
 	name = "blue fannypack"
 	icon_state = "fannypack_blue"
-	inhand_icon_state = "fannypack_blue"
 	worn_icon_state = "fannypack_blue"
 
 /obj/item/storage/belt/fannypack/orange
 	name = "orange fannypack"
 	icon_state = "fannypack_orange"
-	inhand_icon_state = "fannypack_orange"
 	worn_icon_state = "fannypack_orange"
 
 /obj/item/storage/belt/fannypack/white
 	name = "white fannypack"
 	icon_state = "fannypack_white"
-	inhand_icon_state = "fannypack_white"
 	worn_icon_state = "fannypack_white"
 
 /obj/item/storage/belt/fannypack/green
 	name = "green fannypack"
 	icon_state = "fannypack_green"
-	inhand_icon_state = "fannypack_green"
 	worn_icon_state = "fannypack_green"
 
 /obj/item/storage/belt/fannypack/pink
 	name = "pink fannypack"
 	icon_state = "fannypack_pink"
-	inhand_icon_state = "fannypack_pink"
 	worn_icon_state = "fannypack_pink"
 
 /obj/item/storage/belt/fannypack/cyan
 	name = "cyan fannypack"
 	icon_state = "fannypack_cyan"
-	inhand_icon_state = "fannypack_cyan"
 	worn_icon_state = "fannypack_cyan"
 
 /obj/item/storage/belt/fannypack/yellow
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
-	inhand_icon_state = "fannypack_yellow"
 	worn_icon_state = "fannypack_yellow"
+
+/obj/item/storage/belt/fannypack/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = null
+	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
@@ -777,16 +781,18 @@
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/sabre/Initialize()
+/obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(list(
-		/obj/item/melee/sabre,
-		))
+	atom_storage.set_holdable(
+		list(
+			/obj/item/melee/sabre,
+		)
+	)
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
@@ -794,7 +800,7 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
@@ -802,7 +808,7 @@
 		user.put_in_hands(I)
 		update_appearance()
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		balloon_alert(user, "it's empty!")
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)
@@ -822,11 +828,11 @@
 	name = "botanical belt"
 	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
 	icon_state = "plantbelt"
-	inhand_icon_state = "plantbelt"
+	inhand_icon_state = "championbelt"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/plant/Initialize()
+/obj/item/storage/belt/plant/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -837,11 +843,11 @@
 		/obj/item/gun/energy/floragun,
 		/obj/item/hatchet,
 		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
 		/obj/item/shovel/spade,
-		))
+	))

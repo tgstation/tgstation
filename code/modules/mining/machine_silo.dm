@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!powered())
 		return ..()
 
-	if (istype(W, /obj/item/stack))
+	if (isstack(W))
 		return remote_attackby(src, user, W)
 
 	return ..()

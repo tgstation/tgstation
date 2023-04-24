@@ -12,7 +12,7 @@
 /datum/action/cooldown/spell/tongue_spike
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
-	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spike"
 
 	cooldown_time = 10 SECONDS
@@ -30,7 +30,7 @@
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 
-	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.internal_organs
+	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
 		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
 		return
@@ -43,6 +43,7 @@
 /obj/item/hardened_spike
 	name = "biomass spike"
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
 	force = 2
 	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
@@ -64,7 +65,7 @@
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
 	src.fired_by_ref = WEAKREF(source)
-	addtimer(CALLBACK(src, .proc/check_embedded), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_embedded)), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/check_embedded()
 	if(missed)
@@ -146,7 +147,7 @@
 	name = "Transfer Chemicals"
 	desc = "Send all of your reagents into whomever the chem spike is embedded in. One use."
 	background_icon_state = "bg_spell"
-	icon_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spikechemswap"
 	check_flags = AB_CHECK_CONSCIOUS
 

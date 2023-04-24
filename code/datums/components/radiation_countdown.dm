@@ -25,7 +25,7 @@
 	start_deletion_timer()
 
 /datum/component/radiation_countdown/proc/start_deletion_timer()
-	addtimer(CALLBACK(src, .proc/remove_self), TIME_UNTIL_DELETION, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(remove_self)), TIME_UNTIL_DELETION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/component/radiation_countdown/proc/remove_self()
 	if (!HAS_TRAIT(parent, TRAIT_IRRADIATED))
@@ -34,7 +34,7 @@
 	qdel(src)
 
 /datum/component/radiation_countdown/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_IN_THRESHOLD_OF_IRRADIATION, .proc/on_pre_potential_irradiation_within_range)
+	RegisterSignal(parent, COMSIG_IN_THRESHOLD_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation_within_range))
 
 /datum/component/radiation_countdown/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_IN_THRESHOLD_OF_IRRADIATION)

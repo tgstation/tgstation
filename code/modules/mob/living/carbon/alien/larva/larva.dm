@@ -22,7 +22,7 @@
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
-		)
+	)
 
 	var/amount_grown = 0
 	var/max_grown = 100
@@ -38,7 +38,7 @@
 	return ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()
 
 //This needs to be fixed
@@ -73,4 +73,8 @@
 	return
 
 /mob/living/carbon/alien/larva/canBeHandcuffed()
+	return TRUE
+
+/// Don't scramble a larva's body parts, it doesn't have any
+/mob/living/carbon/alien/larva/bioscramble(scramble_source)
 	return TRUE

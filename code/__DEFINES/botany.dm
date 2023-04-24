@@ -11,6 +11,9 @@
 /// MINS:
 #define MIN_PLANT_ENDURANCE 10
 
+/// Default reagent volume for grown plants
+#define PLANT_REAGENT_VOLUME 100
+
 /// -- Some botany trait value defines. --
 /// Weed Hardy can only reduce plants to 3 yield.
 #define WEED_HARDY_YIELD_MIN 3
@@ -20,8 +23,6 @@
 #define FUNGAL_METAB_YIELD_MIN 1
 
 /// -- Hydroponics tray defines. --
-/// Macro for updating the tray name.
-#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
 ///  Base amount of nutrients a tray can old.
 #define STATIC_NUTRIENT_CAPACITY 10
 /// Maximum amount of toxins a tray can reach.
@@ -72,6 +73,9 @@
 #define GLOWSHROOM_BASE_INTEGRITY 60
 
 // obj/machinery/hydroponics/var/plant_status defines
+
+/// How long to wait between plant age ticks, by default. See [/obj/machinery/hydroponics/var/cycledelay]
+#define HYDROTRAY_CYCLE_DELAY 20 SECONDS
 
 #define HYDROTRAY_NO_PLANT "missing"
 #define HYDROTRAY_PLANT_DEAD "dead"

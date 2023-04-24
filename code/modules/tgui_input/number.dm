@@ -119,6 +119,7 @@
 	data["min_value"] = min_value
 	data["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 	data["title"] = title
+	data["round_value"] = round_value
 	return data
 
 /datum/tgui_input_number/ui_data(mob/user)

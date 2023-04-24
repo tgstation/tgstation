@@ -175,9 +175,6 @@
 #define SDQL2_STATE_SWITCHING 5
 #define SDQL2_STATE_HALTING 6
 
-#define SDQL2_VALID_OPTION_TYPES list("proccall", "select", "priority", "autogc" , "sequential")
-#define SDQL2_VALID_OPTION_VALUES list("async", "blocking", "force_nulls", "skip_nulls", "high", "normal", "keep_alive" , "true")
-
 #define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS (1<<0)
 #define SDQL2_OPTION_BLOCKING_CALLS (1<<1)
 #define SDQL2_OPTION_HIGH_PRIORITY (1<<2) //High priority SDQL query, allow using almost all of the tick.
@@ -202,7 +199,7 @@
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
-		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
+		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
 		return FALSE
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
@@ -215,7 +212,7 @@
 	if(!silent)
 		message_admins("[log_entry1] [query_log]")
 	query_log = "[log_entry2] [query_log]"
-	log_game(query_log)
+	usr.log_message(query_log, LOG_ADMIN)
 	NOTICE(query_log)
 
 	var/start_time_total = REALTIMEOFDAY
@@ -493,7 +490,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					options |= SDQL2_OPTION_SEQUENTIAL
 
 /datum/sdql2_query/proc/ARun()
-	INVOKE_ASYNC(src, .proc/Run)
+	INVOKE_ASYNC(src, PROC_REF(Run))
 
 /datum/sdql2_query/proc/Run()
 	if(SDQL2_IS_RUNNING)
@@ -785,7 +782,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			if(v == "#null")
 				SDQL_expression(d, set_list[sets])
 				break
-			if(++i == sets.len)
+			i++
+			if(i == sets.len)
 				if(superuser)
 					if(temp.vars.Find(v))
 						temp.vars[v] = SDQL_expression(d, set_list[sets])
@@ -1208,7 +1206,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /obj/effect/statclick/SDQL2_delete/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	var/datum/sdql2_query/Q = target
 	Q.delete_click()
@@ -1216,7 +1214,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /obj/effect/statclick/SDQL2_action/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	var/datum/sdql2_query/Q = target
 	Q.action_click()
@@ -1227,6 +1225,24 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /obj/effect/statclick/sdql2_vv_all/Click()
 	if(!usr.client?.holder)
 		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
-		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	usr.client.debug_variables(GLOB.sdql2_queries)
+
+#undef SDQL2_HALT_CHECK
+#undef SDQL2_IS_RUNNING
+#undef SDQL2_OPTION_BLOCKING_CALLS
+#undef SDQL2_OPTION_DO_NOT_AUTOGC
+#undef SDQL2_OPTION_HIGH_PRIORITY
+#undef SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS
+#undef SDQL2_OPTION_SEQUENTIAL
+#undef SDQL2_OPTIONS_DEFAULT
+#undef SDQL2_STAGE_SWITCH_CHECK
+#undef SDQL2_STATE_ERROR
+#undef SDQL2_STATE_EXECUTING
+#undef SDQL2_STATE_HALTING
+#undef SDQL2_STATE_IDLE
+#undef SDQL2_STATE_PRESEARCH
+#undef SDQL2_STATE_SEARCHING
+#undef SDQL2_STATE_SWITCHING
+#undef SDQL2_TICK_CHECK

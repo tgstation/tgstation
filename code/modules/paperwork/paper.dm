@@ -16,6 +16,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	worn_icon_state = "paper"
 	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
@@ -61,6 +62,9 @@
 	/// The paper is located in nullspace, and holds a weak ref to the camera that once contained it so the paper can do some
 	/// state checking on if it should be shown to a viewer.
 	var/datum/weakref/camera_holder
+
+	///If TRUE, staff can read paper everywhere, but usually from requests panel.
+	var/request_state = FALSE
 
 /obj/item/paper/Initialize(mapload)
 	. = ..()
@@ -139,7 +143,7 @@
 		for(var/datum/paper_field/text as anything in new_paper.raw_field_input_data)
 			text.field_data.colour = new_color
 
-
+	new_paper.input_field_count = input_field_count
 	new_paper.raw_stamp_data = copy_raw_stamps()
 	new_paper.stamp_cache = stamp_cache?.Copy()
 	new_paper.update_icon_state()
@@ -157,13 +161,15 @@
  * * font - The font to use.
  * * color - The font color to use.
  * * bold - Whether this text should be rendered completely bold.
+ * * advanced_html - Boolean that is true when the writer has R_FUN permission, which sanitizes less HTML (such as images) from the new paper_input
  */
-/obj/item/paper/proc/add_raw_text(text, font, color, bold)
+/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html)
 	var/new_input_datum = new /datum/paper_input(
 		text,
 		font,
 		color,
 		bold,
+		advanced_html,
 	)
 
 	input_field_count += get_input_field_count(text)
@@ -300,9 +306,9 @@
 	add_fingerprint(usr)
 	update_static_data()
 
-/obj/item/paper/suicide_act(mob/user)
+/obj/item/paper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku..."))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
@@ -323,7 +329,7 @@
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
-	if(camera_holder && can_show_to_mob_through_camera(user))
+	if(camera_holder && can_show_to_mob_through_camera(user) || request_state)
 		return UI_UPDATE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
@@ -345,25 +351,28 @@
 		return TRUE
 	return ..()
 
-/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
-	var/ignition_message = I.ignition_effect(src, user)
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
+	//can't be put on fire!
+	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
+		return FALSE
+	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
-		return
-	. = TRUE
+		return FALSE
 	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
 							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
-		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
-			user.dropItemToGround(I)
-		user.adjust_fire_stacks(1)
+		if(user.is_holding(attacking_item)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(attacking_item)
+		user.adjust_fire_stacks(attacking_item)
 		user.ignite_mob()
-		return
+		return TRUE
 
 	if(user.is_holding(src)) //no TK shit here.
 		user.dropItemToGround(src)
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
-	fire_act(I.get_temperature())
+	fire_act(attacking_item.get_temperature())
+	return TRUE
 
 /obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
@@ -399,6 +408,7 @@
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
@@ -532,9 +542,10 @@
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
 			user.visible_message(span_notice("[user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
+			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")
 			var/paper_input = params["text"]
@@ -575,12 +586,12 @@
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
 			var/writing_implement_data = holding.get_writing_implement_details()
 
-			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"])
+			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");
 
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			update_appearance()
 			return TRUE
 		if("fill_input_field")
@@ -621,7 +632,7 @@
 				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], user.real_name))
 					log_paper("[key_name(user)] tried to write to field [field_key] when it already has data, with the following text: [field_text]")
 
-			update_static_data(user, ui)
+			update_static_data_for_all_viewers()
 			return TRUE
 
 /obj/item/paper/proc/get_input_field_count(raw_text)
@@ -645,6 +656,13 @@
 
 	return total_length
 
+/// Get a single string representing the text on a page
+/obj/item/paper/proc/get_raw_text()
+	var/paper_contents = ""
+	for(var/datum/paper_input/line as anything in raw_text_inputs)
+		paper_contents += line.raw_text + "/"
+	return paper_contents
+
 /// A single instance of a saved raw input onto paper.
 /datum/paper_input
 	/// Raw, unsanitised, unparsed text for an input.
@@ -655,15 +673,18 @@
 	var/colour = ""
 	/// Whether to render the font bold or not.
 	var/bold = FALSE
+	/// Whether the creator of this input field has the R_FUN permission, thus allowing less sanitization
+	var/advanced_html = FALSE
 
-/datum/paper_input/New(_raw_text, _font, _colour, _bold)
+/datum/paper_input/New(_raw_text, _font, _colour, _bold, _advanced_html)
 	raw_text = _raw_text
 	font = _font
 	colour = _colour
 	bold = _bold
+	advanced_html = _advanced_html
 
 /datum/paper_input/proc/make_copy()
-	return new /datum/paper_input(raw_text, font, colour, bold);
+	return new /datum/paper_input(raw_text, font, colour, bold, advanced_html)
 
 /datum/paper_input/proc/to_list()
 	return list(
@@ -671,6 +692,7 @@
 		font = font,
 		color = colour,
 		bold = bold,
+		advanced_html = advanced_html,
 	)
 
 /// A single instance of a saved stamp on paper.

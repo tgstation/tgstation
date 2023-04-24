@@ -71,7 +71,7 @@
 /turf/open/floor/holofloor/snow,
 /area/template_noop)
 "G" = (
-/obj/item/clothing/head/ushanka{
+/obj/item/clothing/head/costume/ushanka{
 	pixel_x = -5;
 	pixel_y = 6
 	},

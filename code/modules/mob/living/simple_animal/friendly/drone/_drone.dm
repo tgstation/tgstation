@@ -16,7 +16,7 @@
 /mob/living/simple_animal/drone
 	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
-	icon = 'icons/mob/drone.dmi'
+	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
@@ -30,7 +30,7 @@
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
-	sight = (SEE_TURFS | SEE_OBJS)
+	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -43,11 +43,14 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("neutral","silicon","turret")
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	see_in_dark = 7
+	// Going for a sort of pale green here
+	lighting_cutoff_red = 30
+	lighting_cutoff_green = 35
+	lighting_cutoff_blue = 25
+
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_items = list(null, null)
@@ -131,6 +134,11 @@
 		/obj/item/wrench/drone,
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
+		/obj/item/multitool/drone,
+		/obj/item/pipe_dispenser,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(
@@ -147,11 +155,14 @@
 		/obj/item/stack/rods,
 		/obj/item/stack/sheet,
 		/obj/item/stack/tile,
+		/obj/item/stack/ducts,
 		/obj/item/stock_parts,
 		/obj/item/toner,
 		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
+		/obj/item/storage/box/lights,
+		/obj/item/lightreplacer,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
@@ -184,15 +195,13 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
-	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -253,9 +262,10 @@
 	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
-	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
-			. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
+	for(var/obj/item/held_thing in held_items)
+		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+			continue
+		. += "It has [held_thing.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
@@ -343,8 +353,8 @@
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
-		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
+		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
+		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))

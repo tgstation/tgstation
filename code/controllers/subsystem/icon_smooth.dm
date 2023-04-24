@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = INIT_ORDER_ICON_SMOOTHING
 	wait = 1
-	priority = FIRE_PRIOTITY_SMOOTHING
+	priority = FIRE_PRIORITY_SMOOTHING
 	flags = SS_TICKER
 
 	///Blueprints assemble an image of what pipes/manifolds/wires look like on initialization, and thus should be taken after everything's been smoothed
@@ -32,16 +32,13 @@ SUBSYSTEM_DEF(icon_smooth)
 			can_fire = FALSE
 
 /datum/controller/subsystem/icon_smooth/Initialize()
-	smooth_zlevel(1, TRUE)
-	smooth_zlevel(2, TRUE)
-
 	var/list/queue = smooth_queue
 	smooth_queue = list()
 
 	while(length(queue))
 		var/atom/smoothing_atom = queue[length(queue)]
 		queue.len--
-		if(QDELETED(smoothing_atom) || !(smoothing_atom.smoothing_flags & SMOOTH_QUEUED) || smoothing_atom.z <= 2)
+		if(QDELETED(smoothing_atom) || !(smoothing_atom.smoothing_flags & SMOOTH_QUEUED) || !smoothing_atom.z)
 			continue
 		smoothing_atom.smooth_icon()
 		CHECK_TICK
@@ -55,7 +52,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		var/turf/item_loc = movable_item.loc
 		item_loc.add_blueprints(movable_item)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)
