@@ -368,11 +368,11 @@
 		return FALSE
 
 	var/mob/living/living_owner = owner
-	var/sigreturn = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
-	if(sigreturn & SPELL_INVOCATION_FAIL)
-		return FALSE
-	if(sigreturn & SPELL_INVOCATION_SUCCESS)
-		return TRUE // Skips following checks.
+	switch(SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback))
+		if(SPELL_INVOCATION_FAIL)
+			return FALSE
+		if(SPELL_INVOCATION_SUCCESS)
+			return TRUE // skips all of the following checks
 
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
