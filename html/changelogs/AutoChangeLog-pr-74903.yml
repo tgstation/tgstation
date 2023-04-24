@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "When failing to teleport with the veil shifter it tells you with text and spooky ghost sfx, and doesn't use up a charge or have any unintended vfx."

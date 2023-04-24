@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Restores ability for borgs to adjust reflector angles. This is now a left-click with nothing selected, similar to humans' left-click with an empty hand."

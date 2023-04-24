@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Cameras can only see vertically upwards if the turf above them is transparent. But hey, the North Star (and other multi-z maps) will now perform wayyy better (less time dilation)"
