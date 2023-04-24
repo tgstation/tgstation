@@ -323,18 +323,14 @@
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
 		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
-		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
+		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit() || humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
 			render_list += "<span class='alert ml-1'>[core_temperature_message]</span>\n"
-		else if(humantarget.coretemperature <= humantarget.get_body_temp_cold_damage_limit())
-			render_list += "<span class='notice ml-1'>[core_temperature_message]</span>\n"
 		else
 			render_list += "<span class='info ml-1'>[core_temperature_message]</span>\n"
 
 	var/body_temperature_message = "Body temperature: [round(target.bodytemperature-T0C, 0.1)] &deg;C ([round(target.bodytemperature*1.8-459.67,0.1)] &deg;F)"
-	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit())
+	if(target.bodytemperature >= target.get_body_temp_heat_damage_limit() || target.bodytemperature <= target.get_body_temp_cold_damage_limit())
 		render_list += "<span class='alert ml-1'>[body_temperature_message]</span>\n"
-	else if(target.bodytemperature <= target.get_body_temp_cold_damage_limit())
-		render_list += "<span class='notice ml-1'>[body_temperature_message]</span>\n"
 	else
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"
 
