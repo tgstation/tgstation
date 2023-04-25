@@ -170,7 +170,12 @@
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.stamina.adjust(-rand(40, 90) * (1 - (deviation * 0.5)))
-			flashed.Disorient(7 SECONDS, 70, paralyze = 2 SECONDS)
+			var/paralyze_duration = 2 SECONDS
+			if(ishuman(flashed))
+				var/mob/living/carbon/human/flashed_human = flashed
+				if(ismoth(flashed_human))
+					paralyze_duration = 6 SECONDS
+			flashed.Disorient(7 SECONDS, 100, paralyze = paralyze_duration)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
