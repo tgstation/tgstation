@@ -30,8 +30,6 @@
 	if(!client)
 		return FALSE
 
-	if(!voice && SStts.tts_enabled)
-		voice = pick(SStts.available_speakers)
 	canon_client = client
 	add_to_player_list()
 	lastKnownIP = client.address
