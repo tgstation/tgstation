@@ -11,15 +11,23 @@
 
 /datum/round_event_control/sentient_disease/can_spawn_event(players_amt, allow_magic)
 	. = ..()
-	var/sick_counter = 0 //Counts how many infected we have.
+	if(!.)
+		return .
 
-	//If 75% of the crew are already infected with something, maybe a sentient disease isn't the best choice.
+	var/host_counter = 0 //Counts how many potential hosts we have
+
+	//If 75% of the crew are potential hosts, we send in a sentient disease.
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(candidate.stat == DEAD)
 			continue
-		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//We're only checking crew here.
+		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //We're only checking crew here.
 			continue
+		if(!length(candidate.diseases))
+			continue
+		host_counter++
 
+	if(((length(GLOB.player_list) / host_counter) * 100) < 75) //If over 75% of our crew are uninfected, potential hosts, we run as normal.
+		return FALSE
 
 /datum/round_event/ghost_role/sentient_disease
 	role_name = "sentient disease"
