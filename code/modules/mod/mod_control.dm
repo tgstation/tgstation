@@ -162,26 +162,40 @@
 	for(var/obj/item/part as anything in mod_parts)
 		overslotting_parts -= part
 
-	// We don't need to delete any of these manually, they'll get deleted on their own through `/atom/movable/Destroy()`,
-	// since they're into this item's `contents`.
 	if(helmet)
 		UnregisterSignal(helmet, COMSIG_PARENT_QDELETING)
 		mod_parts -= helmet
+
+		if(!(helmet in contents) && !QDELETED(helmet))
+			qdel(helmet)
+
 		helmet = null
 
 	if(chestplate)
 		UnregisterSignal(chestplate, COMSIG_PARENT_QDELETING)
 		mod_parts -= chestplate
+
+		if(!(chestplate in contents) && !QDELETED(chestplate))
+			qdel(chestplate)
+
 		chestplate = null
 
 	if(gauntlets)
 		UnregisterSignal(gauntlets, COMSIG_PARENT_QDELETING)
 		mod_parts -= gauntlets
+
+		if(!(gauntlets in contents) && !QDELETED(gauntlets))
+			qdel(gauntlets)
+
 		gauntlets = null
 
 	if(boots)
 		UnregisterSignal(boots, COMSIG_PARENT_QDELETING)
 		mod_parts -= boots
+
+		if(!(boots in contents) && !QDELETED(boots))
+			qdel(boots)
+
 		boots = null
 
 	if(core)
