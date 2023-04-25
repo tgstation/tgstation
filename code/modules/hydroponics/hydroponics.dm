@@ -620,6 +620,8 @@
 		. += span_warning("It's filled with tiny worms!")
 	if(connected_tree)
 		. += span_notice("Its connected to a Mother Tree it will recieve its blessings.")
+	if(bio_boosted)
+		. += span_notice("It's currently being bio boosted, plants will grow incredibly quickly.")
 /**
  * What happens when a tray's weeds grow too large.
  * Plants a new weed in an empty tray, then resets the tray.
@@ -783,6 +785,9 @@
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/bio_cube))
+		if(bio_boosted)
+			to_chat(user, span_notice("This tray is already bio-boosted please wait until its no longer bio-boosted to apply it again"))
+			return
 		var/obj/item/bio_cube/attacked_cube = O
 		bio_boosted = TRUE
 		addtimer(CALLBACK(src, PROC_REF(end_boost)), attacked_cube.total_duration)

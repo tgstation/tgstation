@@ -1450,7 +1450,7 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.12))
 		myseed.adjust_maturation(round(chems.get_reagent_amount(src.type) * 0.2))
-		myseed.adjust_production(round(chems.get_reagent_amount(src.type) * 0.2))
+		myseed.adjust_production(round(chems.get_reagent_amount(src.type) * 0.1))
 		if(myseed && prob(10))
 			myseed.adjust_yield(1)
 
