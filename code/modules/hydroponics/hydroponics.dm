@@ -1028,7 +1028,7 @@
 		return
 	if(issilicon(user)) //How does AI know what plant is?
 		return
-
+	var/growth_mult = (1.01 ** -myseed.maturation)
 	if(growth >= myseed.harvest_age * growth_mult)
 		//if(myseed.harvest_age < age * max(myseed.production * 0.044, 0.5) && (myseed.harvest_age) < (age - lastproduce) * max(myseed.production * 0.044, 0.5) && (!harvest && !dead))
 		nutrimentMutation()
