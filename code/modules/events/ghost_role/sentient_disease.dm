@@ -1,7 +1,7 @@
 /datum/round_event_control/sentient_disease
 	name = "Spawn Sentient Disease"
 	typepath = /datum/round_event/ghost_role/sentient_disease
-	earliest_start = 15 MINUTES
+	weight = 7
 	max_occurrences = 1
 	min_players = 25
 	category = EVENT_CATEGORY_HEALTH
