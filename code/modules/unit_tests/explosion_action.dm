@@ -116,8 +116,8 @@
 /// Tests the `EX_ACT()` macro on turf subtypes to ensure some level of the underlying framework still functions.
 /datum/unit_test/explosion_action/proc/execute_turf_tests()
 	var/turf/open/test_open_turf = run_loc_floor_bottom_left // we'll clean this up later like Create and Destroy dw
-	var/original_open_turf_type = test_open_turf.type
-	var/original_open_baseturfs = islist(test_open_turf.baseturfs) ? test_open_turf.baseturfs.Copy() : test_open_turf.baseturfs
+	var/original_open_turf_type = run_loc_floor_bottom_left.type
+	var/original_open_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
 
 	test_open_turf.ChangeTurf(OPEN_FLOOR_TYPE)
 	EX_ACT(test_open_turf, EXPLODE_NONE, test_open_turf) // regardless of severity, this should scrape away the floor
@@ -129,11 +129,11 @@
 	TEST_ASSERT_NOTEQUAL(test_open_turf.type, OPEN_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have scraped away the floor, but instead saw zero changes!")
 	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs)
 
-	var/turf/closed/test_closed_turf = run_loc_floor_top_right
-	var/original_closed_turf_type = test_closed_turf.type // should just be /turf/open/floor but lets be hardy against changes to the map template should they arise
-	var/original_closed_baseturfs = islist(test_closed_turf.baseturfs) ? test_closed_turf.baseturfs.Copy() : test_closed_turf.baseturfs
+	// invert the order of ourselves setting up the `/turf/closed` checks because we don't automatically start off as an open turf here
+	var/original_closed_turf_type = run_loc_floor_top_right.type // should just be /turf/closed/wall but lets be hardy against changes to the map template should they arise
+	var/original_closed_baseturfs = islist(run_loc_floor_top_right.baseturfs) ? run_loc_floor_top_right.baseturfs.Copy() : run_loc_floor_top_right.baseturfs
+	var/turf/closed/wall/test_closed_turf = run_loc_floor_top_right.ChangeTurf(CLOSED_FLOOR_TYPE)
 
-	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
 	EX_ACT(test_closed_turf, EXPLODE_NONE, test_closed_turf) // regardless of severity, this should dismantle the wall
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_NONE severity (setting itself as the target) should have eviscerated the wall, but instead saw zero changes!")
 	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
@@ -153,7 +153,11 @@
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
 	EX_ACT(test_closed_turf, EXPLODE_DEVASTATE) // yeah we're definitely not seeing the wall anymore
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_DEVASTATE severity should have eviscerated the wall, but instead saw zero changes!")
-	test_closed_turf.ChangeTurf(original_closed_turf_type, original_open_baseturfs) // we're done with turf checks, clean up time
+	test_closed_turf.ChangeTurf(original_closed_turf_type, original_open_baseturfs)
+
+	// to be super duper sooper safe, clean up both turfs we changed a second time to ensure we aren't yonking downstream tests by invoking them on the actual turfs rather than what we casted
+	run_loc_floor_bottom_left.ChangeTurf(original_open_turf_type, original_open_baseturfs)
+	run_loc_floor_top_right.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
 
 #undef OPEN_FLOOR_TYPE
 #undef CLOSED_FLOOR_TYPE
