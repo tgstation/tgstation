@@ -473,7 +473,7 @@ Example config:
 	if (isnull(banned_words) || banned_words.len == 0)
 		return null
 
-	var/static/regex/should_join_on_word_bounds = regex(@"^\w+$")
+	var/static/regex/should_join_on_word_bounds = STATIC_INIT(regex(@"^\w+$"))
 
 	// Stuff like emoticons needs another split, since there's no way to get ":)" on a word bound.
 	// Furthermore, normal words need to be on word bounds, so "(adminhelp)" gets filtered.

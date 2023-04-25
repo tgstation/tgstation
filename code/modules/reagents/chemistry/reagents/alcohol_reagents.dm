@@ -1449,7 +1449,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "concentrated matter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/static/list/ray_filter = list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15)
+	var/static/list/ray_filter = STATIC_INIT(list(type = "rays", size = 40, density = 15, color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = 15))
 
 /datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
 	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)

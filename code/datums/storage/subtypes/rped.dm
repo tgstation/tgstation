@@ -17,22 +17,22 @@
 	 * as of now only these stack components are required to build machines like[thermomaachine,crystallizer,electrolyzer]
 	 * so we limit the rped to pick up only these stack types so players dont cheat and use this as a general storage medium
 	 */
-	var/static/list/allowed_material_types = list(
+	var/static/list/allowed_material_types = STATIC_INIT(list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/plasteel,
 		/obj/item/stack/cable_coil,
-	)
+	))
 
 	/**
 	 * we check if the user is trying to insert any of these bluespace crystal types into the RPED
 	 * at any point the total sum of all these types in the RPED must be <= MAX_STACK_PICKUP
 	 */
-	var/static/list/allowed_bluespace_types = list(
+	var/static/list/allowed_bluespace_types = STATIC_INIT(list(
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/ore/bluespace_crystal/refined,
 		/obj/item/stack/ore/bluespace_crystal/artificial,
 		/obj/item/stack/sheet/bluespace_crystal,
-	)
+	))
 
 /datum/storage/rped/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	. = ..()

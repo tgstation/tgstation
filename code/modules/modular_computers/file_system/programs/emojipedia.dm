@@ -9,7 +9,7 @@
 	tgui_id = "NtosEmojipedia"
 	program_icon = "icons"
 	/// Store the list of potential emojis here.
-	var/static/list/emoji_list = icon_states(icon(EMOJI_SET))
+	var/static/list/emoji_list = STATIC_INIT(icon_states(icon(EMOJI_SET)))
 
 /datum/computer_file/program/emojipedia/New()
 	. = ..()

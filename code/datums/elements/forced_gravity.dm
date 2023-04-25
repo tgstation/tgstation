@@ -22,7 +22,7 @@
 
 /datum/element/forced_gravity/Detach(datum/source)
 	. = ..()
-	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY)
+	var/static/list/signals_b_gone = STATIC_INIT(list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY))
 	UnregisterSignal(source, signals_b_gone)
 	REMOVE_TRAIT(source, TRAIT_FORCED_GRAVITY, REF(src))
 

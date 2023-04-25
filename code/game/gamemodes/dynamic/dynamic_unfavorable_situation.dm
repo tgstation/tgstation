@@ -8,7 +8,7 @@
 	INVOKE_ASYNC(src, PROC_REF(_unfavorable_situation))
 
 /datum/game_mode/dynamic/proc/_unfavorable_situation()
-	var/static/list/unfavorable_random_events = list()
+	var/static/list/unfavorable_random_events = STATIC_INIT(list())
 	if (!length(unfavorable_random_events))
 		unfavorable_random_events = generate_unfavourable_events()
 	var/list/possible_heavies = generate_unfavourable_heavy_rulesets()
@@ -59,11 +59,11 @@
 
 /// Filter the below list by which events can actually run on this map
 /datum/game_mode/dynamic/proc/generate_unfavourable_events()
-	var/static/list/unfavorable_random_events = list(
+	var/static/list/unfavorable_random_events = STATIC_INIT(list(
 		/datum/round_event_control/immovable_rod,
 		/datum/round_event_control/meteor_wave,
 		/datum/round_event_control/portal_storm_syndicate,
-	)
+	))
 	var/list/picked_events = list()
 	for(var/type in unfavorable_random_events)
 		var/datum/round_event_control/event = new type()

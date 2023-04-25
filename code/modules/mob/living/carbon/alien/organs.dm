@@ -191,7 +191,7 @@
 	if(!owner || SSmobs.times_fired % 3 != 0)
 		return
 	// Digest the stuff in our stomach, just a bit
-	var/static/list/digestable_cache = typecacheof(list(/mob/living, /obj/item/food, /obj/item/reagent_containers))
+	var/static/list/digestable_cache = STATIC_INIT(typecacheof(list(/mob/living, /obj/item/food, /obj/item/reagent_containers)))
 	for(var/atom/movable/thing as anything in stomach_contents)
 		if(!digestable_cache[thing.type])
 			continue

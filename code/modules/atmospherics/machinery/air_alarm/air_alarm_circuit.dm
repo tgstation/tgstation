@@ -277,7 +277,7 @@
 		"plus" = "add_new_component"
 	)
 
-	var/static/list/filtering_map = list()
+	var/static/list/filtering_map = STATIC_INIT(list())
 
 	var/max_scrubber_duplicates = 20
 	var/list/scrubber_duplicates = list()
@@ -350,7 +350,7 @@
 
 /obj/item/circuit_component/air_alarm_scrubbers/get_ui_notices()
 	. = ..()
-	var/static/list/meta_data = list()
+	var/static/list/meta_data = STATIC_INIT(list())
 	if(length(meta_data) == 0)
 		for(var/typepath as anything in GLOB.meta_gas_info)
 			meta_data += GLOB.meta_gas_info[typepath][META_GAS_ID]
@@ -496,7 +496,7 @@
 		"plus" = "add_new_component"
 	)
 
-	var/static/list/filtering_map = list()
+	var/static/list/filtering_map = STATIC_INIT(list())
 
 	var/max_vent_duplicates = 20
 	var/list/vent_duplicates = list()

@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(map_reports)
 	// build_cache will check bad paths for us
 	var/list/modelCache = build_cache(TRUE, report.bad_paths)
 
-	var/static/regex/area_or_turf = regex(@"/(turf|area)/")
+	var/static/regex/area_or_turf = STATIC_INIT(regex(@"/(turf|area)/"))
 	for(var/path in report.bad_paths)
 		if(area_or_turf.Find("[path]", 1, 1))
 			report.loadable = FALSE

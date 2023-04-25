@@ -1,6 +1,6 @@
 ///Get a random food item exluding the blocked ones
 /proc/get_random_food()
-	var/static/list/allowed_food = list()
+	var/static/list/allowed_food = STATIC_INIT(list())
 
 	if(!LAZYLEN(allowed_food)) //it's static so we only ever do this once
 		var/list/blocked = list(

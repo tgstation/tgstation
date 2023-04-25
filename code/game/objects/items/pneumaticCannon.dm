@@ -318,7 +318,7 @@
 	maxWeightClass = 150 //50 pies. :^)
 	needs_air = FALSE
 	clumsyCheck = FALSE
-	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
+	var/static/list/pie_typecache = STATIC_INIT(typecacheof(/obj/item/food/pie))
 
 /obj/item/pneumatic_cannon/pie/Initialize(mapload)
 	. = ..()

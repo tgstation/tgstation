@@ -34,7 +34,7 @@
 	. = ..()
 
 	if (PERFORM_ALL_TESTS(focus_only/valid_turf_states))
-		var/static/list/previous_errors = list()
+		var/static/list/previous_errors = STATIC_INIT(list())
 
 		if (!(type in previous_errors))
 			if (broken != (icon_state in broken_states()))

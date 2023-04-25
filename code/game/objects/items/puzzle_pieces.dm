@@ -197,7 +197,7 @@
 		0, 0, 0
 	)
 	/// Banned combinations of the list in decimal
-	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
+	var/static/list/banned_combinations = STATIC_INIT(list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511))
 
 /datum/armor/structure_light_puzzle
 	melee = 100

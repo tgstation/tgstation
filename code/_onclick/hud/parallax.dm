@@ -290,7 +290,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	if (!view)
 		view = world.view
 
-	var/static/parallax_scaler = world.icon_size / 480
+	var/static/parallax_scaler = STATIC_INIT(world.icon_size / 480)
 
 	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(view)
@@ -349,10 +349,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	. = ..()
 	if(!owner?.client)
 		return
-	var/static/list/connections = list(
+	var/static/list/connections = STATIC_INIT(list(
 		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change),
 		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
-	)
+	))
 	AddComponent(/datum/component/connect_mob_behalf, owner.client, connections)
 	on_z_change(owner)
 

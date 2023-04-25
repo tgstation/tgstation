@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(ambience)
 	max_ambience_cooldown = 35 SECONDS
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
-	var/static/list/minecraft_cave_noises = list(
+	var/static/list/minecraft_cave_noises = STATIC_INIT(list(
 		'sound/machines/airlock.ogg',
 		'sound/effects/snap.ogg',
 		'sound/effects/footstep/clownstep1.ogg',
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(ambience)
 		'sound/items/deconstruct.ogg',
 		'sound/ambience/source_holehit3.ogg',
 		'sound/ambience/cavesound3.ogg',
-	)
+	))
 
 /area/station/maintenance/play_ambience(mob/M, sound/override_sound, volume)
 	if(!M.has_light_nearby() && prob(0.5))

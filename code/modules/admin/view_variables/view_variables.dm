@@ -2,7 +2,7 @@
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
-	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
+	var/static/cookieoffset = STATIC_INIT(rand(1, 9999)) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
 		to_chat(usr, span_danger("You need to be an administrator to access this."), confidential = TRUE)

@@ -122,7 +122,7 @@
 
 /datum/action/cooldown/spell/pointed/ash_beams/cast(atom/target)
 	. = ..()
-	var/static/list/offsets = list(-25, -10, 0, 10, 25)
+	var/static/list/offsets = STATIC_INIT(list(-25, -10, 0, 10, 25))
 	for(var/offset in offsets)
 		INVOKE_ASYNC(src, PROC_REF(fire_line), owner, line_target(offset, flame_line_length, target, owner))
 

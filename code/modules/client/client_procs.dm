@@ -781,10 +781,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	topic = params2list(topic)
 	if (!CONFIG_GET(flag/check_randomizer))
 		return
-	var/static/cidcheck = list()
-	var/static/tokens = list()
-	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
-	var/static/cidcheck_spoofckeys = list()
+	var/static/cidcheck = STATIC_INIT(list())
+	var/static/tokens = STATIC_INIT(list())
+	var/static/cidcheck_failedckeys = STATIC_INIT(list()) //to avoid spamming the admins if the same guy keeps trying.
+	var/static/cidcheck_spoofckeys = STATIC_INIT(list())
 	var/datum/db_query/query_cidcheck = SSdbcore.NewQuery(
 		"SELECT computerid FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = ckey)

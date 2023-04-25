@@ -3,7 +3,7 @@
 	set name = "Modify Station Traits"
 	set category = "Admin.Events"
 
-	var/static/datum/station_traits_panel/station_traits_panel = new
+	var/static/datum/station_traits_panel/station_traits_panel = STATIC_INIT(new /datum/station_traits_panel)
 	station_traits_panel.ui_interact(usr)
 
 /datum/station_traits_panel

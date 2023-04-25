@@ -60,9 +60,9 @@
 		/datum/pet_command/point_targetting/attack/carp
 	)
 	/// Carp want to eat raw meat
-	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
+	var/static/list/desired_food = STATIC_INIT(list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet))
 	/// Carp want to eat delicious six pack plastic rings
-	var/static/list/desired_trash = list(/obj/item/storage/cans)
+	var/static/list/desired_trash = STATIC_INIT(list(/obj/item/storage/cans))
 	/// Structures that AI carp are willing to attack. This prevents them from deconstructing supermatter cooling equipment.
 	var/static/list/allowed_obstacle_targets = typecacheof(list(
 		/obj/structure/closet,

@@ -57,7 +57,7 @@
 	TEST_ASSERT(!HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_B), "Failed to remove [TRAIT_UNIT_TEST_B] with common source [UNIT_TEST_SOURCE_MAIN]!")
 
 	// Lastly, let's ensure that adding/removing traits using lists still works.
-	var/static/list/standardized_traits_list = list(TRAIT_UNIT_TEST_A, TRAIT_UNIT_TEST_B, TRAIT_UNIT_TEST_C)
+	var/static/list/standardized_traits_list = STATIC_INIT(list(TRAIT_UNIT_TEST_A, TRAIT_UNIT_TEST_B, TRAIT_UNIT_TEST_C))
 	trait_target.add_traits(standardized_traits_list, UNIT_TEST_SOURCE_MAIN)
 	for(var/trait in standardized_traits_list)
 		TEST_ASSERT(HAS_TRAIT(trait_target, trait), "Failed to add [trait] when using add_traits() using [UNIT_TEST_SOURCE_MAIN]!")

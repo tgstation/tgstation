@@ -190,7 +190,7 @@
 	gain_text = span_warning("You lose your grasp on complex words.")
 	lose_text = span_notice("You feel your vocabulary returning to normal again.")
 
-	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
+	var/static/list/common_words = STATIC_INIT(world.file2list("strings/1000_most_common.txt"))
 
 /datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -243,7 +243,7 @@
 	if(hear_dejavu.len >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
-			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
+			var/static/regex/quoted_spoken_message = STATIC_INIT(regex("\".+\"", "gi"))
 			hearing_args[HEARING_RAW_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_RAW_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
 			return
 	if(hear_dejavu.len >= 15)

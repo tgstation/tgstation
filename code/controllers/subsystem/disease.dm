@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(disease)
 	var/list/diseases
 	var/list/archive_diseases = list()
 
-	var/static/list/list_symptoms = subtypesof(/datum/symptom)
+	var/static/list/list_symptoms = STATIC_INIT(subtypesof(/datum/symptom))
 
 /datum/controller/subsystem/disease/PreInit()
 	if(!diseases)

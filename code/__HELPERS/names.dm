@@ -259,9 +259,9 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 /proc/assign_random_name(len=5, prefix="", postfix="")
 	//DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOU'RE DOING
 	//All names already used
-	var/static/list/used_names = list()
+	var/static/list/used_names = STATIC_INIT(list())
 
-	var/static/valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	var/static/valid_chars = STATIC_INIT("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 	var/list/new_name = list()
 	var/text
 	// machine id's should be fun random chars hinting at a larger world

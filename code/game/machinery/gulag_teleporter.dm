@@ -25,7 +25,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/emergency_plasglove_type = /obj/item/clothing/gloves/color/plasmaman
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
-	var/static/list/telegulag_required_items = typecacheof(list(
+	var/static/list/telegulag_required_items = STATIC_INIT(typecacheof(list(
 		/obj/item/implant,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
@@ -34,7 +34,7 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas,
-	))
+	)))
 
 /obj/machinery/gulag_teleporter/Initialize(mapload)
 	. = ..()

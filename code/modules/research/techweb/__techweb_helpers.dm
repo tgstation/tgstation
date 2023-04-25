@@ -1,9 +1,9 @@
 /proc/count_unique_techweb_nodes()
-	var/static/list/L = typesof(/datum/techweb_node)
+	var/static/list/L = STATIC_INIT(typesof(/datum/techweb_node))
 	return L.len
 
 /proc/count_unique_techweb_designs()
-	var/static/list/L = typesof(/datum/design)
+	var/static/list/L = STATIC_INIT(typesof(/datum/design))
 	return L.len
 
 /proc/node_boost_error(id, message)

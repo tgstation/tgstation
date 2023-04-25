@@ -121,11 +121,11 @@
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/list/viable_minds = list() //The first list, which excludes hijinks
 	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
-	var/static/list/trait_obsessions = list(
+	var/static/list/trait_obsessions = STATIC_INIT(list(
 		JOB_MIME = TRAIT_MIME_FAN,
 		JOB_CLOWN = TRAIT_CLOWN_ENJOYER,
 		JOB_CHAPLAIN = TRAIT_SPIRITUAL,
-	) // Jobs and their corresponding quirks
+	)) // Jobs and their corresponding quirks
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 

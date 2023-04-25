@@ -222,7 +222,7 @@ GLOBAL_VAR(restart_counter)
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
 
-	var/static/list/topic_handlers = TopicHandlers()
+	var/static/list/topic_handlers = STATIC_INIT(TopicHandlers())
 
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
@@ -241,7 +241,7 @@ GLOBAL_VAR(restart_counter)
 	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
-	var/static/list/PRcounts = list() //PR id -> number of times announced this round
+	var/static/list/PRcounts = STATIC_INIT(list()) //PR id -> number of times announced this round
 	var/id = "[payload["pull_request"]["id"]]"
 	if(!PRcounts[id])
 		PRcounts[id] = 1

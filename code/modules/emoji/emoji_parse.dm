@@ -4,7 +4,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon(EMOJI_SET))
+	var/static/list/emojis = STATIC_INIT(icon_states(icon(EMOJI_SET)))
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0
@@ -36,7 +36,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon(EMOJI_SET))
+	var/static/list/emojis = STATIC_INIT(icon_states(icon(EMOJI_SET)))
 	var/final = "" //only tags are added to this
 	var/pos = 1
 	var/search = 0

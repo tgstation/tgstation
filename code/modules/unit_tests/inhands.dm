@@ -1,6 +1,6 @@
 /// Makes sure items with defined inhand_icon_states... actually have icons that exist!
 /datum/unit_test/defined_inhand_icon_states
-	var/static/list/possible_icon_states = list()
+	var/static/list/possible_icon_states = STATIC_INIT(list())
 	var/fallback_log_message
 	var/unset_inhand_var_message
 	/// additional_inhands_location is for downstream modularity support. as an example, for skyrat's usage, set additional_inhands_location = "modular_skyrat/master_files/icons/mob/inhands/"

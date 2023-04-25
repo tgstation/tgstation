@@ -34,7 +34,7 @@
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
-	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_danger))
+	var/static/list/atmos_connections = STATIC_INIT(list(COMSIG_TURF_EXPOSE = PROC_REF(check_danger)))
 
 	/// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
 	var/list/datum/tlv/tlv_collection

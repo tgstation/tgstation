@@ -4,7 +4,7 @@
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
 /datum/element/atmos_sensitive
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
-	var/static/list/pass_on = list(COMSIG_TURF_EXPOSE = /atom/proc/check_atmos_process)
+	var/static/list/pass_on = STATIC_INIT(list(COMSIG_TURF_EXPOSE = /atom/proc/check_atmos_process))
 
 /datum/element/atmos_sensitive/Attach(datum/target, mapload)
 	if(!isatom(target)) //How

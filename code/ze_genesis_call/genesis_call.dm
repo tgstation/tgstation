@@ -49,4 +49,4 @@
  * Please lock the door on your way out
  */
 /world/proc/_()
-	var/static/_ = world.Genesis()
+	var/static/_ = STATIC_INIT(world.Genesis())

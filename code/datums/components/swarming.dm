@@ -3,10 +3,10 @@
 	var/offset_y = 0
 	var/is_swarming = FALSE
 	var/list/swarm_members = list()
-	var/static/list/swarming_loc_connections = list(
+	var/static/list/swarming_loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_EXITED = PROC_REF(leave_swarm),
 		COMSIG_ATOM_ENTERED = PROC_REF(join_swarm)
-	)
+	))
 
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)

@@ -77,8 +77,8 @@ Possible to do for anyone motivated enough:
 	/// Replay hologram
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo
 	/// Calls will be automatically answered after a couple rings, here for debugging
-	var/static/force_answer_call = FALSE
-	var/static/list/holopads = list()
+	var/static/force_answer_call = STATIC_INIT(FALSE)
+	var/static/list/holopads = STATIC_INIT(list())
 	var/obj/effect/overlay/holoray/ray
 	var/ringing = FALSE
 	var/offset = FALSE
@@ -864,7 +864,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/effect/overlay/holoray/Initialize(mapload)
 	. = ..()
 	if(!render_target)
-		var/static/uid = 0
+		var/static/uid = STATIC_INIT(0)
 		render_target = "holoray#[uid]"
 		uid++
 	// Let's GLOW BROTHER! (Doing it like this is the most robust option compared to duped overlays)

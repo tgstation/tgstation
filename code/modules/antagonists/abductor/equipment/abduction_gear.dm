@@ -846,7 +846,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	/// Amount to inject per second
 	var/inject_am = 0.5
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
+	var/static/list/injected_reagents = STATIC_INIT(list(/datum/reagent/medicine/cordiolis_hepatico))
 
 /obj/structure/table/optable/abductor/Initialize(mapload)
 	. = ..()

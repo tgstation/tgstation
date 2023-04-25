@@ -15,7 +15,7 @@
 	var/activationUpkeep = 50
 	var/disguise = "engineer"
 	var/mob/listeningTo
-	var/static/list/signalCache = list( // list here all signals that should break the camouflage
+	var/static/list/signalCache = STATIC_INIT(list( // list here all signals that should break the camouflage
 			COMSIG_PARENT_ATTACKBY,
 			COMSIG_ATOM_ATTACK_HAND,
 			COMSIG_MOVABLE_IMPACT_ZONE,
@@ -23,7 +23,7 @@
 			COMSIG_ATOM_EX_ACT,
 			COMSIG_ATOM_FIRE_ACT,
 			COMSIG_ATOM_EMP_ACT,
-			)
+			))
 	var/mob/living/silicon/robot/user // needed for process()
 	var/animation_playing = FALSE
 

@@ -17,7 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/hardcore_quirks = list()
 
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
-	var/static/list/quirk_blacklist = list(
+	var/static/list/quirk_blacklist = STATIC_INIT(list(
 		list("Blind", "Nearsighted"),
 		list("Jolly", "Depression", "Apathetic", "Hypersensitive"),
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
@@ -29,7 +29,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
-	)
+	))
 
 /datum/controller/subsystem/processing/quirks/Initialize()
 	get_quirks()

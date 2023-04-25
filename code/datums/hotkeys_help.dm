@@ -1,5 +1,5 @@
 /datum/hotkeys_help
-	var/static/list/hotkeys = list()
+	var/static/list/hotkeys = STATIC_INIT(list())
 
 /datum/hotkeys_help/ui_state()
 	return GLOB.always_state

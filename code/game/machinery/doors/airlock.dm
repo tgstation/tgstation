@@ -23,7 +23,7 @@
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
 /proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block)
-	var/static/list/airlock_overlays = list()
+	var/static/list/airlock_overlays = STATIC_INIT(list())
 
 	var/base_icon_key = "[icon_state][REF(icon_file)]"
 	if(!(. = airlock_overlays[base_icon_key]))

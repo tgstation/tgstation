@@ -636,7 +636,7 @@
 			return TRUE
 
 /obj/item/paper/proc/get_input_field_count(raw_text)
-	var/static/regex/field_regex = new(@"\[_+\]","g")
+	var/static/regex/field_regex = STATIC_INIT(new /regex(@"\[_+\]","g"))
 
 	var/counter = 0
 	while(field_regex.Find(raw_text))

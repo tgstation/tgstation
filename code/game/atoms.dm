@@ -458,11 +458,11 @@
 	if(!is_reserved_level(current_turf.z))
 		return FALSE
 
-	var/static/list/syndie_typecache = typecacheof(list(
+	var/static/list/syndie_typecache = STATIC_INIT(typecacheof(list(
 		/area/centcom/syndicate_mothership, // syndicate base itself
 		/area/shuttle/assault_pod, // steel rain
 		/area/shuttle/syndicate, // infiltrator
-	))
+	)))
 
 	if(is_type_in_typecache(current_turf.loc, syndie_typecache))
 		return TRUE
@@ -2136,11 +2136,11 @@
 	add_overlay(scanline)
 	// Annd let's make the sucker emissive, so it glows in the dark
 	if(!render_target)
-		var/static/uid = 0
+		var/static/uid = STATIC_INIT(0)
 		render_target = "HOLOGRAM [uid]"
 		uid++
 	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
-	var/static/atom/movable/render_step/emissive/glow = new(null)
+	var/static/atom/movable/render_step/emissive/glow = STATIC_INIT(new /atom/movable/render_step/emissive(null))
 	glow.render_source = render_target
 	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane

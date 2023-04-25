@@ -57,7 +57,7 @@
 		var/rand_y = rand(0, 20) - 10
 		var/mutable_appearance/new_crack_overlay = new(pick(crack_appearances))
 		// Now that we have our overlay, we need to give it a unique render source so we can use a filter against it
-		var/static/uuid = 0
+		var/static/uuid = STATIC_INIT(0)
 		uuid++
 		// * so it doesn't render on its own
 		new_crack_overlay.render_target = "*cracked_overlay_[uuid]"

@@ -1,6 +1,6 @@
 /// Makes sure objects actually have icons that exist!
 /datum/unit_test/missing_icons
-	var/static/list/possible_icon_states = list()
+	var/static/list/possible_icon_states = STATIC_INIT(list())
 	/// additional_icon_location is for downstream modularity support.
 	/// Make sure this location is also present in tools/deploy.sh
 	/// If you need additional paths ontop of this second one, you can add another generate_possible_icon_states_list("your/folder/path/") below the if(additional_icon_location) block in Run(), and make sure to add that path to tools/deploy.sh as well.

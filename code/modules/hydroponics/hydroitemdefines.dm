@@ -552,7 +552,7 @@
 	var/turf/user_turf = get_turf(user)
 	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	swiping = TRUE
-	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
+	var/static/list/scythe_slash_angles = STATIC_INIT(list(0, 45, 90, -45, -90))
 	for(var/i in scythe_slash_angles)
 		var/turf/adjacent_turf = get_step(user_turf, turn(dir_to_target, i))
 		for(var/obj/structure/spacevine/vine in adjacent_turf)

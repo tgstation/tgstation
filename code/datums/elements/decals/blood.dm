@@ -23,7 +23,7 @@
 		// It's something which takes on the look of other items, probably
 		icon = I.icon
 		icon_state = I.icon_state
-	var/static/list/blood_splatter_appearances = list()
+	var/static/list/blood_splatter_appearances = STATIC_INIT(list())
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
 	var/index = "[REF(icon)]-[icon_state]"
 	pic = blood_splatter_appearances[index]

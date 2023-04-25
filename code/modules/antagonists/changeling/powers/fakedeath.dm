@@ -34,7 +34,7 @@
 	// but leave out limbs so we can do it specially
 	user.revive(flags_to_heal & ~HEAL_LIMBS)
 
-	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
+	var/static/list/dont_regenerate = STATIC_INIT(list(BODY_ZONE_HEAD)) // headless changelings are funny
 	if(!length(user.get_missing_limbs() - dont_regenerate))
 		return
 

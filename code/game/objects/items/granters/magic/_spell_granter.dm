@@ -75,7 +75,7 @@
 	icon_state = "random_book"
 	desc = "You feel as if anything could be gained from this book."
 	/// A list of schools we probably shouldn't grab, for various reasons
-	var/static/list/blacklisted_schools = list(SCHOOL_UNSET, SCHOOL_HOLY, SCHOOL_MIME)
+	var/static/list/blacklisted_schools = STATIC_INIT(list(SCHOOL_UNSET, SCHOOL_HOLY, SCHOOL_MIME))
 
 /obj/item/book/granter/action/spell/true_random/Initialize(mapload)
 	. = ..()

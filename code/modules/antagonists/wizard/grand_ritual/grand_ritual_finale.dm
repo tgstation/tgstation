@@ -306,12 +306,12 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	glow_colour = "#dbdd4c48"
-	var/static/list/permitted_transforms = list( // Non-dangerous only
+	var/static/list/permitted_transforms = STATIC_INIT(list( // Non-dangerous only
 		/datum/dimension_theme/gold,
 		/datum/dimension_theme/meat,
 		/datum/dimension_theme/pizza,
 		/datum/dimension_theme/natural,
-	)
+	))
 	var/datum/dimension_theme/chosen_theme
 
 // I sure hope this doesn't have performance implications
@@ -379,7 +379,7 @@
 	var/turf/current_location = get_turf(invoker)
 	invoker.gib()
 
-	var/static/list/doom_options = list()
+	var/static/list/doom_options = STATIC_INIT(list())
 	if (!length(doom_options))
 		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA)
 		if (!SSmapping.config.planetary)

@@ -21,7 +21,7 @@
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
 	/// List of all scanning modes.
-	var/static/list/modes = list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN)
+	var/static/list/modes = STATIC_INIT(list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN))
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()

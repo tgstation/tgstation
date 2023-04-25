@@ -7,7 +7,7 @@
 	///Has this item been used already.
 	var/used_up = FALSE
 	///List of mobs that have already been mobbed.
-	var/static/list/mob_mobs = list()
+	var/static/list/mob_mobs = STATIC_INIT(list())
 
 #define NICKNAME_CAP (MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)

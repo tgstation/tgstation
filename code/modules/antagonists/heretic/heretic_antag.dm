@@ -46,9 +46,9 @@
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
-	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
+	var/static/list/scribing_tools = STATIC_INIT(typecacheof(list(/obj/item/pen, /obj/item/toy/crayon)))
 	/// A blacklist of turfs we cannot scribe on.
-	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	var/static/list/blacklisted_rune_turfs = STATIC_INIT(typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm)))
 	/// Static list of what each path converts to in the UI (colors are TGUI colors)
 	var/static/list/path_to_ui_color = list(
 		PATH_START = "grey",

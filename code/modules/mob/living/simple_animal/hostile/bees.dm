@@ -57,8 +57,8 @@
 	var/idle = 0
 	var/isqueen = FALSE
 	var/icon_base = "bee"
-	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
-	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
+	var/static/beehometypecache = STATIC_INIT(typecacheof(/obj/structure/beebox))
+	var/static/hydroponicstypecache = STATIC_INIT(typecacheof(/obj/machinery/hydroponics))
 
 /mob/living/simple_animal/hostile/bee/Initialize(mapload)
 	. = ..()
@@ -192,7 +192,7 @@
 		real_name = name
 		//clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous)
-		var/static/list/injection_range = list(1, 5)
+		var/static/list/injection_range = STATIC_INIT(list(1, 5))
 		AddElement(/datum/element/venomous, beegent.type, injection_range)
 		generate_bee_visuals()
 

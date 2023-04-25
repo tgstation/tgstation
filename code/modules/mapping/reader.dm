@@ -99,13 +99,13 @@
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
-	var/static/regex/dmm_regex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
+	var/static/regex/dmm_regex = STATIC_INIT(new /regex(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g"))
 	/// Matches key formats in TMG (IE: newline after the \()
-	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
+	var/static/regex/matches_tgm = STATIC_INIT(new /regex(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m"))
 	/// Pulls out key value pairs for TGM
-	var/static/regex/var_edits_tgm = new(@'^\t([A-z]*) = (.*?);?$')
+	var/static/regex/var_edits_tgm = STATIC_INIT(new /regex(@'^\t([A-z]*) = (.*?);?$'))
 	/// Pulls out model paths for DMM
-	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
+	var/static/regex/model_path = STATIC_INIT(new /regex(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g"))
 
 	#ifdef TESTING
 	var/turfsSkipped = 0
@@ -581,8 +581,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/set_space = FALSE
 	// Use where a list is needed, but where it will not be modified
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
-	var/static/list/default_list = GLOB.map_model_default // It's stupid, but it saves += list(list)
-	var/static/list/wrapped_default_list = list(default_list) // It's stupid, but it saves += list(list)
+	var/static/list/default_list = STATIC_INIT(GLOB.map_model_default) // It's stupid, but it saves += list(list)
+	var/static/list/wrapped_default_list = STATIC_INIT(list(default_list)) // It's stupid, but it saves += list(list)
 	var/static/regex/var_edits = var_edits_tgm
 
 	var/path_to_init = ""
@@ -707,7 +707,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/set_space = FALSE
 	// Use where a list is needed, but where it will not be modified
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
-	var/static/list/default_list = list(GLOB.map_model_default)
+	var/static/list/default_list = STATIC_INIT(list(GLOB.map_model_default))
 	for(var/model_key in grid_models)
 		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
 		var/list/members = list()

@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Unlocks special cargo crates
 /datum/adventure_loot_generator/cargo
 	id = "trade_contract"
-	var/static/list/unlockable_packs = list(/datum/supply_pack/exploration/scrapyard,/datum/supply_pack/exploration/catering,/datum/supply_pack/exploration/shrubbery)
+	var/static/list/unlockable_packs = STATIC_INIT(list(/datum/supply_pack/exploration/scrapyard,/datum/supply_pack/exploration/catering,/datum/supply_pack/exploration/shrubbery))
 
 /datum/adventure_loot_generator/cargo/generate()
 	var/list/still_locked_packs = list()

@@ -14,24 +14,24 @@
 	var/obj/effect/overlay/thermite/fakefire
 
 	/// Default thermite overlay, do not touch
-	var/static/mutable_appearance/default_thermite_overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
+	var/static/mutable_appearance/default_thermite_overlay = STATIC_INIT(mutable_appearance('icons/effects/effects.dmi', "thermite"))
 	/// Blacklist of turfs that cannot have thermite on it
-	var/static/list/blacklist = typecacheof(list(
+	var/static/list/blacklist = STATIC_INIT(typecacheof(list(
 		/turf/open/lava,
 		/turf/open/space,
 		/turf/open/water,
 		/turf/open/chasm,
-	))
+	)))
 	/// List of turfs that are immune to thermite
-	var/static/list/immunelist = typecacheof(list(
+	var/static/list/immunelist = STATIC_INIT(typecacheof(list(
 		/turf/closed/wall/mineral/diamond,
 		/turf/closed/indestructible,
 		/turf/open/indestructible,
-	))
+	)))
 	/// List of turfs that take extra thermite to burn through
-	var/static/list/resistlist = typecacheof(list(
+	var/static/list/resistlist = STATIC_INIT(typecacheof(list(
 		/turf/closed/wall/r_wall,
-	))
+	)))
 
 /datum/component/thermite/Initialize(amount = 50, thermite_overlay = default_thermite_overlay)
 	if(!isturf(parent))

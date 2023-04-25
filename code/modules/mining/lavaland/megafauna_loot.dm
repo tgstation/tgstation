@@ -776,7 +776,7 @@
 	var/create_delay = 3 SECONDS
 	var/reset_cooldown = 5 SECONDS
 	var/timer = 0
-	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = STATIC_INIT(typecacheof(list(/turf/open/space/transit, /turf/closed)))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -908,7 +908,7 @@
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(target))
 		swiping = TRUE
-		var/static/list/cleaving_saw_cleave_angles = list(0, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
+		var/static/list/cleaving_saw_cleave_angles = STATIC_INIT(list(0, -45, 45)) //so that the animation animates towards the target clicked and not towards a side target
 		for(var/i in cleaving_saw_cleave_angles)
 			var/turf/turf = get_step(user_turf, turn(dir_to_target, i))
 			for(var/mob/living/living_target in turf)
@@ -967,7 +967,7 @@
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3
 	var/thunder_charge_time = 15 SECONDS
-	var/static/list/excluded_areas = list(/area/space)
+	var/static/list/excluded_areas = STATIC_INIT(list(/area/space))
 	var/list/targeted_turfs = list()
 
 /obj/item/storm_staff/examine(mob/user)

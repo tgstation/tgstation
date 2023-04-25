@@ -1,5 +1,5 @@
 /datum/changelog
-	var/static/list/changelog_items = list()
+	var/static/list/changelog_items = STATIC_INIT(list())
 
 /datum/changelog/ui_state()
 	return GLOB.always_state

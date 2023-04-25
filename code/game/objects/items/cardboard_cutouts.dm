@@ -90,7 +90,7 @@
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")
 
-	var/static/list/cardboard_cutouts = list()
+	var/static/list/cardboard_cutouts = STATIC_INIT(list())
 
 	if(isnull(cardboard_cutouts[cardboard_cutout]))
 		cardboard_cutouts[cardboard_cutout] = new cardboard_cutout

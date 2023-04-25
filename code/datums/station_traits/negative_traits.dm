@@ -230,10 +230,10 @@
 			new /obj/effect/decal/cleanable/blood(location)
 
 		if(prob(50))
-			var/static/blood_types = list(
+			var/static/blood_types = STATIC_INIT(list(
 				/obj/effect/decal/cleanable/blood/splatter,
 				/obj/effect/decal/cleanable/blood/gibs,
-			)
+			))
 			var/blood_type = pick(blood_types)
 			new blood_type(get_turf(pick(orange(location, 2))))
 
@@ -309,7 +309,7 @@
 	trait_to_give = STATION_TRAIT_REVOLUTIONARY_TRASHING
 	weight = 2
 	///The IDs of the graffiti designs that we will generate.
-	var/static/list/trash_talk = list(
+	var/static/list/trash_talk = STATIC_INIT(list(
 		"amyjon",
 		"antilizard",
 		"body",
@@ -332,7 +332,7 @@
 		"toilet",
 		"toolbox",
 		"uboa",
-	)
+	))
 
 /datum/station_trait/revolutionary_trashing/on_round_start()
 	. = ..()

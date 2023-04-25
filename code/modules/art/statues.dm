@@ -438,7 +438,7 @@ Moving interrupts
 	/// Greyscaled target with cutout filter
 	var/mutable_appearance/target_appearance_with_filters
 	/// HSV color filters parameters
-	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
+	var/static/list/greyscale_with_value_bump = STATIC_INIT(list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05))
 
 /obj/structure/carving_block/Destroy()
 	current_target = null
@@ -505,7 +505,7 @@ Moving interrupts
 		//Doesn't use filter helpers because MAs aren't atoms
 		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
-	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
+	var/static/icon/white = STATIC_INIT(icon('icons/effects/alphacolors.dmi', "white"))
 	switch(value)
 		if(0)
 			//delete uncovered and reset filters
@@ -551,7 +551,7 @@ Moving interrupts
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
-	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
+	var/static/list/greyscale_with_value_bump = STATIC_INIT(list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05))
 
 /obj/structure/statue/custom/Destroy()
 	content_ma = null
@@ -566,7 +566,7 @@ Moving interrupts
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
 
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
+	var/static/list/plane_whitelist = STATIC_INIT(list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE))
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_remove = list()

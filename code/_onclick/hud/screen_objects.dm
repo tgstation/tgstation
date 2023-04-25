@@ -193,7 +193,7 @@
 
 /atom/movable/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
-	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
+	var/static/mutable_appearance/blocked_overlay = STATIC_INIT(mutable_appearance('icons/hud/screen_gen.dmi', "blocked"))
 	var/held_index = 0
 
 /atom/movable/screen/inventory/hand/update_overlays()
@@ -423,7 +423,7 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
-	var/static/list/hover_overlays_cache = list()
+	var/static/list/hover_overlays_cache = STATIC_INIT(list())
 	var/hovering
 
 /atom/movable/screen/zone_sel/Click(location, control,params)

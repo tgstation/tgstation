@@ -211,7 +211,7 @@
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)
-	var/static/list/mineral_chances_by_type = list()
+	var/static/list/mineral_chances_by_type = STATIC_INIT(list())
 
 	. = ..()
 	if (prob(mineralChance))

@@ -111,7 +111,7 @@
 	traded_path = null
 	requires_translator = FALSE
 	amount = 1
-	var/static/list/possible_card_states = list("card_flames","card_carp","card_rainbow")
+	var/static/list/possible_card_states = STATIC_INIT(list("card_flames","card_carp","card_rainbow"))
 
 /datum/exploration_event/simple/trader/flame_card/get_discovery_message(obj/item/exodrone/drone)
 	return "Encountered [name] willing to customize any id card you bring them."

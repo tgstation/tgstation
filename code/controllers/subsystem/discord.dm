@@ -293,7 +293,7 @@ SUBSYSTEM_DEF(discord)
  * Returns a text string with the discord id or null
  */
 /datum/controller/subsystem/discord/proc/get_discord_id_from_mention(mention)
-	var/static/regex/discord_mention_extraction_regex = regex(@"<@([0-9]+)>")
+	var/static/regex/discord_mention_extraction_regex = STATIC_INIT(regex(@"<@([0-9]+)>"))
 	discord_mention_extraction_regex.Find(mention)
 	if (length(discord_mention_extraction_regex.group) == 1)
 		return discord_mention_extraction_regex.group[1]

@@ -36,7 +36,7 @@ Example:
 ```dm
 /obj/structure/table/Initialize(mapload)
 	if (!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(
+		var/static/list/tool_behaviors = STATIC_INIT(list(
 			TOOL_SCREWDRIVER = list(
 				SCREENTIP_CONTEXT_RMB = "Disassemble",
 			),
@@ -44,7 +44,7 @@ Example:
 			TOOL_WRENCH = list(
 				SCREENTIP_CONTEXT_RMB = "Deconstruct",
 			),
-		)
+		))
 
 		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 ```
@@ -61,7 +61,7 @@ Example:
 /obj/item/restraints/handcuffs/cable/Initialize(mapload)
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/stack/rods = list(
 			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
 		),
@@ -69,7 +69,7 @@ Example:
 		/obj/item/stack/sheet/iron = list(
 			SCREENTIP_CONTEXT_LMB = "Craft bola",
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 ```

@@ -39,13 +39,13 @@
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
-	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
-	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
-	var/static/radial_use = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use")
+	var/static/radial_examine = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine"))
+	var/static/radial_eject = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject"))
+	var/static/radial_use = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use"))
 
 	// we show the button even if the proc will not work
-	var/static/list/radial_options = list("eject" = radial_eject, "use" = radial_use)
-	var/static/list/ai_radial_options = list("eject" = radial_eject, "use" = radial_use, "examine" = radial_examine)
+	var/static/list/radial_options = STATIC_INIT(list("eject" = radial_eject, "use" = radial_use))
+	var/static/list/ai_radial_options = STATIC_INIT(list("eject" = radial_eject, "use" = radial_use, "examine" = radial_examine))
 
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()

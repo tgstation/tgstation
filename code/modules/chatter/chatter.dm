@@ -20,7 +20,7 @@
 /// Then say() that fragment at that pace
 /// You can pass in a starting delay to wait before speaking the next sound
 /proc/chatter_speak(atom/speaker, list/letter_count, phomeme, extra_delay = 0)
-	var/static/list/punctuation = list(",",":",";",".","?","!","\'","-")
+	var/static/list/punctuation = STATIC_INIT(list(",",":",";",".","?","!","\'","-"))
 	var/delay = extra_delay
 	for(var/i in 1 to length(letter_count))
 		var/item = letter_count[i]

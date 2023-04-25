@@ -4,7 +4,7 @@
 	. = list()
 	for(var/type in types)
 		var/typename = "[type]"
-		var/static/list/TYPES_SHORTCUTS = list(
+		var/static/list/TYPES_SHORTCUTS = STATIC_INIT(list(
 			/obj/effect/decal/cleanable = "CLEANABLE",
 			/obj/item/bodypart = "BODYPART",
 			/obj/item/radio/headset = "HEADSET",
@@ -30,7 +30,7 @@
 			/mob/living/simple_animal = "SIMPLE",
 			/mob/living = "LIVING",
 			/mob = "M"
-		)
+		))
 		for (var/tn in TYPES_SHORTCUTS)
 			if(copytext(typename, 1, length("[tn]/") + 1) == "[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
 				typename = TYPES_SHORTCUTS[tn] + copytext(typename, length("[tn]/"))

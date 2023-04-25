@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
-	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/simple/mob.dmi', "googly_eyes")
+	var/static/mutable_appearance/googly_eyes = STATIC_INIT(mutable_appearance('icons/mob/simple/mob.dmi', "googly_eyes"))
 	var/overlay_googly_eyes = TRUE
 	var/idledamage = TRUE
 

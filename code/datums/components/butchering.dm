@@ -171,9 +171,9 @@
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 /datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)

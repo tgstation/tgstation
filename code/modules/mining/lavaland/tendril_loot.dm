@@ -1031,7 +1031,7 @@
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
 	var/turf/user_turf = get_turf(user)
 	var/dir_to_target = get_dir(user_turf, get_turf(target))
-	var/static/list/cursed_katana_slice_angles = list(0, -45, 45, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+	var/static/list/cursed_katana_slice_angles = STATIC_INIT(list(0, -45, 45, -90, 90)) //so that the animation animates towards the target clicked and not towards a side target
 	for(var/iteration in cursed_katana_slice_angles)
 		var/turf/turf = get_step(user_turf, turn(dir_to_target, iteration))
 		user.do_attack_animation(turf, ATTACK_EFFECT_SLASH)

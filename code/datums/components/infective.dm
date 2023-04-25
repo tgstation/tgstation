@@ -16,9 +16,9 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/static/list/disease_connections = list(
+	var/static/list/disease_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
-	)
+	))
 	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))

@@ -740,7 +740,7 @@ world
 			layers[current] = current_layer; \
 		}
 
-	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/static/icon/flat_template = STATIC_INIT(icon('icons/blanks/32x32.dmi', "nothing"))
 
 	if(!appearance || appearance.alpha <= 0)
 		return icon(flat_template)
@@ -1053,7 +1053,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /// # If you already have a human and need to get its flat icon, call `get_flat_existing_human_icon()` instead.
 /// For creating consistent icons for human looking simple animals.
 /proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
-	var/static/list/humanoid_icon_cache = list()
+	var/static/list/humanoid_icon_cache = STATIC_INIT(list())
 	if(icon_id && humanoid_icon_cache[icon_id])
 		return humanoid_icon_cache[icon_id]
 
@@ -1305,7 +1305,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/icon2base64html(thing)
 	if (!thing)
 		return
-	var/static/list/bicon_cache = list()
+	var/static/list/bicon_cache = STATIC_INIT(list())
 	if (isicon(thing))
 		var/icon/I = thing
 		var/icon_base64 = icon2base64(I)
@@ -1458,7 +1458,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 ///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
 /proc/icon_exists(file, state, scream)
-	var/static/list/icon_states_cache = list()
+	var/static/list/icon_states_cache = STATIC_INIT(list())
 	if(icon_states_cache[file]?[state])
 		return TRUE
 

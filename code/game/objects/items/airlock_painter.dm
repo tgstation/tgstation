@@ -414,7 +414,7 @@
 	)
 
 	/// Regex to split alpha out.
-	var/static/regex/rgba_regex = new(@"(#[0-9a-fA-F]{6})([0-9a-fA-F]{2})")
+	var/static/regex/rgba_regex = STATIC_INIT(new /regex(@"(#[0-9a-fA-F]{6})([0-9a-fA-F]{2})"))
 
 	/// Default alpha for /obj/effect/turf_decal/tile
 	var/default_alpha = 110

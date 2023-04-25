@@ -23,9 +23,9 @@
 	var/soundfile
 
 	///given to connect_loc to listen for something moving over target
-	var/static/list/crossed_connections = list(
+	var/static/list/crossed_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 
 	///So we can update ant damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS

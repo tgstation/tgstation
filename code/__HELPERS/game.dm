@@ -283,7 +283,7 @@
  * * ignore_category -  The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
-	var/static/list/mob/currently_polling_mobs = list()
+	var/static/list/mob/currently_polling_mobs = STATIC_INIT(list())
 
 	if(currently_polling_mobs.Find(target_mob))
 		return list()

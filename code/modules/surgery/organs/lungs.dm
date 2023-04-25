@@ -168,7 +168,7 @@
 	. = ..()
 	// This is very "manual" I realize, but it's useful to ensure cleanup for gases we're removing happens
 	// Avoids stuck alerts and such
-	var/static/datum/gas_mixture/immutable/dummy = new(BREATH_VOLUME)
+	var/static/datum/gas_mixture/immutable/dummy = STATIC_INIT(new /datum/gas_mixture/immutable(BREATH_VOLUME))
 	for(var/gas_id in last_partial_pressures)
 		var/on_loss = breath_lost[gas_id]
 		if(!on_loss)
@@ -596,7 +596,7 @@
 
 	// If the breath is falsy or "null", we can use the backup empty_breath.
 	if(!breath)
-		var/static/datum/gas_mixture/immutable/empty_breath = new(BREATH_VOLUME)
+		var/static/datum/gas_mixture/immutable/empty_breath = STATIC_INIT(new /datum/gas_mixture/immutable(BREATH_VOLUME))
 		breath = empty_breath
 
 	// Indicates if there are moles of gas in the breath.

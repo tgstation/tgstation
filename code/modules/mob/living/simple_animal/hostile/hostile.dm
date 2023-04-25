@@ -143,8 +143,8 @@
 		return
 	var/target_dir = get_dir(src,target)
 
-	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
-	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
+	var/static/list/cardinal_sidestep_directions = STATIC_INIT(list(-90,-45,0,45,90))
+	var/static/list/diagonal_sidestep_directions = STATIC_INIT(list(-45,0,45))
 	var/chosen_dir = 0
 	if (target_dir & (target_dir - 1))
 		chosen_dir = pick(diagonal_sidestep_directions)
@@ -179,7 +179,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, target_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+		var/static/hostile_machines = STATIC_INIT(typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 
 		for(var/HM in typecache_filter_list(range(vision_range, target_from), hostile_machines))
 			if(can_see(target_from, HM, vision_range))
@@ -642,7 +642,7 @@
 		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	var/static/hostile_machines = STATIC_INIT(typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])
 		var/mob/M = I

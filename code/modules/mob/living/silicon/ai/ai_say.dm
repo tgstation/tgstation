@@ -88,7 +88,7 @@
 
 
 /mob/living/silicon/ai/proc/announcement()
-	var/static/announcing_vox = 0 // Stores the time of the last announcement
+	var/static/announcing_vox = STATIC_INIT(0) // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return

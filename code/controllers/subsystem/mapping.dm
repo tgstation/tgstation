@@ -886,7 +886,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	RETURN_TYPE(/datum/turf_reservation)
 
 	UNTIL(initialized)
-	var/static/lazy_loading = FALSE
+	var/static/lazy_loading = STATIC_INIT(FALSE)
 	UNTIL(!lazy_loading)
 
 	lazy_loading = TRUE

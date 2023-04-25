@@ -182,7 +182,7 @@
 
 ///Returns a random reagent object minus blacklisted reagents
 /proc/get_random_reagent_id()
-	var/static/list/random_reagents = list()
+	var/static/list/random_reagents = STATIC_INIT(list())
 	if(!random_reagents.len)
 		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
 			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)

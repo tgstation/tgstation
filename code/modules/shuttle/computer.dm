@@ -27,7 +27,7 @@
 	/// If the console controls are locked
 	var/locked = FALSE
 	/// List of head revs who have already clicked through the warning about not using the console
-	var/static/list/dumb_rev_heads = list()
+	var/static/list/dumb_rev_heads = STATIC_INIT(list())
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 

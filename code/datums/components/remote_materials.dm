@@ -60,7 +60,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/_MakeLocal()
 	silo = null
 
-	var/static/list/allowed_mats = list(
+	var/static/list/allowed_mats = STATIC_INIT((list(
 		/datum/material/iron,
 		/datum/material/glass,
 		/datum/material/silver,
@@ -72,7 +72,7 @@ handles linking back and forth.
 		/datum/material/titanium,
 		/datum/material/bluespace,
 		/datum/material/plastic,
-		)
+		)))
 
 	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, mat_container_flags, allowed_items=/obj/item/stack)
 

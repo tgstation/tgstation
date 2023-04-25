@@ -32,7 +32,7 @@
 	/// A list of weakrefs to all of ourc urrent runes
 	var/list/datum/weakref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
+	var/static/list/blacklisted_turfs = STATIC_INIT(typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava)))
 
 /obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
@@ -90,9 +90,9 @@
  */
 /obj/item/melee/rune_carver/proc/do_carve_rune(turf/open/target_turf, mob/user)
 	// Assoc list of [name] to [image] for the radial (to show tooltips)
-	var/static/list/choices = list()
+	var/static/list/choices = STATIC_INIT(list())
 	// Assoc list of [name] to [path] for after the radial
-	var/static/list/names_to_path = list()
+	var/static/list/names_to_path = STATIC_INIT(list())
 	if(!choices.len || !names_to_path.len)
 		for(var/obj/structure/trap/eldritch/trap as anything in subtypesof(/obj/structure/trap/eldritch))
 			names_to_path[initial(trap.name)] = trap

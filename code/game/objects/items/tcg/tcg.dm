@@ -189,9 +189,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
-	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
-	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
-	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
+	var/static/radial_draw = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw"))
+	var/static/radial_shuffle = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle"))
+	var/static/radial_pickup = STATIC_INIT(image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"))
 
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()

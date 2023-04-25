@@ -17,7 +17,7 @@
 	hide = FALSE
 
 	///cache for the icons
-	var/static/list/mutable_appearance/center_cache = list()
+	var/static/list/mutable_appearance/center_cache = STATIC_INIT(list())
 
 /obj/machinery/atmospherics/pipe/color_adapter/Initialize(mapload)
 	icon_state = ""

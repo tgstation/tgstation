@@ -44,7 +44,7 @@ Stabilized extracts:
 	if(isnull(holder))
 		return
 	var/effectpath = /datum/status_effect/stabilized
-	var/static/list/effects = subtypesof(/datum/status_effect/stabilized)
+	var/static/list/effects = STATIC_INIT(subtypesof(/datum/status_effect/stabilized))
 	for(var/datum/status_effect/stabilized/effect as anything in effects)
 		if(initial(effect.colour) != colour)
 			continue
@@ -128,7 +128,7 @@ Stabilized extracts:
 	var/mob_name = "Familiar"
 
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
-	var/static/list/mob_spawn_pets = list()
+	var/static/list/mob_spawn_pets = STATIC_INIT(list())
 	if(!length(mob_spawn_pets))
 		for(var/mob/living/simple_animal/animal as anything in subtypesof(/mob/living/simple_animal))
 			if(initial(animal.gold_core_spawnable) == FRIENDLY_SPAWN)

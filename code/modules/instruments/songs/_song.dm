@@ -98,8 +98,8 @@
 	var/octave_max = INSTRUMENT_MAX_OCTAVE
 	var/key_min = INSTRUMENT_MIN_KEY
 	var/key_max = INSTRUMENT_MAX_KEY
-	var/static/list/note_offset_lookup = list(9, 11, 0, 2, 4, 5, 7)
-	var/static/list/accent_lookup = list("b" = -1, "s" = 1, "#" = 1, "n" = 0)
+	var/static/list/note_offset_lookup = STATIC_INIT(list(9, 11, 0, 2, 4, 5, 7))
+	var/static/list/accent_lookup = STATIC_INIT(list("b" = -1, "s" = 1, "#" = 1, "n" = 0))
 	//////////////////////////////////////////////////////////////
 
 	///////////// !!FUN!! - Only works in synthesized mode! /////////////////

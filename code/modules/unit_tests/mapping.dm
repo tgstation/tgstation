@@ -4,7 +4,7 @@
 	priority = TEST_PRE
 
 /datum/unit_test/log_mapping/Run()
-	var/static/regex/test_areacoord_regex = regex(@"\(-?\d+,-?\d+,(-?\d+)\)")
+	var/static/regex/test_areacoord_regex = STATIC_INIT(regex(@"\(-?\d+,-?\d+,(-?\d+)\)"))
 
 	for(var/log_entry in GLOB.unit_test_mapping_logs)
 		// Only fail if AREACOORD was conveyed, and it's a station or mining z-level.

@@ -162,9 +162,9 @@
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
 	///The mask image for mimicking a broken-off bottom of the bottle
-	var/static/icon/broken_outline = icon('icons/obj/drinks/drink_effects.dmi', "broken")
+	var/static/icon/broken_outline = STATIC_INIT(icon('icons/obj/drinks/drink_effects.dmi', "broken"))
 	///The mask image for mimicking a broken-off neck of the bottle
-	var/static/icon/flipped_broken_outline = icon('icons/obj/drinks/drink_effects.dmi', "broken-flipped")
+	var/static/icon/flipped_broken_outline = STATIC_INIT(icon('icons/obj/drinks/drink_effects.dmi', "broken-flipped"))
 
 /obj/item/broken_bottle/Initialize(mapload)
 	. = ..()

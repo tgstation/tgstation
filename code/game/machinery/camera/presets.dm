@@ -57,7 +57,7 @@
 /obj/machinery/camera/autoname/LateInitialize()
 	. = ..()
 
-	var/static/list/autonames_in_areas = list()
+	var/static/list/autonames_in_areas = STATIC_INIT(list())
 
 	var/area/camera_area = get_area(src)
 
@@ -88,7 +88,7 @@
 ///Updates the c_tag of the mech camera while preventing duplicate c_tag usage due to having mechs with the same name
 /obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
 	//List of all used mech names
-	var/static/list/existing_mech_names = list()
+	var/static/list/existing_mech_names = STATIC_INIT(list())
 	//Name of the mech passed with this proc. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
 	var/mech_name = format_text(mech.name)
 

@@ -4,10 +4,10 @@
 	var/highest_strength = TURF_DRY
 	var/lube_flags = NONE //why do we have this?
 	var/list/time_left_list //In deciseconds.
-	var/static/mutable_appearance/permafrost_overlay = mutable_appearance('icons/effects/water.dmi', "ice_floor")
-	var/static/mutable_appearance/ice_overlay = mutable_appearance('icons/turf/overlays.dmi', "snowfloor")
-	var/static/mutable_appearance/water_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor_static")
-	var/static/mutable_appearance/generic_turf_overlay = mutable_appearance('icons/effects/water.dmi', "wet_static")
+	var/static/mutable_appearance/permafrost_overlay = STATIC_INIT(mutable_appearance('icons/effects/water.dmi', "ice_floor"))
+	var/static/mutable_appearance/ice_overlay = STATIC_INIT(mutable_appearance('icons/turf/overlays.dmi', "snowfloor"))
+	var/static/mutable_appearance/water_overlay = STATIC_INIT(mutable_appearance('icons/effects/water.dmi', "wet_floor_static"))
+	var/static/mutable_appearance/generic_turf_overlay = STATIC_INIT(mutable_appearance('icons/effects/water.dmi', "wet_static"))
 	var/current_overlay
 	var/permanent = FALSE
 	var/last_process = 0
@@ -164,7 +164,7 @@
 	//NB it's possible we get deleted after this, due to inherit
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
-	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SUPERLUBE)
+	var/static/list/allowed_types = STATIC_INIT(list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SUPERLUBE))
 	if(duration_minimum <= 0 || !type)
 		return FALSE
 	if(type in allowed_types)

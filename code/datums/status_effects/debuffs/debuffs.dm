@@ -758,14 +758,14 @@
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
 	/// Common phrases people covered in ants scream
-	var/static/list/ant_debuff_speech = list(
+	var/static/list/ant_debuff_speech = STATIC_INIT(list(
 		"GET THEM OFF ME!!",
 		"OH GOD THE ANTS!!",
 		"MAKE IT END!!",
 		"THEY'RE EVERYWHERE!!",
 		"GET THEM OFF!!",
 		"SOMEBODY HELP ME!!"
-	)
+	))
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)

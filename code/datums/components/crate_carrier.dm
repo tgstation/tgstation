@@ -20,7 +20,7 @@
 		src.carriable_cache = typecacheof(carriable_types)
 
 	else
-		var/static/default_cache = typecacheof(list(/obj/structure/closet/crate))
+		var/static/default_cache = STATIC_INIT(typecacheof(list(/obj/structure/closet/crate)))
 		src.carriable_cache = default_cache
 
 /datum/component/crate_carrier/Destroy(force, silent)

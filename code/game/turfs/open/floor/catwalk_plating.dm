@@ -18,7 +18,7 @@
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	var/covered = TRUE
 	var/catwalk_type = "maint"
-	var/static/list/catwalk_underlays = list()
+	var/static/list/catwalk_underlays = STATIC_INIT(list())
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()

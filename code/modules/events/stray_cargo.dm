@@ -33,7 +33,7 @@
 	var/area/impact_area ///Randomly picked area
 	announce_chance = 75
 	var/list/possible_pack_types = list() ///List of possible supply packs dropped in the pod, if empty picks from the cargo list
-	var/static/list/stray_spawnable_supply_packs = list() ///List of default spawnable supply packs, filtered from the cargo list
+	var/static/list/stray_spawnable_supply_packs = STATIC_INIT(list()) ///List of default spawnable supply packs, filtered from the cargo list
 	///Admin setable override that is used instead of selecting a random location
 	var/atom/admin_override_turf
 	///Admin setable override to spawn a specific cargo pack type
@@ -122,7 +122,7 @@
 	))
 
 		///Subtypes from the above that actually should explode.
-		var/static/list/unsafe_area_subtypes = typecacheof(list(/area/station/engineering/break_room))
+		var/static/list/unsafe_area_subtypes = STATIC_INIT(typecacheof(list(/area/station/engineering/break_room)))
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 	var/list/possible_areas = typecache_filter_list(GLOB.areas, allowed_areas)
 	if (length(possible_areas))

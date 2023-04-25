@@ -81,7 +81,7 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/possible_colors = list(
+	var/static/list/possible_colors = STATIC_INIT(list(
 	"blue",
 	"brown",
 	"crimson",
@@ -99,7 +99,7 @@
 	"violet",
 	"white",
 	"yellow",
-	)
+	))
 
 	var/list/my_possible_colors = possible_colors.Copy()
 

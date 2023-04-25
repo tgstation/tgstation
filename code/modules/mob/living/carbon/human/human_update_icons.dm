@@ -843,10 +843,10 @@ generate/load female uniform sprites matching all previously decided variables
  * Applies a filter to an appearance according to mob height
  */
 /mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
-	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
-	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
-	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
-	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
+	var/static/icon/cut_torso_mask = STATIC_INIT(icon('icons/effects/cut.dmi', "Cut1"))
+	var/static/icon/cut_legs_mask = STATIC_INIT(icon('icons/effects/cut.dmi', "Cut2"))
+	var/static/icon/lenghten_torso_mask = STATIC_INIT(icon('icons/effects/cut.dmi', "Cut3"))
+	var/static/icon/lenghten_legs_mask = STATIC_INIT(icon('icons/effects/cut.dmi', "Cut4"))
 
 	appearance.remove_filter(list(
 		"Cut_Torso",

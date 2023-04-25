@@ -43,7 +43,7 @@
 /// Returns a list of objects, automatically added to your vis_contents, that apply this effect
 /// QDEL them when appropriate
 /proc/partially_block_emissives(atom/make_blocker, alpha_to_leave)
-	var/static/uid = 0
+	var/static/uid = STATIC_INIT(0)
 	uid++
 	if(!make_blocker.render_target)
 		make_blocker.render_target = "partial_emissive_block_[uid]"

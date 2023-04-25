@@ -189,7 +189,7 @@
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
-	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
+	var/static/list/slimecores = STATIC_INIT(subtypesof(/obj/item/slime_extract))
 	var/i = 0
 	if(!(i = slimecores.Find(atom_to_drop.type))) // If the item is not found
 		return

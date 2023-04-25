@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		moving_loop.delay = speed * 1 SECONDS
 		return
 
-	var/static/list/unconveyables = typecacheof(list(/obj/effect, /mob/dead))
+	var/static/list/unconveyables = STATIC_INIT(typecacheof(list(/obj/effect, /mob/dead)))
 	if(!istype(moving) || is_type_in_typecache(moving, unconveyables) || moving == src)
 		return
 	moving.AddComponent(/datum/component/convey, movedir, speed * 1 SECONDS)

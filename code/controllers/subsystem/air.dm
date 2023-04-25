@@ -441,7 +441,7 @@ SUBSYSTEM_DEF(air)
 			if(net.members.Find(item))
 				continue
 			if(item.parent)
-				var/static/pipenetwarnings = 10
+				var/static/pipenetwarnings = STATIC_INIT(10)
 				if(pipenetwarnings > 0)
 					log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
 					pipenetwarnings--

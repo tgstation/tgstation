@@ -421,7 +421,7 @@
 		return
 
 	var/index = "[REF(icon)]-[icon_state]"
-	var/static/list/damaged_clothes_icons = list()
+	var/static/list/damaged_clothes_icons = STATIC_INIT(list())
 	var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 	if(!damaged_clothes_icon)
 		damaged_clothes_icon = icon(icon, icon_state, , 1)

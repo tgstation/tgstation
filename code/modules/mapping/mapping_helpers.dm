@@ -267,7 +267,7 @@
 		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
-	
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/apc/LateInitialize()
@@ -573,8 +573,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/icon_file
 
 /obj/effect/mapping_helpers/atom_injector/custom_icon/check_validity()
-	var/static/icon_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	var/static/icon_cache = STATIC_INIT(list())
+	var/static/query_in_progress = STATIC_INIT(FALSE) //We're using a single tmp file so keep it linear.
 	if(query_in_progress)
 		UNTIL(!query_in_progress)
 	if(icon_cache[icon_url])
@@ -618,8 +618,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/sound_file
 
 /obj/effect/mapping_helpers/atom_injector/custom_sound/check_validity()
-	var/static/sound_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	var/static/sound_cache = STATIC_INIT(list())
+	var/static/query_in_progress = STATIC_INIT(FALSE) //We're using a single tmp file so keep it linear.
 	if(query_in_progress)
 		UNTIL(!query_in_progress)
 	if(sound_cache[sound_url])
@@ -948,8 +948,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			)
 
 /obj/effect/mapping_helpers/circuit_spawner/proc/load_data()
-	var/static/json_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	var/static/json_cache = STATIC_INIT(list())
+	var/static/query_in_progress = STATIC_INIT(FALSE) //We're using a single tmp file so keep it linear.
 	if(query_in_progress)
 		UNTIL(!query_in_progress)
 	if(json_cache[json_url])

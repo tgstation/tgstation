@@ -283,7 +283,7 @@
  * subsequently be deleted.
  */
 /obj/machinery/biogenerator/proc/convert_to_biomass(obj/item/food/food_to_convert)
-	var/static/list/nutrient_subtypes = typesof(/datum/reagent/consumable/nutriment)
+	var/static/list/nutrient_subtypes = STATIC_INIT(typesof(/datum/reagent/consumable/nutriment))
 	var/nutriments = 0
 
 	nutriments += ROUND_UP(food_to_convert.reagents.get_multiple_reagent_amounts(nutrient_subtypes))

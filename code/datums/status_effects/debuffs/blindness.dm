@@ -11,7 +11,7 @@
 	// fullheal should instead remove all the sources and in turn cure this
 
 	/// Static list of signals that, when recieved, we force an update to our nearsighted overlay
-	var/static/list/update_signals = list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED))
+	var/static/list/update_signals = STATIC_INIT(list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED)))
 	/// How severe is our nearsightedness right now
 	var/overlay_severity = 1
 

@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		CRASH("Invalid JSON in adventure with id:[id], name:[name]")
 
 	//Basic validation of required fields, don't even bother loading if they are missing.
-	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
+	var/static/list/required_fields = STATIC_INIT(list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD))
 	for(var/field in required_fields)
 		if(!json_data[field])
 			CRASH("Adventure id:[id], name:[name] missing [field] value")

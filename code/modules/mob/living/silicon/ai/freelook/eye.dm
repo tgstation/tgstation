@@ -50,7 +50,7 @@
 
 	hud.remove_atom_from_hud(src)
 
-	var/static/list/vis_contents_opaque = list()
+	var/static/list/vis_contents_opaque = STATIC_INIT(list())
 	var/turf/our_turf = get_turf(src)
 	var/our_z_offset = GET_TURF_PLANE_OFFSET(our_turf)
 	var/key = "[our_z_offset]-[ai_detector_color]"

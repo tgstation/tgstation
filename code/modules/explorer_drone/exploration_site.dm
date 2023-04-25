@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 
 /datum/exploration_site/proc/generate_event(site_traits,event_root_type)
 	/// List of exploration event requirements indexed by type, .[/datum/exploration_site/a] = list("required"=list(trait),"blacklisted"=list(other_trait))
-	var/static/exploration_event_requirements_cache = list()
+	var/static/exploration_event_requirements_cache = STATIC_INIT(list())
 	if(!length(exploration_event_requirements_cache))
 		exploration_event_requirements_cache = build_exploration_event_requirements_cache()
 	var/list/viable_events = list()

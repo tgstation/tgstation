@@ -173,7 +173,7 @@
 /obj/machinery/navbeacon/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/static_controls = list()
-	var/static/list/direction_options = list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST))
+	var/static/list/direction_options = STATIC_INIT(list("none", dir2text(EAST), dir2text(NORTH), dir2text(SOUTH), dir2text(WEST)))
 
 	static_controls["direction_options"] = direction_options
 	static_controls["has_codes"] = codes_txt ? TRUE : FALSE

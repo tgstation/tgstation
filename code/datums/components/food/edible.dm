@@ -83,7 +83,7 @@ Behavior that's still missing from this component that original food items had t
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	else
-		var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
+		var/static/list/loc_connections = STATIC_INIT(list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered)))
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 	if(isitem(parent))

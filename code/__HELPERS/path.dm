@@ -437,7 +437,7 @@
 		if(TURF_PATHING_PASS_NO)
 			return TRUE
 
-	var/static/list/directional_blocker_cache = typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only))
+	var/static/list/directional_blocker_cache = STATIC_INIT(typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only)))
 	// Source border object checks
 	for(var/obj/border in src)
 		if(!directional_blocker_cache[border.type])

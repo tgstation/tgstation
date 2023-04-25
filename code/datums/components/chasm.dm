@@ -9,8 +9,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
 
 	/// List of refs to falling objects -> how many levels deep we've fallen
-	var/static/list/falling_atoms = list()
-	var/static/list/forbidden_types = typecacheof(list(
+	var/static/list/falling_atoms = STATIC_INIT(list())
+	var/static/list/forbidden_types = STATIC_INIT(typecacheof(list(
 		/obj/singularity,
 		/obj/energy_ball,
 		/obj/narsie,
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
-	))
+	)))
 
 /datum/component/chasm/Initialize(turf/target)
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Entered))
@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/proc/is_safe()
 	//if anything matching this typecache is found in the chasm, we don't drop things
-	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice, /obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+	var/static/list/chasm_safeties_typecache = STATIC_INIT(typecacheof(list(/obj/structure/lattice, /obj/structure/lattice/catwalk, /obj/structure/stone_tile)))
 
 	var/atom/parent = src.parent
 	var/list/found_safeties = typecache_filter_list(parent.contents, chasm_safeties_typecache)

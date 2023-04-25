@@ -72,7 +72,7 @@
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
-	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
+	var/static/list/stickman_drops = STATIC_INIT(list(/obj/item/gun/ballistic/automatic/pistol/stickman))
 	AddElement(/datum/element/death_drops, stickman_drops)
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
 

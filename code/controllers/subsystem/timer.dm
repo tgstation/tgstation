@@ -46,9 +46,9 @@ SUBSYSTEM_DEF(timer)
 	/// Keeps track of the next index to work on for client timers
 	var/next_clienttime_timer_index = 0
 	/// Contains the last time that a warning was issued for not invoking callbacks
-	var/static/last_invoke_warning = 0
+	var/static/last_invoke_warning = STATIC_INIT(0)
 	/// Boolean operator controlling if the timer SS will automatically reset buckets if it fails to invoke callbacks for an extended period of time
-	var/static/bucket_auto_reset = TRUE
+	var/static/bucket_auto_reset = STATIC_INIT(TRUE)
 	/// How many times bucket was reset
 	var/bucket_reset_count = 0
 
@@ -391,7 +391,7 @@ SUBSYSTEM_DEF(timer)
 	var/bucket_pos = -1
 
 /datum/timedevent/New(datum/callback/callBack, wait, flags, datum/controller/subsystem/timer/timer_subsystem, hash, source)
-	var/static/nextid = 1
+	var/static/nextid = STATIC_INIT(1)
 	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.wait = wait
@@ -504,7 +504,7 @@ SUBSYSTEM_DEF(timer)
  */
 /datum/timedevent/proc/bucketJoin()
 	// Generate debug-friendly name for timer
-	var/static/list/bitfield_flags = list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")
+	var/static/list/bitfield_flags = STATIC_INIT(list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP"))
 	name = "Timer: [id] ([text_ref(src)]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield_to_list(flags, bitfield_flags), ", ")], \
 		callBack: [text_ref(callBack)], callBack.object: [callBack.object][text_ref(callBack.object)]([getcallingtype()]), \
 		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"

@@ -15,7 +15,7 @@
 	/// Message given to the user upon losing this mutation
 	var/text_lose_indication = ""
 	/// Visual indicators upon the character of the owner of this mutation
-	var/static/list/visual_indicators = list()
+	var/static/list/visual_indicators = STATIC_INIT(list())
 	/// The path of action we grant to our user on mutation gain
 	var/datum/action/cooldown/power_path
 	/// Which mutation layer to use

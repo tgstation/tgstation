@@ -1,5 +1,5 @@
 /datum/component/squeak
-	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
+	var/static/list/default_squeak_sounds = STATIC_INIT(list('sound/items/toysqueak1.ogg'= 1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1))
 	var/list/override_squeak_sounds
 	var/mob/holder
 
@@ -22,9 +22,9 @@
 	var/sound_falloff_exponent = 10
 
 	///what we set connect_loc to if parent is an item
-	var/static/list/item_connections = list(
+	var/static/list/item_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(play_squeak_crossed),
-	)
+	))
 
 
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)

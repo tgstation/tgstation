@@ -64,7 +64,7 @@
 /obj/structure/barricade/wooden/Initialize(mapload)
 	. = ..()
 
-	var/static/list/tool_behaviors = list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct"))
+	var/static/list/tool_behaviors = STATIC_INIT(list(TOOL_CROWBAR = list(SCREENTIP_CONTEXT_LMB = "Deconstruct")))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 

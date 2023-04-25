@@ -17,9 +17,9 @@
 	///Bitfield of sources preventing the component from rotting
 	var/blockers = NONE
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 
 
 

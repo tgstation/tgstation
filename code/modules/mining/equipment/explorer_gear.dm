@@ -145,10 +145,10 @@
 			set_armor(/datum/armor/none)
 			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
 		else
-			slot_flags = initial(slot_flags)			
+			slot_flags = initial(slot_flags)
 			set_armor(initial(armor_type))
 			user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
-			
+
 /datum/armor/cloak_goliath
 	melee = 35
 	bullet = 10
@@ -266,7 +266,7 @@
 	var/effect_cooldown_time = 10 MINUTES
 	/// Current cooldown for the effect
 	COOLDOWN_DECLARE(effect_cooldown)
-	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/damage_heal_order = STATIC_INIT(list(BRUTE, BURN, OXY))
 
 /datum/armor/cloak_godslayer
 	melee = 50

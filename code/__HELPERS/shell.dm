@@ -4,14 +4,14 @@
 #define SHELLEO_ERR ".err"
 #define SHELLEO_OUT ".out"
 /world/proc/shelleo(command)
-	var/static/list/shelleo_ids = list()
+	var/static/list/shelleo_ids = STATIC_INIT(list())
 	var/stdout = ""
 	var/stderr = ""
 	var/errorcode = 1
 	var/shelleo_id
 	var/out_file = ""
 	var/err_file = ""
-	var/static/list/interpreters = list("[MS_WINDOWS]" = "cmd /c", "[UNIX]" = "sh -c")
+	var/static/list/interpreters = STATIC_INIT(list("[MS_WINDOWS]" = "cmd /c", "[UNIX]" = "sh -c"))
 	var/interpreter = interpreters["[world.system_type]"]
 	if(interpreter)
 		for(var/seo_id in shelleo_ids)
@@ -44,7 +44,7 @@
 #undef SHELLEO_OUT
 
 /proc/shell_url_scrub(url)
-	var/static/regex/bad_chars_regex = regex("\[^#%&./:=?\\w]*", "g")
+	var/static/regex/bad_chars_regex = STATIC_INIT(regex("\[^#%&./:=?\\w]*", "g"))
 	var/scrubbed_url = ""
 	var/bad_match = ""
 	var/last_good = 1

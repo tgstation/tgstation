@@ -1,6 +1,6 @@
 /// Makes sure suit slot items aren't using CS:S fallbacks.
 /datum/unit_test/worn_icons
-	var/static/list/possible_icon_states = list()
+	var/static/list/possible_icon_states = STATIC_INIT(list())
 	/// additional_icon_location is for downstream modularity support for finding missing sprites in additonal DMI file locations.
 	/// Make sure this location is also present in tools/deploy.sh
 	/// If you need additional paths ontop of this second one, you can add another generate_possible_icon_states_list("your/folder/path/") below the if(additional_icon_location) block in Run(), and make sure to add that path to tools/deploy.sh as well.

@@ -41,7 +41,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		var/static/list/injection_range = list(1, 5)
+		var/static/list/injection_range = STATIC_INIT(list(1, 5))
 		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)

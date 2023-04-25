@@ -13,7 +13,7 @@
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
 	///I track them here because I have no idea how I'd make tgui loop like that
-	var/static/list/possible_amounts = list(0,1,2,3,4,5)
+	var/static/list/possible_amounts = STATIC_INIT(list(0,1,2,3,4,5))
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
 	var/datum/reagent/reagent_id = null
 	///straight up copied from chem dispenser. Being a subtype would be extremely tedious and making it global would restrict potential subtypes using different dispensable_reagents

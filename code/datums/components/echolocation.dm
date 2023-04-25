@@ -22,15 +22,15 @@
 	/// Associative list of world.time when created to a list of receivers.
 	var/list/receivers = list()
 	/// All the saved appearances, keyed by icon-icon_state.
-	var/static/list/saved_appearances = list()
+	var/static/list/saved_appearances = STATIC_INIT(list())
 	/// Typecache of all the allowed paths to render.
 	var/static/list/allowed_paths
 	/// Typecache of turfs that are dangerous, to give them a special icon.
 	var/static/list/danger_turfs
 	/// A matrix that turns everything except #ffffff into pure blackness, used for our images (the outlines are #ffffff).
-	var/static/list/black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
+	var/static/list/black_white_matrix = STATIC_INIT(list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0))
 	/// A matrix that turns everything into pure white.
-	var/static/list/white_matrix = list(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 0, 0, 1, 0, -0, 0, 0)
+	var/static/list/white_matrix = STATIC_INIT(list(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 0, 0, 0, 1, 0, -0, 0, 0))
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 

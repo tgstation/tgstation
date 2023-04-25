@@ -68,14 +68,14 @@
 	maptext_width = 480
 	maptext = ""
 
-	var/static/list/colors = list(
+	var/static/list/colors = STATIC_INIT(list(
 		COLOR_RED,
 		COLOR_ORANGE,
 		COLOR_YELLOW,
 		COLOR_LIME,
 		COLOR_CYAN,
 		COLOR_PURPLE,
-	)
+	))
 
 	/// The last color chosen in the animation, sourced from the static list colors.
 	var/last_color_index = 0

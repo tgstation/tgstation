@@ -2,12 +2,12 @@
 /datum/element/fried_item
 	/// List of colors to apply the element target.
 	/// Each index corresponds to a different level.
-	var/static/list/fried_colors = list(
+	var/static/list/fried_colors = STATIC_INIT(list(
 		COLOR_LIGHT_BROWN,
 		COLOR_BROWNER_BROWN,
 		COLOR_DARKER_BROWN,
 		COLOR_BLACK,
-	)
+	))
 
 /datum/element/fried_item/Attach(datum/target, fry_time)
 	. = ..()

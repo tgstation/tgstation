@@ -26,7 +26,7 @@
 	/// Enables/disables spawning
 	var/ready_to_spawn = FALSE
 	/// Assoc list of map templates indexed by user friendly names
-	var/static/list/arena_templates = list()
+	var/static/list/arena_templates = STATIC_INIT(list())
 	/// Were the config directory arenas loaded
 	var/static/default_arenas_loaded = FALSE
 	/// Name of currently loaded template
@@ -36,11 +36,11 @@
 	// List of team ids
 	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
 	/// List of hud instances indedxed by team id
-	var/static/list/team_huds = list()
+	var/static/list/team_huds = STATIC_INIT(list())
 	/// List of hud colors indexed by team id
-	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green")
+	var/static/list/team_colors = STATIC_INIT(list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green"))
 	// Team hud index in GLOB.huds indexed by team id
-	var/static/list/team_hud_index = list()
+	var/static/list/team_hud_index = STATIC_INIT(list())
 
 	/// List of ckeys indexed by team id
 	var/list/team_keys = list()

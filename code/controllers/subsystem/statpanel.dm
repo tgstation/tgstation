@@ -362,10 +362,10 @@ SUBSYSTEM_DEF(statpanels)
 /datum/object_window_info/proc/start_turf_tracking()
 	if(actively_tracking)
 		stop_turf_tracking()
-	var/static/list/connections = list(
+	var/static/list/connections = STATIC_INIT(list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_mob_move),
 		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
-	)
+	))
 	AddComponent(/datum/component/connect_mob_behalf, parent, connections)
 	actively_tracking = TRUE
 

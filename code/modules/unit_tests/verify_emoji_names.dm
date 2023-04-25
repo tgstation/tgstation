@@ -3,7 +3,7 @@
 /datum/unit_test/verify_emoji_names
 
 /datum/unit_test/verify_emoji_names/Run()
-	var/static/list/emoji_list = icon_states(icon(EMOJI_SET))
+	var/static/list/emoji_list = STATIC_INIT(icon_states(icon(EMOJI_SET)))
 	for(var/checkable in emoji_list)
 		if(isnum(text2num(checkable)))
 			TEST_FAIL("Emoji name [checkable] in [EMOJI_SET] is a pure number. This will cause issues with the CSS backend via Spritesheets. Please rename it to something else.")

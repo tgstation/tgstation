@@ -7,7 +7,7 @@
 	argument_hash_start_idx = 2
 	/// heals a constant amount every time a hit occurs
 	var/flat_heal
-	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/damage_heal_order = STATIC_INIT(list(BRUTE, BURN, OXY))
 
 /datum/element/lifesteal/Attach(datum/target, flat_heal)
 	. = ..()

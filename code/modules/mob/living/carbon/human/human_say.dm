@@ -2,8 +2,8 @@
 
 /mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
 	if(!HAS_TRAIT(src, TRAIT_SPEAKS_CLEARLY))
-		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
-		var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
+		var/static/regex/tongueless_lower = STATIC_INIT(new /regex("\[gdntke]+", "g"))
+		var/static/regex/tongueless_upper = STATIC_INIT(new /regex("\[GDNTKE]+", "g"))
 		if(message[1] != "*")
 			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))

@@ -361,7 +361,7 @@
 	///Range of the effect.
 	var/range = 5
 	///Lists for zones and bodyparts to swap and randomize
-	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/static/list/zones = STATIC_INIT(list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 	var/static/list/chests
 	var/static/list/heads
 	var/static/list/l_arms

@@ -89,7 +89,7 @@
 		balloon_alert(user, "data added")
 
 	else if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && isliving(target))
-		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
+		var/static/list/non_simple_animals = STATIC_INIT(typecacheof(list(/mob/living/carbon/alien)))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
 			var/mob/living/living_target = target
 			if(our_vault.animal_dna[living_target.type])

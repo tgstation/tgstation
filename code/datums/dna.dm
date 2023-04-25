@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 //Used to generate original gene sequences for every mutation
 /proc/generate_gene_sequence(length=4)
-	var/static/list/active_sequences = list("AT","TA","GC","CG")
+	var/static/list/active_sequences = STATIC_INIT(list("AT","TA","GC","CG"))
 	var/sequence
 	for(var/i in 1 to length*DNA_SEQUENCE_LENGTH)
 		sequence += pick(active_sequences)

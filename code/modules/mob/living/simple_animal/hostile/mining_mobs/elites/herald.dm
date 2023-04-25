@@ -157,7 +157,7 @@
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 14)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_circleshot(offset)
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = STATIC_INIT(list(0, 45, 90, 135, 180, 225, 270, 315))
 	for(var/i in directional_shot_angles)
 		shoot_projectile(get_turf(src), i + offset, FALSE, FALSE)
 
@@ -262,7 +262,7 @@
 	hit_reaction_chance = 20
 
 /obj/item/clothing/neck/cloak/herald_cloak/proc/reactionshot(mob/living/carbon/owner)
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = STATIC_INIT(list(0, 45, 90, 135, 180, 225, 270, 315))
 	for(var/i in directional_shot_angles)
 		shoot_projectile(get_turf(owner), i, owner)
 
@@ -279,7 +279,7 @@
 	if(prob(hit_reaction_chance))
 		return
 	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
-	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	var/static/list/directional_shot_angles = STATIC_INIT(list(0, 45, 90, 135, 180, 225, 270, 315))
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 10)
 

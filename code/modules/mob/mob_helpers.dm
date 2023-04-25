@@ -190,13 +190,13 @@
 
 ///Find the first name of a mob from the real name with regex
 /mob/proc/first_name()
-	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+	var/static/regex/firstname = STATIC_INIT(new /regex("^\[^\\s-\]+")) //First word before whitespace or "-"
 	firstname.Find(real_name)
 	return firstname.match
 
 /// Find the last name of a mob from the real name with regex
 /mob/proc/last_name()
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	var/static/regex/lasttname = STATIC_INIT(new /regex("\[^\\s-\]+$")) //First word before whitespace or "-"
 	lasttname.Find(real_name)
 	return lasttname.match
 

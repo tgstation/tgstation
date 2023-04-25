@@ -20,10 +20,10 @@
 	///Does this payment component respect same-department-discount?
 	var/department_discount = FALSE
 	///A static typecache of all the money-based items that can be actively used as currency.
-	var/static/list/allowed_money = typecacheof(list(
+	var/static/list/allowed_money = STATIC_INIT(typecacheof(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
-		/obj/item/coin))
+		/obj/item/coin)))
 
 /datum/component/payment/Initialize(_cost, _target, _style)
 	target_acc = _target

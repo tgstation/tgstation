@@ -12,13 +12,13 @@
 	var/scream_delay = 50
 	var/last_scream = 0
 	/// List of traits to add/remove when someone gets this mutation.
-	var/static/list/mutation_traits = list(
+	var/static/list/mutation_traits = STATIC_INIT(list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
-	)
+	))
 
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)

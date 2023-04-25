@@ -191,7 +191,7 @@
 	icon_state = "brimdemon_fang"
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
-	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
+	var/static/list/comic_phrases = STATIC_INIT(list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM"))
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
 	return "mark detonation creates visual and audiosensory effects on the target"

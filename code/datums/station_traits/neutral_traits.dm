@@ -309,14 +309,14 @@
 	greyscale_config_worn = /datum/greyscale_config/party_hat_worn
 	flags_inv = 0
 	armor_type = /datum/armor/none
-	var/static/list/hat_colors = list(
+	var/static/list/hat_colors = STATIC_INIT(list(
 		COLOR_PRIDE_RED,
 		COLOR_PRIDE_ORANGE,
 		COLOR_PRIDE_YELLOW,
 		COLOR_PRIDE_GREEN,
 		COLOR_PRIDE_BLUE,
 		COLOR_PRIDE_PURPLE,
-	)
+	))
 
 /obj/item/clothing/head/costume/party/Initialize(mapload)
 	set_greyscale(colors = list(pick(hat_colors)))

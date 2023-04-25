@@ -209,7 +209,7 @@
 		return
 
 	if (islist(signal_type))
-		var/static/list/known_failures = list()
+		var/static/list/known_failures = STATIC_INIT(list())
 		var/list/signal_type_list = signal_type
 		var/message = "([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
 

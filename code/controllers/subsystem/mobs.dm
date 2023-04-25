@@ -8,9 +8,9 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 	///only contains living players for some reason
 	var/static/list/clients_by_zlevel[][]
-	var/static/list/dead_players_by_zlevel[][] = list(list()) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
-	var/static/list/cubemonkeys = list()
-	var/static/list/cheeserats = list()
+	var/static/list/dead_players_by_zlevel[][] = STATIC_INIT(list(list())) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
+	var/static/list/cubemonkeys = STATIC_INIT(list())
+	var/static/list/cheeserats = STATIC_INIT(list())
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
 	msg = "P:[length(GLOB.mob_living_list)]"

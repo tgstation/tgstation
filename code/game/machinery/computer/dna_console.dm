@@ -387,8 +387,8 @@
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
-	var/static/list/gene_letters = list("A", "T", "C", "G");
-	var/static/gene_letter_count = length(gene_letters)
+	var/static/list/gene_letters = STATIC_INIT(list("A", "T", "C", "G"));
+	var/static/gene_letter_count = STATIC_INIT(length(gene_letters))
 
 	. = ..()
 	if(.)

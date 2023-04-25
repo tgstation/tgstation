@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			.[checkT] |= turn(dir, 180)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
-			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
+			var/static/list/cardinal_cache = STATIC_INIT(list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE))
 			if(!cardinal_cache["[dir]"] || !TURFS_CAN_SHARE(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
@@ -79,14 +79,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
-	var/static/list/area_or_turf_fail_types = typecacheof(list(
+	var/static/list/area_or_turf_fail_types = STATIC_INIT(typecacheof(list(
 		/turf/open/space,
 		/area/shuttle,
-		))
+		)))
 	// Ignore these areas and dont let people expand them. They can expand into them though
-	var/static/list/blacklisted_areas = typecacheof(list(
+	var/static/list/blacklisted_areas = STATIC_INIT(typecacheof(list(
 		/area/space,
-		))
+		)))
 
 	var/error = ""
 	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types, BP_MAX_ROOM_SIZE*2)

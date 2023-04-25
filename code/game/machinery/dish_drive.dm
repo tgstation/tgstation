@@ -9,17 +9,17 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
-	var/static/list/collectable_items = list(/obj/item/trash/waffles,
+	var/static/list/collectable_items = STATIC_INIT(list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
-		/obj/item/broken_bottle)
-	var/static/list/disposable_items = list(/obj/item/trash/waffles,
+		/obj/item/broken_bottle))
+	var/static/list/disposable_items = STATIC_INIT(list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
 		/obj/item/shard,
-		/obj/item/broken_bottle)
+		/obj/item/broken_bottle))
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE

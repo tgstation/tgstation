@@ -5,22 +5,22 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
 	/// List of all instrument data, associative id = datum
-	var/static/list/datum/instrument/instrument_data = list()
+	var/static/list/datum/instrument/instrument_data = STATIC_INIT(list())
 	/// List of all song datums.
-	var/static/list/datum/song/songs = list()
+	var/static/list/datum/song/songs = STATIC_INIT(list())
 	/// Max lines in songs
-	var/static/musician_maxlines = 600
+	var/static/musician_maxlines = STATIC_INIT(600)
 	/// Max characters per line in songs
-	var/static/musician_maxlinechars = 300
+	var/static/musician_maxlinechars = STATIC_INIT(300)
 	/// Deciseconds between hearchecks. Too high and instruments seem to lag when people are moving around in terms of who can hear it. Too low and the server lags from this.
-	var/static/musician_hearcheck_mindelay = 5
+	var/static/musician_hearcheck_mindelay = STATIC_INIT(5)
 	/// Maximum instrument channels total instruments are allowed to use. This is so you don't have instruments deadlocking all sound channels.
-	var/static/max_instrument_channels = MAX_INSTRUMENT_CHANNELS
+	var/static/max_instrument_channels = STATIC_INIT(MAX_INSTRUMENT_CHANNELS)
 	/// Current number of channels allocated for instruments
-	var/static/current_instrument_channels = 0
+	var/static/current_instrument_channels = STATIC_INIT(0)
 	/// Single cached list for synthesizer instrument ids, so you don't have to have a new list with every synthesizer.
 	var/static/list/synthesizer_instrument_ids
-	var/static/list/note_sustain_modes = list("Linear" = SUSTAIN_LINEAR, "Exponential" = SUSTAIN_EXPONENTIAL)
+	var/static/list/note_sustain_modes = STATIC_INIT(list("Linear" = SUSTAIN_LINEAR, "Exponential" = SUSTAIN_EXPONENTIAL))
 
 /datum/controller/subsystem/processing/instruments/Initialize()
 	initialize_instrument_data()

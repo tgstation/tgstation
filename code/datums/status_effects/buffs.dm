@@ -210,9 +210,9 @@
 	var/deathTick = 0
 
 /datum/status_effect/hippocratic_oath/on_apply()
-	var/static/list/organ_healing = list(
+	var/static/list/organ_healing = STATIC_INIT(list(
 		ORGAN_SLOT_BRAIN = 1.4,
-	)
+	))
 
 	aura_healing = owner.AddComponent( \
 		/datum/component/aura_healing, \

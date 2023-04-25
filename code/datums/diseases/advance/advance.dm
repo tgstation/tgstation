@@ -34,7 +34,7 @@
 	var/oldres //To prevent setting new cures unless resistance changes.
 
 	///Lists of cures and how hard we expect them to be to cure. Sentient diseases will pick two from 6+
-	var/static/list/advance_cures = list(
+	var/static/list/advance_cures = STATIC_INIT(list(
 		list( // level 1
 			/datum/reagent/carbon,
 			/datum/reagent/copper,
@@ -102,7 +102,7 @@
 			/datum/reagent/medicine/c2/tirimol,
 			/datum/reagent/medicine/modafinil,
 		),
-	)
+	))
 
 /*
 

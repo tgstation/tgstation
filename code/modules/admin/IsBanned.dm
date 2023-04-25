@@ -25,7 +25,7 @@
 		return //don't recheck connected clients.
 
 	//IsBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
-	var/static/list/checkedckeys = list()
+	var/static/list/checkedckeys = STATIC_INIT(list())
 	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
 	var/message = !checkedckeys[ckey]++
 
@@ -43,7 +43,7 @@
 
 		var/client_is_in_db = query_client_in_db.NextRow()
 		if(!client_is_in_db)
-			
+
 			var/reject_message = "Failed Login: [ckey] [address]-[computer_id] - New Account attempting to connect during panic bunker, but was rejected due to no prior connections to game servers (no database entry)"
 			log_access(reject_message)
 			if (message)

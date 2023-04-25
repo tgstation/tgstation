@@ -441,7 +441,7 @@
 	icon_state = "modkit_crystal"
 	modifier = 2.5 //Not a very effective method of healing.
 	cost = 20
-	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/damage_heal_order = STATIC_INIT(list(BRUTE, BURN, OXY))
 
 /obj/item/borg/upgrade/modkit/lifesteal/projectile_prehit(obj/projectile/kinetic/K, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	if(isliving(target) && isliving(K.firer))

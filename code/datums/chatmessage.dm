@@ -49,7 +49,7 @@
 	/// Contains the reference to the previous chatmessage in the bucket, used by runechat subsystem
 	var/datum/chatmessage/prev
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
-	var/static/current_z_idx = 0
+	var/static/current_z_idx = STATIC_INIT(0)
 	/// When we started animating the message
 	var/animate_start = 0
 	/// Our animation lifespan, how long this message will last
@@ -115,7 +115,7 @@
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Remove spans in the message from things like the recorder
-	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
+	var/static/regex/span_check = STATIC_INIT(new /regex(@"<\/?span[^>]*>", "gi"))
 	text = replacetext(text, span_check, "")
 
 	// Clip message
@@ -130,11 +130,11 @@
 		target.chat_color_name = target.name
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
-	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
+	var/static/regex/url_scheme = STATIC_INIT(new /regex(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g"))
 	text = replacetext(text, url_scheme, "")
 
 	// Reject whitespace
-	var/static/regex/whitespace = new(@"^\s*$")
+	var/static/regex/whitespace = STATIC_INIT(new /regex(@"^\s*$"))
 	if (whitespace.Find(text))
 		qdel(src)
 		return
@@ -322,7 +322,7 @@
  */
 /datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
 	// seed to help randomness
-	var/static/rseed = rand(1,26)
+	var/static/rseed = STATIC_INIT(rand(1,26))
 
 	// get hsl using the selected 6 characters of the md5 hash
 	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
@@ -360,7 +360,7 @@
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_LAYER_Z_STEP
 #undef CHAT_MESSAGE_APPROX_LHEIGHT
-#undef CHAT_MESSAGE_GRACE_PERIOD 
+#undef CHAT_MESSAGE_GRACE_PERIOD
 #undef CHAT_MESSAGE_EOL_FADE
 #undef CHAT_MESSAGE_EXP_DECAY
 #undef CHAT_MESSAGE_HEIGHT_DECAY

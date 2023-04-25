@@ -20,7 +20,7 @@
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
-	var/static/list/throw_range_success = list(95, 80, 65, 50, 35, 20)
+	var/static/list/throw_range_success = STATIC_INIT(list(95, 80, 65, 50, 35, 20))
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()

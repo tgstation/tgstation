@@ -1043,7 +1043,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	t_ray_view = !t_ray_view
 
 	var/list/t_ray_images = list()
-	var/static/list/stored_t_ray_images = list()
+	var/static/list/stored_t_ray_images = STATIC_INIT(list())
 	for(var/obj/O in orange(client.view, src) )
 		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))

@@ -73,7 +73,7 @@
 	var/hive_name
 
 	/// Static typecache of all changeling powers that are usable.
-	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
+	var/static/list/all_powers = STATIC_INIT(typecacheof(/datum/action/changeling, ignore_root_path = TRUE))
 
 	/// Static list of possible ids. Initialized into the greek alphabet the first time it is used
 	var/static/list/possible_changeling_IDs

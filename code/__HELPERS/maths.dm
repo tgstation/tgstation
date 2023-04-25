@@ -126,9 +126,9 @@
 
 /// Returns the name of the mathematical tuple of same length as the number arg (rounded down).
 /proc/make_tuple(number)
-	var/static/list/units_prefix = list("", "un", "duo", "tre", "quattuor", "quin", "sex", "septen", "octo", "novem")
-	var/static/list/tens_prefix = list("", "decem", "vigin", "trigin", "quadragin", "quinquagin", "sexagin", "septuagin", "octogin", "nongen")
-	var/static/list/one_to_nine = list("monuple", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octuple", "nonuple")
+	var/static/list/units_prefix = STATIC_INIT(list("", "un", "duo", "tre", "quattuor", "quin", "sex", "septen", "octo", "novem"))
+	var/static/list/tens_prefix = STATIC_INIT(list("", "decem", "vigin", "trigin", "quadragin", "quinquagin", "sexagin", "septuagin", "octogin", "nongen"))
+	var/static/list/one_to_nine = STATIC_INIT(list("monuple", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octuple", "nonuple"))
 	number = round(number)
 	switch(number)
 		if(0)

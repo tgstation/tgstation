@@ -9,7 +9,7 @@
 	desc = "A component that formats lists, replacing %n in the format string with corresponding nth list item."
 	category = "List"
 
-	var/static/regex/format_component/list_param_regex = new(@"%([0-9]+)", "g")
+	var/static/regex/format_component/list_param_regex = STATIC_INIT(new /regex/format_component(@"%([0-9]+)", "g"))
 
 	/// The regex used to find a parameter.
 	var/regex/format_component/param_regex
@@ -69,7 +69,7 @@
 	display_name = "Format Associative List"
 	desc = "A component that formats associative lists, replacing %key in the format string with corresponding list\[key] item."
 
-	var/static/regex/format_component/assoc_param_regex = new(@"%([a-zA-Z0-9_]+)", "g")
+	var/static/regex/format_component/assoc_param_regex = STATIC_INIT(new /regex/format_component(@"%([a-zA-Z0-9_]+)", "g"))
 
 /obj/item/circuit_component/format/assoc/Initialize(mapload)
 	. = ..()

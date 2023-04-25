@@ -18,14 +18,14 @@
 	var/breakout_time = 600
 
 	var/next_fact = 10 //in ticks, so about 20 seconds
-	var/static/list/fat_facts = list(\
+	var/static/list/fat_facts = STATIC_INIT(list(\
 	"Fats are triglycerides made up of a combination of different building blocks; glycerol and fatty acids.", \
 	"Adults should get a recommended 20-35% of their energy intake from fat.", \
 	"Being overweight or obese puts you at an increased risk of chronic diseases, such as cardiovascular diseases, metabolic syndrome, type 2 diabetes and some types of cancers.", \
 	"Not all fats are bad. A certain amount of fat is an essential part of a healthy balanced diet. " , \
 	"Saturated fat should form no more than 11% of your daily calories.", \
 	"Unsaturated fat, that is monounsaturated fats, polyunsaturated fats and omega-3 fatty acids, is found in plant foods and fish." \
-	)
+	))
 
 /obj/machinery/fat_sucker/Initialize(mapload)
 	. = ..()

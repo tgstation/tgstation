@@ -4,7 +4,7 @@
 	///Sometimes we need multiple layers, for like the back, middle and front of the person (EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 	var/layers
 	///List of all possible layers. Used for looping through in drawing
-	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
+	var/static/list/all_layers = STATIC_INIT(list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND))
 
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""

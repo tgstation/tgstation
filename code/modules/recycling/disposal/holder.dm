@@ -147,7 +147,7 @@
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	var/static/list/pipes_typecache = STATIC_INIT(typecacheof(/obj/structure/disposalpipe))
 	//Moved to nullspace gang
 	if(!loc || pipes_typecache[loc.type])
 		return

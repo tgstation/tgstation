@@ -33,13 +33,13 @@
 
 /datum/storage/pockets/small/fedora/New()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(
+	var/static/list/exception_cache = STATIC_INIT(typecacheof(list(
 		/obj/item/katana,
 		/obj/item/toy/katana,
 		/obj/item/nullrod/claymore/katana,
 		/obj/item/energy_katana,
 		/obj/item/gun/ballistic/automatic/tommygun,
-	))
+	)))
 	exception_hold = exception_cache
 
 /datum/storage/pockets/small/fedora/detective
@@ -189,5 +189,5 @@
 		/obj/item/reagent_containers/cup/beaker/eldritch,
 	))
 
-	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))
+	var/static/list/exception_cache = STATIC_INIT(typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade)))
 	exception_hold = exception_cache

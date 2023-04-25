@@ -60,15 +60,15 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	/// Outside of initialization, returns null.
 	var/current_initializing_subsystem = null
 
-	var/static/restart_clear = 0
-	var/static/restart_timeout = 0
-	var/static/restart_count = 0
+	var/static/restart_clear = STATIC_INIT(0)
+	var/static/restart_timeout = STATIC_INIT(0)
+	var/static/restart_count = STATIC_INIT(0)
 
 	var/static/random_seed
 
 	///current tick limit, assigned before running a subsystem.
 	///used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
-	var/static/current_ticklimit = TICK_LIMIT_RUNNING
+	var/static/current_ticklimit = STATIC_INIT(TICK_LIMIT_RUNNING)
 
 /datum/controller/master/New()
 	if(!config)
@@ -279,12 +279,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
  * * subsystem - the subsystem to initialize.
  */
 /datum/controller/master/proc/init_subsystem(datum/controller/subsystem/subsystem)
-	var/static/list/valid_results = list(
+	var/static/list/valid_results = STATIC_INIT(list(
 		SS_INIT_FAILURE,
 		SS_INIT_NONE,
 		SS_INIT_SUCCESS,
 		SS_INIT_NO_NEED,
-	)
+	))
 
 	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
 		return

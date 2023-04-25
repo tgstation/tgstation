@@ -322,10 +322,10 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /// This command forces the listeners to take step in a direction chosen by the user, otherwise a random cardinal one.
 /datum/voice_of_god_command/move
 	trigger = "move|walk"
-	var/static/up_words = regex("up|north|fore")
-	var/static/down_words = regex("down|south|aft")
-	var/static/left_words = regex("left|west|port")
-	var/static/right_words = regex("right|east|starboard")
+	var/static/up_words = STATIC_INIT(regex("up|north|fore"))
+	var/static/down_words = STATIC_INIT(regex("down|south|aft"))
+	var/static/left_words = STATIC_INIT(regex("left|west|port"))
+	var/static/right_words = STATIC_INIT(regex("right|east|starboard"))
 
 /datum/voice_of_god_command/move/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1

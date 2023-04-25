@@ -99,5 +99,5 @@
 
 /// Takes a screen_loc string and cut out any directions like NORTH or SOUTH
 /proc/cut_relative_direction(fragment)
-	var/static/regex/regex = regex(@"([A-Z])\w+", "g")
+	var/static/regex/regex = STATIC_INIT(regex(@"([A-Z])\w+", "g"))
 	return regex.Replace(fragment, "")

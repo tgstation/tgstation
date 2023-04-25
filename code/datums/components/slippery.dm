@@ -16,14 +16,14 @@
 	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
 	var/list/slot_whitelist = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_BELT, ITEM_SLOT_NECK)
 	///what we give to connect_loc by default, makes slippable mobs moving over us slip
-	var/static/list/default_connections = list(
+	var/static/list/default_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip),
-	)
+	))
 
 	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
-	var/static/list/holder_connections = list(
+	var/static/list/holder_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip_on_wearer),
-	)
+	))
 
 	/// The connect_loc_behalf component for the holder_connections list.
 	var/datum/weakref/holder_connect_loc_behalf

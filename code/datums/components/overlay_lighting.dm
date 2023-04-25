@@ -36,7 +36,7 @@
 	var/overlay_lighting_flags = NONE
 
 	///Cache of the possible light overlays, according to size.
-	var/static/list/light_overlays = list(
+	var/static/list/light_overlays = STATIC_INIT(list(
 		"32" = 'icons/effects/light_overlays/light_32.dmi',
 		"64" = 'icons/effects/light_overlays/light_64.dmi',
 		"96" = 'icons/effects/light_overlays/light_96.dmi',
@@ -48,7 +48,7 @@
 		"288" = 'icons/effects/light_overlays/light_288.dmi',
 		"320" = 'icons/effects/light_overlays/light_320.dmi',
 		"352" = 'icons/effects/light_overlays/light_352.dmi',
-		)
+		))
 
 	///Overlay effect to cut into the darkness and provide light.
 	var/image/visible_mask

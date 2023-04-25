@@ -274,7 +274,7 @@
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
 		return
 
-	var/static/list/converted_check_list = list(FACTION_RAT)
+	var/static/list/converted_check_list = STATIC_INIT(list(FACTION_RAT))
 	var/uplifted_roach = FALSE
 	for (var/mob/living/basic/cockroach/nearby_roach in oview(owner, range))
 		uplifted_roach = convert_roach(nearby_roach, converted_check_list) || uplifted_roach

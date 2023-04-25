@@ -9,9 +9,9 @@
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
 	///signal list given to connect_loc
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 
 
 /datum/component/squashable/Initialize(squash_chance, squash_damage, squash_flags, squash_callback)

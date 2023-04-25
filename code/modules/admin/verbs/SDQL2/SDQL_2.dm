@@ -979,7 +979,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	return querys
 
 /proc/SDQL_testout(list/query_tree, indent = 0)
-	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
+	var/static/whitespace = STATIC_INIT("&nbsp;&nbsp;&nbsp; ")
 	var/spaces = ""
 	if(indent > 0)
 		for(var/i in 1 to indent)
@@ -1007,7 +1007,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 //Staying as a world proc as this is called too often for changes to offset the potential IsAdminAdvancedProcCall checking overhead.
 /world/proc/SDQL_var(object, list/expression, start = 1, source, superuser, datum/sdql2_query/query)
 	var/v
-	var/static/list/exclude = list("usr", "src", "marked", "global", "MC", "FS", "CFG")
+	var/static/list/exclude = STATIC_INIT(list("usr", "src", "marked", "global", "MC", "FS", "CFG"))
 	var/long = start < expression.len
 	var/datum/D
 	if(isdatum(object))

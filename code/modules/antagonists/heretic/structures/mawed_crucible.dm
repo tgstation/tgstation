@@ -135,9 +135,9 @@
 /obj/structure/destructible/eldritch_crucible/proc/create_potion(mob/living/user)
 
 	// Assoc list of [name] to [image] for the radial
-	var/static/list/choices = list()
+	var/static/list/choices = STATIC_INIT(list())
 	// Assoc list of [name] to [path] for after the radial, to spawn it
-	var/static/list/names_to_path = list()
+	var/static/list/names_to_path = STATIC_INIT(list())
 	if(!choices.len || !names_to_path.len)
 		for(var/obj/item/eldritch_potion/potion as anything in subtypesof(/obj/item/eldritch_potion))
 			names_to_path[initial(potion.name)] = potion

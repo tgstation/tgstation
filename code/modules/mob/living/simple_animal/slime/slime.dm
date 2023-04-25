@@ -74,7 +74,7 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
-	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
+	var/static/regex/slime_name_regex = STATIC_INIT(new /regex("\\w+ (baby|adult) slime \\(\\d+\\)"))
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
@@ -441,7 +441,7 @@
 	..()
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
-	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
+	var/static/list/crossbreeds = STATIC_INIT(subtypesof(/obj/item/slimecross))
 	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	var/crosspath

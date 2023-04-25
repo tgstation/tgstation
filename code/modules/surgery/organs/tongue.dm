@@ -125,12 +125,12 @@
 	languages_native = list(/datum/language/draconic)
 
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
-	var/static/regex/lizard_hiss = new("s+", "g")
-	var/static/regex/lizard_hiSS = new("S+", "g")
-	var/static/regex/lizard_kss = new(@"(\w)x", "g")
-	var/static/regex/lizard_kSS = new(@"(\w)X", "g")
-	var/static/regex/lizard_ecks = new(@"\bx([\-|r|R]|\b)", "g")
-	var/static/regex/lizard_eckS = new(@"\bX([\-|r|R]|\b)", "g")
+	var/static/regex/lizard_hiss = STATIC_INIT(new /regex("s+", "g"))
+	var/static/regex/lizard_hiSS = STATIC_INIT(new /regex("S+", "g"))
+	var/static/regex/lizard_kss = STATIC_INIT(new /regex(@"(\w)x", "g"))
+	var/static/regex/lizard_kSS = STATIC_INIT(new /regex(@"(\w)X", "g"))
+	var/static/regex/lizard_ecks = STATIC_INIT(new /regex(@"\bx([\-|r|R]|\b)", "g"))
+	var/static/regex/lizard_eckS = STATIC_INIT(new /regex(@"\bX([\-|r|R]|\b)", "g"))
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = lizard_hiss.Replace(message, "sss")

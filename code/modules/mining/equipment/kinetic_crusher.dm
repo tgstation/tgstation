@@ -376,7 +376,7 @@
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/demon_claws
 	bonus_value = 10
-	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
+	var/static/list/damage_heal_order = STATIC_INIT(list(BRUTE, BURN, OXY))
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"

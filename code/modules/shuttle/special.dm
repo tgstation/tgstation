@@ -256,8 +256,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	speech_span = SPAN_ROBOT
 	var/threshold = 500
-	var/static/list/approved_passengers = list()
-	var/static/list/check_times = list()
+	var/static/list/approved_passengers = STATIC_INIT(list())
+	var/static/list/check_times = STATIC_INIT(list())
 	var/list/payees = list()
 
 /obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, border_dir)

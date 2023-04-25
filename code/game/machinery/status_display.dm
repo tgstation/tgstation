@@ -243,7 +243,7 @@
 	var/message
 
 	// If the line is short enough to not marquee, and it matches this, it's a header.
-	var/static/regex/header_regex = regex("^-.*-$")
+	var/static/regex/header_regex = STATIC_INIT(regex("^-.*-$"))
 
 	/// Width of each character, including kerning gap afterwards.
 	/// We don't use rich text or anything fancy, so we can bake these values.

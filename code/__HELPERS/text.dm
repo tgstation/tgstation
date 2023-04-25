@@ -35,7 +35,7 @@
 
 /// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
 /proc/sanitize(text)
-	var/static/regex/regex = regex(@"[\n\t]", "g")
+	var/static/regex/regex = STATIC_INIT(regex(@"[\n\t]", "g"))
 	return html_encode(regex.Replace(text, "#"))
 
 
@@ -66,13 +66,13 @@
  */
 /proc/htmlrendertext(t)
 	// Trim "whitespace" by lazily capturing word characters in the middle
-	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
+	var/static/regex/matchMiddle = STATIC_INIT(new /regex(@"^\s*([\W\w]*?)\s*$"))
 	if(matchMiddle.Find(t) == 0)
 		return t
 	t = matchMiddle.group[1]
 
 	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
-	var/static/regex/matchSpacing = new(@"\s+", "g")
+	var/static/regex/matchSpacing = STATIC_INIT(new /regex(@"\s+", "g"))
 	t = replacetext(t, matchSpacing, " ")
 
 	return t
@@ -92,15 +92,15 @@
 	if(ascii_only)
 		if(length(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n]")
+		var/static/regex/non_ascii = STATIC_INIT(regex(@"[^\x20-\x7E\t\n]"))
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
 		return null
-	var/static/regex/non_whitespace = regex(@"\S")
+	var/static/regex/non_whitespace = STATIC_INIT(regex(@"\S"))
 	if(!non_whitespace.Find(text))
 		return null
-	var/static/regex/bad_chars = regex(@"[\\<>/\x00-\x08\x11-\x1F]")
+	var/static/regex/bad_chars = STATIC_INIT(regex(@"[\\<>/\x00-\x08\x11-\x1F]"))
 	if(bad_chars.Find(text))
 		return null
 	return text
@@ -864,8 +864,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
  * * capitalise - Whether the number it returns should be capitalised or not, e.g. "Eighty-Eight" vs. "eighty-eight".
  */
 /proc/int_to_words(number, carried_string, capitalise = FALSE)
-	var/static/list/tens = list("", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
-	var/static/list/ones = list("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+	var/static/list/tens = STATIC_INIT(list("", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"))
+	var/static/list/ones = STATIC_INIT(list("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"))
 	number = round(number)
 
 	if(number > 999)
@@ -1043,7 +1043,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
  * * For pressure conversion, use proc/siunit_pressure() below
  */
 /proc/siunit(value, unit, maxdecimals=1)
-	var/static/list/prefixes = list("f","p","n","μ","m","","k","M","G","T","P")
+	var/static/list/prefixes = STATIC_INIT(list("f","p","n","μ","m","","k","M","G","T","P"))
 
 	// We don't have prefixes beyond this point
 	// and this also captures value = 0 which you can't compute the logarithm for
@@ -1079,7 +1079,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
 /proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
 	var/list/out = list()
-	var/static/list/whitespace = list(" ", "\n", "\t")
+	var/static/list/whitespace = STATIC_INIT(list(" ", "\n", "\t"))
 	for(var/i in 1 to length(original))
 		var/char = original[i]
 		if(!replace_whitespace && (char in whitespace))
@@ -1191,5 +1191,5 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
-	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
+	var/static/regex/regex = STATIC_INIT(new /regex(@"[^a-zA-Z0-9]","g"))
 	return replacetext(name, regex, "")

@@ -135,7 +135,7 @@
 		return
 
 	//cache for sanic speed (lists are references anyways)
-	var/static/list/footstep_sounds = GLOB.footstep
+	var/static/list/footstep_sounds = STATIC_INIT(GLOB.footstep)
 	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 
@@ -150,7 +150,7 @@
 		if(source.dna.species.special_step_sounds)
 			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
-			var/static/list/bare_footstep_sounds = GLOB.barefootstep
+			var/static/list/bare_footstep_sounds = STATIC_INIT(GLOB.barefootstep)
 
 			heard_clients = playsound(source_loc, pick(bare_footstep_sounds[source_loc.barefootstep][1]),
 				bare_footstep_sounds[source_loc.barefootstep][2] * volume * volume_multiplier,

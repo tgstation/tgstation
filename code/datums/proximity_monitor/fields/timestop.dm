@@ -75,7 +75,7 @@
 	///if true, this doesn't time out after a duration but rather when an immune atom inside moves.
 	var/channelled = FALSE
 
-	var/static/list/global_frozen_atoms = list()
+	var/static/list/global_frozen_atoms = STATIC_INIT(list())
 
 /datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_flags, channelled)
 	..()

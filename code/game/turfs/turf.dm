@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/inherent_explosive_resistance = -1
 
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
+	var/static/list/banned_edits = STATIC_INIT(list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z)))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
@@ -433,7 +433,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
-	var/static/list/created_baseturf_lists = list()
+	var/static/list/created_baseturf_lists = STATIC_INIT(list())
 	var/turf/current_target
 	if(fake_baseturf_type)
 		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
@@ -732,7 +732,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * no_id: When true, doors with public access will count as impassible
 */
 /turf/proc/reachableAdjacentTurfs(atom/movable/caller, ID, simulated_only, no_id = FALSE)
-	var/static/space_type_cache = typecacheof(/turf/open/space)
+	var/static/space_type_cache = STATIC_INIT(typecacheof(/turf/open/space))
 	. = list()
 
 	for(var/iter_dir in GLOB.cardinals)

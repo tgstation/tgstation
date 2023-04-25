@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
 /datum/mafia_controller/proc/prepare_game(setup_list, ready_players)
-	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
+	var/static/list/possible_maps = STATIC_INIT(subtypesof(/datum/map_template/mafia))
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
 
 	current_map = pick(possible_maps)

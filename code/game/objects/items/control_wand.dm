@@ -20,7 +20,7 @@
 	access_list = SSid_access.get_region_access_list(list(region_access))
 
 /obj/item/door_remote/attack_self(mob/user)
-	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
+	var/static/list/desc = STATIC_INIT(list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access"))
 	switch(mode)
 		if(WAND_OPEN)
 			mode = WAND_BOLT

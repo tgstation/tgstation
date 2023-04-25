@@ -24,10 +24,10 @@
 	// Relocate when we become unreachable
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
 	// Relocate when our loc, or any of our loc's locs, becomes unreachable
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_parent_moved),
 		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF(on_loc_secluded),
-	)
+	))
 	AddComponent(/datum/component/connect_containers, parent, loc_connections)
 
 /datum/component/stationloving/UnregisterFromParent()
@@ -125,19 +125,19 @@
 /// Checks whether a given atom's turf is within bounds. Returns TRUE if it is, FALSE if it isn't.
 /datum/component/stationloving/proc/atom_in_bounds(atom/atom_to_check)
 	// Typecache of shuttles that we allow the disk to stay on
-	var/static/list/allowed_shuttles = typecacheof(list(
+	var/static/list/allowed_shuttles = STATIC_INIT(typecacheof(list(
 		/area/shuttle/syndicate,
 		/area/shuttle/escape,
 		/area/shuttle/pod_1,
 		/area/shuttle/pod_2,
 		/area/shuttle/pod_3,
 		/area/shuttle/pod_4,
-	))
+	)))
 	// Typecache of areas on the centcom Z-level that we allow the disk to stay on
-	var/static/list/disallowed_centcom_areas = typecacheof(list(
+	var/static/list/disallowed_centcom_areas = STATIC_INIT(typecacheof(list(
 		/area/centcom/abductor_ship,
 		/area/awaymission/errorroom,
-	))
+	)))
 
 	// Our loc is a secluded location = not in bounds
 	if (atom_to_check.loc && HAS_TRAIT(atom_to_check.loc, TRAIT_SECLUDED_LOCATION))

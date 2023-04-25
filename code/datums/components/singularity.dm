@@ -96,9 +96,9 @@
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(consume_bullets))
@@ -196,7 +196,7 @@
 
 	// We use a static index for this to prevent infinite runtimes.
 	// Maybe a might overengineered, but let's be safe yes?
-	var/static/cached_index = 0
+	var/static/cached_index = STATIC_INIT(0)
 	if(cached_index)
 		var/old_index = cached_index
 		cached_index = 0 // Prevents infinite Cut() runtimes. Sorry MSO

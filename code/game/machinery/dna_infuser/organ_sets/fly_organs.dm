@@ -41,8 +41,8 @@
 	languages_native = list(/datum/language/buzzwords)
 
 /obj/item/organ/internal/tongue/fly/modify_speech(datum/source, list/speech_args)
-	var/static/regex/fly_buzz = new("z+", "g")
-	var/static/regex/fly_buZZ = new("Z+", "g")
+	var/static/regex/fly_buzz = STATIC_INIT(new /regex("z+", "g"))
+	var/static/regex/fly_buZZ = STATIC_INIT(new /regex("Z+", "g"))
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = fly_buzz.Replace(message, "zzz")

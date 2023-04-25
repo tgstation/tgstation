@@ -20,8 +20,8 @@
 // STATIC cost tracking macro. Uses static lists instead of the normal global ones
 // Good for debug stuff, and for running before globals init
 #define INIT_COST_STATIC(...) \
-	var/static/list/hidden_static_list_for_fun1 = list(); \
-	var/static/list/hidden_static_list_for_fun2 = list(); \
+	var/static/list/hidden_static_list_for_fun1 = STATIC_INIT(list()); \
+	var/static/list/hidden_static_list_for_fun2 = STATIC_INIT(list()); \
 	INIT_COST(hidden_static_list_for_fun1, hidden_static_list_for_fun2)
 
 // Cost tracking macro for global lists, prevents erroring if GLOB has not yet been initialized
@@ -53,7 +53,7 @@
 
 #define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, proc) \
 	do { \
-		var/static/last_export = 0; \
+		var/static/last_export = STATIC_INIT(0); \
 		if (world.time - last_export > 1.1 SECONDS) { \
 			last_export = world.time; \
 			/* spawn() is used here because this is often used to track init times, where timers act oddly. */ \

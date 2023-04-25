@@ -129,7 +129,7 @@
 	var/hat_offset = -3
 
 	///What types of mobs are allowed to ride/buckle to this mob
-	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
+	var/static/list/can_ride_typecache = STATIC_INIT(typecacheof(/mob/living/carbon/human))
 	can_buckle = TRUE
 	buckle_lying = FALSE
 

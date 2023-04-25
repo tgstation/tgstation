@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	// Current travel cost per 1 distance in deciseconds
 	var/travel_cost_coeff = BASIC_FUEL_TIME_COST
 	/// Repeated drone name counter
-	var/static/name_counter = list()
+	var/static/name_counter = STATIC_INIT(list())
 	/// Used to provide source to the regex replacement function. DO NOT MODIFY DIRECTLY
 	var/static/obj/item/exodrone/_regex_context
 
@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 ///Replaces $$SITE_NAME with site name and $$QualityName with quality values
 /obj/item/exodrone/proc/updateKeywords(text)
 	_regex_context = src
-	var/static/regex/keywordRegex = regex(@"\$\$(\S*)","g")
+	var/static/regex/keywordRegex = STATIC_INIT(regex(@"\$\$(\S*)","g"))
 	. = keywordRegex.Replace(text, /obj/item/exodrone/proc/replace_keyword)
 	_regex_context = null
 

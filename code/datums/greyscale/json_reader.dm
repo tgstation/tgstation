@@ -53,14 +53,14 @@
 	return new_values
 
 /datum/json_reader/blend_mode
-	var/static/list/blend_modes = list(
+	var/static/list/blend_modes = STATIC_INIT(list(
 		"add" = ICON_ADD,
 		"subtract" = ICON_SUBTRACT,
 		"multiply" = ICON_MULTIPLY,
 		"or" = ICON_OR,
 		"overlay" = ICON_OVERLAY,
 		"underlay" = ICON_UNDERLAY,
-	)
+	))
 
 /datum/json_reader/blend_mode/ReadJson(value)
 	var/new_value = blend_modes[lowertext(value)]

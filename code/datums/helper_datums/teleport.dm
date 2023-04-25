@@ -9,14 +9,14 @@
 // forced: whether or not to ignore no_teleport
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
-	var/static/list/delete_atoms = zebra_typecacheof(list(
+	var/static/list/delete_atoms = STATIC_INIT(zebra_typecacheof(list(
 		/obj/effect = TRUE,
 		/obj/effect/dummy/chameleon = FALSE,
 		/obj/effect/wisp = FALSE,
 		/obj/effect/mob_spawn = FALSE,
 		/obj/effect/immovablerod = FALSE,
 		/obj/effect/meteor = FALSE,
-	))
+	)))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
 		return FALSE
@@ -31,7 +31,7 @@
 			if(istype(teleatom, /obj/item/storage/backpack/holding))
 				precision = rand(1,100)
 
-			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+			var/static/list/bag_cache = STATIC_INIT(typecacheof(/obj/item/storage/backpack/holding))
 			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
 			if(bagholding.len)
 				precision = max(rand(1,100)*bagholding.len,100)

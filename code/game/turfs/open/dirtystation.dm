@@ -80,7 +80,7 @@
 		return
 
 	// Cargo bays covered in oil.
-	var/static/list/oily_areas = typecacheof(/area/station/cargo)
+	var/static/list/oily_areas = STATIC_INIT(typecacheof(/area/station/cargo))
 	if(is_type_in_typecache(A, oily_areas))
 		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)

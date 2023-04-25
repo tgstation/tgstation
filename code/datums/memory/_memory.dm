@@ -227,7 +227,7 @@
 
 	//entirely independent vars (not related to the action or story type)
 
-	var/static/list/something_pool = list(
+	var/static/list/something_pool = STATIC_INIT(list(
 		/mob/living/basic/carp,
 		/mob/living/basic/carp/magic,
 		/mob/living/basic/carp/magic/chaos,
@@ -265,7 +265,7 @@
 		/mob/living/simple_animal/pet/fox,
 		/obj/item/food/sausage/american,
 		/obj/item/skub,
-	)
+	))
 
 	// These are picked from the json
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")

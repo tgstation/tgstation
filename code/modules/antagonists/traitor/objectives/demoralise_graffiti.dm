@@ -99,7 +99,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/paint_color = "#780000"
-	var/static/list/no_draw_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	var/static/list/no_draw_turfs = STATIC_INIT(typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm)))
 
 	/// Are we currently drawing? Used to prevent spam clicks for do_while
 	var/drawing_rune = FALSE
