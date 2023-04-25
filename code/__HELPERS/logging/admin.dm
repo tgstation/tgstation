@@ -4,28 +4,28 @@
 // This is to avoid breaking any existing tools that rely on the old format, but should be removed in the future
 
 /// General logging for admin actions
-/proc/log_admin(text, list/data)
+/proc/log_admin(text)
 	GLOB.admin_activities.Add(text)
-	logger.Log(LOG_CATEGORY_ADMIN, text, data)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: [text]")
+	if (CONFIG_GET(flag/log_admin))
+		WRITE_LOG(GLOB.world_game_log, "ADMIN: [text]")
 
 /// Logging for admin actions on or with circuits
-/proc/log_admin_circuit(text, list/data)
+/proc/log_admin_circuit(text)
 	GLOB.admin_activities.Add(text)
-	logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text, data)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: CIRCUIT: [text]")
+	if(CONFIG_GET(flag/log_admin))
+		WRITE_LOG(GLOB.world_game_log, "ADMIN: CIRCUIT: [text]")
 
 /// General logging for admin actions
-/proc/log_admin_private(text, list/data)
+/proc/log_admin_private(text)
 	GLOB.admin_activities.Add(text)
-	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text, data)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: [text]")
+	if (CONFIG_GET(flag/log_admin))
+		WRITE_LOG(GLOB.world_game_log, "ADMINPRIVATE: [text]")
 
 /// Logging for AdminSay (ASAY) messages
-/proc/log_adminsay(text, list/data)
+/proc/log_adminsay(text)
 	GLOB.admin_activities.Add(text)
-	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text, data)
-	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: ASAY: [text]")
+	if (CONFIG_GET(flag/log_adminchat))
+		WRITE_LOG(GLOB.world_game_log, "ADMINPRIVATE: ASAY: [text]")
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text, list/data)

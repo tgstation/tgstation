@@ -138,6 +138,12 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		)
 		rustg_file_write("[json_encode(log_start_entry)]\n", category_type.get_output_file(null))
 
+	if(fexists(GLOB.config_error_log))
+		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
+		fdel(GLOB.config_error_log)
+
+	world._initialize_log_files()
+
 /// Tells the log_holder to not allow any more logging to be done, and dumps all categories to their json file
 /datum/log_holder/proc/shutdown_logging()
 	if(shutdown)
