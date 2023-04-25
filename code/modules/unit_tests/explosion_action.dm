@@ -122,7 +122,7 @@
 	test_open_turf.ChangeTurf(OPEN_FLOOR_TYPE)
 	EX_ACT(test_open_turf, EXPLODE_NONE, test_open_turf) // regardless of severity, this should scrape away the floor
 	TEST_ASSERT_NOTEQUAL(test_open_turf.type, OPEN_FLOOR_TYPE, "EX_ACT() with EXPLODE_NONE severity should have scraped away the floor, but instead saw zero changes!")
-	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs) // clean it up just to be polite
+	test_open_turf.ChangeTurf(original_open_turf_type, original_open_baseturfs) // reset it back to original state before we go again to clear up any potential mess
 
 	test_open_turf.ChangeTurf(OPEN_FLOOR_TYPE)
 	EX_ACT(test_open_turf, EXPLODE_DEVASTATE) // we should scrape away to space here, devestation severity has no probability of altering what it does.
@@ -139,13 +139,15 @@
 	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
 
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	var/cached_hardness = test_closed_turf.hardness
 	test_closed_turf.hardness = 100 // we'll set the hardness to 100 so we don't get errant failures
 	EX_ACT(test_closed_turf, EXPLODE_LIGHT)
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_LIGHT severity should have dismantled the wall, but instead saw zero changes!")
-	test_closed_turf.hardness = initial(test_closed_turf.hardness) // clean up juust in case
 	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
 
+	// just to make sure the hardness is what we wanted it to be, there's no real reason why the hardness should inherit between changeturfs but by God we should guard against it.
 	test_closed_turf.ChangeTurf(CLOSED_FLOOR_TYPE)
+	test_closed_turf.hardness = cached_hardness
 	EX_ACT(test_closed_turf, EXPLODE_HEAVY) // wall will be dismantled at the very least
 	TEST_ASSERT_NOTEQUAL(test_closed_turf.type, CLOSED_FLOOR_TYPE, "EX_ACT() with EXPLODE_HEAVY severity should have dismantled the wall, but instead saw zero changes!")
 	test_closed_turf.ChangeTurf(original_closed_turf_type, original_closed_baseturfs)
