@@ -906,7 +906,7 @@
 					. += overlay.get_overlay(external_layer, src)
 
 	if(!dropped)
-		for(var/image/limb_image as anytihng in .)
+		for(var/image/limb_image as anything in .)
 			limb_image.pixel_y = y_offset
 
 	return .
