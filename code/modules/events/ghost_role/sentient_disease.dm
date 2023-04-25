@@ -1,7 +1,7 @@
 /datum/round_event_control/sentient_disease
 	name = "Spawn Sentient Disease"
 	typepath = /datum/round_event/ghost_role/sentient_disease
-	weight = 7
+	earliest_start = 15 MINUTES
 	max_occurrences = 1
 	min_players = 25
 	category = EVENT_CATEGORY_HEALTH
@@ -22,11 +22,11 @@
 			continue
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //We're only checking crew here.
 			continue
-		if(!length(candidate.diseases))
+		if(length(candidate.diseases))
 			continue
 		host_counter++
 
-	if(((length(GLOB.player_list) / host_counter) * 100) < 75) //If over 75% of our crew are uninfected, potential hosts, we run as normal.
+	if(((host_counter / length(GLOB.player_list)) * 100) < 75) //If under 75% of the crew is infected with something or ineligible, maybe it's not the best time to introduce a sentient disease.
 		return FALSE
 
 /datum/round_event/ghost_role/sentient_disease
