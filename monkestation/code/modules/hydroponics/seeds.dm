@@ -38,7 +38,7 @@
 	var/product_name
 	var/yield_amount = getYield()
 	if(yield_amount >= 10)
-		yield_amount = 10 + log(1.1) * (getYield() - 1)
+		yield_amount = 10 + log(1.05) * (getYield() - 1)
 	while(t_amount < yield_amount)
 		var/picked_object = pick(produce_list)
 		if(prob(10))
