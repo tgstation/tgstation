@@ -55,7 +55,7 @@
 /obj/structure/transit_tube_pod/ex_act(severity, target)
 	. = ..()
 	if(QDELETED(src))
-		return FALSE
+		return TRUE
 
 	empty_pod()
 	return TRUE
