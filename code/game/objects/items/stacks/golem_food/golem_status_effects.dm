@@ -70,6 +70,7 @@
 		return FALSE
 	if (applied_fluff)
 		to_chat(owner, span_notice(applied_fluff))
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
 	if (!overlay_state_prefix || !iscarbon(owner))
 		return TRUE
 	var/mob/living/carbon/golem_owner = owner
@@ -80,7 +81,6 @@
 		overlay.add_to_bodypart(overlay_state_prefix, part)
 		active_overlays += overlay
 	golem_owner.update_body_parts()
-
 	return TRUE
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner)
@@ -92,8 +92,14 @@
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
+	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	QDEL_LIST(active_overlays)
 	return ..()
+
+/// Let's people know what's up with your weird growths
+/datum/status_effect/golem/proc/on_examined(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	examine_text += span_notice("Their body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
@@ -406,6 +412,7 @@
 	id = "golem_lightbulb"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 2 MINUTES
+	alert_type = null
 	var/glow_range = 3
 	var/glow_power = 1
 	var/glow_color = LIGHT_COLOR_DEFAULT

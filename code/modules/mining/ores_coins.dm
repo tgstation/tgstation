@@ -237,21 +237,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/golem_food, consume_on_eat = FALSE, golem_food_key = /obj/item/gibtonite)
 
 /obj/item/gibtonite/Destroy()
 	qdel(wires)
 	wires = null
 	return ..()
-
-// Feed to golem
-/obj/item/gibtonite/attack(mob/living/target, mob/living/user, params)
-	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
-		return ..()
-	var/obj/item/food/material/snack = new(null, GLOB.golem_stack_food_types[GOLEM_FOOD_GIBTONITE])
-	snack.name = name
-	snack.material = WEAKREF(src)
-	snack.consume_food = FALSE
-	snack.attack(target, user, params)
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && isigniter(I))

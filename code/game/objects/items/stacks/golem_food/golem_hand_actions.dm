@@ -5,7 +5,7 @@
 
 /// Lets you hold a gibtonite ore in one hand and shoot it like a gun
 /obj/item/gibtonite_hand
-	name = "stabilised gibtonite"
+	name = "stabilised gibtonite fist"
 	desc = "You had better launch this at something before it comes out the other end of your body."
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "Gibtonite ore"

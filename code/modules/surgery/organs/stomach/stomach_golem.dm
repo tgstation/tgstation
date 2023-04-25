@@ -41,7 +41,7 @@
 /// Reject food, rocks only
 /obj/item/organ/internal/stomach/golem/proc/try_eating(mob/living/carbon/source, atom/eating)
 	SIGNAL_HANDLER
-	if (istype(eating, /obj/item/food/material))
+	if (istype(eating, /obj/item/food/golem_food))
 		return
 	source.balloon_alert(source, "minerals only!")
 	return COMSIG_CARBON_BLOCK_EAT
