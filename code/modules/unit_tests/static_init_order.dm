@@ -18,7 +18,7 @@
 		TEST_FAIL("No static variables initialized or, more likely, someone broke the test");
 
 	if(first_invocation["invocation"] != "world.Genesis()")
-		TEST_FAIL("First invocation was not The Genesis Call")
+		TEST_FAIL("First invocation was not The Genesis Call! Update the location of the #include line for genesis_call.dm to be right above the first invocation in the list")
 
 /proc/StaticInitRecordKeeping(value, invocation, file, line, return_list = FALSE)
 	var/static/list/init_order
