@@ -102,7 +102,7 @@
 	icon_state = "egg-[eggcolor]"
 
 /obj/item/surprise_egg/proc/dispensePrize(turf/where)
-	var/static/list/prize_list = list(/obj/item/clothing/head/costume/bunnyhead,
+	var/static/list/prize_list = STATIC_INIT(list(/obj/item/clothing/head/costume/bunnyhead,
 		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
@@ -120,7 +120,7 @@
 		/obj/item/toy/redbutton,
 		/obj/item/toy/windup_toolbox,
 		/obj/item/clothing/head/collectable/rabbitears
-		) + subtypesof(/obj/item/toy/mecha)
+		) )+ subtypesof(/obj/item/toy/mecha)
 	var/won = pick(prize_list)
 	new won(where)
 	new/obj/item/food/chocolateegg(where)

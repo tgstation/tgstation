@@ -15,7 +15,7 @@
 	var/obj/item/reagent_containers/beaker
 	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
 	var/static/list/obj/item/food/icecream/cone_prototypes
-	var/static/list/icecream_vat_reagents = list(
+	var/static/list/icecream_vat_reagents = STATIC_INIT(list(
 		/datum/reagent/consumable/milk = 6,
 		/datum/reagent/consumable/flour = 6,
 		/datum/reagent/consumable/sugar = 6,
@@ -23,7 +23,7 @@
 		/datum/reagent/consumable/coco = 6,
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
-		/datum/reagent/consumable/ethanol/singulo = 6)
+		/datum/reagent/consumable/ethanol/singulo = 6))
 
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()

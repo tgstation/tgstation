@@ -16,12 +16,12 @@
 	/// The activation message is tracked using this var.
 	var/recorded = ""
 	var/mode = INCLUSIVE_MODE
-	var/static/list/modes = list(
+	var/static/list/modes = STATIC_INIT(list(
 		"inclusive",
 		"exclusive",
 		"recognizer",
 		"voice sensor",
-	)
+	))
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 

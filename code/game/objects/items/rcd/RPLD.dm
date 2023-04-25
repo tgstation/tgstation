@@ -27,13 +27,13 @@
 	///Current selected color, for ducts
 	var/current_color = "omni"
 	///maps layer name to layer number value. didnt make this global cause only this class needs it
-	var/static/list/name_to_number = list(
+	var/static/list/name_to_number = STATIC_INIT(list(
 		"First Layer" = 1,
 		"Second Layer" = 2,
 		"Default Layer" = 3,
 		"Fourth Layer" = 4,
 		"Fifth Layer" = 5,
-	)
+	))
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()

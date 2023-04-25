@@ -655,9 +655,9 @@
 
 /obj/item/toy/plush/goatplushie/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(splat),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)

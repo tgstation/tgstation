@@ -82,11 +82,11 @@
 		/mob/living/basic/meteor_heart,
 	)
 	/// Weighted list of body zones to target while standing
-	var/static/list/standing_damage_zones = list(
+	var/static/list/standing_damage_zones = STATIC_INIT(list(
 		BODY_ZONE_CHEST = 1,
 		BODY_ZONE_R_LEG = 3,
 		BODY_ZONE_L_LEG = 3,
-	)
+	))
 
 /obj/effect/temp_visual/emerging_ground_spike/Initialize(mapload)
 	. = ..()

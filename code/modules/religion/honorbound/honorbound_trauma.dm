@@ -142,11 +142,11 @@
 /datum/brain_trauma/special/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
-	var/static/list/guilty_projectiles = typecacheof(list(
+	var/static/list/guilty_projectiles = STATIC_INIT(typecacheof(list(
 		/obj/projectile/beam,
 		/obj/projectile/bullet,
 		/obj/projectile/magic,
-	))
+	)))
 	if(!is_type_in_typecache(proj, guilty_projectiles))
 		return
 	if(proj.damage_type == STAMINA || !proj.is_hostile_projectile())

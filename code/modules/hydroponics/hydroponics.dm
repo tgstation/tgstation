@@ -62,7 +62,7 @@
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
 			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
@@ -73,7 +73,7 @@
 		/obj/item/shovel = list(
 			SCREENTIP_CONTEXT_LMB = "Clear tray",
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()

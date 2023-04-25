@@ -37,11 +37,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
 		id_tag = assign_random_name()
-		var/static/list/tool_screentips = list(
+		var/static/list/tool_screentips = STATIC_INIT(list(
 			TOOL_MULTITOOL = list(
 				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
 			)
-		)
+		))
 		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
 	assign_to_area()

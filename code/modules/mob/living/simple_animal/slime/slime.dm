@@ -81,7 +81,7 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-	var/static/list/slime_colours = list(
+	var/static/list/slime_colours = STATIC_INIT(list(
 		"adamantine",
 		"black",
 		"blue",
@@ -104,7 +104,7 @@
 		"sepia",
 		"silver",
 		"yellow",
-	)
+	))
 
 	///////////CORE-CROSSING CODE
 

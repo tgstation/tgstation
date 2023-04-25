@@ -28,12 +28,12 @@
 	/// For how long is the victim stunned for after the spell
 	var/unconscious_amount_victim = 40 SECONDS
 	/// List of mobs we cannot mindswap into.
-	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
+	var/static/list/mob/living/blacklisted_mobs = STATIC_INIT(typecacheof(list(
 		/mob/living/brain,
 		/mob/living/silicon/pai,
 		/mob/living/simple_animal/hostile/imp/slaughter,
 		/mob/living/simple_animal/hostile/megafauna,
-	))
+	)))
 
 /datum/action/cooldown/spell/pointed/mind_transfer/can_cast_spell(feedback = TRUE)
 	. = ..()

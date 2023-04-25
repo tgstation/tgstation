@@ -88,9 +88,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
 	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/shower/examine(mob/user)

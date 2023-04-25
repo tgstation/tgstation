@@ -21,11 +21,11 @@
 	. = ..()
 	register_context()
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_SCREWDRIVER = list(
 			SCREENTIP_CONTEXT_RMB = "Deconstruct",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	listening_radio = new(src)
 	listening_radio.canhear_range = 0

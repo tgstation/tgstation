@@ -29,14 +29,14 @@
 	)
 
 /obj/item/circuit_component/arithmetic/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		COMP_ARITHMETIC_ADD,
 		COMP_ARITHMETIC_SUBTRACT,
 		COMP_ARITHMETIC_MULTIPLY,
 		COMP_ARITHMETIC_DIVIDE,
 		COMP_ARITHMETIC_MIN,
 		COMP_ARITHMETIC_MAX,
-	)
+	))
 	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
 /obj/item/circuit_component/arithmetic/populate_ports()

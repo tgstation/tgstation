@@ -114,12 +114,12 @@
 	var/static/list/allowed_areas
 	if(!allowed_areas)
 		///Places that shouldn't explode
-		var/static/list/safe_area_types = typecacheof(list(
+		var/static/list/safe_area_types = STATIC_INIT(typecacheof(list(
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/ai_monitored/turret_protected/ai_upload,
 		/area/station/engineering,
 		/area/shuttle,
-	))
+	)))
 
 		///Subtypes from the above that actually should explode.
 		var/static/list/unsafe_area_subtypes = STATIC_INIT(typecacheof(list(/area/station/engineering/break_room)))

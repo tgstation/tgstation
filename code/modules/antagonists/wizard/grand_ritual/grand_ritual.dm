@@ -34,19 +34,19 @@
 	var/datum/weakref/rune
 
 	/// A blacklist of turfs we cannot scribe on.
-	var/static/list/blacklisted_rune_turfs = typecacheof(list(
+	var/static/list/blacklisted_rune_turfs = STATIC_INIT(typecacheof(list(
 		/turf/closed/indestructible,
 		/turf/open/chasm,
 		/turf/open/indestructible,
 		/turf/open/lava,
 		/turf/open/openspace,
 		/turf/open/space,
-	))
+	)))
 	/**
 	 * Areas where you can place a rune
 	 * To be honest if maintenance subtypes didn't exist I could probably have got away with just a blacklist, c'est la vie
 	 */
-	var/static/list/area_whitelist = typecacheof(list(
+	var/static/list/area_whitelist = STATIC_INIT(typecacheof(list(
 		/area/station/cargo,
 		/area/station/command,
 		/area/station/commons,
@@ -59,9 +59,9 @@
 		/area/station/science,
 		/area/station/security,
 		/area/station/service,
-	))
+	)))
 	/// Areas where you can't be tasked to draw a rune, usually because they're too mean
-	var/static/list/area_blacklist = typecacheof(list(
+	var/static/list/area_blacklist = STATIC_INIT(typecacheof(list(
 		/area/station/cargo/warehouse, // This SHOULD be fine except SOMEBODY gave this area to a kilo structure which is IN SPACE
 		/area/station/engineering/supermatter,
 		/area/station/engineering/transit_tube,
@@ -70,7 +70,7 @@
 		/area/station/science/ordnance/freezerchamber,
 		/area/station/science/server,
 		/area/station/security/prison/safe,
-	))
+	)))
 
 /datum/action/cooldown/grand_ritual/IsAvailable(feedback)
 	. = ..()

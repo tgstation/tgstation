@@ -62,9 +62,9 @@
 /obj/item/watches_mock_calls/Initialize(mapload)
 	. = ..()
 
-	var/static/list/connections = list(
+	var/static/list/connections = STATIC_INIT(list(
 		COMSIG_MOCK_SIGNAL = PROC_REF(on_receive_mock_signal),
-	)
+	))
 
 	AddElement(/datum/element/connect_loc, connections)
 

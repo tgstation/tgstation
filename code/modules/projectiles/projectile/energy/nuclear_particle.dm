@@ -9,14 +9,14 @@
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
-	var/static/list/particle_colors = list(
+	var/static/list/particle_colors = STATIC_INIT(list(
 		"red" = "#FF0000",
 		"blue" = "#00FF00",
 		"green" = "#0000FF",
 		"yellow" = "#FFFF00",
 		"cyan" = "#00FFFF",
 		"purple" = "#FF00FF"
-	)
+	))
 
 /obj/projectile/energy/nuclear_particle/Initialize(mapload)
 	. = ..()

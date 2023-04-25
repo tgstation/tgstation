@@ -57,9 +57,9 @@
 	src.unres_sides = unres_sides
 	update_appearance(UPDATE_ICON)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
-	)
+	))
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)

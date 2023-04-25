@@ -59,7 +59,7 @@
 
 			if(6 to 10)
 				// Send the same generic hallucination type to everyone
-				var/static/list/generic_hallucinations = list(
+				var/static/list/generic_hallucinations = STATIC_INIT(list(
 					/datum/hallucination/bolts,
 					/datum/hallucination/chat,
 					/datum/hallucination/death,
@@ -68,7 +68,7 @@
 					/datum/hallucination/message,
 					/datum/hallucination/oh_yeah,
 					/datum/hallucination/xeno_attack,
-				)
+				))
 
 				admin_forced_hallucination = pick(generic_hallucinations)
 

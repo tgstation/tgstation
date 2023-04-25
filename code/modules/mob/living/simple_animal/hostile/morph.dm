@@ -36,14 +36,14 @@
 	var/melee_damage_disguised = 0
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
-	var/static/list/blacklist_typecache = typecacheof(list(
+	var/static/list/blacklist_typecache = STATIC_INIT(typecacheof(list(
 		/atom/movable/screen,
 		/obj/singularity,
 		/obj/energy_ball,
 		/obj/narsie,
 		/mob/living/simple_animal/hostile/morph,
 		/obj/effect,
-	))
+	)))
 
 /mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()

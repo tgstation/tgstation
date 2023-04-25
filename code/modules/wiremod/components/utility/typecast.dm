@@ -23,12 +23,12 @@
 	output_value = add_output_port("Output", current_type)
 
 /obj/item/circuit_component/typecast/populate_options()
-	var/static/list/component_options = list(
+	var/static/list/component_options = STATIC_INIT(list(
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
 		PORT_COMPOSITE_TYPE_LIST,
 		PORT_TYPE_ATOM,
-	)
+	))
 	typecast_options = add_option_port("Typecast Options", component_options)
 
 /obj/item/circuit_component/typecast/pre_input_received(datum/port/input/port)

@@ -125,7 +125,7 @@
 	///Selected meeting area given to the team members
 	var/meeting_area
 	///List of meeting areas that are randomly selected.
-	var/static/meeting_areas = list(
+	var/static/meeting_areas = STATIC_INIT(list(
 		"The Bar",
 		"Dorms",
 		"Escape Dock",
@@ -135,7 +135,7 @@
 		"Recreation Area",
 		"Chapel",
 		"Library",
-	)
+	))
 
 /datum/team/brother_team/proc/pick_meeting_area()
 	meeting_area = pick(meeting_areas)

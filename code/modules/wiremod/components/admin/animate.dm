@@ -24,10 +24,10 @@
 	var/datum/port/output/animate_event
 
 /obj/item/circuit_component/begin_animation/populate_options()
-	var/static/list/component_options = list(
+	var/static/list/component_options = STATIC_INIT(list(
 		COMP_ANIMATE_ATOM,
 		COMP_ANIMATE_FILTER,
-	)
+	))
 
 	atom_or_filter = add_option_port("Target Options", component_options)
 

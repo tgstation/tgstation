@@ -46,7 +46,7 @@
 
 /proc/collect_vv(obj/item/item)
 	//Temporary/Internal stuff, do not copy these.
-	var/static/list/ignored_vars = list(
+	var/static/list/ignored_vars = STATIC_INIT(list(
 		NAMEOF(item, animate_movement),
 #ifndef EXPERIMENT_515_DONT_CACHE_REF
 		NAMEOF(item, cached_ref),
@@ -61,7 +61,7 @@
 		NAMEOF(item, x),
 		NAMEOF(item, y),
 		NAMEOF(item, z),
-	)
+	))
 
 	if(istype(item) && item.datum_flags & DF_VAR_EDITED)
 		var/list/vedits = list()

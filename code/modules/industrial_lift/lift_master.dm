@@ -9,11 +9,11 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	var/list/obj/structure/industrial_lift/lift_platforms
 
 	/// Typepath list of what to ignore smashing through, controls all lifts
-	var/static/list/ignored_smashthroughs = list(
+	var/static/list/ignored_smashthroughs = STATIC_INIT(list(
 		/obj/machinery/power/supermatter_crystal,
 		/obj/structure/holosign,
 		/obj/machinery/field,
-	)
+	))
 
 	///whether the lift handled by this lift_master datum is multitile as opposed to nxm platforms per z level
 	var/multitile_platform = FALSE

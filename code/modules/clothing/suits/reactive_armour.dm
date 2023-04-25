@@ -7,7 +7,7 @@
 
 /obj/item/reactive_armour_shell/attackby(obj/item/weapon, mob/user, params)
 	..()
-	var/static/list/anomaly_armour_types = list(
+	var/static/list/anomaly_armour_types = STATIC_INIT(list(
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
@@ -15,7 +15,7 @@
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
 		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
-		)
+		))
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
 		var/obj/item/assembly/signaler/anomaly/anomaly = weapon

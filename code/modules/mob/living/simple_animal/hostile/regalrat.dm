@@ -240,19 +240,19 @@
 	/// How close does something need to be for us to recruit it?
 	var/range = 5
 	/// Commands you can give to your mouse army
-	var/static/list/mouse_commands = list(
+	var/static/list/mouse_commands = STATIC_INIT(list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/attack/mouse
-	)
+	))
 	/// Commands you can give to glockroaches
-	var/static/list/glockroach_commands = list(
+	var/static/list/glockroach_commands = STATIC_INIT(list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/attack/glockroach
-	)
+	))
 
 /datum/action/cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)

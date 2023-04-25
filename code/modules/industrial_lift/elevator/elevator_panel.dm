@@ -54,9 +54,9 @@
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_MULTITOOL = list(SCREENTIP_CONTEXT_LMB = "Reset Panel"),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
 
@@ -112,7 +112,7 @@
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
-			continue			
+			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED

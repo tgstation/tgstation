@@ -33,12 +33,12 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/clothing/gloves/color/yellow = 2,
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
-		/obj/item/multitool = 3)
+		/obj/item/multitool = 3))
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/secure_closet/engineering_welding

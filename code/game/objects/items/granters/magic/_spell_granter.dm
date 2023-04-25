@@ -61,9 +61,9 @@
 
 /obj/item/book/granter/action/spell/random/Initialize(mapload)
 	. = ..()
-	var/static/list/banned_spells = list(
+	var/static/list/banned_spells = STATIC_INIT(list(
 		/obj/item/book/granter/action/spell/true_random,
-	) + typesof(/obj/item/book/granter/action/spell/mime)
+	) )+ typesof(/obj/item/book/granter/action/spell/mime)
 
 	var/real_type = pick(subtypesof(/obj/item/book/granter/action/spell) - banned_spells)
 	new real_type(loc)

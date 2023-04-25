@@ -115,9 +115,9 @@
 	access_card.add_access(det_trim.access + det_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/secbot/Destroy()

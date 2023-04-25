@@ -276,9 +276,9 @@
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff, 25, list(BODY_ZONE_PRECISE_EYES), slot_flags)
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 

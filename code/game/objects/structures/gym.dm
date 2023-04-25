@@ -17,7 +17,7 @@
 		lmb_text = "Punch", \
 	)
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_CROWBAR = list(
 			SCREENTIP_CONTEXT_RMB = "Deconstruct",
 		),
@@ -25,7 +25,7 @@
 		TOOL_WRENCH = list(
 			SCREENTIP_CONTEXT_RMB = "Anchor",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/punching_bag/attack_hand(mob/user, list/modifiers)
@@ -79,7 +79,7 @@
 		lmb_text = "Work out", \
 	)
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_CROWBAR = list(
 			SCREENTIP_CONTEXT_RMB = "Deconstruct",
 		),
@@ -87,7 +87,7 @@
 		TOOL_WRENCH = list(
 			SCREENTIP_CONTEXT_RMB = "Anchor",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)

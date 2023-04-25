@@ -6,7 +6,7 @@
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/reagent_containers/dropper = 2,
 		/obj/item/storage/belt/medical = 1,
@@ -15,7 +15,7 @@
 		/obj/item/reagent_containers/cup/bottle/morphine = 2,
 		/obj/item/reagent_containers/cup/bottle/epinephrine= 3,
 		/obj/item/reagent_containers/cup/bottle/multiver = 3,
-		/obj/item/storage/box/rxglasses = 1)
+		/obj/item/storage/box/rxglasses = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/secure_closet/medical2

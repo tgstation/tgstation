@@ -782,11 +782,11 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(IS_CULTIST(user))
-		var/static/list/spells = list(
+		var/static/list/spells = STATIC_INIT(list(
 			"Bloody Halberd (150)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
 			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
 			"Blood Beam (500)" = image(icon = 'icons/obj/weapons/hand.dmi', icon_state = "disintegrate")
-			)
+			))
 		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user))
 			to_chat(user, span_cultitalic("You decide against conducting a greater blood rite."))

@@ -14,7 +14,7 @@
 	break_message = "<span class='warning'>The forge breaks apart into shards with a howling scream!</span>"
 
 /obj/structure/destructible/cult/item_dispenser/forge/setup_options()
-	var/static/list/forge_items = list(
+	var/static/list/forge_items = STATIC_INIT(list(
 		NARSIE_ARMOR = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits/armor.dmi', icon_state = "cult_armor"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/hardened),
@@ -27,7 +27,7 @@
 			PREVIEW_IMAGE = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "cultblade"),
 			OUTPUT_ITEMS = list(/obj/item/melee/cultblade),
 			),
-	)
+	))
 
 	options = forge_items
 

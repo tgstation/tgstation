@@ -514,14 +514,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 	/// List of trait buffs to give to the affected mob, and remove as needed.
-	var/static/list/trait_buffs = list(
+	var/static/list/trait_buffs = STATIC_INIT(list(
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOCRITOVERLAY,
 		TRAIT_NODEATH,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_STABLEHEART,
-	)
+	))
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	var/obj/item/organ/internal/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)

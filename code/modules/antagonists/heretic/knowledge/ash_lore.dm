@@ -187,14 +187,14 @@
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 	route = PATH_ASH
 	/// A static list of all traits we apply on ascension.
-	var/static/list/traits_to_apply = list(
+	var/static/list/traits_to_apply = STATIC_INIT(list(
 		TRAIT_RESISTHEAT,
 		TRAIT_NOBREATH,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOFIRE,
-	)
+	))
 
 /datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()

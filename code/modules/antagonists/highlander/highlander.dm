@@ -7,13 +7,13 @@
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
 	count_against_dynamic_roll_chance = FALSE
 	/// Traits we apply/remove to our target on-demand.
-	var/static/list/applicable_traits = list(
+	var/static/list/applicable_traits = STATIC_INIT(list(
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_NOGUNS,
 		TRAIT_SHOCKIMMUNE,
-	)
+	))
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/subject = owner.current || mob_override

@@ -64,12 +64,12 @@
  */
 
 /datum/round_event/scrubber_clog/proc/get_mob()
-	var/static/list/mob_list = list(
+	var/static/list/mob_list = STATIC_INIT(list(
 				/mob/living/basic/cockroach,
 				/mob/living/basic/giant_spider/maintenance,
 				/mob/living/basic/mouse,
 				/mob/living/simple_animal/butterfly,
-	)
+	))
 	return pick(mob_list)
 
 /**
@@ -149,11 +149,11 @@
 	spawn_delay = rand(15,20)
 
 /datum/round_event/scrubber_clog/major/get_mob()
-	var/static/list/mob_list = list(
+	var/static/list/mob_list = STATIC_INIT(list(
 		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/basic/giant_spider,
-	)
+	))
 	return pick(mob_list)
 
 /datum/round_event/scrubber_clog/major/announce()
@@ -181,11 +181,11 @@
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(scrubber)] ventilation network.", "Security Alert")
 
 /datum/round_event/scrubber_clog/critical/get_mob()
-	var/static/list/mob_list = list(
+	var/static/list/mob_list = STATIC_INIT(list(
 		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
-	)
+	))
 	return pick(mob_list)
 
 /datum/round_event_control/scrubber_clog/strange
@@ -209,11 +209,11 @@
 	priority_announce("Unusual lifesign readings detected in the [get_area_name(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/scrubber_clog/strange/get_mob()
-	var/static/list/mob_list = list(
+	var/static/list/mob_list = STATIC_INIT(list(
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/lightgeist,
-	)
+	))
 	return pick(mob_list)

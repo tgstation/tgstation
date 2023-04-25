@@ -28,7 +28,7 @@
 
 /datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
-	var/static/list/possible_reagents = list(\
+	var/static/list/possible_reagents = STATIC_INIT(list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
 		/datum/reagent/consumable/ethanol/andalusia,\
 		/datum/reagent/consumable/tea/arnold_palmer,\
@@ -70,7 +70,7 @@
 		/datum/reagent/consumable/ethanol/demonsblood,\
 		/datum/reagent/consumable/ethanol/crevice_spike,\
 		/datum/reagent/consumable/ethanol/singulo,\
-		/datum/reagent/consumable/ethanol/whiskey_sour)
+		/datum/reagent/consumable/ethanol/whiskey_sour))
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -84,7 +84,7 @@
 
 /datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
-	var/static/list/possible_reagents = list(\
+	var/static/list/possible_reagents = STATIC_INIT(list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
 		/datum/reagent/consumable/ethanol/bacchus_blessing,\
 		/datum/reagent/consumable/ethanol/bastion_bourbon,\
@@ -103,7 +103,7 @@
 		/datum/reagent/consumable/ethanol/silencer,\
 		/datum/reagent/consumable/ethanol/peppermint_patty,\
 		/datum/reagent/consumable/ethanol/aloe,\
-		/datum/reagent/consumable/pumpkin_latte)
+		/datum/reagent/consumable/pumpkin_latte))
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -118,7 +118,7 @@
 
 /datum/bounty/reagent/chemical_simple/New()
 	// Chemicals that can be mixed by a single skilled Chemist.
-	var/static/list/possible_reagents = list(\
+	var/static/list/possible_reagents = STATIC_INIT(list(\
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
@@ -141,7 +141,7 @@
 		/datum/reagent/drug/methamphetamine,\
 		/datum/reagent/teslium,\
 		/datum/reagent/toxin/anacea,\
-		/datum/reagent/pax)
+		/datum/reagent/pax))
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -156,7 +156,7 @@
 
 /datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
-	var/static/list/possible_reagents = list(\
+	var/static/list/possible_reagents = STATIC_INIT(list(\
 		/datum/reagent/medicine/pyroxadone,\
 		/datum/reagent/medicine/rezadone,\
 		/datum/reagent/medicine/regen_jelly,\
@@ -172,7 +172,7 @@
 		/datum/reagent/medicine/rezadone,\
 		/datum/reagent/toxin/zombiepowder,\
 		/datum/reagent/toxin/ghoulpowder,\
-		/datum/reagent/mulligan)
+		/datum/reagent/mulligan))
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -213,7 +213,7 @@
 
 /datum/bounty/pill/simple_pill/New()
 	//reagent that are possible to be chem factory'd
-	var/static/list/possible_reagents = list(\
+	var/static/list/possible_reagents = STATIC_INIT(list(\
 		/datum/reagent/medicine/spaceacillin,\
 		/datum/reagent/medicine/c2/synthflesh,\
 		/datum/reagent/medicine/pen_acid,\
@@ -228,7 +228,7 @@
 		/datum/reagent/pax,\
 		/datum/reagent/flash_powder,\
 		/datum/reagent/phlogiston,\
-		/datum/reagent/firefighting_foam)
+		/datum/reagent/firefighting_foam))
 
 	var/datum/reagent/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type

@@ -225,12 +225,12 @@
 		THE TIME IS NOW, WITNESS MY ASCENSION, THE STAR GAZER HAS GAINED PURPOSE ONCE MORE!"
 	route = PATH_COSMIC
 	/// A static list of command we can use with our mob.
-	var/static/list/star_gazer_commands = list(
+	var/static/list/star_gazer_commands = STATIC_INIT(list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/attack/star_gazer
-	)
+	))
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()

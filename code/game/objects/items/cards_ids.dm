@@ -66,11 +66,11 @@
 	/// Cooldown between projecting holopays
 	COOLDOWN_DECLARE(last_holopay_projection)
 	/// List of logos available for holopay customization - via font awesome 5
-	var/static/list/available_logos = list("angry", "ankh", "bacon", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
+	var/static/list/available_logos = STATIC_INIT(list("angry", "ankh", "bacon", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
 	"cross", "cut", "dog", "donate", "dna", "fist-raised", "flask", "glass-cheers", "glass-martini-alt", "hamburger", "hand-holding-usd",
 	"hat-wizard", "head-side-cough-slash", "heart", "heart-broken",  "laugh-beam", "leaf", "money-check-alt", "music", "piggy-bank",
 	"pizza-slice", "prescription-bottle-alt", "radiation", "robot", "smile", "skull-crossbones", "smoking", "space-shuttle", "tram",
-	"trash", "user-ninja", "utensils", "wrench")
+	"trash", "user-ninja", "utensils", "wrench"))
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/holopay_fee = 0
 	/// The holopay icon chosen by the user

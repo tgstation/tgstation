@@ -358,7 +358,7 @@
 	dire_warning = TRUE
 	glow_colour = "#be000048"
 	/// Things to yell before you die
-	var/static/list/possible_last_words = list(
+	var/static/list/possible_last_words = STATIC_INIT(list(
 		"Flames and ruin!",
 		"Dooooooooom!!",
 		"HAHAHAHAHAHA!! AHAHAHAHAHAHAHAHAA!!",
@@ -372,7 +372,7 @@
 		"God stays in heaven out of fear of what I have created!",
 		"Ruination is come!",
 		"All of creation, bend to my will!",
-	)
+	))
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
 	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")

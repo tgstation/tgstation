@@ -34,7 +34,7 @@
 	/// Magic words you say to invoke the ritual
 	var/list/magic_words = list()
 	/// Things you might yell when invoking a rune
-	var/static/list/possible_magic_words = list(
+	var/static/list/possible_magic_words = STATIC_INIT(list(
 		list("*scream", "*scream", "*scream"),
 		list("Abra...", "Cadabra...", "Alakazam!"),
 		list("Azarath!", "Metrion!", "Zinthos!!"),
@@ -60,7 +60,7 @@
 		list("Ten!", "Chi!", "Jin!"),
 		list("Ultimate School of Magic!", "Ultimate Ritual!", "Macrocosm!!"),
 		list("Y-abbaa", "Dab'Bah", "Doom!!"),
-	)
+	))
 
 /// Prepare magic words and hide from silicons
 /obj/effect/grand_rune/Initialize(mapload, potency = 0)

@@ -13,12 +13,12 @@
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = CHAMBER_SENSOR_FROM_ID(chamber_id)
-	var/static/list/multitool_tips = list(
+	var/static/list/multitool_tips = STATIC_INIT(list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Link logged injectors/vents",
 			SCREENTIP_CONTEXT_RMB = "Reset all I/O ports",
 		)
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, multitool_tips)
 
 	return ..()

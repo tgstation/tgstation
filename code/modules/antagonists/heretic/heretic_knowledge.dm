@@ -560,7 +560,7 @@
 
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
-	var/static/list/potential_organs = list(
+	var/static/list/potential_organs = STATIC_INIT(list(
 		/obj/item/organ/internal/appendix,
 		/obj/item/organ/external/tail,
 		/obj/item/organ/internal/eyes,
@@ -570,9 +570,9 @@
 		/obj/item/organ/internal/liver,
 		/obj/item/organ/internal/stomach,
 		/obj/item/organ/internal/lungs,
-	)
+	))
 
-	var/static/list/potential_easy_items = list(
+	var/static/list/potential_easy_items = STATIC_INIT(list(
 		/obj/item/shard,
 		/obj/item/flashlight/flare/candle,
 		/obj/item/book,
@@ -581,9 +581,9 @@
 		/obj/item/toy/crayon,
 		/obj/item/flashlight,
 		/obj/item/clipboard,
-	)
+	))
 
-	var/static/list/potential_uncommoner_items = list(
+	var/static/list/potential_uncommoner_items = STATIC_INIT(list(
 		/obj/item/restraints/legcuffs/beartrap,
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/circular_saw,
@@ -592,7 +592,7 @@
 		/obj/item/clothing/gloves/color/yellow,
 		/obj/item/melee/baton/security,
 		/obj/item/clothing/glasses/sunglasses,
-	)
+	))
 
 	required_atoms = list()
 	// 2 organs. Can be the same.

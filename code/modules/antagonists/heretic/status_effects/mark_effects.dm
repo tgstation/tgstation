@@ -98,7 +98,7 @@
 /datum/status_effect/eldritch/rust/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		var/static/list/organs_to_damage = list(
+		var/static/list/organs_to_damage = STATIC_INIT(list(
 			ORGAN_SLOT_BRAIN,
 			ORGAN_SLOT_EARS,
 			ORGAN_SLOT_EYES,
@@ -106,7 +106,7 @@
 			ORGAN_SLOT_LUNGS,
 			ORGAN_SLOT_STOMACH,
 			ORGAN_SLOT_HEART,
-		)
+		))
 
 		// Roughly 75% of their organs will take a bit of damage
 		for(var/organ_slot in organs_to_damage)

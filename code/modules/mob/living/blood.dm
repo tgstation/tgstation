@@ -299,7 +299,7 @@
 	if(!bloodtype)
 		return
 
-	var/static/list/bloodtypes_safe = list(
+	var/static/list/bloodtypes_safe = STATIC_INIT(list(
 		"A-" = list("A-", "O-"),
 		"A+" = list("A-", "A+", "O-", "O+"),
 		"B-" = list("B-", "O-"),
@@ -310,7 +310,7 @@
 		"O+" = list("O-", "O+"),
 		"L" = list("L"),
 		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
-	)
+	))
 
 	var/safe = bloodtypes_safe[bloodtype]
 	if(safe)

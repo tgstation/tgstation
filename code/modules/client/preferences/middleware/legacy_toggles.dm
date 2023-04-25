@@ -7,7 +7,7 @@
 /datum/preference_middleware/legacy_toggles
 	// DO NOT ADD ANY NEW TOGGLES HERE!
 	// Use `/datum/preference/toggle` instead.
-	var/static/list/legacy_toggles = list(
+	var/static/list/legacy_toggles = STATIC_INIT(list(
 		"admin_ignore_cult_ghost" = ADMIN_IGNORE_CULT_GHOST,
 		"announce_login" = ANNOUNCE_LOGIN,
 		"combohud_lighting" = COMBOHUD_LIGHTING,
@@ -22,7 +22,7 @@
 		"sound_adminhelp" = SOUND_ADMINHELP,
 		"sound_prayers" = SOUND_PRAYERS,
 		"split_admin_tabs" = SPLIT_ADMIN_TABS,
-	)
+	))
 
 	var/list/legacy_chat_toggles = list(
 		"chat_bankcard" = CHAT_BANKCARD,
@@ -43,7 +43,7 @@
 	if (preferences.current_window != PREFERENCE_TAB_GAME_PREFERENCES)
 		return list()
 
-	var/static/list/admin_only_legacy_toggles = list(
+	var/static/list/admin_only_legacy_toggles = STATIC_INIT(list(
 		"admin_ignore_cult_ghost",
 		"announce_login",
 		"combohud_lighting",
@@ -55,19 +55,19 @@
 		"sound_adminhelp",
 		"sound_prayers",
 		"split_admin_tabs",
-	)
+	))
 
-	var/static/list/admin_only_chat_toggles = list(
+	var/static/list/admin_only_chat_toggles = STATIC_INIT(list(
 		"chat_dead",
 		"chat_prayer",
-	)
+	))
 
-	var/static/list/deadmin_flags = list(
+	var/static/list/deadmin_flags = STATIC_INIT(list(
 		"deadmin_antagonist",
 		"deadmin_position_head",
 		"deadmin_position_security",
 		"deadmin_position_silicon",
-	)
+	))
 
 	var/list/new_game_preferences = list()
 	var/is_admin = is_admin(user.client)

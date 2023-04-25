@@ -53,10 +53,10 @@
 	var/custom_signal = FALSE
 
 /obj/item/circuit_component/signal_handler/populate_options()
-	var/static/list/component_options = list(
+	var/static/list/component_options = STATIC_INIT(list(
 		COMP_SIGNAL_HANDLER_OBJECT,
 		COMP_SIGNAL_HANDLER_GLOBAL,
-	)
+	))
 	signal_handler_options = add_option_port("Signal Handler Options", component_options, trigger = null)
 
 	signal_id = add_option_port("Signal ID", GLOB.integrated_circuit_signal_ids, trigger = null)

@@ -214,11 +214,11 @@
  * * [SCOUTDRONE]
  */
 /mob/living/simple_animal/drone/proc/update_drone_icon_hacked() //this is hacked both ways
-	var/static/hacked_appearances = list(
+	var/static/hacked_appearances = STATIC_INIT(list(
 		SCOUTDRONE = SCOUTDRONE_HACKED,
 		REPAIRDRONE = REPAIRDRONE_HACKED,
 		MAINTDRONE = MAINTDRONE_HACKED
-	)
+	))
 	if(hacked)
 		icon_living = hacked_appearances[visualAppearance]
 	else if(visualAppearance == MAINTDRONE && colour)

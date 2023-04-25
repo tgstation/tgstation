@@ -45,14 +45,14 @@
 		if(istype(nearby_turf, /turf/open/floor/engine/cult))
 			cultturfs |= nearby_turf
 			continue
-		var/static/list/blacklisted_pylon_turfs = typecacheof(list(
+		var/static/list/blacklisted_pylon_turfs = STATIC_INIT(typecacheof(list(
 			/turf/closed,
 			/turf/open/floor/engine/cult,
 			/turf/open/space,
 			/turf/open/lava,
 			/turf/open/chasm,
 			/turf/open/misc/asteroid,
-		))
+		)))
 		if(is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
 			continue
 		validturfs |= nearby_turf

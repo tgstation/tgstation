@@ -251,11 +251,11 @@
 	/**We whitelist in case we're doing something on a planetary station that shares multiple different types of areas, this should only be full of "station" area types.
 	This only goes into effect when we explicitly do the "on station" Areas Test.
 	*/
-	var/static/list/station_areas_whitelist = typecacheof(list(
+	var/static/list/station_areas_whitelist = STATIC_INIT(typecacheof(list(
 		/area/station,
-	))
+	)))
 	///Additionally, blacklist in order to filter out the types of areas that can show up on station Z-levels that we never need to test for.
-	var/static/list/station_areas_blacklist = typecacheof(list(
+	var/static/list/station_areas_blacklist = STATIC_INIT(typecacheof(list(
 		/area/centcom/asteroid,
 		/area/mine,
 		/area/ruin,
@@ -265,7 +265,7 @@
 		/area/station/holodeck/rec_center,
 		/area/station/science/ordnance/bomb,
 		/area/station/solars,
-	))
+	)))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)

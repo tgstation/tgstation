@@ -77,9 +77,9 @@
 		icon_state = "shield2"
 		name = "resonance matrix"
 		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(burst))
-		var/static/list/loc_connections = list(
+		var/static/list/loc_connections = STATIC_INIT(list(
 			COMSIG_ATOM_ENTERED = PROC_REF(burst),
-		)
+		))
 		AddElement(/datum/element/connect_loc, loc_connections)
 	. = ..()
 	creator = set_creator

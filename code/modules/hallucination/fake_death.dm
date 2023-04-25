@@ -28,7 +28,7 @@
 		if(who_is_salting)
 			delay = rand(2 SECONDS, 5 SECONDS)
 
-			var/static/list/things_to_hate = list(
+			var/static/list/things_to_hate = STATIC_INIT(list(
 				"admins",
 				"batons",
 				"blood cult",
@@ -46,7 +46,7 @@
 				"this",
 				"wizards",
 				"you",
-			)
+			))
 
 			var/list/dead_chat_salt = list(
 				"...",

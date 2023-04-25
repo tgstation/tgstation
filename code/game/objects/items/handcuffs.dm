@@ -155,7 +155,7 @@
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/stack/rods = list(
 			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
 		),
@@ -163,7 +163,7 @@
 		/obj/item/stack/sheet/iron = list(
 			SCREENTIP_CONTEXT_LMB = "Craft bola",
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
@@ -386,9 +386,9 @@
 /obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(spring_trap),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/restraints/legcuffs/beartrap/update_icon_state()

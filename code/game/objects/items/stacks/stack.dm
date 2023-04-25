@@ -115,9 +115,9 @@
 
 	update_weight()
 	update_appearance()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.

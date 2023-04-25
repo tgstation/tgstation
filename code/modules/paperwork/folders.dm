@@ -9,12 +9,12 @@
 	/// The background color for tgui in hex (with a `#`)
 	var/bg_color = "#7f7f7f"
 	/// A typecache of the objects that can be inserted into a folder
-	var/static/list/folder_insertables = typecacheof(list(
+	var/static/list/folder_insertables = STATIC_INIT(typecacheof(list(
 		/obj/item/paper,
 		/obj/item/photo,
 		/obj/item/documents,
 		/obj/item/paperwork,
-	))
+	)))
 	/// Do we hide the contents on examine?
 	var/contents_hidden = FALSE
 

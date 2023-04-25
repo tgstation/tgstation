@@ -27,9 +27,9 @@
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
@@ -726,13 +726,13 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
-		var/static/list/heights = list(
+		var/static/list/heights = STATIC_INIT(list(
 			HUMAN_HEIGHT_SHORTEST,
 			HUMAN_HEIGHT_SHORT,
 			HUMAN_HEIGHT_MEDIUM,
 			HUMAN_HEIGHT_TALL,
 			HUMAN_HEIGHT_TALLEST
-		)
+		))
 		if(!(var_value in heights))
 			return
 

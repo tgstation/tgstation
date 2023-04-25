@@ -14,7 +14,7 @@
 	/// True while currently casting the spell
 	var/casting = FALSE
 	/// List of prank implements you can find in your pockets
-	var/static/list/clown_items = list(
+	var/static/list/clown_items = STATIC_INIT(list(
 		/obj/item/bikehorn = 5,
 		/obj/item/food/pie/cream = 5,
 		/obj/item/grown/bananapeel = 5,
@@ -41,7 +41,7 @@
 		/obj/item/toy/balloon/arrest = 1,
 		/obj/item/toy/crayon/spraycan/lubecan = 1,
 		/obj/item/toy/dummy = 1,
-	)
+	))
 
 /datum/action/cooldown/spell/conjure_item/clown_pockets/before_cast(atom/cast_on)
 	. = ..()

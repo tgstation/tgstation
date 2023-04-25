@@ -12,7 +12,7 @@
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
-	var/static/list/altar_items = list(
+	var/static/list/altar_items = STATIC_INIT(list(
 		ELDRITCH_WHETSTONE = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
 			OUTPUT_ITEMS = list(/obj/item/sharpener/cult),
@@ -25,7 +25,7 @@
 			PREVIEW_IMAGE = image(icon = 'icons/obj/drinks/bottles.dmi', icon_state = "holyflask"),
 			OUTPUT_ITEMS = list(/obj/item/reagent_containers/cup/beaker/unholywater),
 			),
-	)
+	))
 
 	options = altar_items
 

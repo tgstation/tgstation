@@ -60,9 +60,9 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_rummage))
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 

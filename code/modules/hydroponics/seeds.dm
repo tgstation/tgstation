@@ -92,12 +92,12 @@
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
 		reagents_from_genes() //quality coding
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan seed stats",
 			SCREENTIP_CONTEXT_RMB = "Scan seed chemicals"
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 

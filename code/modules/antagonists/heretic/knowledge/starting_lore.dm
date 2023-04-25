@@ -61,11 +61,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
-		var/static/list/backup_organs = list(
+		var/static/list/backup_organs = STATIC_INIT(list(
 			ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
 			ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
 			ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
-		)
+		))
 
 		for(var/backup_slot in backup_organs)
 			var/obj/item/organ/look_for_backup = user.get_organ_slot(backup_slot)

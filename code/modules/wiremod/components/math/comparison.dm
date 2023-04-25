@@ -18,14 +18,14 @@
 	var/current_type = PORT_TYPE_ANY
 
 /obj/item/circuit_component/compare/comparison/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		COMP_COMPARISON_EQUAL,
 		COMP_COMPARISON_NOT_EQUAL,
 		COMP_COMPARISON_GREATER_THAN,
 		COMP_COMPARISON_LESS_THAN,
 		COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
 		COMP_COMPARISON_LESS_THAN_OR_EQUAL,
-	)
+	))
 	comparison_option = add_option_port("Comparison Option", component_options)
 
 /obj/item/circuit_component/compare/comparison/populate_custom_ports()

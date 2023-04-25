@@ -40,11 +40,11 @@
 	///How many reagents can we hold?
 	var/internal_volume_maximum = 100
 	///Typecache of containers we accept
-	var/static/list/drip_containers = typecacheof(list(
+	var/static/list/drip_containers = STATIC_INIT(typecacheof(list(
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/cup,
 		/obj/item/reagent_containers/chem_pack,
-	))
+	)))
 	// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
 	// Whether the injection maintained by the plumbing network

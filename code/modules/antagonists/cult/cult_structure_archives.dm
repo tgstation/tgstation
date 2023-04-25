@@ -14,7 +14,7 @@
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
 /obj/structure/destructible/cult/item_dispenser/archives/setup_options()
-	var/static/list/archive_items = list(
+	var/static/list/archive_items = STATIC_INIT(list(
 		CULT_BLINDFOLD = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold"),
 			OUTPUT_ITEMS = list(/obj/item/clothing/glasses/hud/health/night/cultblind),
@@ -27,7 +27,7 @@
 			PREVIEW_IMAGE = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "shifter"),
 			OUTPUT_ITEMS = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch),
 			),
-	)
+	))
 
 	options = archive_items
 

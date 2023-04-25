@@ -50,7 +50,7 @@
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = STATIC_INIT(typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm)))
 	/// Static list of what each path converts to in the UI (colors are TGUI colors)
-	var/static/list/path_to_ui_color = list(
+	var/static/list/path_to_ui_color = STATIC_INIT(list(
 		PATH_START = "grey",
 		PATH_SIDE = "green",
 		PATH_RUST = "brown",
@@ -59,8 +59,8 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
-	)
-	var/static/list/path_to_rune_color = list(
+	))
+	var/static/list/path_to_rune_color = STATIC_INIT(list(
 		PATH_START = COLOR_LIME,
 		PATH_RUST = COLOR_CARGO_BROWN,
 		PATH_FLESH = COLOR_SOFT_RED,
@@ -68,7 +68,7 @@
 		PATH_VOID = COLOR_CYAN,
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
-	)
+	))
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)

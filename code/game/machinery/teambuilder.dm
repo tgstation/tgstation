@@ -20,9 +20,9 @@
 /obj/machinery/teambuilder/Initialize(mapload)
 	. = ..()
 	add_filter("teambuilder", 2, list("type" = "outline", "color" = team_color, "size" = 2))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/teambuilder/examine_more(mob/user)

@@ -230,7 +230,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	name = "expensive forgery"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	var/static/possible = list(
+	var/static/possible = STATIC_INIT(list(
 		/obj/item/ship_in_a_bottle,
 		/obj/item/gun/energy/pulse,
 		/obj/item/book/granter/martial/carp,
@@ -249,7 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 		/obj/item/stack/telecrystal/twenty,
 		/obj/item/nuke_core,
 		/obj/item/banhammer,
-	)
+	))
 
 /obj/item/fakeartefact/Initialize(mapload)
 	. = ..()

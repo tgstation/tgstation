@@ -12,12 +12,12 @@
 	///Did we finish recharging the currently inserted item?
 	var/finished_recharging = FALSE
 
-	var/static/list/allowed_devices = typecacheof(list(
+	var/static/list/allowed_devices = STATIC_INIT(typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-	))
+	)))
 
 /obj/machinery/recharger/RefreshParts()
 	. = ..()

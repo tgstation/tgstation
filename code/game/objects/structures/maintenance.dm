@@ -13,7 +13,7 @@ at the cost of risking a vicious bite.**/
 	var/critter_infested = TRUE
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
-	var/static/list/loot_table = list(
+	var/static/list/loot_table = STATIC_INIT(list(
 		/obj/item/food/meat/slab/human/mutant/skeleton = 35,
 		/obj/item/food/meat/slab/human/mutant/zombie = 15,
 		/obj/item/trash/can = 15,
@@ -27,7 +27,7 @@ at the cost of risking a vicious bite.**/
 		/obj/item/coin/bananium = 9,
 		/obj/item/knife/butcher = 5,
 		/obj/item/coin/mythril = 1,
-	)
+	))
 
 
 /obj/structure/moisture_trap/Initialize(mapload)
@@ -263,9 +263,9 @@ at the cost of risking a vicious bite.**/
 	. = ..()
 	if(prob(75))
 		vent_active = FALSE
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_EXIT = PROC_REF(blow_steam),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_icon_state()
 

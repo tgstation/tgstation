@@ -86,7 +86,7 @@
 
 	// Static lists
 	/// List of all available downloads
-	var/static/list/available_software = list(
+	var/static/list/available_software = STATIC_INIT(list(
 		"Atmospheric Sensor" = 5,
 		"Crew Manifest" = 5,
 		"Digital Messenger" = 5,
@@ -102,9 +102,9 @@
 		"Door Jack" = 35,
 		"Internal GPS" = 35,
 		"Universal Translator" = 35,
-	)
+	))
 	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
-	var/static/list/possible_chassis = list(
+	var/static/list/possible_chassis = STATIC_INIT(list(
 		"bat" = FALSE,
 		"butterfly" = FALSE,
 		"cat" = TRUE,
@@ -119,9 +119,9 @@
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
-	)
+	))
 	/// List of all available card overlays.
-	var/static/list/possible_overlays = list(
+	var/static/list/possible_overlays = STATIC_INIT(list(
 		"null",
 		"angry",
 		"cat",
@@ -133,7 +133,7 @@
 		"sad",
 		"sunglasses",
 		"what"
-	)
+	))
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return

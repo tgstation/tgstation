@@ -96,14 +96,14 @@
 
 /obj/item/clothing/head/costume/foilhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
-	var/static/list/conspiracy_line = list(
+	var/static/list/conspiracy_line = STATIC_INIT(list(
 		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",
 		";HOW CAN I LIVE IN A WORLD WHERE MY FATE AND EXISTENCE IS DECIDED BY A GROUP OF INDIVIDUALS?!!",
 		";THEY'RE TOYING WITH ALL OF YOUR MINDS AND TREATING YOU AS EXPERIMENTS!!",
 		";THEY HIRE ASSISTANTS WITHOUT DOING BACKGROUND CHECKS!!",
 		";WE LIVE IN A ZOO AND WE ARE THE ONES BEING OBSERVED!!",
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
-	)
+	))
 	user.say(pick(conspiracy_line), forced=type)
 	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)

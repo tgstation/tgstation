@@ -22,10 +22,10 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/textcase/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		COMP_TEXT_LOWER,
 		COMP_TEXT_UPPER,
-	)
+	))
 	textcase_options = add_option_port("Textcase Options", component_options)
 
 /obj/item/circuit_component/textcase/populate_ports()

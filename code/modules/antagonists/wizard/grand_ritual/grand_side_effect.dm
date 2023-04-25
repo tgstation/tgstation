@@ -86,12 +86,12 @@
 /datum/grand_side_effect/create_anomalies
 	abstract = FALSE
 	/// List of anomaly types we are allowed to create, paired with a maximum to create of each
-	var/static/list/permitted_anomalies = list(
+	var/static/list/permitted_anomalies = STATIC_INIT(list(
 		/obj/effect/anomaly/bioscrambler = 1,
 		/obj/effect/anomaly/hallucination = 2,
 		/obj/effect/anomaly/grav = 2,
 		/obj/effect/anomaly/flux/minor = 3,
-	)
+	))
 
 /datum/grand_side_effect/create_anomalies/trigger(potency, turf/ritual_location, mob/invoker)
 	var/to_create = rand(MIN_ANOMALIES_CREATED, MAX_ANOMALIES_CREATED)
@@ -258,7 +258,7 @@
 /// Randomly coloured smoke
 /obj/effect/particle_effect/fluid/smoke/colourful
 	/// Colours that the smoke can be
-	var/static/list/colours = list(
+	var/static/list/colours = STATIC_INIT(list(
 		"#ff0033",
 		"#3366ff",
 		"#10802d",
@@ -270,7 +270,7 @@
 		"#72491e",
 		"#39e2dd",
 		"#50f038",
-	)
+	))
 
 /obj/effect/particle_effect/fluid/smoke/colourful/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
@@ -351,14 +351,14 @@
 /datum/grand_side_effect/spawn_delayed_mobs
 	abstract = FALSE
 	/// Typepaths of mobs to create
-	var/static/list/permitted_mobs = list(
+	var/static/list/permitted_mobs = STATIC_INIT(list(
 		/mob/living/basic/wumborian_fugu,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/killertomato,
 		/mob/living/simple_animal/hostile/ooze,
 		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/basic/carp,
-	)
+	))
 
 /datum/grand_side_effect/spawn_delayed_mobs/trigger(potency, turf/ritual_location, mob/invoker)
 	var/count = LERP(1, 4, potency/GRAND_RITUAL_FINALE_COUNT)

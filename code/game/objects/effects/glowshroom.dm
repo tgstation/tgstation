@@ -33,10 +33,10 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 
 	/// Turfs where the glowshroom cannot spread to
-	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
+	var/static/list/blacklisted_glowshroom_turfs = STATIC_INIT(typecacheof(list(
 		/turf/open/lava,
 		/turf/open/water,
-	))
+	)))
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
@@ -105,12 +105,12 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	START_PROCESSING(SSobj, src)
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan shroom stats",
 			SCREENTIP_CONTEXT_RMB = "Scan shroom chemicals"
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 

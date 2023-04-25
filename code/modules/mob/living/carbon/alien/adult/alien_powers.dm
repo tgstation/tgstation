@@ -305,11 +305,11 @@ Doesn't work on other aliens/AI.*/
 	button_icon_state = "alien_resin"
 	plasma_cost = 55
 	/// A list of all structures we can make.
-	var/static/list/structures = list(
+	var/static/list/structures = STATIC_INIT(list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
 		"resin nest" = /obj/structure/bed/nest,
-	)
+	))
 
 // Snowflake to check for multiple types of alien resin structures
 /datum/action/cooldown/alien/make_structure/resin/check_for_duplicate()

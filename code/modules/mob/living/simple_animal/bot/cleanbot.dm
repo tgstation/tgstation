@@ -41,54 +41,54 @@
 	///List of all stolen names the cleanbot currently has.
 	var/list/stolen_valor = list()
 
-	var/static/list/officers_titles = list(
+	var/static/list/officers_titles = STATIC_INIT(list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_HEAD_OF_SECURITY,
 		JOB_RESEARCH_DIRECTOR,
-	)
-	var/static/list/command_titles = list(
+	))
+	var/static/list/command_titles = STATIC_INIT(list(
 		JOB_CAPTAIN = "Cpt.",
 		JOB_HEAD_OF_PERSONNEL = "Lt.",
-	)
-	var/static/list/security_titles = list(
+	))
+	var/static/list/security_titles = STATIC_INIT(list(
 		JOB_HEAD_OF_SECURITY = "Maj.",
 		JOB_WARDEN = "Sgt.",
 		JOB_DETECTIVE = "Det.",
 		JOB_SECURITY_OFFICER = "Officer",
-	)
-	var/static/list/engineering_titles = list(
+	))
+	var/static/list/engineering_titles = STATIC_INIT(list(
 		JOB_CHIEF_ENGINEER = "Chief Engineer",
 		JOB_STATION_ENGINEER = "Engineer",
 		JOB_ATMOSPHERIC_TECHNICIAN = "Technician",
-	)
-	var/static/list/medical_titles = list(
+	))
+	var/static/list/medical_titles = STATIC_INIT(list(
 		JOB_CHIEF_MEDICAL_OFFICER = "C.M.O.",
 		JOB_MEDICAL_DOCTOR = "M.D.",
 		JOB_CHEMIST = "Pharm.D.",
-	)
-	var/static/list/research_titles = list(
+	))
+	var/static/list/research_titles = STATIC_INIT(list(
 		JOB_RESEARCH_DIRECTOR = "Ph.D.",
 		JOB_ROBOTICIST = "M.S.",
 		JOB_SCIENTIST = "B.S.",
 		JOB_GENETICIST = "Gene B.S.",
-	)
-	var/static/list/legal_titles = list(
+	))
+	var/static/list/legal_titles = STATIC_INIT(list(
 		JOB_LAWYER = "Esq.",
-	)
+	))
 
 	///What ranks are prefixes to the name.
-	var/static/list/prefixes = list(
+	var/static/list/prefixes = STATIC_INIT(list(
 		command_titles,
 		security_titles,
 		engineering_titles,
-	)
+	))
 	///What ranks are suffixes to the name.
-	var/static/list/suffixes = list(
+	var/static/list/suffixes = STATIC_INIT(list(
 		research_titles,
 		medical_titles,
 		legal_titles,
-	)
+	))
 
 /mob/living/simple_animal/bot/cleanbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
@@ -172,9 +172,9 @@
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		weapon.force = weapon.force / 2
 	add_overlay(image(icon = weapon.lefthand_file, icon_state = weapon.inhand_icon_state))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return TRUE
 

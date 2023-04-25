@@ -40,14 +40,14 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/// Our sound loop for the frying sounde effect.
 	var/datum/looping_sound/deep_fryer/fry_loop
 	/// Static typecache of things we can't fry.
-	var/static/list/deepfry_blacklisted_items = typecacheof(list(
+	var/static/list/deepfry_blacklisted_items = STATIC_INIT(typecacheof(list(
 		/obj/item/screwdriver,
 		/obj/item/crowbar,
 		/obj/item/wrench,
 		/obj/item/wirecutters,
 		/obj/item/multitool,
 		/obj/item/weldingtool,
-	))
+	)))
 
 /obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()

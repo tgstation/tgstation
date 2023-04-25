@@ -60,7 +60,7 @@
 	/// Typepath of the organ to spawn when this is destroyed
 	var/stored_organ
 	/// Types of organ we can spawn
-	var/static/list/allowed_organs = list(
+	var/static/list/allowed_organs = STATIC_INIT(list(
 		/obj/item/organ/internal/heart/gland/egg = 7,
 		/obj/item/organ/internal/heart/gland/plasma = 7,
 		/obj/item/organ/internal/alien/plasmavessel = 5,
@@ -82,7 +82,7 @@
 		/obj/item/organ/internal/eyes/night_vision/goliath = 2,
 		/obj/item/organ/internal/eyes/night_vision/rat = 2,
 		/obj/item/organ/internal/heart/gland/ventcrawling = 1,
-	)
+	))
 
 /obj/structure/meateor_fluff/flesh_pod/Initialize(mapload)
 	. = ..()

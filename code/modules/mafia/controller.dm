@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	///The 12 roles used in a default game, selected randomly from each list, going in order of position.
 	///This is balanced for player amount, regardless of players you'll still be about equal town and evils.
-	var/static/list/default_role_list = list(
+	var/static/list/default_role_list = STATIC_INIT(list(
 		//town
 		list(TOWN_INVEST, TOWN_OVERFLOW),
 		list(TOWN_SUPPORT),
@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		list(NEUTRAL_KILL, NEUTRAL_DISRUPT),
 		//town
 		list(TOWN_SUPPORT, TOWN_OVERFLOW),
-	)
+	))
 
 /proc/setup_mafia_roles_by_name()
 	var/list/rolelist_dict = list()

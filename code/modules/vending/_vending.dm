@@ -898,10 +898,10 @@
 	return data
 
 /obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
-	var/static/list/default_category = list(
+	var/static/list/default_category = STATIC_INIT(list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
-	)
+	))
 
 	var/list/out_records = list()
 

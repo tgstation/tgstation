@@ -25,9 +25,9 @@
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if(!ignore_typecache)

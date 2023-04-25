@@ -84,7 +84,7 @@
 	var/post_noise = FALSE
 
 	/// List of selectable graffiti options
-	var/static/list/graffiti = list(
+	var/static/list/graffiti = STATIC_INIT(list(
 		"amyjon",
 		"antilizard",
 		"body",
@@ -100,9 +100,9 @@
 		"revolution",
 		"star",
 		"uboa",
-	)
+	))
 	/// List of selectable symbol options
-	var/static/list/symbols = list(
+	var/static/list/symbols = STATIC_INIT(list(
 		"biohazard",
 		"credit",
 		"danger",
@@ -121,9 +121,9 @@
 		"skull",
 		"space",
 		"trade",
-	)
+	))
 	/// List of selectable drawing options
-	var/static/list/drawings = list(
+	var/static/list/drawings = STATIC_INIT(list(
 		"beepsky",
 		"blueprint",
 		"bottle",
@@ -145,9 +145,9 @@
 		"taser",
 		"toilet",
 		"toolbox",
-	)
+	))
 	/// List of selectable orientable options
-	var/static/list/oriented = list(
+	var/static/list/oriented = STATIC_INIT(list(
 		"arrow",
 		"body",
 		"chevron",
@@ -157,18 +157,18 @@
 		"pawprint",
 		"shortline",
 		"thinline",
-	)
+	))
 	/// List of selectable rune options
-	var/static/list/runes = list(
+	var/static/list/runes = STATIC_INIT(list(
 		"rune1",
 		"rune2",
 		"rune3",
 		"rune4",
 		"rune5",
 		"rune6",
-	)
+	))
 	/// List of selectable random options
-	var/static/list/randoms = list(
+	var/static/list/randoms = STATIC_INIT(list(
 		RANDOM_ANY,
 		RANDOM_DRAWING,
 		RANDOM_GRAFFITI,
@@ -178,14 +178,14 @@
 		RANDOM_PUNCTUATION,
 		RANDOM_RUNE,
 		RANDOM_SYMBOL,
-	)
+	))
 	/// List of selectable large options
-	var/static/list/graffiti_large_h = list(
+	var/static/list/graffiti_large_h = STATIC_INIT(list(
 		"furrypride",
 		"paint",
 		"secborg",
 		"yiffhell",
-	)
+	))
 	/// Combined lists
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 

@@ -64,10 +64,10 @@
 	return item_reactions
 
 /obj/machinery/rnd/experimentor/proc/generate_valid_items_and_item_reactions()
-	var/static/list/banned_typecache = typecacheof(list(
+	var/static/list/banned_typecache = STATIC_INIT(typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
-	))
+	)))
 
 	item_reactions = list()
 	valid_items = list()
@@ -638,7 +638,7 @@
 	visible_message(message)
 	to_chat(user, message)
 
-	var/static/list/valid_animals = list(
+	var/static/list/valid_animals = STATIC_INIT(list(
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat,
@@ -651,7 +651,7 @@
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/basic/carp,
-	)
+	))
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))

@@ -93,11 +93,11 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 
 /// If you have certain spells, use a different targetting datum
 /mob/living/basic/carp/magic/proc/assign_spell_ai(spell_type)
-	var/static/list/spell_special_targetting = list(
+	var/static/list/spell_special_targetting = STATIC_INIT(list(
 		/obj/projectile/magic/animate = MAGICARP_SPELL_OBJECTS,
 		/obj/projectile/magic/door = MAGICARP_SPELL_WALLS,
 		/obj/projectile/magic/resurrection = MAGICARP_SPELL_CORPSES,
-	)
+	))
 
 	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETTING, spell_special_targetting[spell_type])
 

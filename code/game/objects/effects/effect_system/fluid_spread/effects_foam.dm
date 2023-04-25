@@ -21,11 +21,11 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
-	var/static/list/blacklisted_turfs = typecacheof(list(
+	var/static/list/blacklisted_turfs = STATIC_INIT(typecacheof(list(
 		/turf/open/space/transit,
 		/turf/open/chasm,
 		/turf/open/lava,
-	))
+	)))
 	/// The typepath for what this foam leaves behind when it dissipates.
 	var/atom/movable/result_type = null
 	/// Whether or not this foam can produce a remnant movable if something of the same type is already on its turf.

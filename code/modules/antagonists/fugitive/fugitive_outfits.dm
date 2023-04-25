@@ -111,21 +111,21 @@
 /datum/outfit/russian_hunter/pre_equip(mob/living/carbon/human/equip_to)
 
 	// Let's give the Russians a bit of randomization for style.
-	var/static/list/alt_uniforms = list(
+	var/static/list/alt_uniforms = STATIC_INIT(list(
 		/obj/item/clothing/under/syndicate/soviet,
 		/obj/item/clothing/under/syndicate/combat,
 		/obj/item/clothing/under/syndicate/rus_army,
 		/obj/item/clothing/under/syndicate/camo,
-	)
-	var/static/list/alt_suits = list(
+	))
+	var/static/list/alt_suits = STATIC_INIT(list(
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/suit/armor/vest/russian_coat,
-	)
-	var/static/list/alt_helmets = list(
+	))
+	var/static/list/alt_helmets = STATIC_INIT(list(
 		/obj/item/clothing/head/costume/bearpelt,
 		/obj/item/clothing/head/costume/ushanka,
 		/obj/item/clothing/head/helmet/rus_helmet,
-	)
+	))
 
 	if(prob(80))
 		uniform = pick(alt_uniforms)

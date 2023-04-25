@@ -44,14 +44,14 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/static/list/accepted = typecacheof(list(
+	var/static/list/accepted = STATIC_INIT(typecacheof(list(
 		/obj/item/food/grown/tobacco,
 		/obj/item/food/grown/tea,
 		/obj/item/food/grown/ash_flora/mushroom_leaf,
 		/obj/item/food/grown/ambrosia/vulgaris,
 		/obj/item/food/grown/ambrosia/deus,
 		/obj/item/food/grown/wheat,
-	))
+	)))
 
 /obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()

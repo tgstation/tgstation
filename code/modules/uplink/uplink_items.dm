@@ -89,11 +89,11 @@
 /// Returns by how much percentage do we reduce the price of the selected item
 /datum/uplink_item/proc/get_discount()
 
-	var/static/list/discount_types = list(
+	var/static/list/discount_types = STATIC_INIT(list(
 		TRAITOR_DISCOUNT_SMALL = 4,
 		TRAITOR_DISCOUNT_AVERAGE = 2,
 		TRAITOR_DISCOUNT_BIG = 1,
-	)
+	))
 
 	return get_discount_value(pick_weight(discount_types))
 

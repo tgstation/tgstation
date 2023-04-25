@@ -47,7 +47,7 @@
 	return ..()
 
 /obj/item/circuit_component/object_overlay/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		"Corners (Blue)" = "hud_corners",
 		"Corners (Red)" = "hud_corners_red",
 		"Circle (Blue)" = "hud_circle",
@@ -58,7 +58,7 @@
 		"Triangle (Red)" = "hud_triangle_red",
 		"HUD mark (Blue)" = "hud_mark",
 		"HUD mark (Red)" = "hud_mark_red"
-	)
+	))
 	object_overlay_options = add_option_port("Object", component_options)
 	options_map = component_options
 

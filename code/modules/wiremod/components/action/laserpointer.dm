@@ -24,12 +24,12 @@
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/laserpointer/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		"red",
 		"green",
 		"blue",
 		"purple",
-	)
+	))
 	lasercolour_option = add_option_port("Laser Colour", component_options)
 
 

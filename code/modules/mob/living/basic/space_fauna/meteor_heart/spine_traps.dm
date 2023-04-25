@@ -56,11 +56,11 @@
 	/// Time between activations
 	COOLDOWN_DECLARE(thrust_delay)
 	/// Weighted list of body zones to target while standing
-	var/static/list/standing_damage_zones = list(
+	var/static/list/standing_damage_zones = STATIC_INIT(list(
 		BODY_ZONE_CHEST = 1,
 		BODY_ZONE_R_LEG = 3,
 		BODY_ZONE_L_LEG = 3,
-	)
+	))
 
 /obj/effect/temp_visual/thrusting_spines/Initialize(mapload)
 	. = ..()
@@ -68,9 +68,9 @@
 	addtimer(CALLBACK(src, PROC_REF(ready)), 1 SECONDS, TIMER_DELETE_ME)
 	addtimer(CALLBACK(src, PROC_REF(retract)), duration - (0.5 SECONDS), TIMER_DELETE_ME)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /// Called when we're ready to start impaling people

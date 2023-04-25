@@ -44,12 +44,12 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/openspace_item_click_handler)
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_WELDER = list(
 			SCREENTIP_CONTEXT_LMB = "Craft iron sheets",
 			SCREENTIP_CONTEXT_RMB = "Craft floor tiles",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)

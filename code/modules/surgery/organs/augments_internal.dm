@@ -104,12 +104,12 @@
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
-	var/static/list/signalCache = list(
+	var/static/list/signalCache = STATIC_INIT(list(
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 		COMSIG_LIVING_STATUS_PARALYZE,
-	)
+	))
 
 	var/stun_cap_amount = 40
 

@@ -129,9 +129,9 @@
 	. = ..()
 	var/newcolor = pick(10;COLOR_GREEN, 5;COLOR_BLUE, 3;COLOR_RED, 1;COLOR_PURPLE)
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/rupee/proc/on_entered(datum/source, atom/movable/AM)

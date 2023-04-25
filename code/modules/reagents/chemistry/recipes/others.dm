@@ -616,7 +616,7 @@
 
 /datum/chemical_reaction/scream/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	/// List of screams to play.
-	var/static/list/screams = list(
+	var/static/list/screams = STATIC_INIT(list(
 		'sound/voice/human/femalescream_1.ogg',
 		'sound/voice/human/femalescream_2.ogg',
 		'sound/voice/human/femalescream_3.ogg',
@@ -629,7 +629,7 @@
 		'sound/voice/human/malescream_5.ogg',
 		'sound/voice/human/malescream_6.ogg',
 		'sound/voice/human/wilhelm_scream.ogg',
-	)
+	))
 
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
 

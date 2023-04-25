@@ -95,12 +95,12 @@
 
 /obj/item/stack/tile/iron/Initialize(mapload)
 	. = ..()
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_WELDER = list(
 			SCREENTIP_CONTEXT_LMB = "Craft iron sheets",
 			SCREENTIP_CONTEXT_RMB = "Craft iron rods",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/stack/tile/iron/welder_act(mob/living/user, obj/item/tool)

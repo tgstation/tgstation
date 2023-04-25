@@ -13,7 +13,7 @@
 	var/obj/machinery/quantumpad/qpad
 
 	/// where the pad is located and what color the card will become
-	var/static/list/gags_coloring = list(
+	var/static/list/gags_coloring = STATIC_INIT(list(
 		/area/station/maintenance = COLOR_ASSISTANT_GRAY,
 		/area/station/security = COLOR_SECURITY_RED,
 		/area/station/service = COLOR_SERVICE_LIME,
@@ -25,7 +25,7 @@
 		/area/station/engineering = COLOR_ENGINEERING_ORANGE,
 		/area/station/cargo = COLOR_CARGO_BROWN,
 		/area/mine = COLOR_CARGO_BROWN
-	)
+	))
 
 /obj/item/quantum_keycard/examine(mob/user)
 	. = ..()

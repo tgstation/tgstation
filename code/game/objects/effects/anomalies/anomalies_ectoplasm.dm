@@ -132,13 +132,13 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	anchored = TRUE
-	var/static/list/spooky_noises = list(
+	var/static/list/spooky_noises = STATIC_INIT(list(
 		'sound/hallucinations/growl1.ogg',
 		'sound/hallucinations/growl2.ogg',
 		'sound/hallucinations/growl3.ogg',
 		'sound/hallucinations/veryfar_noise.ogg',
 		'sound/hallucinations/wail.ogg'
-	)
+	))
 	var/list/ghosts_spawned = list()
 
 /obj/structure/ghost_portal/Initialize(mapload, candidate_list)

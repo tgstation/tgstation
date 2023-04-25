@@ -54,7 +54,7 @@
 // to list("socks" = "enabled", "name" = "antag")
 // as well as removing anything that was set to FALSE, as this can be extrapolated.
 /datum/preferences/proc/migrate_randomization()
-	var/static/list/random_settings = list(
+	var/static/list/random_settings = STATIC_INIT(list(
 		"random_age" = "age",
 		"random_backpack" = "backpack",
 		"random_eye_color" = "eye_color",
@@ -70,13 +70,13 @@
 		"random_undershirt" = "undershirt",
 		"random_underwear" = "underwear",
 		"random_underwear_color" = "underwear_color",
-	)
+	))
 
-	var/static/list/random_antag_settings = list(
+	var/static/list/random_antag_settings = STATIC_INIT(list(
 		"random_age_antag" = "age",
 		"random_gender_antag" = "gender",
 		"random_name_antag" = "name",
-	)
+	))
 
 	var/list/new_randomise = list()
 

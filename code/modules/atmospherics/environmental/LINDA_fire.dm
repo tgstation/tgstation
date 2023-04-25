@@ -105,10 +105,10 @@
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /**

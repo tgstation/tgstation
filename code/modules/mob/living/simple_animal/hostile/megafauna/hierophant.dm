@@ -671,9 +671,9 @@ Difficulty: Hard
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	INVOKE_ASYNC(src, PROC_REF(blast))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/temp_visual/hierophant/blast/damaging/proc/blast()

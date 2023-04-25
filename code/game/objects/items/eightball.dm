@@ -14,7 +14,7 @@
 	var/shake_time = 50
 	var/cooldown_time = 100
 
-	var/static/list/possible_answers = list(
+	var/static/list/possible_answers = STATIC_INIT(list(
 		"It is certain",
 		"It is decidedly so",
 		"Without a doubt",
@@ -34,7 +34,7 @@
 		"My reply is no",
 		"My sources say no",
 		"Outlook not so good",
-		"Very doubtful")
+		"Very doubtful"))
 
 /obj/item/toy/eightball/Initialize(mapload)
 	. = ..()
@@ -102,7 +102,7 @@
 	//these kind of store the same thing but one is easier to work with.
 	var/list/votes = list()
 	var/list/voted = list()
-	var/static/list/haunted_answers = list(
+	var/static/list/haunted_answers = STATIC_INIT(list(
 		"yes" = list(
 			"It is certain",
 			"It is decidedly so",
@@ -129,7 +129,7 @@
 			"Outlook not so good",
 			"Very doubtful"
 		)
-	)
+	))
 
 /obj/item/toy/eightball/haunted/Initialize(mapload)
 	. = ..()

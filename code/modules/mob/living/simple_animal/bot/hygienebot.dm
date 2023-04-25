@@ -45,9 +45,9 @@
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
@@ -127,11 +127,11 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						var/static/list/messagevoice = list(
+						var/static/list/messagevoice = STATIC_INIT(list(
 							"Fucking finally." = 'sound/voice/hygienebot/finally.ogg',
 							"Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg',
 							"Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg',
-						)
+						))
 						var/message = pick(messagevoice)
 						speak(message)
 						playsound(loc, messagevoice[message], 50)
@@ -146,7 +146,7 @@
 						return
 					SSmove_manager.move_to(src, target, 0, currentspeed)
 					if(mad && prob(min(frustration * 2, 60)))
-						var/static/list/messagevoice = list(
+						var/static/list/messagevoice = STATIC_INIT(list(
 							"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
 							"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
 							"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
@@ -154,7 +154,7 @@
 							"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
 							"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
 							"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
-						)
+						))
 						var/message = pick(messagevoice)
 						speak(message)
 						playsound(loc, messagevoice[message], 50)

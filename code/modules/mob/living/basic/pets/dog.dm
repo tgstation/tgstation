@@ -34,7 +34,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	/// Instructions you can give to dogs
-	var/static/list/pet_commands = list(
+	var/static/list/pet_commands = STATIC_INIT(list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
@@ -42,7 +42,7 @@
 		/datum/pet_command/point_targetting/attack/dog,
 		/datum/pet_command/point_targetting/fetch,
 		/datum/pet_command/play_dead,
-	)
+	))
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()

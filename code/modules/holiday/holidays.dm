@@ -334,14 +334,14 @@
 	begin_day = 23
 	end_day = 29
 
-	var/static/list/rainbow_colors = list(
+	var/static/list/rainbow_colors = STATIC_INIT(list(
 		COLOR_PRIDE_PURPLE,
 		COLOR_PRIDE_BLUE,
 		COLOR_PRIDE_GREEN,
 		COLOR_PRIDE_YELLOW,
 		COLOR_PRIDE_ORANGE,
 		COLOR_PRIDE_RED,
-	)
+	))
 
 /// Given an atom, will return what color it should be to match the pride flag.
 /datum/holiday/pride_week/proc/get_floor_tile_color(atom/atom)

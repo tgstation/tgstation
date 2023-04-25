@@ -24,7 +24,7 @@
 		if(istype(equipped_backpack))
 			// in the future, this could / should be de-harcoded and
 			// just draw from a pool uplink, theft, and antag item typepaths
-			var/static/list/stash_item_paths = list(
+			var/static/list/stash_item_paths = STATIC_INIT(list(
 				/obj/item/areaeditor/blueprints,
 				/obj/item/assembly/flash,
 				/obj/item/card/id/advanced/gold/captains_spare,
@@ -44,7 +44,7 @@
 				/obj/item/powersink, //this is a bulky item what
 				/obj/item/reagent_containers/hypospray/cmo,
 				/obj/item/spellbook,
-			)
+			))
 			var/obj/item/stashed_item = pick(stash_item_paths)
 			message_pool[span_notice("[suspicious_personnel] puts the [initial(stashed_item.name)] into [equipped_backpack].")] = 5
 

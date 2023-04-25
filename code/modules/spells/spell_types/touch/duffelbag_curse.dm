@@ -15,7 +15,7 @@
 	hand_path = /obj/item/melee/touch_attack/duffelbag
 
 	/// Some meme "elaborate backstories" to use.
-	var/static/list/elaborate_backstory = list(
+	var/static/list/elaborate_backstory = STATIC_INIT(list(
 		"spacewar origin story",
 		"military background",
 		"corporate connections",
@@ -23,7 +23,7 @@
 		"anti-government activities",
 		"upbringing on the space farm",
 		"fond memories with your buddy Keith",
-	)
+	))
 
 /datum/action/cooldown/spell/touch/duffelbag/is_valid_target(atom/cast_on)
 	return iscarbon(cast_on)

@@ -17,10 +17,10 @@
 	/// The time it takes to exit a mirror / phase in / exit jaunt.
 	var/phase_in_time = 2 SECONDS
 	/// Static typecache of types that are counted as reflective.
-	var/static/list/special_reflective_surfaces = typecacheof(list(
+	var/static/list/special_reflective_surfaces = STATIC_INIT(typecacheof(list(
 		/obj/structure/window,
 		/obj/structure/mirror,
-	))
+	)))
 
 /datum/action/cooldown/spell/jaunt/mirror_walk/Grant(mob/grant_to)
 	. = ..()

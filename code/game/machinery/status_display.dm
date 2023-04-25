@@ -247,7 +247,7 @@
 
 	/// Width of each character, including kerning gap afterwards.
 	/// We don't use rich text or anything fancy, so we can bake these values.
-	var/static/list/char_widths = list(
+	var/static/list/char_widths = STATIC_INIT(list(
 		//   ! " # $ % & ' ( ) * + , - . /
 		1, 2, 3, 5, 4, 5, 5, 2, 3, 3, 3, 4, 2, 3, 2, 3,
 		// 0 1 2 3 4 5 6 7 8 9 : ; < = > ?
@@ -260,7 +260,7 @@
 		3, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
 		// p q r s t u v w x y z { | } ~
 		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
-	)
+	))
 
 /obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0)
 	. = ..()
@@ -467,7 +467,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	var/emotion = AI_EMOTION_BLANK
 
 	/// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.
-	var/static/list/emotion_map = list(
+	var/static/list/emotion_map = STATIC_INIT(list(
 		AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
 		AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
 		AI_EMOTION_HAPPY = "ai_happy",
@@ -484,7 +484,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
 		AI_EMOTION_BLUE_GLOW = "ai_sal",
 		AI_EMOTION_RED_GLOW = "ai_hal",
-	)
+	))
 
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
@@ -540,14 +540,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	message2 = add_input_port("Message 2", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/status_display/populate_options()
-	var/static/list/command_options = list(
+	var/static/list/command_options = STATIC_INIT(list(
 		"Blank" = "blank",
 		"Shuttle" = "shuttle",
 		"Message" = "message",
 		"Alert" = "alert"
-	)
+	))
 
-	var/static/list/picture_options = list(
+	var/static/list/picture_options = STATIC_INIT(list(
 		"Default" = "default",
 		"Red Alert" = "redalert",
 		"Biohazard" = "biohazard",
@@ -560,7 +560,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		"Confused" = "ai_confused",
 		"Surprised" = "ai_surprised",
 		"BSOD" = "ai_bsod"
-	)
+	))
 
 	command = add_option_port("Command", command_options)
 	command_map = command_options

@@ -11,14 +11,14 @@
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	var/next_beep = 0 //Prevents spamming of the construction sound
 	/// The material cost to construct something on the girder
-	var/static/list/construction_cost = list(
+	var/static/list/construction_cost = STATIC_INIT(list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/rods = 5,
 		/obj/item/stack/sheet/plasteel = 2,
 		/obj/item/stack/sheet/bronze = 2,
 		/obj/item/stack/sheet/runed_metal = 1,
 		exotic_material = 2 // this needs to be refactored properly
-	)
+	))
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()

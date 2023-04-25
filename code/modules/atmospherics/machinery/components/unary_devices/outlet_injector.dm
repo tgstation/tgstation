@@ -22,11 +22,11 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
 	. = ..()
-	var/static/list/tool_screentips = list(
+	var/static/list/tool_screentips = STATIC_INIT(list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
 		)
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	register_context()
 

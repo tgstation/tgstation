@@ -12,12 +12,12 @@
 	/// Current PDA inserted into the machine.
 	var/obj/item/modular_computer/pda/stored_pda = null
 	/// A blacklist of PDA types that we should not be able to paint.
-	var/static/list/pda_type_blacklist = list(
+	var/static/list/pda_type_blacklist = STATIC_INIT(list(
 		/obj/item/modular_computer/pda/heads,
 		/obj/item/modular_computer/pda/clear,
 		/obj/item/modular_computer/pda/syndicate,
 		/obj/item/modular_computer/pda/chameleon,
-		/obj/item/modular_computer/pda/chameleon/broken)
+		/obj/item/modular_computer/pda/chameleon/broken))
 	/// A list of the PDA types that this machine can currently paint.
 	var/list/pda_types = list()
 	/// A list of the card trims that this machine can currently imprint onto a card.

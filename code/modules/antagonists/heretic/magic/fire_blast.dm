@@ -146,9 +146,9 @@
 
 /obj/effect/ebeam/fire/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if(!isturf(loc) || mapload) // idk if this would ever be maploaded but you never know

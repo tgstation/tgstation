@@ -29,16 +29,16 @@
 	num_output = add_output_port("Unit of Time", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/timepiece/populate_options()
-	var/static/format_options = list(
+	var/static/format_options = STATIC_INIT(list(
 		COMP_TIMEPIECE_TWENTYFOUR_HOUR, // Station time is expressed in 24-h in the status tab. So this is the default.
 		COMP_TIMEPIECE_TWELVE_HOUR,
-	)
+	))
 	format = add_option_port("Time Format", format_options)
-	var/static/unit_options = list(
+	var/static/unit_options = STATIC_INIT(list(
 		COMP_TIMEPIECE_HOURS,
 		COMP_TIMEPIECE_MINUTES,
 		COMP_TIMEPIECE_SECONDS,
-	)
+	))
 	time_unit = add_option_port("Unit of Time", unit_options)
 
 /obj/item/circuit_component/timepiece/input_received(datum/port/input/port)

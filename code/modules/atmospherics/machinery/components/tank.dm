@@ -42,11 +42,11 @@
 	var/datum/gas_mixture/air_contents
 
 	/// The sounds that play when the tank is breaking from overpressure
-	var/static/list/breaking_sounds = list(
+	var/static/list/breaking_sounds = STATIC_INIT(list(
 		'sound/effects/structure_stress/pop1.ogg',
 		'sound/effects/structure_stress/pop2.ogg',
 		'sound/effects/structure_stress/pop3.ogg',
-	)
+	))
 
 	/// Shared images for the knob overlay representing a side of the tank that is open to connections
 	var/static/list/knob_overlays

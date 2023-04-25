@@ -58,7 +58,7 @@
  */
 /datum/anomaly_placer/proc/generateAllowedAreas()
 	//Places that shouldn't explode
-	var/static/list/safe_area_types = typecacheof(list(
+	var/static/list/safe_area_types = STATIC_INIT(typecacheof(list(
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/ai_monitored/turret_protected/ai_upload,
 		/area/station/engineering,
@@ -66,7 +66,7 @@
 		/area/station/solars,
 		/area/station/holodeck,
 		/area/station/maintenance,
-	))
+	)))
 
 	//Subtypes from the above that actually should explode.
 	var/static/list/unsafe_area_subtypes = STATIC_INIT(typecacheof(list(/area/station/engineering/break_room)))

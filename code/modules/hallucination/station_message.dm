@@ -39,13 +39,13 @@
 /datum/hallucination/station_message/heretic
 	/// This is gross and will probably easily be outdated in some time but c'est la vie.
 	/// Maybe if someone datumizes heretic paths or something this can be improved
-	var/static/list/ascension_bodies = list(
+	var/static/list/ascension_bodies = STATIC_INIT(list(
 		"Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!",
 		"Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!",
 		"Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!",
 		"Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!",
 		"The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!",
-	)
+	))
 
 /datum/hallucination/station_message/heretic/start()
 	// Unfortunately, this will not be synced if mass hallucinated

@@ -24,11 +24,11 @@
 		rmb_text = "Detach a modkit", \
 	)
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_CROWBAR = list(
 			SCREENTIP_CONTEXT_LMB = "Eject all modkits",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/shoot_with_empty_chamber(mob/living/user)

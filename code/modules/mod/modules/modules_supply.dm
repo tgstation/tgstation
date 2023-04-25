@@ -479,12 +479,12 @@
 	/// Time it takes us to complete the animation.
 	var/animate_time = 0.25 SECONDS
 	/// List of traits to add/remove from our subject as needed.
-	var/static/list/user_traits = list(
+	var/static/list/user_traits = STATIC_INIT(list(
 		TRAIT_FORCED_STANDING,
 		TRAIT_HANDS_BLOCKED,
 		TRAIT_LAVA_IMMUNE,
 		TRAIT_NO_SLIP_ALL,
-	)
+	))
 
 /obj/item/mod/module/sphere_transform/on_activation()
 	if(!mod.wearer.has_gravity())

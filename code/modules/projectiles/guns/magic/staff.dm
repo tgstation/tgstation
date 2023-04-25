@@ -89,7 +89,7 @@
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
-		
+
 /obj/item/gun/magic/staff/healing/examine(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
@@ -134,7 +134,7 @@
 
 	/// Static list of all projectiles we can fire from our staff.
 	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
-	var/static/list/allowed_projectile_types = list(
+	var/static/list/allowed_projectile_types = STATIC_INIT(list(
 		/obj/projectile/magic/animate,
 		/obj/projectile/magic/antimagic,
 		/obj/projectile/magic/arcane_barrage,
@@ -153,7 +153,7 @@
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill,
-	)
+	))
 
 /obj/item/gun/magic/staff/chaos/unrestricted
 	allow_intruder_use = TRUE

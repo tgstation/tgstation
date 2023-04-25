@@ -16,9 +16,9 @@
 	/// How long the smoke sticks around before it dissipates.
 	var/lifetime = 10 SECONDS
 	/// Makes the smoke react to changes on/of its turf.
-	var/static/loc_connections = list(
+	var/static/loc_connections = STATIC_INIT(list(
 		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = PROC_REF(react_to_atmos_adjacency_changes)
-	)
+	))
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
@@ -195,9 +195,9 @@
 
 /obj/effect/particle_effect/fluid/smoke/bad/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/particle_effect/fluid/smoke/bad/smoke_mob(mob/living/carbon/smoker)

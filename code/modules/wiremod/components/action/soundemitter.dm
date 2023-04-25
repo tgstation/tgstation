@@ -46,7 +46,7 @@
 	backwards = add_input_port("Play Backwards", PORT_TYPE_NUMBER, default = 0)
 
 /obj/item/circuit_component/soundemitter/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		"Buzz" = 'sound/machines/buzz-sigh.ogg',
 		"Buzz Twice" = 'sound/machines/buzz-two.ogg',
 		"Chime" = 'sound/machines/chime.ogg',
@@ -68,7 +68,7 @@
 		"Whip" = 'sound/weapons/whip.ogg',
 		"Laugh Track" = 'sound/items/SitcomLaugh1.ogg',
 		"Gavel" = 'sound/items/gavel.ogg',
-	)
+	))
 	sound_file = add_option_port("Sound Option", component_options)
 	options_map = component_options
 

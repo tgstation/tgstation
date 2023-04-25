@@ -17,14 +17,14 @@
 	var/datum/port/input/thing_to_check
 
 /obj/item/circuit_component/compare/typecheck/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
 		PORT_COMPOSITE_TYPE_LIST,
 		PORT_TYPE_ATOM,
 		COMP_TYPECHECK_MOB,
 		COMP_TYPECHECK_HUMAN,
-	)
+	))
 	typecheck_options = add_option_port("Typecheck Options", component_options)
 
 /obj/item/circuit_component/compare/typecheck/populate_custom_ports()

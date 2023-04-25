@@ -22,7 +22,7 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/equipment_action/populate_options()
-	var/static/action_options = list(
+	var/static/action_options = STATIC_INIT(list(
 		"Blank",
 
 		"One",
@@ -57,7 +57,7 @@
 		"Skull",
 		"Sleep",
 		"Wireless",
-	)
+	))
 
 	icon_options = add_option_port("Icon", action_options)
 

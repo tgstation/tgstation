@@ -9,9 +9,9 @@
 	. = ..()
 	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
 		return INITIALIZE_HINT_QDEL
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_TURF_CHANGED = PROC_REF(handle_turf_change),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)

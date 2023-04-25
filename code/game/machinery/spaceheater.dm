@@ -59,7 +59,7 @@
 		rmb_text = "Toggle power", \
 	)
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_SCREWDRIVER = list(
 			SCREENTIP_CONTEXT_LMB = "Open hatch",
 		),
@@ -67,7 +67,7 @@
 		TOOL_WRENCH = list(
 			SCREENTIP_CONTEXT_LMB = "Anchor",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/machinery/space_heater/Destroy()
@@ -398,12 +398,12 @@
 	if(disassembled)
 		beaker?.forceMove(drop_location())
 		beaker = null
-	var/static/bonus_junk = list(
+	var/static/bonus_junk = STATIC_INIT(list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/thermometer = 1
-		)
+		))
 	for(var/item in bonus_junk)
 		if(prob(80))
 			new item(get_turf(loc))

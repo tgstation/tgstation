@@ -95,14 +95,14 @@
 
 /datum/surgery_step/brainwash/sleeper_agent
 	time = 25 SECONDS
-	var/static/list/possible_objectives = list(
+	var/static/list/possible_objectives = STATIC_INIT(list(
 		"You love the Syndicate.",
 		"Do not trust Nanotrasen.",
 		"The Captain is a lizardperson.",
 		"Nanotrasen isn't real.",
 		"They put something in the food to make you forget.",
 		"You are the only real person on the station."
-	)
+	))
 
 /datum/surgery_step/brainwash/sleeper_agent/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	objective = pick(possible_objectives)

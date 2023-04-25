@@ -37,9 +37,9 @@
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(ToggleActive))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/pressure_plate/proc/on_entered(datum/source, atom/movable/AM)

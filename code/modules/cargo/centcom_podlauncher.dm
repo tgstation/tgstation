@@ -26,7 +26,7 @@
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
 /datum/centcom_podlauncher
 	/// Static typecache of atoms we won't lift up, or pod or whatever.
-	var/static/list/ignored_atoms = typecacheof(list(
+	var/static/list/ignored_atoms = STATIC_INIT(typecacheof(list(
 		null, // I don't know why null is the first element of this typepache but it was there when I found it
 		/mob/dead,
 		/obj/effect/landmark,
@@ -34,7 +34,7 @@
 		/obj/effect/particle_effect/sparks,
 		/obj/effect/pod_landingzone,
 		/obj/effect/client_image_holder,
-	))
+	)))
 
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum

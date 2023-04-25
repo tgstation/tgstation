@@ -28,14 +28,14 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/trigonometry/populate_options()
-	var/static/component_functions = list(
+	var/static/component_functions = STATIC_INIT(list(
 		COMP_TRIGONOMETRY_SINE,
 		COMP_TRIGONOMETRY_COSINE,
 		COMP_TRIGONOMETRY_TANGENT,
 		COMP_TRIGONOMETRY_ARCSINE,
 		COMP_TRIGONOMETRY_ARCCOSINE,
 		COMP_TRIGONOMETRY_ARCTANGENT,
-	)
+	))
 	trigonometric_function = add_option_port("Trigonometric Function", component_functions)
 
 /obj/item/circuit_component/trigonometry/populate_ports()

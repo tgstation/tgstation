@@ -112,11 +112,11 @@
 	if(listener.mind?.holy_role)
 		return
 
-	var/static/list/sleepy_messages = list(
+	var/static/list/sleepy_messages = STATIC_INIT(list(
 		"The music is putting you to sleep...",
 		"The music makes you nod off for a moment.",
 		"You try to focus on staying awake through the song.",
-	)
+	))
 
 	if(prob(20))
 		to_chat(listener, span_warning(pick(sleepy_messages)))

@@ -18,7 +18,7 @@
 	/// Rate of temperature stabilization per second.
 	var/temp_stabilization_rate = 0.1
 	/// Possible gases to expel, with how much moles they create.
-	var/static/list/possible_gases = list(
+	var/static/list/possible_gases = STATIC_INIT(list(
 		/datum/gas/oxygen = 50,
 		/datum/gas/nitrogen = 750, //overpressurizing is hard!.
 		/datum/gas/water_vapor = 1, //you need incredibly little water vapor for the effects to kick in
@@ -26,17 +26,17 @@
 		/datum/gas/carbon_dioxide = 50,
 		/datum/gas/plasma = 3,
 		/datum/gas/bz = 10,
-	)
+	))
 	/// Gas colors, used for the particles.
-	var/static/list/gas_colors = list(
+	var/static/list/gas_colors = STATIC_INIT(list(
 		/datum/gas/oxygen = "#63BFDD", //color of frozen oxygen
-		/datum/gas/nitrogen = "#777777", //grey (grey)
+		/datum/gas/nitrogen = "#777777", //grey (grey))
 		/datum/gas/water_vapor = "#96ADCF", //water is slightly blue
 		/datum/gas/nitrous_oxide = "#FEFEFE", //white like the sprite
 		/datum/gas/carbon_dioxide = "#222222", //black like coal
 		/datum/gas/plasma = "#B233CC", //color of the plasma sprite
 		/datum/gas/bz = "#FAFF00", //color of the bz metabolites reagent
-	)
+	))
 
 /mob/living/simple_animal/hostile/guardian/gaseous/Initialize(mapload, theme)
 	. = ..()

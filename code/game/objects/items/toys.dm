@@ -418,11 +418,11 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_SCREWDRIVER = list(
 			SCREENTIP_CONTEXT_LMB = "Change blade color"
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /*
@@ -651,9 +651,9 @@
 
 /obj/item/toy/snappop/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
@@ -1401,12 +1401,12 @@ GLOBAL_LIST_EMPTY(intento_players)
 	/// Score of the player
 	var/score = 0
 	/// Associated list of intents to their sounds
-	var/static/list/sound_by_intent = list(
+	var/static/list/sound_by_intent = STATIC_INIT(list(
 		HELP = 'sound/items/intents/Help.ogg',
 		DISARM = 'sound/items/intents/Disarm.ogg',
 		GRAB = 'sound/items/intents/Grab.ogg',
 		HARM = 'sound/items/intents/Harm.ogg',
-		)
+		))
 
 	/// What state the toy is in.
 	var/state = STATE_OFF

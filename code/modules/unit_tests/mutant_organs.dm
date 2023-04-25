@@ -8,7 +8,7 @@
 		/datum/species/dullahan,
 	)
 	var/list/species = subtypesof(/datum/species) - ignore
-	var/static/list/organs_we_care_about = list(
+	var/static/list/organs_we_care_about = STATIC_INIT(list(
 		ORGAN_SLOT_BRAIN,
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -18,7 +18,7 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_APPENDIX,
-	)
+	))
 
 	for(var/datum/species/species_type as anything in species)
 		// get our dummy

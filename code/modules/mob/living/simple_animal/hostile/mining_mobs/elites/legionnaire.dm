@@ -281,9 +281,9 @@
 
 /obj/structure/legionnaire_bonfire/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/legionnaire_bonfire/proc/on_entered(datum/source, atom/movable/mover)

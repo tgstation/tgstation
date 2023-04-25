@@ -36,12 +36,12 @@
 /obj/item/storage/medkit/regular/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-	)
+	))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/emergency
@@ -52,14 +52,14 @@
 /obj/item/storage/medkit/emergency/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/healthanalyzer/wound = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/storage/pill_bottle/iron = 1,
-	)
+	))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/surgery
@@ -128,7 +128,7 @@
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
@@ -138,7 +138,7 @@
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
-	)
+	))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/ancient
@@ -148,10 +148,10 @@
 /obj/item/storage/medkit/ancient/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
-		/obj/item/stack/medical/ointment= 3)
+		/obj/item/stack/medical/ointment= 3))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/ancient/heirloom
@@ -172,11 +172,11 @@
 /obj/item/storage/medkit/fire/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/toxin
@@ -194,11 +194,11 @@
 /obj/item/storage/medkit/toxin/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 	    /obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/o2
@@ -215,11 +215,11 @@
 /obj/item/storage/medkit/o2/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/reagent_containers/syringe/convermol = 3,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/storage/pill_bottle/iron = 1)
+		/obj/item/storage/pill_bottle/iron = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/brute
@@ -236,11 +236,11 @@
 /obj/item/storage/medkit/brute/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/advanced
@@ -254,11 +254,11 @@
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/penacid = 1)
+		/obj/item/storage/pill_bottle/penacid = 1))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/tactical
@@ -277,7 +277,7 @@
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
-	var/static/list/items_inside = list(
+	var/static/list/items_inside = STATIC_INIT(list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
@@ -290,7 +290,7 @@
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
-	)
+	))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/tactical/premium
@@ -301,7 +301,7 @@
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return
-	var/static/list/items_inside = list(
+	var/static/list/items_inside = STATIC_INIT(list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
@@ -317,7 +317,7 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
-	)
+	))
 	generate_items_inside(items_inside,src)
 
 //medibot assembly

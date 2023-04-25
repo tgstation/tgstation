@@ -31,13 +31,13 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
 	/// List of types which should always be allowed to be faxed
-	var/static/list/allowed_types = list(
+	var/static/list/allowed_types = STATIC_INIT(list(
 		/obj/item/paper,
 		/obj/item/photo,
 		/obj/item/tcgcard
-	)
+	))
 	/// List of types which should be allowed to be faxed if hacked
-	var/static/list/exotic_types = list(
+	var/static/list/exotic_types = STATIC_INIT(list(
 		/obj/item/food/pizzaslice,
 		/obj/item/food/root_flatbread,
 		/obj/item/food/pizza/flatbread,
@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/folder/biscuit,
-	)
+	))
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
 		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),

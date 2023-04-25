@@ -8,9 +8,9 @@
 /obj/structure/scanner_gate_shell/Initialize(mapload)
 	. = ..()
 	set_scanline("passive")
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	AddComponent(/datum/component/shell, list(

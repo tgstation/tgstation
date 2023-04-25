@@ -1074,12 +1074,12 @@
 	inverse_chem = /datum/reagent/inverse/antihol
 	/// All status effects we remove on metabolize.
 	/// Does not include drunk (despite what you may thing) as that's decresed gradually
-	var/static/list/status_effects_to_clear = list(
+	var/static/list/status_effects_to_clear = STATIC_INIT(list(
 		/datum/status_effect/confusion,
 		/datum/status_effect/dizziness,
 		/datum/status_effect/drowsiness,
 		/datum/status_effect/speech/slurring/drunk,
-	)
+	))
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	for(var/effect in status_effects_to_clear)
@@ -1269,14 +1269,14 @@
 
 /// Returns a hippie-esque string for the person affected by the reagent to say.
 /datum/reagent/medicine/earthsblood/proc/return_hippie_line()
-	var/static/list/earthsblood_lines = list(
+	var/static/list/earthsblood_lines = STATIC_INIT(list(
 		"Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?",
 		"Do you believe in magic in a young girl's heart?",
 		"It ain't me, it ain't me...",
 		"Make love, not war!",
 		"Stop, hey, what's that sound? Everybody look what's going down...",
 		"Yeah, well, you know, that's just, like, uh, your opinion, man.",
-	)
+	))
 
 	return pick(earthsblood_lines)
 

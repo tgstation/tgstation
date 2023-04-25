@@ -148,7 +148,7 @@
 	/// Needs burden level nine to refill.
 	var/needs_burden = TRUE
 	/// List of all possible names and descriptions.
-	var/static/list/possible_names = list(
+	var/static/list/possible_names = STATIC_INIT(list(
 		"Requiescat" = "May they rest in peace.",
 		"Requiem" = "They will never reach truth.",
 		"Vade Retro" = "Having a gun might make exorcisms more effective, who knows?",
@@ -167,7 +167,7 @@
 		"Ultimort" = "Your hope dies last.",
 		"Lifelight" = "No escape, no greater fate to be made.",
 		"Bendbreaker" = "FRAGILE: Please do not bend or break.",
-		"Pop Pop" = "The name referring to an onomatopeia (phonetic imitation) of a gun firing.",
+		"Pop Pop" = "The name referring to an onomatopeia (phonetic imitation) )of a gun firing.",
 		"Justice" = "Justice is Splendor.",
 		"Splendor" = "Splendor is Justice.",
 		"Revelation" = "Awaken your faith.",
@@ -181,7 +181,7 @@
 		"Daredevil" = "Hey now, you won't be reckless with this, will you?",
 		"Lacytanga" = "Rules are written by the strong.",
 		"A10" = "The fist of God. Keep away from the terrible.",
-	)
+	))
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()

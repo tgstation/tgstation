@@ -507,12 +507,12 @@
 	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	/// List of traits to add/remove from our subject when we are in their system
-	var/static/list/subject_traits = list(
+	var/static/list/subject_traits = STATIC_INIT(list(
 		TRAIT_STABLEHEART,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOCRITDAMAGE,
-	)
+	))
 
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"

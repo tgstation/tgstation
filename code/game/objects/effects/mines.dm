@@ -25,10 +25,10 @@
 		update_appearance(UPDATE_ICON_STATE)
 		addtimer(CALLBACK(src, PROC_REF(now_armed)), arm_delay)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)

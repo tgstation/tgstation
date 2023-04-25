@@ -88,9 +88,9 @@
 	update_explosive_block()
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
 

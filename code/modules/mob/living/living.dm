@@ -1317,14 +1317,14 @@
 
 	var/mob/living/new_mob
 
-	var/static/list/possible_results = list(
+	var/static/list/possible_results = STATIC_INIT(list(
 		WABBAJACK_MONKEY,
 		WABBAJACK_ROBOT,
 		WABBAJACK_SLIME,
 		WABBAJACK_XENO,
 		WABBAJACK_HUMAN,
 		WABBAJACK_ANIMAL,
-	)
+	))
 
 	// If we weren't passed one, pick a default one
 	what_to_randomize ||= pick(possible_results)
@@ -1334,13 +1334,13 @@
 			new_mob = new /mob/living/carbon/human/species/monkey(loc)
 
 		if(WABBAJACK_ROBOT)
-			var/static/list/robot_options = list(
+			var/static/list/robot_options = STATIC_INIT(list(
 				/mob/living/silicon/robot = 200,
 				/mob/living/simple_animal/drone/polymorphed = 200,
 				/mob/living/silicon/robot/model/syndicate = 1,
 				/mob/living/silicon/robot/model/syndicate/medical = 1,
 				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
-			)
+			))
 
 			var/picked_robot = pick(robot_options)
 			new_mob = new picked_robot(loc)

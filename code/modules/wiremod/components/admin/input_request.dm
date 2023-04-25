@@ -32,11 +32,11 @@
 	var/datum/port/output/input_failed
 
 /obj/item/circuit_component/input_request/populate_options()
-	var/static/list/component_options = list(
+	var/static/list/component_options = STATIC_INIT(list(
 		COMP_INPUT_STRING,
 		COMP_INPUT_NUMBER,
 		COMP_INPUT_LIST
-	)
+	))
 
 	input_options = add_option_port("Option", component_options)
 

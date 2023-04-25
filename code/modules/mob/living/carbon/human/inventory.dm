@@ -109,7 +109,7 @@
 
 /// Returns items which are currently visible on the mob
 /mob/living/carbon/human/proc/get_visible_items()
-	var/static/list/visible_slots = list(
+	var/static/list/visible_slots = STATIC_INIT(list(
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_ICLOTHING,
 		ITEM_SLOT_GLOVES,
@@ -127,7 +127,7 @@
 		ITEM_SLOT_SUITSTORE,
 		ITEM_SLOT_HANDCUFFED,
 		ITEM_SLOT_LEGCUFFED,
-	)
+	))
 	var/list/obscured = check_obscured_slots()
 	var/list/visible_items = list()
 	for (var/slot in visible_slots)

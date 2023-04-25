@@ -32,7 +32,7 @@
 	/// The damage resistence when sinked into the ground
 	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	/// Realistically weighted list of usual gnome hat colours
-	var/static/list/gnome_hat_colours = list(
+	var/static/list/gnome_hat_colours = STATIC_INIT(list(
 		COLOR_GNOME_RED_ONE = 9,
 		COLOR_GNOME_RED_TWO = 9,
 		COLOR_GNOME_RED_THREE = 9,
@@ -48,11 +48,11 @@
 		COLOR_GNOME_PURPLE = 1,
 		COLOR_GNOME_WHITE = 1,
 		COLOR_GNOME_BLACK = 1,
-	)
+	))
 	/// The chosen hat colour
 	var/chosen_hat_colour
 	/// Realistically weighted list of usual gnome body colours
-	var/static/list/gnome_body_colours = list(
+	var/static/list/gnome_body_colours = STATIC_INIT(list(
 		COLOR_GNOME_YELLOW = 6,
 		COLOR_GNOME_RED_ONE = 3,
 		COLOR_GNOME_RED_TWO = 3,
@@ -68,9 +68,9 @@
 		COLOR_GNOME_GREY = 1,
 		COLOR_GNOME_PURPLE = 1,
 		COLOR_GNOME_BLACK = 1,
-	)
+	))
 	/// Realistically weighted list of usual gnome pants colours
-	var/static/list/gnome_pants_colours = list(
+	var/static/list/gnome_pants_colours = STATIC_INIT(list(
 		COLOR_GNOME_BLUE_ONE = 6,
 		COLOR_GNOME_BLUE_TWO = 6,
 		COLOR_GNOME_BLUE_THREE = 6,
@@ -84,9 +84,9 @@
 		COLOR_GNOME_GREY = 1,
 		COLOR_GNOME_PURPLE = 1,
 		COLOR_GNOME_BLACK = 1,
-	)
+	))
 	/// Realistically weighted list of usual gnome beard colours
-	var/static/list/gnome_beard_colours = list(
+	var/static/list/gnome_beard_colours = STATIC_INIT(list(
 		COLOR_GNOME_WHITE = 9,
 		COLOR_GNOME_GREY = 9,
 		COLOR_GNOME_BROWN_ONE = 6,
@@ -96,7 +96,7 @@
 		COLOR_GNOME_GREEN_TWO = 1,
 		COLOR_GNOME_RED_ONE = 1,
 		COLOR_GNOME_PURPLE = 1,
-	)
+	))
 
 /mob/living/basic/garden_gnome/Initialize(mapload)
 	. = ..()

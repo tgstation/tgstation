@@ -46,10 +46,10 @@
 		ui.set_autoupdate(FALSE)
 
 /obj/item/circuit_component/proccall/populate_options()
-	var/static/list/component_options = list(
+	var/static/list/component_options = STATIC_INIT(list(
 		COMP_PROC_OBJECT,
 		COMP_PROC_GLOBAL,
-	)
+	))
 
 	proccall_options = add_option_port("Proccall Options", component_options)
 

@@ -23,7 +23,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/stack/sheet/iron/fifty=1,
 		/obj/item/stack/sheet/glass/fifty=1,
 		/obj/item/stack/sheet/rglass=50,
@@ -43,7 +43,7 @@
 		/obj/item/stack/sheet/mineral/wood=50,
 		/obj/item/stack/sheet/plastic/fifty=1,
 		/obj/item/stack/sheet/runed_metal/fifty=1,
-		)
+		))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/debugtools
@@ -51,7 +51,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
+	var/static/items_inside = STATIC_INIT(list(
 		/obj/item/card/emag=1,
 		/obj/item/construction/rcd/combat/admin=1,
 		/obj/item/disk/tech_disk/debug=1,
@@ -66,7 +66,7 @@
 		/obj/item/storage/box/material=1,
 		/obj/item/uplink/debug=1,
 		/obj/item/uplink/nuclear/debug=1,
-		)
+		))
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/plastic

@@ -33,9 +33,9 @@
 
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)

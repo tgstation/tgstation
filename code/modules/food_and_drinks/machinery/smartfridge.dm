@@ -478,14 +478,14 @@
 	base_build_path = /obj/machinery/smartfridge/chemistry
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	var/static/list/chemfridge_typecache = typecacheof(list(
+	var/static/list/chemfridge_typecache = STATIC_INIT(typecacheof(list(
 					/obj/item/reagent_containers/syringe,
 					/obj/item/reagent_containers/cup/bottle,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,
 					/obj/item/reagent_containers/chem_pack
-	))
+	)))
 
 	if(istype(O, /obj/item/storage/pill_bottle))
 		if(O.contents.len)

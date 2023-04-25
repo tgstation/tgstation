@@ -24,11 +24,11 @@
 
 /obj/structure/closet/body_bag/Initialize(mapload)
 	. = ..()
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_WIRECUTTER = list(
 			SCREENTIP_CONTEXT_RMB = "Remove Tag",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \

@@ -2794,13 +2794,13 @@
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
 	/// List of possible common statements to scream when eating ants
-	var/static/list/ant_screams = list(
+	var/static/list/ant_screams = STATIC_INIT(list(
 		"THEY'RE UNDER MY SKIN!!",
 		"GET THEM OUT OF ME!!",
 		"HOLY HELL THEY BURN!!",
 		"MY GOD THEY'RE INSIDE ME!!",
 		"GET THEM OUT!!",
-	)
+	))
 
 /datum/glass_style/drinking_glass/ants
 	required_drink_type = /datum/reagent/ants

@@ -26,7 +26,7 @@
 	/// String for the socks we use.
 	var/socks_name
 	/// Static list of slot flags we have clothing slots for.
-	var/static/list/slot_flags = list(
+	var/static/list/slot_flags = STATIC_INIT(list(
 		ITEM_SLOT_HEAD,
 		ITEM_SLOT_EYES,
 		ITEM_SLOT_EARS,
@@ -39,7 +39,7 @@
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
-	)
+	))
 	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
 

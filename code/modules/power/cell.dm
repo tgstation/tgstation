@@ -61,9 +61,9 @@
 	update_appearance()
 
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /**

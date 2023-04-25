@@ -3152,13 +3152,13 @@
 	if(SPT_PROB(8, seconds_per_tick))
 		drinker.manual_emote(pick("coughs up some oil", "swallows the lump in [drinker.p_their()] throat", "gags", "chokes up a bit"))
 	if(SPT_PROB(3, seconds_per_tick))
-		var/static/list/messages = list(
+		var/static/list/messages = STATIC_INIT(list(
 			"A horrible aftertaste coats your mouth.",
 			"You feel like you're going to choke on the oil in your throat.",
 			"You start to feel some heartburn coming on.",
 			"You want to throw up, but you know that nothing can come out due to the clog in your esophagus.",
 			"Your throat feels horrible.",
-		)
+		))
 		to_chat(drinker, span_notice(pick(messages)))
 	return ..()
 

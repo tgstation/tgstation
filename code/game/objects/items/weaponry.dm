@@ -311,7 +311,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/wirerod/Initialize(mapload)
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/shard = list(
 			SCREENTIP_CONTEXT_LMB = "Craft spear",
 		),
@@ -319,7 +319,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/obj/item/assembly/igniter = list(
 			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 

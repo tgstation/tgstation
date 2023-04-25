@@ -23,11 +23,11 @@
 	)
 
 /obj/item/circuit_component/compare/logic/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		COMP_LOGIC_AND,
 		COMP_LOGIC_OR,
 		COMP_LOGIC_XOR,
-	)
+	))
 	logic_options = add_option_port("Logic Options", component_options)
 
 /obj/item/circuit_component/compare/logic/populate_custom_ports()

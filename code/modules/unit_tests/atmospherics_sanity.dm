@@ -31,12 +31,12 @@
 		starting_areas |= get_area(start_marker)
 
 		// If there are no starting areas, default to these
-	var/static/list/area/default_starting_areas = list(
+	var/static/list/area/default_starting_areas = STATIC_INIT(list(
 		/area/station/ai_monitored/turret_protected/ai,
 		/area/station/engineering/atmos,
 		/area/station/medical/virology,
 		/area/station/science/xenobiology,
-		)
+		))
 
 	if(!length(starting_areas))
 		log_test("No starting areas found, defaulting...")
@@ -75,7 +75,7 @@
 
 /datum/unit_test/atmospherics_sanity/proc/mark_station_areas_as_goals()
 	// We don't want to check these areas
-	var/static/list/area/ignored_types = list(
+	var/static/list/area/ignored_types = STATIC_INIT(list(
 		/area/station/asteroid,
 		/area/station/engineering/supermatter,
 		/area/station/holodeck,
@@ -85,7 +85,7 @@
 		/area/station/science/ordnance/freezerchamber,
 		/area/station/solars,
 		/area/station/tcommsat/server,
-	)
+	))
 
 	for(var/area/ignored as anything in ignored_types)
 		ignored_types |= subtypesof(ignored)

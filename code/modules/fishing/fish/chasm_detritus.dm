@@ -17,7 +17,7 @@
 	/// Key to the list we want to use from `default_contents`.
 	var/default_contents_key = NORMAL_CONTENTS
 	/// Stuff which you can always fish up even if nothing fell into a hole. Associative by type.
-	var/static/list/default_contents = list(
+	var/static/list/default_contents = STATIC_INIT(list(
 		NORMAL_CONTENTS = list(
 			/obj/item/stack/ore/slag = 2,
 			/obj/item/stack/sheet/bone = 3,
@@ -33,7 +33,7 @@
 			/obj/item/stack/sheet/bone = 14,
 			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
 		),
-	)
+	))
 
 /obj/item/chasm_detritus/Initialize(mapload)
 	. = ..()
@@ -98,10 +98,10 @@
 	return chasm_contents
 
 /// Body detritus is selected in favor of bodies belonging to sentient mobs
-/// The first sentient body found in the list of contents is returned, otherwise 
+/// The first sentient body found in the list of contents is returned, otherwise
 /// if none are sentient choose randomly.
 /obj/item/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
-	for(var/mob/fallen_mob as anything in chasm_stuff)	
+	for(var/mob/fallen_mob as anything in chasm_stuff)
 		if(fallen_mob.mind)
 			return fallen_mob
 	return ..()

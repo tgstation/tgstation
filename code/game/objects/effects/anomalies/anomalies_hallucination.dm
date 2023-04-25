@@ -8,12 +8,12 @@
 	/// How many seconds between each small hallucination pulses
 	var/release_delay = 5
 	/// Messages sent to people feeling the pulses
-	var/static/list/messages = list(
+	var/static/list/messages = STATIC_INIT(list(
 		span_warning("You feel your conscious mind fall apart!"),
 		span_warning("Reality warps around you!"),
 		span_warning("Something's wispering around you!"),
 		span_warning("You are going insane!"),
-	)
+	))
 
 /obj/effect/anomaly/hallucination/anomalyEffect(seconds_per_tick)
 	. = ..()

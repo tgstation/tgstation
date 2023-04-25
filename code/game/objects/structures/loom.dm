@@ -10,11 +10,11 @@
 /obj/structure/loom/Initialize(mapload)
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/stack/sheet/cotton = list(
 			SCREENTIP_CONTEXT_LMB = "Weave",
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 

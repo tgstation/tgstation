@@ -23,7 +23,7 @@
 	update_appearance()
 
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/reagent_containers/dropper = list(
 			SCREENTIP_CONTEXT_LMB = "Use dropper",
 		),
@@ -32,7 +32,7 @@
 			SCREENTIP_CONTEXT_LMB = "Inject sample",
 			SCREENTIP_CONTEXT_RMB = "Draw sample"
 		),
-	)
+	))
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 

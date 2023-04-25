@@ -64,7 +64,7 @@
 	/// Carp want to eat delicious six pack plastic rings
 	var/static/list/desired_trash = STATIC_INIT(list(/obj/item/storage/cans))
 	/// Structures that AI carp are willing to attack. This prevents them from deconstructing supermatter cooling equipment.
-	var/static/list/allowed_obstacle_targets = typecacheof(list(
+	var/static/list/allowed_obstacle_targets = STATIC_INIT(typecacheof(list(
 		/obj/structure/closet,
 		/obj/machinery/door,
 		/obj/structure/door_assembly,
@@ -77,10 +77,10 @@
 		/obj/structure/table,
 		/obj/machinery/vending,
 		/obj/structure/window,
-	))
+	)))
 	/// Weighted list of colours a carp can be
 	/// Weighted list of usual carp colors
-	var/static/list/carp_colors = list(
+	var/static/list/carp_colors = STATIC_INIT(list(
 		COLOR_CARP_PURPLE = 7,
 		COLOR_CARP_PINK = 7,
 		COLOR_CARP_GREEN = 7,
@@ -96,7 +96,7 @@
 		COLOR_CARP_BLUE = 7,
 		COLOR_CARP_PALE_GREEN = 7,
 		COLOR_CARP_SILVER = 1, // The rare silver carp
-	)
+	))
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()

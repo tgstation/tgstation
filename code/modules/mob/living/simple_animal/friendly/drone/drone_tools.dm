@@ -10,7 +10,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-	var/static/list/drone_builtins = list(
+	var/static/list/drone_builtins = STATIC_INIT(list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
 		/obj/item/wrench/drone,
@@ -20,7 +20,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
-	)
+	))
 	atom_storage.max_total_storage = 40
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_slots = 9

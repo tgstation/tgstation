@@ -208,7 +208,7 @@
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(H)
-	var/static/list/associated_mutation = list(
+	var/static/list/associated_mutation = STATIC_INIT(list(
 		"Breathless" = /datum/mutation/human/breathless,
 		"Dextrous" = /datum/mutation/human/dextrous,
 		"Quick" = /datum/mutation/human/quick,
@@ -216,7 +216,7 @@
 		"Plasmocile" = /datum/mutation/human/plasmocile,
 		"Quick Recovery" = /datum/mutation/human/quick_recovery,
 		"Tough" = /datum/mutation/human/tough,
-	)
+	))
 	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])	||	(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)

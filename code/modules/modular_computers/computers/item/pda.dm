@@ -32,19 +32,19 @@
 	///Whether the PDA should have 'pda_programs' apps installed on Initialize.
 	var/has_pda_programs = TRUE
 	///Static list of default PDA apps to install on Initialize.
-	var/static/list/datum/computer_file/pda_programs = list(
+	var/static/list/datum/computer_file/pda_programs = STATIC_INIT(list(
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
-	)
+	))
 	///List of items that can be stored in a PDA
-	var/static/list/contained_item = list(
+	var/static/list/contained_item = STATIC_INIT(list(
 		/obj/item/pen,
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
 		/obj/item/clothing/mask/cigarette,
-	)
+	))
 
 /obj/item/modular_computer/pda/Initialize(mapload)
 	. = ..()

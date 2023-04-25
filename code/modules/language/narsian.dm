@@ -4,7 +4,7 @@
 	key = "n"
 	sentence_chance = 8
 	space_chance = 95 //very high due to the potential length of each syllable
-	var/static/list/base_syllables = list(
+	var/static/list/base_syllables = STATIC_INIT(list(
 		"h", "v", "c", "e", "g", "d", "r", "n", "h", "o", "p",
 		"ra", "so", "at", "il", "ta", "gh", "sh", "ya", "te", "sh", "ol", "ma", "om", "ig", "ni", "in",
 		"sha", "mir", "sas", "mah", "zar", "tok", "lyr", "nqa", "nap", "olt", "val", "qha",
@@ -12,7 +12,7 @@
 		"yoka", "drak", "loso", "arta", "weyh", "ines", "toth", "fara", "amar", "nyag", "eske", "reth", "dedo", "btoh", "nikt", "neth",
 		"kanas", "garis", "uloft", "tarat", "khari", "thnor", "rekka", "ragga", "rfikk", "harfr", "andid", "ethra", "dedol", "totum",
 		"ntrath", "keriam"
-	) //the list of syllables we'll combine with itself to get a larger list of syllables
+	) )//the list of syllables we'll combine with itself to get a larger list of syllables
 	syllables = list(
 		"sha", "mir", "sas", "mah", "hra", "zar", "tok", "lyr", "nqa", "nap", "olt", "val",
 		"yam", "qha", "fel", "det", "fwe", "mah", "erl", "ath", "yro", "eth", "gal", "mud",

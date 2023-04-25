@@ -32,7 +32,7 @@
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
-	var/static/list/wirecutter_colors = list(
+	var/static/list/wirecutter_colors = STATIC_INIT(list(
 		COLOR_TOOL_BLUE,
 		COLOR_TOOL_RED,
 		COLOR_TOOL_PINK,
@@ -40,7 +40,7 @@
 		COLOR_TOOL_GREEN,
 		COLOR_TOOL_CYAN,
 		COLOR_TOOL_YELLOW,
-	)
+	))
 
 /datum/armor/item_wirecutters
 	fire = 50

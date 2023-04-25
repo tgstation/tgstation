@@ -63,14 +63,14 @@
 	diag_hud_set_health()
 	add_sensors()
 
-	var/static/list/traits_to_apply = list(
+	var/static/list/traits_to_apply = STATIC_INIT(list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_ASHSTORM_IMMUNE,
 		TRAIT_LITERATE,
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
-	)
+	))
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 

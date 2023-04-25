@@ -266,13 +266,13 @@
 		return
 
 	COOLDOWN_START(src, last_tipping_action_voice, MEDBOT_FREAKOUT_DELAY) // message for tipping happens when we start interacting, message for righting comes after finishing
-	var/static/list/messagevoice = list(
+	var/static/list/messagevoice = STATIC_INIT(list(
 		"Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',
 		"Please don't..." = 'sound/voice/medbot/please_dont.ogg',
 		"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg',
 		"Nooo..." = 'sound/voice/medbot/nooo.ogg',
 		"Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg',
-		)
+		))
 	var/message = pick(messagevoice)
 	speak(message)
 	playsound(src, messagevoice[message], 70, FALSE)
@@ -374,14 +374,14 @@
 				)
 				playsound(src, pick(i_need_scissors), 70)
 			else
-				var/static/list/messagevoice = list(
+				var/static/list/messagevoice = STATIC_INIT(list(
 					"Delicious!" = 'sound/voice/medbot/delicious.ogg',
 					"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',
 					"Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',
 					"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',
 					"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',
 					"Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg',
-				)
+				))
 				var/message = pick(messagevoice)
 				speak(message)
 				playsound(src, messagevoice[message], 50)

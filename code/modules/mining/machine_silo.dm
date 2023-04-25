@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-	var/static/list/materials_list = list(
+	var/static/list/materials_list = STATIC_INIT(list(
 		/datum/material/iron,
 		/datum/material/glass,
 		/datum/material/silver,
@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/material/titanium,
 		/datum/material/bluespace,
 		/datum/material/plastic,
-		)
+		))
 	AddComponent(/datum/component/material_container, materials_list, INFINITY, MATCONTAINER_NO_INSERT, allowed_items=/obj/item/stack)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src

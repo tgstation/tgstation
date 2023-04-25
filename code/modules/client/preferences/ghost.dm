@@ -40,7 +40,7 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	should_generate_icons = TRUE
 
-	var/static/list/ghost_forms = list(
+	var/static/list/ghost_forms = STATIC_INIT(list(
 		"catghost" = "Cat",
 		"ghost" = "Default",
 		"ghost_black" = "Black",
@@ -68,7 +68,7 @@
 		"ghostian2" = "Ian",
 		"ghostking" = "King",
 		"skeleghost" = "Skeleton",
-	)
+	))
 
 /datum/preference/choiced/ghost_form/init_possible_values()
 	var/list/values = list()

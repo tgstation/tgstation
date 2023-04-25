@@ -439,11 +439,11 @@
 ///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
-	var/static/funny_items = list(
+	var/static/funny_items = STATIC_INIT(list(
 		/obj/item/food/pie/cream,
 		/obj/item/food/grown/tomato,
 		/obj/item/food/meatclown,
-	)
+	))
 
 	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))

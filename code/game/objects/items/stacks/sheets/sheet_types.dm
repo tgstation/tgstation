@@ -155,12 +155,12 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/Initialize(mapload)
 	. = ..()
-	var/static/list/tool_behaviors = list(
+	var/static/list/tool_behaviors = STATIC_INIT(list(
 		TOOL_WELDER = list(
 			SCREENTIP_CONTEXT_LMB = "Craft iron rods",
 			SCREENTIP_CONTEXT_RMB = "Craft floor tiles",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/stack/sheet/iron/examine(mob/user)

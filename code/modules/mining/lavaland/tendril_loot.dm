@@ -955,14 +955,14 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
 	var/shattered = FALSE
 	var/drew_blood = FALSE
-	var/static/list/combo_list = list(
+	var/static/list/combo_list = STATIC_INIT(list(
 		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(strike)),
 		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_ATTACK, LEFT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(slice)),
 		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_ATTACK, RIGHT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(dash)),
 		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(cut)),
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(cloak)),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(shatter)),
-	)
+	))
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()

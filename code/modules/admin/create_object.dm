@@ -14,10 +14,10 @@
 	user << browse(create_panel_helper(create_object_html), "window=create_object;size=425x475")
 
 /datum/admins/proc/quick_create_object(mob/user)
-	var/static/list/create_object_forms = list(
+	var/static/list/create_object_forms = STATIC_INIT(list(
 	/obj, /obj/structure, /obj/machinery, /obj/effect,
 	/obj/item, /obj/item/clothing, /obj/item/stack, /obj/item,
-	/obj/item/reagent_containers, /obj/item/gun)
+	/obj/item/reagent_containers, /obj/item/gun))
 
 	var/path = input("Select the path of the object you wish to create.", "Path", /obj) in sort_list(create_object_forms, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/html_form = create_object_forms[path]

@@ -45,9 +45,9 @@
 
 	new /obj/effect/decal/necropolis_gate_decal(loc)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
-	)
+	))
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL, clickthrough = FALSE)
@@ -262,9 +262,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/stone_tile/singularity_pull()

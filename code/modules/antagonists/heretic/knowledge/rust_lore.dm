@@ -218,7 +218,7 @@
 	/// A typepath to an area that we must finish the ritual in.
 	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
-	var/static/list/conditional_immunities = list(
+	var/static/list/conditional_immunities = STATIC_INIT(list(
 		TRAIT_BOMBIMMUNE,
 		TRAIT_NO_SLIP_ALL,
 		TRAIT_NOBREATH,
@@ -232,7 +232,7 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
-	)
+	))
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -314,13 +314,13 @@
 	/// List of all turfs we've afflicted.
 	var/list/rusted_turfs = list()
 	/// Static blacklist of turfs we can't spread to.
-	var/static/list/blacklisted_turfs = typecacheof(list(
+	var/static/list/blacklisted_turfs = STATIC_INIT(typecacheof(list(
 		/turf/open/indestructible,
 		/turf/closed/indestructible,
 		/turf/open/space,
 		/turf/open/lava,
 		/turf/open/chasm
-	))
+	)))
 
 /datum/rust_spread/New(loc)
 	centre = get_turf(loc)

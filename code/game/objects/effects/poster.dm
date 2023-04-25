@@ -27,11 +27,11 @@
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 
-	var/static/list/hovering_item_typechecks = list(
+	var/static/list/hovering_item_typechecks = STATIC_INIT(list(
 		/obj/item/shard = list(
 			SCREENTIP_CONTEXT_LMB = "Booby trap poster",
 		),
-	)
+	))
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 	if(new_poster_structure && (new_poster_structure.loc != src))

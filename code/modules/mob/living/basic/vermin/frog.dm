@@ -59,9 +59,9 @@
 		butcher_results = list(/obj/item/food/nugget = 5)
 		poison_type = /datum/reagent/drug/mushroomhallucinogen
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 	AddElement(/datum/element/ai_retaliate)

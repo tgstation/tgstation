@@ -75,14 +75,14 @@
 	cost = 1
 	route = PATH_SIDE
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
-	var/static/list/caliber_blacklist = list(
+	var/static/list/caliber_blacklist = STATIC_INIT(list(
 		CALIBER_LASER,
 		CALIBER_ENERGY,
 		CALIBER_FOAM,
 		CALIBER_ARROW,
 		CALIBER_HARPOON,
 		CALIBER_HOOK,
-	)
+	))
 
 /datum/heretic_knowledge/rifle_ammo/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/ammo_casing/casing in atoms)

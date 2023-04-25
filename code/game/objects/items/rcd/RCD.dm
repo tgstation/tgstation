@@ -36,7 +36,7 @@
 	actions_types = list(/datum/action/item_action/rcd_scan)
 
 	///all stuff used by RCD for construction
-	var/static/list/root_categories = list(
+	var/static/list/root_categories = STATIC_INIT(list(
 		//1ST ROOT CATEGORY
 		"Construction" = list( //Stuff you use to make & decorate areas
 			//Walls & Windows
@@ -123,7 +123,7 @@
 
 		//3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed  when this tab is selected
 		"Airlock Access" = list()
-	)
+	))
 
 	/// name of currently selected design
 	var/design_title = "Wall/Floor"
@@ -298,7 +298,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		//check if turf is blocked in for dense structures
 		else
 			//structures which are small enough to fit on turfs containing directional windows.
-			var/static/list/small_structures = list(
+			var/static/list/small_structures = STATIC_INIT(list(
 				RCD_AIRLOCK,
 				RCD_COMPUTER,
 				RCD_FLOODLIGHT,
@@ -306,7 +306,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				RCD_MACHINE,
 				RCD_REFLECTOR,
 				RCD_WINDOWGRILLE,
-			)
+			))
 
 			//edge cases for what we can/can't ignore
 			var/ignore_mobs = FALSE

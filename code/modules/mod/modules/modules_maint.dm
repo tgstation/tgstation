@@ -73,14 +73,14 @@
 	/// A list of all the songs we can play.
 	var/list/songs = list()
 	/// A list of the colors the module can take.
-	var/static/list/rainbow_order = list(
+	var/static/list/rainbow_order = STATIC_INIT(list(
 		list(1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
 		list(1,0,0,0, 0,0.5,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
 		list(1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
 		list(0,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
 		list(0,0,0,0, 0,0.5,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
 		list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
-	)
+	))
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()

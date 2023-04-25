@@ -8,9 +8,9 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	flags_1 = NODECONSTRUCT_1
 	use_power = NO_POWER_USE
-	var/static/list/shortcuts = list(
+	var/static/list/shortcuts = STATIC_INIT(list(
 		"meth" = /datum/reagent/drug/methamphetamine
-	)
+	))
 	///The purity of the created reagent in % (purity uses 0-1 values)
 	var/purity = 100
 

@@ -473,7 +473,7 @@
 	name = "Smartfridge"
 	build_path = /obj/machinery/smartfridge
 	req_components = list(/datum/stock_part/matter_bin = 1)
-	var/static/list/fridges_name_paths = list(/obj/machinery/smartfridge = "plant produce",
+	var/static/list/fridges_name_paths = STATIC_INIT(list(/obj/machinery/smartfridge = "plant produce",
 		/obj/machinery/smartfridge/food = "food",
 		/obj/machinery/smartfridge/drinks = "drinks",
 		/obj/machinery/smartfridge/extract = "slimes",
@@ -481,7 +481,7 @@
 		/obj/machinery/smartfridge/organ = "organs",
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
-		/obj/machinery/smartfridge/disks = "disks")
+		/obj/machinery/smartfridge/disks = "disks"))
 	needs_anchored = FALSE
 	var/is_special_type = FALSE
 
@@ -551,7 +551,7 @@
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
-	var/static/list/vending_names_paths = list(
+	var/static/list/vending_names_paths = STATIC_INIT(list(
 		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
 		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
@@ -594,7 +594,7 @@
 		/obj/machinery/vending/security = "SecTech",
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/custom = "Custom Vendor")
+		/obj/machinery/vending/custom = "Custom Vendor"))
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths

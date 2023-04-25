@@ -44,9 +44,9 @@
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
 
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
-	)
+	))
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
@@ -376,7 +376,7 @@
 	for(var/atom/movable/attached_movable as anything in attached_items)
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
-			
+
 /obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
@@ -404,9 +404,9 @@
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
+	var/static/list/loc_connections = STATIC_INIT(list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)

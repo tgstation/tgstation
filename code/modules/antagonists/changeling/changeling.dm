@@ -79,7 +79,7 @@
 	var/static/list/possible_changeling_IDs
 
 	/// Satic list of what each slot associated with (in regard to changeling flesh items).
-	var/static/list/slot2type = list(
+	var/static/list/slot2type = STATIC_INIT(list(
 		"head" = /obj/item/clothing/head/changeling,
 		"wear_mask" = /obj/item/clothing/mask/changeling,
 		"wear_neck" = /obj/item/changeling,
@@ -93,7 +93,7 @@
 		"ears" = /obj/item/changeling,
 		"wear_id" = /obj/item/changeling/id,
 		"s_store" = /obj/item/changeling,
-	)
+	))
 
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
@@ -733,7 +733,7 @@
  * Transform the currentc hangeing [user] into the [chosen_profile].
  */
 /datum/antagonist/changeling/proc/transform(mob/living/carbon/human/user, datum/changeling_profile/chosen_profile)
-	var/static/list/slot2slot = list(
+	var/static/list/slot2slot = STATIC_INIT(list(
 		"head" = ITEM_SLOT_HEAD,
 		"wear_mask" = ITEM_SLOT_MASK,
 		"wear_neck" = ITEM_SLOT_NECK,
@@ -747,7 +747,7 @@
 		"ears" = ITEM_SLOT_EARS,
 		"wear_id" = ITEM_SLOT_ID,
 		"s_store" = ITEM_SLOT_SUITSTORE,
-	)
+	))
 
 	var/datum/dna/chosen_dna = chosen_profile.dna
 	user.real_name = chosen_profile.name

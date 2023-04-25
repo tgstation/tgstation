@@ -25,10 +25,10 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/circuit_component/radio/populate_options()
-	var/static/component_options = list(
+	var/static/component_options = STATIC_INIT(list(
 		COMP_RADIO_PUBLIC,
 		COMP_RADIO_PRIVATE,
-	)
+	))
 	public_options = add_option_port("Encryption Options", component_options)
 
 /obj/item/circuit_component/radio/populate_ports()
