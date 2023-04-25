@@ -290,7 +290,7 @@
 					adjust_plant_health(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
-			else if(waterlevel > 10 && nutrilevel > 0)
+			else if(waterlevel > 10 && nutrilevel > 0 && !bio_boosted)
 				adjustHealth(rand(1,2) / rating)
 				if(myseed && prob(myseed.weed_chance))
 					adjust_weedlevel(myseed.weed_rate)
@@ -315,9 +315,6 @@
 			if(pestlevel >= 8)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
 					adjustHealth(-2 / rating)
-					if(myseed.potency >=30)
-						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
-						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 				else
 					adjust_plant_health(2 / rating)
 					adjust_pestlevel(-1 / rating)
