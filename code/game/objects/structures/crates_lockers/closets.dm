@@ -90,7 +90,6 @@
 	. = ..()
 
 	var/static/list/closet_paint_jobs = list(
-		"Bar" = list("icon_state" = "cabinet"),
 		"Cargo" = list("icon_state" = "qm"),
 		"Engineering" = list("icon_state" = "ce"),
 		"Engineering Secure" = list("icon_state" = "eng_secure"),

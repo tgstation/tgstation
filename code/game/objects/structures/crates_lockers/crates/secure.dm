@@ -6,8 +6,9 @@
 	locked = TRUE
 	max_integrity = 500
 	armor_type = /datum/armor/crate_secure
-	var/tamperproof = 0
 	damage_deflection = 25
+
+	var/tamperproof = 0
 
 /datum/armor/crate_secure
 	melee = 30
@@ -59,6 +60,7 @@
 	desc = "An insulated crate with a lock on it, used to secure perishables."
 	name = "secure kitchen crate"
 	icon_state = "kitchen_secure_crate"
+	paint_jobs = null
 
 /obj/structure/closet/crate/secure/freezer/pizza
 	name = "secure pizza crate"

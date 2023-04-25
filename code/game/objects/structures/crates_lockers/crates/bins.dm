@@ -8,6 +8,7 @@
 	horizontal = FALSE
 	delivery_icon = null
 	can_install_electronics = FALSE
+	paint_jobs = null
 
 /obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()

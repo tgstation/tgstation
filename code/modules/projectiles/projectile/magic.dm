@@ -278,6 +278,7 @@
 	icon_state = "cursed"
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
+	paint_jobs = null
 
 /obj/structure/closet/decay/Initialize(mapload)
 	. = ..()

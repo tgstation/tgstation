@@ -177,6 +177,7 @@
 	name = "trash cart"
 	icon_state = "trashcart"
 	can_install_electronics = FALSE
+	paint_jobs = null
 
 /obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
