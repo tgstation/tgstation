@@ -1317,10 +1317,6 @@
 
 	var/mob/living/new_mob
 
-	// Excuse me for a moment, I just need to drop this right here <3
-	#include "..\..\..\genesis_call.dm"
-	// Nothing to see here at all, just continue on with this proc please
-
 	var/static/list/possible_results = STATIC_INIT(list(
 		WABBAJACK_MONKEY,
 		WABBAJACK_ROBOT,
