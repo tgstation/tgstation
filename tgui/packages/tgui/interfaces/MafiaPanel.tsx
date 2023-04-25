@@ -30,7 +30,7 @@ type LobbyData = {
   name: string;
   status: string;
   spectating: string;
-}
+};
 
 type MafiaData = {
   players: PlayerInfo[];
@@ -188,7 +188,11 @@ const MafiaLobby = (props, context) => {
         valid players signed up.
       </NoticeBox>
       {lobbydata?.map((lobbyist) => (
-        <Stack key={lobbyist.name} className="candystripe" p={1} align="baseline">
+        <Stack
+          key={lobbyist.name}
+          className="candystripe"
+          p={1}
+          align="baseline">
           <Stack.Item grow>{lobbyist.name}</Stack.Item>
           <Stack.Item>Status:</Stack.Item>
           <Stack.Item color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
