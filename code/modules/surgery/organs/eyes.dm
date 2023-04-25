@@ -352,8 +352,6 @@
 /obj/item/organ/internal/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
-
 /obj/item/organ/internal/eyes/robotic/glow
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
@@ -361,37 +359,55 @@
 	eye_color_right = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"
-	light_range = 5
-	light_power = 2
 	var/max_light_beam_distance = 5
-	var/image/mob_overlay
+	var/mutable_appearance/eyes_overlay
 	var/obj/item/flashlight/eyelight/glow/eye
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	terminate_effects()
+	deactivate()
+	QDEL_NULL(eyes_overlay)
+	QDEL_NULL(eye)
 	return ..()
 
-/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	terminate_effects()
-	return ..()
+/obj/item/organ/internal/eyes/robotic/glow/emp_act()
+	. = ..()
+	if(!eye.on || . & EMP_PROTECT_SELF)
+		return
+	deactivate(silent = TRUE)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/carbon_mob)
 	. = ..()
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight/glow
-	eye.on = TRUE
 	eye.forceMove(carbon_mob)
-	eye.update_brightness(carbon_mob)
+	if(ishuman(carbon_mob))
+		eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", carbon_mob, alpha = carbon_mob.alpha)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/carbon_mob)
 	. = ..()
 	eye.on = FALSE
-	eye.update_brightness(carbon_mob)
+	eye.set_light_on(FALSE)
 	eye.forceMove(src)
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/terminate_effects()
-	if(owner)
-		deactivate()
+/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
+	deactivate()
+	return ..()
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/activate(silent = FALSE)
+	if(!silent)
+		to_chat(owner, span_warning("Your [src] clicks and makes a whining noise, before shooting out a beam of light!"))
+	eye.on = TRUE
+	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively
+		eye.set_light_on(TRUE)
+	update_eyes_overlay()
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(silent = FALSE)
+	if(!silent)
+		to_chat(owner, span_warning("Your [src] shuts off!"))
+	eye.on = FALSE
+	eye.set_light_on(FALSE)
+	if(!QDELETED(owner))
+		owner.cut_overlay(eyes_overlay)
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
@@ -421,42 +437,14 @@
 		eye_color_right = eye_color_left
 		owner.dna.species.handle_body(owner)
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/cycle_mob_overlay()
-	remove_mob_overlay()
-	mob_overlay.color = current_color_string
-	add_mob_overlay()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/add_mob_overlay()
-	if(!QDELETED(owner))
-		owner.add_overlay(mob_overlay)
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/remove_mob_overlay()
-	if(!QDELETED(owner))
-		owner.cut_overlay(mob_overlay)
-
-/obj/item/organ/internal/eyes/robotic/glow/emp_act()
-	. = ..()
-	if(!eye.on || . & EMP_PROTECT_SELF)
+/obj/item/organ/internal/eyes/robotic/glow/proc/update_eyes_overlay()
+	if(!eyes_overlay)
 		return
-	deactivate(silent = TRUE)
-
-/obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	QDEL_NULL(eye)
-	return ..()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/activate(silent = FALSE)
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] clicks and makes a whining noise, before shooting out a beam of light!"))
-	eye.on = TRUE
-	eye.update_brightness()
-	cycle_mob_overlay()
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(silent = FALSE)
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] shuts off!"))
-	eye.on = FALSE
-	eye.update_brightness()
-	remove_mob_overlay()
+	if(QDELETED(owner))
+		return
+	owner.cut_overlay(eyes_overlay)
+	eyes_overlay.color = current_color_string
+	owner.add_overlay(eyes_overlay)
 
 /obj/item/organ/internal/eyes/moth
 	name = "moth eyes"
@@ -517,5 +505,3 @@
 	adapt_light.forceMove(src)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()
-
-#undef RGB2EYECOLORSTRING

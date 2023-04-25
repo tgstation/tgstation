@@ -828,6 +828,8 @@
 
 /obj/item/flashlight/eyelight/glow
 	light_system = MOVABLE_LIGHT_BEAM
+	light_range = 5
+	light_power = 2
 
 #undef FAILURE 
 #undef SUCCESS 

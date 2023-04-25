@@ -347,7 +347,7 @@
 	var/new_range = source.light_range
 	if(range == new_range)
 		return
-	if(range == 0)
+	if(new_range == 0)
 		turn_off()
 	range = clamp(CEILING(new_range, 0.5), 1, 6)
 	var/pixel_bounds = ((range - 1) * 64) + 32
@@ -495,19 +495,19 @@
 		if(NORTH)
 			translate_y += 32 * final_distance
 			if(beam)
-				scale_x = 1 / (cast_range + 1)
+				scale_x = 1 / abs((range * 2) -1)
 		if(SOUTH)
 			translate_y += -32 * final_distance
 			if(beam)
-				scale_x = 1 / (cast_range + 1)
+				scale_x = 1 / abs((range * 2) -1)
 		if(EAST)
 			translate_x += 32 * final_distance
 			if(beam)
-				scale_y = 1 / (cast_range + 1)
+				scale_y = 1 / abs((range * 2) -1)
 		if(WEST)
 			translate_x += -32 * final_distance
 			if(beam)
-				scale_y = 1 / (cast_range + 1)
+				scale_y = 1 / abs((range * 2) -1)
 
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
 		directional_offset_x = translate_x
