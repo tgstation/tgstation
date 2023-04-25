@@ -1,5 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes:
-  - bugfix: "Ingame ore silo logs should now log deposit actions correctly"
-  - config: "New config for silo logs"
