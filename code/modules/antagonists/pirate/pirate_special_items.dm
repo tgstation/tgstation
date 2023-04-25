@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/hypospray/medipen/gore
 	name = "gore autoinjector"
-	desc = "A ghetto looking autoinjector filled with gore, aka dirty kronkaine. Probably shouldn't take this while in the job, but it is a super-stimulant. Don't take two at once."
+	desc = "A ghetto-looking autoinjector filled with gore, aka dirty kronkaine. You probably shouldn't take this while on the job, but it is a super-stimulant. Don't take two at once."
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/drug/kronkaine/gore = 15)
