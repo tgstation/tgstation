@@ -40,7 +40,7 @@
 	if(wings_open)
 		toggle_flight(organ_owner)
 
-/obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
+/obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	handle_flight(owner)

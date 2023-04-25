@@ -56,8 +56,6 @@
 	if(dir & NORTH)
 		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
-	cut_overlays()
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
@@ -137,7 +135,6 @@
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
-
 
 /obj/structure/hoop/CtrlClick(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))

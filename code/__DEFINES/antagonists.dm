@@ -7,6 +7,8 @@
 #define NUKE_RESULT_NOSURVIVORS 6
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
+#define NUKE_RESULT_HIJACK_DISK 9
+#define NUKE_RESULT_HIJACK_NO_DISK 10
 
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
@@ -77,6 +79,7 @@
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
+#define PATH_COSMIC "Cosmic Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1

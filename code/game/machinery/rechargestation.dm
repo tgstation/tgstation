@@ -11,10 +11,21 @@
 	processing_flags = NONE
 	var/recharge_speed
 	var/repairs
+	///Whether we're sending iron and glass to a cyborg. Requires Silo connection.
+	var/sendmats = FALSE
+	var/datum/component/remote_materials/materials
 
 
 /obj/machinery/recharge_station/Initialize(mapload)
 	. = ..()
+
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		"charger", \
+		mapload, \
+		mat_container_flags = MATCONTAINER_NO_INSERT, \
+	)
+
 	update_appearance()
 	if(is_operational)
 		begin_processing()
@@ -46,6 +57,8 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.")
+		if(materials.silo)
+			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be activated by <b>Right-Clicking</b> [src].")
 		if(repairs)
 			. += span_notice("[src] has been upgraded to support automatic repairs.")
 
@@ -57,9 +70,9 @@
 		begin_processing()
 
 
-/obj/machinery/recharge_station/process(delta_time)
+/obj/machinery/recharge_station/process(seconds_per_tick)
 	if(occupant)
-		process_occupant(delta_time)
+		process_occupant(seconds_per_tick)
 	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
@@ -87,6 +100,32 @@
 		return
 	return ..()
 
+/obj/machinery/recharge_station/attack_ai_secondary(mob/user, list/modifiers)
+	toggle_restock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/recharge_station/attack_hand_secondary(mob/user, list/modifiers)
+	toggle_restock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/recharge_station/proc/toggle_restock(mob/user)
+	if(sendmats)
+		sendmats = FALSE
+		balloon_alert(user, "restocking from ore silo: disabled")
+		return
+	if(state_open || !occupant)
+		return
+	if(!iscyborg(occupant))
+		return
+	if(!materials.silo)
+		balloon_alert(user, "error: ore silo connection offline")
+		return
+	if(materials.on_hold())
+		balloon_alert(user, "error: access denied")
+		return FALSE
+	sendmats = TRUE
+	balloon_alert(user, "restocking from ore silo: enabled")
+
 /obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()
 	return TRUE
@@ -99,6 +138,7 @@
 
 /obj/machinery/recharge_station/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
+	sendmats = FALSE //Leaving off for the next user
 	update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/recharge_station/close_machine(atom/movable/target, density_to_set = TRUE)
@@ -114,7 +154,7 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(delta_time)
+/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * seconds_per_tick / 2, repairs, sendmats)

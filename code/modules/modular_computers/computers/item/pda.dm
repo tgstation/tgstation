@@ -2,7 +2,7 @@
 	name = "pda"
 	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
-	worn_icon_state = "pda"
+	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
@@ -13,7 +13,7 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64

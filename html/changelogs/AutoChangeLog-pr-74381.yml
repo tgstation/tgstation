@@ -1,5 +1,0 @@
-author: "Ical92"
-delete-after: True
-changes:
-  - rscadd: "Added security cameras to the five \"default\" shuttles"
-  - rscadd: "Added camera telescreen to KiloStation Emergency Shuttle"

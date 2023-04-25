@@ -714,6 +714,26 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/stove
+	name = "Stove Board"
+	desc = "The circuit board for a Stove."
+	id = "stove"
+	build_path = /obj/item/circuitboard/machine/stove
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/range
+	name = "Range Board"
+	desc = "The circuit board for a Range, which is both an Oven and a Stove."
+	id = "range"
+	build_path = /obj/item/circuitboard/machine/range
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/board/donksofttoyvendor
 	name = "Donksoft Toy Vendor Board"
 	desc = "The circuit board for a Donksoft Toy Vendor."
@@ -1016,3 +1036,14 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/navbeacon
+	name = "Machine Design (Bot Navigational Beacon)"
+	desc = "The circuit board for a beacon that aids bot navigation."
+	id = "botnavbeacon"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/machine/navbeacon
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

@@ -223,7 +223,7 @@
 	return FALSE
 
 
-/mob/proc/reagent_check(datum/reagent/R, delta_time, times_fired) // utilized in the species code
+/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
 	return TRUE
 
 

@@ -203,6 +203,16 @@
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
 	return ..()
 
+/// Callback for [datum/component/takes_reagent_appearance] to inherent style footypes
+/obj/item/reagent_containers/cup/proc/on_cup_change(datum/glass_style/has_foodtype/style)
+	if(!istype(style))
+		return
+	drink_type = style.drink_type
+
+/// Callback for [datum/component/takes_reagent_appearance] to reset to no foodtypes
+/obj/item/reagent_containers/cup/proc/on_cup_reset()
+	drink_type = NONE
+
 /obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
@@ -382,8 +392,8 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor_type = /datum/armor/bucket_wooden
 	resistance_flags = FLAMMABLE
+	armor_type = /datum/armor/bucket_wooden
 
 /datum/armor/bucket_wooden
 	melee = 10
@@ -446,6 +456,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
