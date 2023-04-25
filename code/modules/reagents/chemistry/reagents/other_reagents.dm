@@ -2246,9 +2246,9 @@
 	if(chems.has_reagent(src.type, 1))
 		var/list/generated_values = list()
 		var/amount = chems.get_reagent_amount(src.type)
-		generated_values["potency_change"] = (amount * (rand(2, 8) * 0.1))
+		generated_values["potency_change"] = (amount * (rand(2, 8) * 0.2))
 		generated_values["damage"] = (amount * (rand(3, 7) * 0.1))
-		generated_values["yield_change"] = (amount * (rand(0,2) * 0.1))
+		generated_values["yield_change"] = (amount * (rand(0,2) * 0.2))
 		return generated_values
 
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants

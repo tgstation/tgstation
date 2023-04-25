@@ -111,7 +111,7 @@
 /proc/format_mhelp_embed(message, ckey)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Mentor Help"
-	embed.description = "<byond://play.monkestation.com:1337>"
+	embed.description = "<http://play.monkestation.com:7420>"
 	embed.author = key_name(ckey)
 	var/round_state
 	var/admin_text
