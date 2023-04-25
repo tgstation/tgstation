@@ -153,7 +153,7 @@
 	// Breath may be null, so use a fallback "empty breath" for convenience.
 	if(!breath)
 		/// Fallback "empty breath" for convenience.
-		var/static/datum/gas_mixture/immutable/empty_breath = STATIC_INIT(new(BREATH_VOLUME))
+		var/static/datum/gas_mixture/immutable/empty_breath = STATIC_INIT(new /datum/gas_mixture/immutable(BREATH_VOLUME))
 		breath = empty_breath
 
 	// Ensure gas volumes are present.

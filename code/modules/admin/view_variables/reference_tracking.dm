@@ -16,6 +16,9 @@
 			running_find_references = null
 			return
 
+	find_references_no_alert()
+
+/datum/proc/find_references_no_alert()
 	//this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = FALSE
 

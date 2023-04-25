@@ -29,3 +29,5 @@
 		"invocation" = invocation,
 		"file" = file,
 		"line" = line))
+
+	return value

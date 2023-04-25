@@ -613,9 +613,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/log_active_turfs()
 // sadly this has to be here because we can't realistically expect that all active turfs will be resolved in every possible situation when running through CI.
 // In an ideal world, we would have absolutely zero active turfs 99.99% of the time, but that's not the case. `log_mapping()` during world initialize triggers a CI fail.
-#ifdef UNIT_TESTS
-	return
-#endif
+#ifndef UNIT_TESTS
 	// Associated lists, left-hand-side is the z-level or z-trait, right-hand-side is the number of active turfs associated with that.
 	var/list/tally_by_level = list()
 	// Discriminate for certain z-traits, stuff like "Linkage" is not helpful.
@@ -672,6 +670,7 @@ SUBSYSTEM_DEF(air)
 
 	message_to_log += "End of active turf list."
 	log_mapping(message_to_log.Join("\n"))
+#endif
 
 /turf/open/proc/resolve_active_graph()
 	. = list()

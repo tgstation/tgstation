@@ -65,5 +65,5 @@
 #ifndef UNIT_TESTS
 #define STATIC_INIT(expression) ##expression
 #else
-#define STATIC_INIT(##expression) StaticInitRecordKeeping(##expression, #expression, __FILE__, __LINE__)
+#define STATIC_INIT(expression) StaticInitRecordKeeping(##expression, #expression, __FILE__, __LINE__)
 #endif

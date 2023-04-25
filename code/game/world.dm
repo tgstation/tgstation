@@ -286,8 +286,7 @@ GLOBAL_VAR(restart_counter)
 		Master.Shutdown() //run SS shutdowns
 
 	#ifdef UNIT_TESTS
-	FinishTestRun()
-	return
+	FinishTestRun() // calls qdel(src)
 	#endif
 
 	if(TgsAvailable())
