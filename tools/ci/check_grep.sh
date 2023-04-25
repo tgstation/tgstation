@@ -195,6 +195,13 @@ if [ $lines -gt 0 ]; then
     st=1
 fi;
 
+part "static initializers"
+if $grep -n '(?!.*STATIC_INIT.*)(var/static/.*=.*)' $code_files; then
+    echo
+    echo -e "${RED}ERROR: Found static variable initializer not wrapped in the STATIC_INIT macro! Please wrap all static var initializers with this macro!${NC}"
+    st=1
+fi;
+
 section "515 Proc Syntax"
 part "proc ref syntax"
 if $grep '\.proc/' $code_x_515 ; then
