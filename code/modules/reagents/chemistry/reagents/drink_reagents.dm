@@ -197,6 +197,7 @@
 	description = "Absolutely nothing."
 	taste_description = "nothing"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/shot_glass/nothing
 	required_drink_type = /datum/reagent/consumable/nothing
@@ -222,6 +223,7 @@
 	color = "#FF4DD2"
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.emote("laugh")
@@ -1397,6 +1399,7 @@
 	desc = "DRINK ME."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "red_queen"
+	bypass_restriction = TRUE
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(50, seconds_per_tick))

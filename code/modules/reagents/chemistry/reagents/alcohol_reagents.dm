@@ -997,6 +997,7 @@
 	overdose_threshold = 40
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 	var/datum/brain_trauma/special/beepsky/beepsky_hallucination
 
 /datum/glass_style/drinking_glass/beepsky_smash
@@ -1311,6 +1312,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tasting iron"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/demonsblood
 	required_drink_type = /datum/reagent/consumable/ethanol/demonsblood
@@ -1354,6 +1356,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "bitter iron"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/devilskiss
 	required_drink_type = /datum/reagent/consumable/ethanol/devilskiss
@@ -1889,6 +1892,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	taste_description = "bravado in the face of disaster"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/hearty_punch
 	required_drink_type = /datum/reagent/consumable/ethanol/hearty_punch
@@ -1914,6 +1918,7 @@
 	boozepwr = 300 //I warned you
 	taste_description = "a wall of bricks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/bacchus_blessing
 	required_drink_type = /datum/reagent/consumable/ethanol/bacchus_blessing
@@ -1995,6 +2000,7 @@
 	taste_description = "a numbing sensation"
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/neurotoxin
 	required_drink_type = /datum/reagent/consumable/ethanol/neurotoxin
@@ -2047,6 +2053,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "giving peace a chance"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/hippies_delight
 	required_drink_type = /datum/reagent/consumable/ethanol/hippies_delight
@@ -2119,6 +2126,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "bloody"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/narsour
 	required_drink_type = /datum/reagent/consumable/ethanol/narsour
@@ -2220,6 +2228,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "THE LAW"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/quintuple_sec
 	required_drink_type = /datum/reagent/consumable/ethanol/quintuple_sec
@@ -2280,6 +2289,7 @@
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
+	bypass_restriction = TRUE
 
 /datum/glass_style/shot_glass/bastion_bourbon
 	required_drink_type = /datum/reagent/consumable/ethanol/bastion_bourbon
@@ -2387,6 +2397,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "a bitter SPIKE with a sour aftertaste"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/crevice_spike
 	required_drink_type = /datum/reagent/consumable/ethanol/crevice_spike
@@ -2698,6 +2709,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bubbling possibility"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/blank_paper
 	required_drink_type = /datum/reagent/consumable/ethanol/blank_paper
@@ -3054,6 +3066,7 @@
 	boozepwr = 70
 	quality = DRINK_FANTASTIC
 	taste_description = "alternate realities"
+	bypass_restriction = TRUE
 	var/stored_teleports = 0
 
 /datum/glass_style/drinking_glass/blazaam
@@ -3097,6 +3110,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "fiery, with an aftertaste of burnt flesh"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/mauna_loa
 	required_drink_type = /datum/reagent/consumable/ethanol/mauna_loa

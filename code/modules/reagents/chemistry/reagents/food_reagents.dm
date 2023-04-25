@@ -327,6 +327,7 @@
 	///40 joules per unit.
 	specific_heat = 40
 	default_container = /obj/item/reagent_containers/cup/bottle/frostoil
+	bypass_restriction = TRUE
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/cooling = 0

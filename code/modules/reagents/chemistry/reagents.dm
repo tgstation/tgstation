@@ -119,6 +119,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///The rate of evaporation in units per call
 	var/evaporation_rate = 0.5
 
+	///is this chemical exempt from istype restrictions
+	var/bypass_restriction = FALSE
+	///chemicals that aren't typepathed but are useless so we remove
+	var/restricted = FALSE
+
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()

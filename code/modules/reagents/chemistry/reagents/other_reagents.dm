@@ -833,14 +833,7 @@
 	taste_mult = 0 // oderless and tasteless
 	ph = 9.2//It's acutally a huge range and very dependant on the chemistry but ph is basically a made up var in it's implementation anyways
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-
-/datum/reagent/oxygen/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
-	return
+	restricted = TRUE
 
 /datum/reagent/copper
 	name = "Copper"
@@ -850,6 +843,7 @@
 	taste_description = "metal"
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -868,12 +862,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/nitrogen/expose_turf(turf/open/exposed_turf, reac_volume)
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
-	return ..()
+	restricted = TRUE
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -883,6 +872,7 @@
 	taste_mult = 0
 	ph = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve phes? (not 0 so I don't get div/0 errors)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -891,6 +881,7 @@
 	color = "#A0A0A0" // rgb: 160, 160, 160
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/mercury
 	name = "Mercury"
@@ -915,6 +906,7 @@
 	taste_description = "rotten eggs"
 	ph = 4.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -924,6 +916,7 @@
 	taste_description = "sour chalk"
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/carbon/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -993,6 +986,7 @@
 	taste_description = "salty metal"
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -1002,6 +996,7 @@
 	taste_description = "vinegar"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 // Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -1034,6 +1029,7 @@
 	taste_description = "sweetness"
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
@@ -1060,6 +1056,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
+	restricted = TRUE
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -1074,6 +1071,7 @@
 	taste_description = "expensive metal"
 	material = /datum/material/gold
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/silver
 	name = "Silver"
@@ -1083,6 +1081,7 @@
 	taste_description = "expensive yet reasonable metal"
 	material = /datum/material/silver
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -1200,6 +1199,7 @@
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/silicon
 	name = "Silicon"
@@ -1210,6 +1210,7 @@
 	material = /datum/material/glass
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	restricted = TRUE
 
 /datum/reagent/fuel
 	name = "Welding Fuel"
@@ -1480,12 +1481,6 @@
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
-	return ..()
-
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
 	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery. As it is an anticoagulant, nitrous oxide is best \
@@ -1497,11 +1492,6 @@
 	ph = 5.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/nitrous_oxide/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2o=[reac_volume/20];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
