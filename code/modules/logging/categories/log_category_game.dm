@@ -12,6 +12,11 @@
 	config_flag = /datum/config_entry/flag/log_emote
 	master_category = /datum/log_category/game
 
+/datum/log_category/game_internet_request
+	category = LOG_CATEGORY_GAME_INTERNET_REQUEST
+	config_flag = /datum/config_entry/flag/log_internet_request
+	master_category = /datum/log_category/game
+
 /datum/log_category/game_radio_emote
 	category = LOG_CATEGORY_GAME_RADIO_EMOTE
 	config_flag = /datum/config_entry/flag/log_emote
