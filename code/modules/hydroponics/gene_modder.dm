@@ -39,8 +39,8 @@
 			min_production = INFINITY
 			max_maturation = INFINITY
 		else
-			min_production = initial(min_production) + (M.tier**3) // 53,59,77,95 	 Clamps at 100
-			max_maturation = initial(max_maturation) + (M.tier**3) // 53,59,77,95 	 Clamps at 100
+			min_production = initial(min_production) + (SM.tier**3) // 53,59,77,95 	 Clamps at 100
+			max_maturation = initial(max_maturation) + (SM.tier**3) // 53,59,77,95 	 Clamps at 100
 
 		max_endurance = initial(max_endurance) + (SM.tier * 25) // 35,60,85,100	Clamps at 10min 100max
 
