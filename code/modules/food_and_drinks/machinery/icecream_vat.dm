@@ -23,7 +23,12 @@
 		/datum/reagent/consumable/coco = 6,
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
-		/datum/reagent/consumable/ethanol/singulo = 6)
+		/datum/reagent/consumable/ethanol/singulo = 6,
+		/datum/reagent/consumable/lemonjuice = 6,
+		/datum/reagent/consumable/caramel = 6,
+		/datum/reagent/consumable/banana = 6,
+		/datum/reagent/consumable/orangejuice = 6,
+		/datum/reagent/consumable/cream = 6)
 
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()

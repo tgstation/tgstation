@@ -170,6 +170,10 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_MOB "mob"
 #define ICE_CREAM_CUSTOM "custom"
 #define ICE_CREAM_BLAND "bland"
+#define ICE_CREAM_LEMON "lemon sorbet"
+#define ICE_CREAM_CARAMEL "caramel"
+#define ICE_CREAM_BANANA "banana"
+#define ICE_CREAM_ORANGE_CREAM "orangesicle"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
 // the vertical distance in pixels from an ice cream scoop and another.

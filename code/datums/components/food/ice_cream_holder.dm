@@ -199,8 +199,8 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour
 	/// Make sure the same name is not found on other types; These are singletons keyed by their name after all.
 	var/name = "Coderlicious Gourmet Double Deluxe Undefined"
-	/// The icon state of the flavour, overlay or not.
-	var/icon_state = "icecream_vanilla"
+	/// The colour of the ice cream for non-custom flavours.
+	var/color = "#F2EEDE"
 	/*
 	 * The fluff text sent to the examiner when the snack has only one flavour of ice cream.
 	 * $CONE_NAME and $CUSTOM_NAME are both placeholders for the cone and the custom ice cream name respectively.
@@ -230,8 +230,10 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/proc/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
 	var/atom/owner = target.parent
 	LAZYADD(target.scoops, custom_name || name)
-	if(icon_state)
-		LAZYADD(target.scoop_overlays, icon_state)
+	if(color)
+		var/image/flavoring = image('icons/obj/kitchen.dmi', "icecream_custom")
+		flavoring.color = color
+		LAZYADD(target.scoop_overlays, flavoring)
 	if(custom_name)
 		LAZYSET(target.special_scoops, custom_name, name)
 
@@ -258,28 +260,56 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/chocolate
 	name = ICE_CREAM_CHOCOLATE
-	icon_state = "icecream_chocolate"
+	color = "#93683C"
 	desc = "filled with chocolate ice cream. Surprisingly, made with real cocoa."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco)
 	reagent_type = /datum/reagent/consumable/coco
 
 /datum/ice_cream_flavour/strawberry
 	name = ICE_CREAM_STRAWBERRY
-	icon_state = "icecream_strawberry"
+	color = "#F4CBCB"
 	desc = "filled with strawberry ice cream. Definitely not made with real strawberries."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/berryjuice)
 	reagent_type = /datum/reagent/consumable/berryjuice
 
 /datum/ice_cream_flavour/blue
 	name = ICE_CREAM_BLUE
-	icon_state = "icecream_blue"
+	color = "#CBD5F4"
 	desc = "filled with blue ice cream. Made with real... blue?"
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/ethanol/singulo)
 	reagent_type = /datum/reagent/consumable/ethanol/singulo
 
+/datum/ice_cream_flavour/lemon
+	name = ICE_CREAM_LEMON
+	color = "#FFFF9F"
+	desc = "filled with lemon sorbet. Tangy!"
+	ingredients = list(/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice) //contains no milk
+	reagent_type = /datum/reagent/consumable/lemonjuice
+
+/datum/ice_cream_flavour/caramel
+	name = ICE_CREAM_CARAMEL
+	color = "#D98736"
+	desc = "filled with caramel ice cream. It is deliciously sweet."
+	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco)
+	reagent_type = /datum/reagent/consumable/coco
+
+/datum/ice_cream_flavour/banana
+	name = ICE_CREAM_BANANA
+	color = "#FFFF00"
+	desc = "filled with banana ice cream. Honk!"
+	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/banana)
+	reagent_type = /datum/reagent/consumable/banana
+
+/datum/ice_cream_flavour/orange_cream
+	name = ICE_CREAM_ORANGE_CREAM
+	color = "#FFA980"
+	desc = "filled with orange creamsicle. Not quite the same off the stick..."
+	ingredients = list(/datum/reagent/consumable/cream, /datum/reagent/consumable/ice, /datum/reagent/consumable/orangejuice)
+	reagent_type = /datum/reagent/consumable/orangejuice
+
 /datum/ice_cream_flavour/mob
 	name = ICE_CREAM_MOB
-	icon_state = "icecream_mob"
+	color = "#F4CBCB"
 	desc = "filled with bright red ice cream. That's probably not strawberry..."
 	desc_prefix = "A suspicious $CONE_NAME"
 	reagent_type = /datum/reagent/consumable/liquidgibs
@@ -287,7 +317,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/custom
 	name = ICE_CREAM_CUSTOM
-	icon_state = "" //has its own mutable appearance overlay.
+	color = "" //has its own mutable appearance overlay.
 	desc = "filled with artisanal icecream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
@@ -305,7 +335,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/bland
 	name = ICE_CREAM_BLAND
-	icon_state = "icecream_custom"
+	color = "#F3F3F3"
 	desc = "filled with anemic, flavorless icecream. You wonder why this was ever scooped..."
 	hidden = TRUE
 
