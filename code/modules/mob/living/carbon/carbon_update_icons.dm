@@ -329,10 +329,9 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.dmg_overlay_type)
 			if(iter_part.brutestate)
-				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
+				damage_overlay.add_overlay(image('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", pixel_y = get_top_offset(iter_part)))
 			if(iter_part.burnstate)
-				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
-
+				damage_overlay.add_overlay(image('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]", pixel_y = get_top_offset(iter_part)))
 	apply_overlay(DAMAGE_LAYER)
 
 /mob/living/carbon/update_wound_overlays()
@@ -343,7 +342,7 @@
 
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
+			wound_overlay.add_overlay(image('icons/mob/effects/bleed_overlays.dmi', iter_part.bleed_overlay_icon, pixel_y = get_top_offset(iter_part)))
 
 	apply_overlay(WOUND_LAYER)
 
@@ -414,6 +413,9 @@
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
+		var/list/offsets = handcuffed.get_worn_offsets()
+		handcuff_overlay.pixel_x += offsets[1]
+		handcuff_overlay.pixel_y += offsets[2]
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
@@ -486,16 +488,14 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
 			var/bodypart_icon = limb.get_limb_icon()
-			if(!istype(limb, /obj/item/bodypart/leg))
-				var/top_offset = get_top_offset()
-				for(var/image/image as anything in bodypart_icon)
-					image.pixel_y += top_offset
+			var/limb_offset = get_top_offset(limb)
+			for(var/image/image as anything in bodypart_icon)
+				image.pixel_y += limb_offset
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
-		last_top_offset = get_top_offset()
-
+	last_top_offset = get_top_offset()
 
 	remove_overlay(BODYPARTS_LAYER)
 
@@ -505,7 +505,12 @@
 	apply_overlay(BODYPARTS_LAYER)
 
 /// This looks at the chest and legs of the mob and decides how much our chest, arms, and head should be adjusted. This is useful for limbs that are larger or smaller than the scope of normal human height while keeping the feet anchored to the bottom of the tile
-/mob/living/carbon/proc/get_top_offset()
+/mob/living/carbon/proc/get_top_offset(obj/item/bodypart/limb)
+	if(istype(limb, /obj/item/bodypart/leg))
+		var/limb_offset = 0
+		for(var/obj/item/bodypart/leg/leg_checked in bodyparts)
+			limb_offset = max(-limb.top_offset + leg_checked.top_offset, limb_offset)
+		return limb_offset
 	var/from_chest
 	var/from_leg
 	for(var/obj/item/bodypart/leg/leg_checked in bodyparts)

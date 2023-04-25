@@ -19,7 +19,12 @@
 	var/mob/living/carbon/human/species/monkey/monkey = allocate(/mob/living/carbon/human/species/monkey)
 	var/mob/living/carbon/human/tallboy = allocate(/mob/living/carbon/human/consistent)
 
-	tallboy.set_species(/datum/species/human/tallboy)
+	var/obj/item/bodypart/leg/left/tallboy/left_tallboy_leg = allocate(/obj/item/bodypart/leg/left/tallboy)
+	var/obj/item/bodypart/leg/right/tallboy/right_tallboy_leg = allocate(/obj/item/bodypart/leg/right/tallboy)
+
+	left_tallboy_leg.replace_limb(tallboy, TRUE)
+	right_tallboy_leg.replace_limb(tallboy, TRUE)
+
 	TEST_ASSERT_EQUAL(john_doe.get_top_offset(), 0, "John Doe found to have a top offset other than zero.")
 	TEST_ASSERT_EQUAL(monkey.get_top_offset(), -8, "Monkey found to have a top offset other than -8.")
 	TEST_ASSERT_EQUAL(tallboy.get_top_offset(), 23, "Tallboy human varient found to have a top offset other than 23.")

@@ -256,6 +256,7 @@
 			. += hair_overlay
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
+	return .
 
 /mob/living/proc/set_haircolor(hex_string, override)
 	return

@@ -87,6 +87,48 @@
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
+	/// Offsets for held items. If your hand is shorter and you wanna move the items up.
+	var/held_offset = 0
+	/// Are we covered with blood?
+	var/bloody = FALSE
+	/// Icon_state for the bloody hand.
+	var/bloody_icon
+
+/obj/item/bodypart/arm/update_limb(dropping_limb, is_creating)
+	. = ..()
+	var/mob/living/carbon/human/human_owner = owner
+	bloody = istype(human_owner) && human_owner.blood_in_hands
+
+/obj/item/bodypart/arm/generate_icon_key()
+	. = ..()
+	if(bloody)
+		. += "-bloody"
+	return .
+
+/obj/item/bodypart/arm/get_limb_icon(dropped)
+	. = ..()
+	if(bloody)
+		. += image('icons/effects/blood.dmi', bloody_icon, -GLOVES_LAYER)
+	return .
+
+/obj/item/bodypart/arm/set_disabled(new_disabled)
+	. = ..()
+	if(isnull(.) || !owner)
+		return
+
+	if(!.)
+		if(bodypart_disabled)
+			owner.set_usable_hands(owner.usable_hands - 1)
+			if(owner.stat < UNCONSCIOUS)
+				to_chat(owner, span_userdanger("You lose control of your [name]!"))
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	else if(!bodypart_disabled)
+		owner.set_usable_hands(owner.usable_hands + 1)
+
+	if(owner.hud_used)
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
@@ -103,7 +145,7 @@
 	px_x = -6
 	px_y = 0
 	bodypart_trait_source = LEFT_ARM_TRAIT
-
+	bloody_icon = "bloodyhands_left"
 
 /obj/item/bodypart/arm/left/set_owner(new_owner)
 	. = ..()
@@ -141,27 +183,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
 
-
-/obj/item/bodypart/arm/left/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
-
-
 /obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -178,6 +199,7 @@
 	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	held_offset = 3
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -207,6 +229,7 @@
 	px_x = 6
 	px_y = 0
 	bodypart_trait_source = RIGHT_ARM_TRAIT
+	bloody_icon = "bloodyhands_right"
 
 /obj/item/bodypart/arm/right/set_owner(new_owner)
 	. = ..()
@@ -244,27 +267,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
 
-
-/obj/item/bodypart/arm/right/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
-
-
 /obj/item/bodypart/arm/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -281,6 +283,7 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	held_offset = 3
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'

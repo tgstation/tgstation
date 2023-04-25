@@ -165,20 +165,6 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
 		inv.update_icon()
 
-	//Bloody hands begin
-	var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-	cut_overlay(bloody_overlay)
-	if(!gloves && blood_in_hands && (num_hands > 0))
-		bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-		if(num_hands < 2)
-			if(has_left_hand(FALSE))
-				bloody_overlay.icon_state = "bloodyhands_left"
-			else if(has_right_hand(FALSE))
-				bloody_overlay.icon_state = "bloodyhands_right"
-
-		add_overlay(bloody_overlay)
-	//Bloody hands end
-
 	if(gloves)
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
@@ -717,13 +703,18 @@ generate/load female uniform sprites matching all previously decided variables
 		if(istype(holder))
 			var/list/offsets = holder.get_item_offsets_for_index(holder.get_held_index_of_item(src))
 			if(offsets)
-				.[1] = offsets["x"]
-				.[2] = offsets["y"]
+				.[1] += offsets["x"]
+				.[2] += offsets["y"]
+		if(iscarbon(holder))
+			var/mob/living/carbon/carbon_holder = holder
+			var/obj/item/bodypart/arm/holding_arm = carbon_holder.get_holding_bodypart_of_item(src)
+			.[2] += holding_arm.held_offset
 	else
-		.[2] = worn_y_offset
-	if(ishuman(loc) && slot_flags != ITEM_SLOT_FEET) /// we adjust the human body for high given by body parts, execpt shoes, because they are always on the bottom
-		var/mob/living/carbon/human/human_holder = loc
-		.[2] += human_holder.get_top_offset()
+		.[2] += worn_y_offset
+	if(iscarbon(loc)) /// we adjust the human body for high given by body parts, execpt shoes, because they are always on the bottom
+		var/mob/living/carbon/carbon_holder = loc
+		if(src != carbon_holder.shoes)
+			.[2] += carbon_holder.get_top_offset()
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)

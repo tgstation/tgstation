@@ -524,7 +524,7 @@
 			update_worn_gloves()
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
-		update_worn_gloves()
+		update_body_parts()
 
 	return TRUE
 
@@ -598,7 +598,7 @@
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(obscured & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
-		update_worn_gloves()
+		update_body_parts()
 		. = TRUE
 
 //Turns a mob black, flashes a skeleton overlay

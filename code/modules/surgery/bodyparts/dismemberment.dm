@@ -259,7 +259,6 @@
 		associated_hand?.update_appearance()
 	if(arm_owner.gloves)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
-	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 /obj/item/bodypart/leg/drop_limb(special)
 	if(owner && !special)
@@ -338,7 +337,6 @@
 			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_appearance()
-		new_limb_owner.update_worn_gloves()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.

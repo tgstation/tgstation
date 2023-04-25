@@ -104,12 +104,13 @@
 	if(gloves)
 		var/obj/item/clothing/gloves/mob_gloves = gloves
 		mob_gloves.add_blood_DNA(blood_DNA_to_add)
+		update_worn_gloves()
 	else if(length(blood_DNA_to_add))
 		if (isnull(forensics))
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 		blood_in_hands = rand(2, 4)
-	update_worn_gloves()
+		update_body_parts()
 	return TRUE
 
 /*
