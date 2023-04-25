@@ -1028,6 +1028,15 @@
 		return
 	if(issilicon(user)) //How does AI know what plant is?
 		return
+
+	if(growth >= myseed.harvest_age * growth_mult)
+		//if(myseed.harvest_age < age * max(myseed.production * 0.044, 0.5) && (myseed.harvest_age) < (age - lastproduce) * max(myseed.production * 0.044, 0.5) && (!harvest && !dead))
+		nutrimentMutation()
+		if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
+			if(connected_tree)
+				SEND_SIGNAL(connected_tree, COMSIG_BOTANY_FINAL_GROWTH, src)
+			set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
+
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 		return myseed.harvest(user)
 
