@@ -1,6 +1,5 @@
 /// This test checks that we have the right spot for the call to world.Genesis()
 /datum/unit_test/static_init_order
-	focus = TRUE
 
 /datum/unit_test/static_init_order/Run()
 	var/list/init_order = StaticInitRecordKeeping(return_list = TRUE)
