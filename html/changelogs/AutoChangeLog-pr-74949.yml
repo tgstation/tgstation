@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - refactor: "removed duplicate `pre_attack()` & redundant `attackby()` procs which did the same thing"
+  - bugfix: "unnecessary crash when unwrenching pipes/devices with the RPD"

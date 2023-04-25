@@ -1,0 +1,102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
+"c" = (
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/machinery/door/window,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
+"e" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"k" = (
+/obj/machinery/vending/coffee,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"q" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8;
+	piping_layer = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"v" = (
+/obj/structure/lattice,
+/obj/structure/billboard/Phone_booth,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"z" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/powered/icemoon_phone_booth)
+"J" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/item/gps/spaceruin{
+	gpstag = "Public Holophone"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"M" = (
+/turf/closed/wall/ice,
+/area/ruin/powered/icemoon_phone_booth)
+"R" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"V" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+"W" = (
+/obj/machinery/vending/cigarette{
+	onstation_override = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
+
+(1,1,1) = {"
+v
+M
+k
+W
+M
+"}
+(2,1,1) = {"
+e
+R
+a
+z
+c
+"}
+(3,1,1) = {"
+V
+M
+J
+q
+M
+"}

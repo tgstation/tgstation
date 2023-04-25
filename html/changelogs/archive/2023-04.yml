@@ -876,3 +876,46 @@
   zxaber:
   - bugfix: Restores ability for borgs to adjust reflector angles. This is now a left-click
       with nothing selected, similar to humans' left-click with an empty hand.
+2023-04-25:
+  ArcaneMusic:
+  - rscadd: A few map specific lunar objects have been added related to Konsu 19 (Moon
+      Outpost 19).
+  - rscadd: New fluff objects were added related to xenoflora and mining.
+  - rscadd: New loot, puzzles, and challenges await you on Konsu 19. Are you prepared?
+  DaydreamIQ:
+  - bugfix: Swat crate's description now lists the correct kind of gloves
+  DrDiasyl:
+  - sound: Disablers and lasers have a new deeper sound to them
+  - sound: Sound of lasers hitting a person now are giving more of a punch
+  Fikou:
+  - balance: removes fov from the SWAT mask
+  Gamer025:
+  - bugfix: Ingame ore silo logs should now log deposit actions correctly
+  - config: New config for silo logs
+  GoldenAlpharex:
+  - bugfix: Biogenerators now display the accurate price of their products after having
+      been upgraded, as they no longer visually apply the efficiency discount twice.
+  Rex9001:
+  - spellcheck: Fixes grammar issues located in Pirates and item descriptions related
+      to the folder
+  Rhials:
+  - rscadd: New event weight station trait -- Dust Stormfront.
+  - balance: Space Weather Forecast -- Expect more frequent Major Space Dust storms
+      in the foreseeable future.
+  - code_imp: The Major Space Dust event is once again returned to being a meteor_wave
+      event instead of a Space Dust subtype.
+  SyncIt21:
+  - bugfix: flood light now shines with their object color
+  necromanceranne:
+  - rscadd: You can make a tactical turtleneck or turtleskirt by putting a telecrystal
+      and a tactiCOOL varient of the turtleneck into a washing machine. Watch it change
+      before your eyes!
+  nikothedude:
+  - rscadd: Say emote prefixes are no longer forced to be lowercase. This includes
+      radio emotes!
+  rageguy505:
+  - bugfix: Adds prisoner ID's inside the gen pop lockers on the Northstar. Also renames
+      the holding cells to Gen Pop.
+  - rscadd: A new venture by Nanotrasen has put phonebooths in space.
+  trevorpillow:
+  - rscadd: Added hostile spawn tag to rats
