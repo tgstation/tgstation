@@ -30822,7 +30822,7 @@
 "ioM" = (
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/closet/crate{
-	icon_state = "crateopen"
+	opened = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/light,
