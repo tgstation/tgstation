@@ -1391,6 +1391,7 @@
 	quality = DRINK_GOOD
 	taste_description = "wonder"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/glass_style/drinking_glass/red_queen
@@ -1399,7 +1400,6 @@
 	desc = "DRINK ME."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "red_queen"
-	bypass_restriction = TRUE
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(50, seconds_per_tick))
