@@ -17,7 +17,7 @@
 	light_color = LIGHT_COLOR_BLUE
 
 	/// If the battlecruiser has been called
-	var/static/battlecruiser_called = FALSE
+	var/static/battlecruiser_called = STATIC_INIT(FALSE)
 
 	/// Cooldown for important actions, such as messaging CentCom or other sectors
 	COOLDOWN_DECLARE(static/important_action_cooldown)

@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return TRUE
 
 	// Static so that the result is the same, even when the files are created, for this run
-	var/static/should_refresh = null
+	var/static/should_refresh
 
 	if (isnull(should_refresh))
 		// `fexists` seems to always fail on static-time

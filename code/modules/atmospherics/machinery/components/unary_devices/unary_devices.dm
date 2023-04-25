@@ -8,7 +8,7 @@
 	///Unique id of the device
 	var/uid
 	///Increases to prevent duplicated Ids
-	var/static/gl_uid = 1
+	var/static/gl_uid = STATIC_INIT(1)
 
 /obj/machinery/atmospherics/components/unary/set_init_directions()
 	initialize_directions = dir

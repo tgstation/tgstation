@@ -46,7 +46,7 @@ Assistant
 	give_jumpsuit(target)
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
-	var/static/jumpsuit_number = 0
+	var/static/jumpsuit_number = STATIC_INIT(0)
 	jumpsuit_number += 1
 
 	if (isnull(GLOB.colored_assistant))

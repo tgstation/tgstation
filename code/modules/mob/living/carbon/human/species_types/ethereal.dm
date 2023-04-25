@@ -46,9 +46,9 @@
 	var/r1
 	var/g1
 	var/b1
-	var/static/r2 = 237
-	var/static/g2 = 164
-	var/static/b2 = 149
+	var/static/r2 = STATIC_INIT(237)
+	var/static/g2 = STATIC_INIT(164)
+	var/static/b2 = STATIC_INIT(149)
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 	var/default_color
 

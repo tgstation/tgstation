@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
 	///change the description based on the pillow tag
-	var/static/tag_desc = "This one seems to have its tag removed."
+	var/static/tag_desc = STATIC_INIT("This one seems to have its tag removed.")
 	///pillow tag is attached to it
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
 	///whoever last use this pillow

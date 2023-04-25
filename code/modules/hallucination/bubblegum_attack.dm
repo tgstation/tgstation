@@ -8,7 +8,7 @@
 	/// if TRUE, we will also send one of the hallucination lines when we start.
 	var/haunt_them = FALSE
 	/// if haunt_them is TRUE, they will also be shown one of these lines when the hallucination occurs
-	var/static/list/hallucination_lines = BUBBLEGUM_HALLUCINATION_LINES
+	var/static/list/hallucination_lines = STATIC_INIT(BUBBLEGUM_HALLUCINATION_LINES)
 
 /datum/hallucination/oh_yeah/New(mob/living/hallucinator, source = "an external source", haunt_them = FALSE)
 	src.haunt_them = haunt_them

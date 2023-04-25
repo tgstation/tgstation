@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 	var/dos_failure = FALSE
 	var/list/dos_sources = list() // Backwards reference for qdel() stuff
 	var/uid
-	var/static/gl_uid = 1
+	var/static/gl_uid = STATIC_INIT(1)
 
 	// Denial of Service attack variables
 	var/dos_overload = 0 // Amount of DoS "packets" in this relay's buffer

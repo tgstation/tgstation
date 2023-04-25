@@ -113,7 +113,7 @@
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/static/cats_deployed = 0
+	var/static/cats_deployed = STATIC_INIT(0)
 	var/memory_saved = FALSE
 	held_state = "cat"
 

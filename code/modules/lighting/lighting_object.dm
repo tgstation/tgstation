@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	// Oh it's also shorter line wise.
 	// Including with these comments.
 
-	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = STATIC_INIT(new /datum/lighting_corner/dummy)
 
 	var/turf/affected_turf = src.affected_turf
 

@@ -147,7 +147,7 @@
 /datum/team/abductor_team
 	member_name = "\improper Abductor"
 	var/team_number
-	var/static/team_count = 1
+	var/static/team_count = STATIC_INIT(1)
 	///List of all brainwashed victims' minds
 	var/list/datum/mind/abductees = list()
 

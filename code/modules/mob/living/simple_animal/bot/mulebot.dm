@@ -77,7 +77,7 @@
 
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
-	var/static/mulebot_count = 0
+	var/static/mulebot_count = STATIC_INIT(0)
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null

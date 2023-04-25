@@ -313,7 +313,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	var/options = SDQL2_OPTIONS_DEFAULT
 	var/superuser = FALSE //Run things like proccalls without using admin protections
 	var/allow_admin_interact = TRUE //Allow admins to do things to this excluding varedit these two vars
-	var/static/id_assign = 1
+	var/static/id_assign = STATIC_INIT(1)
 	var/id = 0
 
 	var/qdel_on_finish = FALSE
@@ -532,7 +532,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			SDQL query took [DisplayTimeText(end_time - start_time)] to complete.</span>", confidential = TRUE)
 			if(length(select_text))
 				var/text = islist(select_text)? select_text.Join() : select_text
-				var/static/result_offset = 0
+				var/static/result_offset = STATIC_INIT(0)
 				showmob << browse(text, "window=SDQL-result-[result_offset++]")
 	show_next_to_key = null
 	if(qdel_on_finish)

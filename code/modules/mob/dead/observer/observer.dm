@@ -1036,7 +1036,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "T-ray view"
 	set desc = "Toggles a view of sub-floor objects"
 
-	var/static/t_ray_view = FALSE
+	var/static/t_ray_view = STATIC_INIT(FALSE)
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder && !t_ray_view)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return

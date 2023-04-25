@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
-	var/static/intercom_range_display_status = FALSE
+	var/static/intercom_range_display_status = STATIC_INIT(FALSE)
 	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
 	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)

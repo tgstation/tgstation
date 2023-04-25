@@ -9,7 +9,7 @@
 	var/password
 
 	///A static UID to ensure no conversations are the same.
-	var/static/ntnrc_uid = 0
+	var/static/ntnrc_uid = STATIC_INIT(0)
 	///ID using the UID.
 	var/id
 

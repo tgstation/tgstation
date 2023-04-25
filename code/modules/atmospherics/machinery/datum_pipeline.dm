@@ -94,7 +94,7 @@
 				if(members.Find(item))
 					continue
 				if(item.parent)
-					var/static/pipenetwarnings = 10
+					var/static/pipenetwarnings = STATIC_INIT(10)
 					if(pipenetwarnings > 0)
 						log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
 						pipenetwarnings--
@@ -245,7 +245,7 @@
 
 	var/volume_sum = 0
 
-	var/static/process_id = 0
+	var/static/process_id = STATIC_INIT(0)
 	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)

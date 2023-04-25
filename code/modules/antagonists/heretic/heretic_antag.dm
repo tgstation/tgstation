@@ -713,7 +713,7 @@
 /datum/objective/heretic_research
 	name = "research"
 	/// The length of a main path. Calculated once in New().
-	var/static/main_path_length = 0
+	var/static/main_path_length = STATIC_INIT(0)
 
 /datum/objective/heretic_research/New(text)
 	. = ..()

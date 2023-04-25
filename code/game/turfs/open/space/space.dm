@@ -14,7 +14,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	var/static/datum/gas_mixture/immutable/space/space_gas = STATIC_INIT(new /datum/gas_mixture/immutable/space)
 	// We do NOT want atmos adjacent turfs
 	init_air = FALSE
 	run_later = TRUE

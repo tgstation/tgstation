@@ -9,7 +9,7 @@
 	ability_action = "attempt to absorb"
 	action_priority = COMSIG_MAFIA_NIGHT_KILL_PHASE
 	///Boolean on whether a Changeling has been sent to attack someone yet.
-	var/static/ling_sent = FALSE
+	var/static/ling_sent = STATIC_INIT(FALSE)
 
 /datum/mafia_ability/changeling_kill/clean_action_refs(datum/mafia_controller/game)
 	ling_sent = FALSE

@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
 	var/static/list/default_list = STATIC_INIT(GLOB.map_model_default) // It's stupid, but it saves += list(list)
 	var/static/list/wrapped_default_list = STATIC_INIT(list(default_list)) // It's stupid, but it saves += list(list)
-	var/static/regex/var_edits = var_edits_tgm
+	var/static/regex/var_edits = STATIC_INIT(var_edits_tgm)
 
 	var/path_to_init = ""
 	// Reference to the attributes list we're currently filling, if any
@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/list/members_attributes = model[2]
 
 	// We use static lists here because it's cheaper then passing them around
-	var/static/list/default_list = GLOB.map_model_default
+	var/static/list/default_list = STATIC_INIT(GLOB.map_model_default)
 	////////////////
 	//Instanciation
 	////////////////

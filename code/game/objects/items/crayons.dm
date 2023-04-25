@@ -187,7 +187,7 @@
 		"yiffhell",
 	))
 	/// Combined lists
-	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
+	var/static/list/all_drawables = STATIC_INIT(graffiti + symbols + drawings + oriented + runes + graffiti_large_h)
 
 /obj/item/toy/crayon/proc/isValidSurface(surface)
 	return isfloorturf(surface)

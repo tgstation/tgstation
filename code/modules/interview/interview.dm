@@ -10,7 +10,7 @@
 	/// Unique ID of the interview
 	var/id
 	/// Atomic ID for incrementing unique IDs
-	var/static/atomic_id = 0
+	var/static/atomic_id = STATIC_INIT(0)
 	/// The /client who owns this interview, the intiator
 	var/client/owner
 	/// The Ckey of the owner, used for when a client could disconnect

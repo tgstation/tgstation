@@ -132,7 +132,7 @@
 /obj/structure/closet/crate/maint/Initialize(mapload)
 	..()
 
-	var/static/list/possible_crates = RANDOM_CRATE_LOOT
+	var/static/list/possible_crates = STATIC_INIT(RANDOM_CRATE_LOOT)
 
 	var/crate_path = pick_weight(possible_crates)
 

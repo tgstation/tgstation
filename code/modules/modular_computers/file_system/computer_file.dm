@@ -10,7 +10,7 @@
 	///The computer file's personal ID
 	var/uid
 	///Static ID to ensure all IDs are unique.
-	var/static/file_uid = 0
+	var/static/file_uid = STATIC_INIT(0)
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
 	///The computer disk hosting the file.

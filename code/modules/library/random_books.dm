@@ -72,7 +72,7 @@
 	name = "bookcase (Fiction)"
 	random_category = "Fiction"
 	///have we spawned the chuuni granter
-	var/static/chuuni_book_spawned = FALSE
+	var/static/chuuni_book_spawned = STATIC_INIT(FALSE)
 
 /obj/structure/bookcase/random/fiction/after_random_load()
 	if(!chuuni_book_spawned && is_station_level(z))

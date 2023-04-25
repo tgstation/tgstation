@@ -61,9 +61,9 @@
 	//emag behavior dark matt-eor stuff
 
 	/// amount of emagged active meteor shields
-	var/static/emagged_active_meteor_shields = 0
+	var/static/emagged_active_meteor_shields = STATIC_INIT(0)
 	/// the highest amount of shields you've ever emagged
-	var/static/highest_emagged_threshold_reached = 0
+	var/static/highest_emagged_threshold_reached = STATIC_INIT(0)
 	/// cooldown on emagging meteor shields because instantly summoning a dark matt-eor is very unfun
 	STATIC_COOLDOWN_DECLARE(shared_emag_cooldown)
 

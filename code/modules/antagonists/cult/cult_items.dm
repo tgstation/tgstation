@@ -476,7 +476,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "shuttlecurse"
 	///how many times has the shuttle been cursed so far?
-	var/static/totalcurses = 0
+	var/static/totalcurses = STATIC_INIT(0)
 	///when was the first shuttle curse?
 	var/static/first_curse_time
 	///curse messages that have already been used

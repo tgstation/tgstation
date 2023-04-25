@@ -7,7 +7,7 @@
 	/// Unique ID of the request
 	var/id
 	/// Atomic ID for increment unique request IDs
-	var/static/atomic_id = 0
+	var/static/atomic_id = STATIC_INIT(0)
 	/// The type of request
 	var/req_type
 	/// The owner of the request, the player who created it

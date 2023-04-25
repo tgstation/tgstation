@@ -28,7 +28,7 @@
 	/// Assoc list of map templates indexed by user friendly names
 	var/static/list/arena_templates = STATIC_INIT(list())
 	/// Were the config directory arenas loaded
-	var/static/default_arenas_loaded = FALSE
+	var/static/default_arenas_loaded = STATIC_INIT(FALSE)
 	/// Name of currently loaded template
 	var/current_arena_template = "None"
 	// What turf arena clears to

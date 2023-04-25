@@ -10,7 +10,7 @@
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	/// global counter of IDs
-	var/static/global_id = 0
+	var/static/global_id = STATIC_INIT(0)
 	/// id number for this satellite
 	var/id = 0
 

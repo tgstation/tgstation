@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(map_reports)
 	var/loadable = TRUE
 	var/crashed = TRUE
 
-	var/static/tag_number = 0
+	var/static/tag_number = STATIC_INIT(0)
 
 /datum/map_report/New(datum/parsed_map/map)
 	original_path = map.original_path || "Untitled"

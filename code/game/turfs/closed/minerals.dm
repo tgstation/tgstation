@@ -35,8 +35,8 @@
 
 
 /turf/closed/mineral/Initialize(mapload)
-	var/static/list/smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
-	var/static/list/canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
+	var/static/list/smoothing_groups = STATIC_INIT(SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS)
+	var/static/list/canSmoothWith = STATIC_INIT(SMOOTH_GROUP_MINERAL_WALLS)
 
 	// The cost of the list() being in the type def is very large for something as common as minerals
 	src.smoothing_groups = smoothing_groups

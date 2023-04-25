@@ -31,7 +31,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The id of our supermatter
 	var/uid = 1
 	///The amount of supermatters that have been created this round
-	var/static/gl_uid = 1
+	var/static/gl_uid = STATIC_INIT(1)
 	///Tracks the bolt color we are using
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
 

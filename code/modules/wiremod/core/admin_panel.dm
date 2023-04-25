@@ -3,7 +3,7 @@
 	set category = "Admin.Game"
 	set name = "View All Circuits"
 
-	var/static/datum/circuit_admin_panel/circuit_admin_panel = new
+	var/static/datum/circuit_admin_panel/circuit_admin_panel = STATIC_INIT(new /datum/circuit_admin_panel)
 	circuit_admin_panel.ui_interact(usr)
 
 /datum/circuit_admin_panel

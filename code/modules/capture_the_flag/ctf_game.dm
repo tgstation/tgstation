@@ -113,7 +113,7 @@
 		to_chat(user, span_userdanger("You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!"))
 		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
-		spawn_team_member(new_team_member)	
+		spawn_team_member(new_team_member)
 
 /obj/machinery/ctf/spawner/Topic(href, href_list)
 	if(href_list["join"])
@@ -340,7 +340,7 @@
 /obj/machinery/ctf/control_point/process(seconds_per_tick)
 	if(controlling_team)
 		ctf_game.control_point_scoring(controlling_team, point_rate * seconds_per_tick)
-	
+
 	var/scores
 
 	if(ctf_game.ctf_enabled)
@@ -348,10 +348,10 @@
 			var/datum/ctf_team/ctf_team = ctf_game.teams[team]
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
-	
+
 /obj/machinery/ctf/control_point/attackby(mob/user, params)
 	capture(user)
-	
+
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -453,7 +453,7 @@
 
 ///Proc that handles toggling and unloading CTF.
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
-	var/static/loading = CTF_LOADING_UNLOADED
+	var/static/loading = STATIC_INIT(CTF_LOADING_UNLOADED)
 	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
 	if(isnull(ctf_controller))
 		ctf_controller = create_ctf_game(activated_id)

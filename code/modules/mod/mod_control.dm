@@ -85,7 +85,7 @@
 	/// AI mob inhabiting the MOD.
 	var/mob/living/silicon/ai/ai
 	/// Delay between moves as AI.
-	var/static/movedelay = 0
+	var/static/movedelay = STATIC_INIT(0)
 	/// Cooldown for AI moves.
 	COOLDOWN_DECLARE(cooldown_mod_move)
 	/// Person wearing the MODsuit.

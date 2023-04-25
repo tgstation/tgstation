@@ -414,7 +414,7 @@
 	///Id of the index color of the displayed group
 	var/display_id = 0
 	///Wrapping loop of the index colors
-	var/static/wrapping_id = 0
+	var/static/wrapping_id = STATIC_INIT(0)
 	///All turf reaction flags we have received.
 	var/turf_reactions = NONE
 

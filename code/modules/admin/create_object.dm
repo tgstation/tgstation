@@ -4,7 +4,7 @@
 	return final_html
 
 /datum/admins/proc/create_object(mob/user)
-	var/static/create_object_html = null
+	var/static/create_object_html
 	if (!create_object_html)
 		var/objectjs = null
 		objectjs = jointext(typesof(/obj), ";")

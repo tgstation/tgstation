@@ -190,7 +190,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
 	/// Static counter used for generating each ticket ID
-	var/static/ticket_counter = 0
+	var/static/ticket_counter = STATIC_INIT(0)
 	/// The list of clients currently responding to the opening ticket before it gets a response
 	var/list/opening_responders
 	/// Whether this ahelp has sent a webhook or not, and what type
