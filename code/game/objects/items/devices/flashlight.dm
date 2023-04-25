@@ -32,6 +32,9 @@
 	/// Is the light turned on or off currently
 	var/on = FALSE
 
+/obj/item/flashlight/beam
+	light_system = MOVABLE_LIGHT_BEAM
+
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
@@ -824,7 +827,7 @@
 	light_power = 0.07
 
 /obj/item/flashlight/eyelight/glow
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = MOVABLE_LIGHT_BEAM
 
 #undef FAILURE 
 #undef SUCCESS 
