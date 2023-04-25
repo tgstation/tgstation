@@ -76,6 +76,9 @@ GLOBAL_VAR(restart_counter)
 	// Init the debugger first so we can debug Master
 	init_debugger()
 
+	// Create the logger
+	logger = new
+
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
 
@@ -207,7 +210,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.logger.init_logging()
+	logger.init_logging()
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently

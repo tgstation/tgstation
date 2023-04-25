@@ -1,3 +1,5 @@
+
+GLOBAL_REAL(logger, /datum/log_holder)
 /**
  * Main datum to manage logging actions
  */
