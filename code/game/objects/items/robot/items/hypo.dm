@@ -70,9 +70,9 @@
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
 	)
 #define EXPANDED_SERVICE_REAGENTS list (/datum/reagent/consumable/flour, /datum/reagent/consumable/rice, /datum/reagent/consumable/salt,\
-		 /datum/reagent/consumable/blackpepper, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla,\
-		 /datum/reagent/consumable/cornmeal, /datum/reagent/consumable/corn_starch, /datum/reagent/consumable/cornoil, /datum/reagent/consumable/eggwhite,\
-		 /datum/reagent/consumable/eggyolk\
+		/datum/reagent/consumable/blackpepper, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla,\
+		/datum/reagent/consumable/cornmeal, /datum/reagent/consumable/corn_starch, /datum/reagent/consumable/cornoil, /datum/reagent/consumable/eggwhite,\
+		/datum/reagent/consumable/eggyolk\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
