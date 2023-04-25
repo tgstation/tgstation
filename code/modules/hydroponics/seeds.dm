@@ -362,6 +362,7 @@
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 	if(C)
 		C.value = yield
+
 /**
  * Adjusts seed lifespan up or down according to adjustamt. (Max 100)
  */

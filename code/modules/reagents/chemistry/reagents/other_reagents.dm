@@ -1470,7 +1470,7 @@
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
 		mytray.adjust_pestlevel(-rand(1,2))
 		if(myseed)
-			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.2))
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
