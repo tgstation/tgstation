@@ -11,19 +11,17 @@
 
 /datum/ai_planning_subtree/bileworm_attack
 
-/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/mob/living/target = weak_target?.resolve()
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(QDELETED(target))
 		return
 
-	var/datum/weakref/weak_action = controller.blackboard[BB_BILEWORM_RESURFACE]
-	var/datum/action/cooldown/mob_cooldown/resurface = weak_action?.resolve()
+	var/datum/action/cooldown/mob_cooldown/resurface = controller.blackboard[BB_BILEWORM_RESURFACE]
 
 	//because one ability is always INFINITY cooldown, this actually works to check which ability should be used
 	//sometimes it will try to spew bile on infinity cooldown, but that's okay because as soon as resurface is ready it will attempt that
-	if(resurface && resurface.next_use_time <= world.time)
+	if(!QDELETED(resurface) && resurface.next_use_time <= world.time)
 		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_RESURFACE, BB_BASIC_MOB_CURRENT_TARGET)
 	else
 		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_plan_execute, BB_BILEWORM_SPEW_BILE, BB_BASIC_MOB_CURRENT_TARGET)
@@ -31,10 +29,9 @@
 
 /datum/ai_planning_subtree/bileworm_execute
 
-/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/bileworm_execute/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
-	var/mob/living/target = weak_target?.resolve()
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET]
 	if(QDELETED(target) || target.stat < UNCONSCIOUS)
 		return
 

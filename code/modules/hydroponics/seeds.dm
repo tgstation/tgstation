@@ -545,7 +545,7 @@
 /obj/item/seeds/proc/create_graft()
 	var/obj/item/graft/snip = new(loc, graft_gene)
 	snip.parent_name = plantname
-	snip.name += "([plantname])"
+	snip.name += " ([plantname])"
 
 	// Copy over stats so the graft can outlive its parent.
 	snip.lifespan = lifespan

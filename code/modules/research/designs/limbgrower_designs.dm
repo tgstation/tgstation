@@ -224,7 +224,6 @@
 
 /obj/item/disk/design_disk/limbs/Initialize(mapload)
 	. = ..()
-	max_blueprints = limb_designs.len
 	for(var/design in limb_designs)
 		var/datum/design/new_design = design
 		blueprints += new new_design

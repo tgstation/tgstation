@@ -109,8 +109,7 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 10, paralyze_duration = 1 SECONDS, flags = CALTROP_BYPASS_SHOES)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 /mob/living/basic/garden_gnome/proc/apply_colour()
 	if(!greyscale_config)
@@ -120,13 +119,8 @@
 /mob/living/basic/garden_gnome/proc/ai_retaliate_behaviour(mob/living/attacker)
 	if (!istype(attacker))
 		return
-	var/list/enemy_refs
 	for (var/mob/living/basic/garden_gnome/potential_gnome in oview(src, 7))
-		enemy_refs = potential_gnome.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-		if (!enemy_refs)
-			enemy_refs = list()
-		enemy_refs |= WEAKREF(attacker)
-		potential_gnome.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] = enemy_refs
+		potential_gnome.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
 
 /datum/ai_controller/basic_controller/garden_gnome
 	blackboard = list(

@@ -34,7 +34,7 @@
 		if(50 to 100)
 			. += span_alert("The anomaly pulsates heavily, about to burst with unearthly energy. This can't be good.")
 
-/obj/effect/anomaly/ectoplasm/anomalyEffect(delta_time)
+/obj/effect/anomaly/ectoplasm/anomalyEffect(seconds_per_tick)
 	. = ..()
 
 	if(override_ghosts)
@@ -147,9 +147,9 @@
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
 	playsound(src, pick(spooky_noises), 100, TRUE)
-	QDEL_IN(src, 2 MINUTES)
+	QDEL_IN(WEAKREF(src), 2 MINUTES)
 
-/obj/structure/ghost_portal/process(delta_time)
+/obj/structure/ghost_portal/process(seconds_per_tick)
 	. = ..()
 
 	if(prob(5))
@@ -174,7 +174,7 @@
  * Ghosts are deleted two minutes after being made, and exist to punch stuff until it breaks.
  */
 
-/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list)
+/obj/structure/ghost_portal/proc/make_ghost_swarm(list/candidate_list = list())
 	if(!length(candidate_list)) //If we are not passed a candidate list we just poll everyone who is dead, meaning these can also be spawned directly.
 		candidate_list += GLOB.current_observers_list
 		candidate_list += GLOB.dead_player_list

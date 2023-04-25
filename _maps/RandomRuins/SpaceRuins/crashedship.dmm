@@ -104,12 +104,9 @@
 /turf/open/floor/iron/textured,
 /area/awaymission/bmpship/aft)
 "eU" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/teleport/hub,
 /obj/effect/turf_decal/delivery/white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
 /area/awaymission/bmpship/midship)
 "fc" = (
@@ -243,11 +240,10 @@
 /area/awaymission/bmpship/aft)
 "lx" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 0;
-	pixel_y = 25
+/obj/machinery/power/apc/auto_name/directional/north{
+	environ = 0
 	},
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/midship)
 "lG" = (
@@ -281,14 +277,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/bmpship/aft)
 "nb" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/computer/teleporter{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
 /area/awaymission/bmpship/midship)
 "nh" = (
@@ -309,22 +302,16 @@
 /area/awaymission/bmpship/aft)
 "nY" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "om" = (
 /obj/effect/turf_decal/loading_area,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
@@ -413,11 +400,8 @@
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 4
 	},
@@ -507,12 +491,9 @@
 	},
 /area/awaymission/bmpship/aft)
 "ts" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/machinery/teleport/station,
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
 /area/awaymission/bmpship/midship)
 "tN" = (
@@ -590,37 +571,28 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
 "xy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
 /obj/structure/canister_frame/machine/finished_canister_frame,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "xF" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/aft)
 "xJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/airless,
 /area/awaymission/bmpship/aft)
 "xU" = (
 /obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "yb" = (
@@ -645,10 +617,7 @@
 	},
 /area/awaymission/bmpship/midship)
 "yL" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 8
 	},
@@ -687,14 +656,11 @@
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "zW" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/closet,
 /obj/item/dice/d6,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron/checker/airless,
 /area/awaymission/bmpship/midship)
 "Af" = (
@@ -801,10 +767,10 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
+/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -820,11 +786,8 @@
 "CU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 5
 	},
@@ -904,10 +867,10 @@
 /turf/open/misc/asteroid,
 /area/awaymission/bmpship/fore)
 "FY" = (
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -926,10 +889,7 @@
 "Gv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 9
 	},
@@ -947,9 +907,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -963,10 +921,10 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -1129,10 +1087,7 @@
 "Nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 4
 	},

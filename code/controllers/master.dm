@@ -7,29 +7,8 @@
  *
  **/
 
-// Did you know that Byond initializes global variables in reverse order from how they are declared?
-// This means that globals in files which are earlier in the dme are initialized after later files.
-// The trick here is that global initialization respects line order correctly!
-
-// Due to the inherently asinine logic of this, nothing should be raw globals unless absolutely needed.
-// If you need something to be a raw global, reconsider what you are doing.
-
-// Nothing else should be initialized like this, and if it is needed must be explained for future reference.
-
-// Must be created before Master so that we can debug in Master
-GLOBAL_REAL(Debugger, /datum/debugger) = new
-
-
-// This is created before master because Master creates the Config controller which logs
-GLOBAL_REAL(logger, /datum/log_holder) = new
-
-// Master is what controls how we schedule and control tick flow, and obviously cannot exist until created initially
-GLOBAL_REAL(Master, /datum/controller/master) = new
-
-//THIS IS THE INIT ORDER
-// Debugger -> logger-> Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
-//GOT IT MEMORIZED?
-
+// See initialization order in /code/game/world.dm
+GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master
 	name = "Master"
 
@@ -98,7 +77,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if(!random_seed)
 		#ifdef UNIT_TESTS
-		random_seed = 29051994
+		random_seed = 29051994 // How about 22475?
 		#else
 		random_seed = rand(1, 1e9)
 		#endif

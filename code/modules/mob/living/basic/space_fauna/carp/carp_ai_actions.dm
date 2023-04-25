@@ -25,7 +25,7 @@
 /// Interrupt your attack chain if: you have a spell, it's not on cooldown, and it has a target
 /datum/ai_behavior/basic_melee_attack/carp/magic
 
-/datum/ai_behavior/basic_melee_attack/carp/magic/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/basic_melee_attack/carp/magic/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return ..()
@@ -41,9 +41,8 @@
  */
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target
 
-/datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/datum/weakref/weak_action = controller.blackboard[BB_MAGICARP_SPELL]
-	var/datum/action/cooldown/using_action = weak_action?.resolve()
+/datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return
 	if (!using_action.IsAvailable())
@@ -73,3 +72,5 @@
 	ability_key = BB_MAGICARP_SPELL
 	target_key = BB_MAGICARP_SPELL_TARGET
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/and_clear_target
+
+#undef MAGICARP_SPELL_TARGET_SEEK_RANGE

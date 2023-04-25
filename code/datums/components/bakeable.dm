@@ -50,13 +50,13 @@
 		who_baked_us = REF(baker.mind)
 
 ///Ran every time an item is baked by something
-/datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, delta_time = 1)
+/datum/component/bakeable/proc/on_bake(datum/source, atom/used_oven, seconds_per_tick = 1)
 	SIGNAL_HANDLER
 
 	// Let our signal know if we're baking something good or ... burning something
 	var/baking_result = positive_result ? COMPONENT_BAKING_GOOD_RESULT : COMPONENT_BAKING_BAD_RESULT
 
-	current_bake_time += delta_time * 10 //turn it into ds
+	current_bake_time += seconds_per_tick * 10 //turn it into ds
 	if(current_bake_time >= required_bake_time)
 		finish_baking(used_oven)
 
@@ -92,7 +92,10 @@
 
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
-			examine_list += span_notice("[parent] can be <b>baked</b> into \a [initial(bake_result.name)].")
+			if(initial(bake_result.gender) == PLURAL)
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+			else
+				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
 		return
 
 	if(positive_result)

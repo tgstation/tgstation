@@ -36,7 +36,7 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/blob/blobbernaut/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!..())
 		return FALSE
 	var/list/blobs_in_area = range(2, src)
@@ -53,14 +53,14 @@
 		damagesources++
 	else
 		if(locate(/obj/structure/blob/special/core) in blobs_in_area)
-			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE * delta_time)
+			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				heal_effect.color = overmind.blobstrain.complementary_color
 			else
 				heal_effect.color = "#000000"
 		if(locate(/obj/structure/blob/special/node) in blobs_in_area)
-			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE * delta_time)
+			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE * seconds_per_tick)
 			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(src))
 			if(overmind)
 				heal_effect.color = overmind.blobstrain.complementary_color
@@ -70,7 +70,7 @@
 	if(!damagesources)
 		return FALSE
 
-	adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+	adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * seconds_per_tick) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 	var/image/image = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 	image.appearance_flags = RESET_COLOR
 

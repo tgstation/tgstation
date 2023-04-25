@@ -4,9 +4,11 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 #define KEYCARD_EMERGENCY_MAINTENANCE_ACCESS "Emergency Maintenance Access"
 #define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
 
+#define ACCESS_GRANTING_COOLDOWN (30 SECONDS)
+
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
-	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
+	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate, or to give the Janitor access to a department."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	power_channel = AREA_USAGE_ENVIRON
@@ -18,6 +20,8 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
 	var/waiting = FALSE
+
+	COOLDOWN_DECLARE(access_grant_cooldown)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
@@ -61,9 +65,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/ui_act(action, params)
 	. = ..()
-
 	if(. || waiting || !allowed(usr))
 		return
+
 	switch(action)
 		if("red_alert")
 			if(!event_source)
@@ -83,6 +87,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			if(!event_source)
 				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
+		if("give_janitor_access")
+			var/mob/living/living_user = usr
+			if(!living_user || !istype(living_user))
+				return TRUE
+			if(!COOLDOWN_FINISHED(src, access_grant_cooldown))
+				balloon_alert(usr, "on cooldown!")
+				return TRUE
+			var/obj/item/card/id/advanced/card = living_user.get_idcard(hand_first = TRUE)
+			if(!card)
+				return TRUE
+			for(var/access_as_text in SSid_access.sub_department_managers_tgui)
+				var/list/info = SSid_access.sub_department_managers_tgui[access_as_text]
+				if(card.trim.assignment != info["head"])
+					continue
+				COOLDOWN_START(src, access_grant_cooldown, ACCESS_GRANTING_COOLDOWN)
+				SEND_GLOBAL_SIGNAL(COMSIG_ON_DEPARTMENT_ACCESS, info["regions"])
+				balloon_alert(usr, "key access sent")
+				return
 
 /obj/machinery/keycard_auth/update_appearance(updates)
 	. = ..()
@@ -163,6 +185,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("bluespace artillery", GLOB.bsa_unlock? "unlocked" : "locked"))
 
+#undef ACCESS_GRANTING_COOLDOWN
 #undef KEYCARD_RED_ALERT
 #undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
 #undef KEYCARD_BSA_UNLOCK

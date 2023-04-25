@@ -36,7 +36,7 @@
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/icon/holo_icon //Default is assigned when AI is created.
+	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
 	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
 
 
-	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
+	hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"default")
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -192,8 +192,7 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -414,15 +413,17 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
-	the_mmi.brainmob.set_suicide(suiciding)
-	the_mmi.brain.suicided = suiciding
+
+	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
+	the_mmi.brainmob.set_suicide(has_suicided_trait)
+	the_mmi.brain.suicided = has_suicided_trait
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.core_mmi = the_mmi
 		the_mmi.forceMove(the_core)
 	else
 		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+	if(the_mmi.brainmob.stat == DEAD && !has_suicided_trait)
 		the_mmi.brainmob.set_stat(CONSCIOUS)
 	if(mind)
 		mind.transfer_to(the_mmi.brainmob)
@@ -673,22 +674,17 @@
 						return
 					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
-						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
 						character_icon.setDir(SOUTH)
-
-						var/icon/icon_for_holo = getFlatIcon(character_icon)
-						holo_icon = getHologramIcon(icon(icon_for_holo))
+						hologram_appearance = character_icon
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
 						if("Yes")
 							var/mob/living/carbon/human/dummy/ai_dummy = new
-							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							var/icon/character_icon = getHologramIcon(getFlatIcon(appearance))
-							if(character_icon)
-								qdel(holo_icon)
+							var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+							if(dummy_appearance)
 								qdel(ai_dummy)
-								holo_icon = character_icon
+								hologram_appearance = dummy_appearance
 						if("No")
 							return FALSE
 
@@ -714,16 +710,17 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("poly")
-					holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+					working_state = "parrot_fly"
 				if("chicken")
-					holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
+					working_state = "chicken_brown"
 				if("spider")
-					holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+					working_state = "guard"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 		else
 			var/list/icon_list = list(
 				"default" = 'icons/mob/silicon/ai.dmi',
@@ -738,12 +735,13 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("xeno queen")
-					holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
+					working_state = "alienq"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 	return
 
 /datum/action/innate/core_return
@@ -980,20 +978,32 @@
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
-	else if(apc.aidisabled)
+		return
+	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
-	else
-		malf_picker.processing_time += 10
+		return
 
-		apc.malfai = parent || src
-		apc.malfhack = TRUE
-		apc.locked = TRUE
-		apc.coverlocked = TRUE
+	malf_picker.processing_time += 10
+	var/area/apcarea = apc.area
+	var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
+	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
+		doom_n_boom.hacked_command_areas += apcarea
+		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
+		var/datum/antagonist/malf_ai/malf_ai_datum = mind.has_antag_datum(/datum/antagonist/malf_ai)
+		if(malf_ai_datum)
+			malf_ai_datum.update_static_data_for_all_viewers()
+		else //combat software AIs use a different UI
+			malf_picker.update_static_data_for_all_viewers()
 
-		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
-		to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
-		apc.update_appearance()
+	apc.malfai = parent || src
+	apc.malfhack = TRUE
+	apc.locked = TRUE
+	apc.coverlocked = TRUE
+
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
+	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
+	apc.update_appearance()
 
 /mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
 	set category = "AI Commands"
@@ -1128,3 +1138,5 @@
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
+
+#undef CALL_BOT_COOLDOWN

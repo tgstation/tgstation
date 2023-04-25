@@ -80,6 +80,7 @@
 #define LOG_CATEGORY_PAPER "paper"
 #define LOG_CATEGORY_SHUTTLE "shuttle"
 #define LOG_CATEGORY_SILICON "silicon"
+#define LOG_CATEGORY_SILO "silo"
 #define LOG_CATEGORY_SIGNAL "signal"
 #define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
 #define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"

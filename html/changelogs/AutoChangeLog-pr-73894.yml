@@ -1,5 +1,0 @@
-author: "Rex9001"
-delete-after: True
-changes:
-  - rscadd: "Adds 2 new iron/dark/airless subtypes, textured and smooth_large"
-  - rscadd: "Adds the_faceoff.dmm Ruin"

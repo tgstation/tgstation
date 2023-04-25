@@ -5,25 +5,25 @@
 
 /// General logging for admin actions
 /proc/log_admin(text, list/data)
-	GLOB.admin_log.Add(text)
+	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: [text]")
 
 /// Logging for admin actions on or with circuits
 /proc/log_admin_circuit(text, list/data)
-	GLOB.admin_log.Add(text)
+	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_CIRCUIT, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMIN: CIRCUIT: [text]")
 
 /// General logging for admin actions
 /proc/log_admin_private(text, list/data)
-	GLOB.admin_log.Add(text)
+	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: [text]")
 
 /// Logging for AdminSay (ASAY) messages
 /proc/log_adminsay(text, list/data)
-	GLOB.admin_log.Add(text)
+	GLOB.admin_activities.Add(text)
 	logger.Log(LOG_CATEGORY_ADMIN_PRIVATE_ASAY, text, data)
 	logger.Log(LOG_CATEGORY_COMPAT_GAME, "ADMINPRIVATE: ASAY: [text]")
 

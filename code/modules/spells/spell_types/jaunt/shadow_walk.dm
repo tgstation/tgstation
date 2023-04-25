@@ -44,7 +44,7 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
-	/// The amount that shadow heals us per SSobj tick (times delta_time)
+	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
 	COOLDOWN_DECLARE(light_step_cooldown)
@@ -59,7 +59,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/dummy/phased_mob/shadow/process(delta_time)
+/obj/effect/dummy/phased_mob/shadow/process(seconds_per_tick)
 	var/turf/T = get_turf(src)
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
@@ -70,7 +70,7 @@
 
 	if(!QDELETED(jaunter) && isliving(jaunter)) //heal in the dark
 		var/mob/living/living_jaunter = jaunter
-		living_jaunter.heal_overall_damage(brute = (healing_rate * delta_time), burn = (healing_rate * delta_time), required_bodytype = BODYTYPE_ORGANIC)
+		living_jaunter.heal_overall_damage(brute = (healing_rate * seconds_per_tick), burn = (healing_rate * seconds_per_tick), required_bodytype = BODYTYPE_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/oldloc = loc

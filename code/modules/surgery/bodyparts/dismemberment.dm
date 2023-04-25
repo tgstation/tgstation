@@ -1,11 +1,12 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/item)
-	if(dismemberable)
-		return TRUE
+	if(bodypart_flags & BODYPART_UNREMOVABLE)
+		return FALSE
+	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
-	if(!owner || !dismemberable)
+	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
 	if(limb_owner.status_flags & GODMODE)
@@ -53,7 +54,7 @@
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner
-	if(!dismemberable)
+	if(bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
@@ -90,7 +91,9 @@
 
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
-	update_limb(1)
+	update_limb(TRUE)
+	//limb is out and about, it can't really be considered an implant
+	bodypart_flags &= ~BODYPART_IMPLANTED
 	owner.remove_bodypart(src)
 
 	for(var/datum/wound/wound as anything in wounds)
@@ -130,8 +133,8 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
-	for(var/trait in bodypart_traits)
-		REMOVE_TRAIT(phantom_owner, trait, bodypart_trait_source)
+	if(length(bodypart_traits))
+		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
@@ -143,7 +146,7 @@
 		qdel(src)
 		return
 
-	if(is_pseudopart)
+	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
@@ -299,6 +302,15 @@
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.try_attach_limb(limb_owner, TRUE)
 
+///Checks if a limb qualifies as a BODYPART_IMPLANTED
+/obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
+	if(!istype(monster))
+		return FALSE
+	var/obj/item/bodypart/original_type = monster.dna.species.bodypart_overrides[body_zone]
+	if(!original_type || (limb_id != initial(original_type.limb_id)))
+		return TRUE
+	return FALSE
+
 ///Checks if you can attach a limb, returns TRUE if you can.
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
@@ -355,8 +367,8 @@
 	if(can_be_disabled)
 		update_disabled()
 
-	for(var/trait in bodypart_traits)
-		ADD_TRAIT(owner, trait, bodypart_trait_source)
+	if(length(bodypart_traits))
+		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
@@ -373,18 +385,12 @@
 	var/real_name = src.real_name
 
 	. = ..()
-	if(!.)
-		return .
-	//Transfer some head appearance vars over
-	if(brain)
-		if(brainmob)
-			brainmob.container = null //Reset brainmob head var.
-			brainmob.forceMove(brain) //Throw mob into brain.
-			brain.brainmob = brainmob //Set the brain to use the brainmob
-			brainmob = null //Set head brainmob var to null
-		brain.Insert(new_head_owner) //Now insert the brain proper
-		brain = null //No more brain in the head
 
+	if(!.)
+		return
+
+	if(brain)
+		brain = null
 	if(tongue)
 		tongue = null
 	if(ears)

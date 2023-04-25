@@ -18,6 +18,11 @@
 /proc/log_prayer(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_PRAYER, text, data)
 
+/// Logging for music requests
+/proc/log_internet_request(text)
+	if (CONFIG_GET(flag/log_internet_request))
+		WRITE_LOG(GLOB.world_game_log, "INTERNET REQUEST: [text]")
+
 /// Logging for logging in & out of the game, with error messages.
 /proc/log_access(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_ACCESS, text, data)

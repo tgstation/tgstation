@@ -3,7 +3,7 @@
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
-	icon = "hiking"
+	icon = FA_ICON_HIKING
 	value = -8
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("Your back REALLY hurts!")
@@ -54,17 +54,32 @@
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
-	icon = "tint"
+	icon = FA_ICON_TINT
 	value = -8
+	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = span_danger("You feel your vigor slowly fading away.")
 	lose_text = span_notice("You feel vigorous again.")
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
-/datum/quirk/blooddeficiency/process(delta_time)
+/datum/quirk/blooddeficiency/post_add()
+	if(!ishuman(quirk_holder))
+		return
+
+	// for making sure the roundstart species has the right blood pack sent to them
+	var/mob/living/carbon/human/carbon_target = quirk_holder
+	carbon_target.dna.species.update_quirk_mail_goodies(carbon_target, src)
+
+/**
+ * Makes the mob lose blood from having the blood deficiency quirk, if possible
+ *
+ * Arguments:
+ * * seconds_per_tick
+ */
+/datum/quirk/blooddeficiency/proc/lose_blood(seconds_per_tick)
 	if(quirk_holder.stat == DEAD)
 		return
 
@@ -75,12 +90,12 @@
 	if (carbon_target.blood_volume <= min_blood)
 		return
 	// Ensures that we don't reduce total blood volume below min_blood.
-	carbon_target.blood_volume = max(min_blood, carbon_target.blood_volume - carbon_target.dna.species.blood_deficiency_drain_rate * delta_time)
+	carbon_target.blood_volume = max(min_blood, carbon_target.blood_volume - carbon_target.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
-	icon = "eye-slash"
+	icon = FA_ICON_EYE_SLASH
 	value = -16
 	gain_text = span_danger("You can't see anything.")
 	lose_text = span_notice("You miraculously gain back your vision.")
@@ -106,7 +121,7 @@
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	icon = "brain"
+	icon = FA_ICON_BRAIN
 	value = -12
 	gain_text = span_danger("You feel smooth.")
 	lose_text = span_notice("You feel wrinkled again.")
@@ -127,19 +142,19 @@
 		flavour_text = "These will keep you alive until you can secure a supply of medication. Don't rely on them too much!",
 	)
 
-/datum/quirk/item_quirk/brainproblems/process(delta_time)
+/datum/quirk/item_quirk/brainproblems/process(seconds_per_tick)
 	if(quirk_holder.stat == DEAD)
 		return
 
 	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
 		return
 
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)
 
 /datum/quirk/item_quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
-	icon = "deaf"
+	icon = FA_ICON_DEAF
 	value = -8
 	mob_trait = TRAIT_DEAF
 	gain_text = span_danger("You can't hear anything.")
@@ -154,7 +169,7 @@
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
-	icon = "frown"
+	icon = FA_ICON_FROWN
 	mob_trait = TRAIT_DEPRESSION
 	value = -3
 	gain_text = span_danger("You start feeling depressed.")
@@ -167,7 +182,7 @@
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
-	icon = "toolbox"
+	icon = FA_ICON_TOOLBOX
 	value = -2
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
@@ -240,7 +255,7 @@
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
-	icon = "boxing-glove"
+	icon = FA_ICON_HAND_FIST
 	value = -4
 	gain_text = span_danger("Your jaw feels loose.")
 	lose_text = span_notice("Your jaw feels fitting again.")
@@ -291,7 +306,7 @@
 /datum/quirk/frail
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
-	icon = "skull"
+	icon = FA_ICON_SKULL
 	value = -6
 	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = span_danger("You feel frail.")
@@ -303,7 +318,7 @@
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
-	icon = "bed"
+	icon = FA_ICON_BED
 	value = -2
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = span_danger("You feel sleepy.")
@@ -323,7 +338,7 @@
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
 	desc = "For better or worse, everything seems to affect your mood more than it should."
-	icon = "flushed"
+	icon = FA_ICON_FLUSHED
 	value = -2
 	gain_text = span_danger("You seem to make a big deal out of everything.")
 	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
@@ -342,7 +357,7 @@
 /datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
-	icon = "cocktail"
+	icon = FA_ICON_COCKTAIL
 	value = -2
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = span_notice("Just the thought of drinking alcohol makes your head spin.")
@@ -354,7 +369,7 @@
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
-	icon = "glasses"
+	icon = FA_ICON_GLASSES
 	value = -4
 	gain_text = span_danger("Things far away from you start looking blurry.")
 	lose_text = span_notice("You start seeing faraway things normally again.")
@@ -391,7 +406,7 @@
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
-	icon = "lightbulb"
+	icon = FA_ICON_LIGHTBULB
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 5
@@ -438,7 +453,7 @@
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
-	icon = "peace"
+	icon = FA_ICON_PEACE
 	value = -8
 	mob_trait = TRAIT_PACIFISM
 	gain_text = span_danger("You feel repulsed by the thought of violence!")
@@ -450,7 +465,7 @@
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
-	icon = "wheelchair"
+	icon = FA_ICON_WHEELCHAIR
 	value = -12
 	gain_text = null // Handled by trauma.
 	lose_text = null
@@ -492,7 +507,7 @@
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
-	icon = "bullseye"
+	icon = FA_ICON_BULLSEYE
 	value = -4
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
@@ -502,7 +517,7 @@
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
-	icon = "user-secret"
+	icon = FA_ICON_USER_SECRET
 	value = -4
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
@@ -566,7 +581,7 @@
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
-	icon = "handshake"
+	icon = FA_ICON_HANDSHAKE
 	value = -8
 	mob_trait = TRAIT_GRABWEAKNESS
 	gain_text = span_danger("You feel like a pushover.")
@@ -580,7 +595,7 @@
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
 		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
 		THIS IS NOT A LICENSE TO GRIEF."
-	icon = "grin-tongue-wink"
+	icon = FA_ICON_GRIN_TONGUE_WINK
 	value = -8
 	gain_text = span_userdanger("...")
 	lose_text = span_notice("You feel in tune with the world again.")
@@ -623,7 +638,7 @@
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
-	icon = "comment-slash"
+	icon = FA_ICON_COMMENT_SLASH
 	value = -3
 	gain_text = span_danger("You start worrying about what you're saying.")
 	lose_text = span_notice("You feel easier about talking again.") //if only it were that easy!
@@ -738,7 +753,7 @@
 /datum/quirk/item_quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
-	icon = "pills"
+	icon = FA_ICON_PILLS
 	value = -6
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
@@ -807,7 +822,7 @@
 		for(var/addiction_type in subtypesof(/datum/addiction))
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
-/datum/quirk/item_quirk/junkie/process(delta_time)
+/datum/quirk/item_quirk/junkie/process(seconds_per_tick)
 	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -828,7 +843,7 @@
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
-	icon = "smoking"
+	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	medical_record_text = "Patient is a current smoker."
@@ -858,12 +873,12 @@
 	. = ..()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
-	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
 		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
 		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
 
-/datum/quirk/item_quirk/junkie/smoker/process(delta_time)
+/datum/quirk/item_quirk/junkie/smoker/process(seconds_per_tick)
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
@@ -877,7 +892,7 @@
 /datum/quirk/unstable
 	name = "Unstable"
 	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
-	icon = "angry"
+	icon = FA_ICON_ANGRY
 	value = -10
 	mob_trait = TRAIT_UNSTABLE
 	gain_text = span_danger("There's a lot on your mind right now.")
@@ -889,7 +904,7 @@
 /datum/quirk/item_quirk/allergic
 	name = "Extreme Medicine Allergy"
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
-	icon = "prescription-bottle"
+	icon = FA_ICON_PRESCRIPTION_BOTTLE
 	value = -6
 	gain_text = span_danger("You feel your immune system shift.")
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
@@ -923,7 +938,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
-/datum/quirk/item_quirk/allergic/process(delta_time)
+/datum/quirk/item_quirk/allergic/process(seconds_per_tick)
 	if(!iscarbon(quirk_holder))
 		return
 
@@ -943,9 +958,9 @@
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
-		carbon_quirk_holder.adjustToxLoss(3 * delta_time)
-		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * delta_time)
-		if(DT_PROB(10, delta_time))
+		carbon_quirk_holder.adjustToxLoss(3 * seconds_per_tick)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
+		if(SPT_PROB(10, seconds_per_tick))
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 
@@ -984,7 +999,7 @@
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
 	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
-	icon = "box-open"
+	icon = FA_ICON_BOX_OPEN
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
@@ -994,7 +1009,7 @@
 /datum/quirk/claustrophobia/remove()
 	quirk_holder.clear_mood_event("claustrophobia")
 
-/datum/quirk/claustrophobia/process(delta_time)
+/datum/quirk/claustrophobia/process(seconds_per_tick)
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
@@ -1014,7 +1029,7 @@
 
 	quirk_holder.add_mood_event("claustrophobia", /datum/mood_event/claustrophobia)
 	quirk_holder.losebreath += 0.25 // miss a breath one in four times
-	if(DT_PROB(25, delta_time))
+	if(SPT_PROB(25, seconds_per_tick))
 		if(nick_spotted)
 			to_chat(quirk_holder, span_warning("Santa Claus is here! I gotta get out of here!"))
 		else
@@ -1039,7 +1054,7 @@
 /datum/quirk/illiterate
 	name = "Illiterate"
 	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
-	icon = "graduation-cap"
+	icon = FA_ICON_GRADUATION_CAP
 	value = -8
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient is not literate."
@@ -1050,7 +1065,7 @@
 /datum/quirk/mute
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
-	icon = "volume-xmark"
+	icon = FA_ICON_VOLUME_XMARK
 	value = -4
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
@@ -1061,7 +1076,7 @@
 /datum/quirk/body_purist
 	name = "Body Purist"
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
-	icon = "person-rays"
+	icon = FA_ICON_PERSON_RAYS
 	value = -2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("You now begin to hate the idea of having cybernetic implants.")
@@ -1095,7 +1110,7 @@
 		if(!IS_ORGANIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
-		if(organ.organ_flags & ORGAN_SYNTHETIC)
+		if((organ.organ_flags & ORGAN_SYNTHETIC || organ.status == ORGAN_ROBOTIC) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
 	update_mood()
 
@@ -1106,13 +1121,13 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if(new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) //why the fuck are there 2 of them
+	if((new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if(old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC)
+	if((old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC) && !(old_organ.organ_flags & ORGAN_HIDDEN))
 		cybernetics_level--
 		update_mood()
 
@@ -1127,10 +1142,11 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
+
 /datum/quirk/cursed
 	name = "Cursed"
 	desc = "You are cursed with bad luck. You are much more likely to suffer from accidents and mishaps. When it rains, it pours."
-	icon = "cloud-showers-heavy"
+	icon = FA_ICON_CLOUD_SHOWERS_HEAVY
 	value = -8
 	mob_trait = TRAIT_CURSED
 	gain_text = span_danger("You feel like you're going to have a bad day.")

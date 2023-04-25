@@ -1,15 +1,16 @@
-///global list of all pirate gangs that can show up today. these will be taken out of the global list as spawned so dupes cannot spawn.
-GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
+///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
+GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE))
+GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///initializes the pirate gangs glob list, adding all subtypes that can roll today.
-/proc/init_pirate_gangs()
+/proc/init_pirate_gangs(is_heavy)
 	var/list/pirate_gangs = list()
 
 	for(var/type in subtypesof(/datum/pirate_gang))
 		var/datum/pirate_gang/possible_gang = new type
 		if(!possible_gang.can_roll())
 			qdel(possible_gang)
-		else
+		else if(possible_gang.is_heavy_threat == is_heavy)
 			pirate_gangs += possible_gang
 	return pirate_gangs
 
@@ -18,6 +19,8 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///name of this gang, for spawning feedback
 	var/name = "Space Bugs"
 
+	///Whether or not this pirate crew is a heavy-level threat
+	var/is_heavy_threat = FALSE
 	///the random ship name chosen from pirates.json
 	var/ship_name
 	///the ship they load in on.
@@ -41,6 +44,9 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	var/response_too_late = "Your Bungopoints arrived too late, rebooting world..."
 	///station pays the pirates... but doesn't have enough cash.
 	var/response_not_enough = "Not enough Bungopoints have been added into my bank account, rebooting world..."
+
+	/// Have the pirates been paid off?
+	var/paid_off = FALSE
 
 /datum/pirate_gang/New()
 	. = ..()
@@ -67,9 +73,9 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	threat_title = "Sector protection offer"
 	threat_content = "Hey, pal, this is the %SHIPNAME. Can't help but notice you're rocking a wild \
 		and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've \
-		done a quick evaluation on your rates in this sector and we're offering %PAYOFF to cover for your \
+		done a quick evaluation of your rates in this sector, and we're offering %PAYOFF to cover your \
 		shuttle in case of any disaster."
-	arrival_announcement = "Do you want to reconsider our offer? Unfortunately, the time for negotiations has passed. Open up, we're coming aboard soon."
+	arrival_announcement = "Do you want to reconsider our offer? Unfortunately, the time for negotiations has passed. Open up; we're coming aboard soon."
 	possible_answers = list("Purchase Insurance.","Reject Offer.")
 
 	response_received = "Sweet, free cash. Let's get outta here, boys."
@@ -97,12 +103,13 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/skeletons
 	name = "Skeleton Pirates"
 
+	is_heavy_threat = TRUE
 	ship_template_id = "dutchman"
 	ship_name_pool = "skeleton_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Transfer of goods"
 	threat_content = "Ahoy! This be the %SHIPNAME. Cough up %PAYOFF credits or you'll walk the plank."
-	arrival_announcement = "The Jolly Roger won't wait forever, maties; we're laying alongside ready to send you some gifts."
+	arrival_announcement = "The Jolly Roger won't wait forever, maties; we're lying alongside, ready to send you some gifts."
 	possible_answers = list("We'll pay.","We will not be extorted.")
 
 	response_received = "Thanks for the credits, landlubbers."
@@ -118,9 +125,9 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 
 	threat_title = "Junkie tribute"
 	threat_content = "Hello, you psychically dormant pawn-pieces. It's the %SHIPNAME! Our funds are running a little low, and we're not going to be able to continue our gore-binge! %PAYOFF credits should do, wanna help us out?"
-	arrival_announcement = "We didn't blaze this far just to send some idle threats. Just you wait, we'll make you wish you were in a mental asylum."
+	arrival_announcement = "We didn't blaze this far just to send some idle threats. Just you wait; we'll make you wish you were in a mental asylum."
 	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
 
-	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"
+	response_received = "You guys aren't so bad for being dormants. The next gore-fest goes to you guys. Peace!"
 	response_too_late = "Oh, now you think we're worth the money. Pathetic dormants."
 	response_not_enough = "You really shouldn't have messed with us. You're in for a psychic nightmare."
