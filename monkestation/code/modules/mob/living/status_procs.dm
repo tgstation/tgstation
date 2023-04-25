@@ -31,21 +31,21 @@
 	if(HAS_TRAIT(src, TRAIT_EXHAUSTED))
 		if(knockdown)
 			if(stack_status)
-				AdjustKnockdown(knockdown, ignore_canstun)
+				AdjustKnockdown(knockdown, ignore_canstun, TRUE)
 			else
-				Knockdown(knockdown, ignore_canstun)
+				Knockdown(knockdown, ignore_canstun, TRUE)
 
 		if(paralyze)
 			if(stack_status)
-				AdjustParalyzed(paralyze, ignore_canstun)
+				AdjustParalyzed(paralyze, ignore_canstun, TRUE)
 			else
-				Paralyze(paralyze, ignore_canstun)
+				Paralyze(paralyze, ignore_canstun, TRUE)
 
 		if(stun)
 			if(stack_status)
-				AdjustStun(stun, ignore_canstun)
+				AdjustStun(stun, ignore_canstun, TRUE)
 			else
-				Stun(stun, ignore_canstun)
+				Stun(stun, ignore_canstun, TRUE)
 
 	if(amount > 0)
 		adjust_timed_status_effect(amount, /datum/status_effect/incapacitating/disoriented, 15 SECONDS)
