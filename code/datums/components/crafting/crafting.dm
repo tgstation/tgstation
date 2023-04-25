@@ -150,9 +150,11 @@
 		if(contained_item.atom_storage)
 			for(var/obj/item/subcontained_item in contained_item.contents)
 				available_tools[subcontained_item.type] = TRUE
+				available_tools[subcontained_item.parent_type] = TRUE
 				if(subcontained_item.tool_behaviour)
 					present_qualities[subcontained_item.tool_behaviour] = TRUE
 		available_tools[contained_item.type] = TRUE
+		available_tools[contained_item.parent_type] = TRUE
 		if(contained_item.tool_behaviour)
 			present_qualities[contained_item.tool_behaviour] = TRUE
 
