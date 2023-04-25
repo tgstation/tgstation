@@ -13,6 +13,8 @@
 #define ORGAN_SYNTHETIC_EMP (1<<5)
 ///Can't be removed using surgery
 #define ORGAN_UNREMOVABLE (1<<6)
+/// Can't be seen by scanners, doesn't anger body purists
+#define ORGAN_HIDDEN (1<<7)
 
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated

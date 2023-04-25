@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Deadchat now gets more juicy details on what has triggered a non-randomly occurring random event."
+  - code_imp: "There are now helpers for forcing events in a variety of ways. More events! More events!!!!!!!"

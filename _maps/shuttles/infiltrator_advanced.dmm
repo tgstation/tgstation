@@ -185,12 +185,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/bridge";
-	name = "Infiltrator E.V.A APC";
-	pixel_y = -25
+/obj/machinery/power/apc/auto_name/directional/south{
+	area = "/area/shuttle/syndicate/bridge"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
@@ -332,13 +331,11 @@
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/airlock";
-	dir = 4;
-	name = "Infiltrator Airlock APC";
-	pixel_x = 25
+/obj/machinery/power/apc/auto_name/directional/east{
+	area = "/area/shuttle/syndicate/airlock"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
@@ -403,13 +400,11 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/hallway";
-	dir = 1;
-	name = "Infiltrator APC";
-	pixel_y = 25
+/obj/machinery/power/apc/auto_name/directional/north{
+	area = "/area/shuttle/syndicate/hallway"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
 	pixel_x = 25
@@ -869,13 +864,11 @@
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/eva";
-	dir = 1;
-	name = "Infiltrator E.V.A APC";
-	pixel_y = 25
+/obj/machinery/power/apc/auto_name/directional/north{
+	area = "/area/shuttle/syndicate/eva"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
@@ -1720,13 +1713,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/medical";
-	dir = 8;
-	name = "Infiltrator Medical APC";
-	pixel_x = -25
+/obj/machinery/power/apc/auto_name/directional/west{
+	area = "/area/shuttle/syndicate/medical"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -1782,13 +1773,11 @@
 /obj/item/flashlight/seclite,
 /obj/item/flashlight/seclite,
 /obj/item/extinguisher/mini,
-/obj/machinery/power/apc/syndicate{
-	aidisabled = 1;
-	area = "/area/shuttle/syndicate/armory";
-	dir = 4;
-	name = "Infiltrator Armory APC";
-	pixel_x = 25
+/obj/machinery/power/apc/auto_name/directional/east{
+	area = "/area/shuttle/syndicate/armory"
 	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
