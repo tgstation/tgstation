@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - qol: "Lowered the atmos build, reprogram, and destroy delays on the RPD"
