@@ -851,9 +851,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(target))
 		return
-	
+
 	target.update_held_items()
-	
+
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
 
 /// Handles updates to greyscale value updates.
@@ -930,9 +930,23 @@
 		return FALSE
 	return TRUE
 
+/**
+ * Respond to fire being used on our atom
+ *
+ * Default behaviour is to send [COMSIG_ATOM_FIRE_ACT] and return
+ */
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
-	return
+	return FALSE
+
+/**
+ * Sends [COMSIG_ATOM_EXTINGUISH] signal, which properly removes burning component if it is present.
+ *
+ * Default behaviour is to send [COMSIG_ATOM_ACID_ACT] and return
+ */
+/atom/proc/extinguish()
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)
 
 /**
  * React to being hit by a thrown object
@@ -1278,6 +1292,8 @@
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_SPIN_ANIMATION, "SpinAnimation")
+	VV_DROPDOWN_OPTION(VV_HK_STOP_ALL_ANIMATIONS, "Stop All Animations")
 	VV_DROPDOWN_OPTION(VV_HK_SHOW_HIDDENPRINTS, "Show Hiddenprint log")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
@@ -1391,6 +1407,33 @@
 				transform = M.Turn(angle)
 
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
+
+	if(href_list[VV_HK_SPIN_ANIMATION] && check_rights(R_VAREDIT))
+		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
+		if(num_spins == "No")
+			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+		else
+			num_spins = -1
+		if(!num_spins)
+			return
+		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
+		if(!spin_speed)
+			return
+		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
+		switch(direction)
+			if("Clockwise")
+				direction = 1
+			if("Counter-clockwise")
+				direction = 0
+			else
+				return
+		SpinAnimation(spin_speed, num_spins, direction)
+
+	if(href_list[VV_HK_STOP_ALL_ANIMATIONS] && check_rights(R_VAREDIT))
+		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
+		if(result == "Yes")
+			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
+		return
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
@@ -1850,6 +1893,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
+	return
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2069,3 +2113,39 @@
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density
+
+/// Makes this atom look like a "hologram"
+/// So transparent, blue, with a scanline and an emissive glow
+/// This is acomplished using a combination of filters and render steps/overlays
+/// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
+/atom/proc/makeHologram(opacity = 0.5)
+	// First, we'll make things blue (roughly) and sorta transparent
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	// Now we're gonna do a scanline effect
+	// Gonna take this atom and give it a render target, then use it as a source for a filter
+	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
+	var/static/atom/movable/scanline
+	if(!scanline)
+		scanline = new(null)
+		scanline.icon = 'icons/effects/effects.dmi'
+		scanline.icon_state = "scanline"
+		// * so it doesn't render
+		scanline.render_target = "*HoloScanline"
+	// Now we add it as a filter, and overlay the appearance so the render source is always around
+	add_filter("HOLO: Scanline", 2, alpha_mask_filter(render_source = scanline.render_target))
+	add_overlay(scanline)
+	// Annd let's make the sucker emissive, so it glows in the dark
+	if(!render_target)
+		var/static/uid = 0
+		render_target = "HOLOGRAM [uid]"
+		uid++
+	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
+	var/static/atom/movable/render_step/emissive/glow = new(null)
+	glow.render_source = render_target
+	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
+	// We're creating a render step that copies ourselves, and draws it to the emissive plane
+	// Then we overlay it, and release "ownership" back to this proc, since we get to keep the appearance it generates
+	// We can't just use an MA from the start cause render_source setting starts going fuckey REALLY quick
+	var/mutable_appearance/glow_appearance = new(glow)
+	add_overlay(glow_appearance)
+	LAZYADD(update_overlays_on_z, glow_appearance)

@@ -56,9 +56,8 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ap" = (
@@ -498,9 +497,8 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cb" = (
@@ -540,9 +538,8 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
@@ -1032,9 +1029,8 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eo" = (

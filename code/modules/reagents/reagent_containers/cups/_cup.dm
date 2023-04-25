@@ -392,8 +392,8 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor_type = /datum/armor/bucket_wooden
 	resistance_flags = FLAMMABLE
+	armor_type = /datum/armor/bucket_wooden
 
 /datum/armor/bucket_wooden
 	melee = 10
@@ -456,6 +456,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded

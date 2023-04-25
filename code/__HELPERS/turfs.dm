@@ -361,35 +361,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return target
 
 /**
- * Checks whether the target turf is in a valid state to accept a directional window
- * or other directional pseudo-dense object such as railings.
+ * Checks whether the target turf is in a valid state to accept a directional construction
+ * such as windows or railings.
  *
- * Returns FALSE if the target turf cannot accept a directional window or railing.
+ * Returns FALSE if the target turf cannot accept a directional construction.
  * Returns TRUE otherwise.
  *
  * Arguments:
- * * dest_turf - The destination turf to check for existing windows and railings
+ * * dest_turf - The destination turf to check for existing directional constructions
  * * test_dir - The prospective dir of some atom you'd like to put on this turf.
  * * is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.
  */
-/proc/valid_window_location(turf/dest_turf, test_dir, is_fulltile = FALSE)
+/proc/valid_build_direction(turf/dest_turf, test_dir, is_fulltile = FALSE)
 	if(!dest_turf)
 		return FALSE
 	for(var/obj/turf_content in dest_turf)
-		if(istype(turf_content, /obj/machinery/door/window))
-			if((turf_content.dir == test_dir) || is_fulltile)
+		if(turf_content.obj_flags & BLOCKS_CONSTRUCTION_DIR)
+			if(is_fulltile)  // for making it so fulltile things can't be built over directional things--a special case
 				return FALSE
-		if(istype(turf_content, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/windoor_assembly = turf_content
-			if(windoor_assembly.dir == test_dir || is_fulltile)
-				return FALSE
-		if(istype(turf_content, /obj/structure/window))
-			var/obj/structure/window/window_structure = turf_content
-			if(window_structure.dir == test_dir || window_structure.fulltile || is_fulltile)
-				return FALSE
-		if(istype(turf_content, /obj/structure/railing))
-			var/obj/structure/railing/rail = turf_content
-			if(rail.dir == test_dir || is_fulltile)
+			if(turf_content.dir == test_dir)
 				return FALSE
 	return TRUE
 

@@ -1,14 +1,24 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
-import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
+import { formatTime } from '../format';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { actions, phase, roleinfo, role_theme, admin_controls } = data;
+  const { phase, roleinfo, admin_controls } = data;
+  const [mafia_tab, setMafiaMode] = useLocalState(
+    context,
+    mafia_tab,
+    'Role list'
+  );
   return (
-    <Window title="Mafia" theme={role_theme} width={650} height={580}>
+    <Window
+      title="Mafia"
+      theme={roleinfo && roleinfo.role_theme}
+      width={650}
+      height={580}>
       <Window.Content>
         <Stack fill vertical>
           {!roleinfo && (
@@ -17,55 +27,65 @@ export const MafiaPanel = (props, context) => {
             </Stack.Item>
           )}
           {!!roleinfo && (
-            <Stack.Item>
-              <MafiaRole />
-            </Stack.Item>
+            <>
+              <Stack.Item>
+                <MafiaRole />
+              </Stack.Item>
+              {phase === 'Judgment' && (
+                <Stack.Item>
+                  <MafiaJudgement />
+                </Stack.Item>
+              )}
+            </>
           )}
-          {actions?.map((action) => (
-            <Stack.Item key={action}>
-              <Button
-                onClick={() =>
-                  act('mf_action', {
-                    atype: action,
-                  })
-                }>
-                {action}
-              </Button>
-            </Stack.Item>
-          ))}
-          {!!roleinfo && (
-            <Stack.Item>
-              <MafiaJudgement />
-            </Stack.Item>
-          )}
+          {!!admin_controls && <MafiaAdmin />}
           {phase !== 'No Game' && (
             <Stack.Item grow>
-              <Stack fill>
-                <Stack.Item grow={1.34} basis={0}>
-                  <MafiaPlayers />
-                </Stack.Item>
-                <Stack.Item grow={1} basis={0}>
-                  <Stack fill vertical>
-                    <Stack.Item grow>
-                      <MafiaListOfRoles />
+              <Stack grow fill>
+                <>
+                  <Stack.Item grow>
+                    <MafiaPlayers />
+                  </Stack.Item>
+                  <Stack.Item fluid grow>
+                    <Stack.Item>
+                      <Tabs fluid>
+                        <Tabs.Tab
+                          align="center"
+                          selected={mafia_tab === 'Role list'}
+                          onClick={() => setMafiaMode('Role list')}>
+                          Role list
+                          <Button
+                            color="transparent"
+                            icon="address-book"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
+                            This is the list of roles in the game. You can
+                            press the question mark to get a quick blurb
+                            about the role itself.`}
+                          />
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                          align="center"
+                          selected={mafia_tab === 'Notes'}
+                          onClick={() => setMafiaMode('Notes')}>
+                          Notes
+                          <Button
+                            color="transparent"
+                            icon="pencil"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
+                            This is your notes, anything you want to write
+                            can be saved for future reference. You can
+                            also send it to chat with a button.`}
+                          />
+                        </Tabs.Tab>
+                      </Tabs>
                     </Stack.Item>
-                    {!!roleinfo && (
-                      <Stack.Item height="80px">
-                        <Section fill scrollable>
-                          {roleinfo.action_log?.map((line) => (
-                            <Box key={line}>{line}</Box>
-                          ))}
-                        </Section>
-                      </Stack.Item>
-                    )}
-                  </Stack>
-                </Stack.Item>
+                    {mafia_tab === 'Role list' && <MafiaListOfRoles />}
+                    {mafia_tab === 'Notes' && <MafiaNotesTab />}
+                  </Stack.Item>
+                </>
               </Stack>
-            </Stack.Item>
-          )}
-          {!!admin_controls && (
-            <Stack.Item>
-              <MafiaAdmin />
             </Stack.Item>
           )}
         </Stack>
@@ -76,7 +96,7 @@ export const MafiaPanel = (props, context) => {
 
 const MafiaLobby = (props, context) => {
   const { act, data } = useBackend(context);
-  const { lobbydata, phase, timeleft } = data;
+  const { lobbydata } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
     : null;
@@ -87,9 +107,6 @@ const MafiaLobby = (props, context) => {
       title="Lobby"
       buttons={
         <>
-          Phase = {phase}
-          {' | '}
-          <TimeDisplay auto="down" value={timeleft} />{' '}
           <Button
             icon="clipboard-check"
             tooltipPosition="bottom-start"
@@ -120,7 +137,7 @@ const MafiaLobby = (props, context) => {
             tooltip={multiline`
               Submit a vote to start the game early.
               Starts when half of the current signup list have voted to start.
-              Requires a bare minimum of three players.
+              Requires a bare minimum of six players.
             `}
             content="Start Now!"
             onClick={() => act('vote_to_start')}
@@ -146,10 +163,10 @@ const MafiaLobby = (props, context) => {
 
 const MafiaRole = (props, context) => {
   const { act, data } = useBackend(context);
-  const { phase, roleinfo, timeleft } = data;
+  const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
-      title={phase}
+      title={phase + turn}
       minHeight="100px"
       maxHeight="50px"
       buttons={
@@ -160,7 +177,7 @@ const MafiaRole = (props, context) => {
             'line-height': 1.5,
             'font-weight': 'bold',
           }}>
-          <TimeDisplay auto="down" value={timeleft} />
+          {formatTime(timeleft)}
         </Box>
       }>
       <Stack align="center">
@@ -193,41 +210,11 @@ const MafiaListOfRoles = (props, context) => {
   const { act, data } = useBackend(context);
   const { all_roles } = data;
   return (
-    <Section
-      fill
-      scrollable
-      title="Roles and Notes"
-      minHeight="120px"
-      buttons={
-        <>
-          <Button
-            color="transparent"
-            icon="address-book"
-            tooltipPosition="bottom-start"
-            tooltip={multiline`
-              The top section is the roles in the game. You can
-              press the question mark to get a quick blurb
-              about the role itself.`}
-          />
-          <Button
-            color="transparent"
-            icon="edit"
-            tooltipPosition="bottom-start"
-            tooltip={multiline`
-              The bottom section are your notes. on some roles this
-              will just be an empty box, but on others it records the
-              actions of your abilities (so for example, your
-              detective work revealing a changeling).`}
-          />
-        </>
-      }>
+    <Section fill>
       <Flex direction="column">
         {all_roles?.map((r) => (
-          <Flex.Item
-            key={r}
-            height="30px"
-            className="Section__title candystripe">
-            <Flex height="18px" align="center" justify="space-between">
+          <Flex.Item key={r} className="Section__title candystripe">
+            <Flex align="center" justify="space-between">
               <Flex.Item>{r}</Flex.Item>
               <Flex.Item textAlign="right">
                 <Button
@@ -235,7 +222,7 @@ const MafiaListOfRoles = (props, context) => {
                   icon="question"
                   onClick={() =>
                     act('mf_lookup', {
-                      atype: r.slice(0, -3),
+                      role_name: r.slice(0, -3),
                     })
                   }
                 />
@@ -248,53 +235,66 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
+const MafiaNotesTab = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { user_notes } = data;
+  const [note_message, setNotesMessage] = useLocalState(
+    context,
+    'Notes',
+    user_notes
+  );
+  return (
+    <Section grow fill>
+      <TextArea
+        height="80%"
+        maxLength={600}
+        className="Section__title candystripe"
+        onChange={(_, value) => setNotesMessage(value)}
+        placeholder={'Insert Notes...'}
+        value={note_message}
+      />
+      <Stack grow>
+        <Stack.Item grow fill>
+          <Button
+            color="good"
+            fluid
+            content="Save"
+            textAlign="center"
+            onClick={() => act('change_notes', { new_notes: note_message })}
+            tooltip="Saves whatever is written as your notepad. This can't be done while dead."
+          />
+          <Button.Confirm
+            color="bad"
+            fluid
+            content="Send to Chat"
+            textAlign="center"
+            onClick={() => act('send_notes_to_chat')}
+            tooltip="Sends your notes immediately into the chat for everyone to hear."
+          />
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+};
+
 const MafiaJudgement = (props, context) => {
   const { act, data } = useBackend(context);
-  const { judgement_phase } = data;
   return (
-    <Section
-      title="Judgement"
-      buttons={
-        <Button
-          color="transparent"
-          icon="info"
-          tooltipPosition="left"
-          tooltip={multiline`
-            When someone is on trial, you are in charge of their fate.
-            Innocent winning means the person on trial can live to see
-            another day... and in losing they do not. You can go back
-            to abstaining with the middle button if you reconsider.
-          `}
-        />
-      }>
+    <Section title="Judgement">
       <Flex justify="space-around">
         <Button
           icon="smile-beam"
           content="INNOCENT!"
           color="good"
-          disabled={!judgement_phase}
           onClick={() => act('vote_innocent')}
         />
-        {!judgement_phase && <Box>There is nobody on trial at the moment.</Box>}
-        {!!judgement_phase && (
-          <Box>
-            It is now time to vote, vote the accused innocent or guilty!
-          </Box>
-        )}
-        <Button
-          icon="angry"
-          color="bad"
-          disabled={!judgement_phase}
-          onClick={() => act('vote_guilty')}>
+        <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
+        <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
           GUILTY!
         </Button>
       </Flex>
       <Flex justify="center">
-        <Button
-          icon="meh"
-          color="white"
-          disabled={!judgement_phase}
-          onClick={() => act('vote_abstain')}>
+        <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>
           Abstain
         </Button>
       </Flex>
@@ -323,17 +323,16 @@ const MafiaPlayers = (props, context) => {
                   `Votes: ${player.votes}`}
               </Stack.Item>
               <Stack.Item shrink={0} minWidth="42px" textAlign="center">
-                {player.actions?.map((action) => (
+                {player.possible_actions?.map((action) => (
                   <Button
-                    key={action}
-                    fluid
+                    key={action.name}
                     onClick={() =>
-                      act('mf_targ_action', {
-                        atype: action,
+                      act('perform_action', {
+                        action_ref: action.ref,
                         target: player.ref,
                       })
                     }>
-                    {action}
+                    {action.name}
                   </Button>
                 ))}
               </Stack.Item>

@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSmodular_computers.add_log("[src]: [text]", network_id)
+	return SSmodular_computers.add_log("[src]: [text]")
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

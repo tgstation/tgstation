@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "crafting lizard skin cowboy boots no longer places a spawner object over the created boot item"

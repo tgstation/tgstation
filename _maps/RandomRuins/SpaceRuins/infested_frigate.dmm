@@ -6,13 +6,17 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"af" = (
-/obj/structure/door_assembly/door_assembly_hatch{
-	anchored = 1
+"au" = (
+/obj/effect/spawner/random/exotic/antag_gear_weak{
+	pixel_y = 5
 	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/security,
-/obj/structure/alien/resin/membrane,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/structure/table/glass/plasmaglass,
+/obj/effect/spawner/random/contraband/permabrig_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "aA" = (
@@ -64,6 +68,15 @@
 	pixel_y = -21
 	},
 /turf/open/floor/mineral/plastitanium/airless,
+/area/ruin/space/has_grav/infested_frigate)
+"aX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/structure/cable,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "aY" = (
 /obj/structure/table/reinforced,
@@ -333,6 +346,11 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
+"en" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/infested_frigate)
 "ep" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
@@ -400,19 +418,6 @@
 "fl" = (
 /turf/open/space/basic,
 /area/template_noop)
-"fE" = (
-/obj/structure/cable,
-/obj/effect/spawner/random/trash,
-/obj/structure/alien/weeds/node,
-/obj/effect/decal/cleanable/glass{
-	icon_state = "plasmatiny"
-	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
-/obj/machinery/power/rtg,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "fM" = (
 /obj/structure/door_assembly/door_assembly_ext,
 /turf/open/space/basic,
@@ -721,13 +726,20 @@
 /obj/machinery/vending/boozeomat/syndicate_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
-"kS" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	welded = 1
+"kA" = (
+/obj/structure/door_assembly/door_assembly_hatch{
+	anchored = 1
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/barricade/security,
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"kE" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/trash,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "kT" = (
 /obj/effect/turf_decal/tile/bar{
@@ -755,6 +767,15 @@
 	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"lz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north{
+	equipment = 1
+	},
+/obj/structure/cable,
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "lO" = (
 /obj/structure/fluff/broken_flooring{
@@ -820,6 +841,41 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"mY" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	welded = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/infested_frigate)
+"nd" = (
+/obj/item/coin/antagtoken{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/structure/closet/syndicate,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/item/clothing/gloves/combat{
+	pixel_y = -6
+	},
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/shoes/combat,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
 "nk" = (
 /obj/item/storage/medkit/o2,
 /obj/item/storage/medkit/toxin,
@@ -863,6 +919,26 @@
 /obj/machinery/light/red/dim/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"nw" = (
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/item/storage/toolbox/a762{
+	pixel_y = 16;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/a762{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2;
+	pixel_x = -8
+	},
+/obj/structure/table/glass/plasmaglass,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
 "nG" = (
 /mob/living/simple_animal/hostile/alien{
 	faction = list("syndicate","xenomorph")
@@ -876,20 +952,6 @@
 	desc = "The resin is thick and it keeps collapsing on itself."
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"nU" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood{
-	icon_state = "floor5-old"
-	},
-/obj/item/ammo_casing/spent{
-	layer = 3.1
-	},
-/obj/item/gun/ballistic/automatic/plastikov,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mob_spawn/corpse/human/syndicatepilot,
-/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "oj" = (
 /obj/structure/fans/tiny,
@@ -949,6 +1011,19 @@
 	},
 /turf/open/space/basic,
 /area/template_noop)
+"pE" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5-old"
+	},
+/obj/item/ammo_casing/spent{
+	layer = 3.1
+	},
+/obj/item/gun/ballistic/automatic/plastikov,
+/obj/effect/mob_spawn/corpse/human/syndicatepilot,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/infested_frigate)
 "qb" = (
 /obj/effect/turf_decal{
 	dir = 8
@@ -1040,6 +1115,17 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium/airless,
+/area/ruin/space/has_grav/infested_frigate)
+"ra" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/trash,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/glass{
+	icon_state = "plasmatiny"
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/power/rtg,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "rd" = (
 /obj/effect/decal/cleanable/blood/gibs/old{
@@ -1286,12 +1372,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"vx" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/infested_frigate)
 "vz" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -1529,18 +1609,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
-"yb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
-	dir = 5
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north{
-	equipment = 1
-	},
-/obj/structure/cable,
-/obj/effect/spawner/random/structure/crate_loot,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "ye" = (
 /obj/item/trash/flare,
 /obj/item/ammo_casing/spent,
@@ -1588,6 +1656,18 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"yE" = (
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/effect/spawner/random/entertainment/money_large{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/structure/table/glass/plasmaglass,
+/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "yG" = (
 /obj/effect/decal/cleanable/robot_debris{
@@ -1716,6 +1796,24 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"An" = (
+/obj/structure/cable,
+/obj/structure/barricade/security,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/alien/weeds/node{
+	maximum_growtime = 240000;
+	minimum_growtime = 120000;
+	growtime = 150000
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/structure/door_assembly/door_assembly_hatch{
+	name = "SYN-C Brutus Bridge"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/infested_frigate)
 "Ar" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1816,33 +1914,6 @@
 /area/ruin/space/has_grav/infested_frigate)
 "Cm" = (
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"Cp" = (
-/obj/item/coin/antagtoken{
-	pixel_y = 4;
-	pixel_x = 3
-	},
-/obj/structure/closet/syndicate,
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/item/clothing/gloves/combat{
-	pixel_y = -6
-	},
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/shoes/combat,
-/obj/item/clothing/shoes/combat,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "CE" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -2167,30 +2238,6 @@
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
-"IO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/item/storage/toolbox/a762{
-	pixel_y = 16;
-	pixel_x = 5
-	},
-/obj/item/storage/toolbox/a762{
-	pixel_y = 8;
-	pixel_x = 3
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = 2;
-	pixel_x = -8
-	},
-/obj/structure/table/glass/plasmaglass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
 "IS" = (
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
@@ -2224,20 +2271,6 @@
 	icon_state = "warningline_white"
 	},
 /obj/machinery/newscaster/directional/north,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
-"Jw" = (
-/obj/effect/spawner/random/exotic/antag_gear_weak{
-	pixel_y = 5
-	},
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/effect/spawner/random/exotic/antag_gear,
-/obj/structure/table/glass/plasmaglass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/spawner/random/contraband/permabrig_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "Jx" = (
@@ -2677,16 +2710,6 @@
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
-"PD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/structure/closet/crate/trashcart/filled,
-/obj/effect/spawner/random/exotic/technology,
-/obj/effect/spawner/random/trash,
-/obj/effect/spawner/random/trash,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "PV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /mob/living/carbon/alien/larva{
@@ -2764,11 +2787,6 @@
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
-"Rw" = (
-/obj/machinery/door/airlock/hatch,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
 "Rx" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal{
@@ -2806,25 +2824,6 @@
 	},
 /turf/open/space/basic,
 /area/template_noop)
-"RS" = (
-/obj/structure/cable,
-/obj/structure/barricade/security,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/alien/weeds/node{
-	maximum_growtime = 240000;
-	minimum_growtime = 120000;
-	growtime = 150000
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/structure/door_assembly/door_assembly_hatch{
-	name = "SYN-C Brutus Bridge"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/infested_frigate)
 "RW" = (
 /obj/machinery/door/poddoor/preopen,
 /obj/structure/fans/tiny,
@@ -2843,20 +2842,11 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"St" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/effect/spawner/random/entertainment/money_large{
-	pixel_x = 7;
-	pixel_y = -1
-	},
-/obj/structure/table/glass/plasmaglass,
-/turf/open/floor/pod/dark,
+"Ss" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/item/broken_bottle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "SB" = (
 /obj/machinery/power/shuttle_engine/large{
@@ -2941,6 +2931,12 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"TY" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
 "Ux" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3011,13 +3007,6 @@
 /obj/item/tank/internals/oxygen/empty,
 /turf/open/space/basic,
 /area/template_noop)
-"VU" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/vomit/old,
-/obj/item/broken_bottle,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/infested_frigate)
 "VV" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -3093,16 +3082,6 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/ruin/space/has_grav/infested_frigate)
-"Xc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/clothing/mask/facehugger/impregnated,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/spawner/random/exotic/antag_gear,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "Xm" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs{
@@ -3447,7 +3426,7 @@ fl
 Mm
 mG
 wP
-fE
+ra
 wc
 sQ
 KZ
@@ -3528,10 +3507,10 @@ fl
 wP
 KF
 wP
-yb
+lz
 ER
 ku
-PD
+kE
 LF
 Ux
 bg
@@ -3556,7 +3535,7 @@ wP
 Ln
 wP
 iY
-Xc
+aX
 Hu
 rs
 AH
@@ -3639,7 +3618,7 @@ ab
 Cm
 rm
 Ou
-Rw
+TY
 SX
 xT
 qC
@@ -3692,7 +3671,7 @@ nN
 rd
 wP
 wP
-RS
+An
 Qg
 Qg
 Ah
@@ -3962,7 +3941,7 @@ bM
 Ne
 wP
 bE
-nU
+pE
 ML
 wP
 UX
@@ -3989,8 +3968,8 @@ wP
 MW
 wP
 zV
-VU
-St
+Ss
+yE
 wP
 XG
 wP
@@ -4016,8 +3995,8 @@ wP
 nu
 wP
 FJ
-vx
-Jw
+en
+au
 wP
 Qp
 wP
@@ -4043,8 +4022,8 @@ wP
 bD
 wP
 zV
-kS
-IO
+mY
+nw
 wP
 wu
 wP
@@ -4071,7 +4050,7 @@ CK
 wP
 wE
 Hp
-Cp
+nd
 wP
 Zt
 wP
@@ -4283,7 +4262,7 @@ fl
 fl
 fl
 wP
-af
+kA
 yZ
 yZ
 pl
