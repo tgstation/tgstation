@@ -292,7 +292,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Round End"
-	embed.description = "Join Server! <byond://play.monkestation.com:1337>"
+	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
 	embed.author = "Round Controller"
 	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)
