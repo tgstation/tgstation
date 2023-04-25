@@ -132,6 +132,9 @@
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/basic/giant_spider/nurse
 
+/obj/structure/spider/spiderling/scout
+	grow_as = /mob/living/basic/giant_spider/scout
+
 /obj/structure/spider/spiderling/midwife
 	grow_as = /mob/living/basic/giant_spider/midwife
 

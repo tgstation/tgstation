@@ -78,6 +78,7 @@
 		/mob/living/basic/giant_spider,
 		/mob/living/basic/giant_spider/hunter,
 		/mob/living/basic/giant_spider/nurse,
+		/mob/living/basic/giant_spider/scout,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
