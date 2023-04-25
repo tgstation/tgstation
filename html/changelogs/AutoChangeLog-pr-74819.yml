@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "[Mafia] Notes are no longer written out for you."
+  - qol: "[Mafia] You can now send your notes to chat whenever."
+  - qol: "[Mafia] Roundend has changed. Solos will win over others in a 1v1, but a HoP can keep a round going in case they can solo lynch."

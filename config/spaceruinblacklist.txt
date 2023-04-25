@@ -82,4 +82,6 @@
 #_maps/RandomRuins/SpaceRuins/atmosasteroidruin.dmm
 #_maps/RandomRuins/SpaceRuins/prey_pod.dmm
 #_maps/RandomRuins/SpaceRuins/travelers_rest.dmm
+#_maps/RandomRuins/SpaceRuins/phonebooth.dmm
+#_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm

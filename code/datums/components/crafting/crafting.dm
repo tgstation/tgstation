@@ -462,7 +462,8 @@
 				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 					user.put_in_hands(result)
 				else
-					result.forceMove(user.drop_location())
+					if(!istype(result, /obj/effect/spawner))
+						result.forceMove(user.drop_location())
 				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)

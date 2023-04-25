@@ -310,12 +310,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/pipe_dispenser/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rpd_upgrade/unwrench))
-		install_upgrade(target, user)
-		return TRUE
-	return ..()
-
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(istype(target, /obj/machinery/air_sensor))
 		if(!do_after(user, destroy_speed, target))
@@ -330,12 +324,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		piping_layer = target.piping_layer
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rpd_upgrade))
-		install_upgrade(W, user)
-		return TRUE
-	return ..()
-
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
 	if(istype(target, /obj/machinery/atmospherics))
@@ -344,21 +332,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			context[SCREENTIP_CONTEXT_RMB] = "Copy piping color and layer"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/**
- * Installs an upgrade into the RPD
- *
- * Installs an upgrade into the RPD checking if it is already installed
- * Arguments:
- * * rpd_up - RPD upgrade
- * * user - mob that use upgrade on RPD
- */
-/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
-	if(rpd_up.upgrade_flags& upgrade_flags)
-		balloon_alert(user, "already installed!")
-		return
-	upgrade_flags |= rpd_up.upgrade_flags
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	qdel(rpd_up)
 
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
@@ -482,9 +455,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user, params)
 	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
+
+	if(istype(A, /obj/item/rpd_upgrade))
+		var/obj/item/rpd_upgrade/rpd_up = A
+
+		//already installed
+		if(rpd_up.upgrade_flags & upgrade_flags)
+			balloon_alert(user, "already installed!")
+			return TRUE
+
+		//install & delete upgrade
+		upgrade_flags |= rpd_up.upgrade_flags
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(rpd_up)
+		return TRUE
 
 	var/atom/attack_target = A
 
@@ -496,8 +483,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
-		if(!isatom(attack_target))
-			CRASH("When attempting to call [A.type].wrench_act(), received the following non-atom return value: [attack_target]")
+		if(!isatom(attack_target)) //can return null, FALSE if do_after() fails see /obj/machinery/atmospherics/wrench_act()
+			return TRUE
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
