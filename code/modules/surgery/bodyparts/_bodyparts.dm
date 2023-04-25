@@ -754,8 +754,6 @@
 	else
 		draw_color = null
 
-	y_offset = 0
-
 	if(!is_creating || !owner)
 		return
 
