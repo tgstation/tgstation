@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "skeletons get boosted heals from milk again"
