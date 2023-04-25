@@ -553,6 +553,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
+		. += "-[human_owner.get_top_offset(src)]"
 	return .
 
 ///Generates a cache key specifically for husks
@@ -565,6 +566,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
+		. += "-[human_owner.get_top_offset(src)]"
 	return .
 
 /obj/item/bodypart/head/generate_icon_key()
