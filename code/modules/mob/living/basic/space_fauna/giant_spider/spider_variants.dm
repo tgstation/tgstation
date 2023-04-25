@@ -41,6 +41,8 @@
 
 	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
+	. = ..()
+
 /**
  * ### Spider Nurse
  *
