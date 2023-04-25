@@ -28,7 +28,8 @@
 		/datum/reagent/consumable/caramel = 6,
 		/datum/reagent/consumable/banana = 6,
 		/datum/reagent/consumable/orangejuice = 6,
-		/datum/reagent/consumable/cream = 6)
+		/datum/reagent/consumable/cream = 6,
+	)
 
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()
