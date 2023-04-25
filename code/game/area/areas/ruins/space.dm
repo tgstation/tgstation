@@ -589,6 +589,10 @@
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
 
+// The Phonebooth
+/area/ruin/space/has_grav/powered/space_phone_booth
+	name = "\improper Phonebooth"
+
 // Botnanical Haven
 /area/ruin/space/has_grav/powered/botanical_haven
 	name = "\improper Botanical Haven"
