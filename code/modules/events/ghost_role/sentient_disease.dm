@@ -14,19 +14,18 @@
 	if(!.)
 		return .
 
-	var/host_counter = 0 //Counts how many potential hosts we have
+	var/host_counter = 0
 
-	//If 75% of the crew are potential hosts, we send in a sentient disease.
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(candidate.stat == DEAD)
 			continue
-		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //We're only checking crew here.
+		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		if(length(candidate.diseases))
 			continue
 		host_counter++
 
-	if(((host_counter / length(GLOB.player_list)) * 100) < 75) //If under 75% of the crew is infected with something or ineligible, maybe it's not the best time to introduce a sentient disease.
+	if((host_counter / length(GLOB.player_list)) < 0.75) //If under 75% of the crew is infected with something or ineligible, maybe it's not the best time to introduce a sentient disease.
 		return FALSE
 
 /datum/round_event/ghost_role/sentient_disease
