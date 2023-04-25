@@ -173,6 +173,8 @@
 	var/unarmed_stun_threshold = 2
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
+	/// The actual calculated offset we add to the overlay of the bodypart.
+	var/y_offset = 0
 
 	/// Traits that are given to the holder of the part. If you want an effect that changes this, don't add directly to this. Use the add_bodypart_trait() proc
 	var/list/bodypart_traits = list()
@@ -752,6 +754,8 @@
 	else
 		draw_color = null
 
+	y_offset = 0
+
 	if(!is_creating || !owner)
 		return
 
@@ -761,6 +765,8 @@
 	var/datum/species/owner_species = human_owner.dna.species
 	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
+
+	y_offset = human_owner.get_top_offset(src)
 
 	if(owner_species.use_skintones)
 		skin_tone = human_owner.skin_tone
@@ -898,6 +904,10 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
+
+	if(!dropped)
+		for(var/image/limb_image as anytihng in .)
+			limb_image.pixel_y = y_offset
 
 	return .
 

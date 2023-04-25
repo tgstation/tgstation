@@ -488,9 +488,6 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
 			var/bodypart_icon = limb.get_limb_icon()
-			var/limb_offset = get_top_offset(limb)
-			for(var/image/image as anything in bodypart_icon)
-				image.pixel_y += limb_offset
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
@@ -553,7 +550,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
-		. += "-[human_owner.get_top_offset(src)]"
+	. += "-[y_offset]"
 	return .
 
 ///Generates a cache key specifically for husks
