@@ -26,7 +26,7 @@
 		S.duration = max(world.time + amount, S.duration)
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.05, 0.1)),1)
 	return S
 
 /mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -60,7 +60,7 @@
 		S.duration += amount
 	else if(amount > 0)
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
-	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.3, 0.1)),1)
+	stun_diminish = min(max(0.1, stun_diminish - round(amount * 0.05, 0.1)),1)
 	return S
 
 /* KNOCKDOWN */
@@ -86,7 +86,7 @@
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.05, 0.1)),1)
 	return K
 
 /mob/living/proc/SetKnockdown(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -120,7 +120,7 @@
 		K.duration += amount
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
-	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.3, 0.1)),1)
+	knockdown_diminish = min(max(0.1, knockdown_diminish - round(amount * 0.05, 0.1)),1)
 	return K
 
 /* IMMOBILIZED */
@@ -202,7 +202,7 @@
 		P.duration = max(world.time + amount, P.duration)
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.05, 0.1)),1)
 	return P
 
 /mob/living/proc/SetParalyzed(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -236,7 +236,7 @@
 		P.duration += amount
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
-	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.3, 0.1)),1)
+	paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.05, 0.1)),1)
 	return P
 
 /* INCAPACITATED */
