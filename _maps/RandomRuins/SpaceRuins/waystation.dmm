@@ -2562,15 +2562,15 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "SJ" = (
 /mob/living/basic/syndicate/ranged/shotgun/space,
-/obj/item/ammo_casing/shotgun/buckshot{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = 3;
 	pixel_y = 10
 	},
-/obj/item/ammo_casing/shotgun/buckshot{
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = -3;
 	pixel_y = 1
 	},
