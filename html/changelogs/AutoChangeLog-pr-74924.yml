@@ -1,0 +1,4 @@
+author: "rageguy505"
+delete-after: True
+changes:
+  - bugfix: "Adds prisoner ID's inside the gen pop lockers on the Northstar. Also renames the holding cells to Gen Pop."
