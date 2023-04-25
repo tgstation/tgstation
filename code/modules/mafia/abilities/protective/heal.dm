@@ -28,7 +28,6 @@
 
 	if(target_role == host_role)
 		use_flags &= ~CAN_USE_ON_SELF
-	host_role.add_note("N[game.turn] - Protected [target_role.body.real_name]")
 	RegisterSignal(target_role, COMSIG_MAFIA_ON_KILL, PROC_REF(prevent_kill))
 	return TRUE
 

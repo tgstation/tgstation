@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - balance: "Heretic blades butcher speed is 3 seconds now."
