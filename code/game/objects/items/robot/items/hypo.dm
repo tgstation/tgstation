@@ -61,7 +61,7 @@
 		/datum/reagent/consumable/sodawater, /datum/reagent/consumable/sol_dry, /datum/reagent/consumable/soymilk,\
 		/datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind, /datum/reagent/consumable/space_up,\
 		/datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic,\
-		/datum/reagent/water,\
+		/datum/reagent/consumable/vinegar, /datum/reagent/water,\
 		/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,\
 		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut,\
 		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
@@ -69,9 +69,10 @@
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
 	)
-#define EXPANDED_SERVICE_REAGENTS list (/datum/reagent/consumable/flour, /datum/reagent/consumable/cornmeal, /datum/reagent/consumable/corn_syrup,\
-		/datum/reagent/consumable/rice, /datum/reagent/consumable/salt, /datum/reagent/consumable/blackpepper, /datum/reagent/consumable/sugar,\
-		/datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla, /datum/reagent/consumable/eggwhite, /datum/reagent/consumable/eggyolk\
+#define EXPANDED_SERVICE_REAGENTS list (/datum/reagent/consumable/flour, /datum/reagent/consumable/rice, /datum/reagent/consumable/salt,\
+		 /datum/reagent/consumable/blackpepper, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla,\
+		 /datum/reagent/consumable/cornmeal, /datum/reagent/consumable/corn_starch, /datum/reagent/consumable/cornoil, /datum/reagent/consumable/eggwhite,\
+		 /datum/reagent/consumable/eggyolk\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
