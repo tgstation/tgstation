@@ -646,6 +646,13 @@
 /area/station/engineering/storage)
 "dH" = (
 /obj/effect/landmark/start,
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start/atmospheric_technician,
+/obj/effect/landmark/start/bartender,
+/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start/captain,
+/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dI" = (
@@ -907,6 +914,17 @@
 /obj/structure/grille,
 /turf/open/openspace/airless,
 /area/space/nearstation)
+"hA" = (
+/obj/effect/landmark/start,
+/obj/effect/landmark/start/head_of_security,
+/obj/effect/landmark/start/janitor,
+/obj/effect/landmark/start/lawyer,
+/obj/effect/landmark/start/librarian,
+/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start/mime,
+/obj/effect/landmark/start/warden,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "hT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -1236,6 +1254,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"tc" = (
+/obj/effect/landmark/start/ai,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -1507,6 +1529,21 @@
 "Gb" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"Gf" = (
+/obj/effect/landmark/start,
+/obj/effect/landmark/start/clown,
+/obj/effect/landmark/start/cook,
+/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start/depsec/engineering,
+/obj/effect/landmark/start/depsec/medical,
+/obj/effect/landmark/start/depsec/science,
+/obj/effect/landmark/start/depsec/supply,
+/obj/effect/landmark/start/detective,
+/obj/effect/landmark/start/geneticist,
+/obj/effect/landmark/start/head_of_personnel,
+/obj/effect/landmark/start/security_officer,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "GG" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -1727,6 +1764,16 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"Ou" = (
+/obj/effect/landmark/start,
+/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start/chaplain,
+/obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/chief_engineer,
+/obj/effect/landmark/start/chief_medical_officer,
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "Pa" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -1767,6 +1814,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"Qu" = (
+/obj/effect/landmark/start,
+/obj/effect/landmark/start/paramedic,
+/obj/effect/landmark/start/prisoner,
+/obj/effect/landmark/start/psychologist,
+/obj/effect/landmark/start/quartermaster,
+/obj/effect/landmark/start/research_director,
+/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "Qw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1846,6 +1904,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
+"Uv" = (
+/obj/effect/landmark/start/ai/secondary,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "UA" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -3663,7 +3725,7 @@ dJ
 dB
 dl
 dE
-dH
+Ou
 dI
 dB
 dl
@@ -3717,7 +3779,7 @@ dJ
 dB
 dl
 dE
-dH
+Gf
 dI
 dB
 dl
@@ -3771,7 +3833,7 @@ dJ
 dB
 dl
 dE
-dH
+hA
 dI
 dB
 dl
@@ -3825,7 +3887,7 @@ dJ
 dB
 dl
 dE
-dH
+Qu
 dI
 dB
 dl
@@ -5973,7 +6035,7 @@ SF
 SF
 SF
 XV
-dY
+Uv
 dY
 dY
 dY
@@ -6027,7 +6089,7 @@ SF
 SF
 SF
 XV
-dY
+tc
 dY
 dY
 dY
@@ -6081,7 +6143,7 @@ SF
 SF
 SF
 XV
-dY
+Uv
 dY
 dY
 dY
