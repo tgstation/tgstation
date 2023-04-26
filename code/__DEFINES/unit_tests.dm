@@ -20,7 +20,18 @@
 #endif
 
 #ifdef UNIT_TESTS
-#define REGISTER_REQUIRED_MAP_ITEM(min, max) if(mapload) { AddElement(/datum/element/required_map_item, min_amount = min, max_amount = max) }
+#define REGISTER_REQUIRED_MAP_ITEM(min, max) \
+	do { \
+		if(mapload) { \
+			var/datum/required_item/existing_value = GLOB.required_map_items[type] \
+			if(isnull(existing_value)) { \
+				var/datum/required_item/new_value = new(type, min, max) \
+				GLOB.required_map_items[type] = new_value \
+			} else { \
+				existing_value.total_amount += 1 \
+			} \
+		} \
+	while (FALSE)
 #else
 #define REGISTER_REQUIRED_MAP_ITEM(min, max)
 #endif

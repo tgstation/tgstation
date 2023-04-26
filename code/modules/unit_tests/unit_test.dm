@@ -17,7 +17,6 @@ GLOBAL_VAR(test_log)
 /// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
 GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Global assoc list of required mapping items, [item typepath] to [required item datum].
-/// See [/datum/element/required_map_item]
 GLOBAL_LIST_EMPTY(required_map_items)
 
 /// The name of the test that is currently focused.
