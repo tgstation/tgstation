@@ -647,10 +647,8 @@
 	},
 /obj/machinery/camera/directional/west,
 /obj/item/pipe_dispenser,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/shuttle/ruin/cyborg_mothership)
