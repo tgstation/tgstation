@@ -243,6 +243,7 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
+	block_sound = 'sound/weapons/block_blade.ogg'
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.

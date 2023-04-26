@@ -177,8 +177,6 @@
 
 	///Chance of blocking incoming attack
 	var/block_chance = 0
-	///Effect which plays when attack is blocked
-	var/block_effect = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -641,8 +639,7 @@
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
-		owner.balloon_alert(owner, "blocked!")
-		new block_effect(owner)
+		owner.balloon_alert_to_viewers("blocked!")
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, TRUE)
 		return TRUE
 
