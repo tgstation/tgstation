@@ -18,7 +18,7 @@
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/mob/living/cached_pawn = controller.pawn
-	if(!is_vent_valid(entry_vent) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT])
+	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT] || !is_vent_valid(entry_vent))
 		return
 
 	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
@@ -30,12 +30,12 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	cached_pawn.handle_ventcrawl(entry_vent) // FYI we sleep in here due to a `do_after` call, hence the next check of validation
+	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, FALSE) // must be done here because we have a do_after sleep in handle_ventcrawl unfortunately and double dipping could lead to erroneous suicide pill calls.
+	cached_pawn.handle_ventcrawl(entry_vent)
 	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
 		finish_action(controller, FALSE, target_key)
 		return
 
-	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, FALSE)
 	controller.set_blackboard_key(BB_EXIT_VENT_TARGET, vent_we_exit_out_of)
 
 	if(prob(50))
