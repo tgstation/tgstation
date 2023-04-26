@@ -136,8 +136,6 @@ Possible to do for anyone motivated enough:
 	if(!loc)
 		return
 	// move any relevant holograms, basically non-AI, and rays with the pad
-	if(replay_holo)
-		replay_holo.abstract_move(loc)
 	for(var/mob/living/user as anything in holorays)
 		var/obj/effect/overlay/holoray/ray = holorays[user]
 		ray.abstract_move(loc)
@@ -820,8 +818,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_PRESET)
 			var/preset_type = entry[2]
 			var/datum/preset_holoimage/H = new preset_type
-			replay_holo.cut_overlays()
-			replay_holo.add_overlay(H.build_image())
+			var/image/work_off = H.build_image()
+			replay_holo.icon = work_off.icon
+			replay_holo.icon_state = work_off.icon_state
+			replay_holo.copy_overlays(work_off, TRUE)
 		if(HOLORECORD_RENAME)
 			replay_holo.name = entry[2] + " (Hologram)"
 	.(entry_number+1)
