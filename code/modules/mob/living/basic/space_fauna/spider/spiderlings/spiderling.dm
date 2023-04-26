@@ -75,7 +75,8 @@
 
 	. = ..(gibbed = TRUE) // we're going to get rid of the body, so we must invoke parent with gibbed as TRUE.
 
-	if(!gibbed) // alright, after we've done the parent stuff, and we weren't *actually* gibbed (per the arguments of THIS proc), we should spawn our corpse because it's food. yummy
+	// alright, after we've done the parent stuff, and we weren't *actually* gibbed (per the arguments of THIS proc), we should spawn our corpse because it's food. yummy
+	if(!gibbed)
 		var/obj/item/food/spiderling/dead_spider = new(loc)
 		dead_spider.name = name
 
@@ -166,12 +167,22 @@
 				entry_vent = v
 				SSmove_manager.move_to(src, entry_vent, 1)
 				break
-	if(isturf(loc))
-		amount_grown += rand(0,2)
-		if(amount_grown >= 100)
-			if(!grow_as)
 
-			var/mob/living/basic/giant_spider/S = new grow_as(src.loc)
-			S.faction = faction.Copy()
-			S.directive = directive
-			qdel(src)
+/// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
+/datum/ai_controller/basic_controller/spiderling
+	blackboard = list(
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
+		BB_BASIC_MOB_FLEEING = TRUE,
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
+
+	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
+		/datum/ai_planning_subtree/opportunistic_ventcrawler,
+		/datum/ai_planning_subtree/random_speech/insect,
+	)

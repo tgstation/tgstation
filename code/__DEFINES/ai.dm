@@ -237,6 +237,13 @@
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
+/// Key that holds a nearby vent that looks like it's a good place to hide
+#define BB_ENTRY_VENT_TARGET "BB_entry_vent_target"
+/// Key that holds a vent that we want to exit out of (when we're already in a pipenet)
+#define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
+/// Do we plan on going inside a vent? Boolean.
+#define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+
 /// Is there something that scared us into being stationary? If so, hold the reference here
 #define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"
 ///How long should we remain stationary for?

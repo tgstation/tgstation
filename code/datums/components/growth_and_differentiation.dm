@@ -28,6 +28,8 @@
 	/// Percentage we have grown.
 	var/percent_grown = 0
 	/// Are we ready to grow? This is just in case we fail our checks and need to wait until the next tick.
+	/// We only really need this because we have two competing systems, the timer and the probability-based growth. When one succeeds, this component is considered successful in growth,
+	/// and will actively try to grow the mob (only barred by optional checks).
 	var/ready_to_grow = FALSE
 
 /datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks, optional_grow_behavior)
