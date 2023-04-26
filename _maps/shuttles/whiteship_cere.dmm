@@ -3,14 +3,14 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mob_spawn/corpse/human/engineer{
-	brute_damage = 200
+/obj/structure/closet/crate/secure/freezer/pizza{
+	req_access = list()
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "ac" = (
 /obj/machinery/mech_bay_recharge_port,
@@ -29,38 +29,29 @@
 /area/shuttle/abandoned/cargo)
 "ae" = (
 /obj/structure/cable/layer1,
-/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/crew)
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
 "af" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/effect/spawner/random/exotic/ripley,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/crew)
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
 "ag" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "ah" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/open/floor/wood,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
 /area/shuttle/abandoned/crew)
 "ai" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
+/obj/machinery/power/solar_control{
+	dir = 1;
+	name = "solar sail control"
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aj" = (
@@ -69,60 +60,66 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "ak" = (
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"al" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel/airless,
-/area/shuttle/abandoned/cargo)
-"am" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock{
-	name = "Kitchen and Bridge"
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/bar)
-"an" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/shuttle/abandoned/engine)
-"ao" = (
-/turf/closed/wall/mineral/titanium,
+"al" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/cargo)
+"am" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper{
+	default_raw_text = "These salvage operations are going to get us killed at some point. I swear it."
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
-"ap" = (
+"an" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"ao" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"ap" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "aq" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/paper_bin,
+/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "ar" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
+/obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/pen{
-	pixel_x = -5;
-	pixel_y = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/directional/south,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/crew)
 "as" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/cargo)
@@ -175,8 +172,8 @@
 /area/shuttle/abandoned/engine)
 "az" = (
 /obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
+/obj/machinery/power/solar,
+/turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/abandoned/crew)
 "aA" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -199,6 +196,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/bar)
 "aD" = (
@@ -215,20 +213,22 @@
 /turf/open/floor/wood,
 /area/shuttle/abandoned/bar)
 "aF" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel/airless,
-/area/shuttle/abandoned/crew)
-"aG" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mob_spawn/corpse/human/miner{
-	brute_damage = 200
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Backup Air Supply"
 	},
-/obj/item/knife/combat/survival,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"aG" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "aH" = (
@@ -238,8 +238,10 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aI" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/crew)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
 "aJ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -249,9 +251,11 @@
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "aK" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/template_noop,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "aL" = (
 /obj/machinery/microwave,
@@ -270,9 +274,8 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "aN" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/crew)
 "aO" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -281,22 +284,29 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "aP" = (
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/paper{
-	text = "Remember to depressurise the cargo bay BEFORE opening it into space. On a related note, inform the crew while you are doing so to avoid venting the crew quarters."
+/obj/machinery/door/airlock/hatch{
+	name = "Solar Sail Access"
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aQ" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/structure/bed,
+/obj/item/bedsheet/captain,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/button/door/directional/east{
+	id = "whiteship_captain_room";
+	name = "Door Lock"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/bridge)
 "aR" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/item/clothing/under/rank/captain,
+/obj/item/clothing/shoes/laceup,
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/migo,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/dark,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/bridge)
 "aS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -308,26 +318,27 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "aU" = (
-/obj/structure/cable/multilayer/connected,
-/turf/open/floor/plating,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "aV" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bar)
-"aW" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Solar Sail Access"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
+"aW" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Kitchen and Bridge"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/bar)
 "aX" = (
 /obj/structure/cable,
 /obj/structure/chair/comfy/shuttle,
@@ -335,42 +346,67 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
+"aY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/shuttle/abandoned/cargo)
 "aZ" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "ba" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/migo,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bridge)
 "bb" = (
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"bw" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "cH" = (
-/obj/machinery/light/small/directional/east,
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
-"cN" = (
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
-"dl" = (
+"cX" = (
+/obj/structure/cable,
+/obj/machinery/door/window/right/directional/west{
+	name = "Solar Sail Access"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"dS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"ey" = (
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"fq" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"gm" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/south,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"gn" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
 	name = "Generator Room and Solar Sail Controls"
@@ -378,43 +414,133 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"dA" = (
-/obj/effect/spawner/random/structure/crate,
+"gA" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"ja" = (
+/obj/structure/cable,
+/obj/machinery/power/solar,
+/turf/open/floor/iron/solarpanel/airless,
+/area/shuttle/abandoned/cargo)
+"jx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"ka" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
-"ea" = (
+"kp" = (
+/obj/structure/cable/layer1,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/crew)
+"kJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/docking_port/mobile{
+	dir = 2;
+	shuttle_id = "whiteship";
+	launch_status = 0;
+	name = "NT Heavy Salvage Ship";
+	port_direction = 2
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"nx" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/south,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"nG" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"oJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"qJ" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
 /turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/abandoned/crew)
-"et" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/item/clothing/under/rank/captain,
-/obj/item/clothing/shoes/laceup,
+"qS" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/bridge)
-"fX" = (
-/obj/structure/cable,
-/obj/machinery/power/solar,
-/turf/open/floor/iron/solarpanel/airless,
-/area/shuttle/abandoned/engine)
-"gh" = (
-/turf/closed/wall/mineral/titanium,
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
-"gu" = (
+"rj" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"rC" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/suit_storage_unit/spaceruin,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"rJ" = (
 /obj/structure/cable,
-/obj/machinery/power/tracker,
-/turf/open/floor/iron/solarpanel/airless,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
-"gV" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 1
+"rM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/migo,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"rU" = (
+/obj/machinery/button/door/directional/east{
+	id = "cerewhiteright";
+	name = "Cargo Blast Door Toggle"
 	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"hL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/south,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"sq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"su" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/migo,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/crew)
+"sM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
 	pixel_y = -24
@@ -423,14 +549,16 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/bar)
-"hU" = (
+"sP" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = 24
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
-"ih" = (
+"tg" = (
 /obj/machinery/door/poddoor{
 	id = "cerewhiteright"
 	},
@@ -442,112 +570,55 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
-"iY" = (
+"tE" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
-/obj/machinery/power/solar_control{
-	dir = 1;
-	name = "solar sail control"
-	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"ju" = (
+"ug" = (
 /obj/machinery/suit_storage_unit/spaceruin,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"le" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 4
-	},
+"ux" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"lp" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"lG" = (
-/obj/structure/closet/crate/secure/freezer/pizza{
-	req_access = list()
-	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bar)
+"vb" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"lH" = (
-/obj/machinery/door/poddoor{
-	id = "cerewhiteleft"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/cargo)
-"mD" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/paper{
-	default_raw_text = "These salvage operations are going to get us killed at some point. I swear it."
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/machinery/firealarm/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/crew)
-"mR" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Backup Air Supply"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"mX" = (
-/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"vm" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
+	dir = 4;
+	pixel_x = 24
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bar)
+"wV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/migo,
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
-"nE" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Solar Sail Access"
+"xA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
-/obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
-"nK" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/button/door/directional/east{
-	id = "whiteship_captain_room";
-	name = "Door Lock"
-	},
+"yp" = (
+/obj/machinery/vending/boozeomat/all_access,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
-/area/shuttle/abandoned/bridge)
-"nO" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"pl" = (
-/obj/machinery/door/airlock/external/glass/ruin,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"po" = (
+/area/shuttle/abandoned/bar)
+"Ae" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/closet/crate{
@@ -557,188 +628,20 @@
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"rh" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"rz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"sa" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/engine)
-"tX" = (
-/obj/effect/spawner/random/exotic/ripley,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"uF" = (
-/obj/structure/cable/multilayer/connected,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"ve" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"vQ" = (
-/obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"wJ" = (
+"Ai" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"wU" = (
-/obj/machinery/button/door/directional/east{
-	id = "cerewhiteright";
-	name = "Cargo Blast Door Toggle"
+/obj/effect/mob_spawn/corpse/human/miner{
+	brute_damage = 200
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"yv" = (
-/obj/structure/cable,
-/obj/machinery/light/small/directional/east,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/paper/crumpled/bloody{
-	default_raw_text = "Would you look at that. Just like I predicted, this shit was going to backfire."
-	},
+/obj/item/knife/combat/survival,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/firealarm/directional/east,
+/obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
-"zZ" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned/cargo)
-"Aw" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/emcloset/anchored,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"AM" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/suit_storage_unit/spaceruin,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"Cm" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/tank_dispenser/oxygen,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"Cu" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned/cargo)
-"Cw" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate/engineering/electrical,
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"CD" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"De" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_windows"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/cargo)
-"Dq" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
-"EW" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned/bar)
-"Gb" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned/cargo)
-"HV" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/computer/shuttle/white_ship/bridge{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
-"Ie" = (
-/obj/machinery/vending/boozeomat/all_access,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/bar)
-"Ix" = (
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
-"JT" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/power/smes,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"Kp" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/paperwork/ancient,
-/obj/structure/filingcabinet,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"LV" = (
+"Bv" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/head/hats/caphat/parade{
 	name = "old captain's cap";
@@ -754,59 +657,103 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/bridge)
-"Mc" = (
+"BM" = (
+/obj/item/gun/energy/laser/retro,
+/obj/structure/closet/crate/secure/weapon,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"CL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"CW" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Solar Sail Access"
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"Ed" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"Ev" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/migo,
+/obj/item/paperwork/ancient,
+/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/crew)
-"Ms" = (
-/obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
-	id = "whiteship_bridge"
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"EM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
-/area/shuttle/abandoned/bridge)
-"MQ" = (
+/area/shuttle/abandoned/engine)
+"Gc" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
-"MR" = (
+"GZ" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"HF" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"HU" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"JI" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Ku" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"Lb" = (
 /obj/machinery/suit_storage_unit/spaceruin,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
-"Nc" = (
+"Li" = (
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
-"NS" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"NT" = (
-/obj/machinery/power/shuttle_engine/propulsion/left{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned/cargo)
-"Oe" = (
+"MN" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -815,72 +762,173 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
-"PT" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
+"Nc" = (
+/obj/machinery/door/window/right/directional/north{
+	name = "Bar"
 	},
-/obj/structure/closet/firecloset/full,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"Rx" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/tank_dispenser/oxygen,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"Si" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/tank/air,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"Sp" = (
-/obj/item/gun/energy/laser/retro,
-/obj/structure/closet/crate/secure/weapon,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"Ta" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
-"Tk" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/engine)
-"Tw" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/suit_storage_unit/spaceruin,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"TK" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"TS" = (
-/obj/structure/cable,
-/obj/machinery/door/window/right/directional/west{
-	name = "Solar Sail Access"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"Uw" = (
+/turf/open/floor/wood,
+/area/shuttle/abandoned/bar)
+"Pw" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Solar Sail Access"
 	},
 /obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"Py" = (
+/obj/structure/cable,
+/obj/machinery/power/tracker,
+/turf/open/floor/iron/solarpanel/airless,
+/area/shuttle/abandoned/engine)
+"QC" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"QG" = (
+/obj/structure/cable,
+/obj/machinery/power/solar,
+/turf/open/floor/iron/solarpanel/airless,
+/area/shuttle/abandoned/engine)
+"QR" = (
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Smuggles-The-Plasma";
+	pixel_y = 14
+	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/north,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
+"Rg" = (
+/obj/structure/cable/multilayer/connected,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Solar Sail Access"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/crew)
+"RI" = (
+/obj/machinery/door/poddoor{
+	id = "cerewhiteleft"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"RN" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mob_spawn/corpse/human/engineer{
+	brute_damage = 200
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"Sr" = (
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"SA" = (
+/obj/structure/cable,
+/obj/machinery/light/small/directional/east,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/crumpled/bloody{
+	default_raw_text = "Would you look at that. Just like I predicted, this shit was going to backfire."
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/crew)
+"SO" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/cargo)
+"TQ" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"TR" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/cargo)
+"Ve" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
+"Vz" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/crew)
+"VC" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/bar)
+"VM" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/paper_bin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"VS" = (
+/obj/structure/cable/multilayer/connected,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"VV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "We" = (
@@ -893,83 +941,47 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
-"YI" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"YK" = (
-/obj/machinery/door/window/right/directional/north{
-	name = "Bar"
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/wood,
-/area/shuttle/abandoned/bar)
-"YN" = (
-/obj/item/toy/plush/lizard_plushie/green{
-	name = "Smuggles-The-Plasma";
-	pixel_y = 14
-	},
-/obj/item/stack/sheet/mineral/plasma,
-/obj/structure/closet/crate,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
-"YV" = (
+"XD" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"ZF" = (
-/obj/structure/cable/multilayer/connected,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Solar Sail Access"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
-"ZJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/airlock/external/glass/ruin,
-/obj/docking_port/mobile{
-	dir = 2;
-	shuttle_id = "whiteship";
-	launch_status = 0;
-	name = "NT Heavy Salvage Ship";
-	port_direction = 2
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
-"ZT" = (
-/obj/effect/spawner/random/structure/crate,
+"Yg" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/suit_storage_unit/spaceruin,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
+"YL" = (
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper{
+	text = "Remember to depressurise the cargo bay BEFORE opening it into space. On a related note, inform the crew while you are doing so to avoid venting the crew quarters."
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"ZJ" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 
 (1,1,1) = {"
 aa
 aa
 aa
-gh
+jx
 as
 as
-lH
-lH
-lH
+RI
+RI
+RI
 as
 as
-aF
-aF
-aF
+az
+az
+az
 aa
 aa
 aa
@@ -982,90 +994,90 @@ aa
 aa
 aa
 aa
-cN
-Gb
-dA
+cH
+al
+aV
 ag
 ag
 ag
-ZT
+gm
 as
-az
-az
-az
-az
-az
-ea
+ah
+ah
+ah
+ah
+ah
+qJ
 aa
 aa
 aa
 aa
 "}
 (3,1,1) = {"
-al
-al
+ja
+ja
 aa
-NT
-zZ
-Cm
+TR
+aU
+Ed
 ag
 ag
 ag
-lG
+ab
 as
-aF
-aF
-aF
-aI
+az
+az
+az
+aN
 aM
-aI
+aN
 aa
 aa
 aa
 aa
 "}
 (4,1,1) = {"
-aK
-aK
-aK
-aW
-aU
-nE
-ak
-ak
-ak
-YI
+aY
+aY
+aY
+Pw
+bb
+aP
+ae
+ae
+ae
+vb
 as
 aA
 aA
 aA
-aI
-ZF
-ao
-ao
+aN
+Rg
+Vz
+Vz
 aa
 aa
 aa
 "}
 (5,1,1) = {"
-al
-al
+ja
+ja
 aa
-Nc
-Cu
-AM
+Li
+SO
+rC
 ag
 ag
-aP
-wJ
+YL
+aK
 at
-Mc
-yv
-aG
+su
+SA
+Ai
 aJ
-ae
-aQ
-aQ
+kp
+ba
+ba
 aZ
 aa
 aa
@@ -1074,22 +1086,22 @@ aa
 aa
 aa
 aa
-MQ
-Gb
-MR
+Gc
+al
+Lb
+wV
+ag
+ag
+VM
+aN
+aB
+aN
+aN
+aB
+aN
 ba
-ag
-ag
-aq
-aI
-aB
-aI
-aI
-aB
-aI
-aQ
-et
-aQ
+aR
+ba
 aZ
 aa
 "}
@@ -1101,19 +1113,19 @@ as
 as
 ac
 ag
-hU
+xA
 ag
+nx
+aN
+aG
+am
+aN
+aG
 ar
-aI
-ah
-mD
-aI
-ah
-af
+ba
 aQ
-nK
-LV
-aQ
+Bv
+ba
 aZ
 "}
 (8,1,1) = {"
@@ -1122,11 +1134,11 @@ aa
 aa
 aa
 as
-tX
+af
 ag
 aj
-dA
-Ta
+aV
+aq
 aS
 aS
 aS
@@ -1134,79 +1146,79 @@ aS
 aS
 aS
 aS
-aQ
+ba
 We
-aQ
-aQ
+ba
+ba
 "}
 (9,1,1) = {"
 as
 as
-De
+XD
 as
 as
-le
+ka
 ag
 aj
 ag
-wJ
+aK
 aw
 aC
-hL
+sM
 aS
 aL
-EW
+ux
 aT
-aQ
-aR
-HV
-Ms
+ba
+rM
+TQ
+ey
 "}
 (10,1,1) = {"
-ZJ
-nO
-ve
-NS
-pl
-ap
-ap
-ap
-ap
-ab
+kJ
+aI
+ao
+sP
+fq
+an
+an
+an
+an
+RN
 ax
 aD
-aD
-am
+VC
+aW
 av
 av
 av
-Ix
+Sr
 aX
-Dq
-Ms
+dS
+ey
 "}
 (11,1,1) = {"
 as
 as
-De
+XD
 as
 as
-mX
+ap
 ag
 aj
 ag
-wJ
-YK
+aK
+Nc
 aE
-Ie
+yp
 aS
 au
 aO
-aV
-aQ
-bb
-cH
-Ms
+vm
+ba
+Ve
+Ku
+ey
 "}
 (12,1,1) = {"
 aa
@@ -1214,11 +1226,11 @@ aa
 aa
 aa
 as
-Aw
+qS
 ag
 aj
 ag
-Kp
+Ev
 ay
 ay
 ay
@@ -1226,10 +1238,10 @@ ay
 ay
 ay
 ay
-aQ
-aQ
-aQ
-aQ
+ba
+ba
+ba
+ba
 "}
 (13,1,1) = {"
 aa
@@ -1237,109 +1249,109 @@ aa
 aa
 as
 as
-YN
+QR
 ag
-CD
+oJ
 ag
 ad
 ay
-Si
+CL
 aH
-JT
+GZ
 ay
-TK
-aN
-aN
-ju
-Tk
-sa
+EM
+ZJ
+ZJ
+ug
+rJ
+JI
 "}
 (14,1,1) = {"
 aa
 aa
 aa
-cN
-Gb
-MR
-ba
+cH
+al
+Lb
+wV
 ag
-Sp
-Oe
+BM
+MN
 ay
-po
-mR
-Cw
+Ae
+aF
+QC
 ay
-rz
-gV
-ai
+VV
+HF
+tE
 ay
-sa
+JI
 aa
 "}
 (15,1,1) = {"
-al
-al
+ja
+ja
 aa
-NT
-zZ
-Tw
+TR
+aU
+Yg
 ag
 ag
-ak
-wJ
-lp
-rh
-vQ
-uF
-dl
-rz
-iY
+ae
+aK
+HU
+bw
+nG
+VS
+gn
+VV
+ai
 ay
-sa
+JI
 aa
 aa
 "}
 (16,1,1) = {"
-aK
-aK
-aK
-aW
-aU
-nE
-ak
-ak
-ak
+aY
+aY
+aY
+Pw
+bb
+aP
+ae
+ae
+ae
 ag
 ay
-YV
-YV
-YV
+gA
+gA
+gA
 ay
-TS
+cX
 ay
-sa
+JI
 aa
 aa
 aa
 "}
 (17,1,1) = {"
-al
-al
+ja
+ja
 aa
-Nc
-Cu
-Rx
+Li
+SO
+rj
 ag
 ag
 ag
-PT
+sq
 as
-fX
-fX
-fX
+QG
+QG
+QG
 ay
-Uw
+CW
 ay
 aa
 aa
@@ -1350,20 +1362,20 @@ aa
 aa
 aa
 aa
-MQ
-Gb
-dA
+Gc
+al
+aV
 ag
 ag
 ag
-wU
+rU
 as
-an
-an
-an
-an
-an
-gu
+ak
+ak
+ak
+ak
+ak
+Py
 aa
 aa
 aa
@@ -1373,17 +1385,17 @@ aa
 aa
 aa
 aa
-gh
+jx
 as
 as
-ih
-ih
-ih
+tg
+tg
+tg
 as
 as
-fX
-fX
-fX
+QG
+QG
+QG
 aa
 aa
 aa
