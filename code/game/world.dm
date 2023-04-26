@@ -286,8 +286,8 @@ GLOBAL_VAR(restart_counter)
 		Master.Shutdown() //run SS shutdowns
 
 	#ifdef UNIT_TESTS
-	FinishTestRun() // calls qdel(src)
-	#endif
+	FinishTestRun()
+	#else
 
 	if(TgsAvailable())
 		var/do_hard_reboot
@@ -319,6 +319,7 @@ GLOBAL_VAR(restart_counter)
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
+	#endif
 
 /world/proc/auxcleanup()
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
