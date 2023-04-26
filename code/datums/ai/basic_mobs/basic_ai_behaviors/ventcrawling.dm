@@ -22,7 +22,7 @@
 		return
 
 	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
-		finish_action(controller, FALSE, target_key)
+		finish_action(controller, FALSE, target_key) // "never enter a hole you can't get out of"
 		return
 
 	var/vent_we_exit_out_of = calculate_exit_vent(controller, target_key)
@@ -77,11 +77,14 @@
 /// We've had enough horsing around in the vents, it's time to get out.
 /datum/ai_behavior/crawl_through_vents/proc/exit_the_vents(datum/ai_controller/controller, target_key)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/emergency_vent // vent we will scramble to search for in case plan A is a bust (exit vent)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
-
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
+
+	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) || isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
+		finish_action(controller, TRUE, target_key) // just assume it's a success, we're operating off pilot rules where every landing is a good landing due to the unfortunate async nature of behavior
+		return
+
+	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
 		emergency_vent = calculate_exit_vent(controller)
 		if(isnull(emergency_vent))
