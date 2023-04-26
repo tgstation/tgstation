@@ -163,32 +163,29 @@
 #undef OPEN_FLOOR_TYPE
 #undef CLOSED_FLOOR_TYPE
 
-/// From the base implementation of `/atom`, [var/max_integrity].
-#define MAX_INTEGRITY_VALUE 500
-
 /// Tests the `EX_ACT()` macro on objs to ensure some level of the underlying framework still functions.
 /datum/unit_test/explosion_action/proc/execute_obj_tests()
 	// we're using the abstract type here because we don't need anything stronger for this test.
 	var/obj/test_object = allocate(/obj)
+	// cached integrity value for use throughout the proc.
+	var/cached_max_integrity = test_object.max_integrity // Done like this to be hardy in case of changes to integrity framework (anything is possible) - we want to get the intializate-time value, not compile-time.
 
-	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+	test_object.update_integrity(cached_max_integrity)
 
 	EX_ACT(test_object, EXPLODE_NONE)
-	TEST_ASSERT_EQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_NONE severity should not have altered the integrity of the target, but instead saw a change!")
-	test_object.update_integrity(MAX_INTEGRITY_VALUE) // just here for cleanliness
+	TEST_ASSERT_EQUAL(test_object.get_integrity(), cached_max_integrity, "EX_ACT() with EXPLODE_NONE severity should not have altered the integrity of the target, but instead saw a change!")
+	test_object.update_integrity(cached_max_integrity) // just here for cleanliness
 
 	EX_ACT(test_object, EXPLODE_LIGHT) // can do anywhere from 10 to 90 damage, let's just care if it's not equal or not
-	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_LIGHT severity should have altered the integrity of the target, but instead saw no change!")
-	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), cached_max_integrity, "EX_ACT() with EXPLODE_LIGHT severity should have altered the integrity of the target, but instead saw no change!")
+	test_object.update_integrity(cached_max_integrity)
 
 	EX_ACT(test_object, EXPLODE_HEAVY) // can do anywhere from 100 to 250 damage
-	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), MAX_INTEGRITY_VALUE, "EX_ACT() with EXPLODE_HEAVY severity should have altered the integrity of the target, but instead saw no change!")
-	test_object.update_integrity(MAX_INTEGRITY_VALUE)
+	TEST_ASSERT_NOTEQUAL(test_object.get_integrity(), cached_max_integrity, "EX_ACT() with EXPLODE_HEAVY severity should have altered the integrity of the target, but instead saw no change!")
+	test_object.update_integrity(cached_max_integrity)
 
 	EX_ACT(test_object, EXPLODE_DEVASTATE) // does an INFINITE amount of damage, will trigger a qdel()
 	TEST_ASSERT(QDELETED(test_object), "EX_ACT() with EXPLODE_DEVASTATE severity should have deleted the target, but instead saw no change!")
-
-#undef MAX_INTEGRITY_VALUE
 
 /// Sets up a fully armored corgi for testing purposes. Split out into its own proc as to not clutter up the main test.
 /datum/unit_test/explosion_action/proc/set_up_test_dog()
