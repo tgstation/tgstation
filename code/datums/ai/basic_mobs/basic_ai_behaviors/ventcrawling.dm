@@ -1,15 +1,21 @@
 /// We hop into the vents through a vent outlet, and then crawl around a bit. Jolly good times.
 /// This also assumes that we are on the turf that the vent outlet is on. If it isn't, shit.
-/datum/ai_behavior/crawl_around_vents
-	action_cooldown = 1 SECONDS
+
+/// Warning: this was really snowflake code lifted from an obscure feature that likely has not been touched for over five years years.
+/// Something that isn't implemented is the ability to actually crawl through vents ourselves because I think that's just a waste of time for the same effect (instead of psuedo-teleportation, do REAL forceMoving)
+/// If you are seriously considering using this component, it would be a great idea to extend this proc to be more versatile/less overpowered - the mobs that currently implement this benefit the most
+/// since they are weak as shit with only five health. Up to you though, don't take what's written here as gospel.
+/datum/ai_behavior/crawl_through_vents
+	action_cooldown = 10 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 
-/datum/ai_behavior/crawl_around_vents/setup(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
+	action_cooldown = controller.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key]
-	return istype(target)
+	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework
 
-/datum/ai_behavior/crawl_around_vents/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/crawl_through_vents/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/mob/living/cached_pawn = controller.pawn
@@ -47,7 +53,7 @@
 	addtimer(CALLBACK(src, PROC_REF(suicide_pill), controller), controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING])
 
 /// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
-/datum/ai_behavior/crawl_around_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/returnable_vent
 	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_we_entered_through = controller.blackboard[target_key]
 
@@ -71,7 +77,7 @@
 	return returnable_vent // we return null in case something yonked between then and now so it's all good man
 
 /// We've had enough horsing around in the vents, it's time to get out.
-/datum/ai_behavior/crawl_around_vents/proc/exit_the_vents(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/crawl_through_vents/proc/exit_the_vents(datum/ai_controller/controller, target_key)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/emergency_vent // vent we will scramble to search for in case plan A is a bust (exit vent)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
@@ -97,11 +103,11 @@
 	finish_action(controller, TRUE, target_key) // we did it! we went into the vents and out of the vents. poggers.
 
 /// Simple copy-pasta reducer to see if a vent is valid or not.
-/datum/ai_behavior/crawl_around_vents/proc/check_vent(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
+/datum/ai_behavior/crawl_through_vents/proc/check_vent(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
 	return !QDELETED(checkable) && !checkable.welded
 
 /// Aw fuck, we may have been bested somehow. Regardless of what we do, we can't exit through a vent! Let's end our misery and prevent useless endless calculations.
-/datum/ai_behavior/crawl_around_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
 	if(istype(living_pawn))
 		living_pawn.death(gibbed = TRUE) // call gibbed as true because we are never coming back it is so fucking joever
@@ -110,7 +116,7 @@
 
 	finish_action(controller, FALSE, target_key)
 
-/datum/ai_behavior/crawl_around_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/crawl_through_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 
 	controller.clear_blackboard_key(target_key)

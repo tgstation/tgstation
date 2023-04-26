@@ -16,5 +16,5 @@
 		return
 
 	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, TRUE)
-	controller.queue_behavior(/datum/ai_behavior/crawl_around_vents)
+	controller.queue_behavior(/datum/ai_behavior/crawl_through_vents)
 	return SUBTREE_RETURN_FINISH_PLANNING // we are going into this vent... no distractions
