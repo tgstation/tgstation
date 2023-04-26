@@ -25747,6 +25747,7 @@
 /area/station/maintenance/floor4/starboard)
 "gRH" = (
 /obj/structure/chair/sofa/corp/right,
+/obj/machinery/light/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "gRI" = (
