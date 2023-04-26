@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "\"Camera Obscura\" (crafted with holy water + camera) will now steal the soul of ghostly apparitions when a picture is taken causing damage.  This will also stun and reveal revenants briefly."
