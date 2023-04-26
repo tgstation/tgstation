@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - code_imp: "Adds support for ammunition 'bands', basically intended to be used rather than wholly new sprites for new ammotypes. Additionally, they're (meant to be) greyscale, which allows one overlay to be used for many ammo types. Only implemented on the detective revolver."

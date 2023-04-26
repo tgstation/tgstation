@@ -1,5 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "Book's no longer take your formatting and throw it out the window."
-  - refactor: "Book display and rendering"
