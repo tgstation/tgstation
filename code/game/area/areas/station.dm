@@ -333,6 +333,10 @@
 	name = "\improper Escape Shuttle Hallway"
 	icon_state = "escape"
 
+/area/station/hallway/secondary/exit/escape_pod
+	name = "\improper Escape Pod Bay"
+	icon_state = "escape_pods"
+
 /area/station/hallway/secondary/exit/departure_lounge
 	name = "\improper Departure Lounge"
 	icon_state = "escape_lounge"
@@ -340,7 +344,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
-	area_flags = EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
@@ -434,6 +438,30 @@
 /area/station/commons/dorms
 	name = "\improper Dormitories"
 	icon_state = "dorms"
+
+/area/station/commons/dorms/room1
+	name = "\improper Dorms Room 1"
+	icon_state = "room1"
+
+/area/station/commons/dorms/room2
+	name = "\improper Dorms Room 2"
+	icon_state = "room2"
+
+/area/station/commons/dorms/room3
+	name = "\improper Dorms Room 3"
+	icon_state = "room3"
+
+/area/station/commons/dorms/room4
+	name = "\improper Dorms Room 4"
+	icon_state = "room4"
+
+/area/station/commons/dorms/apartment1
+	name = "\improper Dorms Apartment 1"
+	icon_state = "apartment1"
+
+/area/station/commons/dorms/apartment2
+	name = "\improper Dorms Apartment 2"
+	icon_state = "apartment2"
 
 /area/station/commons/dorms/barracks
 	name = "\improper Sleep Barracks"
@@ -571,6 +599,10 @@
 	name = "\improper Diner"
 	icon_state = "diner"
 
+/area/station/service/kitchen/kitchen_backroom
+	name = "\improper Kitchen Backroom"
+	icon_state = "kitchen_backroom"
+
 /area/station/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
 	icon_state = "abandoned_kitchen"
@@ -626,6 +658,10 @@
 	mood_trait = TRAIT_INTROVERT
 	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
+
+/area/station/service/library/garden
+	name = "\improper Library Garden"
+	icon_state = "library_garden"
 
 /area/station/service/library/lounge
 	name = "\improper Library Lounge"
@@ -857,7 +893,6 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	base_lighting_alpha = 255
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"
@@ -1004,6 +1039,10 @@
 	icon_state = "virology"
 	ambience_index = AMBIENCE_VIROLOGY
 
+/area/station/medical/virology/isolation
+	name = "Virology Isolation"
+	icon_state = "virology_isolation"
+
 /area/station/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
@@ -1095,6 +1134,9 @@
 	icon_state = "courtroom"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/security/courtroom/holding
+	name = "\improper Courtroom Prisoner Holding Room"
+
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
@@ -1180,6 +1222,10 @@
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
 
+/area/station/security/eva
+	name = "\improper Security EVA"
+	icon_state = "sec_eva"
+
 /area/station/security/execution
 	icon_state = "execution_room"
 
@@ -1241,6 +1287,17 @@
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
 
+/area/station/security/checkpoint/first
+	name = "Security Post - First Floor"
+	icon_state = "checkpoint_1"
+
+/area/station/security/checkpoint/second
+	name = "Security Post - Second Floor"
+	icon_state = "checkpoint_2"
+
+/area/station/security/checkpoint/third
+	name = "Security Post - Third Floor"
+	icon_state = "checkpoint_3"
 //Cargo
 
 /area/station/cargo
@@ -1362,6 +1419,7 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/station/science/genetics
 	name = "\improper Genetics Lab"
@@ -1408,6 +1466,20 @@
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/escapepodbay
+	name = "\improper Pod Bay"
+	icon_state = "podbay"
+
+/area/station/asteroid
+	name = "\improper Station Asteroid"
+	icon_state = "station_asteroid"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING
+
 // Telecommunications Satellite
 
 /area/station/tcommsat
@@ -1415,7 +1487,6 @@
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
-	network_root_id = STATION_NETWORK_ROOT // They should of unpluged the router before they left
 
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"
@@ -1454,3 +1525,173 @@
 
 /area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
+
+//Tramstation - External
+/area/misc/asteroid
+	name = "\improper Asteroid"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "asteroid"
+	has_gravity = STANDARD_GRAVITY
+	sound_environment = SOUND_AREA_ASTEROID
+	ambient_buzz = 'sound/ambience/ambiatmos.ogg'
+	outdoors = TRUE
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	ambience_index = AMBIENCE_MINING
+
+//North Star Specific Areas
+//1
+/area/station/hallway/floor1
+	name = "\improper First Floor Hallway"
+
+/area/station/hallway/floor1/aft
+	name = "\improper First Floor Aft Hallway"
+	icon_state = "1_aft"
+
+/area/station/hallway/floor1/fore
+	name = "\improper First Floor Fore Hallway"
+	icon_state = "1_fore"
+//2
+/area/station/hallway/floor2
+	name = "\improper Second Floor Hallway"
+
+/area/station/hallway/floor2/aft
+	name = "\improper Second Floor Aft Hallway"
+	icon_state = "2_aft"
+
+/area/station/hallway/floor2/fore
+	name = "\improper Second Floor Fore Hallway"
+	icon_state = "2_fore"
+//3
+/area/station/hallway/floor3
+	name = "\improper Third Floor Hallway"
+
+/area/station/hallway/floor3/aft
+	name = "\improper Third Floor Aft Hallway"
+	icon_state = "3_aft"
+
+/area/station/hallway/floor3/fore
+	name = "\improper Third Floor Fore Hallway"
+	icon_state = "3_fore"
+//4
+/area/station/hallway/floor4
+	name = "\improper Fourth Floor Hallway"
+
+/area/station/hallway/floor4/aft
+	name = "\improper Fourth Floor Aft Hallway"
+	icon_state = "4_aft"
+
+/area/station/hallway/floor4/fore
+	name = "\improper Fourth Floor Fore Hallway"
+	icon_state = "4_fore"
+
+//North Star Maintenance
+//1
+/area/station/maintenance/floor1
+	name = "\improper 1st Floor Maint"
+
+/area/station/maintenance/floor1/port
+	name = "\improper 1st Floor Central Port Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor1/port/fore
+	name = "\improper 1st Floor Fore Port Maint"
+	icon_state = "maintfore"
+/area/station/maintenance/floor1/port/aft
+	name = "\improper 1st Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor1/starboard
+	name = "\improper 1st Floor Central Starboard Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor1/starboard/fore
+	name = "\improper 1st Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor1/starboard/aft
+	name = "\improper 1st Floor Aft Starboard Maint"
+	icon_state = "maintaft"
+//2
+/area/station/maintenance/floor2
+	name = "\improper 2nd Floor Maint"
+/area/station/maintenance/floor2/port
+	name = "\improper 2nd Floor Central Port Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor2/port/fore
+	name = "\improper 2nd Floor Fore Port Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor2/port/aft
+	name = "\improper 2nd Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor2/starboard
+	name = "\improper 2nd Floor Central Starboard Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor2/starboard/fore
+	name = "\improper 2nd Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor2/starboard/aft
+	name = "\improper 2nd Floor Aft Starboard Maint"
+	icon_state = "maintaft"
+//3
+/area/station/maintenance/floor3
+	name = "\improper 3rd Floor Maint"
+
+/area/station/maintenance/floor3/port
+	name = "\improper 3rd Floor Central Port Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor3/port/fore
+	name = "\improper 3rd Floor Fore Port Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor3/port/aft
+	name = "\improper 3rd Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor3/starboard
+	name = "\improper 3rd Floor Central Starboard Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor3/starboard/fore
+	name = "\improper 3rd Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor3/starboard/aft
+	name = "\improper 3rd Floor Aft Starboard Maint"
+	icon_state = "maintaft"
+//4
+/area/station/maintenance/floor4
+	name = "\improper 4th Floor Maint"
+
+/area/station/maintenance/floor4/port
+	name = "\improper 4th Floor Central Port Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor4/port/fore
+	name = "\improper 4th Floor Fore Port Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor4/port/aft
+	name = "\improper 4th Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor4/starboard
+	name = "\improper 4th Floor Central Starboard Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor4/starboard/fore
+	name = "\improper 4th Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor4/starboard/aft
+	name = "\improper 4th Floor Aft Starboard Maint"
+	icon_state = "maintaft"

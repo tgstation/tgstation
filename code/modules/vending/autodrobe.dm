@@ -55,6 +55,9 @@
 				/obj/item/clothing/suit/costume/dracula = 1,
 				/obj/item/clothing/under/costume/draculass = 1,
 				/obj/item/clothing/suit/costume/gothcoat = 1,
+				/obj/item/clothing/glasses/eyepatch = 1,
+				/obj/item/clothing/glasses/eyepatch/medical = 1,
+				/obj/item/clothing/under/costume/gi = 1,
 			),
 		),
 		list(
@@ -87,7 +90,7 @@
 				/obj/item/clothing/under/rank/civilian/clown/purple = 1,
 				/obj/item/clothing/mask/gas/sexyclown = 1,
 				/obj/item/clothing/under/rank/civilian/clown/sexy = 1,
-				/obj/item/clothing/head/beret = 3,
+				/obj/item/clothing/head/beret = 6,
 				/obj/item/clothing/mask/gas/sexymime = 1,
 				/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 				/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
@@ -203,6 +206,7 @@
 		/obj/item/clothing/head/costume/lobsterhat = 1,
 		/obj/item/clothing/under/costume/lobster = 1,
 		/obj/item/gun/magic/wand/nothing = 2,
+		/obj/item/storage/box/tape_wizard = 1,
 	)
 	premium = list(
 		/obj/item/clothing/suit/costume/pirate/captain = 2,
@@ -220,7 +224,7 @@
 		/obj/item/clothing/under/dress/wedding_dress = 1,
 		/obj/item/clothing/under/suit/tuxedo = 1,
 		/obj/item/clothing/head/costume/weddingveil = 1,
-		/obj/item/storage/belt/cummerbund = 1,
+		/obj/item/storage/belt/fannypack/cummerbund = 1,
 		/obj/item/clothing/suit/costume/drfreeze_coat = 1,
 		/obj/item/clothing/under/costume/drfreeze = 1,
 		/obj/item/clothing/head/costume/drfreezehat = 1,

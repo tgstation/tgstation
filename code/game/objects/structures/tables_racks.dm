@@ -22,6 +22,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -375,7 +376,11 @@
 	for(var/atom/movable/attached_movable as anything in attached_items)
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
-
+			
+/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 /*
  * Glass tables
  */
@@ -484,10 +489,6 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
-/datum/armor/table_glass
-	fire = 80
-	acid = 100
-
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
 		..()
@@ -515,10 +516,6 @@
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
-
-/datum/armor/table_glass
-	fire = 80
-	acid = 100
 
 /obj/structure/table/wood/fancy/Initialize(mapload)
 	. = ..()
@@ -653,15 +650,6 @@
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 
-/datum/armor/table_reinforced
-	melee = 10
-	bullet = 30
-	laser = 30
-	energy = 100
-	bomb = 20
-	fire = 80
-	acid = 70
-
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
@@ -724,15 +712,6 @@
 	custom_materials = list(/datum/material/silver = 2000)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
-
-/datum/armor/table_reinforced
-	melee = 10
-	bullet = 30
-	laser = 30
-	energy = 100
-	bomb = 20
-	fire = 80
-	acid = 70
 
 /obj/structure/table/optable/Initialize(mapload)
 	. = ..()
@@ -799,22 +778,13 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
-
-/datum/armor/table_reinforced
-	melee = 10
-	bullet = 30
-	laser = 30
-	energy = 100
-	bomb = 20
-	fire = 80
-	acid = 70
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -890,21 +860,12 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE
-
-/datum/armor/table_reinforced
-	melee = 10
-	bullet = 30
-	laser = 30
-	energy = 100
-	bomb = 20
-	fire = 80
-	acid = 70
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_WRENCH)

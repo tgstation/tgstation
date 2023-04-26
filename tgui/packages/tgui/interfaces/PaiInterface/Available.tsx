@@ -1,7 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
 import { SOFTWARE_DESC } from './constants';
-import { Data } from './types';
+import { PaiData } from './types';
 
 /**
  * Renders a list of available software and the ram with which to download it
@@ -20,7 +20,7 @@ export const AvailableDisplay = () => {
 
 /** Displays the remaining RAM left as a progressbar. */
 const MemoryDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
+  const { data } = useBackend<PaiData>(context);
   const { ram } = data;
 
   return (
@@ -52,7 +52,7 @@ const MemoryDisplay = (props, context) => {
  *  creates table rows for each, like a vendor.
  */
 const SoftwareList = (props, context) => {
-  const { data } = useBackend<Data>(context);
+  const { data } = useBackend<PaiData>(context);
   const { available } = data;
   if (!available) {
     return null;
@@ -73,7 +73,7 @@ const SoftwareList = (props, context) => {
 
 /** A row for an individual software listing. */
 const ListItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<PaiData>(context);
   const { installed, ram } = data;
   const { cost, name } = props;
   const purchased = installed.includes(name);

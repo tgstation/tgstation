@@ -425,8 +425,8 @@
 	},
 /area/ruin/powered/shuttle)
 "Zd" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

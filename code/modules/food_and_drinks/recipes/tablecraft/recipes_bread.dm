@@ -132,6 +132,26 @@
 	result = /obj/item/food/raw_breadstick
 	category = CAT_BREAD
 
+/datum/crafting_recipe/food/raw_croissant
+	name = "Raw croissant"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/datum/reagent/consumable/sugar = 1,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/raw_croissant
+	category = CAT_BREAD
+
+/datum/crafting_recipe/food/throwing_croissant
+	name = "Throwing croissant"
+	reqs = list(
+		/obj/item/food/croissant = 1,
+		/obj/item/stack/rods = 1,
+	)
+	result = /obj/item/food/croissant/throwing
+	category = CAT_BREAD
+	always_available = FALSE
+
 /datum/crafting_recipe/food/breaddog
 	name = "Living dog/bread hybrid"
 	reqs = list(

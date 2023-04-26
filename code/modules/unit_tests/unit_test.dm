@@ -19,15 +19,17 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Global assoc list of required mapping items, [item typepath] to [required item datum].
 GLOBAL_LIST_EMPTY(required_map_items)
 
-/// The name of the test that is currently focused.
+/// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
-GLOBAL_VAR_INIT(focused_test, focused_test())
+GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
-/proc/focused_test()
+/proc/focused_tests()
+	var/list/focused_tests = list()
 	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
 		if (initial(unit_test.focus))
-			return unit_test
-	return null
+			focused_tests += unit_test
+
+	return focused_tests.len > 0 ? focused_tests : null
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -45,6 +47,9 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
+
+	/// Do not instantiate if type matches this
+	var/abstract_type = /datum/unit_test
 
 	var/static/datum/space_level/reservation
 
@@ -66,7 +71,7 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
 	// clear the test area
-	for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
+	for (var/turf/turf in Z_TURFS(run_loc_floor_bottom_left.z))
 		for (var/content in turf.contents)
 			if (istype(content, /obj/effect/landmark))
 				continue
@@ -74,7 +79,7 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 	return ..()
 
 /datum/unit_test/proc/Run()
-	TEST_FAIL("Run() called parent or not implemented")
+	TEST_FAIL("[type]/Run() called parent or not implemented")
 
 /datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
@@ -146,8 +151,11 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
 
-/proc/RunUnitTest(test_path, list/test_results)
-	if (ispath(test_path, /datum/unit_test/focus_only))
+/proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
+	if(ispath(test_path, /datum/unit_test/focus_only))
+		return
+
+	if(initial(test_path.abstract_type) == test_path)
 		return
 
 	var/datum/unit_test/test = new test_path
@@ -217,7 +225,7 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 
 	SSticker.force_ending = TRUE
 	//We have to call this manually because del_text can preceed us, and SSticker doesn't fire in the post game
-	SSticker.standard_reboot()
+	SSticker.declare_completion()
 
 /datum/map_template/unit_tests
 	name = "Unit Tests Zone"

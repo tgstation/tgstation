@@ -72,11 +72,9 @@
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(flag)
 		return // too close
-	if(ishuman(user))
-		if(!can_trigger_gun(user))
-			return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
 		return
@@ -152,7 +150,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))

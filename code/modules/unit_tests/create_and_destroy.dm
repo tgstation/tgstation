@@ -30,6 +30,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/merge_conflict_marker,
 		//briefcase launchpads erroring
 		/obj/machinery/launchpad/briefcase,
+		//Both are abstract types meant to scream bloody murder if spawned in raw
+		/obj/item/organ/external,
+		/obj/item/organ/external/wings,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -98,6 +101,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/structure/industrial_lift)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	ignore += subtypesof(/obj/machinery/airlock_controller)
+	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
+	ignore += subtypesof(/atom/movable/screen/escape_menu)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
@@ -134,13 +139,18 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	GLOB.running_create_and_destroy = FALSE
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
+
+	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
+	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
 	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 	//Clear it, just in case
 	cached_contents.Cut()
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
-	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
+	// + 2 seconds to ensure that everything gets in the queue.
+	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK] + 2 SECONDS
+
 	var/start_time = world.time
 	var/garbage_queue_processed = FALSE
 
@@ -192,4 +202,5 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10 SECONDS
+	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = GC_CHECK_QUEUE
+	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = GC_DEL_QUEUE

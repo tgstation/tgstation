@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { actions, phase, roleinfo, role_theme, admin_controls } = data;
+  const { phase, roleinfo, role_theme, admin_controls } = data;
   return (
     <Window title="Mafia" theme={role_theme} width={650} height={580}>
       <Window.Content>
@@ -21,18 +21,6 @@ export const MafiaPanel = (props, context) => {
               <MafiaRole />
             </Stack.Item>
           )}
-          {actions?.map((action) => (
-            <Stack.Item key={action}>
-              <Button
-                onClick={() =>
-                  act('mf_action', {
-                    atype: action,
-                  })
-                }>
-                {action}
-              </Button>
-            </Stack.Item>
-          ))}
           {!!roleinfo && (
             <Stack.Item>
               <MafiaJudgement />
@@ -113,6 +101,17 @@ const MafiaLobby = (props, context) => {
             `}
             content="Spectate"
             onClick={() => act('mf_spectate')}
+          />
+          <Button
+            icon="arrow-right"
+            tooltipPosition="bottom-start"
+            tooltip={multiline`
+              Submit a vote to start the game early.
+              Starts when half of the current signup list have voted to start.
+              Requires a bare minimum of six players.
+            `}
+            content="Start Now!"
+            onClick={() => act('vote_to_start')}
           />
         </>
       }>
@@ -224,7 +223,7 @@ const MafiaListOfRoles = (props, context) => {
                   icon="question"
                   onClick={() =>
                     act('mf_lookup', {
-                      atype: r.slice(0, -3),
+                      role_name: r.slice(0, -3),
                     })
                   }
                 />
@@ -312,17 +311,16 @@ const MafiaPlayers = (props, context) => {
                   `Votes: ${player.votes}`}
               </Stack.Item>
               <Stack.Item shrink={0} minWidth="42px" textAlign="center">
-                {player.actions?.map((action) => (
+                {player.possible_actions?.map((action) => (
                   <Button
-                    key={action}
-                    fluid
+                    key={action.name}
                     onClick={() =>
-                      act('mf_targ_action', {
-                        atype: action,
+                      act('perform_action', {
+                        action_ref: action.ref,
                         target: player.ref,
                       })
                     }>
-                    {action}
+                    {action.name}
                   </Button>
                 ))}
               </Stack.Item>
@@ -364,6 +362,9 @@ const MafiaAdmin = (props, context) => {
         </Button>
         <Button icon="paint-roller" onClick={() => act('cancel_setup')}>
           Reset Custom Setup
+        </Button>
+        <Button icon="magic" onClick={() => act('start_now')}>
+          Start now!
         </Button>
       </Section>
     </Collapsible>

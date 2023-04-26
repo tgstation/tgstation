@@ -43,7 +43,7 @@
 	if(!blob || isspaceturf(atom_source)) //does nothing in space
 		return
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
-	consume_returns(damage_increase = blob.get_integrity() * 0.5)
+	consume_returns(damage_increase = blob.get_integrity() * 0.05)
 	if(blob.get_integrity() > 100)
 		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and flinches away!"),
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
@@ -108,7 +108,7 @@
 			)
 			return
 
-		var/obj/item/organ/internal/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/licking_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			dust_mob(source, user,
 				span_danger("As [user] hesitantly leans in and licks [atom_source] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
@@ -213,7 +213,8 @@
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
-		bumped_hit(hit_object)
+		bumped_hit(parent, hit_object)
+	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source
@@ -227,7 +228,7 @@
 		cause = "contact"
 	nom.visible_message(vis_msg, mob_msg, span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 	atom_source.investigate_log("has been attacked ([cause]) by [key_name(nom)]", INVESTIGATE_ENGINE)
-	add_memory_in_range(atom_source, 7, MEMORY_SUPERMATTER_DUSTED, list(DETAIL_PROTAGONIST = nom, DETAIL_WHAT_BY = atom_source), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
+	add_memory_in_range(atom_source, 7, /datum/memory/witness_supermatter_dusting, protagonist = nom, antagonist = atom_source)
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, nom)
 
@@ -247,7 +248,7 @@
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
-			damage_increase += rand(-300, 300) // HONK
+			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
@@ -259,10 +260,13 @@
 				message_admins("[atom_source] has consumed [consumed_object], [suspicion] [ADMIN_JMP(atom_source)].")
 			atom_source.investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_ENGINE)
 		qdel(consumed_object)
-	if(!iseffect(consumed_object) && isitem(consumed_object))
-		var/obj/item/consumed_item = consumed_object
-		object_size = consumed_item.w_class
-		matter_increase += 70 * object_size
+	if(!iseffect(consumed_object) && !isliving(consumed_object))
+		if(isitem(consumed_object))
+			var/obj/item/consumed_item = consumed_object
+			object_size = consumed_item.w_class
+			matter_increase += 70 * object_size
+		else
+			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)

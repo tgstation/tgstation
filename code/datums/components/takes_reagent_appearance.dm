@@ -12,6 +12,8 @@
  * An example usage is bartender mixed drinks - each reagent gets its own fancy drink sprite
  */
 /datum/component/takes_reagent_appearance
+	/// The type to compare against the glass_style's required_container_type. The parent's type by default.
+	var/base_container_type
 	/// Icon file when attached to the item
 	var/icon_pre_change
 	/// Icon state when attached to the item
@@ -24,6 +26,7 @@
 /datum/component/takes_reagent_appearance/Initialize(
 	datum/callback/on_icon_changed,
 	datum/callback/on_icon_reset,
+	base_container_type,
 )
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +40,8 @@
 
 	src.on_icon_changed = on_icon_changed
 	src.on_icon_reset = on_icon_reset
+
+	src.base_container_type = base_container_type || parent.type
 
 /datum/component/takes_reagent_appearance/Destroy()
 	QDEL_NULL(on_icon_changed)
@@ -85,12 +90,15 @@
  */
 /datum/component/takes_reagent_appearance/proc/update_name(datum/glass_style/style)
 	var/obj/item/item_parent = parent
+	if(item_parent.renamedByPlayer)
+		return NONE
+
 	if(isnull(style))
 		// no style (reset)
 		item_parent.name = initial(item_parent.name)
 	else if(style.name)
 		// style
-		item_parent.name = style.name
+		style.set_name(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_NAME
 
 	return NONE
@@ -104,12 +112,15 @@
  */
 /datum/component/takes_reagent_appearance/proc/update_desc(datum/glass_style/style)
 	var/obj/item/item_parent = parent
+	if(item_parent.renamedByPlayer)
+		return NONE
+
 	if(isnull(style))
 		// no style (reset)
 		item_parent.desc = initial(item_parent.desc)
 	else if(style.desc)
 		// style
-		item_parent.desc = style.desc
+		style.set_desc(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_DESC
 
 	return NONE
@@ -128,8 +139,7 @@
 		item_parent.icon_state = icon_state_pre_change
 	else if(style.icon && style.icon_state)
 		// style
-		item_parent.icon = style.icon
-		item_parent.icon_state = style.icon_state
+		style.set_appearance(item_parent)
 		on_icon_changed?.InvokeAsync(style)
 		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
@@ -154,4 +164,4 @@
 	if(isnull(main_reagent))
 		return null
 
-	return GLOB.glass_style_singletons[parent.type][main_reagent.type]
+	return GLOB.glass_style_singletons[base_container_type][main_reagent.type]

@@ -1,0 +1,201 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/maint,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"p" = (
+/turf/template_noop,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/contraband/cannabis,
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"s" = (
+/obj/structure/falsewall,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/injector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+p
+p
+p
+p
+p
+"}
+(2,1,1) = {"
+X
+U
+z
+a
+p
+"}
+(3,1,1) = {"
+p
+C
+Q
+a
+p
+"}
+(4,1,1) = {"
+p
+t
+D
+a
+p
+"}
+(5,1,1) = {"
+p
+I
+I
+a
+p
+"}
+(6,1,1) = {"
+p
+y
+K
+a
+p
+"}
+(7,1,1) = {"
+p
+a
+s
+a
+a
+"}
+(8,1,1) = {"
+p
+Z
+n
+n
+a
+"}
+(9,1,1) = {"
+p
+n
+E
+r
+a
+"}
+(10,1,1) = {"
+p
+e
+k
+v
+a
+"}
+(11,1,1) = {"
+p
+a
+a
+a
+a
+"}

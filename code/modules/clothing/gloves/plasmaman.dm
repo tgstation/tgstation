@@ -20,11 +20,6 @@
 	icon_state = "blackplasma"
 	greyscale_colors = "#2f2e31"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/plasmanitrile
 	name = "nitrile envirogloves"
 	desc = "Pricy nitrile gloves made for plasmamen."
@@ -32,50 +27,25 @@
 	greyscale_colors = "#913b00"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"
 	icon_state = "whiteplasma"
 	greyscale_colors = "#ffffff"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/robot
 	name = "roboticist envirogloves"
 	icon_state = "robotplasma"
 	greyscale_colors = "#932500"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/janny
 	name = "janitor envirogloves"
 	icon_state = "jannyplasma"
 	greyscale_colors = "#883391"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/cargo
 	name = "cargo envirogloves"
 	icon_state = "cargoplasma"
 	greyscale_colors = "#bb9042"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/engineer
 	name = "engineering envirogloves"
@@ -83,30 +53,15 @@
 	greyscale_colors = "#d75600"
 	siemens_coefficient = 0
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/atmos
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	greyscale_colors = "#00a5ff"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
 	icon_state = "explorerplasma"
 	greyscale_colors = "#47453d"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/botanic_leather
 	name = "botany envirogloves"
@@ -115,30 +70,15 @@
 	greyscale_colors = "#3164ff"
 	clothing_traits = list(TRAIT_PLANT_SAFE)
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/prototype
 	name = "prototype envirogloves"
 	icon_state = "protoplasma"
 	greyscale_colors = "#911801"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/clown
 	name = "clown envirogloves"
 	icon_state = "clownplasma"
 	greyscale_colors = "#ff0000"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
 	name = "head of personnel's envirogloves"
@@ -147,61 +87,31 @@
 	inhand_icon_state = null
 	greyscale_colors = null
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/chief_engineer
 	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	greyscale_colors = "#45ff00"
 	siemens_coefficient = 0
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/research_director
 	name = "research director's envirogloves"
 	icon_state = "rdplasma"
 	greyscale_colors = "#64008a"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/centcom_commander
 	name = "CentCom commander envirogloves"
 	icon_state = "commanderplasma"
 	greyscale_colors = "#009100"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/centcom_official
 	name = "CentCom official envirogloves"
 	icon_state = "officialplasma"
 	greyscale_colors = "#10af77"
 
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
-
 /obj/item/clothing/gloves/color/plasmaman/centcom_intern
 	name = "CentCom intern envirogloves"
 	icon_state = "internplasma"
 	greyscale_colors = "#00974b"
-
-/datum/armor/color_plasmaman
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/gloves/color/plasmaman/radio
 	name = "translation envirogloves"

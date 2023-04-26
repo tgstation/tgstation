@@ -8,9 +8,9 @@
 	var/mob/living/target = weak_target?.resolve()
 	if (QDELETED(target))
 		return FALSE
-	controller.current_movement_target = target
+	set_movement_target(controller, target)
 
-/datum/ai_behavior/pet_use_ability/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
+/datum/ai_behavior/pet_use_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	var/datum/action/cooldown/mob_cooldown/ability = controller.blackboard[ability_key]
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/living/target = weak_target?.resolve()
@@ -23,5 +23,4 @@
 
 /datum/ai_behavior/pet_use_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	controller.blackboard[BB_ACTIVE_PET_COMMAND] = PET_COMMAND_IDLE // Wait for further instruction
 	controller.blackboard[target_key] = null

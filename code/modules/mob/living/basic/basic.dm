@@ -7,6 +7,7 @@
 	gender = PLURAL
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
+	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
 
 	var/basic_mob_flags = NONE
 
@@ -35,11 +36,13 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH //This should be an element
 
-	///What kind of objects this mob can smash.
-	var/environment_smash = ENVIRONMENT_SMASH_NONE
+	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
+	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
-	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
+	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	///Minimum force required to deal any damage.
+	var/force_threshold = 0
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
@@ -75,10 +78,6 @@
 	var/icon_dead = ""
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
-	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
-	var/flip_on_death = FALSE
-	///Removes density upon death, restores the original state if alive.
-	var/become_passable_on_death = TRUE
 
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
@@ -91,9 +90,9 @@
 	var/unsuitable_atmos_damage = 1
 
 	///Minimal body temperature without receiving damage
-	var/minimum_survivable_temperature = 250
+	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
-	var/maximum_survivable_temperature = 350
+	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -124,11 +123,10 @@
 	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
 		AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 
-/mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	///Automatic stamina re-gain
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
 	if(length(speak_emote))
@@ -141,29 +139,47 @@
 		qdel(src)
 	else
 		health = 0
-		icon_state = icon_dead
-		if(flip_on_death)
-			transform = transform.Turn(180)
-		if (become_passable_on_death)
-			set_density(FALSE)
+		look_dead()
+
+/**
+ * Apply the appearance and properties this mob has when it dies
+ * This is called by the mob pretending to be dead too so don't put loot drops in here or something
+ */
+/mob/living/basic/proc/look_dead()
+	icon_state = icon_dead
+	if(basic_mob_flags & FLIP_ON_DEATH)
+		transform = transform.Turn(180)
+	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
+		set_density(FALSE)
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
-	if (!.)
+	if(!.)
 		return
+	look_alive()
+
+/// Apply the appearance and properties this mob has when it is alive
+/mob/living/basic/proc/look_alive()
 	icon_state = icon_living
-	if (flip_on_death)
+	if(basic_mob_flags & FLIP_ON_DEATH)
 		transform = transform.Turn(180)
-	if (become_passable_on_death)
+	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		set_density(initial(density))
 
-/mob/living/basic/proc/melee_attack(atom/target)
-	src.face_atom(target)
+/mob/living/basic/update_sight()
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return ..()
+
+/mob/living/basic/proc/melee_attack(atom/target, list/modifiers)
+	face_atom(target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
-	var/result = target.attack_basic_mob(src)
+	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
+
+/mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	melee_attack(attack_target, modifiers)
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	. = ..()
@@ -190,3 +206,25 @@
 	. = ..()
 	. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
+
+/mob/living/basic/compare_sentience_type(compare_type)
+	return sentience_type == compare_type
+
+/// Updates movement speed based on stamina loss
+/mob/living/basic/update_stamina()
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
+
+/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
+
+/mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
+	if(on_fire && isnull(last_icon_state))
+		add_overlay(fire_overlay)
+		return fire_overlay
+	else if(!on_fire && !isnull(last_icon_state))
+		cut_overlay(fire_overlay)
+		return null
+	else if(on_fire && !isnull(last_icon_state))
+		return last_icon_state
+	return null

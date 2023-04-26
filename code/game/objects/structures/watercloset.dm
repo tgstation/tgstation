@@ -156,14 +156,16 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
-	var/exposed = 0 // can you currently put an item inside
-	var/obj/item/hiddenitem = null // what's in the urinal
+	/// Can you currently put an item inside
+	var/exposed = FALSE
+	/// What's in the urinal
+	var/obj/item/hidden_item
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
-	hiddenitem = new /obj/item/food/urinalcake
+	hidden_item = new /obj/item/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -182,21 +184,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 			to_chat(user, span_warning("You need a tighter grip!"))
 
 	else if(exposed)
-		if(!hiddenitem)
+		if(!hidden_item)
 			to_chat(user, span_warning("There is nothing in the drain holder!"))
 		else
 			if(ishuman(user))
-				user.put_in_hands(hiddenitem)
+				user.put_in_hands(hidden_item)
 			else
-				hiddenitem.forceMove(get_turf(src))
-			to_chat(user, span_notice("You fish [hiddenitem] out of the drain enclosure."))
-			hiddenitem = null
+				hidden_item.forceMove(get_turf(src))
+			to_chat(user, span_notice("You fish [hidden_item] out of the drain enclosure."))
+			hidden_item = null
 	else
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
 	if(exposed)
-		if (hiddenitem)
+		if (hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))
 			return
 		if(I.w_class > 1)
@@ -205,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
-		hiddenitem = I
+		hidden_item = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
 	else
 		return ..()
@@ -222,14 +224,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		exposed = !exposed
 	return TRUE
 
+/obj/structure/urinal/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/wallframe/urinal(loc)
+	qdel(src)
+
+/obj/item/wallframe/urinal
+	name = "urinal frame"
+	desc = "An unmounted urinal. Attach it to a wall to use."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "urinal"
+	result_path = /obj/structure/urinal
+	pixel_shift = 32
 
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
+	food_reagents = list(
+		/datum/reagent/chlorine = 3,
+		/datum/reagent/ammonia = 1,
+	)
 	foodtypes = TOXIC | GROSS
 
 /obj/item/food/urinalcake/attack_self(mob/living/user)
@@ -480,12 +497,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			new /obj/item/stock_parts/water_recycler(drop_location())
 	..()
 
-/obj/structure/sink/process(delta_time)
+/obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
 	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
 		return PROCESS_KILL
 
-	reagents.add_reagent(dispensedreagent, reclaim_rate * delta_time)
+	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
 
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)

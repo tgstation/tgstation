@@ -33,21 +33,11 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/datum/armor/engineering_chief_engineer
-	bio = 10
-	fire = 80
-	acid = 40
-
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	inhand_icon_state = "atmos_suit"
-
-/datum/armor/engineering_chief_engineer
-	bio = 10
-	fire = 80
-	acid = 40
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt
 	name = "atmospheric technician's jumpskirt"
@@ -59,11 +49,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/datum/armor/engineering_chief_engineer
-	bio = 10
-	fire = 80
-	acid = 40
-
 /obj/item/clothing/under/rank/engineering/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. Made from fire resistant materials."
 	name = "engineer's jumpsuit"
@@ -71,22 +56,12 @@
 	inhand_icon_state = "engi_suit"
 	species_exception = list(/datum/species/golem/uranium)
 
-/datum/armor/engineering_chief_engineer
-	bio = 10
-	fire = 80
-	acid = 40
-
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit. Made from fire resistant materials."
 	icon_state = "hazard"
 	inhand_icon_state = "syndicate-orange"
 	alt_covers_chest = TRUE
-
-/datum/armor/engineering_chief_engineer
-	bio = 10
-	fire = 80
-	acid = 40
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"

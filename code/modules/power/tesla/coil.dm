@@ -42,9 +42,9 @@
 	. = ..()
 	var/power_multiplier = 0
 	zap_cooldown = 100
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		power_multiplier += C.rating
-		zap_cooldown -= (C.rating * 20)
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		power_multiplier += capacitor.tier
+		zap_cooldown -= (capacitor.tier * 20)
 	input_power_multiplier = max(1 * (power_multiplier / 8), 0.25) //Max out at 50% efficency.
 
 /obj/machinery/power/energy_accumulator/tesla_coil/examine(mob/user)
@@ -83,7 +83,7 @@
 
 	return ..()
 
-/obj/machinery/power/energy_accumulator/tesla_coil/process(delta_time)
+/obj/machinery/power/energy_accumulator/tesla_coil/process(seconds_per_tick)
 	. = ..()
 	zap_sound_volume = min(energy_to_joules(stored_energy)/200000, 100)
 	zap_sound_range = min(energy_to_joules(stored_energy)/4000000, 10)

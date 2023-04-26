@@ -74,6 +74,10 @@
 	SSair.stop_processing_machine(src)
 	return..()
 
+/obj/machinery/space_heater/on_construction()
+	set_panel_open(TRUE)
+	cell = null
+
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
 		LAZYADD(component_parts, cell)
@@ -158,10 +162,10 @@
 	. = ..()
 	var/laser = 0
 	var/cap = 0
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		laser += M.rating
-	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		cap += M.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		laser += micro_laser.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		cap += capacitor.tier
 
 	heating_power = laser * 40000
 
@@ -274,20 +278,9 @@
 					settable_temperature_median + settable_temperature_range)
 		if("eject")
 			if(panel_open && cell)
-				cell.forceMove(drop_location())
+				usr.put_in_hands(cell)
 				cell = null
 				. = TRUE
-
-/obj/machinery/space_heater/constructed
-	cell = null
-
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
-
-/obj/machinery/space_heater/constructed/Initialize(mapload)
-	. = ..()
-	set_panel_open(TRUE)
 
 /obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
@@ -313,15 +306,11 @@
 	var/chem_heating_power = 1
 	display_panel = FALSE
 
-/datum/armor/machinery_space_heater
-	fire = 80
-	acid = 10
-
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
 	QDEL_NULL(beaker)
 
-/obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
+/obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
 	if(!on)
 		update_appearance()
 		return PROCESS_KILL
@@ -340,17 +329,17 @@
 		switch(set_mode)
 			if(HEATER_MODE_AUTO)
 				power_mod *= 0.5
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 				beaker.reagents.handle_reactions()
 			if(HEATER_MODE_HEAT)
 				if(target_temperature < beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			if(HEATER_MODE_COOL)
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-		var/required_energy = heating_power * delta_time * (power_mod * 4)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
 		cell.use(required_energy / efficiency)
 		beaker.reagents.handle_reactions()
 	update_appearance()
@@ -432,7 +421,7 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 
@@ -453,10 +442,10 @@
 	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
-	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		lasers_rating += laser.rating
-	for(var/obj/item/stock_parts/capacitor/capacitor in component_parts)
-		capacitors_rating += capacitor.rating
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		lasers_rating += laser.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		capacitors_rating += capacitor.tier
 
 	heating_power = lasers_rating * 20000
 

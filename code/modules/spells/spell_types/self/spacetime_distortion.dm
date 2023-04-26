@@ -8,7 +8,7 @@
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 30 SECONDS
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION
 	spell_max_level = 1
 
 	/// Weather we're ready to cast again yet or not

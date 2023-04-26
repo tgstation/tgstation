@@ -64,7 +64,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(80))
-				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
 					attempt_lattice_replacement()
 				else
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)

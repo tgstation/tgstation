@@ -28,10 +28,9 @@
 
 	if(target != user)
 		target.visible_message(span_warning("[user] is attempting to implant [target]."))
+		if(!do_after(user, 5 SECONDS, target))
+			return
 
-	var/turf/target_on = get_turf(target)
-	if(!(target_on && (target == user || do_mob(user, target, 5 SECONDS))))
-		return
 	if(!(src && imp))
 		return
 
@@ -54,7 +53,7 @@
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
 	if(user.get_active_held_item() != I)
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(new_name)
 		name = "implanter ([new_name])"

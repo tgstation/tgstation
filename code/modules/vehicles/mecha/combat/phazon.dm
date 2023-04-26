@@ -39,15 +39,6 @@
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
 
-/datum/armor/mecha_phazon
-	melee = 30
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 30
-	fire = 100
-	acid = 100
-
 /datum/action/vehicle/sealed/mecha/mech_switch_damtype/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
@@ -70,15 +61,6 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
 	button_icon_state = "mech_phasing_off"
-
-/datum/armor/mecha_phazon
-	melee = 30
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 30
-	fire = 100
-	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))

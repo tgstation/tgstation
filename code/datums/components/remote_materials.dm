@@ -54,6 +54,7 @@ handles linking back and forth.
 		// specify explicitly in case the other component is deleted first
 		var/atom/P = parent
 		mat_container.retrieve_all(P.drop_location())
+		QDEL_NULL(mat_container)
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()

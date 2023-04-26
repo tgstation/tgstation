@@ -6,6 +6,7 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
+	sharpness = SHARP_POINTY
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	playstyle_string = span_holoparasite("As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.")
 	magic_fluff_string = span_holoparasite("..And draw the Space Ninja, a lethal, invisible assassin.")
@@ -22,16 +23,14 @@
 	var/stealth_cooldown_time = 16 SECONDS
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
+	/// Our wound bonus when in stealth mode.
+	var/stealth_wound_bonus = -20 //from -100, you can now wound!
 	/// Screen alert given when we are able to stealth.
 	var/atom/movable/screen/alert/canstealthalert
 	/// Screen alert given when we are in stealth.
 	var/atom/movable/screen/alert/instealthalert
 	/// Cooldown for the stealth toggle.
 	COOLDOWN_DECLARE(stealth_cooldown)
-
-/mob/living/simple_animal/hostile/guardian/assassin/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	updatestealthalert()
 
 /mob/living/simple_animal/hostile/guardian/assassin/get_status_tab_items()
 	. = ..()
@@ -58,6 +57,7 @@
 		melee_damage_lower -= damage_bonus
 		melee_damage_upper -= damage_bonus
 		armour_penetration = initial(armour_penetration)
+		wound_bonus = initial(wound_bonus)
 		obj_damage = initial(obj_damage)
 		environment_smash = initial(environment_smash)
 		alpha = initial(alpha)
@@ -66,6 +66,7 @@
 		else
 			visible_message(span_danger("\The [src] suddenly appears!"))
 			COOLDOWN_START(src, stealth_cooldown, stealth_cooldown_time) //we were forced out of stealth and go on cooldown
+			addtimer(CALLBACK(src, PROC_REF(updatestealthalert)), stealth_cooldown_time)
 			COOLDOWN_START(src, manifest_cooldown, 4 SECONDS) //can't recall for 4 seconds
 		updatestealthalert()
 		toggle = FALSE
@@ -76,6 +77,7 @@
 		melee_damage_lower += damage_bonus
 		melee_damage_upper += damage_bonus
 		armour_penetration = 100
+		wound_bonus = stealth_wound_bonus
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))

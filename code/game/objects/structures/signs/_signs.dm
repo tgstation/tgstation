@@ -7,9 +7,9 @@
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
 	armor_type = /datum/armor/structure_sign
+	resistance_flags = FLAMMABLE
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
@@ -20,62 +20,28 @@
 	fire = 50
 	acid = 50
 
-/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
-	icon_state = "backing"
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
-	is_editable = TRUE
-	sign_change_name = "Blank Sign"
-
-/obj/item/sign
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
-	icon = 'icons/obj/signs.dmi'
-	icon_state = "backing"
-	inhand_icon_state = "backing"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/plastic = 2000)
-	armor_type = /datum/armor/item_sign
-	resistance_flags = FLAMMABLE
-	max_integrity = 100
-	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
-	var/sign_path = /obj/structure/sign/blank
-	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
-	var/is_editable = TRUE
-
-/datum/armor/item_sign
-	melee = 50
-	fire = 50
-	acid = 50
-
-/obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+/obj/structure/sign/Initialize(mapload)
 	. = ..()
-	var/matrix/M = matrix()
-	M.Turn(90)
-	transform = M
+	register_context()
+
+/obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	switch (held_item?.tool_behaviour)
+		if (TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if(!buildable_sign)
+				return ///Cannot be unfastened regardless.
+			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
+			return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/structure/sign/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return
 	user.examinate(src)
-
-/**
- * This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)
- *
- * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
- */
-/proc/populate_editable_sign_types()
-	var/list/output = list()
-	for(var/s in subtypesof(/obj/structure/sign))
-		var/obj/structure/sign/potential_sign = s
-		if(!initial(potential_sign.is_editable))
-			continue
-		output[initial(potential_sign.sign_change_name)] = potential_sign
-	output = sort_list(output) //Alphabetizes the results.
-	return output
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
@@ -121,24 +87,6 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/item/sign/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(user.combat_mode)
-		return FALSE
-	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This sign is already in perfect condition."))
-		return TRUE
-	if(!I.tool_start_check(user, amount=0))
-		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
-	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
-		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-		span_notice("You finish repairing [src]."))
-	atom_integrity = max_integrity
-	return TRUE
-
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
@@ -167,6 +115,62 @@
 		return
 	return ..()
 
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
+	icon_state = "backing"
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
+	is_editable = TRUE
+	sign_change_name = "Blank Sign"
+
+/obj/structure/sign/nanotrasen
+	name = "\improper Nanotrasen logo sign"
+	sign_change_name = "Corporate Logo - Nanotrasen"
+	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
+	is_editable = TRUE
+
+/obj/structure/sign/logo
+	name = "\improper Nanotrasen logo sign"
+	desc = "The Nanotrasen corporate logo."
+	icon_state = "nanotrasen_sign1"
+	buildable_sign = FALSE
+
+/obj/item/sign
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
+	icon = 'icons/obj/signs.dmi'
+	icon_state = "backing"
+	inhand_icon_state = "backing"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/plastic = 2000)
+	armor_type = /datum/armor/item_sign
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
+	var/sign_path = /obj/structure/sign/blank
+	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/is_editable = TRUE
+
+/datum/armor/item_sign
+	melee = 50
+	fire = 50
+	acid = 50
+
+/obj/item/sign/Initialize(mapload) //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+	. = ..()
+	var/matrix/M = matrix()
+	M.Turn(90)
+	transform = M
+	register_context()
+
+/obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(is_editable && istype(held_item, /obj/item/pen))
+		context[SCREENTIP_CONTEXT_LMB] = "Change design"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
@@ -184,15 +188,6 @@
 		user.visible_message(span_notice("You finish changing the sign."))
 		return
 	return ..()
-
-/obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
-	name = initial(fake_type.name)
-	if(fake_type != /obj/structure/sign/blank)
-		desc = "[initial(fake_type.desc)] It can be placed on a wall."
-	else
-		desc = initial(desc)
-	icon_state = initial(fake_type.icon_state)
-	sign_path = fake_type
 
 /obj/item/sign/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -218,19 +213,47 @@
 	placed_sign.setDir(dir)
 	qdel(src)
 
+/obj/item/sign/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(user.combat_mode)
+		return FALSE
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("This sign is already in perfect condition."))
+		return TRUE
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
+	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
+		return TRUE
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
+	atom_integrity = max_integrity
+	return TRUE
+
+/obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
+	name = initial(fake_type.name)
+	if(fake_type != /obj/structure/sign/blank)
+		desc = "[initial(fake_type.desc)] It can be placed on a wall."
+	else
+		desc = initial(desc)
+	icon_state = initial(fake_type.icon_state)
+	sign_path = fake_type
+
 /obj/item/sign/random/Initialize(mapload)
 	. = ..()
 	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
-
-/obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen logo sign"
-	sign_change_name = "Corporate Logo - Nanotrasen"
-	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
-	icon_state = "nanotrasen"
-	is_editable = TRUE
-
-/obj/structure/sign/logo
-	name = "\improper Nanotrasen logo sign"
-	desc = "The Nanotrasen corporate logo."
-	icon_state = "nanotrasen_sign1"
-	buildable_sign = FALSE
+/**
+ * This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)
+ *
+ * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
+ */
+/proc/populate_editable_sign_types()
+	var/list/output = list()
+	for(var/s in subtypesof(/obj/structure/sign))
+		var/obj/structure/sign/potential_sign = s
+		if(!initial(potential_sign.is_editable))
+			continue
+		output[initial(potential_sign.sign_change_name)] = potential_sign
+	output = sort_list(output) //Alphabetizes the results.
+	return output

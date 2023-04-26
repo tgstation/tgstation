@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list("boss")
+	faction = list(FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -257,13 +257,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	REMOVE_TRAIT(source, TRAIT_ELITE_CHALLENGER, REF(src))
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
-/obj/structure/elite_tumor/process(delta_time)
+/obj/structure/elite_tumor/process(seconds_per_tick)
 	if(!isturf(loc))
 		return
 
 	for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 		if(elitehere == mychild && activity == TUMOR_PASSIVE)
-			mychild.adjustHealth(-mychild.maxHealth * 0.025*delta_time)
+			mychild.adjustHealth(-mychild.maxHealth * 0.025*seconds_per_tick)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = "#FF0000"
 
@@ -363,16 +363,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
@@ -411,16 +401,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
 
-/datum/armor/structure_elite_tumor
-	melee = 100
-	bullet = 100
-	laser = 100
-	energy = 100
-	bomb = 100
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
@@ -436,3 +416,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef TUMOR_ACTIVE
+#undef TUMOR_INACTIVE
+#undef TUMOR_PASSIVE

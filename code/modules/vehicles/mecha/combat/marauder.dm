@@ -46,15 +46,6 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/datum/armor/mecha_marauder
-	melee = 50
-	bullet = 55
-	laser = 40
-	energy = 30
-	bomb = 30
-	fire = 100
-	acid = 100
-
 /obj/vehicle/sealed/mecha/marauder/add_cell(obj/item/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
@@ -65,15 +56,6 @@
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
-
-/datum/armor/mecha_marauder
-	melee = 50
-	bullet = 55
-	laser = 40
-	energy = 30
-	bomb = 30
-	fire = 100
-	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -86,15 +68,6 @@
 /datum/action/vehicle/sealed/mecha/mech_zoom
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
-
-/datum/armor/mecha_marauder
-	melee = 50
-	bullet = 55
-	laser = 40
-	energy = 30
-	bomb = 30
-	fire = 100
-	acid = 100
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
 	if(!owner?.client || !chassis || !(owner in chassis.occupants))
@@ -164,3 +137,12 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
+
+/obj/vehicle/sealed/mecha/marauder/add_cell()
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_scanmod()
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_capacitor()
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

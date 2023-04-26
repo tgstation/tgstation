@@ -6,7 +6,6 @@
 	total_positions = 0
 	spawn_positions = 1
 	supervisors = "your laws and the AI" //Nodrak
-	selection_color = "#ddffdd"
 	spawn_type = /mob/living/silicon/robot
 	minimal_player_age = 21
 	exp_requirements = 120

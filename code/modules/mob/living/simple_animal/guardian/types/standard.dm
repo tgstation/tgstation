@@ -3,6 +3,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	wound_bonus = -5 //you can wound!
 	obj_damage = 80
 	next_move_modifier = 0.8 //attacks 20% faster
 	environment_smash = ENVIRONMENT_SMASH_WALLS

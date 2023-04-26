@@ -110,14 +110,6 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 
-/datum/armor/item_shield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
-
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/melee/baton))
 		if(!COOLDOWN_FINISHED(src, baton_bash))
@@ -143,14 +135,6 @@
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
-
-/datum/armor/item_shield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
@@ -269,14 +253,6 @@
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
 
-/datum/armor/item_shield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
-
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
@@ -320,14 +296,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Whether the shield is extended and protecting the user..
 	var/extended = FALSE
-
-/datum/armor/item_shield
-	melee = 50
-	bullet = 50
-	laser = 50
-	bomb = 30
-	fire = 80
-	acid = 70
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()

@@ -92,9 +92,6 @@
 	user.remote_control = null
 	current_user = null
 	user.unset_machine()
-
-	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
-		plane_static.hide_plane(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
@@ -179,9 +176,6 @@
 	eyeobj.setLoc(eyeobj.loc)
 	if(should_supress_view_changes)
 		user.client.view_size.supress()
-	// Who passes control like this god I hate static code
-	for(var/atom/movable/screen/plane_master/plane_static in user.hud_used?.get_true_plane_masters(CAMERA_STATIC_PLANE))
-		plane_static.unhide_plane(user)
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
@@ -198,7 +192,6 @@
 /mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	user.set_sight(SEE_TURFS)
-	user.set_see_in_dark(2)
 	return TRUE
 
 /mob/camera/ai_eye/remote/Destroy()

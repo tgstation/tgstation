@@ -151,7 +151,7 @@ at the cost of risking a vicious bite.**/
 	switch(altar_result)
 		if("Change Color")
 			var/chosen_color = input(user, "", "Choose Color", pants_color) as color|null
-			if(!isnull(chosen_color) && user.canUseTopic(src, be_close = TRUE))
+			if(!isnull(chosen_color) && user.can_perform_action(src))
 				pants_color = chosen_color
 		if("Create Artefact")
 			if(!COOLDOWN_FINISHED(src, use_cooldown) || status != ALTAR_INACTIVE)

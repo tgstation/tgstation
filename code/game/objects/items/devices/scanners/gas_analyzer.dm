@@ -46,7 +46,7 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src))
+	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))
 		return
 
 	if(cooldown)
@@ -204,6 +204,7 @@
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
 	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
+	worn_icon_state = "analyzer"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
@@ -212,4 +213,5 @@
 	. = ..()
 	if(!can_see(user, target, 15))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

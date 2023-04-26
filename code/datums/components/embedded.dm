@@ -118,11 +118,12 @@
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, PROC_REF(ripOut))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemove))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(checkTweeze))
+	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY, COMSIG_MAGIC_RECALL))
 
-/datum/component/embedded/process(delta_time)
+/datum/component/embedded/process(seconds_per_tick)
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
@@ -134,7 +135,7 @@
 		return
 
 	var/damage = weapon.w_class * pain_mult
-	var/pain_chance_current = DT_PROB_RATE(pain_chance / 100, delta_time) * 100
+	var/pain_chance_current = SPT_PROB_RATE(pain_chance / 100, seconds_per_tick) * 100
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
@@ -146,7 +147,7 @@
 		victim.adjustStaminaLoss(pain_stam_pct * damage)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] hurts!"))
 
-	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
+	var/fall_chance_current = SPT_PROB_RATE(fall_chance / 100, seconds_per_tick) * 100
 	if(victim.body_position == LYING_DOWN)
 		fall_chance_current *= 0.2
 
@@ -287,3 +288,28 @@
 	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
 	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(user)
+
+/// Called when an object is ripped out of someone's body by magic or other abnormal means
+/datum/component/embedded/proc/magic_pull(datum/source, mob/living/caster, obj/marked_item)
+	SIGNAL_HANDLER
+
+	if(marked_item != weapon)
+		return
+
+	var/mob/living/carbon/victim = parent
+
+	if(!harmful)
+		victim.visible_message(span_danger("[marked_item] vanishes from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] vanishes from [limb.plaintext_zone]!"))
+		return
+	var/damage = weapon.w_class * remove_pain_mult
+	limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
+	limb.force_wound_upwards(/datum/wound/pierce/moderate)
+	victim.adjustStaminaLoss(pain_stam_pct * damage)
+	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
+
+	var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
+	if(dist < 7)
+		victim.throw_at(caster, get_dist(victim, caster) - 1, 1, caster)
+		victim.Paralyze(1 SECONDS)
+		victim.visible_message(span_alert("[victim] is sent flying towards [caster] as the [marked_item] tears out of them!"), span_alert("You are launched at [caster] as the [marked_item] tears from your body and towards their hand!"))
+	victim.visible_message(span_danger("[marked_item] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))

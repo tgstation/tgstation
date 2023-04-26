@@ -8,9 +8,9 @@
 	var/atom/target = weak_target?.resolve()
 	if (!target)
 		return FALSE
-	controller.current_movement_target = target
+	set_movement_target(controller, target)
 
-/datum/ai_behavior/pet_follow_friend/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/pet_follow_friend/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()

@@ -31,11 +31,14 @@
 			clear_alert(category)
 			return .()
 		else if(!severity || severity == thealert.severity)
-			if(thealert.timeout)
-				clear_alert(category)
-				return .()
-			else //no need to update
+			if(!thealert.timeout)
+				// No need to update existing alert
 				return thealert
+			// Reset timeout of existing alert
+			var/timeout = initial(thealert.timeout)
+			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
+			thealert.timeout = world.time + timeout - world.tick_lag
+			return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -117,6 +120,13 @@
 
 
 //Gas alerts
+// Gas alerts are continuously thrown/cleared by:
+// * /obj/item/organ/internal/lungs/proc/check_breath()
+// * /mob/living/carbon/check_breath()
+// * /mob/living/carbon/human/check_breath()
+// * /datum/element/atmos_requirements/proc/on_non_stasis_life()
+// * /mob/living/simple_animal/handle_environment()
+
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
@@ -219,12 +229,6 @@
 	name = "High Pressure"
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 	icon_state = "highpressure"
-
-/atom/movable/screen/alert/blind
-	name = "Blind"
-	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
-		or something covering your eyes."
-	icon_state = ALERT_BLIND
 
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
@@ -425,7 +429,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
-	return "[offerer.p_their()] [receiving]"
+	return "[offerer.p_their()] [receiving.name]"
 
 
 /atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
@@ -531,7 +535,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	if(antag.cult_team.blood_target)
 		if(!get_turf(antag.cult_team.blood_target))
-			antag.cult_team.blood_target = null
+			antag.cult_team.unset_blood_target()
 		else
 			blood_target = antag.cult_team.blood_target
 	if(Cviewer?.seeking && Cviewer.master)
@@ -551,7 +555,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
 			if(!summon_objective)
 				return
-			desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
+			var/list/location_list = list()
+			for(var/area/area_to_check in summon_objective.summon_spots)
+				location_list += area_to_check.get_original_area_name()
+			desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(location_list)]!"
 			if(icon_state == "runed_sense1")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
@@ -732,7 +739,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
 		so as to remain in compliance with the most up-to-date laws."
 	icon_state = ALERT_NEW_LAW
-	timeout = 300
+	timeout = 30 SECONDS
 
 /atom/movable/screen/alert/hackingapc
 	name = "Hacking APC"
@@ -740,7 +747,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		complete, you will have exclusive control of it, and you will gain \
 		additional processing time to unlock more malfunction abilities."
 	icon_state = ALERT_HACKING_APC
-	timeout = 600
+	timeout = 60 SECONDS
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()

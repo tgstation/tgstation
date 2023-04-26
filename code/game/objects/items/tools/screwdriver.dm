@@ -72,10 +72,6 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
-
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_alien")
 
@@ -105,10 +101,6 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
-
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
@@ -116,7 +108,9 @@
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -156,10 +150,6 @@
 
 /obj/item/screwdriver/red
 	random_color = FALSE
-
-/datum/armor/item_screwdriver
-	fire = 50
-	acid = 30
 
 /obj/item/screwdriver/red/Initialize(mapload)
 	. = ..()

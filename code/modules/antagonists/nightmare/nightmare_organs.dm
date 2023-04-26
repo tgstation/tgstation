@@ -9,20 +9,28 @@
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
+	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
+	///Our associated terrorize spell, for antagonist nightmares
+	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
-/obj/item/organ/internal/brain/shadow/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/shadow/nightmare/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
-	if(M.dna.species.id != SPECIES_NIGHTMARE)
-		M.set_species(/datum/species/shadow/nightmare)
-		visible_message(span_warning("[M] thrashes as [src] takes root in [M.p_their()] body!"))
+	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
+		brain_owner.set_species(/datum/species/shadow/nightmare)
+		visible_message(span_warning("[brain_owner] thrashes as [src] takes root in [brain_owner.p_their()] body!"))
 
-	our_jaunt = new(M)
-	our_jaunt.Grant(M)
+	our_jaunt = new(brain_owner)
+	our_jaunt.Grant(brain_owner)
 
-/obj/item/organ/internal/brain/shadow/nightmare/Remove(mob/living/carbon/M, special = FALSE, no_id_transfer = FALSE)
+	if(brain_owner.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
+		terrorize_spell = new(src)
+		terrorize_spell.Grant(brain_owner)
+
+/obj/item/organ/internal/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
+	. = ..()
 	QDEL_NULL(our_jaunt)
-	return ..()
+	QDEL_NULL(terrorize_spell)
 
 /obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
@@ -46,7 +54,7 @@
 		return ..()
 	user.visible_message(
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
-		span_danger("[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!")
+		span_danger("[src] feels unnaturally cold in your hands. You raise [src] to your mouth and devour it!")
 	)
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
@@ -57,35 +65,35 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/nightmare/on_insert(mob/living/carbon/heart_owner, special)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
-		M.put_in_hands(blade)
+		heart_owner.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/heart/nightmare/on_remove(mob/living/carbon/heart_owner, special)
+	. = ..()
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
-		M.visible_message(span_warning("\The [blade] disintegrates!"))
+		heart_owner.visible_message(span_warning("\The [blade] disintegrates!"))
 		QDEL_NULL(blade)
-	return ..()
 
 /obj/item/organ/internal/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/internal/heart/nightmare/on_death(delta_time, times_fired)
+/obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			respawn_progress += delta_time SECONDS
+			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(HEAL_ALL)
+	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
@@ -97,8 +105,8 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
-/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/S)
-	if(istype(S,/datum/species/shadow/nightmare))
+/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
+	if(isnightmare(owner_mob))
 		return TRUE
 	return ..()
 

@@ -40,6 +40,8 @@
 	var/filling_color
 	/// If the grown food has an alternaitve icon state to use in places.
 	var/alt_icon
+	/// Should we pixel offset ourselves at init? for mapping
+	var/offset_at_init = TRUE
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
@@ -56,8 +58,9 @@
 		stack_trace("Grown object created without a seed. WTF")
 		return INITIALIZE_HINT_QDEL
 
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
+	if(offset_at_init)
+		pixel_x = base_pixel_x + rand(-5, 5)
+		pixel_y = base_pixel_y + rand(-5, 5)
 
 	make_dryable()
 
@@ -86,7 +89,7 @@
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
-/obj/item/food/grown/MakeLeaveTrash()
+/obj/item/food/grown/make_leave_trash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return

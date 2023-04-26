@@ -310,7 +310,7 @@
 	if(.)
 		return
 
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(attached_accessory)
 		remove_accessory(user)
@@ -362,10 +362,6 @@
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
-
-/datum/armor/clothing_under
-	bio = 10
-	wound = 5
 
 /obj/item/clothing/under/proc/dump_attachment()
 	if(!attached_accessory)

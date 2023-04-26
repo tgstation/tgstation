@@ -56,9 +56,8 @@
 	color = "#FFFF00";
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west{
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"
@@ -107,16 +106,14 @@
 /obj/structure/grille{
 	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 4
+/obj/structure/window/reinforced/spawner/directional/east{
+	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west{
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"

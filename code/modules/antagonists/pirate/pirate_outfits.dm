@@ -11,7 +11,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
-	equipped.faction |= "pirate"
+	equipped.faction |= FACTION_PIRATE
 
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)
@@ -74,6 +74,7 @@
 
 	glasses = null
 	head = null
+	ears = /obj/item/radio/headset/syndicate/alt/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

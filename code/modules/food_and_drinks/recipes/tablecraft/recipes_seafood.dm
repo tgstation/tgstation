@@ -55,7 +55,7 @@
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/cabbage = 1
 	)
-	result = /obj/item/food/fishtaco
+	result = /obj/item/food/taco/fish
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/vegetariansushiroll

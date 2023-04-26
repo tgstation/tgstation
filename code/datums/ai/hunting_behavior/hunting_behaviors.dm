@@ -21,8 +21,8 @@
 	. = ..()
 	hunt_targets = typecacheof(hunt_targets)
 
-/datum/ai_planning_subtree/find_and_hunt_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	if(!DT_PROB(hunt_chance, delta_time))
+/datum/ai_planning_subtree/find_and_hunt_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!SPT_PROB(hunt_chance, seconds_per_tick))
 		return
 	if(controller.blackboard[BB_HUNTING_COOLDOWN] >= world.time)
 		return
@@ -48,7 +48,7 @@
 /// Finds a specific atom type to hunt.
 /datum/ai_behavior/find_hunt_target
 
-/datum/ai_behavior/find_hunt_target/perform(delta_time, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
+/datum/ai_behavior/find_hunt_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
 	. = ..()
 
 	var/mob/living/living_mob = controller.pawn
@@ -75,6 +75,8 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	/// How long do we have to wait after a successful hunt?
 	var/hunt_cooldown = 5 SECONDS
+	/// Do we reset the target after attacking something, so we can check for status changes.
+	var/always_reset_target = FALSE
 
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
@@ -84,7 +86,7 @@
 		return FALSE
 	set_movement_target(controller, hunt_target)
 
-/datum/ai_behavior/hunt_target/perform(delta_time, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+/datum/ai_behavior/hunt_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/mob/living/hunter = controller.pawn
 	var/datum/weakref/hunting_weakref = controller.blackboard[hunting_target_key]
@@ -117,6 +119,8 @@
 	if(succeeded)
 		controller.blackboard[hunting_cooldown_key] = world.time + hunt_cooldown
 	else if(hunting_target_key)
+		controller.blackboard[hunting_target_key] = null
+	if(always_reset_target && hunting_target_key)
 		controller.blackboard[hunting_target_key] = null
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target

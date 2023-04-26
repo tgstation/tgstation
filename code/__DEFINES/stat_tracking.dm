@@ -15,7 +15,7 @@
 #define INIT_COST(costs, counting) \
 	var/list/_costs = costs; \
 	var/list/_counting = counting; \
-	var/usage = TICK_USAGE;
+	var/_usage = TICK_USAGE;
 
 // STATIC cost tracking macro. Uses static lists instead of the normal global ones
 // Good for debug stuff, and for running before globals init
@@ -31,18 +31,22 @@
 		costs = hidden_static_list_for_fun1; \
 		counting = hidden_static_list_for_fun2 ; \
 	} \
-	usage = TICK_USAGE;
+	_usage = TICK_USAGE;
 
 
 #define SET_COST(category) \
 	do { \
-		var/cost = TICK_USAGE; \
-		_costs[category] += TICK_DELTA_TO_MS(cost - usage);\
+		var/_cost = TICK_USAGE; \
+		_costs[category] += TICK_DELTA_TO_MS(_cost - _usage);\
 		_counting[category] += 1; \
 	} while(FALSE); \
-	usage = TICK_USAGE;
+	_usage = TICK_USAGE;
 
 #define SET_COST_LINE(...) SET_COST("[__LINE__]")
+
+/// A quick helper for running the code as a statement and profiling its cost.
+/// For example, `SET_COST_STMT(var/x = do_work())`
+#define SET_COST_STMT(code...) ##code; SET_COST("[__LINE__] - [#code]")
 
 #define EXPORT_STATS_TO_JSON_LATER(filename, costs, counts) EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, stat_tracking_export_to_json_later)
 #define EXPORT_STATS_TO_CSV_LATER(filename, costs, counts) EXPORT_STATS_TO_FILE_LATER(filename, costs, counts, stat_tracking_export_to_csv_later)
@@ -58,4 +62,5 @@
 				##proc(filename, costs, counts); \
 			} \
 		} \
-	} while (FALSE);
+	} while (FALSE); \
+	_usage = TICK_USAGE;

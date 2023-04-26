@@ -129,8 +129,8 @@
 	return ..()
 
 /// Every [recharge_time] seconds, recharge some reagents for the cyborg
-/obj/item/reagent_containers/borghypo/process(delta_time)
-	charge_timer += delta_time
+/obj/item/reagent_containers/borghypo/process(seconds_per_tick)
+	charge_timer += seconds_per_tick
 	if(charge_timer >= recharge_time)
 		regenerate_reagents(default_reagent_types)
 		if(upgraded)
@@ -178,7 +178,7 @@
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	else
-		balloon_alert(user, "[user.zone_selected] is blocked!")
+		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -348,17 +348,18 @@
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		return
+		return .
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.is_refillable())
 		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return
+			return .
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			balloon_alert(user, "[target] is full!")
-			return
+			return .
 
 		// This is the in-between where we're storing the reagent we're going to pour into the container
 		// because we cannot specify a singular reagent to transfer in trans_to
@@ -368,6 +369,7 @@
 
 		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return .
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
