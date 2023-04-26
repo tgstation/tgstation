@@ -59,6 +59,12 @@ GLOBAL_VAR(restart_counter)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
+	// ALL static variables not initialized to null call this proc first in their expression
+	// Early out ASAP if we've already been called
+	var/static/genesis_called
+	if(genesis_called)
+		return
+
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
 	if(!tracy_initialized)
@@ -66,6 +72,8 @@ GLOBAL_VAR(restart_counter)
 		Genesis(tracy_initialized = TRUE)
 		return
 #endif
+
+	genesis_called = TRUE
 
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
@@ -460,29 +468,6 @@ GLOBAL_VAR(restart_counter)
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))
 		. = ..()
-
-
-// Don't even look at this proc. It's used to initialize static variables, that's all you need to know. Don't touch it. I mean it
-/world/proc/_(value)
-	var/static/genesis_called
-	if(!genesis_called)
-		genesis_called = TRUE
-		Genesis()
-	return value
-/**
- * here's an explanation:
- * BYOND loves to tell you about its loving spouse /global
- * But it's actually having a sexy an affair with /static
- * Specifically statics in procs
- * The priority is given to these lines of code is basically bogosorted
- * So this is what we use to call world.Genesis()
- * It's a nameless, no-op function, because it does absolutely nothing except return the value passed to it
- * It's on /world to be invisible to reflection
- * It exists to hold a static var which is uninitialized and call Genesis() if it is
- * Of course, Genesis STILL gets circumvented IF value is the result of another call/new datum
- * Painful right? Good, now you share my suffering
- * Please lock the door on your way out
- */
 
 #undef NO_INIT_PARAMETER
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER

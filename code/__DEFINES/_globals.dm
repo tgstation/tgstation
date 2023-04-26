@@ -62,4 +62,15 @@
 #define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X); GLOBAL_UNMANAGED(X)
 
 /// Used to determine BYOND static init order
-#define STATIC_INIT(expression) world._(##expression)
+#define STATIC_INIT(expression) world.Genesis() ? null : (##expression)
+
+/**
+ * here's an explanation for the above macro:
+ * BYOND loves to tell you about its loving spouse /global
+ * But it's actually having a sexy an affair with /static
+ * Specifically statics in procs
+ * The priority is given to these lines of code is basically bogosorted
+ * So this is what we use to call world.Genesis()
+ * Painful right? Good, now you share my suffering
+ * Please lock the door on your way out <3
+ */
