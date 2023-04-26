@@ -41,23 +41,62 @@
 	var/datum/component/projectile_parry/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
+	/// If this is multitooled, making it make funny noises on the user's rank going up
+	var/multitooled = FALSE
+	/// A static list of lists of all the possible sounds to play when multitooled, in numerical order
+	var/static/list/rankup_sounds = list(
+		list(
+			'sound/items/style/combo_dull1.ogg',
+			'sound/items/style/combo_dull2.ogg',
+			'sound/items/style/combo_dull3.ogg',
+		),
+		list(
+			'sound/items/style/combo_cool1.ogg',
+			'sound/items/style/combo_cool2.ogg',
+			'sound/items/style/combo_cool3.ogg',
+		),
+		list(
+			'sound/items/style/combo_brutal1.ogg',
+			'sound/items/style/combo_brutal2.ogg',
+			'sound/items/style/combo_brutal3.ogg',
+		),
+		list(
+			'sound/items/style/combo_absolute1.ogg',
+			'sound/items/style/combo_absolute2.ogg',
+			'sound/items/style/combo_absolute3.ogg',
+		),
+		list(
+			'sound/items/style/combo_spaced1.ogg',
+			'sound/items/style/combo_spaced2.ogg',
+		),
+	)
 
 
-/datum/component/style/Initialize()
+/datum/component/style/Initialize(multitooled = FALSE)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	var/mob/mob_parent = parent
+
 	meter = new()
 	meter_image = new()
 	meter.vis_contents += meter_image
 	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
 	meter.update_appearance()
 	meter_image.update_appearance()
+
 	update_screen()
+
 	if(mob_parent.hud_used)
 		mob_parent.hud_used.static_inventory += meter
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
+
 	START_PROCESSING(SSdcs, src)
+
+	if(multitooled)
+		src.multitooled = multitooled
+
+	RegisterSignal(src, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_parent_multitool))
 
 /datum/component/style/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
@@ -166,6 +205,10 @@
 		timerid = null
 		if(rank_changed == point_to_rank())
 			go_back = rank > rank_changed ? 100 : 0
+
+			if(multitooled && (rank_changed > rank)) // make funny noises
+				var/mob/mob_parent = parent
+				mob_parent.playsound_local(get_turf(mob_parent), pick(rankup_sounds[rank_changed]), 70, vary = FALSE)
 
 			if((rank < hotswap_rank) && (rank_changed >= hotswap_rank))
 				var/mob/mob_parent = parent
@@ -298,6 +341,10 @@
 	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
 	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
 
+
+/datum/component/style/proc/on_parent_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)
+	multitooled = !multitooled
+	user.balloon_alert(user, "meter [multitooled ? "" : "un"]hacked")
 
 
 // Point givers

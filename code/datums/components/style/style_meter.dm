@@ -11,10 +11,22 @@
 	var/datum/component/style/style_meter
 	/// Mutable appearance added to the attached glasses
 	var/mutable_appearance/meter_appearance
+	/// If this is multitooled, which is passed onto the component on-creation, if one doesn't currently exist
+	var/multitooled = FALSE
 
 /obj/item/style_meter/Initialize(mapload)
 	. = ..()
 	meter_appearance = mutable_appearance(icon, icon_state)
+	RegisterSignal(src, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
+
+/obj/item/style_meter/Destroy(force)
+	if(istype(loc, /obj/item/clothing/glasses))
+		clean_up(loc)
+	return ..()
+
+/obj/item/style_meter/examine(mob/user)
+	. = ..()
+	. += span_notice("You feel like a <b>multitool</b> could be used on this.")
 
 /obj/item/style_meter/afterattack(atom/movable/attacked_atom, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -27,6 +39,7 @@
 	RegisterSignal(attacked_atom, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(attacked_atom, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(attacked_atom, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
+	RegisterSignal(attacked_atom, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
 	balloon_alert(user, "style meter attached")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	if(!iscarbon(attacked_atom.loc))
@@ -36,7 +49,7 @@
 	if(carbon_wearer.glasses != attacked_atom)
 		return
 
-	style_meter = carbon_wearer.AddComponent(/datum/component/style)
+	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled)
 
 /obj/item/style_meter/Moved(atom/old_loc, Dir, momentum_change)
 	. = ..()
@@ -44,11 +57,8 @@
 		return
 	clean_up(old_loc)
 
-/obj/item/style_meter/Destroy(force)
-	if(istype(loc, /obj/item/clothing/glasses))
-		clean_up(loc)
-	return ..()
 
+/// Check if the glasses that this meter is linked with are being worn
 /obj/item/style_meter/proc/check_wearing(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -57,8 +67,10 @@
 			QDEL_NULL(style_meter)
 		return
 
-	style_meter = equipper.AddComponent(/datum/component/style)
+	style_meter = equipper.AddComponent(/datum/component/style, multitooled)
 
+
+/// Signal proc for when the meter-holding glasses are dropped/unequipped
 /obj/item/style_meter/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -67,11 +79,16 @@
 
 	QDEL_NULL(style_meter)
 
+
+/// Signal proc for on-examine
 /obj/item/style_meter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	examine_list += span_notice("You feel like a <b>multitool</b> could be used on this.")
 	examine_list += span_notice("<b>Alt-click</b> to remove the style meter.")
 
+
+/// Signal proc to remove from glasses
 /obj/item/style_meter/proc/on_altclick(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -81,11 +98,23 @@
 
 	return COMPONENT_CANCEL_CLICK_ALT
 
+
+/// Signal proc for when the glasses or the meter is multitooled
+/obj/item/style_meter/proc/on_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)
+	multitooled = !multitooled
+	if(style_meter)
+		SEND_SIGNAL(style_meter, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), user, tool, recipes)
+	else
+		balloon_alert(user, "meter [multitooled ? "" : "un"]hacked")
+
+
+/// Unregister signals and just generally clean up ourselves after being removed from glasses
 /obj/item/style_meter/proc/clean_up(atom/movable/old_location)
 	old_location.cut_overlay(meter_appearance)
 	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
 	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
 	UnregisterSignal(old_location, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(old_location, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	if(!style_meter)
 		return
 	QDEL_NULL(style_meter)
