@@ -114,7 +114,6 @@
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
 	projectile_parry = AddComponent(\
-		src,\
 		/datum/component/projectile_parry,\
 		list(\
 			/obj/projectile/colossus,\
@@ -182,7 +181,7 @@
 		return
 
 	var/modified_amount = amount * (amount > 0 ? 1 - 0.1 * rank : 1) * (use_multiplier ? point_multiplier : 1)
-	style_points = clamp(style_points + modified_amount, -1, 499)
+	style_points = max(style_points + modified_amount, -1)
 	update_screen()
 
 	if(style_points > high_score)
