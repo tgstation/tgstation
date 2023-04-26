@@ -45,7 +45,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
-	var/list/target_turfs = list(get_turf(owner)
+	var/list/target_turfs = list(get_turf(owner))
 	var/range = ascended ? 2 : 1
 	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
 	for (var/direction as anything in directions)
