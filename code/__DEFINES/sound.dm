@@ -35,6 +35,7 @@
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
+#define BLOCK_SOUND_VOLUME 70
 
 #define AMBIENCE_GENERIC "generic"
 #define AMBIENCE_HOLY "holy"

@@ -79,6 +79,8 @@
 	var/drop_sound
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
+	///Sound which is produced when blocking an attack
+	var/block_sound
 
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
@@ -173,7 +175,10 @@
 	///How fast does the tool work
 	var/toolspeed = 1
 
+	///Chance of blocking incoming attack
 	var/block_chance = 0
+	///Effect which plays when attack is blocked
+	var/block_effect = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
@@ -636,6 +641,9 @@
 
 	if(prob(final_block_chance))
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
+		owner.balloon_alert(owner, "blocked!")
+		new block_effect(owner)
+		playsound(src, block_sound, BLOCK_SOUND_VOLUME, TRUE)
 		return TRUE
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
@@ -770,6 +778,7 @@
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
+	playsound(src, block_sound, BLOCK_SOUND_VOLUME, TRUE)
 
 /obj/item/singularity_pull(S, current_size)
 	..()

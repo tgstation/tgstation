@@ -403,6 +403,7 @@
 
 /// Deadly bread used by a mime
 /obj/item/food/baguette/combat
+	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	/// Force when wielded as a sword by a mime
 	var/active_force = 20
