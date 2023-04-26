@@ -9,95 +9,94 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
+	faction = list(FACTION_SPIDER)
+	speed = 1
+	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
+	speak_emote = list("hisses")
+	basic_mob_flags = FLAMMABLE_MOB
 
+	unique_name = TRUE
+	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
 
+	// we have _some_ bite
+	melee_damage_lower = 2
+	melee_damage_upper = 4
 
+	health = 5 // very low.
+	maxHealth = 5
+	unsuitable_cold_damage = 4
+	unsuitable_heat_damage = 4
+	death_message = "lets out a final hiss..."
 
+	// VERY red, to fit the eyes
+	lighting_cutoff_red = 22
+	lighting_cutoff_green = 5
+	lighting_cutoff_blue = 5
+	/// The mob we will grow into.
+	var/mob/living/basic/spider/giant_spider/grow_as = null
+	/// The message that the mother left for our big strong selves.
+	var/directive = ""
+	/// Simple boolean that determines if we should apply the spider antag to the player if they possess this mob. TRUE by default since we're always going to evolve into a spider that will have an antagonistic role.
+	var/apply_spider_antag = TRUE
 
+/mob/living/basic/spiderling/Initialize(mapload)
+	. = ..()
+	// random placement since we're pretty small and to make the swarming component actually look like it's doing something when we have a buncha these fuckers
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
 
+	// the proc that handles passtable is nice but we should always be able to pass through table since we're so small so we can eschew adding that here
+	pass_flags |= PASSTABLE
+	ADD_TRAIT(src, TRAIT_PASSTABLE, INNATE_TRAIT)
 
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
+	AddComponent(/datum/component/evolutionary_leap, )
+	AddComponent(/datum/component/swarming)
 
+/mob/living/basic/spiderling/Destroy()
+	GLOB.spidermobs -= src
+	return ..()
 
+/mob/living/basic/spiderling/death(gibbed)
+	// If we're actually player-controlled, don't drop a body.
+	if(mind)
+		return ..()
 
+	. = ..(gibbed = TRUE) // we're going to get rid of the body, so we must invoke parent with gibbed as TRUE.
 
+	if(!gibbed) // alright, after we've done the parent stuff, and we weren't *actually* gibbed (per the arguments of THIS proc), we should spawn our corpse because it's food. yummy
+		var/obj/item/food/spiderling/dead_spider = new(loc)
+		dead_spider.name = name
+
+	qdel(src)
+
+/mob/living/basic/spiderling/Login() // this is only really here for admins dragging and dropping players into spiderlings, player control of spiderlings is otherwise unimplemented
+	. = ..()
+	if(!. || isnull(client))
+		return FALSE
+	GLOB.spidermobs[src] = TRUE
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = -2) // let's pick up the tempo, we are meant to be fast after all
+	if (apply_spider_antag)
+		var/datum/antagonist/spider/spider_antag = new(directive)
+		mind.add_antag_datum(spider_antag)
+
+/mob/living/basic/spiderling/Logout()
+	. = ..()
+	remove_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier)
+
+/mob/living/basic/spiderling/mob_negates_gravity() // in case our sisters want to give us a helping hand
+	if(locate(/obj/structure/spider/stickyweb) in loc)
+		return TRUE
+	return ..()
+
+/mob/living/basic/spiderling/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE) // we're TOO FUCKING SMALL
+	return
 
 
 
 /obj/structure/spider/spiderling
-	name = "spiderling"
-	desc = "It never stays still for long."
-	icon_state = "spiderling"
-	anchored = FALSE
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	max_integrity = 3
 	var/amount_grown = 0
-	var/grow_as = null
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
-	var/travelling_in_vent = 0
-	var/directive = "" //Message from the mother
-	var/list/faction = list(FACTION_SPIDER)
-
-/obj/structure/spider/spiderling/Destroy()
-	new/obj/item/food/spiderling(get_turf(src))
-	. = ..()
-
-/obj/structure/spider/spiderling/Initialize(mapload)
-	. = ..()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
-	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/swarming)
-
-/obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/basic/giant_spider/hunter
-
-/obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/basic/giant_spider/nurse
-
-/obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/basic/giant_spider/midwife
-
-/obj/structure/spider/spiderling/viper
-	grow_as = /mob/living/basic/giant_spider/viper
-
-/obj/structure/spider/spiderling/tarantula
-	grow_as = /mob/living/basic/giant_spider/tarantula
-
-/obj/structure/spider/spiderling/Bump(atom/user)
-	if(istype(user, /obj/structure/table))
-		forceMove(user.loc)
-	else
-		..()
-
-/obj/structure/spider/spiderling/proc/cancel_vent_move()
-	forceMove(entry_vent)
-	entry_vent = null
-
-/obj/structure/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
-	if(QDELETED(exit_vent) || exit_vent.welded)
-		cancel_vent_move()
-		return
-
-	forceMove(exit_vent)
-	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-	addtimer(CALLBACK(src, PROC_REF(do_vent_move), exit_vent, travel_time), travel_time)
-
-/obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
-	if(QDELETED(exit_vent) || exit_vent.welded)
-		cancel_vent_move()
-		return
-
-	if(prob(50))
-		audible_message(span_hear("You hear something scampering through the ventilation ducts."))
-
-	addtimer(CALLBACK(src, PROC_REF(finish_vent_move), exit_vent), travel_time)
-
-/obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
-	if(QDELETED(exit_vent) || exit_vent.welded)
-		cancel_vent_move()
-		return
-	forceMove(exit_vent.loc)
-	entry_vent = null
 
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
