@@ -212,6 +212,17 @@
 /area/ruin/space/has_grav/interdyne
 	name = "\improper Interdyne Research Base"
 
+//Ruin of Crashed Ship
+
+/area/ruin/space/has_grav/crashedship/aft
+	name = "\improper Crashed Aft"
+
+/area/ruin/space/has_grav/crashedship/midship
+	name = "\improper Crashed Midship"
+
+/area/ruin/space/has_grav/crashedship/fore
+	name = "\improper Crashed Fore"
+
 //Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/ancientstation
