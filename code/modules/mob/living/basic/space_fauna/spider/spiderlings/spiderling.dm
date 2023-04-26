@@ -56,11 +56,12 @@
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 10 MINUTES,\
-		growth_path = grow_as,\
+		growth_path = grow_as,\ // it's kinder to pass in a null to this proc since we're also doing optional_grow_behavior so let's just let it cook
 		growth_probability = 25,\
 		lower_growth_value = 1,\
 		upper_growth_value = 2,\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_giant_spider))
 	)
 
 /mob/living/basic/spiderling/Destroy()
@@ -109,6 +110,21 @@
 		return TRUE
 
 	return FALSE
+
+/// Actually grows the spiderling into a giant spider. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
+/mob/living/basic/spiderling/proc/grow_into_giant_spider()
+	var/growth_path = /mob/living/basic/giant_spider
+	if(isnull(grow_as))
+		growth_path = pick(typesof(growth_path))
+	else
+		growth_path = grow_as
+
+	var/mob/living/basic/giant_spider/grown = change_mob_type(growth_path, old_mob.loc)
+	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
+	grown.faction = faction.Copy()
+	grown.directive = directive
+
+	qdel(src)
 
 /obj/structure/spider/spiderling
 	var/amount_grown = 0

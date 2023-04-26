@@ -7,7 +7,7 @@
  */
 
 /datum/component/growth_and_differentiation
-	/// What this mob turns into when fully grown. If this is set to null, we automatically pick a subtype of the parent. This can be dangerous if you don't know you have full control over the subtype tree!
+	/// What this mob turns into when fully grown.
 	var/growth_path
 	/// Failover for how much time we have until we fully grow. If passed as null, we eschew setting up the timer.
 	/// Remember: We can grow earlier than this if the randomness rolls turn out to be in our favor though!
@@ -20,6 +20,8 @@
 	var/upper_growth_value
 	/// Optional callback for checks to see if we're okay to grow.
 	var/datum/callback/optional_checks
+	/// Optional callback in case we wish to override the default grow() behavior. Assume we supersede the change_mob_type() call if we have this set.
+	var/datum/callback/optional_grow_behavior
 
 	/// ID for the failover timer.
 	var/timer_id
@@ -28,7 +30,7 @@
 	/// Are we ready to grow? This is just in case we fail our checks and need to wait until the next tick.
 	var/ready_to_grow = FALSE
 
-/datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks)
+/datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks, optional_grow_behavior)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -38,6 +40,7 @@
 	src.lower_growth_value = lower_growth_value
 	src.upper_growth_value = upper_growth_value
 	src.optional_checks = optional_checks
+	src.optional_grow_behavior = optional_grow_behavior
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -104,15 +107,17 @@
 
 	STOP_PROCESSING(SSmobs, src)
 
-	var/mob/living/new_mob
-	if(isnull(growth_path))
-		new_mob = pick(subtypesof(old_mob.type))
-	else
-		new_mob = growth_path
+	if(!isnull(optional_grow_behavior)) // basically growth_path is OK to be null but only if we have an optional grow behavior.
+		optional_grow_behavior.Invoke()
+		return
+
+	var/mob/living/new_mob = growth_path
+	if(!istype(growth_path))
+		CRASH("Growth and Differentiation Component: Growth path was not a mob type! If you wanted to do something special, please put it in the optional_grow_behavior callback instead!")
 
 	var/new_mob_name = initial(new_mob.name)
 
 	if(!silent)
 		old_mob.visible_message(span_warning("[old_mob] grows into \a [new_mob_name]!"))
 
-	old_mob.change_mob_type(evolve_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
