@@ -15,9 +15,10 @@
 /atom/movable/render_step/Initialize(mapload, atom/source)
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
-	render_source = source.render_target
-	SET_PLANE_EXPLICIT(src, initial(plane), source)
-	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(source_deleting)) 
+	if(source)
+		render_source = source.render_target
+		SET_PLANE_EXPLICIT(src, initial(plane), source)
+		RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(source_deleting)) 
 	
 /atom/movable/render_step/Destroy()
 	. = ..()
