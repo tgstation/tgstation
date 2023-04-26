@@ -1051,12 +1051,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	maptext_height = 480
 	maptext_width = 480
 	///The client that owns the popup.
-	var/client/owner
+	var/datum/mafia_role/mafia/owner
 
-/atom/movable/screen/mafia_popup/Initialize(mapload, datum/mafia_role/mafia)
+/atom/movable/screen/mafia_popup/Initialize(datum/mafia_role/mafia)
 	. = ..()
-	if(mafia)
-		src.owner = mafia.body.client
+	src.owner = mafia
 
 /atom/movable/screen/mafia_popup/Destroy()
 	owner = null
@@ -1064,13 +1063,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
 	maptext = MAPTEXT("<b style='color: [COLOR_RED]; text-align: center; font-size: 32px'> [text]</b>")
-	maptext_width = view_to_pixels(owner?.view_size.getView())[1]
-	owner?.screen += src
-	addtimer(CALLBACK(src, PROC_REF(null_text)), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	maptext_width = view_to_pixels(owner.body.client?.view_size.getView())[1]
+	owner.body.client?.screen += src
+	addtimer(CALLBACK(src, PROC_REF(null_text), owner.body.client), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
-/atom/movable/screen/mafia_popup/proc/null_text()
+///Clears all text to re-use in the future. We use to_clear here in case someone takes over their old body.
+/atom/movable/screen/mafia_popup/proc/null_text(client/to_clear)
 	maptext = null
-	owner?.screen -= src
+	to_clear?.screen -= src
 
 /**
  * Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.
