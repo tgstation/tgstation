@@ -40,6 +40,8 @@
 	var/datum/asset_cache_item/ACI = asset
 	if (!istype(ACI))
 		ACI = new(asset_name, asset, file_hash, dmi_file_path)
+		// MD5 calls are slow
+		CHECK_TICK
 		if (!ACI || !ACI.hash)
 			CRASH("ERROR: Invalid asset: [asset_name]:[asset]:[ACI]")
 	if (SSassets.cache[asset_name])

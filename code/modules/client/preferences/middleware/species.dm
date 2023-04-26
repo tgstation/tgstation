@@ -12,8 +12,6 @@
 	cross_round_cachable = TRUE
 
 /datum/asset/spritesheet/species/create_spritesheets()
-	var/list/to_insert = list()
-
 	for (var/species_id in get_selectable_species())
 		var/datum/species/species_type = GLOB.species_list[species_id]
 
@@ -26,9 +24,8 @@
 		dummy_icon.Scale(64, 64)
 		dummy_icon.Crop(15, 64, 15 + 31, 64 - 31)
 		dummy_icon.Scale(64, 64)
-		to_insert[sanitize_css_class_name(initial(species_type.name))] = dummy_icon
+		var/spritesheet_key = sanitize_css_class_name(initial(species_type.name))
 
 		SSatoms.prepare_deletion(dummy)
 
-	for (var/spritesheet_key in to_insert)
-		Insert(spritesheet_key, to_insert[spritesheet_key])
+		Insert(spritesheet_key, dummy_icon)

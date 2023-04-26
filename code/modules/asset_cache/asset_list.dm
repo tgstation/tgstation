@@ -361,6 +361,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		queuedInsert(sprite_name, I, icon_state, dir, frame, moving)
 	else
 		to_generate += list(args.Copy())
+	CHECK_TICK
 
 // LEMON NOTE
 // A GOON CODER SAYS BAD ICON ERRORS CAN BE THROWN BY THE "ICON CACHE"

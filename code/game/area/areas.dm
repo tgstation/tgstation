@@ -230,6 +230,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	contained_turfs -= turfs_to_uncontain
 	turfs_to_uncontain = list()
 
+/area/space/proc/cannonize_contained_turfs_slow()
+	// space has a gigantic fucking amount of turfs after loading the map
+	// Since we know it's safe to do so right now, chunk up the uncontainment
+	var/total_turfs_to_uncontain = length(turfs_to_uncontain)
+	for(var/multiplier in 0 to INFINITY)
+		var/start = multiplier * 100 + 1
+		var/limit = (total_turfs_to_uncontain + 1) - start
+		var/range = min(100, limit)
+
+		var/list/chunk = turfs_to_uncontain.Copy(start, start + range)
+		contained_turfs -= chunk
+
+		if(range == limit)
+			break
+
+		CHECK_TICK
+
+	turfs_to_uncontain = list()
+
 /// Returns TRUE if we have contained turfs, FALSE otherwise
 /area/proc/has_contained_turfs()
 	return length(contained_turfs) - length(turfs_to_uncontain) > 0

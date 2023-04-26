@@ -5,6 +5,7 @@
 	head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	for (var/name in values)
+		CHECK_TICK
 		var/datum/sprite_accessory/accessory = accessories[name]
 		if (accessory == null || accessory.icon_state == null)
 			continue

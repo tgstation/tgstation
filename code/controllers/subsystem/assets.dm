@@ -27,6 +27,7 @@ SUBSYSTEM_DEF(assets)
 		var/datum/asset/A = type
 		if (type != initial(A._abstract))
 			load_asset_datum(type)
+		CHECK_TICK
 
 	transport.Initialize(cache)
 

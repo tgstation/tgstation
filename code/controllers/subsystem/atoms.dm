@@ -52,6 +52,7 @@ SUBSYSTEM_DEF(atoms)
 			if(QDELETED(A))
 				continue
 			A.LateInitialize()
+			CHECK_TICK
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 

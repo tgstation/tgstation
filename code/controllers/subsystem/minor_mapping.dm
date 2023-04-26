@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/list/blacklisted_area_types = list(/area/station/holodeck)
 
 	while(turfs.len && amount > 0)
+		CHECK_TICK
 		var/turf/turf = pick_n_take(turfs)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
@@ -62,6 +63,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += Z_TURFS(z)
 	for(var/turf/open/floor/plating/T in all_turfs)
+		CHECK_TICK
 		if(T.is_blocked_turf())
 			continue
 		if(locate(/obj/structure/cable) in T)
@@ -76,6 +78,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		for(var/turf/detected_turf as anything in Z_TURFS(z))
 			if(isfloorturf(detected_turf) && detected_turf.underfloor_accessibility == UNDERFLOOR_HIDDEN)
 				suitable += detected_turf
+			CHECK_TICK
 
 	return shuffle(suitable)
 

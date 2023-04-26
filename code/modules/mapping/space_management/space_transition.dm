@@ -138,6 +138,7 @@
 			var/zdestination = neighbor.z_value
 
 			for(var/turf/open/space/S in turfblock)
+				CHECK_TICK
 				S.destination_x = x_target || S.x
 				S.destination_y = y_target || S.y
 				S.destination_z = zdestination

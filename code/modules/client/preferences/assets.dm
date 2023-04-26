@@ -8,6 +8,7 @@
 	var/list/to_insert = list()
 
 	for (var/preference_key in GLOB.preference_entries_by_key)
+		CHECK_TICK
 		var/datum/preference/choiced/preference = GLOB.preference_entries_by_key[preference_key]
 		if (!istype(preference))
 			continue
@@ -32,7 +33,7 @@
 				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
 
 			to_insert[preference.get_spritesheet_key(preference_value)] = list(icon, icon_state)
-	
+
 	for (var/spritesheet_key in to_insert)
 		var/list/inserting = to_insert[spritesheet_key]
 		Insert(spritesheet_key, inserting[1], inserting[2])

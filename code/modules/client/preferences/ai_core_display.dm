@@ -12,6 +12,7 @@
 
 	for (var/screen in GLOB.ai_core_display_screens - "Portrait" - "Random")
 		values[screen] = icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(screen))
+		CHECK_TICK
 
 	return values
 

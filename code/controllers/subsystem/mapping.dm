@@ -159,6 +159,9 @@ SUBSYSTEM_DEF(mapping)
 	initialize_reserved_level(base_transit.z_value)
 	calculate_default_z_level_gravities()
 
+	for(var/area/space/space in GLOB.areas)
+		space.cannonize_contained_turfs_slow()
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/mapping/fire(resumed)

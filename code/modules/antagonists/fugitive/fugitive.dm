@@ -18,8 +18,12 @@
 	//start with prisoner at the front
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
 
+	// fugitives are THIIIICCCC
+	CHECK_TICK
+
 	//then to the left add cultists of yalp elor
 	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/yalp_cultist), ICON_UNDERLAY, -8, 0)
+	CHECK_TICK
 	//to the right add waldo (we just had to, okay?)
 	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/waldo), ICON_UNDERLAY, 8, 0)
 
