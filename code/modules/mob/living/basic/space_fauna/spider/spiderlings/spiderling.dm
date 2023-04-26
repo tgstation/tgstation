@@ -53,10 +53,11 @@
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 
+	 // it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 10 MINUTES,\
-		growth_path = grow_as,\ // it's kinder to pass in a null to this proc since we're also doing optional_grow_behavior so let's just let it cook
+		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\
 		upper_growth_value = 2,\
@@ -120,7 +121,7 @@
 		else
 			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
 
-	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, old_mob.loc)
+	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
 	grown.faction = faction.Copy()
 	grown.directive = directive
@@ -129,44 +130,6 @@
 
 /obj/structure/spider/spiderling
 	var/amount_grown = 0
-
-/obj/structure/spider/spiderling/process()
-	if(travelling_in_vent)
-		if(isturf(loc))
-			travelling_in_vent = 0
-			entry_vent = null
-	else if(entry_vent)
-		if(get_dist(src, entry_vent) <= 1)
-			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmos_machines)
-				vents.Add(temp_vent)
-			if(!vents.len)
-				entry_vent = null
-				return
-			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			if(prob(50))
-				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
-								span_hear("You hear something scampering through the ventilation ducts."))
-
-			addtimer(CALLBACK(src, PROC_REF(vent_move), exit_vent), rand(20,60))
-
-	//=================
-
-	else if(prob(33))
-		var/list/nearby = oview(10, src)
-		if(nearby.len)
-			var/target_atom = pick(nearby)
-			SSmove_manager.move_to(src, target_atom)
-			if(prob(40))
-				src.visible_message(span_notice("\The [src] skitters[pick(" away"," around","")]."))
-	else if(prob(10))
-		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
-			if(!v.welded)
-				entry_vent = v
-				SSmove_manager.move_to(src, entry_vent, 1)
-				break
 
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
