@@ -62,7 +62,7 @@
 		lower_growth_value = 1,\
 		upper_growth_value = 2,\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
-		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_giant_spider))
+		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_giant_spider))\
 	)
 
 /mob/living/basic/spiderling/Destroy()
@@ -127,9 +127,6 @@
 	grown.directive = directive
 
 	qdel(src)
-
-/obj/structure/spider/spiderling
-	var/amount_grown = 0
 
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
