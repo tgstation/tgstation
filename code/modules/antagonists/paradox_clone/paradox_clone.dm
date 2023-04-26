@@ -50,8 +50,10 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	var/mob/living/carbon/human/clone_human = owner.current
 	var/mob/living/carbon/human/original_human = original_mind.current
+	var/mob/living/carbon/human/clone_human = owner.current
+
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 
 	//equip them in the original's clothes
 	if(!isplasmaman(original_human))
