@@ -1055,7 +1055,12 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /atom/movable/screen/mafia_popup/Initialize(mapload, datum/mafia_role/mafia)
 	. = ..()
-	src.owner = mafia.body.client
+	if(mafia)
+		src.owner = mafia.body.client
+
+/atom/movable/screen/mafia_popup/Destroy()
+	owner = null
+	return ..()
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
 	maptext = MAPTEXT("<b style='color: [COLOR_RED]; text-align: center; font-size: 32px'> [text]</b>")
