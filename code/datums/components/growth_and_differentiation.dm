@@ -25,6 +25,8 @@
 	var/timer_id
 	/// Percentage we have grown.
 	var/percent_grown = 0
+	/// Are we ready to grow? This is just in case we fail our checks and need to wait until the next tick.
+	var/ready_to_grow = FALSE
 
 /datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks)
 	if(!isliving(parent))
@@ -77,8 +79,12 @@
 	return null // just for explicitness's sake, if they ever change Component's Initialize to have more return values make sure this is the one for "Success!"
 
 /datum/component/growth_and_differentiation/process(seconds_per_tick) // check the prob we were passed in, and if we're lucky, grow!
+	if(ready_to_grow)
+		INVOKE_ASYNC(src, PROC_REF(grow), FALSE)
+		return
+
 	if(percent_grown >= 100)
-		STOP_PROCESSING(SSmobs, src)
+		ready_to_grow = TRUE
 		INVOKE_ASYNC(src, PROC_REF(grow), FALSE) // lets not waste any more of SSmobs time this tick.
 		return
 
@@ -87,9 +93,16 @@
 
 /// Grows the mob into its new form.
 /datum/component/growth_and_differentiation/proc/grow(silent)
+	if(!isnull(optional_checks) && !optional_checks.Invoke()) // we failed our checks somehow, but we're still ready to grow. Let's wait until next tick to see if our circumstances have changed.
+		ready_to_grow = TRUE
+		return
+
 	var/mob/living/old_mob = parent
 	if (old_mob.stat == DEAD)
+		qdel(src) // assume that we are priced out of growth once dead
 		return
+
+	STOP_PROCESSING(SSmobs, src)
 
 	var/mob/living/new_mob
 	if(isnull(growth_path))

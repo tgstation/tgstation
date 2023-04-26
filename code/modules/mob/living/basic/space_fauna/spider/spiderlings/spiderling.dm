@@ -50,9 +50,18 @@
 	ADD_TRAIT(src, TRAIT_PASSTABLE, INNATE_TRAIT)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
-	AddComponent(/datum/component/evolutionary_leap, )
 	AddComponent(/datum/component/swarming)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
+
+	AddComponent(\
+		/datum/component/growth_and_differentiation,\
+		growth_time = 10 MINUTES,\
+		growth_path = grow_as,\
+		growth_probability = 25,\
+		lower_growth_value = 1,\
+		upper_growth_value = 2,\
+		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+	)
 
 /mob/living/basic/spiderling/Destroy()
 	GLOB.spidermobs -= src
@@ -93,7 +102,13 @@
 /mob/living/basic/spiderling/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE) // we're TOO FUCKING SMALL
 	return
 
+/// Checks to see if we're ready to grow, primarily if we are on solid ground and not in a vent or something.
+/// The component will automagically grow us when we return TRUE and that threshold has been met.
+/mob/living/basic/spiderling/proc/ready_to_grow()
+	if(isturf(loc))
+		return TRUE
 
+	return FALSE
 
 /obj/structure/spider/spiderling
 	var/amount_grown = 0
