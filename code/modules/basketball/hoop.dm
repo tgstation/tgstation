@@ -106,6 +106,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(dunk_animation), baller, dunk_pixel_y, dunk_pixel_x)
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
+	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
@@ -170,6 +171,7 @@
 		AM.forceMove(get_turf(src))
 		// is it a 3 pointer shot
 		var/points = (distance > 2) ? 3 : 2
+		thrower.add_mood_event("basketball", /datum/mood_event/basketball_score)
 		score(AM, thrower, points)
 		visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
 	else
