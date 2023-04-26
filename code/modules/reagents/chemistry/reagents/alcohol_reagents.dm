@@ -877,13 +877,13 @@
 	color = "#bf707c" // rgb: 191,112,124
 	boozepwr = 55
 	quality = DRINK_GOOD
-	taste_description = "liquid murder"
+	taste_description = "tomatoes with a hint of lime and liquid murder"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/bloody_mary
 	required_drink_type = /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
-	desc = "Tomato juice, mixed with Vodka and a li'l bit of lime. Tastes like liquid murder."
+	desc = "Tomato juice, mixed with Vodka and a li bit of lime. Tastes like liquid murder."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "bloodymaryglass"
 
