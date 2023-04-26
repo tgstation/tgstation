@@ -19,7 +19,6 @@
 /// that may be done on the subtype-to-subtype basis. Any time we use an explicit subtype is to test that framework, so if you update that for some reason, you should also update this test.
 /// Like, if you balance aliens to take more ear damage and this test fails, just update the test to reflect that. That's it.
 /datum/unit_test/explosion_action/proc/execute_mob_tests()
-
 	// You may delete this entire section of the test when the entire `simple_animal` framework needs to be scrapped.
 	var/mob/living/simple_animal/test_simple_animal = allocate(/mob/living/simple_animal)
 	test_simple_animal.maxHealth = MAX_LIVING_HEALTH
@@ -65,20 +64,20 @@
 	test_alien.health = MAX_LIVING_HEALTH
 
 	EX_ACT(test_alien, EXPLODE_NONE) // should do nothing.
-	get_alien_damages(test_alien)
+	read_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(alien_brute_loss, 0, "EX_ACT() with EXPLODE_NONE severity should not affect the brute loss of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT_EQUAL(alien_burn_loss, 0, "EX_ACT() with EXPLODE_NONE severity should not affect the burn loss of an alien! Something has gone terribly wrong!")
 	TEST_ASSERT_EQUAL(alien_ear_damage, 0, "EX_ACT() with EXPLODE_NONE severity should not affect the ear damage of an alien! Something has gone terribly wrong!")
 
 	EX_ACT(test_alien, EXPLODE_LIGHT) // should do 30 brute overall and 15 organ damage to the ears.
-	get_alien_damages(test_alien)
+	read_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(alien_brute_loss, 30, "EX_ACT() with EXPLODE_LIGHT severity should have done 30 brute damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_burn_loss, 0, "EX_ACT() with EXPLODE_LIGHT severity should not affect the burn loss of an alien!")
 	TEST_ASSERT_EQUAL(alien_ear_damage, 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 ear damage to an alien!")
 	test_alien.revive(ADMIN_HEAL_ALL)
 
 	EX_ACT(test_alien, EXPLODE_HEAVY) // should do 60 brute, 60 burn, and 30 organ damage to the ears.
-	get_alien_damages(test_alien)
+	read_alien_damages(test_alien)
 	TEST_ASSERT_EQUAL(alien_brute_loss, 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 brute damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_burn_loss, 60, "EX_ACT() with EXPLODE_HEAVY severity should have done 60 burn damage to an alien!")
 	TEST_ASSERT_EQUAL(alien_ear_damage, 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 30 ear damage to an alien!")
@@ -208,7 +207,7 @@
 	return returnable_dog
 
 /// Proc to lessen the amount of copypasta we do for the alien tests, simply sets the rolling vars we have.
-/datum/unit_test/explosion_action/proc/get_alien_damages(mob/living/carbon/alien/subject)
+/datum/unit_test/explosion_action/proc/read_alien_damages(mob/living/carbon/alien/subject)
 	alien_brute_loss = subject.getBruteLoss()
 	alien_burn_loss = subject.getFireLoss()
 	alien_ear_damage = subject.get_organ_loss(ORGAN_SLOT_EARS)
