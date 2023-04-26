@@ -17777,7 +17777,7 @@
 "gws" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
-/obj/item/stamp/hos,
+/obj/item/stamp/head/hos,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "gwy" = (
@@ -42586,7 +42586,7 @@
 /area/station/science/genetics)
 "ptl" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -46711,7 +46711,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/stamp/qm,
+/obj/item/stamp/head/qm,
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
@@ -48072,7 +48072,7 @@
 "rnc" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/captain,
+/obj/item/stamp/head/captain,
 /obj/machinery/door/window{
 	base_state = "right";
 	icon_state = "right";
@@ -49510,7 +49510,7 @@
 "rMk" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/hop,
+/obj/item/stamp/head/hop,
 /obj/machinery/button/ticket_machine{
 	pixel_x = 32
 	},
@@ -50680,7 +50680,7 @@
 "sgu" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/stamp/ce,
+/obj/item/stamp/head/ce,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},

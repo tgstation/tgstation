@@ -10561,7 +10561,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -22406,7 +22406,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table/glass,
 /obj/item/folder/white,
-/obj/item/stamp/cmo,
+/obj/item/stamp/head/cmo,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark,
@@ -44091,7 +44091,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/stamp/hos{
+/obj/item/stamp/head/hos{
 	pixel_x = 10;
 	pixel_y = 6
 	},
@@ -45626,7 +45626,7 @@
 /area/station/maintenance/port/fore)
 "nWk" = (
 /obj/structure/table,
-/obj/item/stamp/qm,
+/obj/item/stamp/head/qm,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "nWo" = (
@@ -69964,7 +69964,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp/hop,
+/obj/item/stamp/head/hop,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "vEE" = (
@@ -72335,7 +72335,7 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow,
 /obj/item/paper/monitorkey,
-/obj/item/stamp/ce,
+/obj/item/stamp/head/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "woF" = (
@@ -78670,7 +78670,7 @@
 "ykW" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/captain,
+/obj/item/stamp/head/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "ykZ" = (
