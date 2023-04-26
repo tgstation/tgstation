@@ -72,7 +72,7 @@
 			did_we_add_at_least_one_thing = TRUE
 
 	if(!isnull(growth_probability))
-		START_PROCESSING(SSmobs, src)
+		START_PROCESSING(SSdcs, src)
 		did_we_add_at_least_one_thing = TRUE
 
 	if(!did_we_add_at_least_one_thing)
@@ -105,7 +105,7 @@
 		qdel(src) // assume that we are priced out of growth once dead
 		return
 
-	STOP_PROCESSING(SSmobs, src)
+	STOP_PROCESSING(SSdcs, src)
 
 	if(!isnull(optional_grow_behavior)) // basically growth_path is OK to be null but only if we have an optional grow behavior.
 		optional_grow_behavior.Invoke()

@@ -33,7 +33,7 @@
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
 	/// The mob we will grow into.
-	var/mob/living/basic/spider/giant_spider/grow_as = null
+	var/mob/living/basic/giant_spider/grow_as = null
 	/// The message that the mother left for our big strong selves.
 	var/directive = ""
 	/// Simple boolean that determines if we should apply the spider antag to the player if they possess this mob. TRUE by default since we're always going to evolve into a spider that will have an antagonistic role.
@@ -113,13 +113,13 @@
 
 /// Actually grows the spiderling into a giant spider. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
 /mob/living/basic/spiderling/proc/grow_into_giant_spider()
-	var/growth_path = /mob/living/basic/giant_spider
 	if(isnull(grow_as))
-		growth_path = pick(typesof(growth_path))
-	else
-		growth_path = grow_as
+		if(prob(3))
+			grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
+		else
+			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
 
-	var/mob/living/basic/giant_spider/grown = change_mob_type(growth_path, old_mob.loc)
+	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, old_mob.loc)
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
 	grown.faction = faction.Copy()
 	grown.directive = directive
@@ -170,10 +170,7 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				if(prob(3))
-					grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
-				else
-					grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+
 			var/mob/living/basic/giant_spider/S = new grow_as(src.loc)
 			S.faction = faction.Copy()
 			S.directive = directive
