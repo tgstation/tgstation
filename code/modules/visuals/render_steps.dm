@@ -12,10 +12,15 @@
 	//we'll display using that, so we gotta reset
 	appearance_flags = KEEP_APART|KEEP_TOGETHER|RESET_TRANSFORM
 
-/atom/movable/render_step/Initialize(mapload, source)
+/atom/movable/render_step/Initialize(mapload, atom/source)
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
-	render_source = source
+	render_source = source.render_target
+	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(source_deleting)) 
+	
+/atom/movable/render_step/Destroy()
+	. = ..()
+	UnregisterSignal(locate(render_source), COMSIG_PARENT_QDELETING) 
 
 /atom/movable/render_step/ex_act(severity)
 	return FALSE
@@ -34,6 +39,12 @@
 	if(harderforce)
 		return ..()
 
+/atom/movable/render_step/proc/source_deleting(atom/source)
+	SIGNAL_HANDLER
+
+	if(!QDELING(src))
+		qdel(src)
+
 /**
  * Render step that modfies an atom's color
  * Useful for creating coherent emissive blockers out of things like glass floors by lowering alpha statically using matrixes
@@ -44,7 +55,7 @@
 	//RESET_COLOR is obvious I hope
 	appearance_flags = KEEP_APART|KEEP_TOGETHER|RESET_COLOR|RESET_TRANSFORM
 
-/atom/movable/render_step/color/Initialize(mapload, source, color)
+/atom/movable/render_step/color/Initialize(mapload, atom/source, color)
 	. = ..()
 	src.color = color
 
@@ -61,11 +72,10 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS|RESET_TRANSFORM
 
-/atom/movable/render_step/emissive_blocker/Initialize(mapload, source)
+/atom/movable/render_step/emissive_blocker/Initialize(mapload, atom/source)
 	. = ..()
 	src.color = GLOB.em_block_color
-	var/atom/movable/source_atom = locate(source)
-	SET_PLANE_EXPLICIT(src, plane, source_atom)
+	SET_PLANE_EXPLICIT(src, initial(plane), source)
 
 /**
  * Render step that makes the passed in render source GLOW

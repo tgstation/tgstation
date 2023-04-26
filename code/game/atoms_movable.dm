@@ -128,7 +128,7 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(null, render_target)
+			em_block = new(null, src)
 			overlays += em_block
 			if(managed_overlays)
 				if(islist(managed_overlays))
@@ -232,10 +232,10 @@
 	if (blocks_emissive)
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			if(em_block)
-				SET_PLANE(em_block, PLANE_TO_TRUE(em_block.plane), src)
+				SET_PLANE(em_block, EMISSIVE_PLANE, src)
 			else if(!QDELETED(src))
 				render_target = ref(src)
-				em_block = new(null, render_target)
+				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
 	// EMISSIVE_BLOCK_GENERIC == 0
@@ -251,7 +251,7 @@
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
 	if(!generate_for.render_target)
 		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for.render_target)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)
