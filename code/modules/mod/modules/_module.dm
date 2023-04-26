@@ -263,7 +263,6 @@
 		return
 
 	if(source == device)
-		contents -= device
 		device = null
 		qdel(src)
 
