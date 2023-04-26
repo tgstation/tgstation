@@ -28,7 +28,7 @@ handles linking back and forth.
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(OnAttackBy))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z_level))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(check_z_level))
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
@@ -85,6 +85,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
 	if (!old_silo || silo != old_silo)
 		return
+	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
 	if (allow_standalone)
@@ -125,13 +126,14 @@ handles linking back and forth.
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
-/datum/component/remote_materials/proc/check_z_level(datum/source, turf/old_turf, turf/new_turf)
+/datum/component/remote_materials/proc/check_z_level(datum/source)
 	SIGNAL_HANDLER
 	if(!silo)
 		return
 
+	var/turf/current_turf = get_turf(parent)
 	var/turf/silo_turf = get_turf(silo)
-	if(!is_valid_z_level(silo_turf, new_turf))
+	if(!is_valid_z_level(silo_turf, current_turf))
 		disconnect_from(silo)
 
 /datum/component/remote_materials/proc/on_hold()
