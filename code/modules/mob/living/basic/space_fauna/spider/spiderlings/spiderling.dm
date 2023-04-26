@@ -28,10 +28,13 @@
 	unsuitable_heat_damage = 4
 	death_message = "lets out a final hiss..."
 
+	ai_controller = /datum/ai_controller/basic_controller/spiderling
+
 	// VERY red, to fit the eyes
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
+
 	/// The mob we will grow into.
 	var/mob/living/basic/giant_spider/grow_as = null
 	/// The message that the mother left for our big strong selves.
@@ -64,6 +67,11 @@
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_giant_spider))\
 	)
+
+	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
+	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
+	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(3,5) SECONDS)
+	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(7,9) SECONDS)
 
 /mob/living/basic/spiderling/Destroy()
 	GLOB.spidermobs -= src
@@ -131,8 +139,10 @@
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
 	blackboard = list(
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_BASIC_MOB_FLEEING = TRUE,
+		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
+		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 20 SECONDS, // worst case scenario assuming we get 9 seconds for the first path, then 4.5 for every additional path, this is at least 2 complete paths. more than plenty.
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

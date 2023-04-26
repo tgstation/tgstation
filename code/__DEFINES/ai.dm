@@ -243,6 +243,8 @@
 #define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
 /// Do we plan on going inside a vent? Boolean.
 #define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+/// How long should we wait before we try and enter a vent again?
+#define BB_VENTCRAWL_COOLDOWN "BB_ventcrawl_cooldown"
 /// The least amount of time (in seconds) we take to go through the vents.
 #define BB_LOWER_VENT_TIME_LIMIT "BB_lower_vent_time_limit"
 /// The most amount of time (in seconds) we take to go through the vents.
