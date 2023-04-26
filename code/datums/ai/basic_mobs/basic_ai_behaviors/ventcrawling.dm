@@ -53,7 +53,7 @@
 /// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
 /datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
 	var/obj/machinery/atmospherics/components/unary/vent_pump/returnable_vent
-	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_we_entered_through = controller.blackboard[target_key]
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_we_entered_through = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 
 	var/datum/pipeline/entry_vent_parent = vent_we_entered_through.parents[1]
 	var/list/potential_exits = list()
@@ -81,12 +81,13 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
 
 	var/mob/living/living_pawn = controller.pawn
-	if(!is_vent_valid(exit_vent) && !living_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
+	if(!living_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
 		emergency_vent = calculate_exit_vent(controller)
 		if(isnull(emergency_vent))
 			// it's joever. we cooked too hard.
 			suicide_pill(controller, target_key)
+			return
 
 		controller.blackboard[BB_EXIT_VENT_TARGET] = emergency_vent // assign and go again
 		addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), (rand(controller.blackboard[BB_LOWER_VENT_TIME_LIMIT], controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]) / 2)) // we're in danger mode, so scurry out at half the time it would normally take.
