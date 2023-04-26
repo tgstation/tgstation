@@ -1,6 +1,5 @@
 /// Add to a living mob to allow them to "parry" projectiles by clicking on their tile, sending them back at the firer.
 /datum/component/projectile_parry
-	dupe_mode = COMPONENT_DUPE_SOURCES
 	/// typecache of valid projectiles to be able to parry
 	var/list/parryable_projectiles
 

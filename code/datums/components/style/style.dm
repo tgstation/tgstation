@@ -37,8 +37,8 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
-	/// Weakref to the added projectile parry component
-	var/datum/weakref/projectile_parry
+	/// Ref to the added projectile parry component
+	var/datum/component/projectile_parry/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
 
@@ -74,7 +74,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
-	projectile_parry = WEAKREF(parent.AddComponentFrom(\
+	projectile_parry = AddComponent(\
 		src,\
 		/datum/component/projectile_parry,\
 		list(\
@@ -82,8 +82,11 @@
 			/obj/projectile/temp/basilisk,\
 			/obj/projectile/kinetic,\
 			/obj/projectile/bileworm_acid,\
-			/obj/projectile/herald)\
-	))
+			/obj/projectile/herald,\
+			)\
+		)
+
+
 
 /datum/component/style/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK)
@@ -97,7 +100,8 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
-	qdel(projectile_parry?.resolve())
+	if(projectile_parry)
+		QDEL_NULL(projectile_parry)
 
 
 /datum/component/style/Destroy(force, silent)
@@ -300,11 +304,11 @@
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
 
-	if(!proximity || !punching_person.combat_mode || !istype(attacked_atom, /mob/living/simple_animal/hostile))
+	if(!proximity || !punching_person.combat_mode || !isliving(attacked_atom))
 		return
 
-	var/mob/living/simple_animal/hostile/disrespected = attacked_atom
-	if(disrespected.stat || faction_check(punching_person.faction, disrespected.faction))
+	var/mob/living/disrespected = attacked_atom
+	if(disrespected.stat || faction_check(punching_person.faction, disrespected.faction) || !(FACTION_MINING in disrespected.faction))
 		return
 
 	add_action(ACTION_DISRESPECT, 60 * (ismegafauna(disrespected) ? 2 : 1))
@@ -312,15 +316,15 @@
 /datum/component/style/proc/on_attack(mob/living/attacking_person, mob/living/attacked_mob)
 	SIGNAL_HANDLER
 
-	if(attacked_mob.stat)
+	if(!istype(attacked_mob) || attacked_mob.stat)
 		return
 
-	var/mob/living/simple_animal/hostile/attacked_hostile = attacked_mob
+	var/mob/living/attacked = attacked_mob
 	var/mob/mob_parent = parent
-	if(faction_check(attacking_person.faction, attacked_hostile.faction) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked_hostile.has_status_effect(/datum/status_effect/crusher_mark)))
+	if(faction_check(attacking_person.faction, attacked.faction) || !(FACTION_MINING in attacked.faction) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked.has_status_effect(/datum/status_effect/crusher_mark)))
 		return
 
-	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked_hostile) ? 1.5 : 1))
+	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
 
 /datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, give_exp)
 	SIGNAL_HANDLER
@@ -351,7 +355,7 @@
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER
 
-	if(faction_check(creator.faction, hit_living.faction) || (hit_living.stat != CONSCIOUS))
+	if(faction_check(creator.faction, hit_living.faction) || (hit_living.stat != CONSCIOUS) || !(FACTION_MINING in hit_living.faction))
 		return
 
 	add_action(ACTION_TRAPPER, 70)
@@ -411,7 +415,7 @@
 	if(died == parent)
 		change_points(-500, use_multiplier = FALSE)
 		return
-	else if(faction_check(mob_parent.faction, died.faction) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	else if(faction_check(mob_parent.faction, died.faction) || !(FACTION_MINING in died.faction) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
