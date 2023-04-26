@@ -25,6 +25,5 @@
 ///signal called by the stat of the target changing
 /datum/element/death_linked/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
-	var/mob/living/linked_mob_unresolved = linked_mob?.resolve()
-	if(linked_mob_unresolved)
-		linked_mob_unresolved.death(TRUE)
+	var/mob/living/linked_mob_resolved = linked_mob?.resolve()
+	linked_mob_resolved?.death(gibbed = TRUE)

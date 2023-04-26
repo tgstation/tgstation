@@ -45,14 +45,13 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
-	if (ascended)
-		return list(
-			get_turf(owner),
-			get_step(owner, turn(owner.dir, 90)),
-			get_step(get_step(owner, turn(owner.dir, 90)), turn(owner.dir, 90)),
-			get_step(owner, turn(owner.dir, 270)),
-			get_step(get_step(owner, turn(owner.dir, 270)), turn(owner.dir, 270)))
-	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
+	var/list/target_turfs = list(get_turf(owner)
+	var/range = ascended ? 2 : 1
+	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
+	for (var/direction as anything in directions)
+		for (var/i in 1 to range)
+			target_turfs += get_ranged_target_turf(owner, direction, i)
+	return target_turfs
 
 /// To set the star gazer
 /datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/star_gazer/star_gazer_mob)

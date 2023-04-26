@@ -1,7 +1,7 @@
 /**
  * ## death explosion element!
  *
- * Bespoke element that spawns one type of gas when a mob is killed
+ * Bespoke element that generates an explosion when a mob is killed.
  */
 /datum/element/death_explosion
 	element_flags = ELEMENT_BESPOKE
@@ -26,7 +26,7 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
-///signal called by the stat of the target changing
+/// Triggered when target dies, make an explosion.
 /datum/element/death_explosion/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 	explosion(

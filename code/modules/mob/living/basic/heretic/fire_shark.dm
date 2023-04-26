@@ -27,7 +27,7 @@
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "implodes into itself."
-	ai_controller = /datum/ai_controller/basic_controller/fire_shark
+	ai_controller = null
 
 /mob/living/basic/fire_shark/Initialize(mapload)
 	. = ..()
@@ -39,20 +39,3 @@
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/datum/ai_controller/basic_controller/fire_shark
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
-	)
-
-/mob/living/basic/fire_shark/no_ai
-	ai_controller = null

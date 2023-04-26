@@ -1,5 +1,5 @@
 /**
- * Attached to a mob with an AI controller, passes things which have damaged its current target.
+ * Attached to a mob with an AI controller, sets the blackboard current target to the most recent thing to attack this mob.
  * The AI controller is responsible for doing anything with that information.
  */
 /datum/element/ai_target_damagesource
@@ -16,11 +16,11 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_WAS_ATTACKED)
 
-/// Add an attacking atom to a blackboard list of things which attacked us
+/// Add the most recent target that attacked us to our current target blackboard.
 /datum/element/ai_target_damagesource/proc/on_attacked(mob/victim, atom/attacker)
 	SIGNAL_HANDLER
 
 	if (!victim.ai_controller)
 		return
 	victim.ai_controller.CancelActions()
-	victim.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = WEAKREF(attacker)
+	victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)

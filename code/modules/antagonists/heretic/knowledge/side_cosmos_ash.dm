@@ -15,7 +15,7 @@
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
-	mob_to_summon = /mob/living/basic/fire_shark/no_ai
+	mob_to_summon = /mob/living/basic/fire_shark
 	cost = 1
 	route = PATH_SIDE
 
