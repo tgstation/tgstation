@@ -9,10 +9,11 @@
 			continue
 
 		// time to steal your soul
-		if(istype(target, /mob/living/simple_animal/revenant)) // no hiding
+		if(istype(target, /mob/living/simple_animal/revenant))
 			var/mob/living/simple_animal/revenant/peek_a_boo = target
-			peek_a_boo.reveal(2 SECONDS)
-			peek_a_boo.stun(2 SECONDS)
+			peek_a_boo.reveal(2 SECONDS) // no hiding
+			if(!peek_a_boo.unstun_time)
+				peek_a_boo.stun(2 SECONDS)
 		target.visible_message(span_warning("[target] violently flinches!"), \
 			span_revendanger("You feel your essence draining away from having your picture taken!"))
 		target.apply_damage(rand(10, 15))
