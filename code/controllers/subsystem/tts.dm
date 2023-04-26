@@ -6,6 +6,7 @@
 #define EXTRA_TARGETS_INDEX 6
 #define LANGUAGE_INDEX 7
 #define LOCAL_INDEX 8
+#define MESSAGE_RANGE_INDEX 9
 
 SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
@@ -75,7 +76,7 @@ SUBSYSTEM_DEF(tts)
 	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, local)
+/datum/controller/subsystem/tts/proc/play_tts(target, sound, datum/language/language, local, range = 7)
 	if(local)
 		SEND_SOUND(target, sound)
 		return
@@ -85,14 +86,14 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	var/channel = SSsounds.random_available_channel()
-	var/listeners = get_hearers_in_view(SOUND_RANGE, turf_source)
+	var/listeners = get_hearers_in_view(range, turf_source)
 
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		if(!listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
 			continue
 
-		if(get_dist(listening_mob, turf_source) <= SOUND_RANGE && holder.has_language(language, spoken = FALSE))
+		if(get_dist(listening_mob, turf_source) <= range && holder.has_language(language, spoken = FALSE))
 			listening_mob.playsound_local(
 				turf_source,
 				sound,
@@ -147,14 +148,14 @@ SUBSYSTEM_DEF(tts)
 
 		var/identifier = current_message[IDENTIFIER_INDEX]
 		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
-		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_message[LOCAL_INDEX])
+		play_tts(current_message[TARGET_INDEX], new_sound, current_message[LANGUAGE_INDEX], current_message[LOCAL_INDEX], current_message[MESSAGE_RANGE_INDEX])
 		for(var/extra_target in current_message[EXTRA_TARGETS_INDEX])
-			play_tts(extra_target["target"], new_sound, current_message[LANGUAGE_INDEX], extra_target["local"])
+			play_tts(extra_target["target"], new_sound, current_message[LANGUAGE_INDEX], extra_target["local"], extra_target["range"])
 		cached_voices -= identifier
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE)
+/datum/controller/subsystem/tts/proc/queue_tts_message(target, message, datum/language/language, speaker, filter, local = FALSE, message_range = 7)
 	if(!tts_enabled)
 		return
 
@@ -169,11 +170,11 @@ SUBSYSTEM_DEF(tts)
 	var/identifier = sha1(speaker + shell_scrubbed_input + filter)
 	var/cached_voice = cached_voices[identifier]
 	if(islist(cached_voice))
-		cached_voice[EXTRA_TARGETS_INDEX] += list(list(target = target, local = local))
+		cached_voice[EXTRA_TARGETS_INDEX] += list(list("target" = target, "local" = local, "range" = message_range))
 		return
 	else if(fexists("tmp/tts/[identifier].ogg"))
 		var/sound/new_sound = new("tmp/tts/[identifier].ogg")
-		play_tts(target, new_sound, language, local)
+		play_tts(target, new_sound, language, local, message_range)
 		return
 	if(!(speaker in available_speakers))
 		return
@@ -207,6 +208,8 @@ SUBSYSTEM_DEF(tts)
 		language,
 		// LOCAL_INDEX = 8
 		local,
+		// MESSAGE_RANGE_INDEX = 9
+		message_range
 	)
 	cached_voices[identifier] = data
 	waiting_list += list(data)
@@ -220,3 +223,4 @@ SUBSYSTEM_DEF(tts)
 #undef EXTRA_TARGETS_INDEX
 #undef LANGUAGE_INDEX
 #undef LOCAL_INDEX
+#undef MESSAGE_RANGE_INDEX
