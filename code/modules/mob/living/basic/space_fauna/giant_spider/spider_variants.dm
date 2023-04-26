@@ -1,4 +1,29 @@
 /**
+ * ### Spider Ambush
+ * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/ambush
+	name = "ambush spider"
+	desc = "Furry and white, it makes you shudder to look at it. This one has sparkling pink eyes."
+	icon_state = "ambush"
+	icon_living = "ambush"
+	icon_dead = "ambush_dead"
+	maxHealth = 80
+	health = 80
+	melee_damage_lower = 25
+	melee_damage_upper = 30
+	poison_per_bite = 5
+	speed = 5
+	player_speed_modifier = -3.1
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
+
+/mob/living/basic/giant_spider/ambush/Initialize(mapload)
+	var/datum/action/cooldown/web/sneak/sneaky_beaky = new(src)
+	sneaky_beaky.Grant(src)
+	return ..()
+
+/**
  * ### Spider Hunter
  * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
  * This spider is only slightly slower than a human.
