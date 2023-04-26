@@ -778,7 +778,6 @@
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
-	playsound(src, block_sound, BLOCK_SOUND_VOLUME, TRUE)
 
 /obj/item/singularity_pull(S, current_size)
 	..()
