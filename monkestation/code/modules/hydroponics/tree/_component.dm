@@ -34,11 +34,11 @@
 
 /datum/component/botany_tree/Initialize(...)
 	. = ..()
-	RegisterSignal(parent, COMSIG_BOTANY_FINAL_GROWTH, .proc/on_plant_final_growth)
+	RegisterSignal(parent, COMSIG_BOTANY_FINAL_GROWTH, PROC_REF(on_plant_final_growth))
 
 	get_level_requirements()
 
-	INVOKE_ASYNC(src, /datum/component/botany_tree.proc/init_pulse)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/component/botany_tree, init_pulse))
 
 /datum/component/botany_tree/proc/get_level_requirements()
 	var/next_level = current_level + 1
