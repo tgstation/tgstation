@@ -34,7 +34,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "h" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "i" = (

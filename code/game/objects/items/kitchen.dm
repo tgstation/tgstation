@@ -113,6 +113,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
+	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
@@ -159,6 +160,15 @@
 	. = ..()
 	create_reagents(5, INJECTABLE|OPENCONTAINER|DUNKABLE)
 	register_item_context()
+
+/obj/item/kitchen/spoon/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+
+/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents, ...)
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_OVERLAYS)
+	return NONE
 
 /obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(target.is_open_container())
@@ -223,7 +233,6 @@
 		attacked_atom.balloon_alert(user, "spoon partially emptied")
 	else
 		attacked_atom.balloon_alert(user, "it's full!")
-	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
@@ -242,7 +251,6 @@
 		attacked_atom.balloon_alert(user, "grabbed spoonful")
 	else
 		attacked_atom.balloon_alert(user, "spoon is full!")
-	update_appearance(UPDATE_OVERLAYS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic

@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - code_imp: "The ability for objects to be loomed is now a component, with all of the looming behavior moved off of the structure and into said component. The actual behavior for looming cotton (clicking on a loom with cotton) is completely unchanged."

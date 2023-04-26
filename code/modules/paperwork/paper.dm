@@ -325,10 +325,6 @@
 		return
 	. += span_warning("You cannot read it!")
 
-/obj/item/paper/extinguish()
-	..()
-	update_appearance()
-
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
@@ -355,25 +351,28 @@
 		return TRUE
 	return ..()
 
-/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
-	var/ignition_message = I.ignition_effect(src, user)
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
+	//can't be put on fire!
+	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
+		return FALSE
+	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
-		return
-	. = TRUE
+		return FALSE
 	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
 							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
-		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
-			user.dropItemToGround(I)
-		user.adjust_fire_stacks(1)
+		if(user.is_holding(attacking_item)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(attacking_item)
+		user.adjust_fire_stacks(attacking_item)
 		user.ignite_mob()
-		return
+		return TRUE
 
 	if(user.is_holding(src)) //no TK shit here.
 		user.dropItemToGround(src)
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
-	fire_act(I.get_temperature())
+	fire_act(attacking_item.get_temperature())
+	return TRUE
 
 /obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))

@@ -64,6 +64,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	var/broken_hailer = FALSE
 	var/safety = TRUE
 
+/obj/item/clothing/mask/gas/sechailer/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
@@ -75,14 +78,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	has_fov = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
 	inhand_icon_state = "spacepol_mask"
-	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 

@@ -124,7 +124,7 @@
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = active ? rainbow_order[rave_number] : null
 
-/obj/item/mod/module/visor/rave/on_active_process(delta_time)
+/obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1

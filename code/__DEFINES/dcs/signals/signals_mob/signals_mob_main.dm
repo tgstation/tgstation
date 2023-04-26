@@ -56,6 +56,8 @@
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+/// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
+#define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -82,6 +84,8 @@
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
+///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+#define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
@@ -187,6 +191,11 @@
 
 /// from mob/get_status_tab_items(): (list/items)
 #define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"
+
+/// from /mob/living/carbon/human/can_equip(): (mob/living/carbon/human/source_human, obj/item/equip_target, slot)
+#define COMSIG_HUMAN_EQUIPPING_ITEM "mob_equipping_item"
+	/// cancels the equip.
+	#define COMPONENT_BLOCK_EQUIP (1<<0)
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"

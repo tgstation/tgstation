@@ -9,18 +9,13 @@
 	/// If true we terminate planning after trying to use the ability.
 	var/finish_planning = TRUE
 
-/datum/ai_planning_subtree/targeted_mob_ability/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/targeted_mob_ability/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!ability_key)
 		CRASH("You forgot to tell this mob where to find its ability")
 
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/target = weak_target?.resolve()
-	if (QDELETED(target))
-		return
-
-	var/datum/weakref/weak_ability = controller.blackboard[ability_key]
-	var/datum/action/cooldown/using_action = weak_ability?.resolve()
-	if (!using_action || !using_action.IsAvailable())
+	var/mob/living/target = controller.blackboard[target_key]
+	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
+	if (QDELETED(target) || QDELETED(using_action) || !using_action.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)

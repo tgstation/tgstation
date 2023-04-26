@@ -539,6 +539,11 @@
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
+// CRASHED PRISON SHUTTLE
+/area/ruin/space/prison_shuttle
+	name = "\improper Crashed Prisoner Shuttle"
+
+
 //ABANDONED BOX WHITESHIP
 
 /area/ruin/space/has_grav/whiteship/box
@@ -589,6 +594,10 @@
 /area/ruin/space/has_grav/travelers_rest
 	name = "\improper Traveler's Rest"
 
+// The Phonebooth
+/area/ruin/space/has_grav/powered/space_phone_booth
+	name = "\improper Phonebooth"
+
 // Botnanical Haven
 /area/ruin/space/has_grav/powered/botanical_haven
 	name = "\improper Botanical Haven"
@@ -627,6 +636,10 @@
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
+
+// Ruin of The All-American Diner
+/area/ruin/space/has_grav/allamericandiner
+	name = "\improper The All-American Diner"
 
 // Transit Booth
 /area/ruin/space/has_grav/transit_booth

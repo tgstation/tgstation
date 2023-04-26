@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("wall girders (anchored)", /obj/structure/girder, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	null, \
-	new/datum/stack_recipe("tram wall girders (anchored)", /obj/structure/girder/tram, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = FALSE, on_tram = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("tram wall girders (anchored)", /obj/structure/girder/tram, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, on_tram = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console, 10, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
@@ -112,25 +112,25 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 2.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
 	null, \
-	new/datum/stack_recipe("grenade casing", /obj/item/grenade/chem_grenade, category = CAT_CHEMISTRY), \
-	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("grenade casing", /obj/item/grenade/chem_grenade, check_density = FALSE, category = CAT_CHEMISTRY), \
+	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
 	null, \
-	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/airalarm, 2, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/airalarm, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("extinguisher cabinet frame", /obj/item/wallframe/extinguisher_cabinet, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("desk bell", /obj/structure/desk_bell, 2, time = 3 SECONDS, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("desk bell", /obj/structure/desk_bell, 2, time = 3 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 5 SECONDS, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 5 SECONDS, category = CAT_CHEMISTRY), \
-	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS, category = CAT_ROBOT), \
-	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time = 2 SECONDS, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, category = CAT_FURNITURE)
+	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 5 SECONDS, check_density = FALSE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 5 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
+	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS, check_density = FALSE, category = CAT_ROBOT), \
+	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time = 2 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_FURNITURE)
 ))
 
 /obj/item/stack/sheet/iron
@@ -247,9 +247,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ROBOT),
-	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 5 SECONDS, category = CAT_CHEMISTRY),
-	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, one_per_turf=TRUE, category = CAT_ATMOSPHERIC),
+	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 5 SECONDS, one_per_turf = TRUE, check_density = FALSE, category = CAT_ROBOT),
+	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 5 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY),
+	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, one_per_turf=TRUE, check_density = FALSE, category = CAT_ATMOSPHERIC),
 	null,
 	new /datum/stack_recipe_list("airlock assemblies", list( \
 		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS),
@@ -294,10 +294,10 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
  * Wood
  */
 GLOBAL_LIST_INIT(wood_recipes, list ( \
-	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20, category = CAT_TILES), \
-	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 1 SECONDS, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 3 SECONDS, category = CAT_TOOLS), \
+	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 3 SECONDS, check_density = FALSE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
@@ -309,26 +309,26 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden barrel", /obj/structure/fermenting_barrel, 8, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 1 SECONDS, category = CAT_ENTERTAINMENT),\
-	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 1 SECONDS, category = CAT_ENTERTAINMENT),\
+	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 1 SECONDS, check_density = FALSE, category = CAT_ENTERTAINMENT),\
+	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 1 SECONDS, check_density = FALSE, category = CAT_ENTERTAINMENT),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, category = CAT_TOOLS),\
+	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, check_density = FALSE, category = CAT_TOOLS),\
 	new/datum/stack_recipe("mannequin", /obj/structure/mannequin/wood, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("smoking pipe", /obj/item/clothing/mask/cigarette/pipe, 2, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 1 SECONDS, category = CAT_TOOLS),\
-	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, category = CAT_CONTAINERS),\
-	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, category = CAT_TOOLS),\
+	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("smoking pipe", /obj/item/clothing/mask/cigarette/pipe, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_TOOLS),\
+	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, check_density = FALSE, category = CAT_CONTAINERS),\
+	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_TOOLS),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
-	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, category = CAT_WEAPON_MELEE),\
+	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
-	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3, category = CAT_CHEMISTRY), \
-	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 10 SECONDS, category = CAT_TOOLS), \
+	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3, check_density = FALSE, category = CAT_CHEMISTRY), \
+	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 10 SECONDS, check_density = FALSE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, one_per_turf = FALSE, on_solid_ground = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, one_per_turf = FALSE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_FURNITURE), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
 		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),
@@ -371,13 +371,13 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("bamboo spear", /obj/item/spear/bamboospear, 25, time = 9 SECONDS, category = CAT_WEAPON_MELEE), \
-	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 7 SECONDS, category = CAT_WEAPON_RANGED), \
-	new/datum/stack_recipe("crude syringe", /obj/item/reagent_containers/syringe/crude, 5, time = 1 SECONDS, category = CAT_CHEMISTRY), \
-	new/datum/stack_recipe("rice hat", /obj/item/clothing/head/costume/rice_hat, 10, time = 7 SECONDS, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bamboo spear", /obj/item/spear/bamboospear, 25, time = 9 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE), \
+	new/datum/stack_recipe("blow gun", /obj/item/gun/syringe/blowgun, 10, time = 7 SECONDS, check_density = FALSE, category = CAT_WEAPON_RANGED), \
+	new/datum/stack_recipe("crude syringe", /obj/item/reagent_containers/syringe/crude, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
+	new/datum/stack_recipe("rice hat", /obj/item/clothing/head/costume/rice_hat, 10, time = 7 SECONDS, check_density = FALSE, category = CAT_CLOTHING), \
 	null, \
 	new/datum/stack_recipe("bamboo stool", /obj/structure/chair/stool/bamboo, 2, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("bamboo mat piece", /obj/item/stack/tile/bamboo, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("bamboo mat piece", /obj/item/stack/tile/bamboo, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	null, \
 	new/datum/stack_recipe_list("bamboo benches", list(
 		new /datum/stack_recipe("bamboo bench (middle)", /obj/structure/chair/sofa/bamboo, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),
@@ -417,39 +417,39 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
  * Cloth
  */
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
-	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/color/jumpskirt/white, 3, category = CAT_CLOTHING), /*Ladies first*/ \
-	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white bandana", /obj/item/clothing/mask/bandana/white, 2, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/color/jumpskirt/white, 3, check_density = FALSE, category = CAT_CLOTHING), /*Ladies first*/ \
+	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white bandana", /obj/item/clothing/mask/bandana/white, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	null, \
-	new/datum/stack_recipe("backpack", /obj/item/storage/backpack, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("duffel bag", /obj/item/storage/backpack/duffelbag, 6, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("backpack", /obj/item/storage/backpack, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("duffel bag", /obj/item/storage/backpack/duffelbag, 6, check_density = FALSE, category = CAT_CONTAINERS), \
 	null, \
-	new/datum/stack_recipe("plant bag", /obj/item/storage/bag/plants, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("book bag", /obj/item/storage/bag/books, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("mining satchel", /obj/item/storage/bag/ore, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("chemistry bag", /obj/item/storage/bag/chemistry, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("bio bag", /obj/item/storage/bag/bio, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("science bag", /obj/item/storage/bag/xeno, 4, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("construction bag", /obj/item/storage/bag/construction, 4, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("plant bag", /obj/item/storage/bag/plants, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("book bag", /obj/item/storage/bag/books, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("mining satchel", /obj/item/storage/bag/ore, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("chemistry bag", /obj/item/storage/bag/chemistry, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("bio bag", /obj/item/storage/bag/bio, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("science bag", /obj/item/storage/bag/xeno, 4, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("construction bag", /obj/item/storage/bag/construction, 4, check_density = FALSE, category = CAT_CONTAINERS), \
 	null, \
-	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6, category = CAT_TOOLS), \
-	new/datum/stack_recipe("rag", /obj/item/reagent_containers/cup/rag, 1, category = CAT_CHEMISTRY), \
-	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("double bedsheet", /obj/item/bedsheet/double, 6, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6, check_density = FALSE, category = CAT_TOOLS), \
+	new/datum/stack_recipe("rag", /obj/item/reagent_containers/cup/rag, 1, check_density = FALSE, category = CAT_CHEMISTRY), \
+	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("double bedsheet", /obj/item/bedsheet/double, 6, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4, check_density = FALSE, category = CAT_CONTAINERS), \
 	null, \
-	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 3, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white softcap", /obj/item/clothing/head/soft/mime, 2, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white softcap", /obj/item/clothing/head/soft/mime, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	null, \
-	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	null, \
-	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, check_density = FALSE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("pillow", /obj/item/pillow, 3, category = CAT_FURNITURE), \
 	))
 
@@ -478,10 +478,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	amount = 5
 
 GLOBAL_LIST_INIT(durathread_recipes, list ( \
-	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/misc/durathread, 4, time = 4 SECONDS, category = CAT_CLOTHING),
-	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 4 SECONDS, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 4 SECONDS, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 2.5 SECONDS, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/misc/durathread, 4, time = 4 SECONDS, check_density = FALSE, category = CAT_CLOTHING),
+	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 4 SECONDS, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 4 SECONDS, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 2.5 SECONDS, check_density = FALSE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/durathread
@@ -510,13 +510,13 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	var/pull_effort = 1 SECONDS
-	var/loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list(/datum/reagent/cellulose = 20)
+	var/loom_result = /obj/item/stack/sheet/cloth
+	var/loom_time = 1 SECONDS
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/loomable, resulting_item = loom_result, loom_time = pull_effort)
+	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -524,8 +524,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
-	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
+	loom_result = /obj/item/stack/sheet/durathread
 
 /obj/item/stack/sheet/cotton/wool
 	name = "raw wool bundle"
@@ -533,67 +533,67 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw wool ball"
 	icon_state = "sheet-wool"
 	merge_type = /obj/item/stack/sheet/cotton/wool
-	loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list()
+	loom_result = /obj/item/stack/sheet/cloth
 
 /*
  * Cardboard
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
-	new/datum/stack_recipe("box", /obj/item/storage/box, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/costume/cardborg, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("box", /obj/item/storage/box, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/costume/cardborg, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	null, \
 
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("folder", /obj/item/folder, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("folder", /obj/item/folder, check_density = FALSE, category = CAT_CONTAINERS), \
 	null, \
 	//TO-DO: Find a proper way to just change the illustration on the box. Code isn't the issue, input is.
 	new/datum/stack_recipe_list("fancy boxes", list(
-		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes, category = CAT_CONTAINERS),
-		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes, check_density = FALSE, category = CAT_CONTAINERS),
+		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box, check_density = FALSE, category = CAT_CONTAINERS), \
 		null, \
 
-		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas, check_density = FALSE, category = CAT_CONTAINERS), \
 		null, \
 
-		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank, check_density = FALSE, category = CAT_CONTAINERS), \
 		null, \
 
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival/crafted, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer/crafted, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, category = CAT_CONTAINERS)
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival/crafted, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer/crafted, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, check_density = FALSE, category = CAT_CONTAINERS)
 		)),
 
 	null, \
@@ -645,14 +645,14 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	null,
-	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, window_checks = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
 	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20, category = CAT_TILES), \
-	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/costume/bronze, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/costume/bronze, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze, check_density = FALSE, category = CAT_CLOTHING), \
 	null,
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 ))
@@ -737,16 +737,16 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, category = CAT_TILES), \
-	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2, category = CAT_FURNITURE), \
+	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2, check_density = FALSE, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_solid_ground = TRUE, time = 4 SECONDS, category = CAT_FURNITURE), \
-	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, category = CAT_CONTAINERS), \
-	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, category = CAT_CONTAINERS), \
-	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, category = CAT_CONTAINERS), \
-	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, one_per_turf = TRUE, category = CAT_ENTERTAINMENT), \
-	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, category = CAT_EQUIPMENT), \
-	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, category = CAT_EQUIPMENT), \
-	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, category = CAT_FURNITURE)))
+	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/empty, check_density = FALSE, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/cup/glass/waterbottle/large/empty, 3, check_density = FALSE, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/cup/glass/colocup, 1, check_density = FALSE, category = CAT_CONTAINERS), \
+	new /datum/stack_recipe("mannequin", /obj/structure/mannequin/plastic, 25, time = 5 SECONDS, one_per_turf = TRUE, check_density = FALSE, category = CAT_ENTERTAINMENT), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1, check_density = FALSE, category = CAT_FURNITURE)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
@@ -770,7 +770,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	. += GLOB.plastic_recipes
 
 GLOBAL_LIST_INIT(paperframe_recipes, list(
-new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_solid_ground = TRUE, time = 1 SECONDS), \
+new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = TRUE, on_solid_ground = TRUE, is_fulltile = TRUE, time = 1 SECONDS), \
 new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperframe, 3, one_per_turf = TRUE, on_solid_ground = TRUE, time = 1 SECONDS )))
 
 /obj/item/stack/sheet/paperframes

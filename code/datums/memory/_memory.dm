@@ -257,7 +257,7 @@
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 		/mob/living/simple_animal/hostile/morph,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/retaliate/bat,
+		/mob/living/basic/bat,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/cat,

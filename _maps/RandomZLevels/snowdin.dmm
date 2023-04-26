@@ -276,11 +276,11 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "bc" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/research)
 "bd" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/item/flashlight/lamp,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/research)
@@ -2541,7 +2541,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "hQ" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
@@ -2569,7 +2569,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "hU" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "hV" = (
@@ -5882,11 +5882,11 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/cavern2)
 "rh" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "ri" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
@@ -6185,12 +6185,12 @@
 /area/awaymission/snowdin/cave/cavern)
 "sn" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "so" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "sp" = (
@@ -6270,7 +6270,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "sG" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
 "sI" = (
@@ -6398,9 +6398,7 @@
 "ti" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern2)
 "tk" = (
@@ -6773,9 +6771,7 @@
 "vD" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern1)
 "vE" = (
@@ -7553,7 +7549,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "zl" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/lava/plasma,
 /area/awaymission/snowdin/cave/cavern)
@@ -8234,9 +8230,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "BU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
@@ -8392,9 +8386,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
@@ -8607,9 +8599,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "DX" = (
@@ -10913,9 +10903,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "OA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -10948,9 +10936,7 @@
 /area/awaymission/snowdin/post/mining_main/robotics)
 "OR" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
@@ -11225,7 +11211,7 @@
 /area/awaymission/snowdin/cave)
 "Qp" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -11741,9 +11727,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "SV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/circular_saw,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -12164,9 +12148,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "VB" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)

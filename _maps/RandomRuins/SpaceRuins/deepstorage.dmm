@@ -96,9 +96,7 @@
 /obj/machinery/conveyor_switch{
 	id = "bunkerrecycle"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aw" = (
@@ -133,11 +131,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aE" = (
-/obj/machinery/power/apc/away{
-	name = "Recycling APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aG" = (
@@ -638,11 +635,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
-/obj/machinery/power/apc/away{
-	name = "Kitchen APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
@@ -782,10 +778,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cg" = (
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Hydroponics APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "ch" = (
@@ -1046,7 +1042,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cM" = (
 /obj/machinery/shower/directional/east,
-/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cN" = (
@@ -1065,11 +1061,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cQ" = (
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Storage APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cS" = (
@@ -1435,13 +1431,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/power/apc/away{
-	name = "Main Area APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dW" = (
@@ -1491,10 +1486,10 @@
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Armory APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ei" = (
@@ -1720,13 +1715,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden{
 	dir = 10
 	},
-/obj/machinery/power/apc/away{
-	dir = 1;
-	name = "Airlock Control APC";
-	pixel_y = 25
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eO" = (
@@ -1976,13 +1969,11 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/power/apc/away{
-	dir = 8;
-	name = "Power and Atmospherics APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fy" = (
@@ -2027,11 +2018,11 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/highcap/five_k/directional/east{
-	name = "Dormitory APC"
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fF" = (
@@ -2536,12 +2527,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "he" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "hf" = (
@@ -2757,7 +2744,9 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Az" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/ten_k/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/away_general_access,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "AI" = (
