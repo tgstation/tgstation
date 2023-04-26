@@ -184,7 +184,6 @@
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33 //So the big ol' 96x96 sprite shows up right
 	pixel_z = -32
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
@@ -193,9 +192,11 @@
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
 	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
+	bottom.pixel_x = -32
 	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
 	add_overlay(bottom)
 	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
+	middle.pixel_x = -32
 	// Shift physical position up a bit
 	middle.pixel_y = 32
 	middle.pixel_z = -32
@@ -203,6 +204,7 @@
 	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
 	add_overlay(middle)
 	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
+	top.pixel_x = -32
 	// Shift physical position up a bit
 	top.pixel_y = 64
 	top.pixel_z = -64
