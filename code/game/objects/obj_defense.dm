@@ -9,7 +9,7 @@
 
 	. = ..() //contents explosion
 	if(QDELETED(src))
-		return FALSE
+		return TRUE
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
 		return TRUE
