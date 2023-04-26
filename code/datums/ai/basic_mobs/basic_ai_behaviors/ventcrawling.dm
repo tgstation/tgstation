@@ -30,9 +30,8 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	cached_pawn.handle_ventcrawl(entry_vent)
+	cached_pawn.handle_ventcrawl(entry_vent) // FYI we sleep in here due to a `do_after` call, hence the next check of validation
 	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
-		stack_trace("AI with Crawl Around Vents behavior failed to get in the vents! Odd.")
 		finish_action(controller, FALSE, target_key)
 		return
 
