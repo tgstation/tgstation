@@ -169,6 +169,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
 
+/datum/reagent/proc/evaporate(turf/exposed_turf, reac_volume)
+	return
+
 ///Called whenever a reagent is on fire, or is in a holder that is on fire. (WIP)
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return

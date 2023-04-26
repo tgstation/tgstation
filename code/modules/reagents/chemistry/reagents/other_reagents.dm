@@ -2823,6 +2823,7 @@
 	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	ph = 4.6 // Ants contain Formic Acid
+	evaporation_rate = 10
 	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
 	var/ant_damage = 0
 	/// Tells the debuff how many ants we are being covered with.
@@ -2880,14 +2881,12 @@
 		return
 	expose_turf(my_turf, reac_volume)
 
-/datum/reagent/ants/expose_turf(turf/exposed_turf, reac_volume)
+/datum/reagent/ants/evaporate(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(!istype(exposed_turf) || isspaceturf(exposed_turf)) // Is the turf valid
 		return
-	if((reac_volume <= 10)) // Makes sure people don't duplicate ants.
-		return
 
-	var/obj/effect/decal/cleanable/ants/pests = locate() in exposed_turf.contents
+	var/obj/effect/decal/cleanable/ants/pests = locate() in range(5, exposed_turf)
 	if(!pests)
 		pests = new(exposed_turf)
 	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
