@@ -987,7 +987,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_cultists = 3
 	scribe_delay = 100
 
-/obj/effect/rune/apocalypse/Initialize()
+/obj/effect/rune/apocalypse/Initialize(mapload, set_keyword)
 	. = ..()
 	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
 	bottom.pixel_x = -32
