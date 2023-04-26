@@ -16,6 +16,7 @@
 	. = ..()
 	verbs.Cut() //Cargo cultttttt
 	render_source = source.render_target
+	SET_PLANE_EXPLICIT(src, initial(plane), source)
 	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(source_deleting)) 
 	
 /atom/movable/render_step/Destroy()
@@ -75,7 +76,6 @@
 /atom/movable/render_step/emissive_blocker/Initialize(mapload, atom/source)
 	. = ..()
 	src.color = GLOB.em_block_color
-	SET_PLANE_EXPLICIT(src, initial(plane), source)
 
 /**
  * Render step that makes the passed in render source GLOW
