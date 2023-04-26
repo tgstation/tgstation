@@ -7832,7 +7832,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen/fourcolor,
-/obj/item/stamp/head/hop{
+/obj/item/stamp/hop{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -30253,7 +30253,7 @@
 	},
 /obj/item/lighter,
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -36571,7 +36571,7 @@
 	pixel_y = 4
 	},
 /obj/item/pen,
-/obj/item/stamp/head/cmo{
+/obj/item/stamp/cmo{
 	pixel_x = 8;
 	pixel_y = 20
 	},
@@ -42471,7 +42471,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 8;
 	pixel_y = 10
 	},
@@ -48126,7 +48126,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp/head/captain{
+/obj/item/stamp/captain{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -65098,7 +65098,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/stamp/head/rd{
+/obj/item/stamp/rd{
 	pixel_x = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -70803,7 +70803,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/hos,
+/obj/item/stamp/hos,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "wYX" = (

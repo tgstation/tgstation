@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes:
-  - bugfix: "Yawning will now have a chance of making people near you yawn as well, and is guaranteed to make them yawn if they examined you in the last 2 seconds. It was supposed to already do that, but now it'll actually do that"
