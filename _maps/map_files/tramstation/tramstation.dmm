@@ -17777,7 +17777,7 @@
 "gws" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
-/obj/item/stamp/head/hos,
+/obj/item/stamp/hos,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "gwy" = (
@@ -20148,13 +20148,8 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "hpz" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/space/openspace,
 /area/space)
@@ -42368,8 +42363,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "ppM" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/science/breakroom)
 "ppS" = (
@@ -42592,7 +42586,7 @@
 /area/station/science/genetics)
 "ptl" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp/head/rd{
+/obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -46717,7 +46711,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
@@ -47177,6 +47171,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"qVi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/station/service/chapel)
 "qVo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -48070,7 +48072,7 @@
 "rnc" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/head/captain,
+/obj/item/stamp/captain,
 /obj/machinery/door/window{
 	base_state = "right";
 	icon_state = "right";
@@ -49508,7 +49510,7 @@
 "rMk" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/head/hop,
+/obj/item/stamp/hop,
 /obj/machinery/button/ticket_machine{
 	pixel_x = 32
 	},
@@ -50678,7 +50680,7 @@
 "sgu" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
@@ -66709,13 +66711,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
 "xXs" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
@@ -152924,7 +152921,7 @@ bdz
 mSw
 ckb
 gyt
-iUs
+qVi
 iUs
 iUs
 iUs

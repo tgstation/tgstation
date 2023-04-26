@@ -10561,7 +10561,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
-/obj/item/stamp/head/rd{
+/obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -20937,9 +20937,6 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/structure/chair/office{
-	dir = 8
-	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "gpK" = (
@@ -22409,7 +22406,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table/glass,
 /obj/item/folder/white,
-/obj/item/stamp/head/cmo,
+/obj/item/stamp/cmo,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark,
@@ -27364,7 +27361,8 @@
 	},
 /obj/machinery/button/flasher{
 	pixel_y = -32;
-	id = "hopflash"
+	id = "hopflash";
+	pixel_x = 8
 	},
 /obj/machinery/button/door/directional/south{
 	pixel_x = -8;
@@ -27373,7 +27371,6 @@
 	name = "Queue Shutters Control"
 	},
 /obj/machinery/button/door/directional/south{
-	pixel_y = -24;
 	pixel_x = 8;
 	name = "Privacy Shutters Control";
 	req_access = list("hop");
@@ -27381,6 +27378,10 @@
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_x = -8;
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -37030,13 +37031,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "lmR" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lnc" = (
@@ -44096,7 +44091,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/stamp/head/hos{
+/obj/item/stamp/hos{
 	pixel_x = 10;
 	pixel_y = 6
 	},
@@ -45631,7 +45626,7 @@
 /area/station/maintenance/port/fore)
 "nWk" = (
 /obj/structure/table,
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "nWo" = (
@@ -58888,13 +58883,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "shl" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -69025,13 +69015,8 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "vpI" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -69979,7 +69964,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp/head/hop,
+/obj/item/stamp/hop,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "vEE" = (
@@ -72350,7 +72335,7 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow,
 /obj/item/paper/monitorkey,
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "woF" = (
@@ -78685,7 +78670,7 @@
 "ykW" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/head/captain,
+/obj/item/stamp/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "ykZ" = (

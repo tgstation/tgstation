@@ -6189,7 +6189,7 @@
 	dir = 8
 	},
 /obj/item/folder/white,
-/obj/item/stamp/head/rd{
+/obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -11254,7 +11254,7 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006

@@ -2448,7 +2448,7 @@
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -4177,13 +4177,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aXU" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "aXV" = (
@@ -20758,7 +20752,6 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "eXw" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -30514,7 +30507,7 @@
 /obj/item/pen/red{
 	pixel_x = 1
 	},
-/obj/item/stamp/head/hos{
+/obj/item/stamp/hos{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -35280,7 +35273,7 @@
 "iBB" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
-/obj/item/stamp/head/rd,
+/obj/item/stamp/rd,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "iBO" = (
@@ -47398,7 +47391,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "lwZ" = (
@@ -49995,7 +49988,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
@@ -55489,6 +55482,8 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nyC" = (
@@ -56105,7 +56100,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/paper_bin,
-/obj/item/stamp/head/cmo,
+/obj/item/stamp/cmo,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -65765,7 +65760,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/blue,
 /obj/item/pen/fourcolor,
-/obj/item/stamp/head/captain,
+/obj/item/stamp/captain,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Captain's Desk";
 	req_access = list("captain")
@@ -82414,7 +82409,7 @@
 "ucZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin/carbon,
-/obj/item/stamp/head/hop,
+/obj/item/stamp/hop,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
 	department = "Head of Personnel's Desk";
@@ -94275,6 +94270,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/food/grilled_cheese_sandwich,
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "wWy" = (
@@ -98617,13 +98613,8 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "xZM" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)

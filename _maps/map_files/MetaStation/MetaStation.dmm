@@ -3524,7 +3524,7 @@
 "bkT" = (
 /obj/structure/chair/office/light,
 /obj/structure/cable,
-/obj/item/stamp/head/cmo,
+/obj/item/stamp/cmo,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "bla" = (
@@ -15143,6 +15143,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/service/janitor,
+/obj/effect/landmark/navigate_destination/janitor,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "fGb" = (
@@ -29037,7 +29038,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -2
 	},
@@ -31463,7 +31464,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/hop{
+/obj/item/stamp/hop{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -35915,7 +35916,7 @@
 "mOa" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/stamp/head/rd,
+/obj/item/stamp/rd,
 /obj/item/toy/figure/rd{
 	pixel_y = 10
 	},
@@ -37014,7 +37015,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/item/folder/blue,
 /obj/item/hand_tele,
-/obj/item/stamp/head/captain,
+/obj/item/stamp/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "niG" = (
@@ -46454,7 +46455,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 8;
 	name = "Jim Norton's Quebecois Coffee";
-	req_one_access_txt = list("service","maint_tunnels")
+	req_one_access = list("service","maint_tunnels")
 	},
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
@@ -48154,12 +48155,7 @@
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "rec" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
-	},
+/obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
 /area/space)
 "ret" = (
@@ -50127,7 +50123,7 @@
 /obj/machinery/button/door{
 	id = "ordnancebridge";
 	pixel_x = -24;
-	req_one_access_txt = list("maint_tunnels","science")
+	req_one_access = list("maint_tunnels","science")
 	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
@@ -50360,7 +50356,7 @@
 /obj/machinery/button/door{
 	id = "ordnancebridge";
 	pixel_y = 24;
-	req_one_access_txt = list("maint_tunnels","science")
+	req_one_access = list("maint_tunnels","science")
 	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
@@ -57290,7 +57286,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/stamp/head/hos,
+/obj/item/stamp/hos,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "uiB" = (
@@ -62677,12 +62673,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "waq" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/docking_port/stationary/escape_pod{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
@@ -67834,7 +67826,7 @@
 "xSA" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/ce,
+/obj/item/stamp/ce,
 /obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,

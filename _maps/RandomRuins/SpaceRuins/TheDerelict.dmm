@@ -5030,10 +5030,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/chapel{
 	dir = 1

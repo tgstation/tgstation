@@ -667,7 +667,7 @@
 	pixel_x = 15;
 	pixel_y = 14
 	},
-/mob/living/simple_animal/hostile/retaliate/frog{
+/mob/living/basic/frog{
 	name = "Peter Jr."
 	},
 /turf/open/floor/plating/icemoon,
