@@ -256,12 +256,12 @@
 	var/product_count = getYield()
 
 	if(product_count >= 10)
-		product_count = 10 + log(1.4) * (getYield() - 1)
+		product_count = 10 + log(1.02) * (getYield() - 1)
 
 	while(t_amount < product_count)
-		if(prob(30))
+		if(prob(10))
 			var/obj/item/seeds/seed_prod
-			if(prob(10) && has_viable_mutations())
+			if(prob(30) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
 			else
 				seed_prod = src.Copy_drop(output_loc)
@@ -273,11 +273,11 @@
 				t_prod = create_valid_mutation(output_loc)
 			else
 				t_prod = new product(output_loc, src)
-			if(parent.myseed.plantname != initial(parent.myseed.plantname))
-				t_prod.name = parent.myseed.plantname
-			t_prod.seed.name = parent.myseed.name
-			t_prod.seed.desc = parent.myseed.desc
-			t_prod.seed.plantname = parent.myseed.plantname
+				if(parent.myseed.plantname != initial(parent.myseed.plantname))
+					t_prod.name = parent.myseed.plantname
+				t_prod.seed.name = parent.myseed.name
+				t_prod.seed.desc = parent.myseed.desc
+				t_prod.seed.plantname = parent.myseed.plantname
 			result.Add(t_prod) // User gets a consumable
 			if(!t_prod)
 				return
