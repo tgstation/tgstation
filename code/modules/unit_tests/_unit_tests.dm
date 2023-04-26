@@ -210,7 +210,6 @@
 #include "spell_shapeshift.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
-#include "static_init_order.dm"
 #include "station_trait_tests.dm"
 #include "stomach.dm"
 #include "strange_reagent.dm"
