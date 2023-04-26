@@ -168,7 +168,7 @@
 	// we're using the abstract type here because we don't need anything stronger for this test.
 	var/obj/test_object = allocate(/obj)
 	// cached integrity value for use throughout the proc.
-	var/cached_max_integrity = test_object.max_integrity // Done like this to be hardy in case of changes to integrity framework (anything is possible) - we want to get the intializate-time value, not compile-time.
+	var/cached_max_integrity = test_object.max_integrity // Done like this to be hardy in case of changes to integrity framework (anything is possible) - we want to get the intialize-time value, not compile-time.
 
 	test_object.update_integrity(cached_max_integrity)
 
