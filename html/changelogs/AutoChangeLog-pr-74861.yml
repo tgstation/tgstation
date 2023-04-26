@@ -1,0 +1,5 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "You can no longer bypass the laws of bluespace with a portable chem mixer."
+  - bugfix: "You can no longer bypass container locks with storage hotkeys."

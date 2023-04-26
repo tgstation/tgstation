@@ -90,6 +90,7 @@
 	if (!atom_storage.locked)
 		update_contents()
 	if (atom_storage.locked)
+		atom_storage.hide_contents(usr)
 		replace_beaker(user)
 	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
@@ -207,7 +208,7 @@
 			var/reagent_name = params["reagent"]
 			var/datum/reagent/reagent = GLOB.name2reagent[reagent_name]
 			var/entry = dispensable_reagents[reagent]
-			if(beaker)
+			if(beaker && beaker.loc == src)
 				var/datum/reagents/R = beaker.reagents
 				var/actual = min(amount, 1000, R.maximum_volume - R.total_volume)
 				// todo: add check if we have enough reagent left
