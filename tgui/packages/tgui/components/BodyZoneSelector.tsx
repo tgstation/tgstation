@@ -57,7 +57,7 @@ type BodyZoneSelectorProps = {
   onClick?: (zone: BodyZone) => void;
   scale?: number;
   selectedZone: BodyZone | null;
-  theme: string;
+  theme?: string;
 };
 
 type BodyZoneSelectorState = {

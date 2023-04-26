@@ -79,7 +79,6 @@ class SurgeryInitiatorInner extends Component<
               <BodyZoneSelector
                 onClick={(zone) => act('change_zone', { new_zone: zone })}
                 selectedZone={selected_zone}
-                theme="midnight"
               />
             </Stack.Item>
 
