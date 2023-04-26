@@ -883,7 +883,7 @@
 /datum/glass_style/drinking_glass/bloody_mary
 	required_drink_type = /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
-	desc = "Tomato juice, mixed with Vodka and a li bit of lime. Tastes like liquid murder."
+	desc = "Tomato juice, mixed with Vodka and a li'l bit of lime. Tastes like liquid murder."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "bloodymaryglass"
 
