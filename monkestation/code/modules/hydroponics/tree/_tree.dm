@@ -30,6 +30,7 @@
 
 /obj/machinery/mother_tree/Initialize(mapload)
 	. = ..()
+	register_context()
 	trunk = new()
 	leaves = new()
 
@@ -69,6 +70,7 @@
 		.+= "[initial(listed_seed.name)]"
 
 /obj/machinery/mother_tree/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
 	context[SCREENTIP_CONTEXT_LMB] = "Pick Fruit"
 	context[SCREENTIP_CONTEXT_RMB] = "Choose Level Up Perk"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Attempt Requirement Reroll"
