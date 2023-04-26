@@ -24,7 +24,7 @@
 	setup_expected_types()
 
 	// We should find something, at the very least.
-	ASSERT(length(GLOB.required_map_items) >= 0, "No required map items were found!")
+	ASSERT(length(GLOB.required_map_items) > 0, "No required map items were found!")
 
 	var/list/required_map_items = GLOB.required_map_items.Copy()
 	for(var/got_type in expected_types)
@@ -63,7 +63,3 @@
 	src.minimum_amount = minimum_amount
 	src.maximum_amount = maximum_amount
 	total_amount += 1
-
-/// Used to check if this item is fulfilled by the unit test.
-/datum/required_item/proc/is_fulfilled()
-	return total_amount >= minimum_amount && total_amount <= maximum_amount
