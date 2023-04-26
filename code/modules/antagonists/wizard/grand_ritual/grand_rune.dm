@@ -16,7 +16,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
 	pixel_x = -28
-	pixel_z = -33
+	pixel_y = -33
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -71,28 +71,7 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
-	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
-	bottom.pixel_x = -32
-	bottom.add_filter("mask", 1, alpha_mask_filter(y = -66, icon = icon(icon, "row_mask")))
-	add_overlay(bottom)
-	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
-	middle.pixel_x = -32
-	// Shift physical position up a bit
-	middle.pixel_y = 33
-	middle.pixel_z = -33
-	// Mask out everything but the middle
-	middle.add_filter("mask", 1, alpha_mask_filter(y = -33, icon = icon(icon, "row_mask")))
-	add_overlay(middle)
-	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
-	top.pixel_x = -32
-	// Shift physical position up a bit
-	top.pixel_y = 66
-	top.pixel_z = -66
-	// Mask out everything but the top
-	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
-	add_overlay(top)
-
-	icon_state = ""
+	overlay_for_96x96_effects()
 
 	announce_rune()
 

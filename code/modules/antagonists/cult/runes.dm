@@ -527,6 +527,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
+	pixel_x = -32
 	pixel_y = -32
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
@@ -539,28 +540,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
-	bottom.pixel_x = -32
-	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
-	add_overlay(bottom)
-	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
-	middle.pixel_x = -32
-	// Shift physical position up a bit
-	middle.pixel_y = 32
-	middle.pixel_z = -32
-	// Mask out everything but the middle
-	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
-	add_overlay(middle)
-	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
-	top.pixel_x = -32
-	// Shift physical position up a bit
-	top.pixel_y = 64
-	top.pixel_z = -64
-	// Mask out everything but the top
-	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
-	add_overlay(top)
-
-	icon_state = ""
+	overlay_for_96x96_effects()
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
@@ -982,6 +962,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
+	pixel_x = -32
 	pixel_y = -32
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
@@ -989,28 +970,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/apocalypse/Initialize(mapload, set_keyword)
 	. = ..()
-	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
-	bottom.pixel_x = -32
-	bottom.add_filter("mask", 1, alpha_mask_filter(y = -64, icon = icon(icon, "row_mask")))
-	add_overlay(bottom)
-	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
-	middle.pixel_x = -32
-	// Shift physical position up a bit
-	middle.pixel_y = 32
-	middle.pixel_z = -32
-	// Mask out everything but the middle
-	middle.add_filter("mask", 1, alpha_mask_filter(y = -32, icon = icon(icon, "row_mask")))
-	add_overlay(middle)
-	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
-	top.pixel_x = -32
-	// Shift physical position up a bit
-	top.pixel_y = 64
-	top.pixel_z = -64
-	// Mask out everything but the top
-	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask")))
-	add_overlay(top)
-
-	icon_state = ""
+	overlay_for_96x96_effects()
 
 /obj/effect/rune/apocalypse/invoke(list/invokers)
 	if(rune_in_use)
