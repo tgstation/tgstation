@@ -110,7 +110,7 @@
 /datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
 	if(istype(living_pawn))
-		living_pawn.death(gibbed = TRUE) // call gibbed as true because we are never coming back it is so fucking joever
+		living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
 	else
 		qdel(living_pawn)
 
