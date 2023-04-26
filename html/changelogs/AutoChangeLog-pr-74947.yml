@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Falling down one of the stage hazard chasms on the medisim shuttle will now properly kill you on Icebox, instead of dropping you into the z-level below."
