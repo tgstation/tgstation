@@ -924,6 +924,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	. = ..()
 
+	// Ensure 1 Poly exists
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
 /mob/living/simple_animal/parrot/poly/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
