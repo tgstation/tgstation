@@ -29,7 +29,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_x = 7;
 	pixel_y = -2
 	},

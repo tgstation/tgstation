@@ -1034,7 +1034,7 @@
 	pixel_x = -9;
 	pixel_y = 3
 	},
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 5
 	},
 /obj/item/toy/figure/rd{
@@ -2956,7 +2956,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
-/obj/item/stamp/hos,
+/obj/item/stamp/head/hos,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "aKC" = (
@@ -45651,7 +45651,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/stamp/hop{
+/obj/item/stamp/head/hop{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -46700,7 +46700,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp/ce{
+/obj/item/stamp/head/ce{
 	pixel_x = -8
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -67625,7 +67625,7 @@
 "rWL" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/stamp/captain,
+/obj/item/stamp/head/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "rWT" = (
@@ -73552,7 +73552,7 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
-/obj/item/stamp/qm{
+/obj/item/stamp/head/qm{
 	pixel_x = -6
 	},
 /obj/structure/cable,
@@ -73658,7 +73658,7 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/item/paper_bin,
-/obj/item/stamp/cmo,
+/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "tJd" = (
