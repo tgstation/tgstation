@@ -37,7 +37,6 @@
 		data_to_list["title"] = title
 	if(description)
 		var/new_desc = replacetext(replacetext(description, "\proper", ""), "\improper", "")
-		new_desc = GLOB.has_discord_embeddable_links.Replace(replacetext(new_desc, "`", ""), " ```$1``` ")
 		data_to_list["description"] = new_desc
 	if(url)
 		data_to_list["url"] = url
