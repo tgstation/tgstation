@@ -30,7 +30,6 @@
 		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
 	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
 	to_chat(body, span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
-	add_note("I vowed to watch my obsession, [obsession.body.real_name], hang!")
 	RegisterSignal(obsession, COMSIG_MAFIA_ON_KILL, PROC_REF(check_victory))
 	UnregisterSignal(game, COMSIG_MAFIA_SUNDOWN)
 

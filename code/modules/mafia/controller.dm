@@ -179,7 +179,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 /datum/mafia_controller/proc/start_game()
 	create_bodies()
-	start_day()
+	start_day(can_vote = FALSE)
+	send_message(span_notice("<b>The selected map is [current_map.name]!</b></br>[current_map.description]"))
+	send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE), (FIRST_DAY_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE) //no voting period = no votes = instant night
 
 /**
  * How every day starts.
@@ -188,28 +191,24 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * If day one, just a small starting period to see who is in the game and check role, leading to the night phase.
  * * Otherwise, it's a longer period used to discuss events that happened during the night, leading to the voting phase.
  */
-/datum/mafia_controller/proc/start_day()
+/datum/mafia_controller/proc/start_day(can_vote = TRUE)
 	turn += 1
 	phase = MAFIA_PHASE_DAY
-	if(!check_victory())
-		if(!time_speedup)//lets check if the game should be sped up, if not already.
-			var/living_players = 0
-			for(var/i in all_roles)
-				var/datum/mafia_role/player = i
-				if(player.game_status == MAFIA_ALIVE)
-					living_players += 1
-			if(living_players < all_roles.len / 2)
-				time_speedup = MAFIA_SPEEDUP_INCREASE
-				send_message("<span class='bold notice'>With only [living_players] living players left, the game timers have been sped up.</span>")
-		if(turn == 1)
-			send_message(span_notice("<b>The selected map is [current_map.name]!</b></br>[current_map.description]"))
-			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
-			next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), FALSE), (FIRST_DAY_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE) //no voting period = no votes = instant night
-		else
-			send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")
-			next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_voting_phase)), (DAY_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
+	if(check_victory())
+		return
 
-	SStgui.update_uis(src)
+	if(!time_speedup)//lets check if the game should be sped up, if not already.
+		var/living_players = 0
+		for(var/datum/mafia_role/player as anything in all_roles)
+			if(player.game_status == MAFIA_ALIVE)
+				living_players += 1
+		if(living_players < all_roles.len / 2)
+			time_speedup = MAFIA_SPEEDUP_INCREASE
+			send_message("<span class='bold notice'>With only [living_players] living players left, the game timers have been sped up.</span>")
+
+	if(can_vote)
+		send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")
+		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_voting_phase)), (DAY_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 
 /**
  * Players have finished the discussion period, and now must put up someone to the chopping block.
@@ -222,7 +221,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	phase = MAFIA_PHASE_VOTING
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), TRUE), (VOTING_PERIOD_LENGTH / time_speedup),TIMER_STOPPABLE) //be verbose!
 	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
-	SStgui.update_uis(src)
 
 /**
  * Players have voted someone up, and now the person must defend themselves while the town votes innocent or guilty.
@@ -245,20 +243,19 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		judgement_abstain_votes = list()
 		judgement_innocent_votes = list()
 		judgement_guilty_votes = list()
-		for(var/datum/mafia_role/abstainee as anything in all_roles)
-			if(abstainee.game_status == MAFIA_ALIVE && (abstainee != loser))
-				judgement_abstain_votes += abstainee
+		for(var/datum/mafia_role/voters as anything in all_roles)
+			if(voters.game_status == MAFIA_ALIVE && (voters != loser))
+				judgement_abstain_votes += voters
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
 		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(lynch)), (JUDGEMENT_PERIOD_LENGTH / time_speedup),TIMER_STOPPABLE)
 		reset_votes("Day")
 	else
-		if(verbose)
-			send_message("<b>Not enough people have voted to put someone on trial, nobody will be lynched today.</b>")
 		if(!check_victory())
 			lockdown()
-	SStgui.update_uis(src)
+			if(verbose)
+				send_message("<b>Not enough people have voted to put someone on trial, nobody will be lynched today.</b>")
 
 /**
  * Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.
@@ -407,8 +404,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	SEND_SIGNAL(src, COMSIG_MAFIA_GAME_END)
 	if(message)
 		send_message(message)
-	for(var/datum/mafia_role/R in all_roles)
-		R.reveal_role(src)
+	for(var/datum/mafia_role/roles as anything in all_roles)
+		roles.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(end_game)), (VICTORY_LAP_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 
@@ -465,7 +462,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	send_message("<b>Night [turn] started! Lockdown will end in 40 seconds.</b>")
 	SEND_SIGNAL(src, COMSIG_MAFIA_SUNDOWN)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(resolve_night)), (NIGHT_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
-	SStgui.update_uis(src)
 
 /**
  * The end of the night, and a series of signals for the order of events on a night.
@@ -485,7 +481,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	SEND_SIGNAL(src, COMSIG_MAFIA_NIGHT_END)
 	toggle_night_curtains(close=FALSE)
 	start_day()
-	SStgui.update_uis(src)
 
 /**
  * Proc that goes off when players vote for something with their mafia panel.
@@ -602,7 +597,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		H.add_traits(list(TRAIT_NOFIRE, TRAIT_NOBREATH, TRAIT_CANNOT_CRYSTALIZE), MAFIA_TRAIT)
 		H.equipOutfit(outfit_to_distribute)
 		H.status_flags |= GODMODE
-		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
+		RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
@@ -613,39 +608,33 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		H.key = role.player_key
 		role.greet()
 
-/datum/mafia_controller/ui_data(mob/user)
-	. = ..()
-	switch(phase)
-		if(MAFIA_PHASE_DAY, MAFIA_PHASE_VOTING, MAFIA_PHASE_JUDGEMENT)
-			.["phase"] = "Day [turn]"
-		if(MAFIA_PHASE_NIGHT)
-			.["phase"] = "Night [turn]"
-		else
-			.["phase"] = "No Game"
+/datum/mafia_controller/ui_static_data(mob/user)
+	var/list/data = list()
 
 	if(user.client?.holder)
-		.["admin_controls"] = TRUE //show admin buttons to start/setup/stop
-	if(phase == MAFIA_PHASE_JUDGEMENT)
-		.["judgement_phase"] = TRUE //show judgement section
-	else
-		.["judgement_phase"] = FALSE
+		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
+	data["all_roles"] = current_setup_text
+
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
-		.["roleinfo"] = list(
+		data["roleinfo"] = list(
 			"role" = user_role.name,
 			"desc" = user_role.desc,
-			"action_log" = user_role.role_notes,
 			"hud_icon" = user_role.hud_icon,
 			"revealed_icon" = user_role.revealed_icon,
 		)
-		var/ability_options = list()
-		for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-			if(action.validate_action_target(src, silent = TRUE))
-				ability_options += list(list("name" = action, "ref" = REF(action)))
-		.["possible_actions"] = ability_options
-		.["role_theme"] = user_role.special_ui_theme
-	else
-		var/list/lobby_data = list()
+
+	return data
+
+/datum/mafia_controller/ui_data(mob/user)
+	var/list/data = list()
+
+	data["phase"] = phase
+	if(turn)
+		data["turn"] = " - Day [turn]"
+
+	if(phase == MAFIA_PHASE_SETUP)
+		data["lobbydata"] = list()
 		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup)
 			var/list/lobby_member = list()
 			lobby_member["name"] = key
@@ -653,26 +642,30 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			lobby_member["spectating"] = "Ghost"
 			if(key in mafia_spectators)
 				lobby_member["spectating"] = "Spectator"
-			lobby_data += list(lobby_member)
-		.["lobbydata"] = lobby_data
-	var/list/player_data = list()
-	for(var/datum/mafia_role/R in all_roles)
+			data["lobbydata"] += list(lobby_member)
+		return data
+
+	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0 //the tgui menu counts this down.
+
+	var/datum/mafia_role/user_role = player_role_lookup[user]
+	data["user_notes"] = user_role.written_notes
+
+	data["players"] = list()
+	for(var/datum/mafia_role/role as anything in all_roles)
 		var/list/player_info = list()
-		var/list/ability_options = list()
+		player_info["name"] = role.body.real_name
+		player_info["ref"] = REF(role)
+		player_info["alive"] = role.game_status == MAFIA_ALIVE
+		player_info["possible_actions"] = list()
+
 		if(user_role) //not observer
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-				if(action.validate_action_target(src, potential_target = R, silent = TRUE))
-					ability_options += list(list("name" = action, "ref" = REF(action)))
-		player_info["name"] = R.body.real_name
-		player_info["ref"] = REF(R)
-		player_info["possible_actions"] = ability_options
-		player_info["alive"] = R.game_status == MAFIA_ALIVE
-		player_data += list(player_info)
-	.["players"] = player_data
-	.["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
+				if(action.validate_action_target(src, potential_target = role, silent = TRUE))
+					player_info["possible_actions"] += list(list("name" = action, "ref" = REF(action)))
 
-	//Not sure on this, should this info be visible
-	.["all_roles"] = current_setup_text
+		data["players"] += list(player_info)
+
+	return data
 
 /datum/mafia_controller/ui_assets(mob/user)
 	return list(
@@ -748,9 +741,9 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			helper.show_help(usr)
 
 	if(!user_role)//just the dead
-		var/client/C = ui.user.client
 		switch(action)
 			if("mf_signup")
+				var/client/C = ui.user.client
 				if(!SSticker.HasRoundStarted())
 					to_chat(usr, span_warning("Wait for the round to start."))
 					return
@@ -767,6 +760,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 					try_autostart()
 				return TRUE
 			if("mf_spectate")
+				var/client/C = ui.user.client
 				if(C.ckey in mafia_spectators)
 					to_chat(usr, span_notice("You will no longer get messages from the game."))
 					mafia_spectators -= C.ckey
@@ -775,6 +769,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 					mafia_spectators += C.ckey
 				return TRUE
 			if("vote_to_start")
+				var/client/C = ui.user.client
 				if(phase != MAFIA_PHASE_SETUP)
 					to_chat(usr, span_notice("You cannot vote to start while a game is underway!"))
 					return
@@ -796,6 +791,22 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	//User actions (just living)
 	switch(action)
+		if("change_notes")
+			if(user_role.game_status == MAFIA_DEAD)
+				return TRUE
+			user_role.written_notes = params["new_notes"]
+			user_role.body.balloon_alert(user_role.body, "notes saved")
+			return TRUE
+		if("send_notes_to_chat")
+			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
+				return TRUE
+			if(phase == MAFIA_PHASE_NIGHT)
+				return TRUE
+			if(!COOLDOWN_FINISHED(user_role, note_chat_sending_cooldown))
+				return FALSE
+			COOLDOWN_START(user_role, note_chat_sending_cooldown, MAFIA_NOTE_SENDING_COOLDOWN)
+			user_role.body.say("[user_role.written_notes]", forced = "mafia notes sending")
+			return TRUE
 		if("perform_action")
 			var/datum/mafia_role/target = locate(params["target"]) in all_roles
 			if(!istype(target))
@@ -842,7 +853,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	ui = SStgui.try_update_ui(user, src, null)
 	if(!ui)
 		ui = new(user, src, "MafiaPanel")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /proc/assoc_value_sum(list/L)
@@ -1021,14 +1031,15 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	desc = "Use this to play."
 	button_icon = 'icons/obj/mafia.dmi'
 	button_icon_state = "board"
-	var/datum/mafia_controller/parent
+	///The mafia controller that the button will use the UI of.
+	var/datum/mafia_controller/controller_panel
 
-/datum/action/innate/mafia_panel/New(Target,mf)
+/datum/action/innate/mafia_panel/New(Target, datum/mafia_controller/controller)
 	. = ..()
-	parent = mf
+	controller_panel = controller
 
 /datum/action/innate/mafia_panel/Activate()
-	parent.ui_interact(owner)
+	controller_panel.ui_interact(owner)
 
 /**
  * Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.
@@ -1036,6 +1047,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /proc/create_mafia_game()
 	if(GLOB.mafia_game)
 		QDEL_NULL(GLOB.mafia_game)
-	var/datum/mafia_controller/MF = new()
-	return MF
+	var/datum/mafia_controller/new_controller = new()
+	return new_controller
 
