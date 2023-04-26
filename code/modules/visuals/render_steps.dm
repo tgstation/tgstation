@@ -22,7 +22,8 @@
 	
 /atom/movable/render_step/Destroy()
 	. = ..()
-	UnregisterSignal(locate(render_source), COMSIG_PARENT_QDELETING) 
+	if(render_source)
+		UnregisterSignal(locate(render_source), COMSIG_PARENT_QDELETING) 
 
 /atom/movable/render_step/ex_act(severity)
 	return FALSE
