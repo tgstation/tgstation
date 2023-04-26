@@ -10,6 +10,8 @@
 
 	///List of all mafia abilities this role is able to perform.
 	var/list/datum/mafia_ability/role_unique_actions = list()
+	///The player's written notes, that they can send to chat at any time.
+	var/written_notes
 
 	var/player_key
 	var/mob/living/carbon/human/body
@@ -32,7 +34,8 @@
 	///set this to something cool for antagonists and their window will look different
 	var/special_ui_theme
 
-	var/list/role_notes = list()
+	///The cooldown between being able to send your will in chat.
+	COOLDOWN_DECLARE(note_chat_sending_cooldown)
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
@@ -91,9 +94,6 @@
 
 /datum/mafia_role/proc/special_reveal_equip(datum/mafia_controller/game)
 	return
-
-/datum/mafia_role/proc/add_note(note)
-	role_notes += note
 
 /datum/mafia_role/proc/check_total_victory(alive_town, alive_mafia) //solo antags can win... solo.
 	return FALSE
