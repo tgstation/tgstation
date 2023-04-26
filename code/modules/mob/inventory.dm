@@ -3,7 +3,6 @@
 
 ///Returns the thing we're currently holding
 /mob/proc/get_active_held_item()
-	RETURN_TYPE(/obj/item)
 	return get_item_for_held_index(active_hand_index)
 
 
