@@ -1053,7 +1053,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	///The client that owns the popup.
 	var/datum/mafia_role/mafia/owner
 
-/atom/movable/screen/mafia_popup/Initialize(datum/mafia_role/mafia)
+/atom/movable/screen/mafia_popup/Initialize(mapload, datum/mafia_role/mafia)
 	. = ..()
 	src.owner = mafia
 
