@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
 		hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range)
-		if(!found_client && (hearing_movable in GLOB.player_list))
+		if(!found_client && length(hearing_movable.client_mobs_in_contents))
 			found_client = TRUE
 
 	var/tts_message_to_use = tts_message
