@@ -7,19 +7,18 @@
 /// since they are weak as shit with only five health. Up to you though, don't take what's written here as gospel.
 /datum/ai_behavior/crawl_through_vents
 	action_cooldown = 10 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 
 /datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
 	action_cooldown = controller.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
 	. = ..()
-	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key]
+	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework
 
 /datum/ai_behavior/crawl_through_vents/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/mob/living/cached_pawn = controller.pawn
-	if(check_vent(entry_vent) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT])
+	if(!is_vent_valid(entry_vent) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT])
 		return
 
 	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
@@ -61,7 +60,7 @@
 	var/list/potential_exits = list()
 
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in entry_vent_parent.other_atmos_machines)
-		if(check_vent(vent))
+		if(is_vent_valid(vent))
 			potential_exits.Add(vent)
 
 	if(length(potential_exits))
@@ -70,7 +69,7 @@
 
 	// if we're here, we're in "what the flarp" mode... okay maybe we can default to the vent we entered in.
 	returnable_vent = vent_we_entered_through
-	if(check_vent(vent_we_entered_through))
+	if(is_vent_valid(vent_we_entered_through))
 		// AH WHAT THE FUCK. okay, maybe we're not inside the vents yet? let's return null and we can pick up on that based on the wider context of the proc that invokes it.
 		return null
 
@@ -83,7 +82,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
 
 	var/mob/living/living_pawn = controller.pawn
-	if(!check_vent(exit_vent) && !living_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
+	if(!is_vent_valid(exit_vent) && !living_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
 		emergency_vent = calculate_exit_vent(controller)
 		if(isnull(emergency_vent))
@@ -102,8 +101,8 @@
 
 	finish_action(controller, TRUE, target_key) // we did it! we went into the vents and out of the vents. poggers.
 
-/// Simple copy-pasta reducer to see if a vent is valid or not.
-/datum/ai_behavior/crawl_through_vents/proc/check_vent(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
+/// Incredibly stripped down version of the overarching `can_enter_vent` proc on `/mob, just meant for rapid rechecking of a vent. Will be TRUE if not blocked, FALSE otherwise.
+/datum/ai_behavior/crawl_through_vents/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
 	return !QDELETED(checkable) && !checkable.welded
 
 /// Aw fuck, we may have been bested somehow. Regardless of what we do, we can't exit through a vent! Let's end our misery and prevent useless endless calculations.
