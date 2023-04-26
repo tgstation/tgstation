@@ -302,10 +302,6 @@
 "bE" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"bF" = (
-/obj/structure/closet/secure_closet/chief_medical,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "bG" = (
 /obj/structure/table,
 /obj/item/uplink/debug{
@@ -940,6 +936,11 @@
 /obj/structure/grille,
 /turf/open/openspace/airless,
 /area/space/nearstation)
+"hP" = (
+/obj/structure/cable,
+/obj/machinery/computer/communications,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "hT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -3311,7 +3312,7 @@ aP
 aP
 bn
 ah
-bF
+bE
 bE
 co
 bE
@@ -3913,7 +3914,7 @@ gY
 bE
 bE
 cS
-Hp
+hP
 dJ
 dB
 dl
@@ -7303,7 +7304,7 @@ TY
 dY
 dY
 dY
-dY
+WN
 dY
 dY
 NZ
