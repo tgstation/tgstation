@@ -243,6 +243,12 @@
 #define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
 /// Do we plan on going inside a vent? Boolean.
 #define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+/// The least amount of time (in seconds) we take to go through the vents.
+#define BB_LOWER_VENT_TIME_LIMIT "BB_lower_vent_time_limit"
+/// The most amount of time (in seconds) we take to go through the vents.
+#define BB_UPPER_VENT_TIME_LIMIT "BB_upper_vent_time_limit"
+/// How much time (in seconds) do we take until we completely go bust on vent pathing?
+#define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
 
 /// Is there something that scared us into being stationary? If so, hold the reference here
 #define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"
