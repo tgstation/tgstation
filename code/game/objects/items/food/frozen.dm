@@ -354,6 +354,7 @@
 	icon_state = "popsicle_stick"
 	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden."
 	custom_materials = list(/datum/material/wood = 20)
+	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 

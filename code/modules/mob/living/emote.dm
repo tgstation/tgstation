@@ -436,9 +436,9 @@
 	message = "smiles weakly."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_BASE 60
+#define YAWN_PROPAGATE_CHANCE_BASE 40
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_DECAY 10
+#define YAWN_PROPAGATE_CHANCE_DECAY 8
 
 /datum/emote/living/yawn
 	key = "yawn"
@@ -446,11 +446,11 @@
 	message = "yawns."
 	message_mime = "acts out an exaggerated silent yawn."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	cooldown = 3 SECONDS
+	cooldown = 5 SECONDS
 
 /datum/emote/living/yawn/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!. || !isliving(user))
+	if(!isliving(user))
 		return
 
 	if(!TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
@@ -463,7 +463,7 @@
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)

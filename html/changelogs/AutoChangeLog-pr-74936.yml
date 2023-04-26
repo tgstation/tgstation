@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Health analyzers now show body temperature in red/blue if the temperature of the body can't sustain it's own life."
+  - bugfix: "Inverse technetium now properly gives advanced details in genetics/radiation analyzing."
