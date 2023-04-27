@@ -93,7 +93,7 @@
 			suicide_pill(controller, target_key)
 			return
 
-		controller.blackboard[BB_EXIT_VENT_TARGET] = emergency_vent // assign and go again
+		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, emergency_vent) // assign and go again
 		addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), (rand(controller.blackboard[BB_LOWER_VENT_TIME_LIMIT], controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]) / 2)) // we're in danger mode, so scurry out at half the time it would normally take.
 		return
 
