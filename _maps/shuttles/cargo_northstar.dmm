@@ -104,7 +104,8 @@
 /area/shuttle/supply)
 "C" = (
 /obj/machinery/conveyor/inverted{
-	dir = 5
+	dir = 5;
+	id = "QMLoad"
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)

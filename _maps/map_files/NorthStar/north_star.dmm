@@ -25617,6 +25617,13 @@
 	dir = 4
 	},
 /area/station/engineering/lobby)
+"gPk" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "gPr" = (
 /turf/open/floor/iron/textured_corner{
 	dir = 1
@@ -71477,6 +71484,14 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
+"sYW" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "sYX" = (
 /obj/structure/toilet{
 	dir = 4
@@ -117813,7 +117828,7 @@ oCK
 bZr
 gun
 tHL
-nAm
+rbT
 hLP
 ejg
 tql
@@ -118323,7 +118338,7 @@ dOs
 dOs
 dOs
 dOs
-oCK
+gPk
 bZr
 rbT
 nTZ
@@ -118837,11 +118852,11 @@ dOs
 dOs
 dOs
 dOs
-oCK
+sYW
 mjQ
-nAm
-ijL
 rbT
+ijL
+nAm
 hLP
 ydt
 mVL
@@ -119869,7 +119884,7 @@ hKN
 hKN
 pJi
 tHL
-rbT
+nAm
 hLP
 ydt
 iBB
