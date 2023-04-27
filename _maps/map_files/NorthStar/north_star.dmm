@@ -34014,6 +34014,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
+"jiT" = (
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor4/starboard/fore)
 "jja" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/white,
@@ -85078,6 +85082,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/floor4/fore)
+"wJX" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor4/starboard/fore)
 "wKa" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -306708,8 +306718,8 @@ vLW
 vLW
 vLW
 vLW
-aNs
-sHq
+jiT
+lJp
 gGB
 aNs
 sRO
@@ -306965,7 +306975,7 @@ rIR
 lWd
 thZ
 vLW
-aNs
+wJX
 lJp
 gho
 aNs
