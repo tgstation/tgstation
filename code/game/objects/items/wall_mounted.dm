@@ -1,6 +1,6 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron= MINERAL_MATERIAL_AMOUNT * 2)
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -91,6 +91,6 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	custom_price = PAYCHECK_CREW * 0.5

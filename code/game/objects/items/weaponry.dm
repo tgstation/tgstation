@@ -304,7 +304,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
+	custom_materials = list(/datum/material/iron= ROD_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
@@ -373,7 +373,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/stamina
@@ -404,7 +404,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
+	custom_materials = list(/datum/material/iron= MINERAL_MATERIAL_AMOUNT * 6)
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
@@ -478,7 +478,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
@@ -491,7 +491,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron = 600)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6)
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()

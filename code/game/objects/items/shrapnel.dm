@@ -1,6 +1,6 @@
 /obj/item/shrapnel // frag grenades
 	name = "shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
@@ -84,6 +84,6 @@
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
 

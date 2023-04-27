@@ -26,7 +26,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=80)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.8)
 	flags_1 = CONDUCT_1
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
@@ -72,7 +72,7 @@
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	custom_materials = list(/datum/material/plastic=80)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.8)
 	custom_price = PAYCHECK_LOWER * 1
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
@@ -92,7 +92,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_range = 5
-	custom_materials = list(/datum/material/plastic = 100)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
@@ -149,7 +149,7 @@
 	attack_verb_simple = list("whack", "spoon", "tap")
 	attack_verb_continuous = list("whacks", "spoons", "taps")
 	armor_type = /datum/armor/kitchen_spoon
-	custom_materials = list(/datum/material/iron=120)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.2)
 	custom_price = PAYCHECK_LOWER * 2
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
@@ -257,7 +257,7 @@
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
 	force = 0
-	custom_materials = list(/datum/material/plastic=120)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 1.2)
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 	custom_price = PAYCHECK_LOWER * 1
 
