@@ -7,5 +7,5 @@
 			var/asset_name = "paintings_[portrait.md5]"
 			assets[asset_name] = png
 
- 	//this is where it registers all these assets we added to the list
+	//this is where it registers all these assets we added to the list
 	..()
