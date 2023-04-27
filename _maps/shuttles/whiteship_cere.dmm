@@ -580,7 +580,6 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "su" = (
-/obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge"
