@@ -957,3 +957,29 @@
   vinylspiders:
   - bugfix: crafting lizard skin cowboy boots no longer places a spawner object over
       the created boot item
+2023-04-27:
+  Dawnseer:
+  - bugfix: fixed an oversight - Made Goliath Cloak and Goliath Cloak Hood fireproof.
+      And Goliath hide.
+  Fikou:
+  - bugfix: social anxiety is incompatible with mute
+  JohnFulpWillard:
+  - qol: Health analyzers now show body temperature in red/blue if the temperature
+      of the body can't sustain it's own life.
+  - bugfix: Inverse technetium now properly gives advanced details in genetics/radiation
+      analyzing.
+  Rex9001:
+  - bugfix: Fixes the Tramstation CMO office lack of CMO stamp
+  Watermelon914:
+  - bugfix: Fixed final objectives appearing as 'Skipped' in the traitor panel.
+  moocowswag:
+  - bugfix: You can no longer bypass the laws of bluespace with a portable chem mixer.
+  - bugfix: You can no longer bypass container locks with storage hotkeys.
+  san7890:
+  - bugfix: Changelogs entries for "sound" and "image" should now have icons associated
+      with them, how neat.
+  timothymtorres:
+  - qol: Add mood events for basketball shooting and dunking
+  - balance: '"Camera Obscura" (crafted with holy water + camera) will now steal the
+      soul of ghostly apparitions when a picture is taken causing damage.  This will
+      also stun and reveal revenants briefly.'
