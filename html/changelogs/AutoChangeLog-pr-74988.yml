@@ -1,0 +1,4 @@
+author: "SkeletalElite"
+delete-after: True
+changes:
+  - bugfix: "Stabilized Oil extracts no longer explode infinitely if your corpse is immune to gibbing"
