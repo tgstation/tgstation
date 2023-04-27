@@ -114,7 +114,7 @@
 "aF" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply,
+/obj/machinery/atmospherics/components/unary/portables_connector/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "aG" = (
@@ -194,9 +194,6 @@
 /obj/item/mop,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
@@ -307,7 +304,8 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/tank/air{
 	initialize_directions = 1;
-	dir = 1
+	dir = 1;
+	piping_layer = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
@@ -376,7 +374,6 @@
 "by" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
@@ -532,7 +529,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "cd" = (
@@ -614,6 +610,7 @@
 /area/shuttle/voidcrew/box/engine)
 "cq" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "cs" = (
@@ -698,6 +695,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "cC" = (
@@ -756,6 +754,7 @@
 /area/shuttle/voidcrew/box/cargo)
 "cJ" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "cK" = (
@@ -1032,13 +1031,6 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/meter/layer2{
-	name = "supply guage"
-	},
-/obj/machinery/meter/layer4{
-	name = "waste guage"
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "gh" = (
@@ -1180,6 +1172,7 @@
 "wh" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "wG" = (
@@ -1239,6 +1232,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "zZ" = (
@@ -1336,17 +1330,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "Jq" = (
 /obj/effect/turf_decal/tile/blue/anticorner,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/box/medbay)
-"Ks" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/box/engine)
 "Lt" = (
 /obj/machinery/light/small/built{
 	dir = 4
@@ -1396,8 +1385,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/medbay)
 "Ps" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer4{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -1475,6 +1463,10 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/voidcrew/box/crew_quarters)
+"Vz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/box/engine)
 "Ye" = (
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
@@ -1605,7 +1597,7 @@ bk
 aS
 aa
 aS
-bm
+Vz
 aS
 aa
 aa
@@ -1624,7 +1616,7 @@ bk
 aS
 tw
 aS
-bm
+Vz
 aS
 aa
 aa
@@ -1638,7 +1630,7 @@ aa
 aa
 aa
 aS
-Ks
+aS
 MO
 aS
 BE

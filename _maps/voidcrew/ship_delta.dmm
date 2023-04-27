@@ -776,7 +776,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/meter,
 /obj/machinery/power/terminal{
 	dir = 8
 	},

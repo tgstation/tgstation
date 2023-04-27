@@ -188,36 +188,46 @@ SUBSYSTEM_DEF(overmap)
  * When we find a valid template we use it to spawn a ship.
  */
 /datum/controller/subsystem/overmap/proc/spawn_initial_ship()
-	#ifdef UNIT_TESTS
+#ifdef UNIT_TESTS
 	var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
 	for(var/templates in remaining_templates)
 		var/datum/map_template/shuttle/voidcrew/loaded_template = SSshuttle.create_ship(templates)
+		if(!initial_ship_template)
+			initial_ship_template = loaded_template
 		if(!loaded_template)
 			log_mapping("[src] failed to load ship [templates].")
-		initial_ship_template = loaded_template //this will constantly be overwritten but it's fine, it's just for any future testing if needed.
-
-	#else
-	if(!initial_ship_template)
-		var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
-		while(!initial_ship_template && LAZYLEN(remaining_templates))
-			var/datum/map_template/shuttle/voidcrew/random_template = pick_n_take(remaining_templates)
-			if(initial(random_template.abstract) == random_template)
-				continue
-			// the first ship will always be an NT or Syndicate one.
-			if(initial(random_template.faction_prefix) == NEUTRAL_SHIP)
-				continue
-			initial_ship_template = random_template
-
-	if(!initial_ship_template)
-		CRASH("Failed to find a valid initial ship template to spawn.")
-
+#else
+	if(!set_initial_ship())
+		return
 	initial_ship = SSshuttle.create_ship(initial_ship_template)
 	if(!initial_ship)
 		CRASH("Failed to spawn initial ship.")
 
 	RegisterSignal(initial_ship, COMSIG_PARENT_QDELETING, PROC_REF(handle_initial_ship_deletion))
+#endif
 
-	#endif
+/**
+ * Attempts to set an initial ship template.
+ * If one is already set, this will return out.
+ * If a ship is set, initial_ship_template will be set to it, and it will return TRUE, otherwise FALSE.
+ */
+/datum/controller/subsystem/overmap/proc/set_initial_ship()
+	if(initial_ship_template)
+		return TRUE
+
+	var/list/remaining_templates = subtypesof(/datum/map_template/shuttle/voidcrew)
+	while(!initial_ship_template && LAZYLEN(remaining_templates))
+		var/datum/map_template/shuttle/voidcrew/random_template = pick_n_take(remaining_templates)
+		if(initial(random_template.abstract) == random_template)
+			continue
+		// the first ship will always be an NT or Syndicate one.
+		if(initial(random_template.faction_prefix) == NEUTRAL_SHIP)
+			continue
+		initial_ship_template = random_template
+		return TRUE
+
+	stack_trace("Failed to find a valid initial ship template to spawn.")
+	return FALSE
 
 /datum/controller/subsystem/overmap/proc/handle_initial_ship_deletion(datum/source)
 	SIGNAL_HANDLER

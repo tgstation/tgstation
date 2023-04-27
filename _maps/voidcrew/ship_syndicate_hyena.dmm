@@ -1738,7 +1738,7 @@
 "Og" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/voidcrew/hyena/hallway)
+/area/template_noop)
 "Oh" = (
 /obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
@@ -2215,10 +2215,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/hyena/hallway)
-"Zb" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/shuttle/voidcrew/hyena/maintenance/starboard)
 "Zg" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -2435,7 +2431,7 @@ jf
 Fe
 hv
 bF
-Zb
+Og
 "}
 (10,1,1) = {"
 Og
@@ -2455,7 +2451,7 @@ Ay
 AP
 hv
 nn
-Zb
+Og
 "}
 (11,1,1) = {"
 Og
@@ -2475,7 +2471,7 @@ Sd
 dQ
 Eb
 nn
-Zb
+Og
 "}
 (12,1,1) = {"
 Og
@@ -2495,7 +2491,7 @@ Az
 pv
 hv
 nn
-Zb
+Og
 "}
 (13,1,1) = {"
 Og
@@ -2514,8 +2510,8 @@ MR
 zq
 Iz
 hv
-Zb
-Zb
+Og
+Og
 "}
 (14,1,1) = {"
 Og
@@ -2535,7 +2531,7 @@ CT
 CT
 CT
 nn
-Zb
+Og
 "}
 (15,1,1) = {"
 Og
@@ -2555,7 +2551,7 @@ KW
 VY
 rk
 nn
-Zb
+Og
 "}
 (16,1,1) = {"
 nL
@@ -2575,7 +2571,7 @@ Bg
 jY
 de
 pr
-Zb
+Og
 "}
 (17,1,1) = {"
 dY

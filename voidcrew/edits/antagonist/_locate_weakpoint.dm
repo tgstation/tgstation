@@ -5,7 +5,7 @@
 	if(!istype(tot))
 		return FALSE
 
-	var/obj/docking_port/mobile/voidcrew/ship_port = SSshuttle.get_containing_shuttle(src)
+	var/obj/docking_port/mobile/voidcrew/ship_port = SSshuttle.get_containing_shuttle(generating_for.current)
 	if(!istype(ship_port))
 		return FALSE
 

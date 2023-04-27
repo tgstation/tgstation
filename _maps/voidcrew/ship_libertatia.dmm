@@ -670,7 +670,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/landmark/observer_start,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/voidcrew/libertatia/crew_lounge)
 "AL" = (

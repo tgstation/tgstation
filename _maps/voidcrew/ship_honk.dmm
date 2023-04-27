@@ -151,7 +151,7 @@
 /obj/item/stack/tile/eighties/loaded{
 	amount = 50
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/voidcrew/honk)
 "tc" = (
 /obj/machinery/conveyor/auto{
@@ -809,7 +809,7 @@ ZT
 ZT
 ZT
 ZT
-ta
+ZT
 YY
 YY
 YY
@@ -834,7 +834,7 @@ ZT
 FK
 HB
 Up
-ZT
+ta
 Mg
 ZT
 ZT

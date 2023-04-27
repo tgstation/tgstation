@@ -15,7 +15,7 @@
 /area/shuttle/voidcrew/hightide/maintenance/fore)
 "aW" = (
 /turf/closed/wall,
-/area/shuttle/voidcrew/hightide/maintenance)
+/area/template_noop)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/reagent_dispensers/beerkeg,
@@ -53,8 +53,9 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance/port)
 "cb" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/sosjerky,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/plating,
 /area/shuttle/voidcrew/hightide/maintenance)
 "cc" = (
 /obj/structure/table/wood,
@@ -1062,7 +1063,7 @@
 "Uw" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/voidcrew/hightide/maintenance)
+/area/template_noop)
 "UX" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
@@ -1363,7 +1364,7 @@ cQ
 Jt
 FO
 Jn
-rF
+cb
 eb
 Wt
 Wt
@@ -1389,7 +1390,7 @@ Rd
 Rd
 cQ
 Uw
-cb
+QJ
 KU
 tL
 KU

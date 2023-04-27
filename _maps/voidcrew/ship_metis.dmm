@@ -17,19 +17,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/voidcrew/metis/bridge)
-"au" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "slimer"
-	},
-/turf/open/floor/circuit/telecomms{
-	name = "coldroom"
-	},
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "av" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -58,9 +45,6 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "bF" = (
@@ -76,43 +60,16 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
-"bK" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/glass,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "slimelock";
-	name = "Lockdown Shutters"
-	},
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/metis/science/xenobiology)
-"bL" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "slimelock";
-	name = "Lockdown Shutters"
-	},
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "bS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
-	dir = 8
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "cd" = (
-/obj/effect/mob_spawn/corpse/human/scientist,
 /obj/effect/decal/cleanable/blood,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposaloutlet,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "cf" = (
@@ -132,20 +89,9 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/hallway/fore)
-"cK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "cV" = (
 /obj/item/shard,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/nitrogen{
-	anchored = 1
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "cW" = (
@@ -194,19 +140,13 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/robotics)
 "dT" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/science/xenobiology)
+/obj/machinery/light,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
 "dX" = (
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
-"ee" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/hallway/fore)
 "ej" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/titanium/tiled/blue,
@@ -224,7 +164,6 @@
 /area/shuttle/voidcrew/metis/dorms)
 "ep" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "es" = (
@@ -310,11 +249,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "fc" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
@@ -348,7 +283,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
@@ -364,27 +298,14 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
-"gb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/science/xenobiology)
-"gj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer2,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/metis/engineering)
 "gE" = (
 /obj/machinery/monkey_recycler,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "gH" = (
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "gP" = (
@@ -467,14 +388,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "hP" = (
-/mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "hR" = (
-/obj/structure/holosign/barrier/medical,
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -495,12 +415,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
-"ij" = (
-/obj/machinery/atmospherics/components/tank/plasma{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/metis/engineering)
 "it" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/cable,
@@ -511,6 +425,7 @@
 /area/shuttle/voidcrew/metis/science/robotics)
 "iu" = (
 /obj/item/circuitboard/machine/bepis,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "iQ" = (
@@ -562,9 +477,6 @@
 	pixel_y = 7
 	},
 /obj/item/stack/sheet/mineral/plasma/five,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "jH" = (
@@ -610,14 +522,6 @@
 "kD" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/maintenance)
-"kK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "kN" = (
 /obj/item/gun/energy/laser,
 /obj/effect/decal/cleanable/blood,
@@ -626,9 +530,6 @@
 "kZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/conveyor_switch/oneway{
-	id = "slimer"
-	},
 /obj/machinery/button/door{
 	id = "slimelock";
 	name = "Lockdown Shutters";
@@ -659,12 +560,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/ai_core)
 "ll" = (
-/obj/structure/toilet/secret{
-	dir = 8;
-	secret_type = /obj/item/transfer_valve
-	},
-/obj/machinery/airalarm/directional/east,
-/obj/structure/curtain,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/disks_nanite,
+/obj/item/nanite_remote,
+/obj/item/nanite_scanner,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "lu" = (
@@ -693,6 +592,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/closed,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "lS" = (
@@ -707,7 +607,7 @@
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "ml" = (
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "ms" = (
@@ -725,9 +625,10 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "mJ" = (
-/obj/item/storage/belt/utility/full,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/stack/cable_coil,
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "mL" = (
@@ -747,7 +648,6 @@
 "mT" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "nm" = (
@@ -820,6 +720,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "oB" = (
 /obj/machinery/camera/autoname/directional/south,
+/mob/living/simple_animal/hostile/hivebot/mechanic,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "oJ" = (
@@ -861,20 +762,20 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/bridge)
 "pF" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "slimelock";
 	name = "Lockdown Shutters"
 	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "pL" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "pV" = (
@@ -893,9 +794,6 @@
 /area/shuttle/voidcrew/metis/science/robotics)
 "qe" = (
 /obj/item/kirbyplants/random,
-/mob/living/simple_animal/hostile/alien/maid{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/hallway/fore)
@@ -913,7 +811,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/frame/computer,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "qP" = (
@@ -930,10 +827,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "ra" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	piping_layer = 2
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "rb" = (
@@ -999,11 +893,9 @@
 /area/shuttle/voidcrew/metis/hallway/fore)
 "sb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "sd" = (
@@ -1115,15 +1007,11 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "uP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
-"uS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/voidcrew/metis/science/xenobiology)
 "uY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1181,7 +1069,6 @@
 /obj/machinery/door/airlock/science/glass,
 /obj/structure/barricade/wooden/crude/snow,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "wa" = (
@@ -1209,11 +1096,13 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "wD" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
+/obj/machinery/computer/cryopod{
+	pixel_y = 26
+	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
 "wK" = (
@@ -1224,9 +1113,6 @@
 	},
 /obj/item/pen{
 	pixel_x = 5
-	},
-/obj/machinery/firealarm/directional/west{
-	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
@@ -1256,16 +1142,13 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "xv" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "xy" = (
@@ -1275,12 +1158,13 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "xB" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/item/wrench,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "xL" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/rnd/server/ship,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science)
 "yc" = (
@@ -1325,6 +1209,9 @@
 /area/shuttle/voidcrew/metis/eepsoffice)
 "yG" = (
 /obj/structure/window/reinforced/spawner,
+/obj/machinery/atmospherics/components/tank/plasma{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "yH" = (
@@ -1356,7 +1243,7 @@
 "zw" = (
 /obj/item/reagent_containers/cup/glass/flask/gold,
 /obj/item/areaeditor,
-/obj/item/disk/nuclear/fake/obvious,
+/obj/structure/table/wood,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "zx" = (
@@ -1387,26 +1274,12 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
-"Af" = (
-/obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/voidcrew/metis/science/nanites)
 "Ag" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "Ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/machinery/disposal/delivery_chute{
-	dir = 8
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner,
-/obj/machinery/door/poddoor/shutters{
-	id = "slimekill"
-	},
 /turf/open/floor/circuit/telecomms{
 	name = "coldroom"
 	},
@@ -1429,7 +1302,6 @@
 "AD" = (
 /obj/machinery/recharge_station,
 /obj/item/robot_suit,
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/robotics)
 "AG" = (
@@ -1452,12 +1324,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Bf" = (
@@ -1527,24 +1397,14 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/robotics)
 "Cr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/disposaloutlet,
-/obj/item/transfer_valve,
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/circuit/telecomms{
-	name = "coldroom"
-	},
-/area/shuttle/voidcrew/metis/science/xenobiology)
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/nanites)
 "Ct" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "Cz" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/maintenance)
 "CK" = (
@@ -1563,9 +1423,12 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "CT" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/south{
+	id = "rdshutter";
+	name = "Lockdown Shutters"
+	},
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "CZ" = (
@@ -1611,9 +1474,7 @@
 /area/shuttle/voidcrew/metis/science)
 "DM" = (
 /obj/structure/sink/directional/north,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "DO" = (
@@ -1687,6 +1548,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "EL" = (
@@ -1716,6 +1580,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Fo" = (
@@ -1763,8 +1628,10 @@
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "FX" = (
-/obj/machinery/power/smes,
-/obj/structure/cable,
+/obj/item/stack/cable_coil,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/belt/utility/full,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "Gh" = (
@@ -1809,12 +1676,8 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/robotics)
 "Hj" = (
-/mob/living/simple_animal/hostile/alien,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
@@ -1822,9 +1685,6 @@
 /obj/structure/barricade/wooden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Hy" = (
@@ -1839,10 +1699,6 @@
 /area/shuttle/voidcrew/metis/hallway/fore)
 "HA" = (
 /mob/living/simple_animal/slime,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "slimer"
-	},
 /turf/open/floor/circuit/telecomms{
 	name = "coldroom"
 	},
@@ -1858,10 +1714,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "HM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -1882,9 +1734,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "HV" = (
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/machinery/atmospherics/components/binary/pump/layer2{
+/obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1923,7 +1773,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "Iq" = (
@@ -1942,20 +1792,7 @@
 /area/shuttle/voidcrew/metis/hallway/fore)
 "IE" = (
 /obj/structure/barricade/wooden,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/science/xenobiology)
-"IJ" = (
-/obj/machinery/firealarm/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "IS" = (
 /obj/item/stack/sheet/mineral/titanium{
@@ -1983,9 +1820,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Jj" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/spawner/east,
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
@@ -1993,6 +1828,7 @@
 	id = "slimelock";
 	name = "Lockdown Shutters"
 	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Jn" = (
@@ -2015,10 +1851,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/nanites)
 "JD" = (
-/obj/machinery/computer/cryopod{
-	pixel_y = 26
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
 "JM" = (
@@ -2037,12 +1871,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "JT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/science/xenobiology)
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
 "Kj" = (
 /obj/structure/door_assembly/door_assembly_science,
 /obj/machinery/door/firedoor,
@@ -2065,9 +1895,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "KB" = (
@@ -2078,10 +1905,10 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "KF" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/hallway/aft)
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
 "KK" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/rd,
@@ -2108,7 +1935,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/shuttle/voidcrew/metis/engineering)
+/area/template_noop)
 "LG" = (
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2152,19 +1979,14 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/slime_scanner,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "My" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "slimelock";
 	name = "Lockdown Shutters"
 	},
-/obj/item/pipe/trinary/flippable,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "ME" = (
@@ -2200,9 +2022,6 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakers,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "NA" = (
@@ -2210,9 +2029,6 @@
 /obj/effect/decal/cleanable/greenglow,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "ND" = (
@@ -2239,25 +2055,14 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science)
 "Ob" = (
-/obj/machinery/button/door{
-	id = "rdshutter";
-	name = "Lockdown Shutters";
-	pixel_x = -5;
-	pixel_y = 39
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light_switch{
-	pixel_x = 6;
-	pixel_y = 40
-	},
-/obj/item/radio/intercom{
-	pixel_y = 23
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/radio/intercom/command/directional/north,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "Oc" = (
 /obj/structure/sign/warning/cold_temp,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Oo" = (
@@ -2270,10 +2075,7 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Ox" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/trinary/mixer/flipped/on/layer2{
-	node1_concentration = 0.21;
-	node2_concentration = 0.79
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "OE" = (
@@ -2300,9 +2102,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
@@ -2364,13 +2163,9 @@
 /area/shuttle/voidcrew/metis/science/robotics)
 "Qn" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "slimelock";
-	name = "Lockdown Shutters"
-	},
-/obj/machinery/atmospherics/pipe/layer_manifold/supply,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Qo" = (
@@ -2397,6 +2192,9 @@
 "QS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "QT" = (
@@ -2413,9 +2211,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
-"Rd" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/voidcrew/metis/science)
 "Ri" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
@@ -2445,7 +2240,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/metis/engineering)
 "RU" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "slimelock";
 	name = "Lockdown Shutters"
@@ -2468,10 +2262,10 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/dorms)
 "Sg" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4;
-	piping_layer = 2
-	},
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/belt/utility/full,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
 "Sh" = (
@@ -2480,9 +2274,6 @@
 /area/shuttle/voidcrew/metis/eepsoffice)
 "Sj" = (
 /mob/living/simple_animal/slime,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
@@ -2534,10 +2325,6 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
 	dir = 1
-	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "slimer"
 	},
 /turf/open/floor/circuit/telecomms{
 	name = "coldroom"
@@ -2601,28 +2388,14 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "Uo" = (
-/obj/machinery/disposal/delivery_chute{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
-/obj/machinery/door/window/brigdoor/right/directional/east{
-	dir = 8
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Us" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/voidcrew/metis/science/xenobiology)
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
 "Ut" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2641,7 +2414,6 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Uv" = (
-/obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "slimelock";
@@ -2670,6 +2442,7 @@
 "UH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/carpet/purple,
 /area/shuttle/voidcrew/metis/eepsoffice)
 "UL" = (
@@ -2700,6 +2473,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "Vz" = (
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/robotics)
 "VA" = (
@@ -2707,7 +2481,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/bridge)
 "VE" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "VI" = (
@@ -2717,19 +2491,12 @@
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/robotics)
-"VQ" = (
-/mob/living/simple_animal/hostile/hivebot/mechanic,
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
-/area/shuttle/voidcrew/metis/ai_core)
 "VS" = (
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
+/obj/structure/disposaloutlet,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "VU" = (
@@ -2800,22 +2567,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "slimer"
-	},
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
 /turf/open/floor/circuit/telecomms{
 	name = "coldroom"
 	},
-/area/shuttle/voidcrew/metis/science/xenobiology)
-"WZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "Xc" = (
 /obj/structure/table/reinforced,
@@ -2851,10 +2608,6 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Xw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
@@ -2911,16 +2664,12 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/science)
 "Ye" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/disks_nanite,
-/obj/item/nanite_scanner,
-/obj/item/nanite_remote,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
+/obj/structure/frame/computer,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/voidcrew/metis/science/nanites)
 "Yf" = (
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/fore)
 "Yi" = (
@@ -2947,9 +2696,6 @@
 "Yo" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/toy/plush/moth,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
@@ -2979,18 +2725,12 @@
 /area/shuttle/voidcrew/metis/science/xenobiology)
 "YG" = (
 /obj/machinery/processor/slime,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/voidcrew/metis/science/xenobiology)
-"YO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/voidcrew/metis/dorms)
 "YP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer2{
-	dir = 9
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/metis/engineering)
@@ -2999,6 +2739,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/voidcrew/metis/hallway/aft)
 "Zq" = (
@@ -3099,17 +2840,17 @@ HQ
 Ej
 HS
 Np
-uS
+VI
 VS
 Yo
-uS
+VI
 cd
 Xw
-uS
+VI
 HM
 Sj
 My
-Cr
+Ai
 WS
 VI
 vo
@@ -3125,19 +2866,19 @@ qe
 VI
 wz
 Er
-cK
+eN
 DM
-dT
+VI
 xv
 Hj
-gb
+VI
 AQ
 Kz
-gb
+VI
 fc
 OS
-bL
-au
+My
+Ai
 HA
 VI
 vo
@@ -3153,11 +2894,11 @@ lS
 VI
 RQ
 RQ
-Us
+RQ
 bn
-WZ
+VI
 RU
-bK
+pF
 ow
 Uv
 Jj
@@ -3181,7 +2922,7 @@ qo
 VI
 Dq
 Fk
-kK
+RQ
 IE
 ON
 xs
@@ -3222,7 +2963,7 @@ xu
 kZ
 VI
 ml
-Iq
+WF
 FX
 RS
 LX
@@ -3237,8 +2978,8 @@ Tr
 VI
 lu
 nT
-kK
-JT
+RQ
+nR
 ga
 YC
 tv
@@ -3250,8 +2991,8 @@ YC
 bS
 dD
 EG
-QS
-Sg
+WF
+WF
 Sg
 LX
 "}
@@ -3265,7 +3006,7 @@ wR
 VI
 LP
 fH
-IJ
+xy
 NA
 PJ
 WG
@@ -3279,7 +3020,7 @@ Ec
 Qn
 Ox
 HV
-gj
+ra
 YP
 LX
 "}
@@ -3336,7 +3077,7 @@ fH
 RS
 mT
 uP
-ij
+uP
 LX
 "}
 (11,1,1) = {"
@@ -3416,9 +3157,9 @@ lk
 lk
 lk
 hI
-fQ
+uI
 ms
-ml
+Us
 iu
 yG
 Lo
@@ -3468,7 +3209,7 @@ lk
 nm
 eE
 eE
-VQ
+nm
 eE
 sd
 lb
@@ -3545,7 +3286,7 @@ QW
 Wi
 DQ
 Xl
-YO
+ih
 XB
 dX
 lk
@@ -3575,7 +3316,7 @@ vE
 Xl
 JM
 ih
-Ky
+dT
 lk
 nm
 eE
@@ -3656,10 +3397,10 @@ JR
 Yw
 Qu
 to
-ee
+to
 lK
 YU
-KF
+kn
 vS
 DT
 VW
@@ -3881,7 +3622,7 @@ JR
 wY
 wY
 wY
-Rd
+uE
 uE
 Vx
 eB
@@ -3910,7 +3651,7 @@ vo
 vo
 vo
 Jz
-uE
+KF
 In
 Fo
 sb
@@ -3937,7 +3678,7 @@ vo
 vo
 vo
 vo
-vo
+Jz
 Jz
 uE
 Ye
@@ -3967,9 +3708,9 @@ vo
 vo
 vo
 vo
-Jz
-Af
+Cr
 wa
+JT
 nI
 gP
 kD
@@ -3995,7 +3736,7 @@ vo
 vo
 vo
 vo
-vo
+Jz
 Jz
 uE
 VE

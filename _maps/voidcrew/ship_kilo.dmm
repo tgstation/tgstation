@@ -108,7 +108,7 @@
 	},
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "aS" = (
@@ -242,6 +242,8 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "bM" = (
@@ -347,16 +349,12 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/valve/layer2{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "ca" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -374,7 +372,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "cf" = (
@@ -410,10 +407,8 @@
 /area/shuttle/voidcrew/kilo/cargo)
 "cl" = (
 /obj/effect/decal/cleanable/greenglow,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cq" = (
@@ -424,9 +419,6 @@
 	pixel_y = -23
 	},
 /obj/machinery/light/small/built,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -448,8 +440,9 @@
 "cv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cw" = (
@@ -466,11 +459,11 @@
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/meter,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -489,10 +482,6 @@
 "cK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cM" = (
@@ -512,6 +501,7 @@
 	id = "whiteship_windows";
 	name = "Exterior Window Blas Door"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "cV" = (
@@ -636,7 +626,7 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "dF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/voidcrew/kilo/cargo)
 "dO" = (
@@ -947,9 +937,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/syndi_cakes,
 /obj/item/organ/internal/stomach,
-/obj/machinery/firealarm/directional/west{
-	dir = 4
-	},
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_y = 23
@@ -962,6 +949,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/voidcrew/kilo/cafe)
 "qp" = (
@@ -1120,8 +1108,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "xi" = (
@@ -1177,6 +1163,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "zH" = (
@@ -1316,7 +1305,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
@@ -1575,8 +1563,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "PS" = (
@@ -1623,8 +1609,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "Sk" = (
@@ -1705,9 +1689,11 @@
 /area/shuttle/voidcrew/kilo/bridge)
 "Va" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
@@ -1786,7 +1772,6 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/cargo)
 "Yz" = (
@@ -1890,12 +1875,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/areaeditor,
 /obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/kilo/engineering)
 "ZG" = (

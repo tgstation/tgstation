@@ -2,15 +2,20 @@
 	RETURN_TYPE(/obj/structure/overmap/ship)
 
 	UNTIL(!shuttle_loading)
-	var/obj/structure/overmap/ship/ship_to_spawn = new(SSovermap.get_unused_overmap_square(tries = INFINITY), new ship_template_to_spawn)
-
 	shuttle_loading = TRUE
+	var/obj/structure/overmap/ship/ship_to_spawn = new(SSovermap.get_unused_overmap_square(tries = INFINITY), new ship_template_to_spawn)
+	if(!ship_to_spawn)
+		stack_trace("Unable to properly load ship [ship_template_to_spawn].")
+		shuttle_loading = FALSE
+		return FALSE
+
 	SSair.can_fire = FALSE // fuck you
 	var/obj/docking_port/mobile/voidcrew/loaded = action_load(ship_to_spawn.source_template)
 	SSair.can_fire = TRUE
 	shuttle_loading = FALSE
 
 	if(!loaded)
+		stack_trace("Unable to properly load ship template [ship_to_spawn.source_template].")
 		qdel(ship_to_spawn)
 		return FALSE
 
@@ -18,10 +23,12 @@
 	ship_to_spawn.name = loaded.name
 	ship_to_spawn.shuttle = loaded
 
+	SEND_SIGNAL(loaded, COMSIG_VOIDCREW_SHIP_LOADED)
+
 	// assign landmarks as needed
 	var/turf/safe_turf = get_safe_random_station_turf(loaded.shuttle_areas)
-	new /obj/effect/landmark/blobstart(safe_turf) // StationLoving component
-	new /obj/effect/landmark/observer_start(safe_turf) // Observer and UnitTests
+	new /obj/effect/landmark/blobstart(safe_turf) // Stationloving component
+	new /obj/effect/landmark/observer_start(safe_turf) // Observer and Unit tests
 
 	return ship_to_spawn
 

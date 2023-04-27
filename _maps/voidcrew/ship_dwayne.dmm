@@ -1082,7 +1082,6 @@
 	desc = "A moth.";
 	name = "moth"
 	},
-/obj/effect/landmark/observer_start,
 /turf/open/floor/iron/grimy,
 /area/shuttle/voidcrew/dwayne/crew)
 "Ia" = (
