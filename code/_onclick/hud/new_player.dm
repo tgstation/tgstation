@@ -118,8 +118,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby)
 
 /atom/movable/screen/lobby/button/character_setup/proc/show_setup_button(datum/preferences/preferences)
 	SIGNAL_HANDLER
-	set_button_status(TRUE)
 	UnregisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED)
+	flick("[base_icon_state]_enabled", src)
+	set_button_status(TRUE)
 
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
