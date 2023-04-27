@@ -2759,7 +2759,7 @@
 "aHA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/red/dim/directional/west,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/starboard/fore)
 "aHC" = (
@@ -3406,7 +3406,6 @@
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -10207,7 +10206,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
 "czK" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/biogenerator,
 /turf/open/floor/iron/white,
 /area/station/cargo/miningdock)
 "czP" = (
@@ -23379,6 +23378,17 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"gic" = (
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "Arrivalblast";
+	pixel_y = 31;
+	pixel_x = -24
+	},
+/turf/open/floor/pod/dark,
+/area/station/hallway/secondary/entry)
 "gid" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/mess,
@@ -25617,13 +25627,6 @@
 	dir = 4
 	},
 /area/station/engineering/lobby)
-"gPk" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/conveyor{
-	id = "QMLoad"
-	},
-/turf/open/floor/pod/dark,
-/area/station/cargo/storage)
 "gPr" = (
 /turf/open/floor/iron/textured_corner{
 	dir = 1
@@ -43244,7 +43247,8 @@
 	dir = 1
 	},
 /obj/structure/bed/dogbed{
-	desc = "A comfy-looking mouse bed."
+	desc = "A comfy-looking mouse bed.";
+	name = "Robert's bed"
 	},
 /mob/living/basic/mouse{
 	desc = "Your only friend in this place";
@@ -50194,6 +50198,8 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/closet/secure_closet/armory2,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nkw" = (
@@ -71484,14 +71490,6 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
-"sYW" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad"
-	},
-/turf/open/floor/pod/dark,
-/area/station/cargo/storage)
 "sYX" = (
 /obj/structure/toilet{
 	dir = 4
@@ -74879,6 +74877,10 @@
 "tWX" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/emergency_shield/regenerating,
+/obj/machinery/door/poddoor/preopen{
+	name = "Arrivals Blast Door";
+	id = "Arrivalblast"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "tXg" = (
@@ -79355,6 +79357,10 @@
 	},
 /area/station/hallway/floor3/aft)
 "vko" = (
+/obj/machinery/autolathe,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -80726,7 +80732,7 @@
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "vBB" = (
-/obj/machinery/light/red/dim/directional/west,
+/obj/machinery/light/dim/directional/west,
 /turf/open/openspace,
 /area/station/service/library/private)
 "vBI" = (
@@ -82738,6 +82744,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"wdR" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "wdV" = (
 /turf/open/floor/carpet/royalblue,
 /area/station/medical/break_room)
@@ -85469,7 +85482,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/food_or_drink/condiment,
 /obj/item/flashlight,
-/obj/machinery/light/red/dim/directional/west,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard)
 "wLl" = (
@@ -88498,7 +88511,8 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	req_access = list("cargo");
-	name = "Cargo Autolathe Access"
+	name = "Cargo Autolathe Access";
+	layer = 3.31
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Autolathe"
@@ -90671,6 +90685,14 @@
 /obj/structure/window/spawner,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
+"yhd" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "yhj" = (
 /obj/structure/railing{
 	dir = 1
@@ -114271,7 +114293,7 @@ qlt
 qlt
 qlt
 qlt
-qlt
+gic
 lCo
 tWX
 cHX
@@ -118338,7 +118360,7 @@ dOs
 dOs
 dOs
 dOs
-gPk
+wdR
 bZr
 rbT
 nTZ
@@ -118852,7 +118874,7 @@ dOs
 dOs
 dOs
 dOs
-sYW
+yhd
 mjQ
 rbT
 ijL
