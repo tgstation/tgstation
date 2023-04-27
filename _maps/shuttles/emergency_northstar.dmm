@@ -113,7 +113,8 @@
 	},
 /area/shuttle/escape)
 "nh" = (
-/turf/template_noop,
+/obj/machinery/smartfridge/survival_pod/preloaded,
+/turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/escape)
 "nt" = (
 /obj/structure/table/optable,
@@ -337,6 +338,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Dx" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/escape)
 "DJ" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/half{
@@ -368,6 +375,9 @@
 "HG" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/escape)
+"HY" = (
+/turf/template_noop,
 /area/shuttle/escape)
 "Ir" = (
 /obj/structure/table/reinforced,
@@ -613,7 +623,7 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
-nh
+HY
 AW
 FQ
 FQ
@@ -639,8 +649,8 @@ Ei
 "}
 (2,1,1) = {"
 AW
-AW
-tq
+nh
+Dx
 mw
 rV
 OL
@@ -863,7 +873,7 @@ AW
 Ei
 "}
 (11,1,1) = {"
-nh
+HY
 AW
 FQ
 FQ
