@@ -20,8 +20,7 @@
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/web_sneak/sneaky_beaky = new(src)
-	sneaky_beaky.Grant(src)
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /**
  * ### Spider Hunter
