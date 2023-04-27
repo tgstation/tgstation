@@ -14,6 +14,7 @@
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
 	speak_emote = list("hisses")
 	basic_mob_flags = FLAMMABLE_MOB
+	mob_size = MOB_SIZE_TINY
 
 	unique_name = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
