@@ -52,9 +52,7 @@
 	if(!can_enter_vent(ventcrawl_target))
 		return
 
-	var/has_client = FALSE // clientless mobs can do this too! this is just stored in case the client disconnects while we sleep in do_after.
-	if(!isnull(client))
-		has_client = TRUE
+	var/has_client = !isnull(client) // clientless mobs can do this too! this is just stored in case the client disconnects while we sleep in do_after.
 
 	//Handle the exit here
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
