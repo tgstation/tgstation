@@ -9622,6 +9622,7 @@
 /area/station/service/chapel/office)
 "cqK" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/floor4/aft)
 "cqR" = (
@@ -13471,6 +13472,7 @@
 /obj/structure/transit_tube/curved/flipped{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/floor4/aft)
 "dvC" = (
@@ -25172,6 +25174,7 @@
 "gIO" = (
 /obj/structure/transit_tube/curved,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/floor4/aft)
 "gJg" = (
@@ -27907,6 +27910,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "hwK" = (
@@ -36956,6 +36960,7 @@
 /obj/structure/transit_tube/station/dispenser{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "jTE" = (
@@ -40953,6 +40958,7 @@
 /obj/structure/transit_tube/horizontal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "kWx" = (
@@ -51371,6 +51377,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor2/starboard/aft)
+"nzZ" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
 "nAb" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -61443,6 +61454,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
 /obj/effect/landmark/navigate_destination/minisat_access_ai,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "qos" = (
@@ -71944,6 +71956,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "tiT" = (
@@ -74279,6 +74292,7 @@
 /obj/effect/turf_decal/trimline/red/end{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "tQJ" = (
@@ -74434,6 +74448,7 @@
 /area/station/hallway/floor1/fore)
 "tSO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "tSU" = (
@@ -77877,6 +77892,7 @@
 /area/station/security/prison)
 "uTg" = (
 /obj/item/radio/intercom/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "uTk" = (
@@ -80401,6 +80417,7 @@
 "vAx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "vAy" = (
@@ -326300,15 +326317,15 @@ nGl
 rNo
 rNo
 oyh
-eYj
-eYj
+oyh
+oyh
 gIO
 kWw
 jTD
 kWw
 dvq
-eYj
-eYj
+oyh
+oyh
 oyh
 fkA
 fkA
@@ -326556,8 +326573,8 @@ nGl
 nGl
 rNo
 rNo
-eYj
-eYj
+oyh
+oyh
 mrL
 nWW
 cqK
@@ -326565,8 +326582,8 @@ cqK
 cqK
 nWW
 ric
-eYj
-eYj
+oyh
+oyh
 fkA
 fkA
 qgw
@@ -326813,17 +326830,17 @@ rNo
 wVX
 rNo
 rNo
-eYj
+oyh
 mYM
 oyh
 oyh
 oyh
-oyh
+nzZ
 oyh
 oyh
 oyh
 sVp
-eYj
+oyh
 wMF
 wMF
 wMF
@@ -327070,17 +327087,17 @@ rVQ
 rVQ
 rVQ
 rVQ
-eYj
-kgW
-oyh
-oyh
-oyh
-oyh
-oyh
-oyh
 oyh
 kgW
-eYj
+oyh
+oyh
+oyh
+nzZ
+oyh
+oyh
+oyh
+kgW
+oyh
 wMF
 wMF
 yeU
@@ -327327,17 +327344,17 @@ vBB
 spb
 rVQ
 rVQ
-eYj
+oyh
 rCR
 oyh
 oyh
 iSU
-oyh
+nzZ
 iSU
 oyh
 oyh
 rCR
-eYj
+oyh
 wMF
 wMF
 wMF
@@ -327584,17 +327601,17 @@ rgz
 xXq
 rVQ
 rVQ
-eYj
-kgW
-oyh
-oyh
-oyh
-oyh
-oyh
-oyh
 oyh
 kgW
-eYj
+oyh
+oyh
+oyh
+nzZ
+oyh
+oyh
+oyh
+kgW
+oyh
 wMF
 wMF
 xaW
@@ -327841,17 +327858,17 @@ tyP
 qxE
 rVQ
 rVQ
-eYj
-rCR
-oyh
-oyh
-oyh
-oyh
-oyh
-oyh
 oyh
 rCR
-eYj
+oyh
+oyh
+oyh
+nzZ
+oyh
+oyh
+oyh
+rCR
+oyh
 wMF
 wMF
 qzQ
@@ -328098,17 +328115,17 @@ rVQ
 rVQ
 rVQ
 rVQ
-eYj
-kgW
-oyh
-oyh
-oyh
-oyh
-oyh
-oyh
 oyh
 kgW
-eYj
+oyh
+oyh
+oyh
+nzZ
+oyh
+oyh
+oyh
+kgW
+oyh
 wMF
 wMF
 nSz
@@ -328355,17 +328372,17 @@ nhd
 rVQ
 rVQ
 rVQ
-eYj
+oyh
 rCR
 oyh
 oyh
 iSU
-oyh
+nzZ
 iSU
 oyh
 oyh
 rCR
-eYj
+oyh
 wMF
 wMF
 wMF
@@ -328612,17 +328629,17 @@ rVQ
 rVQ
 rVQ
 oyh
-eYj
-kgW
-oyh
-oyh
-oyh
-oyh
-oyh
-oyh
 oyh
 kgW
-eYj
+oyh
+oyh
+oyh
+nzZ
+oyh
+oyh
+oyh
+kgW
+oyh
 oyh
 wMF
 wMF
@@ -328869,17 +328886,17 @@ rVQ
 rVQ
 oyh
 oyh
-eYj
+oyh
 uUj
 oyh
 oyh
 oyh
-oyh
+nzZ
 oyh
 oyh
 oyh
 rDD
-eYj
+oyh
 oyh
 oyh
 wMF
@@ -329126,8 +329143,8 @@ rVQ
 oyh
 oyh
 oyh
-eYj
-eYj
+oyh
+oyh
 ric
 nbP
 uQA
@@ -329135,8 +329152,8 @@ mkR
 uQA
 nbP
 mrL
-eYj
-eYj
+oyh
+oyh
 oyh
 oyh
 oyh
@@ -329384,15 +329401,15 @@ oyh
 oyh
 oyh
 oyh
-eYj
-eYj
+oyh
+oyh
 xTI
 xJH
 drq
 xJH
 uWn
-eYj
-eYj
+oyh
+oyh
 oyh
 oyh
 oyh
