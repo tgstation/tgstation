@@ -18,7 +18,7 @@ export const RequestMainScreen = (props, context) => {
               selected={tab === RequestTabs.MESSAGE_VIEW}
               onClick={() => {
                 setTab(RequestTabs.MESSAGE_VIEW);
-                act('clear_new_message_priority');
+                act('clear_header_and_verification');
               }}>
               View Messages <Icon name={'envelope-open'} />
             </Tabs.Tab>
@@ -26,7 +26,7 @@ export const RequestMainScreen = (props, context) => {
               selected={tab === RequestTabs.MESSAGE_WRITE}
               onClick={() => {
                 if (tab === RequestTabs.MESSAGE_VIEW) {
-                  act('clear_new_message_priority');
+                  act('clear_header_and_verification');
                 }
                 setTab(RequestTabs.MESSAGE_WRITE);
               }}>
@@ -37,7 +37,7 @@ export const RequestMainScreen = (props, context) => {
                 selected={tab === RequestTabs.ANNOUNCE}
                 onClick={() => {
                   if (tab === RequestTabs.MESSAGE_VIEW) {
-                    act('clear_new_message_priority');
+                    act('clear_header_and_verification');
                   }
                   setTab(RequestTabs.ANNOUNCE);
                 }}>

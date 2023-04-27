@@ -5,6 +5,7 @@ import { RequestsData, RequestType, RequestPriority } from './Types';
 export const MessageWriteTab = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const {
+    authentication_data,
     hack_state,
     assistance_consoles = [],
     supply_consoles = [],
@@ -148,13 +149,15 @@ export const MessageWriteTab = (props, context) => {
             <Button
               warning
               icon="id-card"
-              content={'Not verified'}
+              content={
+                authentication_data.message_verified_by || 'Not verified'
+              }
               onClick={() => act('verify_id')}
             />
             <Button
               warning
               icon="stamp"
-              content={'Not stamped'}
+              content={authentication_data.message_stamped_by || 'Not stamped'}
               onClick={() => act('stamp')}
             />
           </Stack.Item>
@@ -167,6 +170,7 @@ export const MessageWriteTab = (props, context) => {
                   return;
 
                 act('send_message', {
+                  authentication_data: authentication_data,
                   message: messageText,
                   recipient: recipient,
                   request_type: requestType,

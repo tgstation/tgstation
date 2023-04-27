@@ -4,9 +4,10 @@ import { RequestsData, RequestPriority } from './Types';
 
 export const RequestsConsoleHeader = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
-  const { new_message_priority } = data;
+  const { has_mail_send_error, new_message_priority } = data;
   return (
     <Stack.Item>
+      {!!new_message_priority && <ErrorNoticeBox />}
       {!!new_message_priority && <MessageNoticeBox />}
       <EmergencyBox />
     </Stack.Item>
@@ -67,6 +68,14 @@ export const EmergencyBox = (props, context) => {
         </Stack>
       )}
     </>
+  );
+};
+
+export const ErrorNoticeBox = (props, context) => {
+  const { act, data } = useBackend<RequestsData>(context);
+  const { new_message_priority } = data;
+  return (
+    <NoticeBox danger>{'Error occured while sending a message!'}</NoticeBox>
   );
 };
 

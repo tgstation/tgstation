@@ -39,8 +39,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/list/messages = list()
 	/// Priority of the latest message
 	var/new_message_priority = REQ_NO_NEW_MESSAGE
-	///Define for the currently displayed page
-	var/screen = REQ_SCREEN_MAIN
 	// Is the console silent? Set to TRUE for it not to beep all the time
 	var/silent = FALSE
 	// Is the console hacked? Enables EXTREME priority if TRUE
@@ -67,6 +65,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/supplies_requestable = FALSE
 	/// Can you relay information to this console?
 	var/anon_tips_receiver = FALSE
+	/// Did we error in the last mail?
+	var/has_mail_send_error = FALSE
 
 /datum/armor/machinery_requests_console
 	melee = 70
@@ -171,7 +171,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 
 	switch(action)
-		if("clear_new_message_priority")
+		if("clear_header_and_verification")
+			message_stamped_by = null
+			message_verified_by = null
+			announcement_authenticated = null
 			for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 				if (console.department == department)
 					console.new_message_priority = REQ_NO_NEW_MESSAGE
@@ -211,6 +214,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/request_type = params["request_type"]
 			if(!request_type)
 				return
+			var/list/authentication_data = params["authentication_data"]
+
 
 			var/radio_freq
 			switch(ckey(recipient))
@@ -232,14 +237,14 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				"rec_dpt" = recipient,
 				"send_dpt" = department,
 				"message" = message,
-				"verified" = message_verified_by,
-				"stamped" = message_stamped_by,
+				"verified" = authentication_data["message_verified_by"],
+				"stamped" = authentication_data["message_stamped_by"],
 				"priority" = priority,
 				"notify_freq" = radio_freq
 			))
 			signal.send_to_receivers()
 
-			screen = signal.data["done"] ? REQ_SCREEN_SENT : REQ_SCREEN_ERR
+			has_mail_send_error = signal.data["done"]
 
 			if(!silent)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
@@ -252,6 +257,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	data["hack_state"] = hack_state
 	data["new_message_priority"] = new_message_priority
 	data["silent"] = silent
+	data["has_mail_send_error"] = has_mail_send_error
+	data["authentication_data"] = list(
+		"message_verified_by" = message_verified_by,
+		"message_stamped_by" = message_stamped_by,
+		"announcement_authenticated" = announcement_authenticated,
+	)
 	data["messages"] = list()
 	for (var/message in messages)
 		var/list/message_data = list(
@@ -358,22 +369,15 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, params)
 	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
-		if(screen == REQ_SCREEN_AUTHENTICATE)
-			message_verified_by = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
-			SStgui.update_uis(src)
-		if(screen == REQ_SCREEN_ANNOUNCE)
-			if (ACCESS_RC_ANNOUNCE in ID.access)
-				announcement_authenticated = TRUE
-				SStgui.update_uis(src)
-			else
-				announcement_authenticated = FALSE
-				to_chat(user, span_warning("You are not authorized to send announcements!"))
+		message_verified_by = "[ID.registered_name] ([ID.assignment])"
+		SStgui.update_uis(src)
+		announcement_authenticated = (ACCESS_RC_ANNOUNCE in ID.access)
+		SStgui.update_uis(src)
 		return
 	if (istype(attacking_item, /obj/item/stamp))
-		if(screen == REQ_SCREEN_AUTHENTICATE)
-			var/obj/item/stamp/attacking_stamp = attacking_item
-			message_stamped_by = span_boldnotice("Stamped with the [attacking_stamp.name]")
-			SStgui.update_uis(src)
+		var/obj/item/stamp/attacking_stamp = attacking_item
+		message_stamped_by = attacking_stamp.name
+		SStgui.update_uis(src)
 		return
 	return ..()
 
