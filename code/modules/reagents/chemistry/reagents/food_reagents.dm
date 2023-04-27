@@ -13,6 +13,7 @@
 	taste_mult = 4
 	inverse_chem_val = 0.1
 	inverse_chem = null
+	restricted = TRUE
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
