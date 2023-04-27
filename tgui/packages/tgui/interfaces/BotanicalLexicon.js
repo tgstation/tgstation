@@ -60,6 +60,11 @@ const PlantInfo = (props, context) => {
       </Flex.Item>
 
       <Flex.Item class="chicken-metric">
+        {selectedPlant.mutates_from &&
+          'Mutates From:' + selectedPlant.mutates_from}
+      </Flex.Item>
+
+      <Flex.Item class="chicken-metric">
         {selectedPlant.desc && 'Description:' + selectedPlant.desc}
       </Flex.Item>
 

@@ -23,6 +23,8 @@
 *
 */
 /datum/hydroponics/plant_mutation
+	///Name of the plant we mutate from
+	var/list/mutates_from = list()
 	///items that are created if chosen
 	var/obj/item/created_product
 	var/obj/item/seeds/created_seed

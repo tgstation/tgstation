@@ -45,10 +45,18 @@
 			details["lifespan_low"] = listed_mutation.required_lifespan[1]
 			details["lifespan_high"] = listed_mutation.required_lifespan[2]
 
+		if(listed_mutation.mutates_from.len)
+			var/list/parents = list()
+			for(var/item in listed_mutation.mutates_from)
+				var/obj/item/seeds/linked_seeds = item
+				parents += initial(linked_seeds.name)
+
+			details["mutates_from"] = parents.Join(",")
+
 		if(istype(listed_mutation, /datum/hydroponics/plant_mutation/infusion))
 			var/datum/hydroponics/plant_mutation/infusion/infused_type = listed_mutation
 			var/list/reagent_names = list()
-			for(var/datum/reagent/listed_reagent in infused_type.reagent_requirement)
+			for(var/datum/reagent/listed_reagent as anything in infused_type.reagent_requirement)
 				reagent_names += initial(listed_reagent.name)
 			details["required_reagents"] = reagent_names.Join(",")
 
