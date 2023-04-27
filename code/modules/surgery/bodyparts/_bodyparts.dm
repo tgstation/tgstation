@@ -620,6 +620,8 @@
 	owner = new_owner
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
+		if(length(bodypart_traits))
+			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
 				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
@@ -633,6 +635,8 @@
 				))
 		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
 	if(owner)
+		if(length(bodypart_traits))
+			owner.add_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 				set_can_be_disabled(FALSE)
