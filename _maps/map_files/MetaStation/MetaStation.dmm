@@ -15667,6 +15667,11 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/random/directional/east,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fYJ" = (

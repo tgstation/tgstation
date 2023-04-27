@@ -78697,6 +78697,11 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "tpE" = (

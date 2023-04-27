@@ -28777,6 +28777,11 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/toy/figure/botanist,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jrs" = (
