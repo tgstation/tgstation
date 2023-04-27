@@ -8,6 +8,10 @@ SUBSYSTEM_DEF(early_assets)
 	init_order = INIT_ORDER_EARLY_ASSETS
 	flags = SS_NO_FIRE
 
+/datum/controller/subsystem/early_assets/OnConfigLoad()
+	if(CONFIG_GET(flag/disable_early_assets))
+		flags |= SS_NO_INIT
+
 /datum/controller/subsystem/early_assets/Initialize()
 	for (var/datum/asset/asset_type as anything in subtypesof(/datum/asset))
 		if (initial(asset_type._abstract) == asset_type)

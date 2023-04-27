@@ -23,13 +23,14 @@ SUBSYSTEM_DEF(assets)
 
 
 /datum/controller/subsystem/assets/Initialize()
+	var/early_assets_disabled = CONFIG_GET(flag/disable_early_assets)
 	for(var/type in typesof(/datum/asset))
 		var/datum/asset/A = type
 		if (type == initial(A._abstract))
 			continue
 
 		A = load_asset_datum(type)
-		if (!A.early)
+		if (early_assets_disabled || !A.early)
 			if (A.should_generate())
 				generate_queue += A
 			else
