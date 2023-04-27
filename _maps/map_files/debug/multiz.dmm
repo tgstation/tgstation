@@ -302,52 +302,41 @@
 "bE" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"bF" = (
+/obj/structure/closet/secure_closet/chief_medical,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "bG" = (
-/obj/structure/table,
-/obj/item/uplink/debug{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/machinery/airalarm/directional/north{
+	locked = 0;
+	pixel_y = 23
 	},
-/obj/item/uplink/nuclear/debug,
+/obj/structure/closet/secure_closet/captains,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/iron,
 /area/station/command/bridge)
 "bI" = (
 /obj/structure/table,
-/obj/item/card/emag,
-/obj/item/flashlight/emp/debug,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bJ" = (
-/obj/structure/closet/secure_closet/captains{
-	locked = 0
-	},
-/obj/item/stamp/head/captain,
+/obj/structure/table,
+/obj/item/card/id/advanced/gold/captains_spare,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
-/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bM" = (
-/obj/machinery/camera/directional/north,
-/obj/structure/table,
-/obj/item/construction/rld,
-/obj/item/construction/rcd/arcd,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/structure/closet/secure_closet/hop,
+/turf/open/floor/iron{
 	dir = 4
 	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
-	},
-/turf/open/floor/iron,
 /area/station/command/bridge)
 "bN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -387,6 +376,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bW" = (
+/obj/structure/closet/secure_closet/hos,
 /obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
@@ -411,10 +401,9 @@
 /area/station/hallway/primary/central)
 "ce" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/turf/open/floor/iron{
 	dir = 8
 	},
-/turf/open/floor/iron,
 /area/station/command/bridge)
 "cf" = (
 /obj/structure/cable,
@@ -436,28 +425,24 @@
 /area/station/hallway/primary/central)
 "cp" = (
 /obj/machinery/light/directional/south,
-/obj/structure/closet/secure_closet/engineering_chief{
-	locked = 0
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron{
+	dir = 10
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/item/stamp/head/ce,
-/turf/open/floor/iron,
 /area/station/command/bridge)
 "cr" = (
 /obj/machinery/light/directional/south,
-/obj/structure/closet/secure_closet/hos{
-	locked = 0
+/turf/open/floor/iron{
+	dir = 6
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/item/stamp/head/hos,
-/turf/open/floor/iron,
+/area/station/command/bridge)
+"cv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/closed/wall/r_wall,
 /area/station/command/bridge)
 "cw" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cx" = (
@@ -468,12 +453,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"cy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "cA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -529,13 +508,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
-"cK" = (
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "cargounload"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "cL" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -743,22 +715,18 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eb" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/closet/secure_closet/quartermaster,
-/obj/item/stamp/head/qm,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ec" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/turf/open/floor/iron{
 	dir = 4
 	},
-/turf/open/floor/iron,
 /area/station/command/bridge)
 "ee" = (
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
+/turf/open/floor/iron{
+	dir = 9
+	},
+/area/station/hallway/secondary/service)
 "ej" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -795,6 +763,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/station/hallway/secondary/service)
+"ez" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron{
+	dir = 8
+	},
 /area/station/hallway/secondary/service)
 "eC" = (
 /turf/open/openspace,
@@ -869,9 +843,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"ff" = (
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "fo" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -936,11 +907,6 @@
 /obj/structure/grille,
 /turf/open/openspace/airless,
 /area/space/nearstation)
-"hP" = (
-/obj/structure/cable,
-/obj/machinery/computer/communications,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "hT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -980,20 +946,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "iK" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargoload"
+/turf/open/floor/iron{
+	dir = 8
 	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
-"iV" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/hallway/secondary/service)
 "jb" = (
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
@@ -1014,17 +970,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"jy" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargoload";
-	name = "Supply Dock Loading Door"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "jz" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1053,9 +998,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/edge,
 /area/station/engineering/storage)
-"jT" = (
-/turf/closed/wall/r_wall,
-/area/station/cargo/storage)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -1089,17 +1031,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction)
-"kK" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/machinery/computer/department_orders/service{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
-"kV" = (
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "kX" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating,
@@ -1152,7 +1083,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "mZ" = (
@@ -1177,19 +1107,6 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
-"nP" = (
-/obj/structure/table,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/construction/rcd/combat,
-/obj/item/construction/plumbing,
-/turf/open/floor/iron,
-/area/station/command/bridge)
-"nR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "nS" = (
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/siding/white,
@@ -1233,14 +1150,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"pq" = (
-/obj/structure/closet/secure_closet/chief_medical{
-	locked = 0
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/cmo,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "qo" = (
 /turf/open/openspace,
 /area/station/engineering/storage)
@@ -1304,11 +1213,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/service)
-"sj" = (
-/obj/machinery/light/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "su" = (
 /obj/structure/railing{
 	dir = 8
@@ -1338,21 +1242,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage)
-"tq" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 5;
-	height = 7;
-	name = "Cargo Bay";
-	shuttle_id = "cargo_home";
-	width = 12
-	},
-/turf/open/space/basic,
-/area/space)
-"tG" = (
-/obj/machinery/status_display/supply,
-/turf/closed/wall/r_wall,
-/area/station/cargo/storage)
 "uv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1365,35 +1254,6 @@
 "uw" = (
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
-"uy" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/computer/cargo/express{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
-"uR" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external/ruin{
-	name = "Supply Dock Airlock"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
-"uX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1469,12 +1329,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "xI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/station/cargo/storage)
+/area/station/hallway/secondary/service)
 "xK" = (
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/siding/white{
@@ -1482,24 +1339,10 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
-"xN" = (
-/obj/machinery/airalarm/unlocked{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/machinery/computer/department_orders/security{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "xO" = (
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/engineering/storage)
-"yb" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "ye" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1545,23 +1388,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
-"zo" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/fans/tiny,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
-"zY" = (
-/obj/structure/closet/secure_closet/research_director{
-	locked = 0
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/rd,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "Af" = (
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/plating,
@@ -1586,19 +1412,9 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/construction)
-"Ay" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "AG" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/storage)
-"Bd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "Bm" = (
 /obj/structure/sign/warning/directional/east,
 /obj/structure/industrial_lift/public,
@@ -1626,10 +1442,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"CC" = (
-/mob/living/simple_animal/parrot/poly,
-/turf/open/floor/iron,
-/area/station/engineering/storage)
 "CK" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -1654,13 +1466,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
-"DT" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "cargounload"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "DU" = (
 /obj/structure/table,
 /obj/item/flashlight{
@@ -1707,13 +1512,6 @@
 /obj/structure/railing,
 /turf/open/openspace,
 /area/station/engineering/storage)
-"GY" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "cargoload"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "Hp" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1722,43 +1520,6 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/station/construction)
-"HM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
-"HO" = (
-/obj/machinery/door/airlock,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
-"HQ" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
-"HU" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external/ruin{
-	name = "Supply Dock Airlock"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "Ia" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -1814,10 +1575,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage)
-"JJ" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "JY" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -1837,13 +1594,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"Kj" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargounload"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "Km" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1860,25 +1610,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"KJ" = (
-/obj/machinery/computer/cargo{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/button/door/directional/east{
-	id = "cargounload";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = 8
-	},
-/obj/machinery/button/door/directional/east{
-	id = "cargoload";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = -8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "KM" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1919,12 +1650,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
-"LI" = (
-/obj/machinery/computer/department_orders/medical{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "LL" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -1962,12 +1687,6 @@
 	},
 /turf/open/floor/iron/edge,
 /area/station/engineering/storage)
-"Mv" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "cargoload"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "ME" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
@@ -1979,19 +1698,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
-"ML" = (
-/obj/structure/table,
-/obj/item/card/id/advanced/centcom/ert{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/card/id/advanced/chameleon,
-/obj/item/card/id/advanced/gold/captains_spare{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "MP" = (
 /obj/structure/railing{
 	dir = 8
@@ -2017,24 +1723,10 @@
 /obj/item/crowbar/power,
 /turf/open/floor/plating,
 /area/station/engineering/main)
-"NZ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
-"Or" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "Pa" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -2049,12 +1741,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction)
-"Pt" = (
-/obj/machinery/computer/department_orders/engineering{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "Pu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2075,12 +1761,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"Qn" = (
-/obj/machinery/computer/department_orders/science{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "Qo" = (
 /obj/structure/disposalpipe/trunk/multiz/down{
 	dir = 1
@@ -2117,17 +1797,6 @@
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/iron,
 /area/station/construction)
-"Rt" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargounload";
-	name = "Supply Dock Unloading Door"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "RC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -2136,11 +1805,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
-"RH" = (
-/obj/effect/turf_decal/stripes/asteroid/line,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "RQ" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable,
@@ -2149,20 +1813,6 @@
 "SF" = (
 /turf/open/openspace/airless,
 /area/space)
-"SG" = (
-/obj/structure/closet/secure_closet/hop{
-	locked = 0
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/hop,
-/turf/open/floor/iron,
-/area/station/command/bridge)
-"ST" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "TH" = (
 /turf/open/floor/plating,
 /area/station/engineering/storage)
@@ -2186,6 +1836,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/commons/storage/primary)
+"Ui" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/service)
 "Um" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -2213,11 +1867,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
-"Vk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "Vm" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -2246,15 +1895,6 @@
 	dir = 4
 	},
 /area/station/commons/storage/primary)
-"Vv" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "VD" = (
 /obj/structure/sign/warning/directional/north,
 /obj/machinery/light/directional/north,
@@ -2350,7 +1990,7 @@
 	},
 /area/station/hallway/secondary/service)
 "Zc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2362,10 +2002,6 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
-"ZH" = (
-/mob/living/basic/pet/dog/corgi/ian,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "ZQ" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -3312,7 +2948,7 @@ aP
 aP
 bn
 ah
-bE
+bF
 bE
 co
 bE
@@ -3423,7 +3059,7 @@ bu
 bG
 ce
 cp
-bu
+cv
 cC
 bE
 bE
@@ -3528,9 +3164,9 @@ ha
 Na
 iy
 bv
-ML
+bI
 cf
-pq
+eb
 bu
 cD
 bE
@@ -3584,7 +3220,7 @@ iy
 bv
 bJ
 cf
-cy
+cf
 cw
 cD
 bE
@@ -3637,8 +3273,8 @@ Cc
 Cc
 bv
 bK
-cf
-zY
+eb
+eb
 bu
 cD
 Uc
@@ -3690,9 +3326,9 @@ aj
 Cc
 Cc
 bv
-nP
-cf
-SG
+bI
+eb
+eb
 bv
 cD
 Au
@@ -3914,7 +3550,7 @@ gY
 bE
 bE
 cS
-hP
+Hp
 dJ
 dB
 dl
@@ -4069,7 +3705,7 @@ bg
 bq
 ak
 bR
-ZH
+bE
 bE
 bO
 gY
@@ -5182,438 +4818,6 @@ Cc
 Cc
 Cc
 "}
-(53,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(54,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(55,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(56,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(57,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(58,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(59,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(60,1,1) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
 
 (1,1,2) = {"
 SF
@@ -6612,12 +5816,12 @@ eF
 TY
 TY
 mZ
-Ay
-Ay
-Ay
-RH
-Jg
-Jg
+dY
+dY
+dY
+eu
+Gb
+Gb
 nF
 Gb
 Gb
@@ -6666,7 +5870,7 @@ dY
 WN
 TY
 em
-Ay
+dY
 dY
 dY
 eu
@@ -6720,7 +5924,7 @@ dY
 dY
 eF
 sh
-Ay
+dY
 dY
 dY
 eu
@@ -6774,7 +5978,7 @@ dY
 dY
 dY
 sh
-Ay
+dY
 dY
 dY
 eu
@@ -6828,14 +6032,14 @@ dY
 dY
 dY
 sh
-Ay
+dY
 dY
 dY
 eu
 Gb
 Gb
 Gb
-Zc
+Gb
 Gb
 Gb
 Gb
@@ -6882,14 +6086,14 @@ dY
 dY
 dY
 sh
-Ay
+dY
 dY
 dY
 eu
 Gb
 Gb
 Gb
-Zc
+Gb
 Gb
 Gb
 Gb
@@ -6936,14 +6140,14 @@ dY
 dY
 eF
 sh
-Ay
+dY
 dY
 eN
 ey
 eJ
 eJ
 eJ
-Vv
+eJ
 eJ
 eJ
 eJ
@@ -6990,14 +6194,14 @@ dY
 eN
 TY
 sh
-Ay
+dY
 dY
 TY
 dY
 dY
 dY
 dY
-HM
+dY
 dY
 dY
 dY
@@ -7030,8 +6234,8 @@ SF
 SF
 SF
 SF
-TY
-TY
+ad
+ad
 TY
 eF
 xw
@@ -7044,14 +6248,14 @@ eF
 TY
 TY
 sh
-uX
-HM
-Or
-HM
-HM
-HM
-HM
-HM
+dY
+dY
+WN
+dY
+dY
+dY
+dY
+dY
 dY
 dY
 dY
@@ -7084,6 +6288,8 @@ SF
 SF
 SF
 SF
+ad
+af
 TY
 dY
 dY
@@ -7092,20 +6298,18 @@ dY
 dY
 dY
 dY
-dY
-TY
 dY
 WN
 dY
 dY
-uX
 dY
 dY
 dY
 dY
 dY
 dY
-Bd
+dY
+dY
 dY
 dY
 dY
@@ -7138,6 +6342,8 @@ SF
 SF
 SF
 SF
+ad
+af
 TY
 dY
 dY
@@ -7147,12 +6353,10 @@ dY
 dY
 dY
 dY
-TY
 dY
 dY
 dY
 dY
-uX
 dY
 dY
 dY
@@ -7192,9 +6396,9 @@ SF
 SF
 SF
 SF
+ad
+af
 TY
-dY
-dY
 dY
 eN
 dY
@@ -7206,7 +6410,7 @@ dY
 dY
 dY
 dY
-uX
+dY
 dY
 dY
 dY
@@ -7246,21 +6450,21 @@ SF
 SF
 SF
 SF
+ad
+af
+TY
+dY
 TY
 dY
 dY
 dY
-TY
 dY
 dY
-NZ
-NZ
-NZ
-NZ
-NZ
-NZ
-NZ
-NZ
+dY
+dY
+dY
+dY
+dY
 dY
 dY
 dY
@@ -7300,14 +6504,14 @@ SF
 SF
 SF
 SF
+ad
+Dm
 TY
 dY
 dY
 dY
-WN
 dY
 dY
-NZ
 dY
 dY
 dY
@@ -7354,16 +6558,16 @@ SF
 SF
 SF
 SF
+ad
+af
 TY
 dY
 dY
 dY
 dY
 dY
-dY
-NZ
-dY
 TY
+dY
 dY
 dY
 dY
@@ -7408,16 +6612,16 @@ SF
 SF
 SF
 SF
+ad
+af
 TY
 dY
 dY
 dY
 dY
 dY
-dY
-NZ
-dY
 TY
+dY
 dY
 eN
 dY
@@ -7462,22 +6666,22 @@ SF
 SF
 SF
 SF
-jT
-jT
-jT
-jT
-jT
-jT
-jT
-HO
-yb
-jT
-jT
-jT
-jT
-jT
-jT
+ad
+af
 TY
+dY
+dY
+dY
+dY
+dY
+TY
+TY
+TY
+TY
+dY
+TY
+dY
+dY
 TY
 VF
 dY
@@ -7516,21 +6720,21 @@ SF
 SF
 SF
 SF
-jT
-Pt
-LI
-Qn
-xN
-kK
-sj
+ad
+af
+TY
+dY
+sh
+iK
+mZ
 xI
-kV
+TY
 ee
-uy
-kV
-kV
-kV
-kV
+iK
+ez
+iK
+TY
+TY
 TY
 TY
 Wq
@@ -7570,21 +6774,21 @@ SF
 SF
 SF
 SF
-jT
-kV
-kV
-kV
-kV
-kV
-kV
-xI
-kV
-kV
-kV
-kV
-kV
-kV
-kV
+ad
+af
+TY
+dY
+iK
+dY
+iK
+dY
+TY
+sh
+dY
+dY
+dY
+dY
+dY
 TY
 cT
 iu
@@ -7624,21 +6828,21 @@ SF
 SF
 SF
 SF
-jT
-kV
-kV
-kV
-kV
-cK
-kV
-ST
-kV
-kV
-kV
-Mv
-kV
-kV
-kV
+ad
+Dm
+TY
+dY
+mZ
+iK
+sh
+dY
+TY
+sh
+dY
+dY
+dY
+dY
+dY
 TY
 vD
 iu
@@ -7678,21 +6882,21 @@ SF
 SF
 SF
 SF
-jT
-kV
-JJ
-Kj
-Kj
-Kj
-DT
-JJ
-KJ
-JJ
-GY
+ad
+af
+TY
+dY
+dY
+eN
+dY
+dY
+TY
+sh
+dY
+dY
 iK
-iK
-JJ
-kV
+dY
+dY
 TY
 la
 iu
@@ -7732,21 +6936,21 @@ SF
 SF
 SF
 SF
-jT
-jT
-tG
-nR
-nR
-nR
-Rt
-HU
-nR
-HU
-jy
-nR
-nR
-nR
-jT
+ad
+af
+TY
+TY
+TY
+TY
+TY
+TY
+TY
+TY
+TY
+TY
+Ui
+TY
+TY
 TY
 TY
 TY
@@ -7786,23 +6990,23 @@ SF
 SF
 SF
 SF
-jT
-ff
-ff
-ff
-ff
-Vk
-iV
-zo
-tG
-zo
-HQ
-Vk
-ff
-ff
-ff
-ff
 ad
+af
+oA
+af
+af
+af
+af
+oA
+af
+af
+af
+af
+af
+af
+oA
+af
+af
 af
 oA
 af
@@ -7840,22 +7044,22 @@ SF
 SF
 SF
 SF
-jT
-ff
-ff
-ff
-ff
-nR
-Rt
-uR
-nR
-uR
-jy
-nR
-ff
-ff
-ff
-ff
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -7899,13 +7103,13 @@ SF
 SF
 SF
 SF
-Cc
-Cc
-tq
-Cc
-Cc
-Cc
-Cc
+SF
+SF
+SF
+SF
+SF
+SF
+SF
 SF
 SF
 SF
@@ -8422,438 +7626,6 @@ SF
 SF
 SF
 SF
-"}
-(53,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(54,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(55,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(56,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(57,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(58,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(59,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(60,1,2) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
 "}
 
 (1,1,3) = {"
@@ -10066,7 +8838,7 @@ SF
 DK
 Jt
 dS
-CC
+dS
 dS
 dS
 dS
@@ -10974,20 +9746,20 @@ SF
 SF
 SF
 AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+xO
 AG
 AG
 AG
@@ -11028,21 +9800,21 @@ SF
 SF
 SF
 AG
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-AG
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+qo
+xO
+qo
 qo
 qo
 xO
@@ -11663,436 +10435,4 @@ SF
 SF
 SF
 SF
-"}
-(53,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(54,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(55,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(56,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(57,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(58,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(59,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-"}
-(60,1,3) = {"
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
-Cc
 "}

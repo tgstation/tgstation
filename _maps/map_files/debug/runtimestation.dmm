@@ -381,6 +381,11 @@
 /turf/open/floor/iron,
 /area/station/science)
 "bG" = (
+/obj/machinery/airalarm/unlocked{
+	dir = 1;
+	pixel_y = 23
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/table,
 /obj/item/uplink/debug{
 	pixel_x = -4;
@@ -391,7 +396,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bH" = (
@@ -433,10 +437,6 @@
 /obj/item/construction/rcd/arcd,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
-	},
-/obj/machinery/airalarm/unlocked{
-	dir = 1;
-	pixel_y = 23
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -603,7 +603,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/item/stamp/head/ce,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cq" = (
@@ -617,7 +616,6 @@
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/item/stamp/head/hos,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ct" = (
@@ -1225,9 +1223,6 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/computer/department_orders/science{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eH" = (
@@ -1270,9 +1265,6 @@
 "eP" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/machinery/computer/department_orders/security{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eQ" = (
@@ -1667,9 +1659,6 @@
 "fY" = (
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
-/obj/machinery/computer/department_orders/service{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fZ" = (
@@ -1923,13 +1912,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"kR" = (
-/obj/structure/closet/secure_closet/captains{
-	locked = 0
-	},
-/obj/item/stamp/head/captain,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "lc" = (
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
@@ -1957,12 +1939,6 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"mW" = (
-/obj/machinery/computer/department_orders/medical{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2016,10 +1992,6 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"qM" = (
-/mob/living/carbon/human/species/monkey/punpun,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "qQ" = (
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
@@ -2050,12 +2022,6 @@
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"ts" = (
-/obj/machinery/computer/department_orders/engineering{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -2186,15 +2152,17 @@
 /obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"ze" = (
-/mob/living/basic/pet/dog/corgi/ian,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"Ap" = (
+/obj/structure/table,
+/obj/item/ammo_box/c10mm,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "AE" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
@@ -2213,7 +2181,6 @@
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/cmo,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Ce" = (
@@ -2272,9 +2239,10 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "EI" = (
+/obj/structure/closet/secure_closet/captains{
+	locked = 0
+	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/closet/secure_closet/quartermaster,
-/obj/item/stamp/head/qm,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ES" = (
@@ -2291,10 +2259,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"EZ" = (
-/obj/structure/falsewall/reinforced,
-/turf/open/floor/plating,
-/area/station/maintenance/department/bridge)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2312,7 +2276,6 @@
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/rd,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "II" = (
@@ -2339,10 +2302,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"Lv" = (
-/mob/living/simple_animal/parrot/poly,
-/turf/open/floor/plating,
-/area/station/maintenance/department/bridge)
 "Ly" = (
 /obj/machinery/chem_dispenser/chem_synthesizer,
 /turf/open/floor/iron/dark,
@@ -2427,10 +2386,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
-"QC" = (
-/obj/structure/bed/maint,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2446,7 +2401,6 @@
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/item/stamp/head/hop,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "Sj" = (
@@ -2489,14 +2443,6 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
-"Vf" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/food/cracker{
-	pixel_y = 7;
-	pixel_x = -5
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/bridge)
 "Vg" = (
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
@@ -2625,10 +2571,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"Zk" = (
-/obj/structure/bed/dogbed/ian,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/iron,
@@ -6546,8 +6488,8 @@ dZ
 cN
 Tt
 bL
-Zk
-bL
+fg
+aa
 aa
 aa
 aa
@@ -6637,9 +6579,9 @@ dn
 dL
 cN
 Tt
-Rb
-ze
 bL
+fg
+aa
 aa
 aa
 aa
@@ -6707,7 +6649,7 @@ an
 yN
 ab
 bv
-bJ
+Ap
 cf
 BD
 bu
@@ -6730,8 +6672,8 @@ dL
 cN
 Tt
 bL
-bL
-bL
+fg
+aa
 aa
 aa
 aa
@@ -6799,7 +6741,7 @@ an
 yN
 ab
 bv
-kR
+bJ
 cf
 cq
 cw
@@ -6821,8 +6763,8 @@ dn
 dL
 cN
 Tt
-Tt
 Rb
+fg
 aa
 aa
 aa
@@ -6913,8 +6855,8 @@ dn
 dL
 cN
 Tt
-Tt
 Rb
+fg
 aa
 aa
 aa
@@ -7005,8 +6947,8 @@ do
 cZ
 cN
 Tt
-Tt
 Rb
+fg
 aa
 aa
 aa
@@ -7097,8 +7039,8 @@ cS
 cS
 cS
 Tt
-Tt
 Rb
+aa
 aa
 aa
 aa
@@ -7190,8 +7132,8 @@ dE
 cS
 Tt
 bL
-bL
-bL
+aa
+aa
 aa
 aa
 aa
@@ -7281,9 +7223,9 @@ dC
 eW
 vv
 Tt
-Rb
-qM
 bL
+aa
+aa
 aa
 aa
 aa
@@ -7374,8 +7316,8 @@ dJ
 cS
 Tt
 bL
-QC
-bL
+aa
+aa
 aa
 aa
 aa
@@ -7619,7 +7561,7 @@ aa
 aa
 aa
 ad
-Vf
+af
 ak
 as
 aG
@@ -7711,8 +7653,8 @@ aa
 aa
 aa
 bY
-Lv
-aI
+af
+ak
 at
 Wx
 bh
@@ -7895,7 +7837,7 @@ aa
 aa
 aa
 ad
-EZ
+af
 ak
 av
 av
@@ -8463,8 +8405,8 @@ by
 cm
 es
 by
-ts
-mW
+eu
+eu
 eG
 eP
 fY
@@ -8558,13 +8500,13 @@ by
 eu
 eu
 eu
+eQ
+eu
+fa
 eu
 eu
-eZ
 eu
-eu
-eu
-eu
+fo
 eu
 eu
 et
@@ -8647,18 +8589,18 @@ fg
 fg
 fg
 et
-eu
-eu
-eu
-eQ
-eu
-fa
-eu
-eu
-eu
-fo
-eu
-eu
+ev
+eA
+eA
+eA
+eN
+ev
+fe
+ev
+eT
+fm
+fm
+ev
 et
 fO
 fO
@@ -8739,18 +8681,18 @@ aa
 aa
 aa
 et
-ev
-eA
-eA
-eA
-eN
-ev
-fe
-ev
-eT
-fm
-fm
-ev
+fB
+fh
+fh
+fh
+eY
+eR
+fh
+eR
+fc
+fh
+fh
+fh
 et
 ga
 ga
@@ -8802,98 +8744,6 @@ aa
 aa
 "}
 (68,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-et
-fB
-fh
-fh
-fh
-eY
-eR
-fh
-eR
-fc
-fh
-fh
-fh
-et
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(69,1,1) = {"
 aa
 aa
 aa
@@ -8985,7 +8835,7 @@ aa
 aa
 aa
 "}
-(70,1,1) = {"
+(69,1,1) = {"
 aa
 aa
 aa
@@ -9077,7 +8927,7 @@ aa
 aa
 aa
 "}
-(71,1,1) = {"
+(70,1,1) = {"
 aa
 aa
 aa
@@ -9113,6 +8963,98 @@ aa
 aa
 aa
 eJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(71,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
