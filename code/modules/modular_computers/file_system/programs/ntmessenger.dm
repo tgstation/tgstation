@@ -105,9 +105,6 @@
 	return GLOB.default_state
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
@@ -119,27 +116,27 @@
 				return
 
 			ringtone = new_ringtone
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_ringer_status")
 			ringer_status = !ringer_status
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sAndR")
 			sending_and_receiving = !sending_and_receiving
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_viewMessages")
 			viewing_messages = !viewing_messages
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_clearMessages")
 			messages = list()
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_changeSortStyle")
 			sort_by_job = !sort_by_job
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
@@ -158,7 +155,7 @@
 			if(targets.len > 0)
 				send_message(usr, targets, TRUE)
 
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
@@ -182,19 +179,20 @@
 					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
 						disk.send_virus(computer, target, usr)
-						return UI_UPDATE
+						update_static_data(usr, ui)
+						return TRUE
 
 				send_message(usr, list(target))
-				return UI_UPDATE
+				return TRUE
 
 		if("PDA_clearPhoto")
 			saved_image = null
 			photo_path = null
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_toggleVirus")
 			sending_virus = !sending_virus
-			return UI_UPDATE
+			return TRUE
 
 		if("PDA_selectPhoto")
 			if(!issilicon(usr))
@@ -210,18 +208,15 @@
 			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
-	var/list/data = ..()
-
+	var/list/data = list()
 	data["owner"] = computer.saved_identification
-	data["sortByJob"] = sort_by_job
-	data["isSilicon"] = issilicon(user)
-
 	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = list()
-
 	data["messages"] = messages
+	data["sortByJob"] = sort_by_job
+	data["isSilicon"] = issilicon(user)
 	data["messengers"] = ScrubMessengerList()
 	data["ringer_status"] = ringer_status
 	data["sending_and_receiving"] = sending_and_receiving
@@ -233,7 +228,6 @@
 	if(disk && istype(disk))
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
-
 	return data
 
 //////////////////////
@@ -294,8 +288,11 @@
 
 	if (!string_targets.len)
 		return FALSE
-
-	if (prob(1))
+	var/sent_prob = 1
+	if(ishuman(user))
+		var/mob/living/carbon/human/old_person = user
+		sent_prob = old_person.age >= 30 ? 25 : sent_prob
+	if (prob(sent_prob))
 		message += " Sent from my PDA"
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(

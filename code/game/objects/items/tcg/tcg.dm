@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
 	if(istype(item, /obj/item/tcgcard))
-		if(contents.len > 30)
+		if(contents.len >= 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
 			return FALSE
 		var/obj/item/tcgcard/new_card = item

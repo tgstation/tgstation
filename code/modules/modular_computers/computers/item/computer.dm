@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		enabled = TRUE
 		update_appearance()
 		if(open_ui)
-			ui_interact(user)
+			update_tablet_open_uis(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -463,7 +463,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process(delta_time)
+/obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(idle_programs.program_state == PROGRAM_STATE_KILLED)
 			idle_threads.Remove(idle_programs)
 			continue
-		idle_programs.process_tick(delta_time)
+		idle_programs.process_tick(seconds_per_tick)
 		idle_programs.ntnet_status = get_ntnet_status()
 		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
@@ -488,10 +488,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(active_program.program_state == PROGRAM_STATE_KILLED)
 			active_program = null
 		else
-			active_program.process_tick(delta_time)
+			active_program.process_tick(seconds_per_tick)
 			active_program.ntnet_status = get_ntnet_status()
 
-	handle_power(delta_time) // Handles all computer power interaction
+	handle_power(seconds_per_tick) // Handles all computer power interaction
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
@@ -581,11 +581,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
 	wipe_program(forced)
-	var/mob/user = usr
-	if(user && istype(user))
-		//Here to prevent programs sleeping in destroy
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
+	update_tablet_open_uis(usr)
 
 /obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
 	if(program.computer != src)
@@ -621,7 +618,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	active_program = program
 	program.alert_pending = FALSE
 	update_appearance()
-	ui_interact(user)
+	update_tablet_open_uis(user)
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
@@ -651,7 +648,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!get_ntnet_status())
 		return FALSE
 
-	return SSmodular_computers.add_log("[src]: [text]", network_id)
+	return SSmodular_computers.add_log("[src]: [text]")
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

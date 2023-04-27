@@ -1,8 +1,9 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
-import { getGasLabel } from '../constants';
+
+import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+import { getGasLabel } from '../constants';
+import { useBackend } from '../backend';
 
 type Data = {
   filter_types: Filter[];
@@ -14,7 +15,7 @@ type Data = {
 type Filter = {
   id: number;
   enabled: BooleanLike;
-  gas_id: number;
+  gas_id: string;
   gas_name: string;
 };
 

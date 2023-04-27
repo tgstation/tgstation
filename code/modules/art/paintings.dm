@@ -83,6 +83,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -423,6 +424,7 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -435,6 +437,7 @@
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -649,8 +652,6 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
-	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

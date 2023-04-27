@@ -5,7 +5,7 @@
 	icon_state = "sleeper"
 	base_icon_state = "sleeper"
 	density = FALSE
-	obj_flags = NO_BUILD
+	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 

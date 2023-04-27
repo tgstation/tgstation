@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "mobs can now be set on fire using flares and candles if they are covered in something flammable"

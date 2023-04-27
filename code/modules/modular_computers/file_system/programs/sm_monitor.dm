@@ -54,10 +54,7 @@
 	data["focus_uid"] = focused_supermatter?.uid
 	return data
 
-/datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/supermatter_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_refresh")
 			refresh()
@@ -106,7 +103,7 @@
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 		. = max(., S.get_status())
 
-/datum/computer_file/program/supermatter_monitor/process_tick(delta_time)
+/datum/computer_file/program/supermatter_monitor/process_tick(seconds_per_tick)
 	..()
 	var/new_status = get_status()
 	if(last_status != new_status)
