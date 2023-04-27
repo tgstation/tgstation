@@ -2218,6 +2218,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/port/fore)
+"aBc" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/floor2/port)
 "aBd" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -8616,6 +8621,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port)
 "cdN" = (
@@ -20896,6 +20902,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/port/fore)
+"fAW" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "fBa" = (
 /obj/structure/railing{
 	dir = 4
@@ -22944,6 +22957,14 @@
 	},
 /turf/open/floor/mineral/silver,
 /area/station/service/chapel/funeral)
+"gca" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/turf/open/floor/pod/dark,
+/area/station/cargo/storage)
 "gcf" = (
 /obj/structure/table/wood/poker,
 /obj/effect/turf_decal/siding/wood{
@@ -23378,17 +23399,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"gic" = (
-/obj/effect/turf_decal/trimline/red/warning{
-	dir = 8
-	},
-/obj/machinery/button/door/directional/north{
-	id = "Arrivalblast";
-	pixel_y = 31;
-	pixel_x = -24
-	},
-/turf/open/floor/pod/dark,
-/area/station/hallway/secondary/entry)
 "gid" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/trash/mess,
@@ -25136,6 +25146,10 @@
 "gIl" = (
 /turf/closed/wall,
 /area/station/command/teleporter)
+"gIm" = (
+/obj/structure/cable,
+/turf/open/openspace,
+/area/station/maintenance/floor4/port/aft)
 "gIo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -27869,6 +27883,11 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
+"hwc" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable,
+/turf/open/openspace,
+/area/station/maintenance/floor4/port/aft)
 "hwi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30102,6 +30121,17 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
+"icV" = (
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "Arrivalblast";
+	pixel_y = 31;
+	pixel_x = -24
+	},
+/turf/open/floor/pod/dark,
+/area/station/hallway/secondary/entry)
 "icY" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -34206,6 +34236,19 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"jkQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/floor3/port)
 "jlx" = (
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
@@ -52275,6 +52318,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/port)
 "nJK" = (
@@ -78948,6 +78992,11 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/commons/storage/primary)
+"vdu" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable,
+/turf/open/openspace,
+/area/station/maintenance/floor3/port)
 "vdP" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -82003,6 +82052,7 @@
 "vTS" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port)
 "vTY" = (
@@ -82744,13 +82794,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"wdR" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/conveyor{
-	id = "QMLoad"
-	},
-/turf/open/floor/pod/dark,
-/area/station/cargo/storage)
 "wdV" = (
 /turf/open/floor/carpet/royalblue,
 /area/station/medical/break_room)
@@ -90685,14 +90728,6 @@
 /obj/structure/window/spawner,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
-"yhd" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad"
-	},
-/turf/open/floor/pod/dark,
-/area/station/cargo/storage)
 "yhj" = (
 /obj/structure/railing{
 	dir = 1
@@ -114293,7 +114328,7 @@ qlt
 qlt
 qlt
 qlt
-gic
+icV
 lCo
 tWX
 cHX
@@ -118360,7 +118395,7 @@ dOs
 dOs
 dOs
 dOs
-wdR
+fAW
 bZr
 rbT
 nTZ
@@ -118874,7 +118909,7 @@ dOs
 dOs
 dOs
 dOs
-yhd
+gca
 mjQ
 rbT
 ijL
@@ -187536,7 +187571,7 @@ gXY
 gXY
 gXY
 aal
-iiA
+aBc
 iiA
 yeB
 sKQ
@@ -253072,7 +253107,7 @@ eSa
 tGn
 tGn
 tDf
-aGQ
+vdu
 aGQ
 tGn
 tGn
@@ -253329,7 +253364,7 @@ uZc
 tGn
 qCv
 jQK
-mex
+jkQ
 mex
 xJW
 pSl
@@ -318608,7 +318643,7 @@ fwC
 cWK
 sWo
 ycM
-sOU
+hwc
 sOU
 wQK
 nXQ
@@ -318865,7 +318900,7 @@ sWo
 jJC
 wyv
 ycM
-sOU
+gIm
 sOU
 gCV
 bzM
