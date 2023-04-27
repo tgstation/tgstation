@@ -49,7 +49,7 @@
 	else
 		count = MINOR_AMOUNT
 	for(var/increment = 1, increment <= count, increment++)
-		var/obj/item/seeds/picked_seed = pick(typesof(/obj/item/seeds) - /obj/item/seeds - /obj/item/seeds/sample - /obj/item/seeds/gatfruit - /obj/item/seeds/cherry/bomb - /obj/item/seeds/random - typesof(/obj/item/seeds/lavaland))
+		var/obj/item/seeds/picked_seed = pick(typesof(/obj/item/seeds) - /obj/item/seeds - /obj/item/seeds/sample - /obj/item/seeds/gatfruit - /obj/item/seeds/cherry/bomb - /obj/item/seeds/random - typesof(/obj/item/seeds/lavaland) - /obj/item/seeds/replicapod - /obj/item/seeds/kronkus)
 		unfufilled_requirements += picked_seed
 
 /datum/component/botany_tree/proc/on_plant_final_growth(datum/source, obj/machinery/hydroponics/grown_location)
