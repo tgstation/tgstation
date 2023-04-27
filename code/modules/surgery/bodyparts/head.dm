@@ -173,6 +173,8 @@
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 
+	if(!owner)
+		return
 	real_name = owner.real_name
 	if(HAS_TRAIT(owner, TRAIT_HUSK))
 		real_name = "Unknown"
@@ -256,6 +258,10 @@
 			. += hair_overlay
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
+
+		for(var/image/limb_image as anything in .)
+			limb_image.pixel_y = y_offset
+
 	return .
 
 /mob/living/proc/set_haircolor(hex_string, override)

@@ -754,17 +754,20 @@
 	else
 		draw_color = null
 
-	if(!is_creating || !owner)
+	if(!owner)
 		return
 
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
+	y_offset = human_owner.get_top_offset(src)
+
+	if(!is_creating)
+		return
+
 	var/datum/species/owner_species = human_owner.dna.species
 	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
-
-	y_offset = human_owner.get_top_offset(src)
 
 	if(owner_species.use_skintones)
 		skin_tone = human_owner.skin_tone
@@ -836,6 +839,9 @@
 		limb.icon = icon_invisible
 		limb.icon_state = "invisible_[body_zone]"
 		. += limb
+		if(!dropped)
+			for(var/image/limb_image as anything in .)
+				limb_image.pixel_y = y_offset
 		return .
 
 	// Normal non-husk handling

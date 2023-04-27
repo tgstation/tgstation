@@ -108,7 +108,7 @@
 /obj/item/bodypart/arm/get_limb_icon(dropped)
 	. = ..()
 	if(bloody)
-		. += image('icons/effects/blood.dmi', bloody_icon, -GLOVES_LAYER)
+		. += image('icons/effects/blood.dmi', bloody_icon, -GLOVES_LAYER, pixel_y = y_offset)
 	return .
 
 /obj/item/bodypart/arm/set_disabled(new_disabled)
