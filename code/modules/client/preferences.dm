@@ -359,13 +359,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /// Check if UI assets are ready
 /datum/preferences/proc/are_assets_ready()
-	var/all_loaded = TRUE
-	for(var/typepath in get_ui_asset_typepaths())
-		var/datum/asset/asset = get_unregistered_asset_datum(typepath)
-		if(!asset.is_ready())
-			all_loaded = FALSE
-
-	return all_loaded
+	return asset_loading_count == 0
 
 /datum/preferences/proc/register_assets_loaded()
 	for(var/typepath in get_ui_asset_typepaths())
