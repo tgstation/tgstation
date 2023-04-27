@@ -84,7 +84,7 @@ handles linking back and forth.
 	else if(!silo.holds[src])
 		silo.holds[src] = TRUE
 	else
-		silo.holds[src] -= src
+		silo.holds -= src
 
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
