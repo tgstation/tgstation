@@ -26,7 +26,29 @@
 
 
 /**
- * Register a browser asset with the asset cache system.
+ * Register a browser asset with the asset cache system without yielding to the MC.
+ * register_asset should be preferred where possible
+ * returns a /datum/asset_cache_item.
+ * mutiple calls to register the same asset under the same asset_name return the same datum.
+ *
+ * Arguments:
+ * * asset_name - the identifier of the asset.
+ * * asset - the actual asset file (or an asset_cache_item datum).
+ * * file_hash - optional, a hash of the contents of the asset files contents. used so asset_cache_item doesnt have to hash it again
+ * * dmi_file_path - optional, means that the given asset is from the rsc and thus we dont need to do some expensive operations
+ */
+/datum/asset_transport/proc/register_asset_immediate(asset_name, asset, file_hash, dmi_file_path)
+	var/datum/asset_cache_item/ACI = asset
+	if (!istype(ACI))
+		ACI = new(asset_name, asset, file_hash, dmi_file_path)
+		// MD5 calls are slow
+		if (!ACI || !ACI.hash)
+			CRASH("ERROR: Invalid asset: [asset_name]:[asset]:[ACI]")
+
+	return cache_asset(ACI, asset_name)
+
+/**
+ * Register a browser asset with the asset cache system, allowing yielding to the MC.
  * returns a /datum/asset_cache_item.
  * mutiple calls to register the same asset under the same asset_name return the same datum.
  *
@@ -41,9 +63,13 @@
 	if (!istype(ACI))
 		ACI = new(asset_name, asset, file_hash, dmi_file_path)
 		// MD5 calls are slow
-		CHECK_TICK
 		if (!ACI || !ACI.hash)
 			CRASH("ERROR: Invalid asset: [asset_name]:[asset]:[ACI]")
+		CHECK_TICK
+
+	return cache_asset(ACI, asset_name)
+
+/datum/asset_transport/proc/cache_asset(datum/asset_cache_item/ACI, asset_name)
 	if (SSassets.cache[asset_name])
 		var/datum/asset_cache_item/OACI = SSassets.cache[asset_name]
 		OACI.legacy = ACI.legacy = (ACI.legacy|OACI.legacy)

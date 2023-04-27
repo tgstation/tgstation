@@ -1254,7 +1254,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if (isfile(thing)) //special snowflake
 			var/name = SANITIZE_FILENAME("[generate_asset_name(thing)].png")
 			if (!SSassets.cache[name])
-				SSassets.transport.register_asset(name, thing)
+				SSassets.transport.register_asset_immediate(name, thing)
 			for (var/thing2 in targets)
 				SSassets.transport.send_assets(thing2, name)
 			if(sourceonly)
@@ -1295,7 +1295,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	key = "[name_and_ref[3]].png"
 
 	if(!SSassets.cache[key])
-		SSassets.transport.register_asset(key, rsc_ref, file_hash, icon_path)
+		SSassets.transport.register_asset_immediate(key, rsc_ref, file_hash, icon_path)
 	for (var/client_target in targets)
 		SSassets.transport.send_assets(client_target, key)
 	if(sourceonly)
