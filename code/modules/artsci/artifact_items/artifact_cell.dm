@@ -9,6 +9,7 @@
 /obj/item/stock_parts/cell/artifact/Initialize(mapload, var/forced_origin = null)
 	. = ..()
 	assoc_comp = AddComponent(assoc_comp, forced_origin)
+	START_PROCESSING(SSobj, src)
 
 /datum/component/artifact/cell
 	associated_object = /obj/item/stock_parts/cell/artifact
@@ -40,3 +41,7 @@
 	. = FALSE
 	if(assoc_comp.active)
 		return ..()
+
+/obj/item/stock_parts/cell/artifact/process()
+	. = ..()
+	assoc_comp.heat_from_turf(get_turf(src))

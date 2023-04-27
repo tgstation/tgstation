@@ -14,6 +14,7 @@
 	assoc_comp = AddComponent(assoc_comp, forced_origin)
 
 /obj/structure/artifact/process()
+	assoc_comp?.heat_from_turf(get_turf(src))
 	if(assoc_comp?.active)
 		assoc_comp.effect_process()
 

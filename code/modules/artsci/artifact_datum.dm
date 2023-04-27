@@ -267,6 +267,9 @@
 	Stimulate(STIMULUS_SHOCK, 800 * severity)
 	Stimulate(STIMULUS_RADIATION, 2 * severity)
 
+/datum/component/artifact/proc/heat_from_turf(turf/target)
+	Stimulate(STIMULUS_HEAT, target.return_air().temperature)
+
 /datum/component/artifact/proc/on_analysis(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER
 	if(analysis)

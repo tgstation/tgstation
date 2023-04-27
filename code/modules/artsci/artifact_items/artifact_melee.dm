@@ -18,6 +18,7 @@
 /obj/item/melee/artifact/Initialize(mapload, var/forced_origin = null)
 	. = ..()
 	assoc_comp = AddComponent(assoc_comp, forced_origin)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
 	SIGNAL_HANDLER
@@ -39,6 +40,10 @@
 			if(victim.move_resist < MOVE_FORCE_OVERPOWERING)
 				do_teleport(victim, get_turf(victim), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	COOLDOWN_START(src,special_cooldown,special_cooldown_time)
+
+/obj/item/melee/artifact/process()
+	. = ..()
+	assoc_comp.heat_from_turf(get_turf(src))
 
 /datum/component/artifact/melee
 	associated_object = /obj/item/melee/artifact
