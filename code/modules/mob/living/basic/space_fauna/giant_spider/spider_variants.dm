@@ -9,11 +9,11 @@
 	icon_state = "ambush"
 	icon_living = "ambush"
 	icon_dead = "ambush_dead"
+	gender = FEMALE
 	maxHealth = 80
 	health = 80
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	poison_per_bite = 5
 	speed = 5
 	player_speed_modifier = -3.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
@@ -60,10 +60,11 @@
 	icon_dead = "scout_dead"
 	maxHealth = 40
 	health = 40
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	obj_damage = 10
+	melee_damage_lower = 5
+	melee_damage_upper = 10
 	poison_per_bite = 0
-	speed = 2.5
+	speed = 2.8
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
 	menu_description = "Fast spider variant specializing in scouting and alerting of prey ,with the ability to travel in vents."
