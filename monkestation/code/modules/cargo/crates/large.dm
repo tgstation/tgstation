@@ -42,3 +42,13 @@
 	crate_name = "particle accelerator crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
+
+/datum/supply_pack/goody/monkestation_stickers
+	name = "Three Pack of Monkestation Stickers"
+	desc = "Stickers for all!"
+	cost = 2500
+	contains = list(/obj/item/storage/box/monkestation_stickers,
+					/obj/item/storage/box/monkestation_stickers,
+					/obj/item/storage/box/monkestation_stickers)
+	crate_name = "collectable stickers crate"
+	crate_type = /obj/structure/closet/crate

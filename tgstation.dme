@@ -5290,6 +5290,7 @@
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
 #include "monkestation\code\game\objects\items\plushies.dm"
+#include "monkestation\code\game\objects\items\stickers.dm"
 #include "monkestation\code\game\objects\items\circuitboards\computer_circuitboards.dm"
 #include "monkestation\code\game\objects\items\circuitboards\holy_weapons.dm"
 #include "monkestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
