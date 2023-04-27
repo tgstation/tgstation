@@ -76,8 +76,9 @@
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
 		/mob/living/basic/giant_spider,
-		/mob/living/basic/giant_spider/hunter,
+		/mob/living/basic/giant_spider/ambush,
 		/mob/living/basic/giant_spider/nurse,
+		/mob/living/basic/giant_spider/hunter,
 		/mob/living/basic/giant_spider/scout,
 	)
 

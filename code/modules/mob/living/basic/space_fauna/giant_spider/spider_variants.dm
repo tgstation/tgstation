@@ -20,6 +20,10 @@
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
+
 	var/datum/action/cooldown/web_sneak/sneak_web = new(src)
 	sneak_web.Grant(src)
 

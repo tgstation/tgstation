@@ -1,6 +1,7 @@
 /datum/action/cooldown/web_sneak
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "web_sneak"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
@@ -29,4 +30,3 @@
 		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
 
 	return TRUE
-

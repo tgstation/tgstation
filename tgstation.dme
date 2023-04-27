@@ -3928,6 +3928,7 @@
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\hivemind.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\lay_eggs.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\web.dm"
+#include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\web_sneak.dm"
 #include "code\modules\mob\living\basic\space_fauna\giant_spider\spider_abilities\wrap.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\chasing_spikes.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_eyeball.dm"
