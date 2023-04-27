@@ -82,15 +82,10 @@
 /obj/item/cult_bastard/IsReflect(def_zone)
 	if(!spinning)
 		return FALSE
-	playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 	return TRUE
 
 /obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!prob(final_block_chance))
 		return FALSE
-	if(attack_type == PROJECTILE_ATTACK)
-		owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-		return TRUE
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 	return TRUE

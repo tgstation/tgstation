@@ -735,15 +735,9 @@ Striking a noncultist, however, will tear their flesh."}
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
-			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(get_turf(owner), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-			return TRUE
-		else
-			owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-			return TRUE
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
+		return TRUE
 	else
 		return FALSE
 
