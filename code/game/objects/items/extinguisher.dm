@@ -142,6 +142,7 @@
 	return
 
 /obj/item/extinguisher/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
 	if(istype(I, /obj/item/reagent_containers))
 		if(safety)
 			to_chat(user, "<span class='warning'>You need to take off the safety before you can refill the [src]!</span>")
