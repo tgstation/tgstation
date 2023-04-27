@@ -1,3 +1,33 @@
+/**
+ * update_tablet_open_uis
+ *
+ * Will search the user to see if they have the tablet open.
+ * If they don't, we'll open a new UI depending on the tab the tablet is meant to be on.
+ * If they do, we'll update the interface and title, then update all static data and re-send assets.
+ *
+ * This is best called when you're actually changing the app, as we don't check
+ * if we're swapping to the current UI repeatedly.
+ * Args:
+ * user - The person whose UI we're updating.
+ */
+/obj/item/modular_computer/proc/update_tablet_open_uis(mob/user)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+	if(!active_ui)
+		if(active_program)
+			active_ui = new(user, src, active_program.tgui_id, active_program.filedesc)
+		else
+			active_ui = new(user, src, "NtosMain")
+		return active_ui.open()
+
+	if(active_program)
+		active_ui.interface = active_program.tgui_id
+		active_ui.title = active_program.filedesc
+	else
+		active_ui.interface = "NtosMain"
+
+	update_static_data(user, active_ui)
+	active_ui.send_assets()
+
 /obj/item/modular_computer/interact(mob/user)
 	if(enabled)
 		ui_interact(user)
@@ -23,23 +53,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		if(active_program)
-			ui = new(user, src, active_program.tgui_id, active_program.filedesc)
-		else
-			ui = new(user, src, "NtosMain")
-		ui.open()
-		return
-
-	var/old_open_ui = ui.interface
-	if(active_program)
-		ui.interface = active_program.tgui_id
-		ui.title = active_program.filedesc
-	else
-		ui.interface = "NtosMain"
-	//opened a new UI
-	if(old_open_ui != ui.interface)
-		update_static_data(user, ui)
-		ui.send_assets()
+		update_tablet_open_uis(user)
 
 /obj/item/modular_computer/ui_assets(mob/user)
 	var/list/data = list()
@@ -49,14 +63,12 @@
 	return data
 
 /obj/item/modular_computer/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	if(active_program)
 		data += active_program.ui_static_data(user)
 		return data
 
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
-
 	return data
 
 /obj/item/modular_computer/ui_data(mob/user)
@@ -64,6 +76,11 @@
 	if(active_program)
 		data += active_program.ui_data(user)
 		return data
+
+	data["pai"] = inserted_pai
+	data["has_light"] = has_light
+	data["light_on"] = light_on
+	data["comp_light_color"] = comp_light_color
 
 	data["login"] = list(
 		IDName = saved_identification || "Unknown",
@@ -93,10 +110,6 @@
 			"alert" = program.alert_pending,
 		))
 
-	data["has_light"] = has_light
-	data["light_on"] = light_on
-	data["comp_light_color"] = comp_light_color
-	data["pai"] = inserted_pai
 	return data
 
 // Handles user's GUI input
@@ -105,14 +118,11 @@
 	if(.)
 		return
 
-	if(ishuman(usr) && !allow_chunky) //in /datum/computer_file/program/ui_act() too
+	if(ishuman(usr) && !allow_chunky)
 		var/mob/living/carbon/human/human_user = usr
 		if(human_user.check_chunky_fingers())
 			balloon_alert(human_user, "fingers are too big!")
 			return TRUE
-
-	if(active_program)
-		active_program.ui_act(action, params, ui, state)
 
 	switch(action)
 		if("PC_exit")
@@ -134,6 +144,7 @@
 
 			active_program = null
 			update_appearance()
+			return TRUE
 
 		if("PC_killprogram")
 			var/prog = params["name"]
@@ -144,12 +155,15 @@
 
 			killed_program.kill_program(forced = TRUE)
 			to_chat(usr, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
+			return TRUE
 
 		if("PC_runprogram")
 			open_program(usr, find_file_by_name(params["name"]))
+			return TRUE
 
 		if("PC_toggle_light")
-			return toggle_flashlight()
+			toggle_flashlight()
+			return TRUE
 
 		if("PC_light_color")
 			var/mob/user = usr
@@ -161,7 +175,8 @@
 				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
 					to_chat(user, span_warning("That color is too dark! Choose a lighter one."))
 					new_color = null
-			return set_flashlight_color(new_color)
+			set_flashlight_color(new_color)
+			return TRUE
 
 		if("PC_Eject_Disk")
 			var/param = params["name"]
@@ -205,7 +220,10 @@
 					update_appearance(UPDATE_ICON)
 				if("interact")
 					inserted_pai.attack_self(usr)
-			return UI_UPDATE
+			return TRUE
+
+	if(active_program)
+		return active_program.ui_act(action, params, ui, state)
 
 /obj/item/modular_computer/ui_host()
 	if(physical)
