@@ -97,7 +97,7 @@
 	owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 	owner_mob.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	if (owner_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner_mob.blood_volume += 1 * seconds_per_tick
+		owner_mob.blood_volume += 2 * seconds_per_tick
 	owner_mob.updatehealth()
 
 /datum/component/damage_aura/process(seconds_per_tick)
