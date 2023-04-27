@@ -1,0 +1,8 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "SiliConnect can download borg logs again."
+  - bugfix: "The RD can once again enable Admin mode on Wirecarp"
+  - bugfix: "NT IRN can once again see the shopping cart and call the cargo shuttle."
+  - bugfix: "Chat Client, ID Management and Messenger should now update their UIs properly."
+  - code_imp: "PDAs will hopefully not lag as much when clicking on buttons (such as in ID management)."
