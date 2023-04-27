@@ -53,7 +53,7 @@
  * This spider is only slightly faster than a human.
  */
 /mob/living/basic/giant_spider/scout
-	name = "hunter spider"
+	name = "scout spider"
 	desc = "Furry and blueish black, it makes you shudder to look at it. This one has sparkling blue eyes."
 	icon_state = "scout"
 	icon_living = "scout"
