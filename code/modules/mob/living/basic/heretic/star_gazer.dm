@@ -7,17 +7,18 @@
 	pixel_x = -32
 	base_pixel_x = -32
 	basic_mob_flags = DEL_ON_DEATH
-	mob_biotypes = MOB_HUMANOID
+	mob_biotypes = MOB_HUMANOID | MOB_EPIC
 	faction = list(FACTION_HERETIC)
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	speed = -0.2
-	maxHealth = 3500
-	health = 3500
+	maxHealth = 6000
+	health = 6000
 
 	obj_damage = 400
-	melee_damage_lower = 35
-	melee_damage_upper = 35
+	armour_penetration = 20
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "ravages"
@@ -25,7 +26,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
 	unsuitable_atmos_damage = 0
@@ -47,10 +48,13 @@
 /mob/living/basic/star_gazer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/cosmic_domain))
+	AddElement(/datum/element/death_explosion, 3, 6, 12)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/effect_trail/cosmic_trail)
+	AddElement(/datum/element/ai_target_damagesource)
+	AddComponent(/datum/component/regenerator, outline_colour = "#b97a5d")
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
@@ -97,6 +101,13 @@
 	if(living_target.pulledby != living_pawn)
 		if(living_pawn.Adjacent(living_target) && isturf(living_target.loc) && living_target.stat == SOFT_CRIT)
 			living_target.grabbedby(living_pawn)
+	for(var/mob/living/nearby_mob in range(1, living_pawn))
+		if(nearby_mob.stat == DEAD || living_target == nearby_mob || faction_check(nearby_mob.faction, list(FACTION_HERETIC)))
+			continue
+		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
+		nearby_mob.adjustBruteLoss(10)
+		living_pawn.do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
+		log_combat(living_pawn, nearby_mob, "slashed")
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
 	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
