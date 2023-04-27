@@ -426,15 +426,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"gi" = (
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/broken/directional/south,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/shuttle/abandoned/cargo)
 "gu" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch,
@@ -466,6 +457,13 @@
 	pixel_y = 24
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/abandoned/cargo)
+"iS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate,
+/obj/item/pickaxe/emergency,
+/obj/item/mining_scanner,
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "iT" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -579,6 +577,14 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"rq" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "rQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -605,6 +611,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
+"uc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned/cargo)
 "uw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -853,13 +864,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"Ni" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate,
-/obj/item/pickaxe/emergency,
-/obj/item/mining_scanner,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned/cargo)
 "NK" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
@@ -888,14 +892,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
-"Qm" = (
-/obj/structure/cable,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
 "QD" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
@@ -905,6 +901,15 @@
 /area/shuttle/abandoned/cargo)
 "QY" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/cargo)
+"Rx" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/broken/directional/south,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "Sw" = (
 /obj/item/toy/plush/lizard_plushie/green{
@@ -1060,7 +1065,7 @@ QD
 Fg
 iT
 ad
-ad
+uc
 ad
 mB
 as
@@ -1154,7 +1159,7 @@ ac
 ad
 uw
 ad
-gi
+Rx
 aG
 ah
 dF
@@ -1299,7 +1304,7 @@ aH
 aB
 aj
 qx
-Qm
+rq
 Dy
 yX
 fU
@@ -1361,7 +1366,7 @@ hj
 ao
 ao
 ao
-Ni
+iS
 aj
 af
 af
