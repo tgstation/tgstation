@@ -6,19 +6,33 @@
 //all of our asset datums, used for referring to these later
 GLOBAL_LIST_EMPTY(asset_datums)
 
+/// Gets an asset datum before it's even registered. Only useful for registering signals
+/proc/get_unregistered_asset_datum(type)
+	var/datum/asset/asset = GLOB.asset_datums[type]
+	if(!asset)
+		if(!ispath(type, /datum/asset))
+			CRASH("Attempted to retrieve invalid asset type: [type]")
+
+		asset = new type()
+	return asset
+
 //get an assetdatum or make a new one
 //does NOT ensure it's filled, if you want that use get_asset_datum()
 /proc/load_asset_datum(type)
-	return GLOB.asset_datums[type] || new type()
+	var/datum/asset/potentially_unregistered_asset = get_unregistered_asset_datum(type)
+	return potentially_unregistered_asset.ensure_registered()
 
 /proc/get_asset_datum(type)
-	var/datum/asset/loaded_asset = GLOB.asset_datums[type] || new type()
-	return loaded_asset.ensure_ready()
+	var/datum/asset/registered_asset = load_asset_datum(type)
+	return registered_asset.ensure_generated()
 
 /datum/asset
 	var/_abstract = /datum/asset
 	var/cached_serialized_url_mappings
 	var/cached_serialized_url_mappings_transport_type
+
+	/// If the asset datum has been registered or not
+	var/registered = FALSE
 
 	/// Whether or not this asset should be loaded in the "early assets" SS
 	var/early = FALSE
@@ -30,16 +44,34 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
-	register()
+
+/datum/asset/proc/ensure_registered()
+	if(!registered)
+		register()
+		registered = TRUE
+	return src
 
 /// Stub that allows us to react to something trying to get us
 /// Not useful here, more handy for sprite sheets
-/datum/asset/proc/ensure_ready()
+/datum/asset/proc/ensure_generated()
+	SHOULD_NOT_SLEEP(TRUE)
 	return src
 
-/// Stub to hook into if your asset is having its generation queued by SSasset_loading
+/// Check if the asset is fully loaded
+/datum/asset/proc/is_ready()
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	return registered
+
+/// Stub to hook into if your asset is having its generation queued by SSassets or SSearly_assets
+/datum/asset/proc/should_generate()
+	SHOULD_NOT_SLEEP(TRUE)
+	return FALSE
+
+/// Stub to hook into if your asset is having its generation queued by SSassets or SSearly_assets
 /datum/asset/proc/queued_generation()
-	CRASH("[type] inserted into SSasset_loading despite not implementing /proc/queued_generation")
+	SHOULD_NOT_SLEEP(TRUE)
+	CRASH("[type] inserted into generation queue despite not implementing /proc/queued_generation")
 
 /datum/asset/proc/get_url_mappings()
 	return list()
@@ -130,6 +162,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 #define SPRSZ_COUNT 1
 #define SPRSZ_ICON 2
 #define SPRSZ_STRIPPED 3
+// Size items after this point are cut after loading
+#define SPRSZ_ASSET_CACHE_ITEM 4
 
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
@@ -146,13 +180,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
 
-/datum/asset/spritesheet/proc/should_load_immediately()
+/datum/asset/spritesheet/should_generate()
 #ifdef DO_NOT_DEFER_ASSETS
-	return TRUE
+	return FALSE // generate on register
 #else
-	return load_immediately
+	return !load_immediately
 #endif
-
 
 /datum/asset/spritesheet/should_refresh()
 	if (..())
@@ -182,10 +215,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		load_immediately = TRUE
 
 	create_spritesheets()
-	if(should_load_immediately())
-		realize_spritesheets(yield = FALSE)
-	else
-		SSasset_loading.queue_asset(src)
+
+	if(!should_generate())
+		// sprite sheets always generate, what this means is we should generate them right now
+		do
+			realize_spritesheets(yield = TRUE)
+			CHECK_TICK
+		while(!fully_generated)
 
 /datum/asset/spritesheet/proc/realize_spritesheets(yield)
 	if(fully_generated)
@@ -197,33 +233,48 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		if(yield && TICK_CHECK)
 			return
 
-	ensure_stripped()
+	if(!ensure_stripped(yield))
+		return
+
 	for(var/size_id in sizes)
-		var/size = sizes[size_id]
-		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+		var/list/size = sizes[size_id]
+		if(size[SPRSZ_ASSET_CACHE_ITEM])
+			continue
+
+		size[SPRSZ_ASSET_CACHE_ITEM] = SSassets.transport.register_asset_immediate("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+		if(yield && TICK_CHECK)
+			return
+
 	var/css_name = "spritesheet_[name].css"
 	var/file_directory = "data/spritesheets/[css_name]"
 	fdel(file_directory)
 	text2file(generate_css(), file_directory)
-	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory))
 
+	// TODO: This group of file-op calls could probably be yielded as well
+	SSassets.transport.register_asset_immediate(css_name, fcopy_rsc(file_directory))
 	if(CONFIG_GET(flag/save_spritesheets))
 		save_to_logs(file_name = css_name, file_location = file_directory)
 
+	// Here too
 	fdel(file_directory)
-
 	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
 		write_to_cache()
+
+	// Don't need to store the ACIs anymore
+	for(var/size_id in sizes)
+		var/list/size = sizes[size_id]
+		size.Cut(SPRSZ_ASSET_CACHE_ITEM)
+
 	fully_generated = TRUE
-	// If we were ever in there, remove ourselves
-	SSasset_loading.dequeue_asset(src)
 
 /datum/asset/spritesheet/queued_generation()
 	realize_spritesheets(yield = TRUE)
 
-/datum/asset/spritesheet/ensure_ready()
-	if(!fully_generated)
-		realize_spritesheets(yield = FALSE)
+/datum/asset/spritesheet/is_ready()
+	return ..() && fully_generated
+
+/datum/asset/spritesheet/ensure_generated()
+	realize_spritesheets(yield = FALSE)
 	return ..()
 
 /datum/asset/spritesheet/send(client/client)
@@ -249,8 +300,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/size_id in sizes)
 		.["[name]_[size_id].png"] = SSassets.transport.get_asset_url("[name]_[size_id].png")
 
-/datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
-	for(var/size_id in sizes_to_strip)
+/datum/asset/spritesheet/proc/ensure_stripped(yield)
+	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		if (size[SPRSZ_STRIPPED])
 			continue
@@ -269,6 +320,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			save_to_logs(file_name = png_name, file_location = file_directory)
 
 		fdel(file_directory)
+
+		if(yield && TICK_CHECK)
+			return FALSE
+
+	return TRUE
 
 /datum/asset/spritesheet/proc/generate_css()
 	var/list/out = list()
@@ -357,10 +413,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	CRASH("create_spritesheets() not implemented for [type]!")
 
 /datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
-	if(should_load_immediately())
-		queuedInsert(sprite_name, I, icon_state, dir, frame, moving)
-	else
-		to_generate += list(args.Copy())
+	to_generate += list(args.Copy())
 	CHECK_TICK
 
 // LEMON NOTE
@@ -389,7 +442,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 		sprites[sprite_name] = list(size_id, position)
 	else
-		sizes[size_id] = size = list(1, I, null)
+		sizes[size_id] = size = list(1, I, null, null)
 		sprites[sprite_name] = list(size_id, 0)
 
 /**
@@ -458,7 +511,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/item_filename
 
 /datum/asset/changelog_item/New(date)
+	..()
 	item_filename = SANITIZE_FILENAME("[date].yml")
+
+/datum/asset/changelog_item/register()
+	..()
 	SSassets.transport.register_asset(item_filename, file("html/changelogs/archive/" + item_filename))
 
 /datum/asset/changelog_item/send(client)

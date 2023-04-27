@@ -32,7 +32,7 @@
 	return list()
 
 /// Append all of these into ui_assets
-/datum/preference_middleware/proc/get_ui_assets()
+/datum/preference_middleware/proc/get_ui_asset_typepaths()
 	return list()
 
 /// Append all of these into /datum/asset/json/preferences.

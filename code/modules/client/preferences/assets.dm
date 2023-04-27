@@ -45,6 +45,7 @@
 /// Sends information needed for shared details on individual preferences
 /datum/asset/json/preferences
 	name = "preferences"
+	early = TRUE
 
 /datum/asset/json/preferences/generate()
 	var/list/preference_data = list()

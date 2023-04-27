@@ -11,18 +11,20 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type(null, src, owner)
 		lobbyscreen.SlowInit()
-		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
-		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
-			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
-			lobby_button.owner = REF(owner)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+
+INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby)
+
+/atom/movable/screen/lobby/Initialize(mapload, datum/hud/new_player/_hud)
+	. = ..()
+	hud = _hud
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -41,6 +43,10 @@
 	var/highlighted = FALSE
 	/// The ref of the mob that owns this button. Only the owner can click on it.
 	var/owner
+
+/atom/movable/screen/lobby/button/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
+	. = ..()
+	owner = REF(_owner)
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
 	if(owner != REF(usr))
@@ -103,6 +109,18 @@
 	icon_state = "character_setup"
 	base_icon_state = "character_setup"
 
+/atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
+	. = ..()
+	var/datum/preferences/preferences = _owner.client.prefs
+	if(!preferences.are_assets_ready())
+		set_button_status(FALSE)
+		RegisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED, PROC_REF(show_setup_button))
+
+/atom/movable/screen/lobby/button/character_setup/proc/show_setup_button(datum/preferences/preferences)
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED)
+
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
 	if(!.)
@@ -121,7 +139,7 @@
 	base_icon_state = "not_ready"
 	var/ready = FALSE
 
-/atom/movable/screen/lobby/button/ready/Initialize(mapload)
+/atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -166,7 +184,7 @@
 	base_icon_state = "join_game"
 	enabled = FALSE
 
-/atom/movable/screen/lobby/button/join/Initialize(mapload)
+/atom/movable/screen/lobby/button/join/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -236,7 +254,7 @@
 	base_icon_state = "observe"
 	enabled = FALSE
 
-/atom/movable/screen/lobby/button/observe/Initialize(mapload)
+/atom/movable/screen/lobby/button/observe/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
 	. = ..()
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)

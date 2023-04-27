@@ -1,10 +1,8 @@
 /// Handles the assets for species icons
 /datum/preference_middleware/species
 
-/datum/preference_middleware/species/get_ui_assets()
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/species),
-	)
+/datum/preference_middleware/species/get_ui_asset_typepaths()
+	return list(/datum/asset/spritesheet/species)
 
 /datum/asset/spritesheet/species
 	name = "species"

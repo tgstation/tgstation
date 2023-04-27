@@ -16,9 +16,19 @@ SUBSYSTEM_DEF(early_assets)
 		if (!initial(asset_type.early))
 			continue
 
-		if (!load_asset_datum(asset_type))
+		var/datum/asset/asset = load_asset_datum(asset_type)
+		if (!asset)
 			stack_trace("Could not initialize early asset [asset_type]!")
+			continue
 
 		CHECK_TICK
+		if (asset.should_generate())
+			while(TRUE)
+				asset.queued_generation()
+				if(!TICK_CHECK)
+					break
+				stoplag()
+
+		SEND_SIGNAL(asset, COMSIG_ASSET_GENERATED)
 
 	return SS_INIT_SUCCESS

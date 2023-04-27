@@ -88,6 +88,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
+	/// The number of assets remaining to load
+	var/asset_loading_count = 0
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
@@ -99,6 +102,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for (var/middleware_type in subtypesof(/datum/preference_middleware))
 		middleware += new middleware_type(src)
+
+	register_assets_loaded()
 
 	if(IS_CLIENT_OR_MOCK(parent))
 		load_and_save = !is_guest_key(parent.key)
@@ -192,13 +197,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return data
 
 /datum/preferences/ui_assets(mob/user)
-	var/list/assets = list(
-		get_asset_datum(/datum/asset/spritesheet/preferences),
-		get_asset_datum(/datum/asset/json/preferences),
-	)
+	var/list/assets = ..()
 
-	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-		assets += preference_middleware.get_ui_assets()
+	for(var/typepath in get_ui_asset_typepaths())
+		assets += get_asset_datum(typepath)
 
 	return assets
 
@@ -342,6 +344,46 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		value_cache -= preference.type
 		preference.apply_to_client(parent, read_preference(preference.type))
+
+
+/datum/preferences/proc/get_ui_asset_typepaths()
+	var/list/asset_typepaths = list(
+		/datum/asset/spritesheet/preferences,
+		/datum/asset/json/preferences,
+	)
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		asset_typepaths += preference_middleware.get_ui_asset_typepaths()
+
+	return asset_typepaths
+
+/// Check if UI assets are ready
+/datum/preferences/proc/are_assets_ready()
+	var/all_loaded = TRUE
+	for(var/typepath in get_ui_asset_typepaths())
+		var/datum/asset/asset = get_unregistered_asset_datum(typepath)
+		if(!asset.is_ready())
+			all_loaded = FALSE
+
+	return all_loaded
+
+/datum/preferences/proc/register_assets_loaded()
+	for(var/typepath in get_ui_asset_typepaths())
+		var/datum/asset/asset = get_unregistered_asset_datum(typepath)
+		if(!asset.is_ready())
+			++asset_loading_count
+			RegisterSignal(asset, COMSIG_ASSET_GENERATED, PROC_REF(asset_loaded))
+
+		// we want to ensure that all our spritesheets have prioritized loading
+		if(!asset.early)
+			stack_trace("[asset.type] is a preferences spritesheet that does not set early = TRUE!")
+
+/datum/preferences/proc/asset_loaded(datum/asset/asset)
+	SIGNAL_HANDLER
+	UnregisterSignal(asset, COMSIG_ASSET_GENERATED)
+
+	if(--asset_loading_count == 0)
+		SEND_SIGNAL(src, COMSIG_PREFS_ASSETS_LOADED)
 
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview

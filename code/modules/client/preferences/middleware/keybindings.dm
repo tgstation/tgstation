@@ -18,10 +18,8 @@
 		"keybindings" = keybindings,
 	)
 
-/datum/preference_middleware/keybindings/get_ui_assets()
-	return list(
-		get_asset_datum(/datum/asset/json/keybindings)
-	)
+/datum/preference_middleware/keybindings/get_ui_asset_typepaths()
+	return list(/datum/asset/json/keybindings)
 
 /datum/preference_middleware/keybindings/proc/reset_all_keybinds(list/params, mob/user)
 	preferences.key_bindings = deep_copy_list(GLOB.default_hotkeys)
@@ -81,6 +79,7 @@
 
 /datum/asset/json/keybindings
 	name = "keybindings"
+	early = TRUE
 
 /datum/asset/json/keybindings/generate()
 	var/list/keybindings = list()
