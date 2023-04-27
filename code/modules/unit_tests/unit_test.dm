@@ -191,7 +191,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 		if(length(log_entry))
 			message = log_entry.Join("\n")
-		log_test(message)
+			log_test(message)
 
 		test_output_desc += " [duration / 10]s"
 		if (test.succeeded)
