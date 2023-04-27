@@ -327,10 +327,11 @@ rough example of the "cone" made by the 3 dirs checked
 /// Proc used for 96x96 effects such as runes(Nar-sie, Apocalypse, Heretic and Wizard ones). So they don't overlay above the items.
 /atom/proc/overlay_for_96x96_effects()
 	icon = 'icons/effects/96x96.dmi'
+	render_target = src
 	var/mutable_appearance/bottom = mutable_appearance(icon, icon_state)
 	bottom.pixel_x = pixel_x
 	bottom.pixel_w = -(pixel_x)
-	bottom.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask_bottom")))
+	bottom.add_filter("mask", 1, alpha_mask_filter(render_source, icon = icon(icon, "row_mask_bottom")))
 	add_overlay(bottom)
 	var/mutable_appearance/middle = mutable_appearance(icon, icon_state)
 	middle.pixel_x = pixel_x
@@ -339,7 +340,7 @@ rough example of the "cone" made by the 3 dirs checked
 	middle.pixel_y = -(pixel_y)
 	middle.pixel_z = pixel_y
 	// Mask out everything but the middle
-	middle.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask_middle")))
+	middle.add_filter("mask", 1, alpha_mask_filter(render_source, icon = icon(icon, "row_mask_middle")))
 	add_overlay(middle)
 	var/mutable_appearance/top = mutable_appearance(icon, icon_state)
 	top.pixel_x = pixel_x
@@ -348,7 +349,7 @@ rough example of the "cone" made by the 3 dirs checked
 	top.pixel_y = -(pixel_y*2)
 	top.pixel_z = (pixel_y*2)
 	// Mask out everything but the top
-	top.add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "row_mask_top")))
+	top.add_filter("mask", 1, alpha_mask_filter(render_source, icon = icon(icon, "row_mask_top")))
 	add_overlay(top)
 
 	icon_state = ""
