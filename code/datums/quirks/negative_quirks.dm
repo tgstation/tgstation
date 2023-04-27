@@ -530,6 +530,7 @@
 	icon = "tg-prosthetic-leg"
 	value = -3
 	var/slot_string = "limb"
+	var/obj/item/bodypart/old_limb_type
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
@@ -552,11 +553,16 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
+	old_limb_type = human_holder.get_bodypart(limb_slot)
 	human_holder.del_and_replace_bodypart(prosthetic)
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment."))
+
+/datum/quirk/prosthetic_limb/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.del_and_replace_bodypart(new old_limb_type)
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
