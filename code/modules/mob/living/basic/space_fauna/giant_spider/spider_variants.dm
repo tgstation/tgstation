@@ -20,7 +20,8 @@
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
 	. = ..()
-	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+	var/datum/action/cooldown/web_sneak/sneak_web = new(src)
+	sneak_web.Grant(src)
 
 /**
  * ### Spider Hunter
