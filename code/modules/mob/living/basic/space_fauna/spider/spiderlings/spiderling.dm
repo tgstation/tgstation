@@ -57,7 +57,7 @@
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 
-	 // it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
+	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 10 MINUTES,\
