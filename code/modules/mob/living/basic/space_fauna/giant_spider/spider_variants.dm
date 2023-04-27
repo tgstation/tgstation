@@ -19,7 +19,7 @@
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
-	var/datum/action/cooldown/web_sneak/sneaky_beaky = new(src)
+    var/datum/action/cooldown/giant_spider/web_sneak/sneaky_beaky = new(src)
 	sneaky_beaky.Grant(src)
 	return ..()
 
