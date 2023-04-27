@@ -189,10 +189,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			// Normal log message
 			log_entry += "\tFAILURE #[reasonID]: [text] at [file]:[line]"
 
-		message = log_entry.Join("\n")
+		if(length(log_entry))
+			message = log_entry.Join("\n")
 		log_test(message)
 
-		test_output_desc += "[duration / 10]s"
+		test_output_desc += " [duration / 10]s"
 		if (test.succeeded)
 			log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
 
