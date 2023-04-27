@@ -1,0 +1,8 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - balance: "Star Gazer now explodes when it dies."
+  - balance: "Star Gazer will only die when the owner dies."
+  - balance: "Star Gazer will attack the most recent enemy that attacked him when on autopilot."
+  - balance: "Star Gazer has an aura that slowly damages people and heals the owner."
+  - balance: "Cosmic Ascension now buffs some spells."
