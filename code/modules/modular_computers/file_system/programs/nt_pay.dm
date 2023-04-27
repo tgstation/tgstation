@@ -18,9 +18,6 @@
 	var/wanted_token
 
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("Transaction")
 			token = params["token"]

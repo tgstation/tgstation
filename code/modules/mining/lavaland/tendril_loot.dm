@@ -228,8 +228,8 @@
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lantern-blue"
-	inhand_icon_state = "lantern"
+	icon_state = "lantern-blue-on"
+	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
@@ -237,18 +237,21 @@
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
 		to_chat(user, span_warning("The wisp has gone missing!"))
-		icon_state = "lantern"
+		icon_state = "lantern-blue"
+		inhand_icon_state = "lantern-blue"
 		return
 
 	if(wisp.loc == src)
 		to_chat(user, span_notice("You release the wisp. It begins to bob around your head."))
-		icon_state = "lantern"
+		icon_state = "lantern-blue"
+		inhand_icon_state = "lantern-blue"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, span_notice("You return the wisp to the lantern."))
-		icon_state = "lantern-blue"
+		icon_state = "lantern-blue-on"
+		inhand_icon_state = "lantern-blue-on"
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 

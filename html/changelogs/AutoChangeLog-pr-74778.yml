@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "Pirate and hunter shuttles now have no wi-fi. (added cutAIwire apc helpers to them)"
-  - bugfix: "Added missing apc helpers to apc on DeepStorage (the bunker with \"away\" access)"
