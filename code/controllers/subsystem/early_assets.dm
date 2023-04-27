@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(early_assets)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/early_assets/OnConfigLoad()
-	if(CONFIG_GET(flag/disable_early_assets))
+	if(!CONFIG_GET(flag/enable_early_assets))
 		flags |= SS_NO_INIT
 
 /datum/controller/subsystem/early_assets/Initialize()

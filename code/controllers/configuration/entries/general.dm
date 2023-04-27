@@ -653,7 +653,7 @@
 /datum/config_entry/flag/cache_assets
 	default = TRUE
 
-/datum/config_entry/flag/disable_early_assets
+/datum/config_entry/flag/enable_early_assets
 	default = TRUE
 
 /datum/config_entry/flag/save_spritesheets
