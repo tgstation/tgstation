@@ -112,7 +112,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby)
 /atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/new_player/_hud, mob/_owner)
 	. = ..()
 	var/datum/preferences/preferences = _owner.client.prefs
-	if(!preferences.are_assets_ready())
+	// config check to allow the old click-to-force-tick-overrun-loading-assets behaviour
+	if(CONFIG_GET(flag/enable_early_assets) && !preferences.are_assets_ready())
 		set_button_status(FALSE)
 		RegisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED, PROC_REF(show_setup_button))
 
