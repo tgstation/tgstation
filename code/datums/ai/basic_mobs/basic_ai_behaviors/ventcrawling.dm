@@ -112,15 +112,19 @@
 /// Aw fuck, we may have been bested somehow. Regardless of what we do, we can't exit through a vent! Let's end our misery and prevent useless endless calculations.
 /datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
+
 	if(istype(living_pawn))
 		finish_action(controller, FALSE, target_key)
-		living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
+
+		if(isnull(living_pawn.client)) // only call death if we don't have a client because maybe their natural intelligence can pick up where our AI calculations have failed
+			living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
+
 		return
 
 	if(QDELETED(living_pawn)) // we got deleted by some other means, just presume the action is a wash and get outta here
 		return
 
-	qdel(living_pawn) // failover, we really shouldn't exist after we invoke this.
+	qdel(living_pawn) // failover, we really should've been caught in the istype() but lets just bow out of existing at this point
 
 
 /datum/ai_behavior/crawl_through_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)
