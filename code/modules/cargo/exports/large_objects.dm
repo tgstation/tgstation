@@ -4,7 +4,6 @@
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(
-		/obj/structure/closet/crate/coffin,
 		/obj/structure/closet/crate/large,
 		/obj/structure/closet/crate/mail,
 		/obj/structure/closet/crate/wooden,
