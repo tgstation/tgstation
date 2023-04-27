@@ -1,8 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "candles can now be used to light other candles, cigarettes, and anything else that needs lighting in a pinch."
-  - bugfix: "flashlights that have directional lights now have directional sprites to match"
-  - bugfix: "candles can now be snuffed again"
-  - imageadd: "adds new inhand sprites for most flashlights in the game, including animated flares and candles"
-  - refactor: "cleaned up flashlight.dm's unnecessary bits and made some slight improvements"

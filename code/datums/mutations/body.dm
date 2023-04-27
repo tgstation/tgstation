@@ -259,7 +259,7 @@
 	locked = TRUE
 
 /datum/mutation/human/glow/anti/glow_color()
-	return COLOR_VERY_LIGHT_GRAY
+	return COLOR_BLACK
 
 /datum/mutation/human/strong
 	name = "Strength"
