@@ -39360,6 +39360,10 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mailbelt"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "kAE" = (
@@ -71148,6 +71152,9 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/conveyor{
+	id = "mailbelt"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "sUH" = (
@@ -88587,7 +88594,8 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Cargo Office Shutters";
-	id = "CargoOffice"
+	id = "CargoOffice";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
