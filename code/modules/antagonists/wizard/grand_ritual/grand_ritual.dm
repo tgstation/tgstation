@@ -273,7 +273,6 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
-	overlay_for_96x96_effects_animations()
 
 /// Animates drawing a cool rune
 /obj/effect/temp_visual/wizard_rune/drawing
