@@ -40161,6 +40161,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "kLz" = (
@@ -57620,6 +57621,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server/upper)
+"plH" = (
+/obj/structure/showcase/cyborg/old{
+	dir = 4;
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "plI" = (
 /obj/structure/table,
 /obj/item/food/pizzaslice/moldy,
@@ -67014,6 +67026,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/port/fore)
+"rMe" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "rMl" = (
 /obj/structure/chair/sofa/bench{
 	dir = 4
@@ -67494,6 +67511,9 @@
 /area/station/maintenance/floor1/starboard/fore)
 "rTn" = (
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "rTt" = (
@@ -331937,7 +331957,7 @@ aFj
 aFj
 aFj
 sOy
-kLu
+plH
 rTn
 kLu
 sOy
@@ -332196,7 +332216,7 @@ aFj
 mWh
 oiP
 oiP
-wHv
+rMe
 mWh
 vyR
 oHW
@@ -332453,7 +332473,7 @@ nEB
 hPC
 hPC
 hPC
-oiP
+onI
 pbd
 vyR
 qMh
