@@ -1,7 +1,6 @@
 /// Sends information needed for uplinks
 /datum/asset/json/uplink
 	name = "uplink"
-	early = TRUE
 
 /datum/asset/json/uplink/generate()
 	var/list/data = list()
