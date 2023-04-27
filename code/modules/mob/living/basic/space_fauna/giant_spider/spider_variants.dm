@@ -19,7 +19,7 @@
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
-	var/datum/action/cooldown/web/sneak/sneaky_beaky = new(src)
+	var/datum/action/cooldown/web_sneak/sneaky_beaky = new(src)
 	sneaky_beaky.Grant(src)
 	return ..()
 
@@ -64,9 +64,9 @@
 	sight = SEE_SELF|SEE_MOBS
 	menu_description = "Fast spider variant specializing in scouting and alerting of prey ,with the ability to travel in vents."
 
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
-
+/mob/living/basic/giant_spider/scout/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /**
  * ### Spider Nurse
