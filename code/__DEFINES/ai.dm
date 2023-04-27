@@ -251,6 +251,8 @@
 #define BB_UPPER_VENT_TIME_LIMIT "BB_upper_vent_time_limit"
 /// How much time (in seconds) do we take until we completely go bust on vent pathing?
 #define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
+/// The timer ID of the timer that makes us give up on vent pathing.
+#define BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID "BB_give_up_on_vent_pathing_timer_id"
 
 /// Is there something that scared us into being stationary? If so, hold the reference here
 #define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"

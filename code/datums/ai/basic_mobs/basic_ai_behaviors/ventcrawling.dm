@@ -48,7 +48,7 @@
 	var/upper_vent_time_limit = controller.blackboard[BB_UPPER_VENT_TIME_LIMIT] // the most amount of time we spend in the vents
 
 	addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), rand(lower_vent_time_limit, upper_vent_time_limit))
-	addtimer(CALLBACK(src, PROC_REF(suicide_pill), controller), controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING])
+	controller.set_blackboard_key(BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID, addtimer(CALLBACK(src, PROC_REF(suicide_pill), controller), controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING], TIMER_STOPPABLE))
 
 /// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
 /datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
@@ -80,10 +80,11 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
 	var/mob/living/living_pawn = controller.pawn
 
-	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) || isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
-		finish_action(controller, TRUE, target_key) // just assume it's a success, we're operating off pilot rules where every landing is a good landing due to the unfortunate async nature of behavior
+	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) && isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
+		finish_action(controller, TRUE, target_key) // assume that we got yeeted out somehow and call this so we can halt the suicide pill timer.
 		return
 
+	living_pawn.forceMove(exit_vent)
 	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
 		emergency_vent = calculate_exit_vent(controller)
@@ -112,15 +113,20 @@
 /datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
 	if(istype(living_pawn))
+		finish_action(controller, FALSE, target_key)
 		living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
-	else
-		qdel(living_pawn)
+		return
 
-	finish_action(controller, FALSE, target_key)
+	if(QDELETED(living_pawn)) // we got deleted by some other means, just presume the action is a wash and get outta here
+		return
+
+	qdel(living_pawn) // failover, we really shouldn't exist after we invoke this.
+
 
 /datum/ai_behavior/crawl_through_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 
+	deltimer(controller.blackboard[BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID])
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_ENTRY_VENT_TARGET)
 	controller.clear_blackboard_key(BB_EXIT_VENT_TARGET)
