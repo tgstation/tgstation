@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - image: "removes unused vault walls"
