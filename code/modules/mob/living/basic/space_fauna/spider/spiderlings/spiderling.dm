@@ -71,8 +71,9 @@
 
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
-	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(3,5) SECONDS)
-	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(7,9) SECONDS)
+	// also remember we can't evolve if we're in a vent. lots to keep in mind when you set these variables.
+	ai_controller.set_blackboard_key(BB_LOWER_VENT_TIME_LIMIT, rand(9, 11) SECONDS)
+	ai_controller.set_blackboard_key(BB_UPPER_VENT_TIME_LIMIT, rand(12, 14) SECONDS)
 
 /mob/living/basic/spiderling/Destroy()
 	GLOB.spidermobs -= src
@@ -130,7 +131,7 @@
 		else
 			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
 
-	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src))
+	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
 	grown.faction = faction.Copy()
 	grown.directive = directive
@@ -143,7 +144,7 @@
 		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
-		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 20 SECONDS, // worst case scenario assuming we get 9 seconds for the first path, then 4.5 for every additional path, this is at least 2 complete paths. more than plenty.
+		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
