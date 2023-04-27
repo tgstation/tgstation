@@ -132,11 +132,14 @@
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
 
+	var/offset = list(0, 0)
 	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-		for(var/mutable_appearance/overlay in overlays)
-			overlay.pixel_x += offset[OFFSET_X]
-			overlay.pixel_y += offset[OFFSET_Y]
+		offset = parent.dna.species.offset_features[OFFSET_FACE]
+
+	offset[OFFSET_Y] += parent.get_top_offset()
+	for(var/mutable_appearance/overlay in overlays)
+		overlay.pixel_x += offset[OFFSET_X]
+		overlay.pixel_y += offset[OFFSET_Y]
 
 	return overlays
 
