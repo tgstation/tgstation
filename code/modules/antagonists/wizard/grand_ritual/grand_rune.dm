@@ -72,7 +72,6 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	overlay_for_96x96_effects()
-
 	announce_rune()
 
 /// I cast Summon Security
