@@ -9,6 +9,7 @@
 	taste_mult = 1.2
 	harmful = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	evaporation_rate = 3 //6x faster than normal chems
 	///The amount of toxin damage this will cause when metabolized (also used to calculate liver damage)
 	var/toxpwr = 1.5
 	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
