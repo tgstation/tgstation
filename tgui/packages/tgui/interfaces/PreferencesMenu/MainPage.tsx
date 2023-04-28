@@ -26,7 +26,8 @@ const CharacterControls = (props: {
   setGender: (gender: Gender) => void;
   showGender: boolean;
   handleExportSavefile: () => void;
-  exportEnabled: boolean;
+  serverExportEnabled: boolean;
+  personalExportEnabled: boolean;
 }) => {
   return (
     <Stack>
@@ -59,15 +60,23 @@ const CharacterControls = (props: {
         </Stack.Item>
       )}
 
-      {props.exportEnabled && (
+      {props.serverExportEnabled && (
+        // basically, if the server has export enabled, this button will show up,
+        // otherwise, we just don't show the button at all.
+        // the button will grey out when we've met our maximum download allowance.
         <Stack.Item>
           <Button
             onClick={props.handleExportSavefile}
             fontSize="22px"
             icon="download"
-            iconColor="green"
-            tooltip="Export Savefile"
+            iconColor={props.personalExportEnabled ? 'green' : 'black'}
+            tooltip={
+              props.personalExportEnabled
+                ? 'Export Savefile'
+                : 'Export Savefile (Max Downloads Reached)'
+            }
             tooltipPosition="top"
+            disabled={!props.personalExportEnabled}
           />
         </Stack.Item>
       )}
@@ -544,7 +553,10 @@ export const MainPage = (
                       handleExportSavefile={() => {
                         act('export_savefile');
                       }}
-                      exportEnabled={!!data.json_export_enabled}
+                      serverExportEnabled={!!data.server_export_enabled}
+                      personalExportEnabled={
+                        !!data.personal_preference_export_available
+                      }
                       setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true

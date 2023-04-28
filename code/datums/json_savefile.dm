@@ -10,6 +10,8 @@
 	var/auto_save = FALSE
 	/// Increments how many time this datum has been requested for download. Used to determine if someone is trying to spam download it to lag out a server for any reason.
 	var/download_requests = 0
+	/// Have we been attempted to be saved too many times? Used to grey out the button that allows us to download UI-side.
+	var/download_available = TRUE
 
 GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
@@ -86,11 +88,12 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 /// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
 /// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
 /datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
-	if(isnull(requester) || CONFIG_GET(flag/allow_preferences_export))
+	if(isnull(requester) || !CONFIG_GET(flag/allow_preferences_export))
 		return
 
 	var/max_allowed_requests = CONFIG_GET(number/maximum_preferences_export_attempts)
 	if(download_requests > max_allowed_requests)
+		download_available = FALSE
 		tgui_alert("You have hit the maximum number of allowed download requests ([max_allowed_requests]) for this round! Please try again next round.", list("OK"))
 		return
 
