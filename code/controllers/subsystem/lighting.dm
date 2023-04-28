@@ -32,20 +32,22 @@ SUBSYSTEM_DEF(lighting)
 
 	var/list/queue = sources_queue
 	var/i = 0
-	for (i in 1 to length(queue))
-		var/datum/light_source/L = queue[i]
+	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
+		i += 1
 
-		L.needs_update = LIGHTING_NO_UPDATE //update_corners() can qdel itself if the source atom was deleted or this light has no power/range
+		var/datum/light_source/L = queue[i]
 		L.update_corners()
 		if(!QDELETED(L))
-			L.needs_update = LIGHTING_NO_UPDATE //no need to update since we are gonna update those corners in the next for loop
+			L.needs_update = LIGHTING_NO_UPDATE
+		else
+			i -= 1 // update_corners() has removed L from the list, move back so we don't overflow or skip the next element
 
 		if(init_tick_checks)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break
-	if (i)
-		queue.Cut(1, i+1)
+	if(i)
+		queue.Cut(1, i + 1)
 		i = 0
 
 	if(!init_tick_checks)
@@ -84,7 +86,7 @@ SUBSYSTEM_DEF(lighting)
 		else if (MC_TICK_CHECK)
 			break
 	if (i)
-		queue.Cut(1, i+1)
+		queue.Cut(1, i + 1)
 
 
 /datum/controller/subsystem/lighting/Recover()
