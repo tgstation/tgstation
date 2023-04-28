@@ -574,9 +574,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor3/starboard)
 "ahe" = (
-/obj/effect/turf_decal/tile/dark/half/contrasted{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/camera/directional/south{
 	c_tag = "Genetics Lab"
@@ -585,6 +582,7 @@
 /obj/machinery/computer/cloning{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -2248,7 +2246,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 10
 	},
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
@@ -2297,13 +2295,15 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
 	},
-/obj/structure/rack,
 /obj/machinery/requests_console/directional/west{
 	department = "Genetics";
 	name = "Genetics Requests Console";
 	supplies_requestable = 1
 	},
-/obj/item/reagent_containers/dropper,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -2534,12 +2534,9 @@
 	},
 /area/station/commons/fitness)
 "aER" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/dark/fourcorners,
 /obj/effect/turf_decal/siding/purple,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -13179,12 +13176,13 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/aft)
 "dqN" = (
+/obj/effect/turf_decal/siding/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -14284,6 +14282,8 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/siding/purple,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -28571,6 +28571,7 @@
 "hFL" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/clonepod,
+/obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -29868,9 +29869,6 @@
 /area/station/engineering/atmos)
 "hXR" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -48174,6 +48172,7 @@
 /area/station/science/ordnance/burnchamber)
 "mKT" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
 "mKY" = (
@@ -72132,9 +72131,6 @@
 "thj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
@@ -74658,6 +74654,7 @@
 /area/station/science/robotics/lab)
 "tRT" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "tRU" = (
@@ -188868,7 +188865,7 @@ eXn
 qun
 syC
 btD
-dqN
+thj
 lpA
 tZh
 oOE
@@ -189125,7 +189122,7 @@ imx
 qun
 tdd
 fFR
-dqN
+thj
 aDs
 maW
 aUh
@@ -190154,7 +190151,7 @@ qun
 qun
 fyp
 fUD
-nIL
+dqN
 oUN
 mqv
 mqv
