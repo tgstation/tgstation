@@ -1134,3 +1134,27 @@
 		owner.update_body_parts()
 	else
 		update_icon_dropped()
+
+/obj/item/bodypart/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_WIRES || !(bodytype & BODYTYPE_ROBOTIC))
+		return FALSE
+	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
+
+	var/time_needed = 10 SECONDS
+	var/brute_damage = 5 + 1.5 // Augments reduce brute damage by 5.
+	var/burn_damage = 4 + 2.5 // As above, but for burn it's 4.
+
+	if(severity == EMP_HEAVY)
+		time_needed *= 2
+		brute_damage *= 2
+		burn_damage *= 2
+
+	receive_damage(brute_damage, burn_damage)
+	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
+	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
+	return TRUE
+
+/obj/item/bodypart/proc/un_paralyze()
+	REMOVE_TRAITS_IN(src, EMP_TRAIT)
