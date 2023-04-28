@@ -42,6 +42,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		OFFSET_SUIT = list(0,0),
 		OFFSET_NECK = list(0,0),
 	)
+	///Automatically generated list of feature offsets which need to be flipped when your dir changes
+	var/list/mirrored_offset_features
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
@@ -483,6 +485,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
 
+	if (!mirrored_offset_features)
+		mirrored_offset_features = list()
+		for (var/feature_key in offset_features)
+			var/list/offset_values = offset_features[feature_key]
+			if (offset_values[1] != 0)
+				mirrored_offset_features += feature_key
+	if (length(mirrored_offset_features))
+		RegisterSignal(C, COMSIG_ATOM_DIR_CHANGE, PROC_REF(regenerate_feature_offsets))
+
 	if (old_species.type != type)
 		replace_body(C, src)
 
@@ -545,6 +556,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/organ/external/organ in C.organs)
 		organ.Remove(C)
 		qdel(organ)
+
+	UnregisterSignal(C, COMSIG_ATOM_DIR_CHANGE)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -2253,3 +2266,59 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	target.create_bodyparts(bodypart_overrides)
+
+/// Update mob feature offsets when direction changes
+/datum/species/proc/regenerate_feature_offsets(mob/living/carbon/species_mob, olddir, newdir)
+	SIGNAL_HANDLER
+	var/static/list/mirror_dirs = list(NORTH, EAST)
+	var/was_mirrored = (olddir in mirror_dirs)
+	var/is_mirrored = (newdir in mirror_dirs)
+	if (was_mirrored == is_mirrored)
+		return
+
+	for (var/feature_key in mirrored_offset_features)
+		offset_features[feature_key][1] = -(offset_features[feature_key][1])
+		switch(feature_key)
+			if(OFFSET_UNIFORM)
+				species_mob.update_worn_undersuit()
+				continue
+			if(OFFSET_ID)
+				species_mob.update_worn_id()
+				continue
+			if(OFFSET_GLOVES)
+				species_mob.update_worn_gloves()
+				continue
+			if(OFFSET_GLASSES)
+				species_mob.update_worn_glasses()
+				continue
+			if(OFFSET_EARS)
+				species_mob.update_inv_ears()
+				continue
+			if(OFFSET_SHOES)
+				species_mob.update_worn_shoes()
+				continue
+			if(OFFSET_S_STORE)
+				species_mob.update_suit_storage()
+				continue
+			if(OFFSET_FACEMASK)
+				species_mob.update_worn_mask()
+				continue
+			if(OFFSET_HEAD)
+				handle_body(species_mob) // updates eye icon
+				species_mob.update_worn_head()
+				continue
+			if(OFFSET_FACE)
+				species_mob.update_worn_mask()
+				continue
+			if(OFFSET_BELT)
+				species_mob.update_worn_belt()
+				continue
+			if(OFFSET_BACK)
+				species_mob.update_worn_back()
+				continue
+			if(OFFSET_SUIT)
+				species_mob.update_worn_oversuit()
+				continue
+			if(OFFSET_NECK)
+				species_mob.update_worn_neck()
+				continue

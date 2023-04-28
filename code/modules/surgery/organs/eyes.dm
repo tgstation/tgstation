@@ -119,6 +119,9 @@
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
+	if(isnull(eye_icon_state))
+		return list()
+
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
@@ -255,6 +258,7 @@
 /obj/item/organ/internal/eyes/golem
 	name = "resonating crystal"
 	icon_state = "adamantine_cords"
+	eye_icon_state = null
 	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
 	color = COLOR_GOLEM_GRAY
 	visual = FALSE
