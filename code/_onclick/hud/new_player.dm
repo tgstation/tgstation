@@ -115,11 +115,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby)
 	// config check to allow the old click-to-force-tick-overrun-loading-assets behaviour
 	if(CONFIG_GET(flag/enable_early_assets) && !preferences.are_assets_ready())
 		set_button_status(FALSE)
-		RegisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED, PROC_REF(show_setup_button))
+		RegisterSignal(preferences, COMSIG_PREFS_ASSETS_READY, PROC_REF(show_setup_button))
 
 /atom/movable/screen/lobby/button/character_setup/proc/show_setup_button(datum/preferences/preferences)
 	SIGNAL_HANDLER
-	UnregisterSignal(preferences, COMSIG_PREFS_ASSETS_LOADED)
+	UnregisterSignal(preferences, COMSIG_PREFS_ASSETS_READY)
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
 

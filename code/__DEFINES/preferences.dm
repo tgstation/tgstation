@@ -136,6 +136,3 @@
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
-
-/// Signal sent when all ui assets for preferences are loaded
-#define COMSIG_PREFS_ASSETS_LOADED "preferences_assets_loaded"

@@ -378,7 +378,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	--asset_loading_count
 	if(asset_loading_count == 0)
-		SEND_SIGNAL(src, COMSIG_PREFS_ASSETS_LOADED)
+		SEND_SIGNAL(src, COMSIG_PREFS_ASSETS_READY)
 
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
