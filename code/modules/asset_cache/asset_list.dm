@@ -53,6 +53,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Stub that allows us to react to something trying to get us
 /// Not useful here, more handy for sprite sheets
+/// Can SIGNIFICANTLY overrun the server tick. Prefer using queued_generation() and checking is_ready().
 /datum/asset/proc/ensure_generated()
 	SHOULD_NOT_SLEEP(TRUE)
 	return src
@@ -176,16 +177,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/list/cached_spritesheets_needed
 	var/generating_cache = FALSE
 	var/fully_generated = FALSE
-	/// If this asset should be fully loaded on new
-	/// Defaults to false so we can process this stuff nicely
-	var/load_immediately = FALSE
 
 /datum/asset/spritesheet/should_generate()
-#ifdef DO_NOT_DEFER_ASSETS
-	return FALSE // generate on register
-#else
-	return !load_immediately
-#endif
+	return TRUE
 
 /datum/asset/spritesheet/should_refresh()
 	if (..())
@@ -210,19 +204,20 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		fully_generated = TRUE
 		return
 
-	// If it's cached, may as well load it now, while the loading is cheap
-	if(CONFIG_GET(flag/cache_assets) && cross_round_cachable)
-		load_immediately = TRUE
-
 	create_spritesheets()
 
-	if(!should_generate())
-		// sprite sheets always generate, what this means is we should generate them right now
-		do
-			realize_spritesheets(yield = TRUE)
-			CHECK_TICK
-		while(!fully_generated)
+#ifdef DO_NOT_DEFER_ASSETS
+	full_generation()
+#endif
 
+/// Private. Fully generate the spritesheet, yielding to the MC
+/datum/asset/spritesheet/proc/full_generation()
+	do
+		realize_spritesheets(yield = TRUE)
+		CHECK_TICK
+	while(!fully_generated)
+
+/// Private. Generate the spritesheet, optionally yielding to the MC. Sets [fully_generated] when complete, otherwise, needs to be called again after stoplag.
 /datum/asset/spritesheet/proc/realize_spritesheets(yield)
 	if(fully_generated)
 		return
