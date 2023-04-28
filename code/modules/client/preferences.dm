@@ -170,8 +170,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["active_slot"] = default_slot
 
-	data["personal_preference_export_available"] = savefile.download_available
-
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
 
@@ -181,8 +179,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/data = list()
 
 	data["character_profiles"] = create_character_profiles()
-
-	data["server_export_enabled"] = CONFIG_GET(flag/allow_preferences_export)
 
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
@@ -278,10 +274,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (!update_preference(requested_preference, new_color))
 				return FALSE
 
-			return TRUE
-
-		if("export_savefile")
-			savefile.export_json_to_client(usr, parent.ckey)
 			return TRUE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
