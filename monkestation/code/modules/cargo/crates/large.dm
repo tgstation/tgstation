@@ -52,3 +52,11 @@
 					/obj/item/storage/box/monkestation_stickers)
 	crate_name = "collectable stickers crate"
 	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/emergency/spatialriftnullifier
+	name = "Spatial Rift Nullifier Pack"
+	desc = "Everything that the crew needs to take down a rogue Singularity or Tesla."
+	cost = 5000
+	contains = list(/obj/item/gun/ballistic/SRN_rocketlauncher = 4)
+	crate_name = "Spatial Rift Nullifier (SRN)"
+	crate_type = /obj/structure/closet/crate/secure
