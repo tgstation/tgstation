@@ -376,7 +376,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	SIGNAL_HANDLER
 	UnregisterSignal(asset, COMSIG_ASSET_GENERATED)
 
-	if(--asset_loading_count == 0)
+	--asset_loading_count
+	if(asset_loading_count == 0)
 		SEND_SIGNAL(src, COMSIG_PREFS_ASSETS_LOADED)
 
 /// A preview of a character for use in the preferences menu
