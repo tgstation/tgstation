@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Paradox clones are now attempted manual copies of humans, rather than straight-up copying everything. They should no longer have bugs related to being unable to use UIs, having FOV, or visual bugs."
