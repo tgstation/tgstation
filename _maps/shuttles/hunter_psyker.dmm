@@ -24,23 +24,20 @@
 /turf/open/floor/iron,
 /area/shuttle/hunter)
 "bK" = (
-/turf/closed/wall,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
 "bV" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/turf/open/floor/iron/white/diagonal,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "bX" = (
 /obj/item/reagent_containers/blood,
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine,
-/area/shuttle/hunter)
-"ca" = (
-/obj/structure/lattice,
-/obj/effect/forcefield/psychic{
-	initial_duration = 0
-	},
-/turf/template_noop,
 /area/shuttle/hunter)
 "cp" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -99,10 +96,6 @@
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
-/area/shuttle/hunter)
-"gs" = (
-/obj/structure/lattice,
-/turf/template_noop,
 /area/shuttle/hunter)
 "gA" = (
 /obj/machinery/power/smes/engineering{
@@ -215,12 +208,6 @@
 /obj/item/reagent_containers/syringe/contraband,
 /turf/open/floor/iron,
 /area/shuttle/hunter)
-"ld" = (
-/obj/machinery/power/shuttle_engine/propulsion/right{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/hunter)
 "lu" = (
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
@@ -233,13 +220,6 @@
 "lI" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /turf/open/floor/iron/white/diagonal,
-/area/shuttle/hunter)
-"me" = (
-/obj/machinery/computer/monitor{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/white,
-/turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -286,9 +266,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"oq" = (
-/turf/open/floor/catwalk_floor,
-/area/shuttle/hunter)
 "oL" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -319,12 +296,6 @@
 	},
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
-/area/shuttle/hunter)
-"qq" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/machinery/light/cold/directional/south,
-/obj/item/statuebust,
-/turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "qz" = (
 /obj/structure/curtain/cloth/fancy/mechanical{
@@ -412,13 +383,6 @@
 	name = "External Blast Door"
 	},
 /turf/open/floor/plating,
-/area/shuttle/hunter)
-"vT" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
-/turf/open/floor/iron/white/diagonal,
-/area/shuttle/hunter)
-"wc" = (
-/turf/closed/wall/r_wall,
 /area/shuttle/hunter)
 "ws" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
@@ -530,7 +494,7 @@
 /area/shuttle/hunter)
 "zY" = (
 /obj/effect/turf_decal/box/white,
-/obj/machinery/fugitive_capture,
+/obj/machinery/fugitive_capture/psyker,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "AF" = (
@@ -624,12 +588,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/grimy,
-/area/shuttle/hunter)
-"Fk" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/hunter)
 "Gv" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -740,9 +698,6 @@
 /obj/effect/turf_decal/box/white,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
-/area/shuttle/hunter)
-"LV" = (
-/turf/closed/wall/space,
 /area/shuttle/hunter)
 "Mc" = (
 /obj/item/storage/pill_bottle,
@@ -925,6 +880,14 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Tw" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/arrows{
+	dir = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "TL" = (
@@ -994,12 +957,6 @@
 /obj/machinery/button/door/directional/west{
 	id = "psyker_bridge";
 	name = "Blast Door Control"
-	},
-/turf/open/floor/iron/kitchen/small,
-/area/shuttle/hunter)
-"Xc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
@@ -1091,12 +1048,12 @@ yd
 yd
 yd
 Nw
-wc
+CW
 vw
 vw
 vw
 vw
-wc
+CW
 Nw
 yd
 yd
@@ -1118,12 +1075,12 @@ Nw
 Nw
 Nw
 Nw
-wc
+CW
 GS
 tT
 Xk
 yO
-wc
+CW
 Nw
 yd
 yd
@@ -1142,15 +1099,15 @@ yd
 yd
 Nw
 yd
-wc
+CW
 vw
 vw
-wc
+CW
 pb
 lu
 rF
 Nb
-wc
+CW
 Nw
 Nw
 Nw
@@ -1169,20 +1126,20 @@ yd
 yd
 Nw
 yd
-wc
+CW
 Tw
 lu
 Xa
-lu
+bK
 XX
-Xc
-Tw
-wc
+rF
+bV
+CW
 yd
-gs
+oL
 yd
 yd
-gs
+oL
 yd
 yd
 Nw
@@ -1195,22 +1152,22 @@ yd
 (6,1,1) = {"
 yd
 Nw
-gs
-wc
+oL
+CW
 zY
-rF
-me
+lu
+lu
 LI
 XX
-wc
-wc
-wc
-wc
-wc
-wc
-wc
-wc
-wc
+CW
+CW
+CW
+CW
+CW
+CW
+CW
+CW
+CW
 yd
 Nw
 yd
@@ -1223,22 +1180,22 @@ yd
 yd
 Nw
 yd
-wc
-wc
-wc
-wc
-wc
+CW
+CW
+CW
+CW
+CW
 vu
-wc
+CW
 am
 Xp
 eZ
-wc
+CW
 ZW
 ZC
 ws
-wc
-gs
+CW
+oL
 Pz
 yd
 yd
@@ -1250,7 +1207,7 @@ yd
 yd
 Nw
 yd
-wc
+CW
 Tl
 AF
 kN
@@ -1260,11 +1217,11 @@ na
 Ne
 Mk
 QI
-wc
+CW
 lI
 yg
 RA
-wc
+CW
 yd
 Pz
 yd
@@ -1276,8 +1233,8 @@ yd
 (9,1,1) = {"
 yd
 Nw
-gs
-wc
+oL
+CW
 bX
 rS
 SG
@@ -1286,12 +1243,12 @@ ke
 na
 Jz
 na
-wc
-wc
+CW
+CW
 GT
 Dw
 Ui
-wc
+CW
 yd
 Pz
 yd
@@ -1304,7 +1261,7 @@ yd
 yd
 Nw
 yd
-wc
+CW
 Jh
 Yq
 mz
@@ -1316,10 +1273,10 @@ bx
 Ea
 Id
 hE
-vT
-qq
-wc
-gs
+yg
+RA
+CW
+oL
 Pz
 Pz
 yd
@@ -1331,7 +1288,7 @@ yd
 Nw
 Nw
 yd
-wc
+CW
 HO
 PS
 En
@@ -1342,8 +1299,8 @@ Ja
 Ss
 EM
 mR
-vT
-bV
+yg
+lI
 gE
 CW
 yd
@@ -1356,15 +1313,15 @@ yd
 "}
 (12,1,1) = {"
 Nw
-wc
-wc
-wc
+CW
+CW
+CW
 na
 na
 na
 na
 nB
-bK
+na
 dq
 BZ
 CW
@@ -1383,7 +1340,7 @@ yd
 "}
 (13,1,1) = {"
 Nw
-wc
+CW
 Nn
 Nn
 Nn
@@ -1391,26 +1348,26 @@ Nn
 Nn
 na
 ON
-bK
-bK
-bK
-bK
-LV
-LV
-LV
-LV
-LV
+na
+na
+na
+na
+Nn
+Nn
+Nn
+Nn
+Nn
 CW
 CW
 CW
-wc
+CW
 Nw
 Nw
-gs
+oL
 "}
 (14,1,1) = {"
 Nw
-wc
+CW
 Nn
 NO
 qa
@@ -1418,16 +1375,16 @@ nq
 Nn
 na
 ON
-bK
+na
 Ih
 Hp
-bK
-LV
+na
+Nn
 BY
 gj
 tO
-LV
-bK
+Nn
+na
 Ck
 eO
 VF
@@ -1437,7 +1394,7 @@ pO
 "}
 (15,1,1) = {"
 Nw
-wc
+CW
 Nn
 Wy
 ht
@@ -1445,7 +1402,7 @@ Me
 Nn
 na
 Hd
-bK
+na
 sB
 RZ
 OS
@@ -1464,7 +1421,7 @@ gW
 "}
 (16,1,1) = {"
 Nw
-wc
+CW
 Nn
 NO
 no
@@ -1472,16 +1429,16 @@ ys
 Nn
 na
 jB
-bK
+na
 jl
 PD
-bK
-LV
+na
+Nn
 zm
 zq
 tO
-LV
-bK
+Nn
+na
 Ck
 uH
 De
@@ -1491,7 +1448,7 @@ pO
 "}
 (17,1,1) = {"
 Nw
-wc
+CW
 Nn
 Nn
 Nn
@@ -1499,42 +1456,42 @@ gY
 Nn
 na
 jB
-bK
+na
 Ys
-bK
-bK
-LV
-LV
-LV
-LV
-LV
+na
+na
+Nn
+Nn
+Nn
+Nn
+Nn
 CW
 CW
 CW
-wc
+CW
 Nw
 Nw
-gs
+oL
 "}
 (18,1,1) = {"
 Nw
-wc
-wc
-wc
+CW
+CW
+CW
 CW
 rn
-bK
-bK
+na
+na
 cM
 gl
 sW
 eq
-bK
-bK
-bK
-bK
-bK
-bK
+na
+na
+na
+na
+na
+na
 CW
 yd
 Nw
@@ -1551,14 +1508,14 @@ yd
 CW
 do
 zi
-bK
+na
 Tj
 cM
 uy
 Ik
 Te
 NL
-bK
+na
 Gv
 Rs
 WL
@@ -1573,7 +1530,7 @@ yd
 (20,1,1) = {"
 yd
 yd
-ca
+Nw
 yd
 CW
 Oc
@@ -1600,24 +1557,24 @@ yd
 (21,1,1) = {"
 yd
 yd
-ca
+Nw
 oL
 CW
 AH
 SI
-bK
+na
 Mc
 td
 Ik
 TL
 Ik
 Pv
-bK
+na
 zX
 pf
 xa
 CW
-oq
+pO
 Nw
 yd
 yd
@@ -1627,7 +1584,7 @@ yd
 (22,1,1) = {"
 yd
 yd
-ca
+Nw
 yd
 CW
 xp
@@ -1654,13 +1611,13 @@ yd
 (23,1,1) = {"
 yd
 yd
-ca
-ca
-ca
-ld
-Fk
-ca
-ca
+Nw
+Nw
+Nw
+PA
+Lc
+Nw
+Nw
 CW
 HI
 CW
@@ -1687,12 +1644,12 @@ yd
 yd
 yd
 yd
-ca
+Nw
 CW
 Zb
 CW
 Zb
-wc
+CW
 Nw
 yd
 yd
@@ -1714,11 +1671,11 @@ yd
 yd
 yd
 yd
-ca
-ca
-oq
-oq
-oq
+Nw
+Nw
+pO
+pO
+pO
 Nw
 Nw
 yd
