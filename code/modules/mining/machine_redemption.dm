@@ -74,7 +74,7 @@
 		var/mats = stack_mats & mat_container.materials
 		var/amount = gathered_ore.amount
 		mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
-		materials.silo_log(src, "smelted", amount, "someone", mats)
+		materials.silo_log(src, "smelted", amount, gathered_ore.name, mats)
 		qdel(gathered_ore)
 
 	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
