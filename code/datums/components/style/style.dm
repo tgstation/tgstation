@@ -37,8 +37,8 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
-	/// Ref to the added projectile parry component
-	var/datum/component/projectile_parry/projectile_parry
+	/// Weakref to the added projectile parry component
+	var/datum/weakref/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
 	/// If this is multitooled, making it make funny noises on the user's rank going up
@@ -113,7 +113,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 
-	projectile_parry = AddComponent(\
+	projectile_parry = WEAKREF(AddComponent(\
 		src,\
 		/datum/component/projectile_parry,\
 		list(\
@@ -124,7 +124,7 @@
 			/obj/projectile/herald,\
 			)\
 		)
-
+	)
 
 
 /datum/component/style/UnregisterFromParent()
@@ -140,7 +140,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
 	if(projectile_parry)
-		QDEL_NULL(projectile_parry)
+		QDEL_NULL(projectile_parry.resolve())
 
 
 /datum/component/style/Destroy(force, silent)
