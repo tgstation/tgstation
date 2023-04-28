@@ -181,6 +181,12 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
+	// copied from windoors, because fuck you and connect loc
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -619,12 +625,16 @@
 
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
 			return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/wrench/bolter))
-		if(locked)
-			context[SCREENTIP_CONTEXT_LMB] = "Raise bolts"
-			return CONTEXTUAL_SCREENTIP_SET
 
-		return CONTEXTUAL_SCREENTIP_SET
+		if(TOOL_WRENCH)
+			if(panel_open && security_level == AIRLOCK_SECURITY_NONE)
+				if(istype(held_item, /obj/item/wrench/bolter))
+					if(locked)
+						context[SCREENTIP_CONTEXT_LMB] = "Raise bolts"
+						return CONTEXTUAL_SCREENTIP_SET
+				context[SCREENTIP_CONTEXT_LMB] = "Change orientation"
+				return CONTEXTUAL_SCREENTIP_SET
+
 	return .
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
@@ -758,6 +768,31 @@
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/door/airlock/wrench_act(mob/living/user, obj/item/tool)
+	if(!panel_open || !density)
+		return ..()
+
+	if(security_level != AIRLOCK_SECURITY_NONE)
+		balloon_alert(user, "cannot access!")
+		return TRUE
+
+	if(shock(user, 100))
+		return TRUE
+
+	if(locked)
+		if(!istype(tool, /obj/item/wrench/bolter))
+			balloon_alert(user, "bolted!")
+		else
+			return do_bolter_unbolt(user, tool)
+		return TRUE
+
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return TRUE
+
+	setDir(turn(dir, 90))
+	balloon_alert(user, "changed orientation [dir2text(dir)]")
+	return TRUE
+
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
 		. = TOOL_ACT_TOOLTYPE_SUCCESS  // everything after this shouldn't result in attackby
@@ -819,22 +854,11 @@
 		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/door/airlock/wrench_act(mob/living/user, obj/item/tool)
-	if(!locked)
+/obj/machinery/door/airlock/proc/do_bolter_unbolt(mob/living/user, /obj/item/wrench/bolter/bolter)
+	balloon_alert(user, "raising bolts...")
+	if(!do_after(user, 5 SECONDS, src))
 		return
-	if(!panel_open)
-		balloon_alert(user, "panel is closed!")
-		return
-	if(security_level != AIRLOCK_SECURITY_NONE)
-		balloon_alert(user, "airlock is reinforced!")
-		return
-
-	if(istype(tool, /obj/item/wrench/bolter))
-		balloon_alert(user, "raising bolts...")
-		if(!do_after(user, 5 SECONDS, src))
-			return
-		unbolt()
-
+	unbolt()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/airlock/welder_act(mob/living/user, obj/item/tool)
@@ -1360,6 +1384,27 @@
 		open()
 		safe = TRUE
 
+/// I hate movement code.
+/obj/machinery/door/airlock/proc/allow_movement_for(atom/movable/passing_through, direction)
+	if(passing_through.movement_type & PHASING)
+		return TRUE
+	if(density && !operating)
+		return TRUE // to prevent people from getting stuck in doors
+	if(locate(/obj/machinery/door/airlock) in get_step(src, direction))
+		return TRUE // going from one airlock to another
+	return (direction == dir || direction == turn(dir, 180))
+
+/obj/machinery/door/airlock/CanAllowThrough(atom/movable/mover, border_dir)
+	if(allow_movement_for(mover, border_dir))
+		return ..() // only allow movement if they are coming in or out the same direction of the airlock
+
+	return FALSE // lmao theres a wall there fucko
+
+/obj/machinery/door/airlock/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+
+	if(!allow_movement_for(leaving, direction))
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/airlock/proc/on_break()
 	SIGNAL_HANDLER
