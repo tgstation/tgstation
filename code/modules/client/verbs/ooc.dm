@@ -449,3 +449,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set hidden = TRUE
 
 	init_verbs()
+
+/client/proc/export_preferences()
+	set name = "Export Preferences"
+	set desc = "Export your current preferences to a file."
+	set category = "OOC"
+
+	if(isnull(prefs))
+		tgui_alert(usr, "You do not have any preferences to export!")
+		return
+
+	prefs.savefile.export_json_to_client(usr, ckey)

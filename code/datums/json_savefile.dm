@@ -88,7 +88,11 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 /// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
 /// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
 /datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
-	if(isnull(requester) || !CONFIG_GET(flag/allow_preferences_export))
+	if(!istype(requester))
+		return
+
+	if(!CONFIG_GET(flag/allow_preferences_export))
+		tgui_alert(requester, "Preferences exporting is disabled on this server!")
 		return
 
 	var/max_allowed_requests = CONFIG_GET(number/maximum_preferences_export_attempts)
