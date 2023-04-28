@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return data
 
 /datum/preferences/ui_assets(mob/user)
-	var/list/assets = ..()
+	var/list/assets = list()
 
 	for(var/typepath in get_ui_asset_typepaths())
 		assets += get_asset_datum(typepath)
