@@ -1163,6 +1163,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "clearing up soil...")
 	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
+		new /obj/item/stack/ore/glass(drop_location(), 3)
 		balloon_alert(user, "cleared")
 		qdel(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
