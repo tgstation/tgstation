@@ -101,14 +101,58 @@
 	else if(isprojectile(mover))
 		return prob(30)
 
-	/obj/structure/spider/solid/web
+/obj/structure/spider/solid
 	name = "solid web"
+	icon = 'icons/effects/effects.dmi'
 	desc = "A solid thick wall of web, airtight enough to block air flow."
 	icon_state = "solidweb"
-	sealed = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
+	density = TRUE
 	max_integrity = 60
+
+/obj/structure/spider/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == MELEE)
+		switch(damage_type)
+			if(BURN)
+				damage_amount *= 0.75
+			if(BRUTE)
+				damage_amount *= 0.25
+	. = ..()
+
+/obj/structure/spider/passage
+	name = "web passage"
+	icon = 'icons/effects/effects.dmi'
+	desc = "messy connection of webs blocking the other side but not solid enough to prevent passage."
+	icon_state = "webpassage"
+	can_atmos_pass = ATMOS_PASS_NO
+	opacity = TRUE
+	max_integrity = 40
+
+/obj/structure/spider/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == MELEE)
+		switch(damage_type)
+			if(BURN)
+				damage_amount *= 0.75
+			if(BRUTE)
+				damage_amount *= 0.25
+	. = ..()
 
 /obj/structure/spider/spiderling
 	name = "spiderling"
