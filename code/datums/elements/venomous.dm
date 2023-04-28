@@ -21,7 +21,7 @@
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/venomous/proc/do_venom(atom/venom_source, mob/living/target)
+/datum/element/venomous/proc/do_venom(datum/element_owner, atom/venom_source, mob/living/target, hit_zone)
 	if(!istype(target))
 		return
 	if(target.stat == DEAD)

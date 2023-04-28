@@ -7,12 +7,14 @@
  * THIS COULD EASILY SUPPORT COMPONENT_DUPE_ALLOWED but the getcomponent makes it throw errors. if you can figure that out feel free to readd the dupe types
  */
 /datum/component/on_hit_effect
-
-	///callback used
+	///callback used by other components to apply effects
 	var/datum/callback/on_hit_callback
+	///callback optionally used for more checks
+	var/datum/callback/extra_check_callback
 
-/datum/component/on_hit_effect/Initialize(on_hit_callback)
+/datum/component/on_hit_effect/Initialize(on_hit_callback, extra_check_callback)
 	src.on_hit_callback = on_hit_callback
+	src.extra_check_callback = extra_check_callback
 	if(!(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent) || isitem(parent) || isanimal_or_basicmob(parent) || isprojectile(parent)))
 		return ELEMENT_INCOMPATIBLE
 
@@ -39,22 +41,36 @@
 
 	if(!proximity_flag)
 		return
-	on_hit_callback.Invoke(user, target)
+
+	if(extra_check_callback)
+		if(!extra_check_callback.Invoke(user, target))
+			return
+	on_hit_callback.Invoke(source, user, target, user.zone_selected)
 	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
-/datum/component/on_hit_effect/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
+/datum/component/on_hit_effect/proc/hostile_attackingtarget(mob/living/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
 	if(!success)
 		return
-	on_hit_callback.Invoke(attacker, target)
 
-/datum/component/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
+	if(extra_check_callback)
+		if(!extra_check_callback.Invoke(attacker, target))
+			return
+	on_hit_callback.Invoke(attacker, attacker, target, attacker.zone_selected)
+
+/datum/component/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, angle, obj/item/bodypart/hit_limb)
 	SIGNAL_HANDLER
 
-	on_hit_callback.Invoke(firer, target)
+	if(extra_check_callback)
+		if(!extra_check_callback.Invoke(firer, target))
+			return
+	on_hit_callback.Invoke(fired_from, firer, target, hit_limb.body_zone)
 
-/datum/component/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, hit_limb)
+/datum/component/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, obj/item/bodypart/hit_limb)
 	SIGNAL_HANDLER
 
-	on_hit_callback.Invoke(firer, target)
+	if(extra_check_callback)
+		if(!extra_check_callback.Invoke(firer, target))
+			return
+	on_hit_callback.Invoke(source, firer, target, hit_limb.body_zone)

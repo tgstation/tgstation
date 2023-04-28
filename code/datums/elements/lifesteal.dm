@@ -19,7 +19,7 @@
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/lifesteal/proc/do_lifesteal(atom/heal_target, atom/damage_target)
+/datum/element/lifesteal/proc/do_lifesteal(datum/element_owner, atom/heal_target, atom/damage_target, hit_zone)
 	if(isliving(heal_target) && isliving(damage_target))
 		var/mob/living/healing = heal_target
 		var/mob/living/damaging = damage_target
