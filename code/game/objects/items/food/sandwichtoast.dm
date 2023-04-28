@@ -271,3 +271,4 @@
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
 	balloon_alert(consumer, "ate it wrong!")
 	consumer.adjustToxLoss(50)
+	consumer.set_silence_if_lower(5 SECONDS)
