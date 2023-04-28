@@ -18,6 +18,9 @@
 ///The length of the roundend report, where people can look over the round and the details.
 #define VICTORY_LAP_PERIOD_LENGTH (20 SECONDS)
 
+///The cooldown between being able to send your notes in chat.
+#define MAFIA_NOTE_SENDING_COOLDOWN (15 SECONDS)
+
 ///How fast the game will speed up when half the players are gone.
 #define MAFIA_SPEEDUP_INCREASE 2
 
@@ -68,12 +71,12 @@
 ///Flag that decides whether the Mafia ability can be used on dead players. This overwrites the first two, and only allows for dead.
 #define CAN_USE_ON_DEAD (1<<2)
 
-#define MAFIA_PHASE_SETUP 1
-#define MAFIA_PHASE_DAY 2
-#define MAFIA_PHASE_VOTING 3
-#define MAFIA_PHASE_JUDGEMENT 4
-#define MAFIA_PHASE_NIGHT 5
-#define MAFIA_PHASE_VICTORY_LAP 6
+#define MAFIA_PHASE_SETUP "No Game"
+#define MAFIA_PHASE_DAY "Morning Period"
+#define MAFIA_PHASE_VOTING "Voting Period"
+#define MAFIA_PHASE_JUDGEMENT "Judgment"
+#define MAFIA_PHASE_NIGHT "Night Period"
+#define MAFIA_PHASE_VICTORY_LAP "Victory Lap"
 
 #define MAFIA_ALIVE 1
 #define MAFIA_DEAD 2

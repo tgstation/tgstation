@@ -46,9 +46,10 @@
 	var/raw_content = ""
 
 	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
-		raw_content += text_input.raw_text
-
-	// Content from paper is never trusted. It it raw, unsanitised, unparsed user input.
+		if(!isnull(text_input.colour))
+			raw_content += text_input.raw_text
+		else
+			raw_content += "<font color='[text_input.colour]'>[text_input.raw_text]</font>"
 	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
 
 /datum/book_info/proc/get_content(default="N/A")
@@ -112,19 +113,29 @@
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 
-/obj/item/book/proc/on_read(mob/living/user)
-	if(book_data?.content)
-		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+/obj/item/book/ui_static_data(mob/user)
+	var/list/data = list()
+	data["author"] = book_data.get_author()
+	data["title"] = book_data.get_title()
+	data["content"] = book_data.get_content()
+	return data
 
-		LAZYINITLIST(user.mind?.book_titles_read)
-		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
+/obj/item/book/ui_interact(mob/living/user, datum/tgui/ui)
+	if(!length(book_data.get_content()))
+		balloon_alert(user, "this book is blank!")
+		return
 
-		if(has_not_read_book) // any new books give bonus mood
+	if(istype(user) && !isnull(user.mind))
+		LAZYINITLIST(user.mind.book_titles_read)
+		var/has_not_read_book = !(starting_title in user.mind.book_titles_read)
+		if(has_not_read_book)
 			user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
-			user.mind?.book_titles_read[starting_title] = TRUE
-		onclose(user, "book")
-	else
-		to_chat(user, span_notice("This book is completely blank!"))
+			user.mind.book_titles_read[starting_title] = TRUE
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MarkdownViewer", name)
+		ui.open()
 
 /// Generates a random icon state for the book
 /obj/item/book/proc/gen_random_icon_state()
@@ -134,10 +145,12 @@
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return
+
 	if(!user.can_read(src))
 		return
+
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
-	on_read(user)
+	ui_interact(user)
 
 /obj/item/book/attackby(obj/item/attacking_item, mob/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
