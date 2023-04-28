@@ -3,9 +3,6 @@
 /obj/item/gun/ballistic/bow/longbow
 	name = "longbow"
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
-	icon_state = "bow"
-	inhand_icon_state = "bow"
-	base_icon_state = "bow"
 
 ///chaplain's divine archer bow
 /obj/item/gun/ballistic/bow/divine

@@ -3,6 +3,9 @@
 	icon = 'icons/obj/weapons/guns/bows/bows.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
+	icon_state = "bow"
+	inhand_icon_state = "bow"
+	base_icon_state = "bow"
 	load_sound = null
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
