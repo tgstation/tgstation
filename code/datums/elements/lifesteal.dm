@@ -7,15 +7,16 @@
 	argument_hash_start_idx = 2
 	/// heals a constant amount every time a hit occurs
 	var/flat_heal
+	/// static list shared that tells which order of damage types to prioritize
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /datum/element/lifesteal/Attach(datum/target, flat_heal = 10)
 	. = ..()
 	src.flat_heal = flat_heal
-	target.AddElement(/datum/element/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
+	target.AddElement(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
 
 /datum/element/lifesteal/Detach(datum/target)
-	target.RemoveElement(/datum/element/on_hit_effect)
+	target.RemoveElement(/datum/component/on_hit_effect)
 	return ..()
 
 /datum/element/lifesteal/proc/do_lifesteal(atom/heal_target, atom/damage_target)
