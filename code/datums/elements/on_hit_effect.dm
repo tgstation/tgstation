@@ -12,12 +12,15 @@
 
 /datum/element/on_hit_effect/Attach(datum/target, on_hit_callback)
 	. = ..()
+	src.on_hit_callback = on_hit_callback
 	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
+		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	else if(ishostile(target))
 		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
+	else if(isprojectile(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_self_hit))
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -40,14 +43,12 @@
 		return
 	on_hit_callback.Invoke(attacker, target)
 
-/datum/element/on_hit_effect/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
+/datum/element/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	on_hit_callback.Invoke(firer, target)
 
-/datum/element/venomous/projectile/proc/on_hit(datum/source, mob/firer, atom/target, angle, hit_limb)
+/datum/element/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
-		return
-	add_reagent(target)
+	on_hit_callback.Invoke(firer, target)

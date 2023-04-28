@@ -9,7 +9,7 @@
 	var/flat_heal
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/datum/element/lifesteal/Attach(datum/target, flat_heal)
+/datum/element/lifesteal/Attach(datum/target, flat_heal = 10)
 	. = ..()
 	src.flat_heal = flat_heal
 	target.AddElement(/datum/element/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))

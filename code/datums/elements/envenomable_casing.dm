@@ -39,7 +39,7 @@
 		return
 	var/amount_applied = min(venom_applied.volume, amount_allowed)
 
-	casing.loaded_projectile.AddComponent(/datum/element/venomous/projectile, venom_applied.type, amount_applied)
+	casing.loaded_projectile.AddComponent(/datum/element/venomous, venom_applied.type, amount_applied)
 	to_chat(user, span_notice("You coat [casing] in [venom_applied]."))
 	venom_container.reagents.remove_reagent(venom_applied.type, amount_applied)
 	///stops further poison application
@@ -51,7 +51,7 @@
 
 	if(!casing.loaded_projectile)
 		return
-	if(casing.loaded_projectile.GetComponent(/datum/element/venomous/projectile))
+	if(casing.loaded_projectile.GetComponent(/datum/element/venomous))
 		examine_list += span_warning("It's coated in some kind of chemical...")
 	else
 		examine_list += span_notice("You can dip it in a chemical to deliver a poisonous kick.")
