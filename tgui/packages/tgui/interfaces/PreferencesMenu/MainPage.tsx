@@ -73,7 +73,7 @@ const CharacterControls = (props: {
             tooltip={
               props.personalExportEnabled
                 ? 'Export Savefile'
-                : 'Export Savefile (Max Downloads Reached)'
+                : 'Max Downloads Reached'
             }
             tooltipPosition="top"
             disabled={!props.personalExportEnabled}
