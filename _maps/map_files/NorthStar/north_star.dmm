@@ -79433,10 +79433,16 @@
 	},
 /area/station/hallway/floor3/aft)
 "vko" = (
-/obj/machinery/autolathe,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/autolathe/hacked{
+	name = "Security Autolathe";
+	desc = "This one is pre-authorized to manufacture lethal ammunition for private security forces"
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -5
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
