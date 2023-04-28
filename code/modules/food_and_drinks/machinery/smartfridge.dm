@@ -110,9 +110,10 @@
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
-		cut_overlays()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
+		else
+			cut_overlay("[initial(icon_state)]-panel")
 		SStgui.update_uis(src)
 		return
 
