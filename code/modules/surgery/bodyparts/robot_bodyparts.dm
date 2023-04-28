@@ -100,6 +100,15 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
+/obj/item/bodypart/leg/left/robot/emp_act(severity)
+	. = ..()
+	if(!.)
+		return
+	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
+	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+		return
+	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
+
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
@@ -129,6 +138,15 @@
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+
+/obj/item/bodypart/leg/right/robot/emp_act(severity)
+	. = ..()
+	if(!.)
+		return
+	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
+	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+		return
+	to_chat(owner, span_danger("As your [src.name] unexpectedly malfunctions, it causes you to fall to the ground!"))
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -160,6 +178,19 @@
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
+
+/obj/item/bodypart/chest/robot/emp_act(severity)
+	. = ..()
+	if(!.)
+		return
+	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
+	if(severity == EMP_HEAVY)
+		owner.Stun(6 SECONDS)
+		owner.Shake(pixelshiftx = 5, pixelshifty = 2, duration = 4 SECONDS)
+		return
+
+	owner.Stun(3 SECONDS)
+	owner.Shake(pixelshiftx = 3, pixelshifty = 0, duration = 2.5 SECONDS)
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -272,6 +303,22 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
+
+#define EMP_GLITCH "EMP_GLITCH"
+
+/obj/item/bodypart/head/robot/emp_act(severity)
+	. = ..()
+	if(!.)
+		return
+	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
+
+	var/glitch_duration = severity == EMP_HEAVY ? 15 SECONDS : 7.5 SECONDS
+
+	owner.add_client_colour(/datum/client_colour/malfunction)
+
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
+
+#undef EMP_GLITCH
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
