@@ -170,7 +170,7 @@
 	for(var/required_path in recipe.tool_paths)
 		var/found_this_tool = FALSE
 		for(var/tool_path in available_tools)
-			if(!ispath(required_path, tool_path))
+			if(!ispath(tool_path, required_path))
 				continue
 			found_this_tool = TRUE
 			break

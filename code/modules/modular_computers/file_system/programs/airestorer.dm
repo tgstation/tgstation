@@ -98,11 +98,7 @@
 	return TRUE
 
 
-/datum/computer_file/program/ai_restorer/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/datum/computer_file/program/ai_restorer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(!stored_card || !stored_card.AI)
