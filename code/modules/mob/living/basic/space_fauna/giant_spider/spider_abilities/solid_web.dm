@@ -9,7 +9,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	/// How long it takes to lay a web
-	var/webbing_time = 4 SECONDS
+	var/webbing_time = 5 SECONDS
 
 /datum/action/cooldown/solid_web/Grant(mob/grant_to)
 	. = ..()
