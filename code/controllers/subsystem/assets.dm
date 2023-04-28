@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(assets)
 	name = "Assets"
 	init_order = INIT_ORDER_ASSETS
 	priority = FIRE_PRIORITY_ASSETS
+	runlevels = RUNLEVEL_SETUP | RUNLEVELS_DEFAULT
 	var/list/datum/asset_cache_item/cache = list()
 	var/datum/asset_transport/transport = new()
 	var/list/datum/asset/generate_queue = list()
