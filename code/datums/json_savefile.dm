@@ -79,3 +79,10 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 				continue
 			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
+
+/// Proc that handles generating a prettified JSON string of a user's preferences and showing it to them.
+/datum/json_savefile/proc/export_json_to_client(mob/requester)
+	if(isnull(requester))
+		return
+
+	DIRECT_OUTPUT(requester, ftp(file(path), "[requester.ckey]_preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))

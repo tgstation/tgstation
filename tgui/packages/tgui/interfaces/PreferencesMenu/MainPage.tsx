@@ -25,6 +25,7 @@ const CharacterControls = (props: {
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
+  handleExportSavefile: () => void;
 }) => {
   return (
     <Stack>
@@ -56,6 +57,17 @@ const CharacterControls = (props: {
           />
         </Stack.Item>
       )}
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleExportSavefile}
+          fontSize="22px"
+          icon="download"
+          iconColor="green"
+          tooltip="Export Savefile"
+          tooltipPosition="top"
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -525,6 +537,9 @@ export const MainPage = (
                       handleOpenSpecies={props.openSpecies}
                       handleRotate={() => {
                         act('rotate');
+                      }}
+                      handleExportSavefile={() => {
+                        act('export_savefile');
                       }}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={

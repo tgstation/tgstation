@@ -276,6 +276,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			return TRUE
 
+		if("export_savefile")
+			savefile.export_json_to_client(usr)
+			return TRUE
+
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/delegation = preference_middleware.action_delegations[action]
 		if (!isnull(delegation))
