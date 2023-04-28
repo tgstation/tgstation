@@ -115,3 +115,14 @@
 	)
 	result = /obj/item/food/philly_cheesesteak
 	category = CAT_SANDWICH
+
+/datum/crafting_recipe/food/death_sandwich
+	name = "Death Sandwich"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 2,
+		/obj/item/food/meat/cutlet = 4,
+		/obj/item/food/meatball = 4,
+		/obj/item/food/grown/tomato = 1,
+	)
+	result = /obj/item/food/death_sandwich
+	category = CAT_SANDWICH
