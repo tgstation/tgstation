@@ -351,8 +351,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	testing("MC: Runlevel changed from [isnull(old_runlevel) ? "NULL" : old_runlevel] to [new_runlevel]")
 	current_runlevel = log(2, new_runlevel) + 1
 	if(current_runlevel < 1)
-		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 		current_runlevel = old_runlevel
+		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing(delay)
