@@ -36,6 +36,13 @@
 	///cost of the materials in the magazine/box itself
 	var/list/base_cost
 
+	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
+	var/ammo_band_color
+	/// If this and ammo_band_color aren't null, run update_ammo_band() Is the greyscale icon used for the ammo band.
+	var/ammo_band_icon
+	/// Is the greyscale icon used for the ammo band when it's empty of bullets, only if it's not null.
+	var/ammo_band_icon_empty
+
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
 	if(!bullet_cost)
@@ -43,6 +50,7 @@
 		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
 	if(!start_empty)
 		top_off(starting=TRUE)
+	update_icon_state()
 
 /obj/item/ammo_box/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
@@ -178,7 +186,21 @@
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
+
+	if(ammo_band_color && ammo_band_icon)
+		update_ammo_band()
+
 	return ..()
+
+/obj/item/ammo_box/proc/update_ammo_band()
+	overlays.Cut()
+	var/band_icon = ammo_band_icon
+	if(!(length(stored_ammo)) && ammo_band_icon_empty)
+		band_icon = ammo_band_icon_empty
+	var/image/ammo_band_image = image(icon, src, band_icon)
+	ammo_band_image.color = ammo_band_color
+	ammo_band_image.appearance_flags = RESET_COLOR|KEEP_APART
+	overlays += ammo_band_image
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.
 /obj/item/ammo_box/proc/update_custom_materials()

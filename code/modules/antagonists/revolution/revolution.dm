@@ -31,6 +31,24 @@
 		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE
 
+/datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
+	// No revolution exists which means admin adding this will create a new revolution team
+	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
+	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
+		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
+			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
+			Are you sure?", "Be Wary", list("Yes", "No"))
+		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
+			return
+
+	go_through_with_admin_add(new_owner, admin)
+
+/datum/antagonist/rev/proc/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has rev'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has rev'ed [key_name(new_owner)].")
+	to_chat(new_owner.current, span_userdanger("You are a member of the revolution!"))
+
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
@@ -110,7 +128,7 @@
 	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
 	log_admin("[key_name(admin)] has head-rev'ed [O].")
 
-/datum/antagonist/rev/head/admin_add(datum/mind/new_owner,mob/admin)
+/datum/antagonist/rev/head/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
@@ -187,30 +205,36 @@
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_PRE_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	UnregisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON)
+	UnregisterSignal(real_mob, list(COMSIG_MOB_PRE_FLASHED_CARBON, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON))
 
-/// Signal proc for [COMSIG_MOB_FLASHED_CARBON].
-/// The bread and butter of head revolutionary conversions.
+/// Signal proc for [COMSIG_MOB_PRE_FLASHED_CARBON].
+/// Flashes will always result in partial success even if it's from behind someone
 /datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
 	// Always partial flash at the very least
-	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
+/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
+/// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
+/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+	SIGNAL_HANDLER
 
 	if(flashed.stat == DEAD)
-		return .
+		return
 	if(flashed.stat != CONSCIOUS)
 		to_chat(source, span_warning("[flashed.p_they(capitalized = TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
-		return .
+		return
 
 	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
-		return .
+		return
 
 	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
@@ -219,8 +243,6 @@
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
 	else
 		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
-
-	return .
 
 /// Used / called async from [proc/on_flash] to deliver a funny meme line
 /datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)
@@ -384,7 +406,11 @@
 	if(give_hud)
 		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = new()
 		S.Insert(C)
-		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		if(C.get_quirk(/datum/quirk/body_purist))
+			to_chat(C, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \
+			some odd reason, you just can't remember... either way, the program must have worked, because you have gained the ability to keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		else
+			to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
 	name = "\improper Revolution"

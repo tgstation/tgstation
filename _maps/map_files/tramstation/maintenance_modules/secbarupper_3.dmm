@@ -17,6 +17,22 @@
 /obj/effect/landmark/blobstart,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
+"cQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	location = "Law Office";
+	name = "navigation beacon (Law Office Delivery)"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "lawyerdropoff"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
 "df" = (
 /obj/structure/railing{
 	dir = 8
@@ -281,11 +297,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
-"Cj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "CW" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -364,6 +375,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
+"JR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
 "JT" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -378,24 +394,6 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"Me" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	dir = 1;
-	freq = 1400;
-	location = "Law Office";
-	name = "navigation beacon (Law Office Delivery)"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "lawyerdropoff"
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "Mt" = (
 /obj/modular_map_root/tramstation{
 	key = "secbarupper_attachment_a"
@@ -1697,7 +1695,7 @@ RO
 RO
 RO
 RO
-Cj
+JR
 Du
 WI
 Cd
@@ -1942,7 +1940,7 @@ Sc
 Sc
 RO
 ZK
-Me
+cQ
 xZ
 rm
 Py
