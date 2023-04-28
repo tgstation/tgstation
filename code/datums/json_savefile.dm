@@ -94,7 +94,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	var/max_allowed_requests = CONFIG_GET(number/maximum_preferences_export_attempts)
 	if(download_requests > max_allowed_requests)
 		download_available = FALSE
-		tgui_alert("You have hit the maximum number of allowed download requests ([max_allowed_requests]) for this round! Please try again next round.", list("OK"))
+		tgui_alert("You have hit the maximum number of allowed download requests ([max_allowed_requests]) for this round! Please try again next round.")
 		return
 
 	download_requests++
@@ -102,4 +102,4 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences", list("Yes", "No", "Cancel")) != "Yes")
 		return
 
-	DIRECT_OUTPUT(requester, ftp(file(path), "[account_name]_preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))
+	DIRECT_OUTPUT(requester, ftp(file(path), "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))
