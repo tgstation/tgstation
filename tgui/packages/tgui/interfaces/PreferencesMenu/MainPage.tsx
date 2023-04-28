@@ -26,7 +26,7 @@ const CharacterControls = (props: {
   setGender: (gender: Gender) => void;
   showGender: boolean;
   handleExportSavefile: () => void;
-  exportEnabled: Boolean;
+  exportEnabled: boolean;
 }) => {
   return (
     <Stack>
@@ -544,7 +544,7 @@ export const MainPage = (
                       handleExportSavefile={() => {
                         act('export_savefile');
                       }}
-                      exportEnabled={data.json_export_enabled}
+                      exportEnabled={!!data.json_export_enabled}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true

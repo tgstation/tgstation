@@ -124,7 +124,7 @@ export type PreferencesMenuData = {
   character_preview_view: string;
   character_profiles: (string | null)[];
 
-  json_export_enabled: Boolean;
+  json_export_enabled: boolean;
 
   character_preferences: {
     clothing: Record<string, string>;
