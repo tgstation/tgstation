@@ -13,44 +13,16 @@
 
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added)
 	. = ..()
-
-	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
-	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
-	else if(ishostile(target) || isbasicmob(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
-	else
-		return ELEMENT_INCOMPATIBLE
-
 	src.poison_type = poison_type
 	src.amount_added = amount_added
 
+	target.AddElement(/datum/element/on_hit_effect, CALLBACK(src, PROC_REF(do_venom)))
+
 /datum/element/venomous/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
+	target.RemoveElement(/datum/element/on_hit_effect)
 	return ..()
 
-/datum/element/venomous/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
-	SIGNAL_HANDLER
-
-	add_reagent(target)
-
-/datum/element/venomous/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-	add_reagent(target)
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-/datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
-	SIGNAL_HANDLER
-
-	if(!success)
-		return
-	add_reagent(target)
-
-/datum/element/venomous/proc/add_reagent(mob/living/target)
+/datum/element/venomous/proc/do_venom(atom/venom_source, mob/living/target)
 	if(!istype(target))
 		return
 	if(target.stat == DEAD)
@@ -61,23 +33,3 @@
 	else
 		final_amount_added = amount_added
 	target.reagents?.add_reagent(poison_type, final_amount_added)
-
-
-/**
- * Subtype for projectiles to apply a reagent on hit.
- */
-/datum/element/venomous/projectile
-
-/datum/element/venomous/projectile/Attach(datum/target, poison_type, amount_added)
-	. = ..()
-	if(!isprojectile(target))
-		return ELEMENT_INCOMPATIBLE
-
-	RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_hit))
-
-/datum/element/venomous/projectile/proc/on_hit(datum/source, mob/firer, atom/target, angle, hit_limb)
-	SIGNAL_HANDLER
-
-	if(!isliving(target))
-		return
-	add_reagent(target)

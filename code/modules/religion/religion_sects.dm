@@ -210,7 +210,11 @@
 
 /datum/religion_sect/pyre/on_select()
 	. = ..()
-
+	AddComponent(/datum/component/sect_nullrod_bonus, list(
+		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+			/datum/religion_rites/blazing_star,
+		),
+	))
 
 //candle sect bibles don't heal or do anything special apart from the standard holy water blessings
 /datum/religion_sect/pyre/sect_bless(mob/living/target, mob/living/chap)

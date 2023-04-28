@@ -80,3 +80,6 @@
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
+
+/// global signal when a global nullrod type is picked
+#define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"

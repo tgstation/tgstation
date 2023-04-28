@@ -1191,6 +1191,7 @@
 #include "code\datums\elements\nerfed_pulling.dm"
 #include "code\datums\elements\noticable_organ.dm"
 #include "code\datums\elements\obj_regen.dm"
+#include "code\datums\elements\on_hit_effect.dm"
 #include "code\datums\elements\openspace_item_click_handler.dm"
 #include "code\datums\elements\organ_set_bonus.dm"
 #include "code\datums\elements\pet_bonus.dm"

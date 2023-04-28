@@ -128,7 +128,6 @@
 	if(GLOB.religious_sect)
 		return
 	GLOB.religious_sect = new path()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_SECT_CHOSEN, GLOB.religious_sect)
 	for(var/i in GLOB.player_list)
 		if(!isliving(i))
 			continue
