@@ -4,11 +4,13 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/smartfridge.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
+	light_power = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
@@ -44,29 +46,55 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
+/obj/machinery/smartfridge/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & BROKEN)
+		set_light(0)
+		return
+	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
+
 /obj/machinery/smartfridge/update_icon_state()
-	if(machine_stat)
-		icon_state = "[initial(icon_state)]-off"
-		return ..()
-
-	if(!visible_contents)
-		icon_state = "[initial(icon_state)]"
-		return ..()
-
-	var/list/shown_contents = contents - component_parts
-	switch(shown_contents.len)
-		if(0)
-			icon_state = "[initial(icon_state)]"
-		if(1 to 25)
-			icon_state = "[initial(icon_state)]1"
-		if(26 to 75)
-			icon_state = "[initial(icon_state)]2"
-		if(76 to INFINITY)
-			icon_state = "[initial(icon_state)]3"
+	icon_state = "[initial(icon_state)]"
+	if(machine_stat & BROKEN)
+		icon_state += "-broken"
+	else if(!powered())
+		icon_state += "-off"
 	return ..()
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
+
+	var/list/shown_contents = contents - component_parts
+	if(visible_contents && shown_contents.len > 0)
+		var/contents_icon_state = "[initial(icon_state)]"
+		switch(base_build_path)
+			if(/obj/machinery/smartfridge/extract)
+				contents_icon_state += "-slime"
+			if(/obj/machinery/smartfridge/food)
+				contents_icon_state += "-food"
+			if(/obj/machinery/smartfridge/drinks)
+				contents_icon_state += "-drink"
+			if(/obj/machinery/smartfridge/organ)
+				contents_icon_state += "-organ"
+			if(/obj/machinery/smartfridge/petri)
+				contents_icon_state += "-petri"
+			if(/obj/machinery/smartfridge/chemistry)
+				contents_icon_state += "-chem"
+			if(/obj/machinery/smartfridge/chemistry/virology)
+				contents_icon_state += "-viro"
+			else
+				contents_icon_state += "-plant"
+		switch(shown_contents.len)
+			if(1 to 25)
+				contents_icon_state += "-1"
+			if(26 to 50)
+				contents_icon_state += "-2"
+			if(31 to INFINITY)
+				contents_icon_state += "-3"
+		. += mutable_appearance(icon, contents_icon_state)
+
+	. += mutable_appearance(icon, "[initial(icon_state)]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
+
 	if(!machine_stat && has_emissive)
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
@@ -537,6 +565,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
+	icon = 'icons/obj/vending.dmi'
 	pass_flags = PASSTABLE
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/disks
