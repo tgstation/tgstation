@@ -127,8 +127,8 @@
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
 	maxHealth = 40
 	health = 40
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	poison_per_bite = 5
 	poison_type = /datum/reagent/toxin/acid
 	obj_damage = 40
