@@ -11,7 +11,7 @@
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
 
-/datum/action/cooldown/sweb_passage/Grant(mob/grant_to)
+/datum/action/cooldown/web_passage/Grant(mob/grant_to)
 	. = ..()
 	if (!owner)
 		return
@@ -39,13 +39,13 @@
 	. = ..()
 	var/turf/spider_turf = get_turf(owner)
 	var/obj/structure/spider/webpassage = locate() in spider_turf
-	if(solidweb)
+	if(webpassage)
 		owner.balloon_alert_to_viewers("sealing web...")
 	else
 		owner.balloon_alert_to_viewers("spinning web...")
 
 	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
-		plant_solidweb(spider_turf, solidweb)
+		plant_webpassage(spider_turf, webpassage)
 	else
 		owner?.balloon_alert(owner, "interrupted!") // Null check because we might have been interrupted via being disintegrated
 	build_all_button_icons()
