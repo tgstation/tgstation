@@ -249,6 +249,33 @@
 /obj/item/card/id/advanced/bountyhunter/ert
 	trim = /datum/id_trim/centcom/bounty_hunter
 
+/datum/id_trim/bounty_hunter/psykers
+	assignment = "Psyker-gang Shikari"
+
+
+
+// FINDSOMEWHERE TO PUT /obj/item/clothing/suit/armor/reactive/psykerboost SO IT ISNT LOST
+// ORIGINALLY PSYKER CAPTAIN GEAR. IDK WHAT IT DOES
+
+/datum/outfit/pirate/psyker
+	name = "Psyker-gang Shikari"
+
+	glasses = null
+	head = null
+	ears = /obj/item/radio/headset/syndicate/alt/psyker
+	uniform = /obj/item/clothing/under/pants/track
+	gloves = /obj/item/clothing/gloves/fingerless
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	l_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/gore
+
+	id_trim = /datum/id_trim/bounty_hunter/psykers
+
+/datum/outfit/pirate/psyker/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	equipped.psykerize()
+
 /datum/outfit/invisible_man
 	name = "Invisible Man"
 	uniform = /obj/item/clothing/under/suit/black_really
