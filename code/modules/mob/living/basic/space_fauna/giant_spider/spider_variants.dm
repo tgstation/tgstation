@@ -16,7 +16,7 @@
 	melee_damage_upper = 30
 	speed = 5
 	player_speed_modifier = -3.1
-	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
+	menu_description = "Slow spider variant specializing in stalking and ambushing prey, but has goo health and damage."
 
 /mob/living/basic/giant_spider/ambush/Initialize(mapload)
 	. = ..()
@@ -109,6 +109,32 @@
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
+
+/**
+ * ### Tangle Spider
+ *
+ * A subtype of the giant spider which specializes in support skills.
+ * Nurses can place down webbing in a quarter of the time that other species can and can wrap other spiders' wounds, healing them.
+ * Note that it cannot heal itself.
+ */
+/mob/living/basic/giant_spider/tangle
+	name = "tangle spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	icon_state = "tangle"
+	icon_living = "tangle"
+	icon_dead = "tangle_dead"
+	gender = FEMALE
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	obj_damage = 40
+	web_speed = 0.25
+	speed = 5
+	web_type = /datum/action/cooldown/lay_web/sealer
+	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
+
 
 /**
  * ### Tarantula

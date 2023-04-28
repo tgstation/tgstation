@@ -75,6 +75,7 @@
 	var/obj/structure/spider/eggcluster/egg
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
+		/mob/living/basic/giant_spider/tangle,
 		/mob/living/basic/giant_spider/nurse,
 		/mob/living/basic/giant_spider/ambush,
 		/mob/living/basic/giant_spider/scout,
