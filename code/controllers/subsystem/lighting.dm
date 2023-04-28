@@ -35,8 +35,10 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to length(queue))
 		var/datum/light_source/L = queue[i]
 
+		L.needs_update = LIGHTING_NO_UPDATE //update_corners() can qdel itself if the source atom was deleted or this light has no power/range
 		L.update_corners()
-		L.needs_update = LIGHTING_NO_UPDATE
+		if(!QDELETED(L))
+			L.needs_update = LIGHTING_NO_UPDATE //no need to update since we are gonna update those corners in the next for loop
 
 		if(init_tick_checks)
 			CHECK_TICK
