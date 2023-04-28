@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes rare occasions in which the captain can fail to spawn with their banner on certain maps if their left hand was holding something else."
