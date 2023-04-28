@@ -6,7 +6,7 @@
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	mag_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
-	fire_sound = 'sound/weapons/rocketlaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	fire_sound_volume = 80
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
@@ -151,7 +151,7 @@
 		var/mob/living/M = AM
 		investigate_log("([key_name(A)]) has been consumed by the Spatial rift at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 		M.ghostize(FALSE)
-	else if(istype(AM, /obj/anomaly/singularity))
+	else if(istype(AM, /obj/singularity))
 		investigate_log("([key_name(A)]) has been consumed by the Spatial rift at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 		return
 	AM.forceMove(src)
