@@ -74,7 +74,7 @@
 
 /obj/machinery/fugitive_capture/psyker
 	name = "psyker recreation cell"
-	desc = "A repourposed recreation chamber frequently used by psykers, which soothes its user by bombarding them with loud noises and harmful stimuli. Repurposed for the storage of prisoners, and should have no (lasting) side effects on non-psykers forced into it."
+	desc = "A repurposed recreation chamber frequently used by psykers, which soothes its user by bombarding them with loud noises and painful stimuli. Repurposed for the storage of prisoners, and should have no (lasting) side effects on non-psykers forced into it."
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE
 
 /// Psyker gear
