@@ -582,6 +582,9 @@
 	c_tag = "Genetics Lab"
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/computer/cloning{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -2422,6 +2425,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -28566,7 +28570,7 @@
 /area/station/maintenance/floor4/port)
 "hFL" = (
 /obj/effect/turf_decal/siding/purple,
-/obj/item/kirbyplants/random,
+/obj/machinery/clonepod,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -79438,7 +79442,7 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/autolathe/hacked{
 	name = "Security Autolathe";
-	desc = "This one is pre-authorized to manufacture lethal ammunition for private security forces"
+	desc = "This Autolathe is pre-authorized to manufacture lethal ammunition for private security forces"
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
