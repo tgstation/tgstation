@@ -82,7 +82,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /// Proc that handles generating a prettified JSON string of a user's preferences and showing it to them.
 /datum/json_savefile/proc/export_json_to_client(mob/requester)
-	if(isnull(requester))
+	if(isnull(requester) || CONFIG_GET(flag/allow_preferences_export))
 		return
 
 	DIRECT_OUTPUT(requester, ftp(file(path), "[requester.ckey]_preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))

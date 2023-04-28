@@ -472,6 +472,10 @@
 
 /datum/config_entry/flag/preference_map_voting
 
+/// Allows players to export their own preferences as a JSON file.
+/datum/config_entry/flag/allow_preferences_export
+	default = FALSE // if you're running this as a dev on local you already have full access to this file, just needs a tiny bit of navigating the file system
+
 /datum/config_entry/number/client_warn_version
 	default = null
 	min_val = 500

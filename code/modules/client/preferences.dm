@@ -180,6 +180,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["character_profiles"] = create_character_profiles()
 
+	data["json_export_enabled"] = CONFIG_GET(flag/allow_preferences_export)
+
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window

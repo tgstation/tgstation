@@ -26,6 +26,7 @@ const CharacterControls = (props: {
   setGender: (gender: Gender) => void;
   showGender: boolean;
   handleExportSavefile: () => void;
+  exportEnabled: Boolean;
 }) => {
   return (
     <Stack>
@@ -58,16 +59,18 @@ const CharacterControls = (props: {
         </Stack.Item>
       )}
 
-      <Stack.Item>
-        <Button
-          onClick={props.handleExportSavefile}
-          fontSize="22px"
-          icon="download"
-          iconColor="green"
-          tooltip="Export Savefile"
-          tooltipPosition="top"
-        />
-      </Stack.Item>
+      {props.exportEnabled && (
+        <Stack.Item>
+          <Button
+            onClick={props.handleExportSavefile}
+            fontSize="22px"
+            icon="download"
+            iconColor="green"
+            tooltip="Export Savefile"
+            tooltipPosition="top"
+          />
+        </Stack.Item>
+      )}
     </Stack>
   );
 };
@@ -541,6 +544,7 @@ export const MainPage = (
                       handleExportSavefile={() => {
                         act('export_savefile');
                       }}
+                      exportEnabled={data.json_export_enabled}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true
