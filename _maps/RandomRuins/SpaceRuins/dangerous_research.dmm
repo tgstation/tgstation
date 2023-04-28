@@ -1662,7 +1662,7 @@
 "uI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/purple,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "uP" = (
 /obj/effect/turf_decal/trimline/purple/line{
@@ -2030,7 +2030,7 @@
 /area/ruin/space)
 "zY" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "zZ" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -2277,7 +2277,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "CB" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_b" = "Air Supply B");
+	atmos_chambers = list("asrc_b"="Air Supply B");
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2433,7 +2433,7 @@
 /area/ruin/space)
 "Ey" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "EA" = (
 /turf/open/floor/plating/rust,
@@ -3061,7 +3061,7 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Ob" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("asrc_a" = "Air Supply A")
+	atmos_chambers = list("asrc_a"="Air Supply A")
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -3270,7 +3270,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Qv" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Qy" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -5123,8 +5123,8 @@ Bg
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 GZ
 GZ
 nB
@@ -5165,8 +5165,8 @@ Qv
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 xK
 xd
 xd
@@ -5207,8 +5207,8 @@ Qv
 Bg
 Bg
 Bg
-nB
-nB
+Bg
+Bg
 Zv
 Zv
 iw
