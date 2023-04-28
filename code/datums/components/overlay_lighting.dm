@@ -494,27 +494,27 @@
 	switch(current_direction)
 		if(NORTH)
 			translate_y += 32 * final_distance
-			if(beam)
-				scale_x = 1 / abs((range * 2) -1)
+			if(beam && range > 1)
+				scale_x = 1 / (range -1)
 		if(SOUTH)
 			translate_y += -32 * final_distance
-			if(beam)
-				scale_x = 1 / abs((range * 2) -1)
+			if(beam && range > 1)
+				scale_x = 1 / (range -1)
 		if(EAST)
 			translate_x += 32 * final_distance
-			if(beam)
-				scale_y = 1 / abs((range * 2) -1)
+			if(beam && range > 1)
+				scale_y = 1 / (range -1)
 		if(WEST)
 			translate_x += -32 * final_distance
-			if(beam)
-				scale_y = 1 / abs((range * 2) -1)
+			if(beam && range > 1)
+				scale_y = 1 / (range -1)
 
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
 		directional_offset_x = translate_x
 		directional_offset_y = translate_y
 		var/matrix/transform = matrix()
-		if(beam)
-			transform.Scale(scale_x, scale_y) // we want a skinnier light overlay to be cast for beams
+		if(beam && range > 1)
+			transform.Scale(scale_x, scale_y)
 		transform.Translate(translate_x, translate_y)
 		visible_mask.transform = transform
 	if(overlay_lighting_flags & LIGHTING_ON)
