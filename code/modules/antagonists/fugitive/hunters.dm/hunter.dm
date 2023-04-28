@@ -38,7 +38,7 @@
 			to_chat(owner, span_danger("Our client promised us big bucks, and we intend to make good on our delivery. Let's hope this is an easy paycheck..."))
 		if(HUNTER_PACK_PSYKER)
 			to_chat(owner, span_danger("GOOD EVENING, WE ARE PSYKER HUNTE- NO, PSYKER SHIKARIS!"))
-			to_chat(owner, span_danger("An inferior brainling contacted us with an offer we could NOT pass up. We kidnap some fools for them, and in exchange we get a LIFETIME SUPPLY OF GORE."))
+			to_chat(owner, span_danger("A brainling hit us up on the holopad with an offer we could NOT pass up. We kidnap some fools for them, and in exchange we get a LIFETIME SUPPLY OF GORE."))
 			to_chat(owner, span_danger("Our gore supply has been running thin as of late -- How could we say no? The binge MUST go on!"))
 
 	to_chat(owner, span_boldannounce("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))

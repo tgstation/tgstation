@@ -786,7 +786,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "NO" = (
-/obj/effect/mob_spawn/ghost_role/human/pirate/psykers,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers,
 /obj/machinery/light/floor,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
@@ -970,7 +970,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/hunter)
 "Wy" = (
-/obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers/captain,
 /obj/machinery/light/floor,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,

@@ -26,7 +26,7 @@
 	prompt_name = "a spacepol officer"
 	you_are_text = "I am a member of the Spacepol!"
 	flavour_text = "Justice has arrived. We must capture those fugitives lurking on that station!"
-	back_story = "space cop"
+	back_story = HUNTER_PACK_COPS
 	outfit = /datum/outfit/spacepol
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -41,7 +41,7 @@
 	you_are_text = "Ay blyat. I am a Space-Russian smuggler!"
 	flavour_text = "We were mid-flight when our cargo was beamed off our ship! Must be on station somewhere? \
 		We must \"legally\" reaquire it by any means necessary - is our property, after all!"
-	back_story = "russian"
+	back_story = HUNTER_PACK_RUSSIAN
 	outfit = /datum/outfit/russian_hunter
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/russian/leader
@@ -54,10 +54,22 @@
 	prompt_name = "a bounty hunter"
 	you_are_text = "I'm a bounty hunter."
 	flavour_text = "We got a new bounty on some fugitives, dead or alive."
-	back_story = "bounty hunters"
+	back_story = HUNTER_PACK_BOUNTY
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers
+	name = "mental energizer"
+	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
+	icon_state = "psykerpod"
+	prompt_name = "a psyker-hunter"
+	mob_species = /datum/species/human
+	outfit = /datum/outfit/psyker
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers/captain
+	prompt_name = "a psyker-hunter captain"
+	outfit = /datum/outfit/psyker/captain
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/Destroy()
 	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
@@ -72,3 +84,18 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth
 	outfit = /datum/outfit/bountysynth
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker
+	name = "mental energizer"
+	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
+	icon_state = "psykerpod"
+	prompt_name = "a psyker"
+	you_are_text = "Ahahaha! I am a Psyker Shikari!"
+	flavour_text = "" //This gets printed elsewhere
+	back_story = HUNTER_PACK_PSYKER
+	outfit = /datum/outfit/psyker
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/captain
+	prompt_name = "a psyker Captain"
+	back_story = HUNTER_PACK_COPS
+	outfit = /datum/outfit/psyker/captain

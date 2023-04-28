@@ -2638,7 +2638,6 @@
 #include "code\modules\antagonists\pirate\pirate_outfits.dm"
 #include "code\modules\antagonists\pirate\pirate_roles.dm"
 #include "code\modules\antagonists\pirate\pirate_shuttle_equipment.dm"
-#include "code\modules\antagonists\pirate\pirate_special_items.dm"
 #include "code\modules\antagonists\pyro_slime\pyro_slime.dm"
 #include "code\modules\antagonists\revenant\haunted_item.dm"
 #include "code\modules\antagonists\revenant\revenant_abilities.dm"

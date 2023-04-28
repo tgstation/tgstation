@@ -162,9 +162,11 @@
 /datum/id_trim/bounty_hunter/psykers
 	assignment = "Psyker-gang Shikari"
 
+/datum/id_trim/pirate/captain/psykers
+	assignment = "Psyker-gang Shikari Captain"
+
 /datum/outfit/psyker
 	name = "Psyker-Shikari Hunter"
-
 	glasses = null
 	head = null
 	ears = /obj/item/radio/headset/syndicate/alt/psyker

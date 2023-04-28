@@ -778,7 +778,7 @@
 
 /datum/map_template/shuttle/hunter/psyker
 	suffix = "psyker"
-	name = "Psyker Shikari Ship"
+	name = "Psyker Fortune-Telling Ship"
 
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"
