@@ -87,6 +87,8 @@
 #define NOAUGMENTS 17
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 18
+/// Similar to NOEYESPRITES but only excludes the eyeless overlay
+#define NOEYEHOLES 19
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

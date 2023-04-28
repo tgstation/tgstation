@@ -661,18 +661,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
 			add_pixel_y += height_offset
 
-			if(!eye_organ)
+			if(eye_organ)
+				eye_organ.refresh(call_update = FALSE)
+				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					eye_overlay.pixel_y += height_offset
+					standing += eye_overlay
+			else if (!(NOEYEHOLES in species_traits))
 				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
-			else
-				eye_organ.refresh(call_update = FALSE)
-
-			if(!no_eyeslay)
-				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
-					eye_overlay.pixel_y += height_offset
-					standing += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
