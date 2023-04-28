@@ -279,7 +279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return TRUE
 
 		if("export_savefile")
-			savefile.export_json_to_client(usr)
+			savefile.export_json_to_client(usr, parent.ckey)
 			return TRUE
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)

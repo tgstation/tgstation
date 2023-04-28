@@ -8,6 +8,8 @@
 	VAR_PRIVATE/list/tree
 	/// If this is set to true, calling set_entry or remove_entry will automatically call save(), this does not catch modifying a sub-tree, nor do I know how to do that
 	var/auto_save = FALSE
+	/// Increments how many time this datum has been requested for download. Used to determine if someone is trying to spam download it to lag out a server for any reason.
+	var/download_requests = 0
 
 GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
@@ -81,8 +83,20 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 			region[entry] = entry_value
 
 /// Proc that handles generating a prettified JSON string of a user's preferences and showing it to them.
-/datum/json_savefile/proc/export_json_to_client(mob/requester)
+/// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
+/// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
+/datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
 	if(isnull(requester) || CONFIG_GET(flag/allow_preferences_export))
 		return
 
-	DIRECT_OUTPUT(requester, ftp(file(path), "[requester.ckey]_preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))
+	var/max_allowed_requests = CONFIG_GET(number/maximum_preferences_export_attempts)
+	if(download_requests > max_allowed_requests)
+		tgui_alert("You have hit the maximum number of allowed download requests ([max_allowed_requests]) for this round! Please try again next round.", list("OK"))
+		return
+
+	download_requests++
+
+	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences", list("Yes", "No", "Cancel")) != "Yes")
+		return
+
+	DIRECT_OUTPUT(requester, ftp(file(path), "[account_name]_preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"))
