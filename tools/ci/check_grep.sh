@@ -77,9 +77,10 @@ if $grep '\tarmor = list' $map_files; then
 	st=1
 fi;
 part "common spelling mistakes"
-if $grep -i 'nanotransen' $map_files; then
+if $grep -i 'nanotransen' $map_files
+	$grep 'NanoTrasen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra n or capitalized T.${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
@@ -161,9 +162,10 @@ if $grep -i 'centcomm' $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in code, please remove the extra M(s).${NC}"
     st=1
 fi;
-if $grep -ni 'nanotransen' $code_files; then
+if $grep -ni 'nanotransen' $code_files
+	$grep 'NanoTrasen' $code_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra n or capitalized T.${NC}"
     st=1
 fi;
 part "map json naming"
