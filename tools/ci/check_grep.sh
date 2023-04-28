@@ -77,9 +77,9 @@ if $grep '\tarmor = list' $map_files; then
 	st=1
 fi;
 part "common spelling mistakes"
-if $grep 'NanoTrasen' $map_files; then
+if $grep -i 'nanotransen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the capitalized T.${NC}"
+    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
