@@ -136,6 +136,9 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	max_integrity = 40
+	alpha = 200
+	plane = GAME_PLANE_UPPER
+	var/can_tangle = TRUE
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()
