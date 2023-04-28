@@ -61,3 +61,20 @@
 		new /obj/item/clothing/mask/breath(src)
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/oxygen(src)
+
+
+
+///Psyker-friendly gear!
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker
+	name = "psyker navigation warper"
+	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
+	icon_screen = "recharge_comp_on"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
+	x_offset = 0
+	y_offset = 11
+
+/obj/machinery/fugitive_capture/psyker
+	name = "psyker recreation cell"
+	desc = "A repourposed recreation chamber frequently used by psykers, which soothes its user by bombarding them with loud noises and harmful stimuli. Repurposed for the storage of prisoners, and should have no (lasting) side effects on non-psykers forced into it."
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE
