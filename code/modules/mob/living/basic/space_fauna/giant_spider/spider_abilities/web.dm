@@ -83,3 +83,18 @@
 
 /datum/action/cooldown/lay_web/sealer/obstructed_by_other_web()
 	return !!(locate(/obj/structure/spider/stickyweb/sealed) in get_turf(owner))
+
+
+/// Variant which allows sealed webs to be stacked into thicker walls
+/datum/action/cooldown/lay_web/solid
+	desc = "Spin a web to slow down potential prey. Webs can be stacked to make solid structures."
+
+/datum/action/cooldown/lay_web/solid/plant_web(turf/target_turf, obj/structure/spider/sealed/existing_web)
+	if (existing_web)
+		qdel(existing_web)
+		new /obj/structure/spider/sealed(target_turf)
+		return
+	new /obj/structure/spider/sealed(target_turf)
+
+/datum/action/cooldown/lay_web/solid/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/stickyweb/sealed/solid) in get_turf(owner))
