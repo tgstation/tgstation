@@ -13,7 +13,7 @@
 		damage = 0
 	if(ishuman(target)) //monkestation edit
 		var/mob/living/carbon/human/h_mob = target //monkestation edit
-		if(h_mob.can_inject()) //monkestation edi
+		if(h_mob.can_inject()) //monkestation edit
 			h_mob.adjustStaminaLoss(40) //monkestation edit
 	return ..()
 
