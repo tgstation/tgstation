@@ -919,3 +919,106 @@
   - rscadd: A new venture by Nanotrasen has put phonebooths in space.
   trevorpillow:
   - rscadd: Added hostile spawn tag to rats
+2023-04-26:
+  13spacemen:
+  - qol: Lowered the atmos build, reprogram, and destroy delays on the RPD
+  Fikou:
+  - bugfix: skeletons get boosted heals from milk again
+  Helg2:
+  - balance: Heretic blades butcher speed is 3 seconds now.
+  JohnFulpWillard:
+  - balance: '[Mafia] Notes are no longer written out for you.'
+  - qol: '[Mafia] You can now send your notes to chat whenever.'
+  - qol: '[Mafia] Roundend has changed. Solos will win over others in a 1v1, but a
+      HoP can keep a round going in case they can solo lynch.'
+  Rhials:
+  - bugfix: Falling down one of the stage hazard chasms on the medisim shuttle will
+      now properly kill you on Icebox, instead of dropping you into the z-level below.
+  - qol: Deadchat now gets more juicy details on what has triggered a non-randomly
+      occurring random event.
+  - code_imp: There are now helpers for forcing events in a variety of ways. More
+      events! More events!!!!!!!
+  SyncIt21:
+  - refactor: removed duplicate `pre_attack()` & redundant `attackby()` procs which
+      did the same thing
+  - bugfix: unnecessary crash when unwrenching pipes/devices with the RPD
+  Tattle:
+  - sound: shutters have a unique sound effect
+  ZephyrTFA:
+  - bugfix: Book's no longer take your formatting and throw it out the window.
+  - refactor: Book display and rendering
+  Zonespace27:
+  - rscadd: Added a crashed prisoner transport space ruin.
+  carlarctg:
+  - code_imp: Adds support for ammunition 'bands', basically intended to be used rather
+      than wholly new sprites for new ammotypes. Additionally, they're (meant to be)
+      greyscale, which allows one overlay to be used for many ammo types. Only implemented
+      on the detective revolver.
+  vinylspiders:
+  - bugfix: crafting lizard skin cowboy boots no longer places a spawner object over
+      the created boot item
+2023-04-27:
+  Dawnseer:
+  - bugfix: fixed an oversight - Made Goliath Cloak and Goliath Cloak Hood fireproof.
+      And Goliath hide.
+  Fikou:
+  - bugfix: social anxiety is incompatible with mute
+  JohnFulpWillard:
+  - qol: Health analyzers now show body temperature in red/blue if the temperature
+      of the body can't sustain it's own life.
+  - bugfix: Inverse technetium now properly gives advanced details in genetics/radiation
+      analyzing.
+  Rex9001:
+  - bugfix: Fixes the Tramstation CMO office lack of CMO stamp
+  Watermelon914:
+  - bugfix: Fixed final objectives appearing as 'Skipped' in the traitor panel.
+  moocowswag:
+  - bugfix: You can no longer bypass the laws of bluespace with a portable chem mixer.
+  - bugfix: You can no longer bypass container locks with storage hotkeys.
+  san7890:
+  - bugfix: Changelogs entries for "sound" and "image" should now have icons associated
+      with them, how neat.
+  timothymtorres:
+  - qol: Add mood events for basketball shooting and dunking
+  - balance: '"Camera Obscura" (crafted with holy water + camera) will now steal the
+      soul of ghostly apparitions when a picture is taken causing damage.  This will
+      also stun and reveal revenants briefly.'
+2023-04-28:
+  Comxy:
+  - balance: Star Gazer now explodes when it dies.
+  - balance: Star Gazer will only die when the owner dies.
+  - balance: Star Gazer will attack the most recent enemy that attacked him when on
+      autopilot.
+  - balance: Star Gazer has an aura that slowly damages people and heals the owner.
+  - balance: Cosmic Ascension now buffs some spells.
+  Fikou:
+  - bugfix: Fixes crafting tools not taking into account subtypes, i.e. you can craft
+      a filet migrawr with any lighter.
+  JohnFulpWillard:
+  - bugfix: Paradox clones are now attempted manual copies of humans, rather than
+      straight-up copying everything. They should no longer have bugs related to being
+      unable to use UIs, having FOV, or visual bugs.
+  - bugfix: SiliConnect can download borg logs again.
+  - bugfix: The RD can once again enable Admin mode on Wirecarp
+  - bugfix: NT IRN can once again see the shopping cart and call the cargo shuttle.
+  - bugfix: Chat Client, ID Management and Messenger should now update their UIs properly.
+  - code_imp: PDAs will hopefully not lag as much when clicking on buttons (such as
+      in ID management).
+  LemonInTheDark:
+  - bugfix: Holodisk recording gives the right vfx again. Bonus, the rays work with
+      it now too!
+  Melbert:
+  - bugfix: Fixes rare occasions in which the captain can fail to spawn with their
+      banner on certain maps if their left hand was holding something else.
+  SkeletalElite:
+  - bugfix: Stabilized Oil extracts no longer explode infinitely if your corpse is
+      immune to gibbing
+  Tattle:
+  - image: removes unused vault walls
+  rageguy505:
+  - bugfix: Updated the billboard on the space phonebooth
+  - bugfix: Replaced live ammo found that was unintended on the waystation and the
+      faceoff with spent subtypes.
+  vinylspiders:
+  - bugfix: mobs can now be set on fire using flares and candles if they are covered
+      in something flammable

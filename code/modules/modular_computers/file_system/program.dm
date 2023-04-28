@@ -53,6 +53,10 @@
 	temp.usage_flags = usage_flags
 	return temp
 
+///We are not calling parent as it's handled by the computer itself, this is only called after.
+/datum/computer_file/program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(FALSE)
+
 // Relays icon update to the computer.
 /datum/computer_file/program/proc/update_computer_icon()
 	if(computer)

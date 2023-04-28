@@ -539,6 +539,11 @@
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
+// CRASHED PRISON SHUTTLE
+/area/ruin/space/prison_shuttle
+	name = "\improper Crashed Prisoner Shuttle"
+
+
 //ABANDONED BOX WHITESHIP
 
 /area/ruin/space/has_grav/whiteship/box
