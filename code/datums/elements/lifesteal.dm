@@ -13,10 +13,10 @@
 /datum/element/lifesteal/Attach(datum/target, flat_heal = 10)
 	. = ..()
 	src.flat_heal = flat_heal
-	target.AddElement(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
+	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
 
 /datum/element/lifesteal/Detach(datum/target)
-	target.RemoveElement(/datum/component/on_hit_effect)
+	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
 /datum/element/lifesteal/proc/do_lifesteal(atom/heal_target, atom/damage_target)

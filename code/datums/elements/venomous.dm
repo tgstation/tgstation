@@ -18,7 +18,7 @@
 	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_venom)))
 
 /datum/element/venomous/Detach(datum/target)
-	target.RemoveElement(/datum/component/on_hit_effect)
+	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
 /datum/element/venomous/proc/do_venom(atom/venom_source, mob/living/target)
