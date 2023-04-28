@@ -139,7 +139,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
 	if(projectile_parry)
-		QDEL_NULL(projectile_parry.resolve())
+		qdel(projectile_parry.resolve())
 
 
 /datum/component/style/Destroy(force, silent)
