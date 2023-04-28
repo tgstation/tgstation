@@ -103,6 +103,10 @@
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
 
+	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+
 	AddComponent(/datum/component/healing_touch,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\

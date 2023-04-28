@@ -101,34 +101,14 @@
 	else if(isprojectile(mover))
 		return prob(30)
 
-	/obj/structure/spider/stickyweb/sealed
+	/obj/structure/spider/solid/web
 	name = "solid web"
 	desc = "A solid thick wall of web, airtight enough to block air flow."
 	icon_state = "solidweb"
 	sealed = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-
-	/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
-	genetic = TRUE
-	var/mob/living/allowed_mob
-
-/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
-	allowed_mob = allowedmob
-	. = ..()
-
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..() //this is the normal spider web return aka a spider would make this TRUE
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
+	max_integrity = 60
 
 /obj/structure/spider/spiderling
 	name = "spiderling"
