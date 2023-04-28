@@ -102,7 +102,7 @@
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
-	if(!.) // other emp effects handled in parent
+	if(!.)
 		return
 	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
@@ -141,7 +141,7 @@
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
-	if(!.) // other emp effects handled in parent
+	if(!.)
 		return
 	owner.Knockdown(severity == EMP_HEAVY ? 20 SECONDS : 10 SECONDS)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
@@ -181,7 +181,7 @@
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
-	if(!.) // other emp effects handled in parent
+	if(!.)
 		return
 	to_chat(owner, span_danger("Your [src.name]'s logic boards temporarily become unresponsive!"))
 	if(severity == EMP_HEAVY)
@@ -308,7 +308,7 @@
 
 /obj/item/bodypart/head/robot/emp_act(severity)
 	. = ..()
-	if(!.) // other emp effects handled in parent
+	if(!.)
 		return
 	to_chat(owner, span_danger("Your [src.name]'s optical transponders glitch out and malfunction!"))
 
