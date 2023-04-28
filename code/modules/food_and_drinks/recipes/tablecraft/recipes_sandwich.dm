@@ -120,7 +120,7 @@
 	name = "Death Sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/food/meat/cutlet = 4,
+		/obj/item/food/salami = 4,
 		/obj/item/food/meatball = 4,
 		/obj/item/food/grown/tomato = 1,
 	)
