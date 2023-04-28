@@ -1,17 +1,19 @@
 /**
  * ## On Hit Effect Component!
  *
- * Element for other elements/components to rely on for on-hit effects without duplicating the on-hit code.
- * See Lifesteal, or bane for examples
+ * Component for other elements/components to rely on for on-hit effects without duplicating the on-hit code.
+ * See Lifesteal, or bane for examples.
+ *
+ * THIS COULD EASILY SUPPORT COMPONENT_DUPE_ALLOWED but the getcomponent makes it throw errors. if you can figure that out feel free to readd the dupe types
  */
 /datum/component/on_hit_effect
-	dupe_mode = COMPONENT_DUPE_ALLOWED
+
 	///callback used
 	var/datum/callback/on_hit_callback
 
 /datum/component/on_hit_effect/Initialize(on_hit_callback)
 	src.on_hit_callback = on_hit_callback
-	if(!(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent) || isitem(parent) || ishostile(parent) || isprojectile(parent)))
+	if(!(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent) || isitem(parent) || isanimal_or_basicmob(parent) || isprojectile(parent)))
 		return ELEMENT_INCOMPATIBLE
 
 /datum/component/on_hit_effect/RegisterWithParent()
