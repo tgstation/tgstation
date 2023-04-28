@@ -103,7 +103,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	else
 		string_to_send += " You only have [max_allowed_requests - download_requests] download requests left for this round!" // since they'll probably get the drill right around here
 
-	if(tgui_alert(requester, string_to_send, "Export Preferences JSON", list("Yes", "No", "Cancel")) != "Yes")
+	if(tgui_alert(requester, string_to_send, "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
 		return
 
 	download_requests++
