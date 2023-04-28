@@ -295,13 +295,13 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/black
 	colour = "black"
-	effect_desc = "Transforms the user into a random type of golem."
+	effect_desc = "Transforms the user into a golem."
 
 /obj/item/slimecross/chilling/black/do_effect(mob/user)
 	if(ishuman(user))
-		user.visible_message(span_notice("[src] crystallizes along [user]'s skin, turning into metallic scales!"))
+		user.visible_message(span_notice("[src] crystallizes along [user]'s skin, turning into solid stone!"))
 		var/mob/living/carbon/human/H = user
-		H.set_species(/datum/species/golem) // TODO: replace?
+		H.set_species(/datum/species/golem)
 	..()
 
 /obj/item/slimecross/chilling/lightpink

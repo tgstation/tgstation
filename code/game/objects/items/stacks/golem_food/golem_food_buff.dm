@@ -1,6 +1,3 @@
-
-// TODO: make this a two stage key/value thing so i dont have several instances of the same datum probably
-
 /// An effect you gain from eating minerals
 /datum/golem_food_buff
 	/// If we can apply this while you already have a different status effect

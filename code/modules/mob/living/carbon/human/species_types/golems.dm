@@ -34,6 +34,7 @@
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = BODYTEMP_COLD_ICEBOX_SAFE
 
+	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
 	mutanteyes = /obj/item/organ/internal/eyes/golem
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
