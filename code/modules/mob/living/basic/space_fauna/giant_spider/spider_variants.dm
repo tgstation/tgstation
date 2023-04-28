@@ -119,7 +119,7 @@
  */
 /mob/living/basic/giant_spider/tangle
 	name = "tangle spider"
-	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	desc = "Furry and brown, it makes you shudder to look at it. This one has dim brown eyes."
 	icon_state = "tangle"
 	icon_living = "tangle"
 	icon_dead = "tangle_dead"
@@ -127,13 +127,15 @@
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
 	maxHealth = 40
 	health = 40
-	melee_damage_lower = 5
-	melee_damage_upper = 10
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	poison_per_bite = 5
+	poison_type = /datum/reagent/toxin/acid
 	obj_damage = 40
 	web_speed = 0.25
 	speed = 5
 	web_type = /datum/action/cooldown/lay_web/sealer
-	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
+	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
 
 
 /**
