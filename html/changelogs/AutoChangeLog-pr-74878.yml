@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "Economy class airlock on the Luxury Shuttle now aligns with dock"
