@@ -34,6 +34,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"hb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "ix" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/north,
@@ -229,7 +233,6 @@
 "zB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable/layer1,
 /obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -270,10 +273,6 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
-"FD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "FU" = (
 /turf/open/floor/plating,
@@ -420,10 +419,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"TQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "TZ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -453,6 +448,10 @@
 /obj/structure/table,
 /obj/structure/window/plasma/spawner/directional/east,
 /turf/open/floor/glass/reinforced/plasma,
+/area/station/engineering/supermatter/room)
+"Xx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "XF" = (
 /obj/structure/particle_accelerator/power_box,
@@ -810,7 +809,7 @@ zz
 "}
 (16,1,1) = {"
 Om
-TQ
+hb
 au
 HO
 se
@@ -854,7 +853,7 @@ zz
 "}
 (18,1,1) = {"
 Om
-FD
+Xx
 yN
 QT
 NO
