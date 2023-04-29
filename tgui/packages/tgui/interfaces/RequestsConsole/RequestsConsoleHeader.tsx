@@ -7,7 +7,7 @@ export const RequestsConsoleHeader = (props, context) => {
   const { has_mail_send_error, new_message_priority } = data;
   return (
     <Stack.Item>
-      {!!new_message_priority && <ErrorNoticeBox />}
+      {!!has_mail_send_error && <ErrorNoticeBox />}
       {!!new_message_priority && <MessageNoticeBox />}
       <EmergencyBox />
     </Stack.Item>

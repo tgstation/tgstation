@@ -20,6 +20,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 #define REQ_EMERGENCY_ENGINEERING "Engineering"
 #define REQ_EMERGENCY_MEDICAL "Medical"
 
+#define ANNOUNCEMENT_COOLDOWN_TIME (30 SECONDS)
+
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
@@ -67,6 +69,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/anon_tips_receiver = FALSE
 	/// Did we error in the last mail?
 	var/has_mail_send_error = FALSE
+	/// Cooldown to prevent announcement spam
+	COOLDOWN_DECLARE(announcement_cooldown)
 
 /datum/armor/machinery_requests_console
 	melee = 70
@@ -171,15 +175,17 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		return
 
 	switch(action)
-		if("clear_header_and_verification")
-			message_stamped_by = null
-			message_verified_by = null
-			announcement_authenticated = FALSE
+		if("clear_message_status")
 			has_mail_send_error = FALSE
 			for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 				if (console.department == department)
 					console.new_message_priority = REQ_NO_NEW_MESSAGE
 					console.update_appearance()
+			return TRUE
+		if("clear_authentication")
+			message_stamped_by = ""
+			message_verified_by = ""
+			announcement_authenticated = FALSE
 			return TRUE
 		if("toggle_silent")
 			silent = !silent
@@ -202,6 +208,30 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				update_appearance()
 				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
+		if("send_announcement")
+			if(!COOLDOWN_FINISHED(src, announcement_cooldown))
+				to_chat(usr, span_alert("Intercomms recharging. Please stand by."))
+				return
+			if(!can_send_announcements)
+				return
+			if(!(announcement_authenticated || isAdminGhostAI(usr)))
+				return
+
+			var/message = params["message"]
+			if(!message)
+				return
+			if(isliving(usr))
+				var/mob/living/L = usr
+				message = L.treat_message(message)
+			minor_announce(message, "[department] Announcement:", html_encode = FALSE)
+			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
+			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
+			deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
+
+			COOLDOWN_START(src, announcement_cooldown, ANNOUNCEMENT_COOLDOWN_TIME)
+			announcement_authenticated = FALSE
+			return TRUE
 		if("send_message")
 			var/recipient = params["recipient"]
 			if(!recipient)
@@ -215,8 +245,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/request_type = params["request_type"]
 			if(!request_type)
 				return
-			var/list/authentication_data = params["authentication_data"]
-
 
 			var/radio_freq
 			switch(ckey(recipient))
@@ -238,20 +266,28 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				"rec_dpt" = recipient,
 				"send_dpt" = department,
 				"message" = message,
-				"verified" = authentication_data["message_verified_by"],
-				"stamped" = authentication_data["message_stamped_by"],
+				"verified" = message_verified_by,
+				"stamped" = message_stamped_by,
 				"priority" = priority,
 				"notify_freq" = radio_freq
 			))
 			signal.send_to_receivers()
 
-			has_mail_send_error = signal.data["done"]
+			has_mail_send_error = !signal.data["done"]
 
 			if(!silent)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+				if(has_mail_send_error)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+				else
+					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+
+			message_stamped_by = ""
+			message_verified_by = ""
+			return TRUE
 
 /obj/machinery/requests_console/ui_data(mob/user)
 	var/list/data = list()
+	data["is_admin_ghost_ai"] = isAdminGhostAI()
 	data["can_send_announcements"] = can_send_announcements
 	data["department"] = department
 	data["emergency"] = emergency
@@ -371,7 +407,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
 		message_verified_by = "[ID.registered_name] ([ID.assignment])"
-		SStgui.update_uis(src)
 		announcement_authenticated = (ACCESS_RC_ANNOUNCE in ID.access)
 		SStgui.update_uis(src)
 		return
@@ -416,3 +451,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 #undef REQ_SCREEN_VIEW_MSGS
 #undef REQ_SCREEN_AUTHENTICATE
 #undef REQ_SCREEN_ANNOUNCE
+
+#undef ANNOUNCEMENT_COOLDOWN_TIME

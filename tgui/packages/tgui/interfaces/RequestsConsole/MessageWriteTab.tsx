@@ -147,6 +147,25 @@ export const MessageWriteTab = (props, context) => {
         <Stack fill justify="space-between">
           <Stack.Item>
             <Button
+              icon="paper-plane"
+              content={'Send message'}
+              disabled={!messageText || !recipient || !priority || !requestType}
+              onClick={() => {
+                if (!messageText || !recipient || !priority || !requestType)
+                  return;
+
+                act('send_message', {
+                  message: messageText,
+                  recipient: recipient,
+                  request_type: requestType,
+                  priority: priority,
+                });
+                resetMessage();
+              }}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
               warning
               icon="id-card"
               content={
@@ -159,25 +178,6 @@ export const MessageWriteTab = (props, context) => {
               icon="stamp"
               content={authentication_data.message_stamped_by || 'Not stamped'}
               onClick={() => act('stamp')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              icon="paper-plane"
-              content={'Send message'}
-              onClick={() => {
-                if (!messageText || !recipient || !priority || !requestType)
-                  return;
-
-                act('send_message', {
-                  authentication_data: authentication_data,
-                  message: messageText,
-                  recipient: recipient,
-                  request_type: requestType,
-                  priority: priority,
-                });
-                resetMessage();
-              }}
             />
           </Stack.Item>
         </Stack>

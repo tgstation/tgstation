@@ -7,6 +7,7 @@ export type RequestsData = {
   emergency: string;
   hack_state: BooleanLike;
   has_mail_send_error: BooleanLike;
+  is_admin_ghost_ai: BooleanLike;
   messages: RequestMessage[];
   new_message_priority: RequestPriority;
   silent: BooleanLike;
