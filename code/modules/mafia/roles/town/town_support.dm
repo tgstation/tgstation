@@ -14,6 +14,7 @@
 	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
 	role_type = TOWN_SUPPORT
 	role_flags = ROLE_UNIQUE
+	role_flags = ROLE_CAN_KILL
 	hud_icon = "hudheadofpersonnel"
 	revealed_icon = "headofpersonnel"
 	revealed_outfit = /datum/outfit/mafia/hop
