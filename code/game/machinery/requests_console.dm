@@ -174,7 +174,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("clear_header_and_verification")
 			message_stamped_by = null
 			message_verified_by = null
-			announcement_authenticated = null
+			announcement_authenticated = FALSE
+			has_mail_send_error = FALSE
 			for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 				if (console.department == department)
 					console.new_message_priority = REQ_NO_NEW_MESSAGE
