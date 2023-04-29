@@ -20,6 +20,9 @@ export const MessageViewTab = (props, context) => {
 
 export const MessageDisplay = (props, context) => {
   const { message } = props;
+  const append_list_keys = message.appended_list
+    ? Object.keys(message.appended_list)
+    : [];
   return (
     <Stack.Item>
       <Section
@@ -36,7 +39,18 @@ export const MessageDisplay = (props, context) => {
         {message.priority === RequestPriority.EXTREME && (
           <NoticeBox bad>!!!Extreme Priority!!!</NoticeBox>
         )}
-        <BlockQuote>{message.content}</BlockQuote>
+        <BlockQuote>
+          {message.content}
+          {!!message.appended_list && !!append_list_keys.length && (
+            <LabeledList>
+              {append_list_keys.map((list_key) => (
+                <LabeledList.Item label={list_key}>
+                  {message.appended_list[list_key]}
+                </LabeledList.Item>
+              ))}
+            </LabeledList>
+          )}
+        </BlockQuote>
         <LabeledList>
           <LabeledList.Item label="Message Verified By">
             {message.message_verified_by || 'Not Verified'}

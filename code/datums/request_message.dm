@@ -1,7 +1,7 @@
 #define ORE_UPDATE_REQUEST "Ore Update"
 
 /datum/request_message
-	/// The name of the department request console that sent the message
+	/// The r5tname of the department request console that sent the message
 	var/sender_department = ""
 	/// The time when the message arrived
 	var/received_time = null
@@ -17,6 +17,8 @@
 	var/radio_freq = null
 	/// The type of the request
 	var/request_type = ""
+	/// A list to be appended after the message, for example, list of ores
+	var/appended_list = list()
 
 /datum/request_message/New(data)
 	sender_department =  data["sender_department"]
@@ -27,6 +29,9 @@
 	priority = data["priority"]
 	radio_freq = data["notify_freq"]
 	request_type = data["ore_update"] ? ORE_UPDATE_REQUEST : data["request_type"]
+	var/list/data_appended_list = data["appended_list"]
+	if(data_appended_list && data_appended_list.len)
+		appended_list = data_appended_list
 
 /datum/request_message/proc/get_alert()
 	var/authenticated = ""
@@ -46,6 +51,7 @@
 	ui_data["message_stamped_by"] = message_stamped_by
 	ui_data["priority"] = priority
 	ui_data["request_type"] = request_type
+	ui_data["appended_list"] = appended_list
 
 	return ui_data
 

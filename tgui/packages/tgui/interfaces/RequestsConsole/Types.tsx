@@ -30,6 +30,7 @@ export type RequestMessage = {
   received_time: string;
   request_type: RequestType;
   sender_department: string;
+  appended_list: string[];
 };
 
 export enum RequestType {
