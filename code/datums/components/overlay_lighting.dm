@@ -367,8 +367,11 @@
 	visible_mask.transform = transform
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
-	if(directional && !beam)
-		cast_range = clamp(round(new_range * 0.5), 1, 3)
+	if(directional)
+		if(beam)
+			cast_range = max(round(new_range * 0.5), 1)
+		else 
+			cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
 
@@ -516,7 +519,7 @@
 
 /// A more narrow directional light overlay 
 /datum/component/overlay_lighting/proc/cast_directional_beam()
-	var/final_distance = max(range/2, 1)
+	var/final_distance = cast_range
 	//Lower the distance by 1 if we're not looking at a cardinal direction, and we're not a short cast
 	if(final_distance > SHORT_CAST && !(ALL_CARDINALS & current_direction))
 		final_distance -= 1
