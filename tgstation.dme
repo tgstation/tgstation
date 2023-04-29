@@ -1081,6 +1081,7 @@
 #include "code\datums\diseases\anxiety.dm"
 #include "code\datums\diseases\beesease.dm"
 #include "code\datums\diseases\brainrot.dm"
+#include "code\datums\diseases\chronic_illness.dm"
 #include "code\datums\diseases\cold.dm"
 #include "code\datums\diseases\cold9.dm"
 #include "code\datums\diseases\decloning.dm"

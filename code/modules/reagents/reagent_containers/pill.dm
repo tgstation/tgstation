@@ -143,6 +143,12 @@
 	list_reagents = list(/datum/reagent/medicine/mannitol = 14)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/sansufentanyl
+	name = "sansufentanyl pill"
+	desc = "Used to treat Hereditary Manifold Sickness. Temporary side effects include - nausea, dizziness, impaired motor coordination."
+	icon_state = "pill19"
+	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 5)
+
 //Lower quantity mannitol pills (50u pills heal 250 brain damage, 5u pills heal 25)
 /obj/item/reagent_containers/pill/mannitol/braintumor
 	desc = "Used to treat symptoms for brain tumors."

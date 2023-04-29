@@ -8,6 +8,7 @@
 
 //Disease Flags
 #define CURABLE (1<<0)
+#define CHRONIC (1<<0)
 #define CAN_CARRY (1<<1)
 #define CAN_RESIST (1<<2)
 
