@@ -202,7 +202,7 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
 	show_in_report = TRUE
-	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
+	report_message = "We here at Nanotransen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
 	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot) //Overiding the annoucer hides the birthday person in the annoucement message.
 	///Variable that stores a reference to the person selected to have their birthday celebrated.
@@ -253,7 +253,7 @@
 
 
 /datum/station_trait/birthday/proc/announce_birthday()
-	report_message = "We here at Nanotrasen would all like to wish [birthday_person ? birthday_person_name : "Employee Name"] a very happy birthday"
+	report_message = "We here at NanoTrasen would all like to wish [birthday_person ? birthday_person_name : "Employee Name"] a very happy birthday"
 	priority_announce("Happy birthday to [birthday_person ? birthday_person_name : "Employee Name"]! Nanotrasen wishes you a very happy [birthday_person ? thtotext(birthday_person.age + 1) : "255th"] birthday.")
 	if(birthday_person)
 		playsound(birthday_person, 'sound/items/party_horn.ogg', 50)
