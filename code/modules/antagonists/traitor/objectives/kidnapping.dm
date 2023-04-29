@@ -46,7 +46,7 @@
 		/datum/job/chemist,
 		/datum/job/doctor,
 		/datum/job/psychologist,
-		/datum/job/virologist,
+		/datum/job/fisherman,
 		// Science
 		/datum/job/geneticist,
 		/datum/job/roboticist,

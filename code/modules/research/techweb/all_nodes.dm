@@ -398,7 +398,6 @@
 		"medical_kiosk",
 		"medigel",
 		"medipen_refiller",
-		"pandemic",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

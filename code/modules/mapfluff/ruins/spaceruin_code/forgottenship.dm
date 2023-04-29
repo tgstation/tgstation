@@ -30,8 +30,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
-	contraband = list(/obj/item/reagent_containers/cup/bottle/cold = 2,
-					/obj/item/restraints/handcuffs = 4,
+	contraband = list(/obj/item/restraints/handcuffs = 4,
 					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
 					/obj/item/storage/medkit/tactical = 1)
 	premium = list(/obj/item/storage/pill_bottle/psicodine = 2,

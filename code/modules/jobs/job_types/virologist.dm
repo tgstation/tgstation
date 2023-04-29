@@ -1,7 +1,6 @@
-/datum/job/virologist
-	title = JOB_VIROLOGIST
-	description = "Study the effects of various diseases and synthesize a \
-		vaccine for them. Engineer beneficial viruses."
+/datum/job/fisherman
+	title = JOB_FISHERMAN
+	description = "Catch fish in medical."
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 1
@@ -10,9 +9,9 @@
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
-	config_tag = "VIROLOGIST"
+	config_tag = "FISHERMAN"
 
-	outfit = /datum/outfit/job/virologist
+	outfit = /datum/outfit/job/fisherman
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
 	paycheck = PAYCHECK_CREW
@@ -29,7 +28,6 @@
 	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 	mail_goodies = list(
-		/obj/item/reagent_containers/cup/bottle/random_virus = 15,
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
 		/obj/item/reagent_containers/cup/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
@@ -39,21 +37,19 @@
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
-/datum/outfit/job/virologist
-	name = "Virologist"
-	jobtype = /datum/job/virologist
+/datum/outfit/job/fisherman
+	name = "Fisherman"
+	jobtype = /datum/job/fisherman
 
-	id_trim = /datum/id_trim/job/virologist
-	uniform = /obj/item/clothing/under/rank/medical/virologist
-	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
-	suit_store = /obj/item/flashlight/pen
+	id_trim = /datum/id_trim/job/fisherman
+	uniform = /obj/item/clothing/under/misc/overalls
 	belt = /obj/item/modular_computer/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	mask = /obj/item/clothing/mask/surgical
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	head = /obj/item/clothing/head/soft
+	shoes = /obj/item/clothing/shoes/workboots
 
-	backpack = /obj/item/storage/backpack/virology
-	satchel = /obj/item/storage/backpack/satchel/vir
-	duffelbag = /obj/item/storage/backpack/duffelbag/virology
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	box = /obj/item/storage/box/survival/medical

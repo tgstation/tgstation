@@ -131,9 +131,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_CMO
 	access_view = ACCESS_VIROLOGY
-	contains = list(/obj/item/reagent_containers/cup/bottle/flu_virion,
-					/obj/item/reagent_containers/cup/bottle/cold,
-					/obj/item/reagent_containers/cup/bottle/random_virus = 4,
+	contains = list(
 					/obj/item/reagent_containers/cup/bottle/fake_gbs,
 					/obj/item/reagent_containers/cup/bottle/magnitis,
 					/obj/item/reagent_containers/cup/bottle/pierrot_throat,

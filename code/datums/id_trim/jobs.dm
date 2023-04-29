@@ -1085,8 +1085,8 @@
 		)
 	job = /datum/job/station_engineer
 
-/datum/id_trim/job/virologist
-	assignment = "Virologist"
+/datum/id_trim/job/fisherman
+	assignment = "Fisherman"
 	trim_state = "trim_virologist"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
@@ -1107,7 +1107,7 @@
 		ACCESS_CHANGE_IDS,
 		ACCESS_CMO,
 		)
-	job = /datum/job/virologist
+	job = /datum/job/fisherman
 
 /datum/id_trim/job/warden
 	assignment = "Warden"

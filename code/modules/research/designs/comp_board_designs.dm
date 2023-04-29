@@ -98,16 +98,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/pandemic
-	name = "PanD.E.M.I.C. 2200 Board"
-	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
-	id = "pandemic"
-	build_path = /obj/item/circuitboard/computer/pandemic
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/board/comconsole
 	name = "Communications Board"
 	desc = "Allows for the construction of circuit boards used to build a communications console."

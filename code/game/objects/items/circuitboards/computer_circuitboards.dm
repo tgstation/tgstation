@@ -356,11 +356,6 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/computer/operating
 
-/obj/item/circuitboard/computer/pandemic
-	name = "PanD.E.M.I.C. 2200"
-	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/computer/pandemic
-
 //Science
 
 /obj/item/circuitboard/computer/aifixer
