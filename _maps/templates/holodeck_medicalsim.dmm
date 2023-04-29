@@ -321,7 +321,6 @@
 	},
 /area/template_noop)
 "BS" = (
-/obj/machinery/computer/pandemic,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/holofloor{
 	icon_state = "white"
