@@ -49,8 +49,8 @@
 	else
 		count = MINOR_AMOUNT
 	for(var/increment = 1, increment <= count, increment++)
-		var/datum/hydroponics/plant_mutation/picked_mutation  = pick(subtypesof(/datum/hydroponics/plant_mutation) - /datum/hydroponics/plant_mutation/infusion)
-		var/obj/item/seeds/picked_seed = initial(picked_mutation.created_seed)
+		var/datum/hydroponics/plant_mutation/picked_mutation  = pick(subtypesof(/datum/hydroponics/plant_mutation) - /datum/hydroponics/plant_mutation)
+		var/obj/item/seeds/picked_seed = pick(typesof(/obj/item/seeds) - /obj/item/seeds - /obj/item/seeds/sample - /obj/item/seeds/gatfruit - /obj/item/seeds/cherry/bomb - /obj/item/seeds/random - typesof(/obj/item/seeds/lavaland) - /obj/item/seeds/replicapod - /obj/item/seeds/kronkus - /obj/item/seeds/banana/bombanana)
 		unfufilled_requirements += picked_seed
 
 /datum/component/botany_tree/proc/on_plant_final_growth(datum/source, obj/machinery/hydroponics/grown_location)
