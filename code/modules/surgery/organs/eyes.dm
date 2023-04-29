@@ -360,12 +360,16 @@
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"
 	var/max_light_beam_distance = 5
-	var/mutable_appearance/eyes_overlay
 	var/obj/item/flashlight/eyelight/glow/eye
+	var/mutable_appearance/eyes_overlay
+
+/obj/item/organ/internal/eyes/robotic/glow/Initialize()
+	. = ..()
+	eye = new /obj/item/flashlight/eyelight/glow
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
+	SStgui.close_uis(src)
 	deactivate()
-	QDEL_NULL(eyes_overlay)
 	QDEL_NULL(eye)
 	return ..()
 
@@ -373,47 +377,120 @@
 	. = ..()
 	if(!eye.on || . & EMP_PROTECT_SELF)
 		return
-	deactivate(silent = TRUE)
+	SStgui.close_uis(src)
+	deactivate()
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/carbon_mob)
 	. = ..()
-	if(!eye)
-		eye = new /obj/item/flashlight/eyelight/glow
+	SStgui.close_uis(src)
+	deactivate()
 	eye.forceMove(carbon_mob)
-	if(ishuman(carbon_mob))
-		eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", carbon_mob, alpha = carbon_mob.alpha)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/carbon_mob)
 	. = ..()
-	eye.on = FALSE
-	eye.set_light_on(FALSE)
+	SStgui.close_uis(src)
+	deactivate()
 	eye.forceMove(src)
 
-/obj/item/organ/internal/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	deactivate()
+/obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
+	return GLOB.default_state
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user)
+	if(!QDELETED(owner))
+		if(owner == user)
+			return UI_INTERACTIVE
+		else return UI_CLOSE
 	return ..()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/activate(silent = FALSE)
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] clicks and makes a whining noise, before shooting out a beam of light!"))
-	eye.on = TRUE
-	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively
-		eye.set_light_on(TRUE)
-	update_eyes_overlay()
+/obj/item/organ/internal/eyes/robotic/glow/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HighLuminosityEyesMenu")
+		ui.autoupdate = FALSE
+		ui.open()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(silent = FALSE)
-	if(!silent)
-		to_chat(owner, span_warning("Your [src] shuts off!"))
-	eye.on = FALSE
-	eye.set_light_on(FALSE)
-	if(!QDELETED(owner))
-		owner.cut_overlay(eyes_overlay)
+/obj/item/organ/internal/eyes/robotic/glow/ui_data(mob/user)
+	var/list/data = list()
 
-/obj/item/organ/internal/eyes/robotic/glow/ui_action_click(owner, action)
+	data["eye_color"] = list(
+			"right" = current_color_string,
+			"left" = current_color_string,
+		)
+	data["range"] = eye.light_range
+
+	return data
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("set_range")
+			var/new_range = params["new_range"]
+			set_beam_range(new_range)
+			return TRUE
+		if("pick_color")
+			var/new_color = input(
+				usr,
+				"Choose eye color color:",
+				"High Luminosity Eyes Menu",
+				current_color_string
+			) as color|null
+			if(new_color)
+				set_beam_color(new_color)
+				return TRUE
+		if("enter_color")
+			var/new_color = lowertext(params["new_color"])
+			set_beam_color(new_color, sanitize = TRUE)
+			return TRUE
+		if("random_color")
+			randomize_color()
+			return TRUE
+
+/obj/item/organ/internal/eyes/robotic/glow/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
 		toggle_active()
 	else if(istype(action, /datum/action/item_action/organ_action/use))
-		prompt_for_controls(owner)
+		ui_interact(user)
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/activate()
+	eye.on = TRUE
+	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
+		eye.set_light_on(TRUE)
+	update_eyes_overlay()
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate()
+	eye.on = FALSE
+	eye.set_light_on(FALSE)
+	update_eyes_overlay()
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/randomize_color()
+	var/new_color = "#"
+	for(var/i in 1 to 3)
+		new_color += num2hex(rand(0, 255), 2)
+	set_beam_color(new_color)
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_range(new_range)
+	var/old_light_range = eye.light_range
+	if(old_light_range == 0 && new_range > 0 && eye.on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
+		eye.set_light_on(TRUE)
+
+	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
+	eye.set_light_on(TRUE)
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_color(newcolor, sanitize = FALSE)
+	if(sanitize)
+		current_color_string = sanitize_hexcolor(newcolor)
+	else
+		current_color_string = newcolor
+
+	eye.set_light_color(newcolor)
+
+	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
+		eye_color_left = current_color_string
+		eye_color_right = eye_color_left
+		owner.dna.species.handle_body(owner)
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/toggle_active()
 	if(eye.on)
@@ -421,28 +498,19 @@
 	else
 		activate()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
-	var/color = input(owner, "Select Color", "Select color", "#ffffff") as color|null
-	if(!color || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
-		return
-	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
-	eye.set_light_range(clamp(range, 0, max_light_beam_distance))
-	assume_rgb(color)
-
-/obj/item/organ/internal/eyes/robotic/glow/proc/assume_rgb(newcolor)
-	current_color_string = newcolor
-	eye.set_light_color(newcolor)
-	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
-		eye_color_left = sanitize_hexcolor(current_color_string)
-		eye_color_right = eye_color_left
-		owner.dna.species.handle_body(owner)
-
 /obj/item/organ/internal/eyes/robotic/glow/proc/update_eyes_overlay()
-	if(!eyes_overlay)
-		return
 	if(QDELETED(owner))
 		return
+
+	if(!ishuman(owner))
+		return
+
 	owner.cut_overlay(eyes_overlay)
+
+	if(!eye.on)
+		return
+
+	eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", owner, alpha = owner.alpha)
 	eyes_overlay.color = current_color_string
 	owner.add_overlay(eyes_overlay)
 

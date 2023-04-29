@@ -191,7 +191,10 @@
 	if(!isturf(current_holder?.loc))
 		return
 	if(directional)
-		cast_directional_light()
+		if(beam)
+			cast_directional_beam()
+		else
+			cast_directional_light()
 	get_new_turfs()
 
 
@@ -355,7 +358,7 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.icon = light_overlays["[pixel_bounds]"]
-	if(pixel_bounds == 32)
+	if(pixel_bounds == 32 && !directional)
 		visible_mask.transform = null
 		return
 	var/offset = (pixel_bounds - 32) * 0.5
@@ -364,7 +367,7 @@
 	visible_mask.transform = transform
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
-	if(directional)
+	if(directional && !beam)
 		cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
@@ -443,7 +446,10 @@
 	if(current_holder)
 		add_dynamic_lumi()
 		if(directional)
-			cast_directional_light()
+			if(beam)
+				cast_directional_beam()
+			else
+				cast_directional_light()
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 	get_new_turfs()
@@ -489,31 +495,68 @@
 
 	var/translate_x = -((range - 1) * 32)
 	var/translate_y = translate_x
-	var/scale_x = 1
-	var/scale_y = 1
 	switch(current_direction)
 		if(NORTH)
 			translate_y += 32 * final_distance
-			if(beam && range > 1)
-				scale_x = 1 / (range -1)
 		if(SOUTH)
 			translate_y += -32 * final_distance
-			if(beam && range > 1)
-				scale_x = 1 / (range -1)
 		if(EAST)
 			translate_x += 32 * final_distance
-			if(beam && range > 1)
-				scale_y = 1 / (range -1)
 		if(WEST)
 			translate_x += -32 * final_distance
-			if(beam && range > 1)
-				scale_y = 1 / (range -1)
 
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
 		directional_offset_x = translate_x
 		directional_offset_y = translate_y
 		var/matrix/transform = matrix()
-		if(beam && range > 1)
+		transform.Translate(translate_x, translate_y)
+		visible_mask.transform = transform
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += visible_mask
+
+/// A more narrow directional light overlay 
+/datum/component/overlay_lighting/proc/cast_directional_beam()
+	var/final_distance = max(range/2, 1)
+	//Lower the distance by 1 if we're not looking at a cardinal direction, and we're not a short cast
+	if(final_distance > SHORT_CAST && !(ALL_CARDINALS & current_direction))
+		final_distance -= 1
+	var/turf/scanning = get_turf(current_holder)
+	for(var/i in 1 to final_distance)
+		var/turf/next_turf = get_step(scanning, current_direction)
+		if(isnull(next_turf) || IS_OPAQUE_TURF(next_turf))
+			final_distance = i
+			break
+		scanning = next_turf
+
+	current_holder.underlays -= visible_mask
+
+	var/translate_x = -((range - 1) * 32)
+	var/translate_y = translate_x
+	var/scale_x = 1
+	var/scale_y = 1
+	switch(current_direction)
+		if(NORTH)
+			translate_y += 32 * final_distance
+			if(range > 1)
+				scale_x = 1 / (range - (range/5))
+		if(SOUTH)
+			translate_y += -32 * final_distance
+			if(range > 1)
+				scale_x = 1 / (range - (range/5))
+		if(EAST)
+			translate_x += 32 * final_distance
+			if(range > 1)
+				scale_y = 1 / (range - (range/5))
+		if(WEST)
+			translate_x += -32 * final_distance
+			if(range > 1)
+				scale_y = 1 / (range - (range/5))
+
+	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
+		directional_offset_x = translate_x
+		directional_offset_y = translate_y
+		var/matrix/transform = matrix()
+		if(range > 1)
 			transform.Scale(scale_x, scale_y)
 		transform.Translate(translate_x, translate_y)
 		visible_mask.transform = transform
