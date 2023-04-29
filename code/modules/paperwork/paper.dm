@@ -695,6 +695,17 @@
 		advanced_html = advanced_html,
 	)
 
+/// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
+/datum/paper_input/proc/to_raw_html()
+	var/final = raw_text
+	if(font)
+		final = "<font face='[font]'>[final]</font>"
+	if(colour)
+		final = "<font color='[colour]'>[final]</font>"
+	if(bold)
+		final = "<b>[final]</b>"
+	return final
+
 /// A single instance of a saved stamp on paper.
 /datum/paper_stamp
 	/// Asset class of the for rendering in tgui

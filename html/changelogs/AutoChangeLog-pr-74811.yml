@@ -1,0 +1,6 @@
+author: "tralezab code, Drag for the commission and player project, cre#0484 for their spritework"
+delete-after: True
+changes:
+  - rscadd: "Divine Archer Armor and Weapon"
+  - qol: "Bows give more feedback when you're doing something wrong, like trying to draw without a nocked arrow"
+  - code_imp: "Sorted files, cleaned bow code up to allow subtypes"
