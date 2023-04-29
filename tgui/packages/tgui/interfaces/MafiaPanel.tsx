@@ -135,7 +135,7 @@ export const MafiaPanel = (props, context) => {
 
 const MafiaLobby = (props, context) => {
   const { act, data } = useBackend<MafiaData>(context);
-  const { lobbydata } = data;
+  const { lobbydata = [] } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
     : null;
@@ -187,7 +187,7 @@ const MafiaLobby = (props, context) => {
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
       </NoticeBox>
-      {lobbydata?.map((lobbyist) => (
+      {lobbydata.map((lobbyist) => (
         <Stack
           key={lobbyist.name}
           className="candystripe"
