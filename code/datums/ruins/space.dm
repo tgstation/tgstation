@@ -407,6 +407,12 @@
 	name = "Traveler's Rest"
 	description = "An abandoned capsule floating through space. It seems as if somebody was in here not too long ago."
 
+/datum/map_template/ruin/space/prison_shuttle
+	id = "prison_shuttle"
+	suffix = "prison_shuttle.dmm"
+	name = "Crashed Prisoner Shuttle"
+	description = "A prisoner transport shuttle that had crashed into a stray asteroid long ago."
+
 /datum/map_template/ruin/space/botanical_haven
 	id = "botanical_haven"
 	suffix = "botanical_haven.dmm"
@@ -448,6 +454,12 @@
 	suffix = "transit_booth.dmm"
 	name = "Transit Booth"
 	description = "Make sure to check out the duty-free store!"
+
+/datum/map_template/ruin/space/space_phonebooth
+	id = "Space_phonebooth"
+	suffix = "phonebooth.dmm"
+	name = "Space Phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads."
 
 /datum/map_template/ruin/space/the_outlet
 	id = "the_outlet"

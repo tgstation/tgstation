@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		enabled = TRUE
 		update_appearance()
 		if(open_ui)
-			ui_interact(user)
+			update_tablet_open_uis(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
@@ -581,11 +581,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
 	wipe_program(forced)
-	var/mob/user = usr
-	if(user && istype(user))
-		//Here to prevent programs sleeping in destroy
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
+	update_tablet_open_uis(usr)
 
 /obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
 	if(program.computer != src)
@@ -621,7 +618,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	active_program = program
 	program.alert_pending = FALSE
 	update_appearance()
-	ui_interact(user)
+	update_tablet_open_uis(user)
 	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)

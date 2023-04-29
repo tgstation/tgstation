@@ -17,9 +17,6 @@
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("PRG_print")
 			if(computer) //This option should never be called if there is no printer

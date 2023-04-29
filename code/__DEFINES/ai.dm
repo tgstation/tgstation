@@ -237,6 +237,17 @@
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
+/// Is there something that scared us into being stationary? If so, hold the reference here
+#define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"
+///How long should we remain stationary for?
+#define BB_STATIONARY_SECONDS "BB_stationary_time_in_seconds"
+///Should we move towards the target that triggered us to be stationary?
+#define BB_STATIONARY_MOVE_TO_TARGET "BB_stationary_move_to_target"
+/// What targets will trigger us to be stationary? Must be a list.
+#define BB_STATIONARY_TARGETS "BB_stationary_targets"
+/// How often can we get spooked by a target?
+#define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
