@@ -425,7 +425,7 @@
 
 	var/has_brimdemon_trophy = locate(/obj/item/crusher_trophy/brimdemon_fang) in crusher.trophies
 
-	add_action(ACTION_MARK_DETONATED, round(60 * (ismegafauna(target) ? 1.5 : 1) * (has_brimdemon_trophy ? 1.25 : 1)))
+	add_action(ACTION_MARK_DETONATED, round((backstabbed ? 60 : 30) * (ismegafauna(target) ? 1.5 : 1) * (has_brimdemon_trophy ? 1.25 : 1)))
 
 
 /datum/component/style/proc/on_geyser_discover(datum/source, obj/structure/geyser/geyser)
