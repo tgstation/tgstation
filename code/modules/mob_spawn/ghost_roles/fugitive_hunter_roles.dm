@@ -97,5 +97,5 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/captain
 	prompt_name = "a psyker Captain"
-	back_story = HUNTER_PACK_COPS
+	back_story = HUNTER_PACK_PSYKER
 	outfit = /datum/outfit/psyker/captain
