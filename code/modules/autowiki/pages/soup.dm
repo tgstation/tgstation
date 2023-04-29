@@ -21,7 +21,7 @@
 		var/result_soup_type = soup_recipe.results[1]
 		var/datum/reagent/result_soup = new result_soup_type()
 		var/datum/glass_style/has_foodtype/soup_style = GLOB.glass_style_singletons[container_for_images][result_soup_type]
-		var/filename = "soup/[SANITIZE_FILENAME(escape_value(format_text(result_soup.name)))]"
+		var/filename = "soup_[SANITIZE_FILENAME(escape_value(format_text(result_soup.name)))]"
 
 		// -- Compiles a list of required reagents and food items --
 		var/list/all_needs_text = list()
@@ -43,6 +43,8 @@
 		for(var/req_text in all_needs_text)
 			if(length(req_text))
 				compiled_requirements += "<li>[req_text]</li>"
+		if(length(compiled_requirements))
+			compiled_requirements = "<ul>[compiled_requirements]</ul>"
 
 		// -- Compiles a list of resulting reagents --
 		var/list/all_results_text = list()
@@ -55,6 +57,8 @@
 		for(var/res_text in all_results_text)
 			if(length(res_text))
 				compiled_results += "<li>[res_text]</li>"
+		if(length(compiled_results))
+			compiled_results = "<ul>[compiled_results]</ul>"
 
 		// -- Assemble the template list --
 		var/list/template_list = list()
