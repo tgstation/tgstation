@@ -89,6 +89,7 @@
 
 /datum/tgui_input_number/Destroy(force, ...)
 	SStgui.close_uis(src)
+	state = null
 	return ..()
 
 /**
