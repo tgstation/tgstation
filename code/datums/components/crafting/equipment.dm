@@ -142,6 +142,17 @@
 	result = /obj/item/ore_sensor
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/material_sniffer
+	name = "Material Sniffer"
+	time = 3 SECONDS
+	reqs = list(
+		/obj/item/analyzer = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/pinpointer/material_sniffer
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/pressureplate
 	name = "Pressure Plate"
 	result = /obj/item/pressure_plate
