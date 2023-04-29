@@ -8,10 +8,8 @@
 	VAR_PRIVATE/list/tree
 	/// If this is set to true, calling set_entry or remove_entry will automatically call save(), this does not catch modifying a sub-tree, nor do I know how to do that
 	var/auto_save = FALSE
-	/// Increments how many time this datum has been requested for download. Used to determine if someone is trying to spam download it to lag out a server for any reason.
-	var/download_requests = 0
-	/// Have we been attempted to be saved too many times? Used to grey out the button that allows us to download UI-side.
-	var/download_available = TRUE
+	/// Cooldown that tracks the time between attempts to download the savefile.
+	COOLDOWN_DECLARE(download_cooldown)
 
 GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
@@ -84,7 +82,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
 
-/// Proc that handles generating a prettified JSON string of a user's preferences and showing it to them.
+/// Proc that handles generating a prettified JSON string (or just simply sending the server-side JSON) of a user's preferences and showing it to them.
 /// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
 /// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
 /datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
@@ -95,22 +93,14 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		tgui_alert(requester, "Preferences exporting is disabled on this server!")
 		return
 
-	var/max_allowed_requests = CONFIG_GET(number/maximum_preferences_export_attempts)
-	if(download_requests >= max_allowed_requests)
-		download_available = FALSE
-		tgui_alert(requester, "You have hit the maximum number of allowed download requests ([max_allowed_requests]) for this round! Please try again next round.")
+	if(!COOLDOWN_FINISHED(src, download_cooldown))
+		tgui_alert(requester, "You must wait [COOLDOWN_TIMELEFT(src, download_cooldown)] before exporting your preferences again!")
 		return
 
-	var/string_to_send = "Are you sure you want to export your preferences as a JSON file?"
-	if(download_requests == 0)
-		string_to_send += " This will save to a file on your computer." // they only really need this message the first time
-	else
-		string_to_send += " You only have [max_allowed_requests - download_requests] download requests left for this round!" // since they'll probably get the drill right around here
-
-	if(tgui_alert(requester, string_to_send, "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
+	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
 		return
 
-	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YY_hh-mm-ss")].json"
+	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/temporary_file_storage = "/data/preferences_export_working_directory/[file_name]"
 	var/exportable_json = ""
 
@@ -125,6 +115,6 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.")
 		return
 
-	download_requests++
+	COOLDOWN_START(src, download_cooldown, CONFIG_GET(number/seconds_cooldown_for_preferences_export))
 	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
 	fdel(temporary_file_storage)

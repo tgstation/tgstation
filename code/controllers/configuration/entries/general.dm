@@ -476,9 +476,9 @@
 /datum/config_entry/flag/allow_preferences_export
 	default = FALSE // if you're running this as a dev on local you already have full access to this file, just needs a tiny bit of navigating the file system
 
-/// The maximum number of attempts a player can make to export their preferences.
-/datum/config_entry/number/maximum_preferences_export_attempts
-	default = 3
+/// The number of seconds a player must wait between preference export attempts.
+/datum/config_entry/number/seconds_cooldown_for_preferences_export
+	default = 10
 	min_val = 1
 
 /datum/config_entry/number/client_warn_version

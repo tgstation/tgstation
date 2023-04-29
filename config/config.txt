@@ -633,10 +633,10 @@ CACHE_ASSETS 0
 ## This is opted-out in case this doesn't work for your server's setup or to prevent malicious actors from overloading this with requests.
 #ALLOW_PREFERENCES_EXPORT
 
-## How many times do you want to restrict players to downloading their own preferences file during a round? Used to prevent download spam from clogging up your server's tubes.
-## If you don't care, set it to a really high number. Minimum number settable for this is 1 however.
+## The time (in seconds) that a player must wait between download requests of their JSON preferences.
+## Minimum number settable for this is 1.
 ## This value will go unused if ALLOW_PREFERENCES_EXPORT is not present (commented out).
-MAXIMUM_PREFERENCE_EXPORT_REQUESTS 3
+SECONDS_COOLDOWN_FOR_PREFERENCES_EXPORT 10
 
 ## Uncomment to allow the station name to be in the hub entry.
 ## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
