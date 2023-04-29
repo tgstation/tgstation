@@ -1,6 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - qol: "basicmobs can now make sounds when their speech is triggered"
-  - qol: "pigs will now make sounds and emote on their own"
-  - sound: "cows, pigs, and sheep have new sound effects!"

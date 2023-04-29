@@ -263,3 +263,19 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/snow/standard_air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+
+/turf/open/misc/asteroid/moon
+	name = "lunar surface"
+	baseturfs = /turf/open/misc/asteroid/moon
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	base_icon_state = "moon"
+	floor_variance = 40
+	dig_result = /obj/item/stack/ore/glass/basalt
+	broken_state = "moon_dug"
+
+/turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
+	dug = TRUE
+	floor_variance = 0
+	base_icon_state = "moon_dug"
+	icon_state = "moon_dug"
