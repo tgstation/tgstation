@@ -198,7 +198,7 @@
 	get_new_turfs()
 
 
-///Adds the luminosity and source for the afected movable atoms to keep track of their visibility.
+///Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
 	LAZYSET(current_holder.affected_dynamic_lights, src, lumcount_range + 1)
 	current_holder.underlays += visible_mask
@@ -206,7 +206,7 @@
 	if(directional)
 		current_holder.underlays += cone
 
-///Removes the luminosity and source for the afected movable atoms to keep track of their visibility.
+///Removes the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/remove_dynamic_lumi()
 	LAZYREMOVE(current_holder.affected_dynamic_lights, src)
 	current_holder.underlays -= visible_mask

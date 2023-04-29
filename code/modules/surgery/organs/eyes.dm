@@ -50,26 +50,27 @@
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
 
-/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if(!.)
 		return
-	owner.cure_blind(NO_EYES)
+	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh()
+	refresh(eye_recipient, inserting = TRUE)
 
 /// Refreshes the visuals of the eyes
-/// If call_update is TRUE, we also will call udpate_body
-/obj/item/organ/internal/eyes/proc/refresh(call_update = TRUE)
+/// If call_update is TRUE, we also will call update_body
+/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
 
-	if(!ishuman(owner))
+	if(!ishuman(eye_owner))
 		return
 
-	var/mob/living/carbon/human/affected_human = owner
-	old_eye_color_left = affected_human.eye_color_left
-	old_eye_color_right = affected_human.eye_color_right
+	var/mob/living/carbon/human/affected_human = eye_owner
+	if(inserting) // we only want to be setting old_eye_color the one time
+		old_eye_color_left = affected_human.eye_color_left
+		old_eye_color_right = affected_human.eye_color_right
 	if(initial(eye_color_left))
 		affected_human.eye_color_left = eye_color_left
 	else
@@ -81,10 +82,10 @@
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
-		owner.add_fov_trait(type, native_fov)
+		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		owner.dna?.species?.handle_body(affected_human) //updates eye icon
+		affected_human.dna?.species?.handle_body(affected_human) //updates eye icon
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
@@ -335,7 +336,6 @@
 	eye.update_brightness(victim)
 	victim.become_blind(FLASHLIGHT_EYES)
 
-
 /obj/item/organ/internal/eyes/robotic/flashlight/on_remove(mob/living/carbon/victim)
 	. = ..()
 	eye.on = FALSE
@@ -368,8 +368,7 @@
 	eye = new /obj/item/flashlight/eyelight/glow
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	SStgui.close_uis(src)
-	deactivate()
+	deactivate(close_ui = TRUE)
 	QDEL_NULL(eye)
 	return ..()
 
@@ -377,20 +376,18 @@
 	. = ..()
 	if(!eye.on || . & EMP_PROTECT_SELF)
 		return
-	SStgui.close_uis(src)
-	deactivate()
+	deactivate(close_ui = TRUE)
 
-/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/carbon_mob)
+/obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
 	. = ..()
-	SStgui.close_uis(src)
-	deactivate()
-	eye.forceMove(carbon_mob)
+	deactivate(close_ui = TRUE)
+	eye.forceMove(eye_recipient)
 
-/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/carbon_mob)
-	. = ..()
-	SStgui.close_uis(src)
-	deactivate()
+/obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
+	deactivate(eye_owner, close_ui = TRUE)
+	QDEL_NULL(eyes_overlay)
 	eye.forceMove(src)
+	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
 	return GLOB.default_state
@@ -398,7 +395,10 @@
 /obj/item/organ/internal/eyes/robotic/glow/ui_status(mob/user)
 	if(!QDELETED(owner))
 		if(owner == user)
-			return UI_INTERACTIVE
+			return min(
+				ui_status_user_is_abled(user, src),
+				ui_status_only_living(user),
+			)
 		else return UI_CLOSE
 	return ..()
 
@@ -458,12 +458,14 @@
 	eye.on = TRUE
 	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
 		eye.set_light_on(TRUE)
-	update_eyes_overlay()
+	update_mob_eyes_overlay()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate()
+/obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
+	if(close_ui)
+		SStgui.close_uis(src)
 	eye.on = FALSE
 	eye.set_light_on(FALSE)
-	update_eyes_overlay()
+	update_mob_eyes_overlay(eye_owner)
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/randomize_color()
 	var/new_color = "#"
@@ -473,11 +475,10 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_range(new_range)
 	var/old_light_range = eye.light_range
-	if(old_light_range == 0 && new_range > 0 && eye.on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
-		eye.set_light_on(TRUE)
-
 	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
-	eye.set_light_on(TRUE)
+	if(old_light_range == 0 && new_range > 0 && eye.on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
+		eye.light_on = FALSE // this is stupid, but this has to be FALSE for set_light_on() to work.
+		eye.set_light_on(TRUE)
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/set_beam_color(newcolor, sanitize = FALSE)
 	if(sanitize)
@@ -486,11 +487,10 @@
 		current_color_string = newcolor
 
 	eye.set_light_color(newcolor)
+	eye_color_left = current_color_string
+	eye_color_right = eye_color_left
 
-	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
-		eye_color_left = current_color_string
-		eye_color_right = eye_color_left
-		owner.dna.species.handle_body(owner)
+	update_mob_eye_color()
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/toggle_active()
 	if(eye.on)
@@ -498,21 +498,27 @@
 	else
 		activate()
 
-/obj/item/organ/internal/eyes/robotic/glow/proc/update_eyes_overlay()
-	if(QDELETED(owner))
+/obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eye_color(mob/living/carbon/eye_owner = owner)
+	if(QDELETED(eye_owner) || ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
 
-	if(!ishuman(owner))
+	eye_owner.dna.species.handle_body(eye_owner)
+
+/obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eyes_overlay(mob/living/carbon/eye_owner = owner)
+	if(QDELETED(eye_owner))
 		return
 
-	owner.cut_overlay(eyes_overlay)
+	if(!ishuman(eye_owner))
+		return
+
+	eye_owner.cut_overlay(eyes_overlay)
 
 	if(!eye.on)
 		return
 
-	eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", owner, alpha = owner.alpha)
+	eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
 	eyes_overlay.color = current_color_string
-	owner.add_overlay(eyes_overlay)
+	eye_owner.add_overlay(eyes_overlay)
 
 /obj/item/organ/internal/eyes/moth
 	name = "moth eyes"
