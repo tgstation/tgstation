@@ -105,6 +105,17 @@
 		power_change()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/machinery/smartfridge/atom_break(damage_flag)
+	playsound(src, SFX_SHATTER, 50, TRUE)
+	return ..()
+
 /*******************
 *   Item Adding
 ********************/
