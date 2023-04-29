@@ -288,3 +288,33 @@
 		return HUMAN_HEIGHT_DWARF
 
 	return mob_height
+
+/**
+ * Makes a full copy of src and returns it.
+ * Attempts to copy as much as possible to be a close to the original.
+ * This includes job outfit (which handles skillchips), quirks, and mutations.
+ * We do not set a mind here, so this is purely the body.
+ * Args:
+ * location - The turf the human will be spawned on.
+ */
+/mob/living/carbon/human/proc/make_full_human_copy(turf/location, client/quirk_client)
+	RETURN_TYPE(/mob/living/carbon/human)
+
+	var/mob/living/carbon/human/clone = new(location)
+
+	clone.fully_replace_character_name(null, dna.real_name)
+	copy_clothing_prefs(clone)
+	clone.age = age
+	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+
+	clone.dress_up_as_job(SSjob.GetJob(job))
+
+	for(var/datum/quirk/original_quircks as anything in quirks)
+		clone.add_quirk(original_quircks.type, override_client = client)
+	for(var/datum/mutation/human/mutations in dna.mutations)
+		clone.dna.add_mutation(mutations)
+
+	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	clone.domutcheck()
+
+	return clone

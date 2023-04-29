@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Bookbinder no longer takes your pen's font and throws it out the nearest window"
