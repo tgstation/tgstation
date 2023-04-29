@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/numdir = text2num(dir)
 		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		row["previews"] += list(list(
-			"selected" = dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
+			"selected" = !selected_dir ? FALSE : dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir),
 			"dir" = dir2text(numdir),
 			"dir_name" = dirs[dir],
 			"icon_state" = icon_state,
@@ -387,7 +387,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(initial(sensor.chamber_id))] != null)
 					continue
 
-			r += list(list("pipe_name" = info.name, "pipe_index" = i))
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "preview" = info.get_preview()))
 			if(info == recipe)
 				data["selected_category"] = c
 		if(r.len == 0) //when all air sensors are installed this list will become empty

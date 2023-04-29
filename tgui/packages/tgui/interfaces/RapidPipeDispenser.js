@@ -2,7 +2,7 @@ import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
+import { Divider, Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
@@ -144,9 +144,9 @@ export const LayerSelect = (props, context) => {
 
 const PreviewSelect = (props, context) => {
   const { act, data } = useBackend(context);
-  const previews = data.preview_rows.flatMap((row) => row.previews);
+  const previews = props.previews.flatMap((row) => row.previews);
   return (
-    <Box width="120px">
+    <Box>
       {previews.map((preview) => (
         <Button
           ml={0}
@@ -158,12 +158,16 @@ const PreviewSelect = (props, context) => {
             height: '40px',
             padding: 0,
           }}
-          onClick={() =>
+          onClick={() => {
+            act('pipe_type', {
+              pipe_type: props.pipe_type,
+              category: props.category,
+            });
             act('setdir', {
               dir: preview.dir,
               flipped: preview.flipped,
-            })
-          }>
+            });
+          }}>
           <Box
             className={classes([
               'pipes32x32',
@@ -185,7 +189,6 @@ const LayerSection = (props, context) => {
   return (
     <Section fill width={7.5}>
       {rootCategoryIndex === 0 && <LayerSelect />}
-      <PreviewSelect />
     </Section>
   );
 };
@@ -217,20 +220,19 @@ const PipeTypeSection = (props, context) => {
         ))}
       </Tabs>
       {shownCategory?.recipes.map((recipe) => (
-        <Button.Checkbox
-          key={recipe.pipe_index}
-          fluid
-          ellipsis
-          checked={recipe.pipe_name === selected_recipe}
-          content={recipe.pipe_name}
-          title={recipe.pipe_name}
-          onClick={() =>
-            act('pipe_type', {
-              pipe_type: recipe.pipe_index,
-              category: shownCategory.cat_name,
-            })
-          }
-        />
+        <Stack key={recipe.pipe_index}>
+          <Stack.Item grow lineHeight={2.1} mt={1}>
+            {recipe.pipe_name}
+            <Divider />
+          </Stack.Item>
+          <Stack.Item>
+            <PreviewSelect
+              previews={recipe.preview}
+              pipe_type={recipe.pipe_index}
+              category={shownCategory.cat_name}
+            />
+          </Stack.Item>
+        </Stack>
       ))}
     </Section>
   );
@@ -319,7 +321,7 @@ export const RapidPipeDispenser = (props, context) => {
   const { data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
-    <Window width={500} height={540}>
+    <Window width={560} height={540}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
