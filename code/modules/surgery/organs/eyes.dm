@@ -412,10 +412,7 @@
 /obj/item/organ/internal/eyes/robotic/glow/ui_data(mob/user)
 	var/list/data = list()
 
-	data["eye_color"] = list(
-			"right" = current_color_string,
-			"left" = current_color_string,
-		)
+	data["eye_color"] = current_color_string
 	data["range"] = eye.light_range
 
 	return data
@@ -499,7 +496,7 @@
 		activate()
 
 /obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eye_color(mob/living/carbon/eye_owner = owner)
-	if(QDELETED(eye_owner) || ishuman(eye_owner)) //Other carbon mobs don't have eye color.
+	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
 
 	eye_owner.dna.species.handle_body(eye_owner)

@@ -3,13 +3,8 @@ import { Button, ColorBox, Input, LabeledList, NumberInput, Section } from '../c
 import { Window } from '../layouts';
 
 type HighLuminosityEyesMenuData = {
-  eye_color: EyeColorData;
+  eye_color: string;
   range: number;
-};
-
-type EyeColorData = {
-  right: string;
-  left: string;
 };
 
 const ColorDisplay = (props, context) => {
@@ -19,7 +14,7 @@ const ColorDisplay = (props, context) => {
     <Section title="Color">
       <LabeledList>
         <LabeledList.Item label="Light Color">
-          <ColorBox color={eye_color.right} />{' '}
+          <ColorBox color={eye_color} />{' '}
           <Button
             icon="palette"
             onClick={() => act('pick_color')}
@@ -31,7 +26,7 @@ const ColorDisplay = (props, context) => {
             tooltip="Randomizes the light color."
           />
           <Input
-            value={eye_color.right}
+            value={eye_color}
             width={6}
             maxLength={7}
             onChange={(_, value) => act('enter_color', { new_color: value })}
