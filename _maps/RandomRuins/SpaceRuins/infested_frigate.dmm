@@ -40,7 +40,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 23
 	},
 /obj/machinery/icecream_vat{
 	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
@@ -429,7 +429,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/exotic/languagebook,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -28
+	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib6-old"
@@ -1104,7 +1104,7 @@
 "si" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/plastic,
@@ -2422,7 +2422,7 @@
 /obj/item/clothing/mask/facehugger/dead,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -3144,7 +3144,7 @@
 "YT" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "ltrails_1";

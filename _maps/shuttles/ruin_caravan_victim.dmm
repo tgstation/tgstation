@@ -187,7 +187,7 @@
 "nj" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
@@ -200,7 +200,7 @@
 "nO" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/broken_floor,
@@ -229,7 +229,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
@@ -547,7 +547,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -630,7 +630,7 @@
 "LI" = (
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
@@ -658,7 +658,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -680,7 +680,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -737,7 +737,7 @@
 "Qi" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,

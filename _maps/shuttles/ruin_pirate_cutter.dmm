@@ -363,7 +363,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -437,7 +437,7 @@
 /obj/structure/closet/crate/secure/loot,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
@@ -512,7 +512,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -654,7 +654,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -28
+	pixel_y = -24
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/ruin/caravan/pirate)
@@ -805,7 +805,7 @@
 /obj/structure/table,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /obj/item/ammo_box/a40mm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

@@ -139,7 +139,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "w" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = -28
+	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4

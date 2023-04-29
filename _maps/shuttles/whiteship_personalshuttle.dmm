@@ -468,7 +468,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5

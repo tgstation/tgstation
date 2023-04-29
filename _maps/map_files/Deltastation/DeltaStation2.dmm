@@ -6083,7 +6083,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
@@ -41924,7 +41924,7 @@
 "kse" = (
 /obj/machinery/airalarm/mixingchamber{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/effect/turf_decal/stripes/corner{
@@ -42811,7 +42811,7 @@
 "kDE" = (
 /obj/machinery/airalarm/engine{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 23
 	},
 /obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/engine,
@@ -72671,7 +72671,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/kitchen_cold_room{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
@@ -78625,7 +78625,7 @@
 "tIh" = (
 /obj/machinery/airalarm/mixingchamber{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 25
 	},
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,

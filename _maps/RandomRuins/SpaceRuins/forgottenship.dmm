@@ -572,7 +572,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 28;
+	pixel_y = 24;
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,

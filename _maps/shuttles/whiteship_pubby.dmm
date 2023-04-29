@@ -802,7 +802,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)

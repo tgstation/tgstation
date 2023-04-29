@@ -106,7 +106,7 @@
 "H" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/structure/filingcabinet/security,
 /obj/effect/turf_decal/siding/thinplating/dark{

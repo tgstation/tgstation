@@ -171,7 +171,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -28
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -307,7 +307,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/crew)
@@ -566,7 +566,7 @@
 	},
 /obj/item/stack/cable_coil/cut,
 /obj/machinery/airalarm/all_access{
-	pixel_y = -28
+	pixel_y = -24
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
@@ -616,7 +616,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -1073,7 +1073,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 22
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/engine)

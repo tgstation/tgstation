@@ -110,7 +110,7 @@
 "gp" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/machinery/suit_storage_unit/standard_unit{
 	mask_type = /obj/item/clothing/mask/gas;
@@ -569,7 +569,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
@@ -685,7 +685,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 1;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
@@ -719,7 +719,7 @@
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,

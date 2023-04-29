@@ -118,7 +118,7 @@
 "A" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

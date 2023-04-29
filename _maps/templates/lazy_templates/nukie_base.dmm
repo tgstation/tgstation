@@ -450,7 +450,7 @@
 	},
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bombthreat)

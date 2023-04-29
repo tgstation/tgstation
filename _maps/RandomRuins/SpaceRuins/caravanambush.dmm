@@ -157,7 +157,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -616,7 +616,7 @@
 "wc" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -869,7 +869,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 24
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter2)
@@ -961,7 +961,7 @@
 "Nl" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
-	pixel_x = -28
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
