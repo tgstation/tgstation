@@ -74,7 +74,7 @@
 					if(3)
 						scramble_dna(affected_mob, 0, 0, 1, rand(15,45))
 		if(5)
-			switch(pick(1,2))
+			switch(pick(1,2,3,4))
 				if(1)
 					to_chat(affected_mob, span_notice("You feel your atoms begin to realign. You're safe. For now."))
 					src.stage = 1
