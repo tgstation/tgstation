@@ -34,7 +34,7 @@
 
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
-	if(sniffable && is_station_level(z) && amount < 10)
+	if(sniffable && is_station_level(z) && amount > 10)
 		GLOB.sniffable_sheets += src
 
 /// removing from sniffable handled by the sniffer itself when it checks for targets
