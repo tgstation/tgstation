@@ -2509,9 +2509,7 @@
 /area/station/security/prison/mess)
 "bhG" = (
 /obj/effect/turf_decal/siding/wood,
-/mob/living/simple_animal/hostile/russian/ranged{
-	loot = null
-	},
+/mob/living/basic/syndicate/russian/ranged/lootless,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "bhI" = (
@@ -37318,9 +37316,7 @@
 /area/station/maintenance/department/science/xenobiology)
 "nIu" = (
 /obj/structure/chair/stool/directional/west,
-/mob/living/simple_animal/hostile/russian/ranged{
-	loot = null
-	},
+/mob/living/basic/syndicate/russian/ranged/lootless,
 /turf/open/floor/carpet/orange,
 /area/station/service/abandoned_gambling_den)
 "nIC" = (

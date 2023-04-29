@@ -17222,10 +17222,8 @@
 "fJr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
+/mob/living/basic/syndicate/russian{
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian)
 	},
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/greater)
@@ -64105,10 +64103,8 @@
 /area/station/science/ordnance)
 "uYp" = (
 /obj/structure/chair/stool/bar/directional/west,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
+/mob/living/basic/syndicate/russian{
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian)
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
@@ -71208,10 +71204,8 @@
 "xhe" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
+/mob/living/basic/syndicate/russian{
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian)
 	},
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/greater)

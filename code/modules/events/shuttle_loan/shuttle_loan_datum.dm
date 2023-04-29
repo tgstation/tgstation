@@ -178,11 +178,11 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/simple_animal/hostile/russian)
-	spawn_list.Add(/mob/living/simple_animal/hostile/russian/ranged) //drops a mateba
+	spawn_list.Add(/mob/living/basic/syndicate/russian)
+	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
 	spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
 	if(prob(75))
-		spawn_list.Add(/mob/living/simple_animal/hostile/russian)
+		spawn_list.Add(/mob/living/basic/syndicate/russian)
 	if(prob(50))
 		spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
 
