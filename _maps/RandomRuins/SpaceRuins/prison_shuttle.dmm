@@ -1,0 +1,418 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/girder/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/girder/reinforced,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"d" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"e" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet/red/airless,
+/area/ruin/space/prison_shuttle)
+"f" = (
+/obj/machinery/modular_computer/console,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"g" = (
+/mob/living/simple_animal/hostile/asteroid/basilisk{
+	environment_smash = 0
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"h" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/prison_shuttle)
+"i" = (
+/obj/structure/table/reinforced,
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"j" = (
+/turf/open/floor/carpet/red/airless,
+/area/ruin/space/prison_shuttle)
+"m" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"p" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"q" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"r" = (
+/obj/machinery/light/broken/directional/south,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"s" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"t" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"u" = (
+/obj/structure/closet/secure_closet/security,
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"w" = (
+/mob/living/simple_animal/hostile/asteroid/hivelord,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"x" = (
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"y" = (
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"z" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"B" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"E" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/prison_shuttle)
+"F" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"G" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"H" = (
+/obj/structure/closet/secure_closet/contraband{
+	name = "confiscation locker"
+	},
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/random/contraband/prison,
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"J" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled/airless,
+/area/ruin/space/prison_shuttle)
+"L" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"M" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/prisoner,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"N" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"O" = (
+/mob/living/basic/cockroach,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"P" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/ruin/space/prison_shuttle)
+"R" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/template_noop,
+/area/ruin/space/prison_shuttle)
+"S" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"T" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"U" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"V" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"X" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/effect/mob_spawn/corpse/human/prisoner,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
+"Y" = (
+/turf/closed/mineral/random/stationside/asteroid,
+/area/ruin/space/prison_shuttle)
+"Z" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/prison_shuttle)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+h
+h
+h
+h
+h
+L
+a
+a
+Z
+F
+"}
+(2,1,1) = {"
+a
+b
+E
+a
+c
+h
+h
+h
+u
+x
+H
+h
+h
+h
+h
+Z
+F
+"}
+(3,1,1) = {"
+a
+E
+Y
+c
+e
+i
+p
+h
+w
+x
+B
+h
+M
+S
+V
+Z
+F
+"}
+(4,1,1) = {"
+E
+Y
+Y
+d
+E
+j
+q
+s
+x
+x
+x
+z
+N
+N
+O
+Q
+a
+"}
+(5,1,1) = {"
+E
+Y
+Y
+d
+f
+m
+r
+h
+h
+z
+h
+h
+O
+T
+N
+Q
+a
+"}
+(6,1,1) = {"
+E
+Y
+Y
+Y
+Y
+Y
+E
+t
+x
+B
+x
+h
+P
+U
+X
+Z
+F
+"}
+(7,1,1) = {"
+E
+Y
+Y
+Y
+Y
+c
+c
+h
+y
+x
+J
+h
+h
+h
+h
+Z
+F
+"}
+(8,1,1) = {"
+E
+Y
+Y
+Y
+Y
+E
+a
+h
+h
+G
+h
+h
+R
+a
+a
+Z
+F
+"}
+(9,1,1) = {"
+a
+E
+Y
+Y
+g
+E
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+E
+E
+E
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+E
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

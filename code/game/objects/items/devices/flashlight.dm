@@ -345,6 +345,16 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/flashlight/flare/attack(mob/living/carbon/victim, mob/living/carbon/user)
+	if(!isliving(victim))
+		return ..()
+
+	if(on && victim.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
+		
+	return ..()
+
 /obj/item/flashlight/flare/toggle_light()
 	if(on || !fuel)
 		return FALSE

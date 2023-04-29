@@ -933,6 +933,13 @@
 	},
 /turf/closed/indestructible/iron,
 /area/shuttle/escape/simulation)
+"Mc" = (
+/obj/structure/fluff/big_chain{
+	pixel_y = 9
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/chasm/true,
+/area/shuttle/escape/simulation)
 "Mj" = (
 /obj/structure/railing{
 	dir = 1
@@ -1122,7 +1129,7 @@
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "TE" = (
-/turf/open/chasm,
+/turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "TI" = (
 /obj/item/binoculars,
@@ -1192,7 +1199,7 @@
 /obj/structure/fluff/big_chain{
 	pixel_y = 9
 	},
-/turf/open/chasm,
+/turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "WA" = (
 /obj/structure/closet/crate/large,
@@ -2107,7 +2114,7 @@ xP
 Et
 TE
 rX
-lg
+Mc
 Io
 Cr
 YV
@@ -2210,7 +2217,7 @@ sK
 TE
 TE
 TE
-lg
+Mc
 VG
 pF
 pF
