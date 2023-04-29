@@ -628,7 +628,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NIGHT_VISION "night_vision"
 #define TRAIT_LIGHT_STEP "light_step"
 #define TRAIT_SPIRITUAL "spiritual"
-#define TRAIT_CHRONIC_ILLNESS "chronic_illness"
 #define TRAIT_CLOWN_ENJOYER "clown_enjoyer"
 #define TRAIT_MIME_FAN "mime_fan"
 #define TRAIT_VORACIOUS "voracious"

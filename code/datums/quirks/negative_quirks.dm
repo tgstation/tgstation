@@ -894,7 +894,6 @@
 	desc = "You have a chronic illness that requires constant medication to keep under control."
 	icon = FA_ICON_DISEASE
 	value = -8
-	mob_trait = TRAIT_CHRONIC_ILLNESS
 	gain_text = span_danger("You feel a bit off today.")
 	lose_text = span_notice("You feel a bit better today.")
 	medical_record_text = "Patient has a chronic illness that requires constant medication to keep under control."
