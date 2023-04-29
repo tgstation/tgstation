@@ -1022,3 +1022,24 @@
   vinylspiders:
   - bugfix: mobs can now be set on fire using flares and candles if they are covered
       in something flammable
+2023-04-29:
+  Striders13:
+  - rscadd: filled up Northstar's Z1 maint with stuff. Reworked some ugly rooms.
+  - bugfix: fixed Northstar's Z1 sec outpost having the wrong sec locker
+  carlarctg:
+  - balance: 'EMPs on robotic limbs will now disable them for 10-20 seconds rather
+      than causing a 10-20 second full stun on the user. Additionally, they will damage
+      the limb for a little brute and some burn.
+
+      EMPs on robotic limbs will now disable them for 10-20 seconds rather than causing
+      a 10-20 second full stun on the user. Additionally, they will damage the limb
+      for a little brute and some burn.'
+  - balance: Arm EMPs don't do anything special as the limb being disabled already
+      drops items.
+  - balance: Leg EMPs cause a 10-20 second knockdown, only really applicable if there's
+      only one robotic leg as two disabled legs KD you anyways.
+  - balance: Chest EMPs cause a 3-6 second standing-up paralyze, visible to the player
+      by a quite noticeable shaking of their body.
+  - balance: Head EMPs break the optical transponder circuits for 7.5-15 seconds,
+      effectively giving the user nightmare goggles vision with green instead of red
+      as the only remaining color.
