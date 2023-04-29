@@ -44722,6 +44722,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "lSE" = (
