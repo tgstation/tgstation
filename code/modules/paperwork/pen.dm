@@ -339,7 +339,7 @@
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
+	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = 10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.

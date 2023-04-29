@@ -50,7 +50,7 @@
 	name = "Camera"
 	id = "camera"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 50, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/camera
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -86,7 +86,7 @@
 	name = "Plastic Knife"
 	id = "plastic_knife"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 100)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/knife/plastic
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -206,7 +206,7 @@
 	name = "Shot Glass"
 	id = "shot_glass"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 100)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	category = list(
@@ -338,7 +338,7 @@
 	name = "Pet Carrier"
 	id = "pet_carrier"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 7500, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/pet_carrier
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -350,7 +350,7 @@
 	name = "Cap Gun"
 	id = "toygun"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 50)
 	build_path = /obj/item/toy/gun
 	category = list(
 		RND_CATEGORY_HACKED,

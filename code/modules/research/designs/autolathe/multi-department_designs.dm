@@ -344,7 +344,7 @@
 	name = "Light Tube"
 	id = "light_tube"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 100)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/light/tube
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -356,7 +356,7 @@
 	name = "Light Bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 100)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/light/bulb
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -391,7 +391,7 @@
 	name = "Spraycan"
 	id = "spraycan"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/crayon/spraycan
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -453,7 +453,7 @@
 	name = "Holodisk"
 	id = "holodisk"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/holodisk
 	category = list(
 		RND_CATEGORY_INITIAL,

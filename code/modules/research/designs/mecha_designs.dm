@@ -136,7 +136,7 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
-	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace = 100)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/main
 	category = list(
 		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_PHAZON
@@ -147,7 +147,7 @@
 	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
-	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace = 100)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
 	category = list(
 		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_PHAZON
@@ -158,7 +158,7 @@
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
-	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace = 100)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
 	category = list(
 		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_PHAZON

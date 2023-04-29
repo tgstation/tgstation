@@ -47,7 +47,7 @@
 	desc = "Produce additional disks for storing technology data."
 	id = "tech_disk"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 300, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/tech_disk
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE

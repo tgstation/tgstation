@@ -64,7 +64,7 @@
 	possible_transfer_amounts = list(15)
 	fill_icon_state = "shot_glass"
 	volume = 15
-	custom_materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_CREW * 0.4
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)

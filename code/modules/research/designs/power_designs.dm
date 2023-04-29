@@ -59,7 +59,7 @@
 	desc = "A power cell that holds 40 MJ of energy."
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list(/datum/material/iron = 800, /datum/material/gold = 120, /datum/material/glass = 160, /datum/material/diamond = 160, /datum/material/titanium = 300, /datum/material/bluespace = 100)
+	materials = list(/datum/material/iron = 800, /datum/material/gold = 120, /datum/material/glass = 160, /datum/material/diamond = 160, /datum/material/titanium = 300, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/bluespace/empty
 	category = list(

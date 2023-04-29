@@ -14,7 +14,7 @@
 	name = "Solar Tracking Electronics"
 	id = "solar_tracker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 500)
 	build_path = /obj/item/electronics/tracker
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -26,7 +26,7 @@
 	name = "Blast Door Controller"
 	id = "blast"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -208,7 +208,7 @@
 	name = "APC Module"
 	id = "power_control"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/electronics/apc
 	category = list(
 		RND_CATEGORY_INITIAL,

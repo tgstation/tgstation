@@ -10,7 +10,7 @@
 	/// If TRUE, we will always have the noslip trait no matter whether they're on or off
 	var/always_noslip = FALSE
 	/// How many materials we consume per banana created
-	var/material_per_banana = 100
+	var/material_per_banana =SMALL_MATERIAL_AMOUNT
 	/// Typepath of created banana
 	var/banana_type = /obj/item/grown/bananapeel/specialpeel
 

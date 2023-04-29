@@ -8,7 +8,7 @@
 	desc = "A bluespace tracking beacon."
 	id = "beacon"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 150, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/beacon
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE

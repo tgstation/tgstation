@@ -120,7 +120,7 @@
 	desc = "This awesome mug will ensure your coffee never stays cold!"
 	id = "mauna_mug"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
@@ -191,7 +191,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	id = "engine_goggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -215,7 +215,7 @@
 	desc = "Used by Atmospheric Technician to determine the temperature of the air"
 	id = "atmos_thermal"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma = 100)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/glasses/meson/engine/atmos_imaging
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ATMOSPHERICS
@@ -395,7 +395,7 @@
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	id = "idcard"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
+	materials = list(/datum/material/iron=200, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/card/id/advanced
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -659,7 +659,7 @@
 	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/holosign_creator/medical
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver =SMALL_MATERIAL_AMOUNT) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
 	id = "holobarrier_med"
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -760,7 +760,7 @@
 	desc = "An empty evidence bag."
 	id = "evidencebag"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 100)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/evidencebag
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -794,7 +794,7 @@
 	name = "Gas Filter"
 	id = "gas_filter"
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/gas_filter
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT
@@ -805,7 +805,7 @@
 	name = "Plasmaman Gas Filter"
 	id = "plasmaman_gas_filter"
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/gas_filter/plasmaman
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT

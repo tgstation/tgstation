@@ -87,7 +87,7 @@
 	desc = "Produce additional disks for storing genetic data."
 	id = "dna_disk"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
+	materials = list(/datum/material/iron = 300, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/silver = 50)
 	build_path = /obj/item/disk/data
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GENETICS

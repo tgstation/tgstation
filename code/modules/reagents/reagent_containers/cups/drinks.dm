@@ -48,7 +48,7 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5)
 	volume = 5
 	flags_1 = CONDUCT_1
