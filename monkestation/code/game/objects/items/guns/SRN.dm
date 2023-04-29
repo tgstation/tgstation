@@ -3,6 +3,7 @@
 	name = "Spatial Rift Nullifier"
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "srnlauncher"
+	inhand_icon_state = "srnlauncher"
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	mag_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
