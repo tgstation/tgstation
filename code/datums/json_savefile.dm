@@ -100,21 +100,22 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
 		return
 
+	COOLDOWN_START(src, download_cooldown, CONFIG_GET(number/seconds_cooldown_for_preferences_export))
 	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/temporary_file_storage = "/data/preferences_export_working_directory/[file_name]"
-	var/exportable_json = ""
+	var/exportable_json
 
 #if DM_VERSION >= 515
 	if(text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
 		exportable_json = file(temporary_file_storage)
 #else
-	exportable_json = file(path)
+	if(text2file(json_encode(tree), temporary_file_storage))
+		exportable_json = file(temporary_file_storage)
 #endif
 
-	if(!exportable_json)
+	if(!isfile(exportable_json))
 		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.")
 		return
 
-	COOLDOWN_START(src, download_cooldown, CONFIG_GET(number/seconds_cooldown_for_preferences_export))
 	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
 	fdel(temporary_file_storage)
