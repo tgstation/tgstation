@@ -75,7 +75,13 @@
 /obj/machinery/fugitive_capture/psyker
 	name = "psyker recreation cell"
 	desc = "A repurposed recreation chamber frequently used by psykers, which soothes its user by bombarding them with loud noises and painful stimuli. Repurposed for the storage of prisoners, and should have no (lasting) side effects on non-psykers forced into it."
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE
+
+/obj/machinery/fugitive_capture/psyker/process() //I have no fucking idea how to make click-dragging work for psykers so this one just sucks them in.
+	for(var/mob/living/carbon/human/potential_victim in range(1, get_turf(src)))
+		var/datum/antagonist/fugitive/fug_antag = potential_victim.mind.has_antag_datum(/datum/antagonist/fugitive)
+		if(fug_antag)
+			potential_victim.visible_message(span_alert("[potential_victim] is violently sucked into the [src]!"))
+			add_prisoner(potential_victim, fug_antag)
 
 /// Psyker gear
 /obj/item/reagent_containers/hypospray/medipen/gore
