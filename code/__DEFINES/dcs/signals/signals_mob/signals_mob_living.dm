@@ -156,7 +156,7 @@
 /// From /turf/closed/mineral/gibtonite/defuse() : (det_time)
 #define COMSIG_LIVING_DEFUSED_GIBTONITE "living_defused_gibtonite"
 
-/// From /obj/item/kinetic_crusher/afterattack() : (mob/living/target, obj/item/kinetic_crusher/crusher)
+/// From /obj/item/kinetic_crusher/afterattack() : (mob/living/target, obj/item/kinetic_crusher/crusher, backstabbed)
 #define COMSIG_LIVING_CRUSHER_DETONATE "living_crusher_detonate"
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)

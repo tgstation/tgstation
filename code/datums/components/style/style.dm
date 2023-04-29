@@ -136,6 +136,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_RESONATOR_BURST)
 	UnregisterSignal(parent, COMSIG_LIVING_PROJECTILE_PARRIED)
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
+	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
 
 	if(projectile_parry)
@@ -419,7 +420,7 @@
 
 	add_action(ACTION_GIBTONITE_DEFUSED, min(40, 20 * (10 - det_time))) // 40 to 180 points depending on speed
 
-/datum/component/style/proc/on_crusher_detonate(datum/source, mob/living/target, obj/item/kinetic_crusher/crusher)
+/datum/component/style/proc/on_crusher_detonate(datum/source, mob/living/target, obj/item/kinetic_crusher/crusher, backstabbed)
 	SIGNAL_HANDLER
 
 	var/has_brimdemon_trophy = locate(/obj/item/crusher_trophy/brimdemon_fang) in crusher.trophies
