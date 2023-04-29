@@ -82,7 +82,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 			READ_FILE(savefile, entry_value) //we are cd'ed to the entry, so we don't need to specify a path to read from
 			region[entry] = entry_value
 
-/// Proc that handles generating a prettified JSON string (or just simply sending the server-side JSON) of a user's preferences and showing it to them.
+/// Proc that handles generating a JSON file (prettified if 515 and over!) of a user's preferences and showing it to them.
 /// Requester is passed in to the ftp() and tgui_alert() procs, and account_name is just used to generate the filename.
 /// We don't _need_ to pass in account_name since this is reliant on the json_savefile datum already knowing what we correspond to, but it's here to help people keep track of their stuff.
 /datum/json_savefile/proc/export_json_to_client(mob/requester, account_name)
