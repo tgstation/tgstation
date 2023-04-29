@@ -208,7 +208,7 @@
 /obj/item/flashlight/dropped(mob/user, silent = FALSE)
 	. = ..()
 	if(istype(user) && dir != user.dir)
-		setDir(user.dir, no_signal = TRUE)
+		setDir(user.dir)
 
 /obj/item/flashlight/pen
 	name = "penlight"
