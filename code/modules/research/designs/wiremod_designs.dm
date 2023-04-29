@@ -545,7 +545,7 @@
 	materials = list(
 		/datum/material/glass = 5000,
 		/datum/material/iron = 15000,
-		/datum/material/gold = 1500,
+		/datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5,
 	)
 	build_path = /obj/item/shell/server
 	build_type = COMPONENT_PRINTER

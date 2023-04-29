@@ -543,7 +543,7 @@
 	desc = "A utility scanner that fills multiple roles: Exports, sales, and vendor price tags."
 	id = "universal_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/glass = 500)
 	build_path = /obj/item/universal_scanner
 	category = list(
 		RND_CATEGORY_INITIAL,

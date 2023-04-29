@@ -218,7 +218,7 @@
 	name = "Shaker"
 	id = "shaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/shaker
 	category = list(

@@ -131,7 +131,7 @@
 	name = "Blood Filter"
 	id = "blood_filter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver = 500)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 500)
 	build_path = /obj/item/blood_filter
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -319,7 +319,7 @@
 	inhand_icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
@@ -506,7 +506,7 @@
 	icon_state = "bloodfilter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/glass=1500, /datum/material/silver=500)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/glass=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=500)
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("pumps", "siphons")

@@ -66,7 +66,7 @@
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/plasma = 400)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/glass = 500, /datum/material/plasma = 400)
 	build_path = /obj/item/gun/energy/plasmacutter
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -102,7 +102,7 @@
 	desc = "An upgraded version of the resonator that allows more fields to be active at once."
 	id = "superresonator"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver =ROD_MATERIAL_AMOUNT, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/resonator/upgraded
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -114,7 +114,7 @@
 	desc = "A device which allows kinetic accelerators to be wielded by any organism."
 	id = "triggermod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1500, /datum/material/gold = 1500, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/trigger_guard
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -126,7 +126,7 @@
 	desc = "A device which allows kinetic accelerators to deal more damage."
 	id = "damagemod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1500, /datum/material/gold = 1500, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/damage
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -146,7 +146,7 @@
 	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
 	id = "cooldownmod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1500, /datum/material/gold = 1500, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -166,7 +166,7 @@
 	desc = "A device which allows kinetic accelerators to fire at a further range."
 	id = "rangemod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1500, /datum/material/gold = 1500, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -186,7 +186,7 @@
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
 	id = "hypermod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 8000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS

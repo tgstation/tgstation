@@ -262,7 +262,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
+	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/titanium=ROD_MATERIAL_AMOUNT)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)

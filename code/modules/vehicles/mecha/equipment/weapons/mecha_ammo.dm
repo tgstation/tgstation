@@ -101,7 +101,7 @@
 	name = "launchable flashbang clusters"
 	desc = "A box of clustered flashbangs, for use with a specialized exosuit cluster launcher. Cannot be primed by hand."
 	icon_state = "clusterbang"
-	custom_materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
+	custom_materials = list(/datum/material/iron=6000,/datum/material/gold=ROD_MATERIAL_AMOUNT * 1.5,/datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5)
 	rounds = 3
 	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG

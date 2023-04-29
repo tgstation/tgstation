@@ -405,7 +405,7 @@
 	desc = "A kit to reverse-engineer a proto-kinetic accelerator into an energy crossbow, favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1500, /datum/material/uranium = 1500, /datum/material/silver = 1500)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/weaponcrafting/gunkit/ebow
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS

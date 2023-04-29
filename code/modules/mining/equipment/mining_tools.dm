@@ -43,7 +43,7 @@
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"

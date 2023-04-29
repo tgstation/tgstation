@@ -561,7 +561,7 @@
 	id = "clusterbang_launcher_ammo"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
-	materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
+	materials = list(/datum/material/iron=6000,/datum/material/gold=ROD_MATERIAL_AMOUNT * 1.5MATERIAL_AMOUNT * 1.5,/datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -735,7 +735,7 @@
 	id = "mech_repair_droid"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=1000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=ROD_MATERIAL_AMOUNT,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,

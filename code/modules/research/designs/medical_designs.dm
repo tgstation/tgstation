@@ -135,7 +135,7 @@
 	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
 	id = "crewpinpointer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 500)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold = 500)
 	build_path = /obj/item/pinpointer/crew
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
@@ -148,7 +148,7 @@
 	id = "defibrillator"
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver = 3000, /datum/material/gold = 1500)
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver = 3000, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -208,7 +208,7 @@
 	id = "healthanalyzer_advanced"
 	build_path = /obj/item/healthanalyzer/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -243,7 +243,7 @@
 	id = "laserscalpel"
 	build_path = /obj/item/scalpel/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -372,7 +372,7 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	id = "ci-surgery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (/datum/material/iron = 2500, /datum/material/glass = 1500, /datum/material/silver = 1500)
+	materials = list (/datum/material/iron = 2500, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	construction_time = 200
 	build_path = /obj/item/organ/internal/cyberimp/arm/surgery
 	category = list(
@@ -385,7 +385,7 @@
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (/datum/material/iron = 2500, /datum/material/glass = 1500, /datum/material/silver = 1500)
+	materials = list (/datum/material/iron = 2500, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	construction_time = 200
 	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
 	category = list(

@@ -251,7 +251,7 @@
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	id = "magboots"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4500, /datum/material/silver = 1500, /datum/material/gold = 2500)
+	materials = list(/datum/material/iron = 4500, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -299,7 +299,7 @@
 	desc = "A roasting stick for cooking sausages in exotic ovens."
 	id = "roastingstick"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=1000, /datum/material/glass = 500, /datum/material/bluespace = 250)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/bluespace = 250)
 	build_path = /obj/item/melee/roastingstick
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
@@ -311,7 +311,7 @@
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	id = "locator"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=1000, /datum/material/glass = 500, /datum/material/silver = 500)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/silver = 500)
 	build_path = /obj/item/locator
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -407,7 +407,7 @@
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	id = "eng_gloves"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=1500, /datum/material/gold =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/gloves/tinkerer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -418,7 +418,7 @@
 	name = "Lava-Resistant Iron Rods"
 	id = "lava_rods"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/plasma=500, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods/lava
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
@@ -482,7 +482,7 @@
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
 	id = "blutrash"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold = 1500, /datum/material/uranium = 250, /datum/material/plasma = 1500)
+	materials = list(/datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = 250, /datum/material/plasma =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/trash/bluespace
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -494,7 +494,7 @@
 	desc = "A device to automatically replace lights. Refill with working light bulbs."
 	id = "light_replacer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000)
 	build_path = /obj/item/lightreplacer
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -506,7 +506,7 @@
 	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
 	id = "light_replacer_blue"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
 	build_path = /obj/item/lightreplacer/blue
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -831,7 +831,7 @@
 	name = "Pointy Tape"
 	id = "pointy_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plastic =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sticky_tape/pointy
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE

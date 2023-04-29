@@ -260,7 +260,7 @@
 	id = "gygax_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_arm
-	materials = list(/datum/material/iron=15000, /datum/material/gold=1000, /datum/material/silver=1000)
+	materials = list(/datum/material/iron=15000, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/silver=ROD_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -271,7 +271,7 @@
 	id = "gygax_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_arm
-	materials = list(/datum/material/iron=15000, /datum/material/gold=1000, /datum/material/silver=1000)
+	materials = list(/datum/material/iron=15000, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/silver=ROD_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -1164,7 +1164,7 @@
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
-	materials = list(/datum/material/iron = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
+	materials = list(/datum/material/iron = 1200, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold = 200)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
@@ -1591,7 +1591,7 @@
 /datum/design/module/mod_jetpack
 	name = "Ion Jetpack Module"
 	id = "mod_jetpack"
-	materials = list(/datum/material/iron = 1500, /datum/material/plasma =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/jetpack
 
 /datum/design/module/mod_magboot
@@ -1606,7 +1606,7 @@
 /datum/design/module/mod_mag_harness
 	name = "Magnetic Harness Module"
 	id = "mod_mag_harness"
-	materials = list(/datum/material/iron = 1500, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 500)
 	build_path = /obj/item/mod/module/magnetic_harness
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
@@ -1624,7 +1624,7 @@
 /datum/design/module/mod_mouthhole
 	name = "Eating Apparatus Module"
 	id = "mod_mouthhole"
-	materials = list(/datum/material/iron = 1500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/mouthhole
 
 /datum/design/module/mod_rad_protection
@@ -1751,7 +1751,7 @@
 /datum/design/module/mod_orebag
 	name = "Ore Bag Module"
 	id = "mod_orebag"
-	materials = list(/datum/material/iron = 1500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/orebag
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
@@ -1793,7 +1793,7 @@
 /datum/design/module/mister_atmos
 	name = "Resin Mister Module"
 	id = "mod_mister_atmos"
-	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/titanium = 1500)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/mister/atmos
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
@@ -1802,7 +1802,7 @@
 /datum/design/module/mod_holster
 	name = "Holster Module"
 	id = "mod_holster"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/holster
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
@@ -1829,7 +1829,7 @@
 /datum/design/module/surgicalprocessor
 	name = "Surgical Processor Module"
 	id = "mod_surgicalprocessor"
-	materials = list(/datum/material/titanium = 250, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/silver = 1500)
+	materials = list(/datum/material/titanium = 250, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/surgical_processor
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
@@ -1838,7 +1838,7 @@
 /datum/design/module/threadripper
 	name = "Thread Ripper Module"
 	id = "mod_threadripper"
-	materials = list(/datum/material/titanium = 250, /datum/material/plastic =ROD_MATERIAL_AMOUNT, /datum/material/silver = 1500)
+	materials = list(/datum/material/titanium = 250, /datum/material/plastic =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/thread_ripper
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
@@ -1847,7 +1847,7 @@
 /datum/design/module/defibrillator
 	name = "Defibrillator Module"
 	id = "mod_defib"
-	materials = list(/datum/material/titanium = 250, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/silver = 1500)
+	materials = list(/datum/material/titanium = 250, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/defibrillator
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
