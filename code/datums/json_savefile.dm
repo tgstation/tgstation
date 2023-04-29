@@ -90,11 +90,11 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 		return
 
 	if(!CONFIG_GET(flag/allow_preferences_export))
-		tgui_alert(requester, "Preferences exporting is disabled on this server!")
+		tgui_alert(requester, "Preferences exporting is disabled on this server!", "Export Preferences JSON")
 		return
 
 	if(!COOLDOWN_FINISHED(src, download_cooldown))
-		tgui_alert(requester, "You must wait [COOLDOWN_TIMELEFT(src, download_cooldown)] before exporting your preferences again!")
+		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
 		return
 
 	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
@@ -114,7 +114,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 #endif
 
 	if(!isfile(exportable_json))
-		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.")
+		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
 		return
 
 	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
