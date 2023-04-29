@@ -363,7 +363,7 @@
 	var/obj/item/flashlight/eyelight/glow/eye
 	var/mutable_appearance/eyes_overlay
 
-/obj/item/organ/internal/eyes/robotic/glow/Initialize()
+/obj/item/organ/internal/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
 	eye = new /obj/item/flashlight/eyelight/glow
 
