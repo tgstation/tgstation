@@ -83,7 +83,7 @@
 	name = "precision explosive missiles"
 	desc = "A box of large missiles, ready for loading into a PEP-6 exosuit missile rack."
 	icon_state = "missile_br"
-	custom_materials = list(/datum/material/iron=8000,/datum/material/gold=500)
+	custom_materials = list(/datum/material/iron=8000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
 	direct_load = TRUE
 	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
@@ -93,7 +93,7 @@
 	name = "launchable flashbangs"
 	desc = "A box of smooth flashbangs, for use with a large exosuit launcher. Cannot be primed by hand."
 	icon_state = "flashbang"
-	custom_materials = list(/datum/material/iron=4000,/datum/material/gold=500)
+	custom_materials = list(/datum/material/iron=4000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
 	ammo_type = MECHA_AMMO_FLASHBANG
 

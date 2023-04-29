@@ -7,7 +7,7 @@
 	name = "Advanced Fire Extinguisher"
 	id = "adv_fire_extinguisher"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/titanium = 500, /datum/material/gold = 500)
+	materials = list(/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/extinguisher/advanced/empty
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -44,7 +44,7 @@
 	desc = "An experimental welder capable of self-fuel generation."
 	id = "exwelder"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/plasma =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = 200)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = 200)
 	build_path = /obj/item/weldingtool/experimental
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -187,7 +187,7 @@
 	id = "gene_shears"
 	build_path = /obj/item/geneshears
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=4000, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=500)
+	materials = list(/datum/material/iron=4000, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
 	)
@@ -312,7 +312,7 @@
 	id = "alien_scalpel"
 	build_path = /obj/item/scalpel/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = 500, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)
@@ -324,7 +324,7 @@
 	id = "alien_hemostat"
 	build_path = /obj/item/hemostat/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = 500, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)
@@ -336,7 +336,7 @@
 	id = "alien_retractor"
 	build_path = /obj/item/retractor/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = 500, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)
@@ -372,7 +372,7 @@
 	id = "alien_cautery"
 	build_path = /obj/item/cautery/alien
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = 500, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ALIEN
 	)

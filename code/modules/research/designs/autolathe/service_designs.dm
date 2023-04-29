@@ -182,7 +182,7 @@
 	name = "Bowl"
 	id = "bowl"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/bowl
 	category = list(
@@ -194,7 +194,7 @@
 	name = "Drinking Glass"
 	id = "drinking_glass"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	build_path = /obj/item/reagent_containers/cup/glass/drinkingglass
 	category = list(
@@ -410,7 +410,7 @@
 	name = "Plastic Bead Necklace"
 	id = "plastic_necklace"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 500)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/neck/beads
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -446,7 +446,7 @@
 	name = "Sticky Tape"
 	id = "sticky_tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 500)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/sticky_tape
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	maxstack = 5

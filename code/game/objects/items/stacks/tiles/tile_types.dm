@@ -1093,7 +1093,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	mats_per_unit = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
@@ -1141,7 +1141,7 @@
 	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
 	icon_state = "tile_brass"
 	turf_type = /turf/open/floor/bronze
-	mats_per_unit = list(/datum/material/bronze=500)
+	mats_per_unit = list(/datum/material/bronze=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/bronze
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bronze,
@@ -1169,7 +1169,7 @@
 	desc = "A strange tile made from runed metal. Doesn't seem to actually have any paranormal powers."
 	icon_state = "tile_cult"
 	turf_type = /turf/open/floor/cult
-	mats_per_unit = list(/datum/material/runedmetal=500)
+	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult
 
 /// Floor tiles used to test emissive turfs.

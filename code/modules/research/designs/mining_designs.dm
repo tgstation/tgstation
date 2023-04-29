@@ -66,7 +66,7 @@
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/glass = 500, /datum/material/plasma = 400)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma = 400)
 	build_path = /obj/item/gun/energy/plasmacutter
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -78,7 +78,7 @@
 	desc = "It's an advanced plasma cutter, oh my god."
 	id = "plasmacutter_adv"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 500)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/gun/energy/plasmacutter/adv
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -205,7 +205,7 @@
 	name = "Mining Scanner"
 	id = "mining_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/t_scanner/adv_mining_scanner/lesser
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING

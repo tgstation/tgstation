@@ -609,7 +609,7 @@
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold=500)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'

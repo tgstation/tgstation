@@ -7,7 +7,7 @@
 	fill_icon_thresholds = list(0)
 	fill_icon_state = "drinking_glass"
 	volume = 50
-	custom_materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF

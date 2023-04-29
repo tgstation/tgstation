@@ -132,7 +132,7 @@
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 300)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 300)
 	build_path = /obj/item/firing_pin/test_range
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_FIRING_PINS
@@ -156,7 +156,7 @@
 	desc = "This firing pin only shoots while ya ain't on station, fair dinkum!"
 	id = "pin_explorer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/iron = 500)
+	materials = list(/datum/material/silver =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/firing_pin/explorer
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_FIRING_PINS
@@ -245,7 +245,7 @@
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
 	id = "temp_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 500, /datum/material/silver = 3000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = 3000)
 	build_path = /obj/item/weaponcrafting/gunkit/temperature
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -258,7 +258,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/gun/energy/floragun
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
@@ -282,7 +282,7 @@
 	desc = "An advanced grenade that is able to self ignite its mixture."
 	id = "pyro_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/grenade/chem_grenade/pyro
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -294,7 +294,7 @@
 	desc = "An advanced grenade that rapidly cools its contents upon detonation."
 	id = "cryo_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/grenade/chem_grenade/cryo
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -306,7 +306,7 @@
 	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
 	id = "adv_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 500)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -381,7 +381,7 @@
 	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/suppressor
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_PARTS

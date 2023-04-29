@@ -532,7 +532,7 @@
 	materials = list(
 		/datum/material/glass =MINERAL_MATERIAL_AMOUNT,
 		/datum/material/iron = 11000,
-		/datum/material/gold = 500,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
 	)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS

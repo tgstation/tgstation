@@ -465,7 +465,7 @@
 	id = "mech_grenade_launcher_ammo"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
-	materials = list(/datum/material/iron=4000,/datum/material/gold=500)
+	materials = list(/datum/material/iron=4000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -513,7 +513,7 @@
 	id = "mech_missile_rack_ammo"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_pep
-	materials = list(/datum/material/iron=8000,/datum/material/gold=500)
+	materials = list(/datum/material/iron=8000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,

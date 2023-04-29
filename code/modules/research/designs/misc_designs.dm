@@ -8,7 +8,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	id = "health_hud"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/hud/health
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
@@ -32,7 +32,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
 	id = "security_hud"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/hud/security
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -56,7 +56,7 @@
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "diagnostic_hud"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -84,7 +84,7 @@
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
 	id = "welding_goggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/welding
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -108,7 +108,7 @@
 	desc = "By applying state of the art lighting technology to a fire helmet with industry standard photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
 	id = "bright_helmet"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plastic = 3000, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -167,7 +167,7 @@
 	name = "Hilarious Firing Pin"
 	id = "clown_firing_pin"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 300, /datum/material/bananium = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 300, /datum/material/bananium =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/firing_pin/clown
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -179,7 +179,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	id = "mesons"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/meson
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -191,7 +191,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	id = "engine_goggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -203,7 +203,7 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	id = "tray_goggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ATMOSPHERICS
@@ -215,7 +215,7 @@
 	desc = "Used by Atmospheric Technician to determine the temperature of the air"
 	id = "atmos_thermal"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/glasses/meson/engine/atmos_imaging
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ATMOSPHERICS
@@ -275,7 +275,7 @@
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
 	id = "scigoggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/science
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -299,7 +299,7 @@
 	desc = "A roasting stick for cooking sausages in exotic ovens."
 	id = "roastingstick"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/bluespace = 250)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace = 250)
 	build_path = /obj/item/melee/roastingstick
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
@@ -311,7 +311,7 @@
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	id = "locator"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/silver = 500)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/locator
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -323,7 +323,7 @@
 	desc = "Allows for the construction of a quantum keycard."
 	id = "quantum_keycard"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500, /datum/material/silver = 500, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/quantum_keycard
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -335,7 +335,7 @@
 	desc = "Allows you to control the connected bot launchpad"
 	id = "botpad_remote"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/botpad_remote
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -418,7 +418,7 @@
 	name = "Lava-Resistant Iron Rods"
 	id = "lava_rods"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/plasma=500, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods/lava
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
@@ -659,7 +659,7 @@
 	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/holosign_creator/medical
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver =SMALL_MATERIAL_AMOUNT) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
 	id = "holobarrier_med"
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -735,7 +735,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	id = "bola_energy"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = 500, /datum/material/plasma = 500, /datum/material/titanium = 500)
+	materials = list(/datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -910,7 +910,7 @@
 	desc = "Gotta shove something in!"
 	id = "oven_tray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/plate/oven_tray
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
@@ -940,7 +940,7 @@
 	name = "Coffeepot"
 	id = "coffeepot"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/plastic = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/reagent_containers/cup/coffeepot
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
@@ -951,7 +951,7 @@
 	name = "Bluespace Coffeepot"
 	id = "bluespace_coffeepot"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/plastic = 500, /datum/material/bluespace = 500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/reagent_containers/cup/coffeepot/bluespace
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN

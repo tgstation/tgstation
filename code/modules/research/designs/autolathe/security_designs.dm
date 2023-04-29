@@ -62,7 +62,7 @@
 	name = "Box of Foam Darts (Harmless)"
 	id = "foam_dart"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/ammo_box/foambox
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -74,7 +74,7 @@
 	name = "Flamethrower (Lethal/Highly Destructive)"
 	id = "flamethrower"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/flamethrower/full
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -98,7 +98,7 @@
 	name = "Handcuffs"
 	id = "handcuffs"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/restraints/handcuffs
 	category = list(
 		RND_CATEGORY_HACKED,

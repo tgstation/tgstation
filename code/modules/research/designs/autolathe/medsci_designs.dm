@@ -27,7 +27,7 @@
 	name = "Surgical Tape"
 	id = "surgical_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 500)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/sticky_tape/surgical
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -52,7 +52,7 @@
 	name = "Petri Dish"
 	id = "petri_dish"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/petri_dish
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -131,7 +131,7 @@
 	name = "Blood Filter"
 	id = "blood_filter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 500)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/blood_filter
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -14,7 +14,7 @@
 	name = "Solar Tracking Electronics"
 	id = "solar_tracker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/electronics/tracker
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -148,7 +148,7 @@
 	name = "Earmuffs"
 	id = "earmuffs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/ears/earmuffs
 	category = list(
 		RND_CATEGORY_INITIAL,

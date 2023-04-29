@@ -20,7 +20,7 @@
 	desc = "Allows for the construction of a pAI Card."
 	id = "paicard"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/pai_card
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_MISC
