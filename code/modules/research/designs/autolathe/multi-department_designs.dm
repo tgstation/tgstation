@@ -202,7 +202,7 @@
 	name = "Generic Gas Tank"
 	id = "generic_tank"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/tank/internals/generic
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -296,7 +296,7 @@
 	name = "Infrared Emitter"
 	id = "infrared_emitter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 500)
 	build_path = /obj/item/assembly/infra
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -530,7 +530,7 @@
 	name = "Laptop Frame"
 	id = "laptop"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/modular_computer/laptop/buildable
 	category = list(
 		RND_CATEGORY_INITIAL,

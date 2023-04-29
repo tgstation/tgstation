@@ -7,7 +7,7 @@
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/iron =ROD_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/circuit_multitool
@@ -19,7 +19,7 @@
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
 	)
-	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/iron =ROD_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/usb_cable
@@ -39,7 +39,7 @@
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass = 1000)
+	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS

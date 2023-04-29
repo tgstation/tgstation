@@ -44,7 +44,7 @@
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 500, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/gps
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
@@ -57,7 +57,7 @@
 	desc = "A device that can desynchronize the user from spacetime."
 	id = "desynchronizer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/desynchronizer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
@@ -81,7 +81,7 @@
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
 	id = "swapper"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500, /datum/material/silver = 1000)
+	materials = list(/datum/material/iron = 500, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500, /datum/material/silver =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/swapper
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE

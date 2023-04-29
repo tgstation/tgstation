@@ -16,7 +16,7 @@
 	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/silver = 5000, /datum/material/gold = 1000)
+	materials = list(/datum/material/iron = 20000, /datum/material/silver = 5000, /datum/material/gold =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_box/c38/trac
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -123,7 +123,7 @@
 	name = "WT-550 Autorifle Incendiary Magazine (4.6x30mm IC) (Lethal/Highly Destructive)"
 	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_ic"
-	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
@@ -156,7 +156,7 @@
 	desc = "This firing pin only shoots while ya ain't on station, fair dinkum!"
 	id = "pin_explorer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = 1000, /datum/material/gold = 1000, /datum/material/iron = 500)
+	materials = list(/datum/material/silver =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/iron = 500)
 	build_path = /obj/item/firing_pin/explorer
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_FIRING_PINS
@@ -181,7 +181,7 @@
 	desc = "The kit for an energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/weaponcrafting/gunkit/nuclear
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -233,7 +233,7 @@
 	desc = "A gun that fires many syringes."
 	id = "rapidsyringe"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -369,7 +369,7 @@
 		Does nothing on its own."
 	id = "techshotshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 200)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO

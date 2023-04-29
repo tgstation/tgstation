@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "Everytime it lands it bolts or opens doors, except for you."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond = 1000, /datum/material/plasma = 1000)
+	custom_materials = list(/datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/plasma =ROD_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE

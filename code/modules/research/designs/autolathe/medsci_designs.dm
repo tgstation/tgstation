@@ -15,7 +15,7 @@
 	name = "Stethoscope"
 	id = "stethoscope"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/neck/stethoscope
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -143,7 +143,7 @@
 	name = "Scalpel"
 	id = "scalpel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/scalpel
 	category = list(
 		RND_CATEGORY_INITIAL,
