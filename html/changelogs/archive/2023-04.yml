@@ -957,3 +957,89 @@
   vinylspiders:
   - bugfix: crafting lizard skin cowboy boots no longer places a spawner object over
       the created boot item
+2023-04-27:
+  Dawnseer:
+  - bugfix: fixed an oversight - Made Goliath Cloak and Goliath Cloak Hood fireproof.
+      And Goliath hide.
+  Fikou:
+  - bugfix: social anxiety is incompatible with mute
+  JohnFulpWillard:
+  - qol: Health analyzers now show body temperature in red/blue if the temperature
+      of the body can't sustain it's own life.
+  - bugfix: Inverse technetium now properly gives advanced details in genetics/radiation
+      analyzing.
+  Rex9001:
+  - bugfix: Fixes the Tramstation CMO office lack of CMO stamp
+  Watermelon914:
+  - bugfix: Fixed final objectives appearing as 'Skipped' in the traitor panel.
+  moocowswag:
+  - bugfix: You can no longer bypass the laws of bluespace with a portable chem mixer.
+  - bugfix: You can no longer bypass container locks with storage hotkeys.
+  san7890:
+  - bugfix: Changelogs entries for "sound" and "image" should now have icons associated
+      with them, how neat.
+  timothymtorres:
+  - qol: Add mood events for basketball shooting and dunking
+  - balance: '"Camera Obscura" (crafted with holy water + camera) will now steal the
+      soul of ghostly apparitions when a picture is taken causing damage.  This will
+      also stun and reveal revenants briefly.'
+2023-04-28:
+  Comxy:
+  - balance: Star Gazer now explodes when it dies.
+  - balance: Star Gazer will only die when the owner dies.
+  - balance: Star Gazer will attack the most recent enemy that attacked him when on
+      autopilot.
+  - balance: Star Gazer has an aura that slowly damages people and heals the owner.
+  - balance: Cosmic Ascension now buffs some spells.
+  Fikou:
+  - bugfix: Fixes crafting tools not taking into account subtypes, i.e. you can craft
+      a filet migrawr with any lighter.
+  JohnFulpWillard:
+  - bugfix: Paradox clones are now attempted manual copies of humans, rather than
+      straight-up copying everything. They should no longer have bugs related to being
+      unable to use UIs, having FOV, or visual bugs.
+  - bugfix: SiliConnect can download borg logs again.
+  - bugfix: The RD can once again enable Admin mode on Wirecarp
+  - bugfix: NT IRN can once again see the shopping cart and call the cargo shuttle.
+  - bugfix: Chat Client, ID Management and Messenger should now update their UIs properly.
+  - code_imp: PDAs will hopefully not lag as much when clicking on buttons (such as
+      in ID management).
+  LemonInTheDark:
+  - bugfix: Holodisk recording gives the right vfx again. Bonus, the rays work with
+      it now too!
+  Melbert:
+  - bugfix: Fixes rare occasions in which the captain can fail to spawn with their
+      banner on certain maps if their left hand was holding something else.
+  SkeletalElite:
+  - bugfix: Stabilized Oil extracts no longer explode infinitely if your corpse is
+      immune to gibbing
+  Tattle:
+  - image: removes unused vault walls
+  rageguy505:
+  - bugfix: Updated the billboard on the space phonebooth
+  - bugfix: Replaced live ammo found that was unintended on the waystation and the
+      faceoff with spent subtypes.
+  vinylspiders:
+  - bugfix: mobs can now be set on fire using flares and candles if they are covered
+      in something flammable
+2023-04-29:
+  Striders13:
+  - rscadd: filled up Northstar's Z1 maint with stuff. Reworked some ugly rooms.
+  - bugfix: fixed Northstar's Z1 sec outpost having the wrong sec locker
+  carlarctg:
+  - balance: 'EMPs on robotic limbs will now disable them for 10-20 seconds rather
+      than causing a 10-20 second full stun on the user. Additionally, they will damage
+      the limb for a little brute and some burn.
+
+      EMPs on robotic limbs will now disable them for 10-20 seconds rather than causing
+      a 10-20 second full stun on the user. Additionally, they will damage the limb
+      for a little brute and some burn.'
+  - balance: Arm EMPs don't do anything special as the limb being disabled already
+      drops items.
+  - balance: Leg EMPs cause a 10-20 second knockdown, only really applicable if there's
+      only one robotic leg as two disabled legs KD you anyways.
+  - balance: Chest EMPs cause a 3-6 second standing-up paralyze, visible to the player
+      by a quite noticeable shaking of their body.
+  - balance: Head EMPs break the optical transponder circuits for 7.5-15 seconds,
+      effectively giving the user nightmare goggles vision with green instead of red
+      as the only remaining color.
