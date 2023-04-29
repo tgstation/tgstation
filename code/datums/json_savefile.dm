@@ -89,18 +89,10 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(!istype(requester) || isnull(path))
 		return
 
-	if(!CONFIG_GET(flag/allow_preferences_export))
-		tgui_alert(requester, "Preferences exporting is disabled on this server!", "Export Preferences JSON")
+	if(!json_export_checks(requester))
 		return
 
-	if(!COOLDOWN_FINISHED(src, download_cooldown))
-		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
-		return
-
-	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) != "Yes")
-		return
-
-	COOLDOWN_START(src, download_cooldown, CONFIG_GET(number/seconds_cooldown_for_preferences_export))
+	COOLDOWN_START(src, download_cooldown, (CONFIG_GET(number/seconds_cooldown_for_preferences_export) SECONDS))
 	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/temporary_file_storage = "/data/preferences_export_working_directory/[file_name]"
 	var/exportable_json
@@ -119,3 +111,19 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 	DIRECT_OUTPUT(requester, ftp(exportable_json, file_name))
 	fdel(temporary_file_storage)
+
+/// Proc that just handles all of the checks for exporting a preferences file, returns TRUE if all checks are passed, FALSE otherwise.
+/// Just done like this to make the code in the export_json_to_client() proc a bit cleaner.
+/datum/json_savefile/proc/json_export_checks(mob/requester)
+	if(!SSticker.HasRoundStarted()) // we want to be absolutely certain the cooldown system will work and that all the data has been loaded.
+		tgui_alert(requester, "You must wait until the round has started before exporting your preferences!", "Export Preferences JSON")
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, download_cooldown))
+		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
+		return FALSE
+
+	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "No", "Yes")) == "Yes")
+		return TRUE
+
+	return FALSE
