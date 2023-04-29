@@ -181,7 +181,7 @@
 	desc = "The kit for an energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium = 1000)
 	build_path = /obj/item/weaponcrafting/gunkit/nuclear
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -258,7 +258,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500, /datum/material/uranium = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/gun/energy/floragun
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
@@ -282,7 +282,7 @@
 	desc = "An advanced grenade that is able to self ignite its mixture."
 	id = "pyro_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/plasma = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = 500)
 	build_path = /obj/item/grenade/chem_grenade/pyro
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -294,7 +294,7 @@
 	desc = "An advanced grenade that rapidly cools its contents upon detonation."
 	id = "cryo_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver = 500)
 	build_path = /obj/item/grenade/chem_grenade/cryo
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -318,7 +318,7 @@
 	desc = "Not quite as menacing as it sounds"
 	id = "xray_laser"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 4000, /datum/material/iron = 5000, /datum/material/titanium = 2000, /datum/material/bluespace = 2000)
+	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 4000, /datum/material/iron = 5000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/weaponcrafting/gunkit/xray
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -331,7 +331,7 @@
 	desc = "How to Dismantle a Cyborg: The Gun."
 	id = "ioncarbine"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = 6000, /datum/material/iron = 8000, /datum/material/uranium = 2000)
+	materials = list(/datum/material/silver = 6000, /datum/material/iron = 8000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/weaponcrafting/gunkit/ion
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -344,7 +344,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/silver = 2000, /datum/material/iron = 5000, /datum/material/diamond = 2000, /datum/material/bluespace = 3000)
+	materials = list(/datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 5000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -381,7 +381,7 @@
 	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/silver = 500)
 	build_path = /obj/item/suppressor
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_PARTS
@@ -427,7 +427,7 @@
 	desc = "Uses reverse flow gravitodynamics to flip its personal gravity back to the thrower mid-flight. Also functions similar to a stun baton."
 	id = "stun_boomerang"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/melee/baton/security/boomerang
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED

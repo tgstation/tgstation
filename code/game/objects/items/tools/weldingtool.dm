@@ -380,7 +380,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	toolspeed = 0.1
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	change_icons = FALSE

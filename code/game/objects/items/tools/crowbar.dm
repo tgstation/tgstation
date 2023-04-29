@@ -47,7 +47,7 @@
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
 	icon = 'icons/obj/abductor.dmi'
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/atmospherics/tank.dmi'
 	icon_state = "holder"
 
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 
 	density = FALSE
 	anchored = FALSE

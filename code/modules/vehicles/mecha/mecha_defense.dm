@@ -447,7 +447,7 @@
 			qdel(A)
 			return TRUE
 		A.rounds = 0
-		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.set_custom_materials(list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT))
 		A.update_appearance()
 		return TRUE
 	if(!fail_chat_override)

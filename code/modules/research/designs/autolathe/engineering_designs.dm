@@ -38,7 +38,7 @@
 	name = "Custom Vendor Refill"
 	id = "custom_vendor_refill"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/vending_refill/custom
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -160,7 +160,7 @@
 	name = "Pipe Painter"
 	id = "pipe_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/pipe_painter
 	category = list(
 		RND_CATEGORY_INITIAL,

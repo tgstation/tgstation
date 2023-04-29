@@ -21,8 +21,8 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/iron_cost = 1000
-	var/glass_cost = 1000
+	var/iron_cost =ROD_MATERIAL_AMOUNT
+	var/glass_cost =ROD_MATERIAL_AMOUNT
 	var/power_used = 1000
 
 	var/mode = DRONE_READY
@@ -80,8 +80,8 @@
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
-	iron_cost = 2000
-	glass_cost = 2000
+	iron_cost =MINERAL_MATERIAL_AMOUNT
+	glass_cost =MINERAL_MATERIAL_AMOUNT
 	power_used = 2000
 	starting_amount = 10000
 

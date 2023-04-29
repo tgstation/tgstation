@@ -2,7 +2,7 @@
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
 
 	Variables:
-		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=2000.
+		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=MINERAL_MATERIAL_AMOUNT.
 		max_amount - max raw amount of mineral this container can hold.
 		sheet_type - type of the mineral sheet the container handles, used for output.
 		parent - object that this container is being used by, used for output.

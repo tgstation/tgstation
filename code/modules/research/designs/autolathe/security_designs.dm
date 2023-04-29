@@ -2,7 +2,7 @@
 	name = "Beanbag Slug (Less Lethal)"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list(
 		RND_CATEGORY_INITIAL,

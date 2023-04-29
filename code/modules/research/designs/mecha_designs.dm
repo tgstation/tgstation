@@ -321,7 +321,7 @@
 	id = "mech_ion"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	materials = list(/datum/material/iron=20000,/datum/material/silver=6000,/datum/material/uranium=2000)
+	materials = list(/datum/material/iron=20000,/datum/material/silver=6000,/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -735,7 +735,7 @@
 	id = "mech_repair_droid"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=1000,/datum/material/silver=2000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=1000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -845,7 +845,7 @@
 	id = "mech_plasma_cutter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -963,7 +963,7 @@
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
-	materials = list(/datum/material/iron=3000, /datum/material/glass = 2000)
+	materials = list(/datum/material/iron=3000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -980,7 +980,7 @@
 	desc = "Equipment for medical exosuits. A mounted medical nanite projector which will treat patients with a focused beam."
 	id = "mech_medi_beam"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list(

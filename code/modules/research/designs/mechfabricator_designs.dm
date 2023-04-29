@@ -238,7 +238,7 @@
 	id = "gygax_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_torso
-	materials = list(/datum/material/iron=20000,/datum/material/glass = 10000,/datum/material/gold=2000, /datum/material/silver=2000)
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 10000,/datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 300
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -249,7 +249,7 @@
 	id = "gygax_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000, /datum/material/gold=2000, /datum/material/silver=2000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000, /datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -282,7 +282,7 @@
 	id = "gygax_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_leg
-	materials = list(/datum/material/iron=15000, /datum/material/gold=2000, /datum/material/silver=2000)
+	materials = list(/datum/material/iron=15000, /datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -293,7 +293,7 @@
 	id = "gygax_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_leg
-	materials = list(/datum/material/iron=15000, /datum/material/gold=2000, /datum/material/silver=2000)
+	materials = list(/datum/material/iron=15000, /datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -338,7 +338,7 @@
 	id = "durand_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_head
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -649,7 +649,7 @@
 	id = "savannah_ivanov_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/savannah_ivanov_head
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -867,7 +867,7 @@
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 1000,/datum/material/silver=2000,/datum/material/plasma=5000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 1000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT,/datum/material/plasma=5000)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -999,7 +999,7 @@
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
-	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
+	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY
@@ -1010,7 +1010,7 @@
 	id = "borg_upgrade_diamonddrill"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ddrill
-	materials = list(/datum/material/iron=10000, /datum/material/glass = 6000, /datum/material/diamond = 2000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass = 6000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 80
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -1021,7 +1021,7 @@
 	id = "borg_upgrade_holding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/soh
-	materials = list(/datum/material/iron = 10000, /datum/material/gold = 2000, /datum/material/uranium = 1000)
+	materials = list(/datum/material/iron = 10000, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 1000)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -1120,7 +1120,7 @@
 	id = "borg_upgrade_trashofholding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/tboh
-	materials = list(/datum/material/gold = 2000, /datum/material/uranium = 1000)
+	materials = list(/datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 1000)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
@@ -1131,7 +1131,7 @@
 	id = "borg_upgrade_advancedmop"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/amop
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
@@ -1187,7 +1187,7 @@
 	id = "borg_upgrade_circuitapp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/circuit_app
-	materials = list(/datum/material/iron = 2000, /datum/material/titanium = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/titanium = 500)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
@@ -1198,7 +1198,7 @@
 	id = "borg_upgrade_beakerapp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/beaker_app
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2250) //Need glass for the new beaker too
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 2250) //Need glass for the new beaker too
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
@@ -1445,7 +1445,7 @@
 	name = "MOD Engineering Plating"
 	id = "mod_plating_engineering"
 	build_path = /obj/item/mod/construction/plating/engineering
-	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	research_icon_state = "engineering-plating"
 
@@ -1453,7 +1453,7 @@
 	name = "MOD Atmospheric Plating"
 	id = "mod_plating_atmospheric"
 	build_path = /obj/item/mod/construction/plating/atmospheric
-	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	research_icon_state = "atmospheric-plating"
 
@@ -1461,7 +1461,7 @@
 	name = "MOD Medical Plating"
 	id = "mod_plating_medical"
 	build_path = /obj/item/mod/construction/plating/medical
-	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	research_icon_state = "medical-plating"
 
@@ -1469,7 +1469,7 @@
 	name = "MOD Security Plating"
 	id = "mod_plating_security"
 	build_path = /obj/item/mod/construction/plating/security
-	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	research_icon_state = "security-plating"
 
@@ -1477,7 +1477,7 @@
 	name = "MOD Cosmohonk Plating"
 	id = "mod_plating_cosmohonk"
 	build_path = /obj/item/mod/construction/plating/cosmohonk
-	materials = list(/datum/material/iron = 6000, /datum/material/bananium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/bananium =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
@@ -1519,7 +1519,7 @@
 /datum/design/module/mod_storage_expanded
 	name = "Expanded Storage Module"
 	id = "mod_storage_expanded"
-	materials = list(/datum/material/iron = 5000, /datum/material/uranium = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/storage/large_capacity
 
 /datum/design/module/mod_visor_medhud
@@ -1733,7 +1733,7 @@
 /datum/design/module/mod_clamp
 	name = "Crate Clamp Module"
 	id = "mod_clamp"
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/clamp
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
@@ -1742,7 +1742,7 @@
 /datum/design/module/mod_drill
 	name = "Drill Module"
 	id = "mod_drill"
-	materials = list(/datum/material/silver = 1000, /datum/material/iron = 2000)
+	materials = list(/datum/material/silver = 1000, /datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/drill
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
@@ -1885,7 +1885,7 @@
 /datum/design/module/mod_antigrav
 	name = "Anti-Gravity Module"
 	id = "mod_antigrav"
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 2000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/anomaly_locked/antigrav
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
@@ -1894,7 +1894,7 @@
 /datum/design/module/mod_teleporter
 	name = "Teleporter Module"
 	id = "mod_teleporter"
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/bluespace = 2000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/anomaly_locked/teleporter
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
@@ -1903,7 +1903,7 @@
 /datum/design/module/mod_kinesis
 	name = "Kinesis Module"
 	id = "mod_kinesis"
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING

@@ -347,7 +347,7 @@
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
 	id = "anomaly_neutralizer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/gold = 2000, /datum/material/plasma = 5000, /datum/material/uranium = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = 5000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/anomaly_neutralizer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -371,7 +371,7 @@
 	desc = "An empty oxygen tank."
 	id = "oxygen_tank"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/tank/internals/oxygen/empty
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
@@ -383,7 +383,7 @@
 	desc = "An empty oxygen tank."
 	id = "plasma_tank"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
@@ -407,7 +407,7 @@
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	id = "eng_gloves"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=1500, /datum/material/gold = 1000)
 	build_path = /obj/item/clothing/gloves/tinkerer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -418,7 +418,7 @@
 	name = "Lava-Resistant Iron Rods"
 	id = "lava_rods"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods/lava
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
@@ -470,7 +470,7 @@
 	desc = "It's a bag for trash, you put garbage in it."
 	id = "normtrash"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/bag/trash
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -599,7 +599,7 @@
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -611,7 +611,7 @@
 	desc = "A holograpic projector used to project hard light wet floor barriers."
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 1000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/holosign_creator/janibarrier
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -772,7 +772,7 @@
 	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
 	id = "inspector"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/uranium = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -842,7 +842,7 @@
 	name = "Super Pointy Tape"
 	id = "super_pointy_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/plastic = 2000)
+	materials = list(/datum/material/iron = 3000, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sticky_tape/pointy/super
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -868,7 +868,7 @@
 	name = "Rocket Gloves"
 	id = "tackle_rocket"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
+	materials = list(/datum/material/plasma = 1000, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/gloves/tackler/rocket
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -886,7 +886,7 @@
 	desc = "A holographic projector that creates seating designation for restaurants."
 	id = "holosignrestaurant"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/restaurant
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
@@ -898,7 +898,7 @@
 	desc = "A holographic projector that creates seating designation for bars."
 	id = "holosignbar"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/bar
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE
@@ -925,7 +925,7 @@
 	name = "Advanced Fishing Rod"
 	id = "fishing_rod_tech"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/uranium = 1000, /datum/material/plastic = 2000)
+	materials = list(/datum/material/uranium = 1000, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/fishing_rod/tech
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE

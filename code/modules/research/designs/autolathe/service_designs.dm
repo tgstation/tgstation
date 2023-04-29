@@ -38,7 +38,7 @@
 	name = "Push Broom"
 	id = "pushbroom"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/pushbroom
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -386,7 +386,7 @@
 	name = "Plastic Armblade"
 	id = "toy_armblade"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/foamblade
 	category = list(
 		RND_CATEGORY_HACKED,

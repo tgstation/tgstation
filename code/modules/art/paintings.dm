@@ -423,7 +423,7 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =MINERAL_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
@@ -436,7 +436,7 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =MINERAL_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.

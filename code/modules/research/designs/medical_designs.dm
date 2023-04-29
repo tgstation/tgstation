@@ -75,7 +75,7 @@
 	desc = "An advanced syringe that can hold 60 units of chemicals"
 	id = "bluespacesyringe"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2000, /datum/material/plasma = 1000, /datum/material/diamond = 1000, /datum/material/bluespace = 500)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = 1000, /datum/material/diamond = 1000, /datum/material/bluespace = 500)
 	build_path = /obj/item/reagent_containers/syringe/bluespace
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -99,7 +99,7 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2000, /datum/material/diamond = 1000)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond = 1000)
 	build_path = /obj/item/reagent_containers/syringe/piercing
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -111,7 +111,7 @@
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/plasma = 2000, /datum/material/diamond = 500, /datum/material/bluespace = 500)
+	materials = list(/datum/material/iron = 3000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond = 500, /datum/material/bluespace = 500)
 	build_path = /obj/item/bodybag/bluespace
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -159,7 +159,7 @@
 	desc = "A mounted frame for holding defibrillators, providing easy security."
 	id = "defibmountdefault"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000)
 	build_path = /obj/item/wallframe/defib_mount
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
@@ -171,7 +171,7 @@
 	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables. The PENLITE version also allows for slow recharging of the defib's battery."
 	id = "defibmount"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 500)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/glass = 1000, /datum/material/silver = 500)
 	build_path = /obj/item/wallframe/defib_mount/charging
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
@@ -208,7 +208,7 @@
 	id = "healthanalyzer_advanced"
 	build_path = /obj/item/healthanalyzer/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2000, /datum/material/gold = 1500)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -230,7 +230,7 @@
 	name = "Surgical Drapes"
 	id = "surgical_drapes"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/surgical_drapes
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -243,7 +243,7 @@
 	id = "laserscalpel"
 	build_path = /obj/item/scalpel/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -267,7 +267,7 @@
 	id = "searingtool"
 	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -278,7 +278,7 @@
 	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
 	id = "med_spray_bottle"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/spray/medical
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
@@ -291,7 +291,7 @@
 	id = "chem_pack"
 	build_type = PROTOLATHE | AWAY_LATHE
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-	materials = list(/datum/material/plastic = 2000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/chem_pack
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
@@ -451,7 +451,7 @@
 	id = "ci-thermals"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/organ/internal/eyes/robotic/thermals
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
@@ -529,7 +529,7 @@
 	id = "ci-thrusters"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 80
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/silver = 1000, /datum/material/diamond = 1000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/silver = 1000, /datum/material/diamond = 1000)
 	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
