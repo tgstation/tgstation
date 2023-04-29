@@ -4,18 +4,6 @@ GLOBAL_LIST_EMPTY(req_console_information)
 GLOBAL_LIST_EMPTY(req_console_all)
 GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
-#define REQ_SCREEN_MAIN 0
-#define REQ_SCREEN_REQ_ASSISTANCE 1
-#define REQ_SCREEN_REQ_SUPPLIES 2
-#define REQ_SCREEN_RELAY 3
-#define REQ_SCREEN_WRITE 4
-#define REQ_SCREEN_CHOOSE 5
-#define REQ_SCREEN_SENT 6
-#define REQ_SCREEN_ERR 7
-#define REQ_SCREEN_VIEW_MSGS 8
-#define REQ_SCREEN_AUTHENTICATE 9
-#define REQ_SCREEN_ANNOUNCE 10
-
 #define REQ_EMERGENCY_SECURITY "Security"
 #define REQ_EMERGENCY_ENGINEERING "Engineering"
 #define REQ_EMERGENCY_MEDICAL "Medical"
@@ -157,6 +145,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)
+	QDEL_LIST(messages)
 	GLOB.req_console_all -= src
 	return ..()
 
@@ -217,8 +206,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			if(!(announcement_authenticated || isAdminGhostAI(usr)))
 				return
 
-			var/message = params["message"]
+			var/message = reject_bad_text(params["message"])
 			if(!message)
+				to_chat(usr, span_alert("Invalid message."))
 				return
 			if(isliving(usr))
 				var/mob/living/L = usr
@@ -239,9 +229,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/priority = params["priority"]
 			if(!priority)
 				return
-			var/message = params["message"]
+			var/message = reject_bad_text(params["message"])
 			if(!message)
-				return
+				to_chat(usr, span_alert("Invalid message."))
+				has_mail_send_error = TRUE
+				return TRUE
 			var/request_type = params["request_type"]
 			if(!request_type)
 				return
@@ -262,14 +254,14 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					radio_freq = FREQ_SUPPLY
 
 			var/datum/signal/subspace/messaging/rc/signal = new(src, list(
-				"sender" = department,
-				"rec_dpt" = recipient,
-				"send_dpt" = department,
+				"sender_department" = department,
+				"recipient_department" = recipient,
 				"message" = message,
 				"verified" = message_verified_by,
 				"stamped" = message_stamped_by,
 				"priority" = priority,
-				"notify_freq" = radio_freq
+				"notify_freq" = radio_freq,
+				"request_type" = request_type,
 			))
 			signal.send_to_receivers()
 
@@ -301,11 +293,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		"announcement_authenticated" = announcement_authenticated,
 	)
 	data["messages"] = list()
-	for (var/message in messages)
-		var/list/message_data = list(
-			content = message,
-			)
-		data["messages"] += list(message_data)
+	for (var/datum/request_message/message in messages)
+		data["messages"] += list(message.message_ui_data())
 	return data
 
 
@@ -329,55 +318,41 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	emergency = null
 	update_appearance()
 
-/// From message_server.dm: Console.create_message(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
-/obj/machinery/requests_console/proc/create_message(source, source_department, message, message_verified_by, message_stamped_by, priority, radio_freq)
-	var/linkedsender
+/// From message_server.dm: Console.create_message(data)
+/obj/machinery/requests_console/proc/create_message(data)
 
-	var/sending = "[message]<br>"
-	if(message_verified_by)
-		sending = "[sending][message_verified_by]<br>"
-	if(message_stamped_by)
-		sending = "[sending][message_stamped_by]<br>"
+	var/datum/request_message/new_message = new(data)
 
-	linkedsender = source_department ? "<a href='?src=[REF(src)];write=[ckey(source_department)]'>[source_department]</a>" : (source || "unknown")
-
-	var/authentic = (message_verified_by || message_stamped_by) && " (Authenticated)"
-	var/alert = "Message from [source][authentic]"
-	var/silenced = silent
-	var/header = "<b>From:</b> [linkedsender] Received: [station_time_timestamp()]<BR>"
-
-	switch(priority)
+	switch(new_message.priority)
 		if(REQ_NORMAL_MESSAGE_PRIORITY)
 			if(new_message_priority < REQ_NORMAL_MESSAGE_PRIORITY)
 				new_message_priority = REQ_NORMAL_MESSAGE_PRIORITY
 				update_appearance()
 
 		if(REQ_HIGH_MESSAGE_PRIORITY)
-			header = "<span class='bad'>High Priority</span><BR>[header]"
-			alert = "PRIORITY Alert from [source][authentic]"
 			if(new_message_priority < REQ_HIGH_MESSAGE_PRIORITY)
 				new_message_priority = REQ_HIGH_MESSAGE_PRIORITY
 				update_appearance()
 
 		if(REQ_EXTREME_MESSAGE_PRIORITY)
-			header = "<span class='bad'>!!!Extreme Priority!!!</span><BR>[header]"
-			alert = "EXTREME PRIORITY Alert from [source][authentic]"
-			silenced = FALSE
+			silent = FALSE
 			if(new_message_priority < REQ_EXTREME_MESSAGE_PRIORITY)
 				new_message_priority = REQ_EXTREME_MESSAGE_PRIORITY
 				update_appearance()
 
-	messages.Insert(1, "[header][sending]") //reverse order
+	messages.Insert(1, new_message) //reverse order
 
 	SStgui.update_uis(src)
 
-	if(!silenced)
+	var/alert = new_message.get_alert()
+
+	if(!silent)
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		say(alert)
 
-	if(radio_freq)
-		radio.set_frequency(radio_freq)
-		radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
+	if(new_message.radio_freq)
+		radio.set_frequency(new_message.radio_freq)
+		radio.talk_into(src, "[alert]: <i>[new_message.content]</i>", new_message.radio_freq)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
@@ -439,17 +414,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING
 #undef REQ_EMERGENCY_MEDICAL
-
-#undef REQ_SCREEN_MAIN
-#undef REQ_SCREEN_REQ_ASSISTANCE
-#undef REQ_SCREEN_REQ_SUPPLIES
-#undef REQ_SCREEN_RELAY
-#undef REQ_SCREEN_WRITE
-#undef REQ_SCREEN_CHOOSE
-#undef REQ_SCREEN_SENT
-#undef REQ_SCREEN_ERR
-#undef REQ_SCREEN_VIEW_MSGS
-#undef REQ_SCREEN_AUTHENTICATE
-#undef REQ_SCREEN_ANNOUNCE
 
 #undef ANNOUNCEMENT_COOLDOWN_TIME

@@ -120,7 +120,7 @@
 	console_notify_timer = null
 
 	var/area/A = get_area(src)
-	var/msg = "Now available in [A]:<br>"
+	var/msg = "Now available in [A]:"
 
 	var/has_minerals = FALSE
 
@@ -129,17 +129,17 @@
 		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
-		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
+		msg += "[capitalize(M.name)]: [mineral_amount] sheets"
 
 	if(!has_minerals)
 		return
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"ore_update" = TRUE,
-		"sender" = "Ore Redemption Machine",
+		"sender_department" = "Ore Redemption Machine",
 		"message" = msg,
-		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
-		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
+		"verified" = "Ore Redemption Machine",
+		"priority" = REQ_NORMAL_MESSAGE_PRIORITY,
 	))
 	signal.send_to_receivers()
 

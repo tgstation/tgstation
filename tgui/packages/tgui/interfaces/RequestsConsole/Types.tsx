@@ -24,13 +24,20 @@ export type AuthenticationData = {
 
 export type RequestMessage = {
   content: string;
+  message_stamped_by: string;
+  message_verified_by: string;
+  priority: RequestPriority;
+  received_time: string;
+  request_type: RequestType;
+  sender_department: string;
 };
 
 export enum RequestType {
   NONE = '',
-  ASSISTANCE = 'assistance',
-  SUPPLIES = 'supplies',
-  INFORMATION = 'information',
+  ASSISTANCE = 'Assistance Request',
+  SUPPLIES = 'Supplies Request',
+  INFORMATION = 'Anonymous Information',
+  ORE_UPDATE = 'Ore Update',
 }
 
 export enum RequestPriority {
