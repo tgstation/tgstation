@@ -11,6 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	light_power = 1
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	integrity_failure = 0.5
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
