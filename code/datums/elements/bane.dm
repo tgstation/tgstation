@@ -36,16 +36,17 @@
 /datum/element/bane/proc/check_bane(mob/living/bane_applier, atom/target)
 	if(!isliving(target))
 		return
+	var/mob/living/living_target = target
 	if(bane_applier)
 		if(requires_combat_mode && !bane_applier.combat_mode)
 			return
-	var/is_correct_biotype = target.mob_biotypes & mob_biotypes
+	var/is_correct_biotype = living_target.mob_biotypes & mob_biotypes
 	if(mob_biotypes && !(is_correct_biotype))
 		return FALSE
 	if(ispath(target_type, /mob/living))
-		return istype(target, target_type)
+		return istype(living_target, target_type)
 	else //species type
-		return is_species(target, target_type)
+		return is_species(living_target, target_type)
 
 /datum/element/bane/proc/do_bane(datum/element_owner, mob/living/bane_applier, mob/living/baned_target, hit_zone)
 	var/force_boosted
