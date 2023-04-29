@@ -85,8 +85,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "lG" = (
@@ -229,10 +227,10 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "zB" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer1,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "zH" = (
@@ -272,6 +270,10 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"FD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "FU" = (
 /turf/open/floor/plating,
@@ -343,7 +345,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Ou" = (
-/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "OY" = (
@@ -417,6 +419,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"TQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "TZ" = (
 /turf/template_noop,
@@ -804,7 +810,7 @@ zz
 "}
 (16,1,1) = {"
 Om
-Ms
+TQ
 au
 HO
 se
@@ -848,7 +854,7 @@ zz
 "}
 (18,1,1) = {"
 Om
-ud
+FD
 yN
 QT
 NO
