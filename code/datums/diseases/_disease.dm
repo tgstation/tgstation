@@ -1,7 +1,7 @@
 /datum/disease
 	//Flags
 	var/visibility_flags = 0
-	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST|CHRONIC
+	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
@@ -69,12 +69,11 @@
 	if(has_cure())
 		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
 			src.stage = 1
-			to_chat(affected_mob, span_notice("You feel condition improve."))
+			to_chat(affected_mob, span_notice("You feel your chronic illness has bettered, but it can't be cured!"))
 			return
 		else
 			if(SPT_PROB(cure_chance, seconds_per_tick))
 				update_stage(max(stage - 1, 1))
-
 			if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
 				cure()
 				return FALSE
@@ -88,7 +87,7 @@
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
-	if(!(disease_flags & CURABLE))
+	if(!(disease_flags & CURABLE | CHRONIC))
 		return FALSE
 
 	. = cures.len

@@ -134,7 +134,8 @@
 
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(affected_mob, "You feel confused and disoriented.")
-		SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
+		if(prob(30))
+			SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
 	..()
 
 /datum/reagent/medicine/cryoxadone
