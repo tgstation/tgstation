@@ -3025,8 +3025,7 @@
 "ij" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
-	pixel_x = -28;
-	req_access = null
+	pixel_x = -28req_access = null
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer{
