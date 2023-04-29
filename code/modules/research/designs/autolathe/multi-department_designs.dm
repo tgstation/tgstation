@@ -37,7 +37,7 @@
 	name = "Rapid Wiring Device"
 	id = "rwd"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/rwd/loaded
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -273,7 +273,7 @@
 	name = "Condenser"
 	id = "condenser"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=250, /datum/material/glass=300)
+	materials = list(/datum/material/iron=250, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/assembly/igniter/condenser
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -308,7 +308,7 @@
 	name = "Health Sensor"
 	id = "health_sensor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 800, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/assembly/health
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -368,7 +368,7 @@
 	name = "Proximity Sensor"
 	id = "prox_sensor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 800, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/assembly/prox_sensor
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -440,7 +440,7 @@
 	name = "Package Wrapping"
 	id = "packagewrap"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/stack/package_wrap
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -470,7 +470,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "water recycler"
 	icon_state = "water_recycler"
 	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
-	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron=50)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

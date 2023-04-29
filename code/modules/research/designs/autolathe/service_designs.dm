@@ -2,7 +2,7 @@
 	name = "Bucket"
 	id = "bucket"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/cup/bucket
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -14,7 +14,7 @@
 	name = "Watering Can"
 	id = "watering_can"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/cup/watering_can
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -507,7 +507,7 @@
 	name = "Fishing Rod"
 	id = "fishing_rod"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/fishing_rod
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -533,7 +533,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/bar
 	category = list(
@@ -548,7 +548,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/entertainment
 	category = list(

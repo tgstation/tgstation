@@ -68,7 +68,7 @@
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "diagnostic_hud_night"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium =ROD_MATERIAL_AMOUNT, /datum/material/plasma = 300)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium =ROD_MATERIAL_AMOUNT, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -167,7 +167,7 @@
 	name = "Hilarious Firing Pin"
 	id = "clown_firing_pin"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 300, /datum/material/bananium =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bananium =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/firing_pin/clown
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -347,7 +347,7 @@
 	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
 	id = "anomaly_neutralizer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = 5000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/anomaly_neutralizer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -395,7 +395,7 @@
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	id = "idcard"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=200, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/card/id/advanced
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -458,7 +458,7 @@
 	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
 	id = "advmop"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/mop/advanced
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -506,7 +506,7 @@
 	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
 	id = "light_replacer_blue"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/lightreplacer/blue
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -518,7 +518,7 @@
 	desc = "A floor buffer that can be attached to vehicular janicarts."
 	id = "buffer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/janicart_upgrade/buffer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JANITOR
@@ -530,7 +530,7 @@
 	desc = "A vacuum that can be attached to vehicular janicarts."
 	id = "vacuum"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/janicart_upgrade/vacuum
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JANITOR
@@ -555,7 +555,7 @@
 	desc = "A spray bottle, with an unscrewable top."
 	id = "spraybottle"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/spray
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -567,7 +567,7 @@
 	desc = "A trap used to catch space bears and other legged creatures."
 	id = "beartrap"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/restraints/legcuffs/beartrap
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -583,7 +583,7 @@
 	name = "Advanced Watering Can"
 	id = "adv_watering_can"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
 	)
@@ -623,7 +623,7 @@
 	desc = "A holographic projector that creates holographic security barriers."
 	id = "holosignsec"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/holosign_creator/security
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SECURITY
@@ -635,7 +635,7 @@
 	desc = "A holographic projector that creates holographic engineering barriers."
 	id = "holosignengi"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/holosign_creator/engineering
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
@@ -647,7 +647,7 @@
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric conditions."
 	id = "holosignatmos"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/silver =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/holosign_creator/atmos
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS
@@ -675,7 +675,7 @@
 	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
 	id = "reactive_armour"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/reactive_armour_shell
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -696,7 +696,7 @@
 	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
 	id = "knight_helmet"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 5000)
+	materials = list(MAT_CATEGORY_ITEM_MATERIAL =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -723,7 +723,7 @@
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly. Printed pepper sprays do not contain reagents."
 	id = "pepperspray"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/reagent_containers/spray/pepper/empty
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
@@ -772,7 +772,7 @@
 	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
 	id = "inspector"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/inspector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY

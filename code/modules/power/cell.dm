@@ -347,7 +347,7 @@
 	name = "super-capacity power cell"
 	icon_state = "scell"
 	maxcharge = 20000
-	custom_materials = list(/datum/material/glass=300)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = 2000
 
 /obj/item/stock_parts/cell/super/empty

@@ -26,7 +26,7 @@
 	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -319,7 +319,7 @@
 	inhand_icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond = 200, /datum/material/titanium = 4000)
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
@@ -368,7 +368,7 @@
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
-	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
+	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	icon_state = "adv_retractor"
 	inhand_icon_state = "adv_retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -490,7 +490,7 @@
 	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = 2500, /datum/material/silver = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL

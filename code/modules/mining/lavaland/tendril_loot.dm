@@ -45,14 +45,14 @@
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum=ROD_MATERIAL_AMOUNT*5ial/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 8000, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum=ROD_MATERIAL_AMOUNT*5ial/glass =ROD_MATERIAL_A=ROD_MATERIAL_AMOUNT*55, /datum/material/silver =ROD_MATERIAL_AMOUNT*5ATERIAL_AMOUNT*5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty

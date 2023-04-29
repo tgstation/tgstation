@@ -451,7 +451,7 @@
 	desc = "A handheld shell with one big button."
 	id = "compact_remote_shell"
 	build_path = /obj/item/compact_remote
-	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 5000)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
@@ -543,7 +543,7 @@
 	desc = "A very large shell that cannot be moved around. Stores the most components."
 	id = "server_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
 		/datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5,
 	)
@@ -558,7 +558,7 @@
 	desc = "A door shell that cannot be moved around when assembled."
 	id = "door_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/airlock
@@ -572,7 +572,7 @@
 	desc = "A dispenser shell that can dispense items."
 	id = "dispenser_shell"
 	materials = list(
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/dispenser
@@ -623,7 +623,7 @@
 	name = "Assembly Shell"
 	desc = "An assembly shell that can be attached to wires and other assemblies."
 	id = "assembly_shell"
-	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 5000)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/assembly/wiremod
 	build_type = COMPONENT_PRINTER
 	category = list(

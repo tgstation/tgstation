@@ -16,7 +16,7 @@
 	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/silver = 5000, /datum/material/gold =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 20000, /datum/material/silver =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/gold =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_box/c38/trac
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -28,7 +28,7 @@
 	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
 	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 5000)
+	materials = list(/datum/material/iron = 20000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/ammo_box/c38/hotshot
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -40,7 +40,7 @@
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 5000)
+	materials = list(/datum/material/iron = 20000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/ammo_box/c38/iceblox
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -132,7 +132,7 @@
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 300)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/firing_pin/test_range
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_FIRING_PINS
@@ -144,7 +144,7 @@
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = 600, /datum/material/diamond = 600, /datum/material/uranium = 200)
+	materials = list(/datum/material/silver = 600, /datum/material/diamond = 600, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2L_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/firing_pin/implant/mindshield
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_FIRING_PINS
@@ -194,7 +194,7 @@
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	id = "tele_shield"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 4000, /datum/material/silver = 300, /datum/material/titanium = 200)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 4000, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 2L_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/shield/riot/tele
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_MELEE
@@ -207,7 +207,7 @@
 	desc = "The gunkit for a powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
 	id = "beamrifle"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold =MINERAL_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/weaponcrafting/gunkit/beam_rifle
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -220,7 +220,7 @@
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 10000)
+	materials = list(/datum/material/gold =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 10000)
 	build_path = /obj/item/weaponcrafting/gunkit/decloner
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -233,7 +233,7 @@
 	desc = "A gun that fires many syringes."
 	id = "rapidsyringe"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -245,7 +245,7 @@
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
 	id = "temp_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = 3000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = 3000)
 	build_path = /obj/item/weaponcrafting/gunkit/temperature
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -318,7 +318,7 @@
 	desc = "Not quite as menacing as it sounds"
 	id = "xray_laser"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 4000, /datum/material/iron = 5000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/gold =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 4000, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/weaponcrafting/gunkit/xray
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -344,7 +344,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 5000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace = 3000)
+	materials = list(/datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -356,7 +356,7 @@
 	desc = "A stunning shell for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2L_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -369,7 +369,7 @@
 		Does nothing on its own."
 	id = "techshotshell"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 200)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2L_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -405,7 +405,7 @@
 	desc = "A kit to reverse-engineer a proto-kinetic accelerator into an energy crossbow, favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =ROD_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/weaponcrafting/gunkit/ebow
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS

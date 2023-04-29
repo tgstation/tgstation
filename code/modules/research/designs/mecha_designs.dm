@@ -675,7 +675,7 @@
 	id = "mech_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas
-	materials = list(/datum/material/iron=25000,/datum/material/titanium=5000,/datum/material/silver=3000)
+	materials = list(/datum/material/iron=25000,/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/silver=3000)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -735,7 +735,7 @@
 	id = "mech_repair_droid"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=ROD_MATERIAL_AMOUNT,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=10000,/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/gold=ROD_MATERIAL_AMOUNT,/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -765,7 +765,7 @@
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
-	materials = list(/datum/material/iron=20000,/datum/material/silver=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/silver=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -795,7 +795,7 @@
 	id = "mech_proj_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
-	materials = list(/datum/material/iron=20000,/datum/material/gold=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/gold=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -945,7 +945,7 @@
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	materials = list(/datum/material/iron=5000, /datum/material/glass = 10000)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 10000)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,

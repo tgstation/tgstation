@@ -26,7 +26,7 @@
 	id = "borg_head"
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/head/robot
-	materials = list(/datum/material/iron=5000)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 350
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
@@ -249,7 +249,7 @@
 	id = "gygax_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000, /datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=10000,/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/gold=MINERAL_MATERIAL_AMOUNT, /datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -427,7 +427,7 @@
 	id = "honk_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_head
-	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -438,7 +438,7 @@
 	id = "honk_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_left_arm
-	materials = list(/datum/material/iron=15000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=15000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -449,7 +449,7 @@
 	id = "honk_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_right_arm
-	materials = list(/datum/material/iron=15000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=15000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -460,7 +460,7 @@
 	id = "honk_left_leg"
 	build_type = MECHFAB
 	build_path =/obj/item/mecha_parts/part/honker_left_leg
-	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -471,7 +471,7 @@
 	id = "honk_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/honker_right_leg
-	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -505,7 +505,7 @@
 	id = "phazon_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_head
-	materials = list(/datum/material/iron=15000,/datum/material/glass = 5000,/datum/material/plasma=10000)
+	materials = list(/datum/material/iron=15000,/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/plasma=10000)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CHASSIS
@@ -831,7 +831,7 @@
 	id = "mech_mscanner"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
-	materials = list(/datum/material/iron=5000,/datum/material/glass = 2500)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/glass = 2500)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -867,7 +867,7 @@
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
-	materials = list(/datum/material/iron=10000,/datum/material/glass =ROD_MATERIAL_AMOUNT,/datum/material/silver=MINERAL_MATERIAL_AMOUNT,/datum/material/plasma=5000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass =ROD_MATERIAL_AMOUNT,/datum/material/silver=MINERAL_MATERIAL_AMOUNT,/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -894,7 +894,7 @@
 	id = "mech_mousetrap_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
-	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 300
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -911,7 +911,7 @@
 	id = "mech_banana_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
-	materials = list(/datum/material/iron=20000,/datum/material/bananium=5000)
+	materials = list(/datum/material/iron=20000,/datum/material/bananium=MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 300
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -966,7 +966,7 @@
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
-	materials = list(/datum/material/iron = 5000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
@@ -977,7 +977,7 @@
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg_restart_board
-	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
+	materials = list(/datum/material/iron = 20000 , /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
@@ -988,7 +988,7 @@
 	id = "borg_upgrade_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/thrusters
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/plasma = 5000, /datum/material/uranium = 6000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = 6000)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
@@ -1032,7 +1032,7 @@
 	id = "borg_upgrade_lavaproof"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/lavaproof
-	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 4000, /datum/material/titanium = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 4000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
@@ -1087,7 +1087,7 @@
 	id = "borg_upgrade_piercinghypospray"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/titanium = 5000, /datum/material/diamond = 3000)
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond = 3000)
 	construction_time = 80
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
@@ -1098,7 +1098,7 @@
 	id = "borg_upgrade_defibrillator"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/defib
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 5000, /datum/material/silver = 4000, /datum/material/gold = 3000)
+	materials = list(/datum/material/iron = 8000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 4000, /datum/material/gold = 3000)
 	construction_time = 80
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
@@ -1109,7 +1109,7 @@
 	id = "borg_upgrade_surgicalprocessor"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/processor
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 4000, /datum/material/silver = 4000)
 	construction_time = 40
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
@@ -1153,7 +1153,7 @@
 	id = "borg_upgrade_expand"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/expand
-	materials = list(/datum/material/iron = 200000, /datum/material/titanium = 5000)
+	materials = list(/datum/material/iron = 200000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
@@ -1164,7 +1164,7 @@
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
-	materials = list(/datum/material/iron = 1200, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold = 200)
+	materials = list(/datum/material/iron = 1200, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
@@ -1176,7 +1176,7 @@
 	id = "borg_upgrade_rped"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rped
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 120
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
@@ -1293,7 +1293,7 @@
 	id = "mecha_tracking_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = 200)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -1321,7 +1321,7 @@
 	id = "mecha_camera"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/camera_kit
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma = 200, /datum/material/titanium = 200)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 50
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -1366,7 +1366,7 @@
 	desc = "A 'Nakamura Engineering' designed shell for a Modular Suit."
 	id = "mod_shell"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 25 SECONDS
 	build_path = /obj/item/mod/construction/shell
 	category = list(
@@ -1378,7 +1378,7 @@
 	desc = "A 'Nakamura Engineering' designed helmet for a Modular Suit."
 	id = "mod_helmet"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 5000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/helmet
 	category = list(
@@ -1390,7 +1390,7 @@
 	desc = "A 'Nakamura Engineering' designed chestplate for a Modular Suit."
 	id = "mod_chestplate"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 5000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/chestplate
 	category = list(
@@ -1402,7 +1402,7 @@
 	desc = "'Nakamura Engineering' designed gauntlets for a Modular Suit."
 	id = "mod_gauntlets"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 5000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/gauntlets
 	category = list(
@@ -1414,7 +1414,7 @@
 	desc = "'Nakamura Engineering' designed boots for a Modular Suit."
 	id = "mod_boots"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 5000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/boots
 	category = list(
@@ -1519,7 +1519,7 @@
 /datum/design/module/mod_storage_expanded
 	name = "Expanded Storage Module"
 	id = "mod_storage_expanded"
-	materials = list(/datum/material/iron = 5000, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/uranium =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/storage/large_capacity
 
 /datum/design/module/mod_visor_medhud

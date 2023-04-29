@@ -99,7 +99,7 @@ other types of metals and chemistry for reagents).
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3L_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 
 	///List of all `/datum/design` stored on the disk.
 	var/list/blueprints = list()

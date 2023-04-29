@@ -380,7 +380,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	toolspeed = 0.1
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	change_icons = FALSE
@@ -404,7 +404,7 @@
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"
 	max_fuel = 40
-	custom_materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
+	custom_materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = 500, /datum/material/plasma =ROD_MATERIAL_AMOUNT*1.5, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 2)
 	change_icons = FALSE
 	can_off_process = TRUE
 	light_range = 1

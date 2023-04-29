@@ -240,7 +240,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/interrogation
 	category = list(
@@ -255,7 +255,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass = 5000,
+		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/prison
 	category = list(
