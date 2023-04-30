@@ -58,7 +58,7 @@
 	name = "condenser"
 	desc = "A small electronic device able to chill their surroundings."
 	icon_state = "freezer"
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	heat = 200
 
 /obj/item/assembly/igniter/condenser/activate()

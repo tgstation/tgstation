@@ -14,7 +14,7 @@
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
-	custom_materials = list(/datum/material/iron=150)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*1.5)
 	drop_sound = 'sound/items/handling/wrench_drop.ogg'
 	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'
 
@@ -42,7 +42,7 @@
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/abductor.dmi'
 	belt_icon_state = "wrench_alien"
-	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNTAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNTAL_MATERIAL_AMOUNT)
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 

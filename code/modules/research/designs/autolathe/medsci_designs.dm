@@ -3,7 +3,7 @@
 	name = "Pill Bottle"
 	id = "pillbottle"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 20, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/pill_bottle
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -107,7 +107,7 @@
 	name = "Syringe"
 	id = "syringe"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
+	materials = list(/datum/material/iron = 10, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/reagent_containers/syringe
 	category = list(
 		RND_CATEGORY_INITIAL,

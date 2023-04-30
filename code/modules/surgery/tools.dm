@@ -6,7 +6,7 @@
 	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*3, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 1.5)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +26,7 @@
 	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT*1.25)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -48,7 +48,7 @@
 	inhand_icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/glass = SMALL_MATERIAL_AMOUNT*7.5)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -72,7 +72,7 @@
 	inhand_icon_state = "e_cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 30, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*2, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = MINERAL_MATERIAL_AMOUNT*1.5, /datum/material/titanium = MINERAL_MATERIAL_AMOUNT*1.5)
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -116,7 +116,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT*3)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -163,7 +163,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*2, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -207,7 +207,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT*3)
 	attack_verb_continuous = list("attacks", "slashes", "saws", "cuts")
 	attack_verb_simple = list("attack", "slash", "saw", "cut")
 	sharpness = SHARP_EDGED
@@ -319,7 +319,7 @@
 	inhand_icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = 4000)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*3, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = MINERAL_MATERIAL_AMOUNT*2)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
@@ -368,7 +368,7 @@
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
-	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*6, /datum/material/glass = MINERAL_MATERIAL_AMOUNT*2, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*2, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT * 2.5)
 	icon_state = "adv_retractor"
 	inhand_icon_state = "adv_retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -416,7 +416,7 @@
 	throwforce = 6
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=8000, /datum/material/titanium=6000)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*4, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT*3)
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
@@ -490,7 +490,7 @@
 	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = 2500, /datum/material/silver = 2500)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*1.25)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL

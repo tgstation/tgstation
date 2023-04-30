@@ -51,7 +51,7 @@
 	name = "Light Fixture Battery"
 	id = "miniature_power_cell"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 20)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/stock_parts/cell/emergency_light
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -136,7 +136,7 @@
 	name = "Intercom Frame"
 	id = "intercom_frame"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/wallframe/intercom
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -328,7 +328,7 @@
 	name = "Light Switch Frame"
 	id = "light_switch_frame"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/wallframe/light_switch
 	category = list(
 		RND_CATEGORY_INITIAL,

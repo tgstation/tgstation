@@ -50,7 +50,7 @@
 	name = "Universal Recorder Tape"
 	id = "tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = 5)
 	build_path = /obj/item/tape/random
 	category = list(
 		RND_CATEGORY_INITIAL,

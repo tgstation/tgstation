@@ -242,7 +242,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	custom_materials = list(/datum/material/glass=2500)
+	custom_materials = list(/datum/material/glass= MINERAL_MATERIAL_AMOUNT*1.25)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -252,7 +252,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
-	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
@@ -262,7 +262,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/titanium=ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold=ROD_MATERIAL_AMOUNT, /datum/material/titanium=ROD_MATERIAL_AMOUNT)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)

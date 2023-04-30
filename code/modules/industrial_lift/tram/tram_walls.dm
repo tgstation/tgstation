@@ -109,7 +109,7 @@
 	explosion_block = 0 //gold is a soft metal you dingus.
 	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
-	custom_materials = list(/datum/material/gold = 4000)
+	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/silver
 	name = "silver wall"
@@ -122,7 +122,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SILVER_WALLS
-	custom_materials = list(/datum/material/silver = 4000)
+	custom_materials = list(/datum/material/silver = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/diamond
 	name = "diamond wall"
@@ -138,7 +138,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
-	custom_materials = list(/datum/material/diamond = 4000)
+	custom_materials = list(/datum/material/diamond = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/bananium
 	name = "bananium wall"
@@ -151,7 +151,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
-	custom_materials = list(/datum/material/bananium = 4000)
+	custom_materials = list(/datum/material/bananium = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/sandstone
 	name = "sandstone wall"
@@ -165,7 +165,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
-	custom_materials = list(/datum/material/sandstone = 4000)
+	custom_materials = list(/datum/material/sandstone = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/uranium
 	article = "a"
@@ -179,7 +179,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_URANIUM_WALLS
-	custom_materials = list(/datum/material/uranium = 4000)
+	custom_materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT*2)
 
 	/// Mutex to prevent infinite recursion when propagating radiation pulses
 	var/active = null
@@ -224,7 +224,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
-	custom_materials = list(/datum/material/plasma = 4000)
+	custom_materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/wood
 	name = "wooden wall"
@@ -238,7 +238,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)
@@ -272,7 +272,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
-	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2.5)
 
 /obj/structure/tramwall/abductor
 	name = "alien wall"
@@ -287,7 +287,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
-	custom_materials = list(/datum/material/alloy/alien = 4000)
+	custom_materials = list(/datum/material/alloy/alien = MINERAL_MATERIAL_AMOUNT*2)
 
 /obj/structure/tramwall/material
 	name = "wall"

@@ -47,7 +47,7 @@
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
 	icon = 'icons/obj/abductor.dmi'
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
-	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
@@ -60,7 +60,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
-	custom_materials = list(/datum/material/iron=70)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
 	icon_state = "crowbar_large"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
@@ -96,7 +96,7 @@
 	worn_icon_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*2.25, /datum/material/silver = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/titanium = MINERAL_MATERIAL_AMOUNT*1.75)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL

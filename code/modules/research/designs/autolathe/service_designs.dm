@@ -242,7 +242,7 @@
 	name = "Plant Analyzer"
 	id = "plant_analyzer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+	materials = list(/datum/material/iron = 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/plant_analyzer
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -314,7 +314,7 @@
 	name = "Station Bounced Radio"
 	id = "bounced_radio"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/radio/off
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -362,7 +362,7 @@
 	name = "Box of Cap Gun Shots"
 	id = "capbox"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -471,7 +471,7 @@
 	name = "Hand Labeler Paper Roll"
 	id = "roll"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = 25)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/hand_labeler_refill
 	category = list(
 		RND_CATEGORY_INITIAL,

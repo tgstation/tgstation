@@ -36,7 +36,7 @@
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
-	custom_materials = list(/datum/material/plasma = 500)
+	custom_materials = list(/datum/material/plasma = SMALL_MATERIAL_AMOUNT*5)
 
 //Plasma floor that can't be removed, for disco inferno
 
@@ -51,7 +51,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
-	custom_materials = list(/datum/material/gold = 500)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*5)
 
 //SILVER
 
@@ -60,7 +60,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
-	custom_materials = list(/datum/material/silver = 500)
+	custom_materials = list(/datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 
 //TITANIUM (shuttle)
 
@@ -68,7 +68,7 @@
 	name = "shuttle floor"
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	custom_materials = list(/datum/material/titanium = 500)
+	custom_materials = list(/datum/material/titanium = SMALL_MATERIAL_AMOUNT*5)
 
 /turf/open/floor/mineral/titanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -152,7 +152,7 @@
 	name = "shuttle floor"
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	custom_materials = list(/datum/material/alloy/plastitanium = 500)
+	custom_materials = list(/datum/material/alloy/plastitanium = SMALL_MATERIAL_AMOUNT*5)
 
 /turf/open/floor/mineral/plastitanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -181,7 +181,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
-	custom_materials = list(/datum/material/bananium = 500)
+	custom_materials = list(/datum/material/bananium = SMALL_MATERIAL_AMOUNT*5)
 	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The custom mat one should still slip.
 	var/sound_cooldown = 0
 
@@ -227,7 +227,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
-	custom_materials = list(/datum/material/diamond = 500)
+	custom_materials = list(/datum/material/diamond = SMALL_MATERIAL_AMOUNT*5)
 
 //URANIUM
 
@@ -237,7 +237,7 @@
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
 	icons = list("uranium","uranium_dam")
-	custom_materials = list(/datum/material/uranium = 500)
+	custom_materials = list(/datum/material/uranium = SMALL_MATERIAL_AMOUNT*5)
 	var/last_event = 0
 	var/active = null
 
@@ -287,7 +287,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 	baseturfs = /turf/open/floor/plating/abductor2
-	custom_materials = list(/datum/material/alloy/alien = 500)
+	custom_materials = list(/datum/material/alloy/alien = SMALL_MATERIAL_AMOUNT*5)
 
 /turf/open/floor/mineral/abductor/Initialize(mapload)
 	. = ..()
