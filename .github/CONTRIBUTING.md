@@ -110,8 +110,9 @@ Things you **CAN'T** do:
 - [Hard Deletes](./guides/HARDDELETES.md)
 - [MC Tab Guide](./guides/MC_tab.md)
 - [Policy Configuration System](./guides/POLICYCONFIG.md)
-- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
+- [Quickly setting up a development database with ezdb](./guides/EZDB.md)
 - [Required Tests (Continuous Integration)](./guides/CI.md)
+- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
 - [UI Development](../tgui/README.md)
 - [Visual Effects and Systems](./guides/VISUALS.md)
 

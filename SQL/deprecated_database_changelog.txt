@@ -1,14 +1,24 @@
-Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
+=====================================================
 
-Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.23; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 23);
-or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 23);
 
-In any query remember to add a prefix to the table names if you use one.
+
+== THIS FILE IS DEPRECATED! ==
+
+It has been superseded by the updates/ folder, which contains a SQL file
+for every change since 5.0.
+
+It currently persists as a historical document, but may be removed another day.
+
+Read the README.md to learn how to either update your database as a server operator
+or how to create SQL update files as a developer.
+
+
+
+
+
+=====================================================
 
 -----------------------------------------------------
 Version 5.23, 28 December 2022, by Mothblocks
