@@ -529,13 +529,14 @@
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	icon = "tg-prosthetic-leg"
 	value = -3
-	var/slot_string = "limb"
-	/// the original limb from before the prosthetic was applied
-	var/obj/item/bodypart/old_limb
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it's randomized at roundstart
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
+	/// The slot to replace, in string form
+	var/slot_string = "limb"
+	/// the original limb from before the prosthetic was applied
+	var/obj/item/bodypart/old_limb
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
