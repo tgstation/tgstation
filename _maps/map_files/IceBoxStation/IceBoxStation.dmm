@@ -35851,7 +35851,7 @@
 "luQ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("secure_morgue");
+	req_access = list("morgue_secure");
 	name = "Secure Morgue Trays"
 	},
 /turf/open/floor/iron/dark,
@@ -65789,7 +65789,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("secure_morgue");
+	req_access = list("morgue_secure");
 	name = "Coroner's Office"
 	},
 /turf/open/floor/iron/dark,
