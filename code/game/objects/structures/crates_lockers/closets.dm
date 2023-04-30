@@ -596,7 +596,7 @@
 			return
 
 		if(locked)
-			balloon_alert(user, "unlock first!!")
+			balloon_alert(user, "unlock first!")
 			return
 
 		user.visible_message(span_notice("[user] is installing a card reader."),
@@ -742,7 +742,7 @@
 			return
 
 		if(locked)
-			balloon_alert(user, "unlock first!!")
+			balloon_alert(user, "unlock first!")
 			return
 
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
