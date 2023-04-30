@@ -42,7 +42,7 @@
 
 /datum/component/botany_tree/proc/get_level_requirements()
 	var/next_level = current_level + 1
-	var/list/major_levels = list(5,10,15)
+	var/list/major_levels = list(3,5,7)
 	var/count = 0
 	if(next_level in major_levels)
 		count = MAJOR_AMOUNT
@@ -60,11 +60,11 @@
 
 /datum/component/botany_tree/proc/trigger_level()
 	var/next_level = current_level + 1
-	var/list/major_levels = list(5,15,20)
-	var/fruit_level = 10
+	var/list/major_levels = list(3,5,7)
+	var/fruit_level = 5
 	var/list/picked_nodes = list()
 	if(next_level in major_levels)
-		var/list/major_nodes = (typesof(/datum/tree_node/major) - /datum/tree_node/major - typesof(/datum/tree_node/major/fruit))
+		var/list/major_nodes = (subtypesof(/datum/tree_node/major) - typesof(/datum/tree_node/major/fruit))
 		for(var/number = 1, number <= choices, number++)
 			if(major_nodes.len)
 				var/datum/tree_node/major/picked_node = pick(major_nodes)
@@ -73,7 +73,7 @@
 				created_node.on_choice_generation()
 
 	else if(next_level == fruit_level)
-		var/list/fruit_nodes = (typesof(/datum/tree_node/major/fruit) - /datum/tree_node/major/fruit)
+		var/list/fruit_nodes = (subtypesof(/datum/tree_node/major/fruit))
 		for(var/number = 1, number <= choices, number++)
 			if(fruit_nodes.len)
 				var/datum/tree_node/major/fruit/picked_node = pick(fruit_nodes)
