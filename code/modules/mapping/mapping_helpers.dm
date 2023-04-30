@@ -285,7 +285,7 @@
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
 	if(target.tlv_no_checks && target.tlv_cold_room)
-		CRASH("Tried to apply incompatible air alarm treshold helpers!")
+		CRASH("Tried to apply incompatible air alarm threshold helpers!")
 
 	if(target.syndicate_access)
 		target.give_syndicate_access()

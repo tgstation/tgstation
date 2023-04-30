@@ -52,9 +52,9 @@
 	/// Used for air alarm helper called all_access to remove air alarm's required access.
 	var/all_access = FALSE
 
-	/// Used for air alarm helper called tlv_cold_room to adjust alarm tresholds for cold room.
+	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
 	var/tlv_cold_room = FALSE
-	/// Used for air alarm helper called tlv_no_ckecks to remove alarm tresholds.
+	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
 
@@ -548,12 +548,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	req_access = null
 	req_one_access = null
 
-///Used for air alarm cold room tlv helper, which sets cold room temperature and pressure alarm tresholds
+///Used for air alarm cold room tlv helper, which sets cold room temperature and pressure alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_cold_room()
 	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
 	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
 
-///Used for air alarm no tlv helper, which removes alarm tresholds
+///Used for air alarm no tlv helper, which removes alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
