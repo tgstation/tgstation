@@ -46,7 +46,7 @@
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
+		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
 
