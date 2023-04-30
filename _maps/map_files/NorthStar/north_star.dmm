@@ -83848,7 +83848,7 @@
 "wqX" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/closed/wall,
-/area/station/medical/medbay/lobby)
+/area/station/medical/morgue)
 "wrb" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/door/airlock/public/glass{
@@ -192271,7 +192271,7 @@ aHk
 hhR
 aHk
 aHk
-aHk
+vrA
 vrA
 vrA
 vrA
@@ -192528,7 +192528,7 @@ ssk
 mve
 cKC
 tou
-aHk
+vrA
 lGB
 oIU
 azp
@@ -192785,7 +192785,7 @@ ofb
 xNg
 sNN
 fVF
-aHk
+vrA
 qmc
 xRG
 pAK
@@ -193042,7 +193042,7 @@ jwL
 aCr
 hUx
 mvp
-aHk
+vrA
 ycK
 wvi
 epW
@@ -193299,7 +193299,7 @@ aHk
 hWT
 ntP
 xoW
-aHk
+vrA
 kTR
 iqS
 lsq
