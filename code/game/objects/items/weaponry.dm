@@ -855,7 +855,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/simple_animal/butterfly,
 		/mob/living/basic/cockroach,
 		/obj/item/queen_bee,
-		/obj/structure/spider/spiderling,
+		/mob/living/basic/spiderling,
 		/mob/living/simple_animal/hostile/ant,
 		/obj/effect/decal/cleanable/ants,
 	))
