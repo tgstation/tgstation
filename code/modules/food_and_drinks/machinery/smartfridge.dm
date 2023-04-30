@@ -273,6 +273,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	has_emissive = FALSE
+	circuit = null
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
