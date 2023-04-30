@@ -247,7 +247,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		CHECK_TICK
 
-	turfs_to_uncontain = list()
+	turfs_to_uncontain.Cut(1, total_turfs_to_uncontain + 1)
 
 /// Returns TRUE if we have contained turfs, FALSE otherwise
 /area/proc/has_contained_turfs()
