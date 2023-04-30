@@ -653,7 +653,7 @@
 	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
 	new /obj/item/pen/edagger(src) // 2 TC
 	// The necessary equipment to help secure that disky.
-	new /obj/item/encryptionkey/syndicate(src) // 5 TC / Free for nukies
+	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
 	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
 	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
 	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
@@ -661,6 +661,10 @@
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
 	new spess_helmet(src) // 4 TC for the space gear
 	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	// Tacticool gear
+	new /obj/item/clothing/shoes/combat(src)
+	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/book/manual/nuclear(src) // Very important
 	// The most important part of the kit, the implant that gives them the syndicate faction.
 	new /obj/item/implanter/induction_implant(src)
