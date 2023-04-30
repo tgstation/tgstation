@@ -8,7 +8,6 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(
-		/obj/item/autopsy_scanner,
 		/obj/item/analyzer,
 		/obj/item/biopsy_tool,
 		/obj/item/dnainjector,
@@ -83,6 +82,15 @@
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/bio
+
+/obj/item/clothing/suit/toggle/labcoat/coroner
+	name = "coroner labcoat"
+	desc = "A suit that protects against minor chemical spills. Has a black stripe on the shoulder."
+	icon_state = "labcoat_coroner"
+
+/obj/item/clothing/suit/toggle/labcoat/coroner/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/autopsy_scanner
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"

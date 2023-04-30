@@ -17116,7 +17116,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "emu" = (
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/spray/cleaner,

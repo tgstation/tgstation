@@ -1,10 +1,10 @@
 /obj/item/autopsy_scanner
 	name = "autopsy scanner"
-	desc = "Extracts information on what occured on a cadaver."
+	desc = "Used in surgery to extract information from a cadaver."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autopsy_scanner"
-	inhand_icon_state = "healthanalyzer"
-	worn_icon_state = "healthanalyzer"
+	inhand_icon_state = "autopsy_scanner"
+	worn_icon_state = "autopsy_scanner"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	flags_1 = CONDUCT_1

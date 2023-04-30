@@ -49,9 +49,8 @@
 
 	box = /obj/item/storage/box/survival/medical
 	backpack_contents = list(
-		/obj/item/autopsy_scanner = 1,
-		/obj/item/healthanalyzer = 1,
 		/obj/item/storage/box/bodybags = 1,
+		/obj/item/autopsy_scanner = 1,
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
 		/obj/item/reagent_containers/dropper = 1,
 	)
