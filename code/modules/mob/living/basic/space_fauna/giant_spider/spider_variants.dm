@@ -22,7 +22,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/ambush_web)
 
 	var/datum/action/cooldown/web_sneak/sneak_web = new(src)
 	sneak_web.Grant(src)
@@ -46,6 +46,11 @@
 	speed = 3
 	player_speed_modifier = -3.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
+
+/mob/living/basic/giant_spider/hunter/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/hunter_web)
 
 /**
  * ### Spider Scout
@@ -92,6 +97,8 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
+	speed = 4
+	player_speed_modifier = -3.1
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
@@ -112,6 +119,8 @@
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/nurse_web)
 
 /**
  * ### Tangle Spider
@@ -140,6 +149,15 @@
 	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
 
+/mob/living/basic/giant_spider/tangle/Initialize(mapload)
+	. = ..()
+	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tangle_web)
 
 /**
  * ### Tarantula
@@ -220,10 +238,12 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 60
-	health = 60
+	maxHealth = 200
+	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	speed = 4
+	player_speed_modifier = -3.1
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/lay_web/sealer
@@ -245,6 +265,14 @@
 
 	var/datum/action/command_spiders/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
+
+	var/datum/action/cooldown/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/midwife_web)
 
 /**
  * ### Giant Ice Spider

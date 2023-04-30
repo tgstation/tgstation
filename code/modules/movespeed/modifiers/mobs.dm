@@ -94,11 +94,26 @@
 	variable = TRUE
 	flags = IGNORE_NOSLOW
 
-/datum/movespeed_modifier/tarantula_web
-	multiplicative_slowdown = 5
+/datum/movespeed_modifier/hunter_web
+	multiplicative_slowdown = 0.4
 
 /datum/movespeed_modifier/duct_spider_web
 	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/nurse_web
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/tangle_web
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/midwife_web
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/ambush_web
+	multiplicative_slowdown = 5
+
+/datum/movespeed_modifier/tarantula_web
+	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
