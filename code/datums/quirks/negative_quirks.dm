@@ -908,7 +908,7 @@
 		list(
 			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 		),
-		flavour_text = "You've been provided with a medication to help manage your condition. Take it regularly to avoid complications.",
+		flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.",
 	)
 
 /datum/quirk/unstable

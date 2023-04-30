@@ -69,7 +69,7 @@
 	if(has_cure())
 		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
 			src.stage = 1
-			to_chat(affected_mob, span_notice("You feel your chronic illness has bettered, but it can't be cured!"))
+			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
 		else
 			if(SPT_PROB(cure_chance, seconds_per_tick))
