@@ -20881,10 +20881,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
 "fhF" = (
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table/reinforced,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "fhQ" = (
@@ -23474,7 +23471,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "fRt" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
 	},
@@ -23484,6 +23480,8 @@
 /obj/structure/sign/poster/contraband/borg_fancy_1{
 	pixel_x = -32
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/ecto_sniffer,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/science/robotics/lab)
 "fRK" = (
@@ -38090,13 +38088,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"jxw" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/table/reinforced,
-/obj/machinery/ecto_sniffer,
-/turf/open/floor/iron,
-/area/station/science/robotics/lab)
 "jxz" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot,
@@ -75391,10 +75382,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "sRc" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/effect/turf_decal/trimline/neutral/mid_joiner,
 /obj/structure/sign/warning/no_smoking/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/science/robotics/lab)
 "sRd" = (
@@ -128544,7 +128537,7 @@ iYC
 oTC
 iYC
 xPX
-jxw
+fhF
 inb
 cni
 kRZ

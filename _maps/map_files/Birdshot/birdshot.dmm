@@ -16287,7 +16287,6 @@
 /obj/machinery/computer/operating{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "gnw" = (
@@ -22449,6 +22448,7 @@
 "iqv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "iqD" = (
@@ -36432,6 +36432,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/supply)
+"nrZ" = (
+/obj/machinery/sparker/directional/north{
+	id = "Xenobio"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "nsd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/crate/cardboard,
@@ -41319,13 +41325,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
-"phe" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/turf_decal/loading_area/white{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/science/robotics/augments)
 "phs" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/white/small,
@@ -44052,12 +44051,6 @@
 	dir = 1
 	},
 /area/station/security/execution/transfer)
-"pZs" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/plating,
-/area/station/science/robotics/augments)
 "pZu" = (
 /obj/structure/hedge,
 /turf/open/floor/plating,
@@ -47495,13 +47488,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"reo" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/sparker/directional/north{
-	id = "Xenobio"
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "rer" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -63627,6 +63613,7 @@
 /area/station/medical/psychology)
 "win" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/station/science/robotics/augments)
 "wiy" = (
@@ -114995,7 +114982,7 @@ ugX
 sYa
 sYa
 sYa
-sYa
+xlP
 xlP
 epN
 xlP
@@ -115251,9 +115238,9 @@ rrt
 uWl
 iqv
 xhN
-pZs
 sYa
 rQw
+xlP
 bAo
 tGp
 eWI
@@ -115508,8 +115495,8 @@ rrt
 saY
 qbo
 win
-phe
 sYa
+xlP
 xlP
 jMC
 xlP
@@ -115766,8 +115753,8 @@ bXG
 jlN
 gns
 sYa
-sYa
-reo
+nrZ
+rfJ
 iHH
 xlP
 eWI

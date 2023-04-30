@@ -42148,6 +42148,9 @@
 /area/station/maintenance/solars/port/aft)
 "nxn" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "nxD" = (
@@ -53764,11 +53767,11 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rdb" = (
+/obj/structure/sign/poster/official/random/directional/south,
 /obj/structure/table/optable{
 	name = "Robotics Operating Table"
 	},
 /obj/effect/landmark/event_spawn,
-/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "rdd" = (
@@ -62328,13 +62331,6 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
-"tSc" = (
-/obj/machinery/computer/operating{
-	dir = 1;
-	name = "Robotics Operating Computer"
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "tSs" = (
 /obj/item/flashlight/lantern{
 	on = 1
@@ -63638,13 +63634,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"unw" = (
-/obj/structure/table,
-/obj/item/storage/box/bodybags,
-/obj/item/pen,
-/obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "unM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair{
@@ -68349,13 +68338,9 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "vPE" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/latex,
-/obj/item/surgical_drapes,
-/obj/item/razor,
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
+/turf/closed/wall/r_wall,
+/area/station/maintenance/aft/greater)
 "vPF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -70715,6 +70700,14 @@
 	},
 /turf/closed/wall,
 /area/station/cargo/sorting)
+"wBN" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/latex,
+/obj/item/surgical_drapes,
+/obj/item/razor,
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "wBS" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/west,
@@ -72075,6 +72068,10 @@
 /area/station/cargo/sorting)
 "wVJ" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/computer/operating{
+	dir = 4;
+	name = "Robotics Operating Computer"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "wVR" = (
@@ -73763,10 +73760,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/maintenance/aft/greater)
-"xwN" = (
-/obj/structure/bodycontainer/morgue,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "xxc" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -248815,7 +248808,7 @@ sZF
 sZF
 sZF
 sZF
-eZi
+sKf
 wEV
 sKf
 sZF
@@ -249331,9 +249324,9 @@ sZF
 sZF
 sZF
 npD
-npD
-npD
-npD
+eZi
+sKf
+mFj
 npD
 bEo
 sou
@@ -249587,10 +249580,10 @@ wIg
 vzX
 bJJ
 gzB
-uvt
+sZF
 vPE
-unw
-xwN
+npD
+npD
 npD
 npD
 mSv
@@ -249846,7 +249839,7 @@ hOY
 dbx
 uvt
 awK
-pra
+wBN
 wVJ
 mtI
 axc
@@ -250361,7 +250354,7 @@ apM
 uvt
 kBT
 pra
-tSc
+pra
 mtI
 uxj
 eNK

@@ -6233,13 +6233,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"aLH" = (
-/obj/effect/turf_decal/loading_area/white{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/white,
-/area/station/science/robotics/lab)
 "aLI" = (
 /obj/machinery/computer/operating{
 	dir = 8
@@ -24245,10 +24238,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "hsR" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
+/turf/closed/wall/r_wall,
 /area/station/science/robotics/lab)
 "hsT" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -27273,6 +27263,10 @@
 /obj/item/flashlight,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"iDc" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "iDB" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -33797,7 +33791,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/item/storage/box/bodybags,
 /obj/item/reagent_containers/syringe,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/camera{
@@ -35191,13 +35184,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"lqP" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/medical)
 "lqQ" = (
 /obj/machinery/computer/teleporter{
 	dir = 4
@@ -39999,6 +39985,9 @@
 	},
 /turf/open/floor/iron/stairs/right,
 /area/station/hallway/secondary/construction/engineering)
+"nik" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/eva)
 "nim" = (
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
@@ -42468,6 +42457,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "nZm" = (
@@ -48058,12 +48048,11 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/medkit/regular,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "qdy" = (
@@ -49270,11 +49259,15 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "qAg" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
+	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/obj/structure/table/glass,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/white,
 /area/station/security/medical)
 "qAk" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -56336,7 +56329,8 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/records/medical/laptop,
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "sZH" = (
@@ -150221,7 +150215,7 @@ run
 run
 run
 run
-ayR
+nik
 abM
 ayR
 hzN
@@ -150477,7 +150471,7 @@ qAg
 qdr
 sZD
 kUf
-lqP
+run
 ayR
 gKX
 ayR
@@ -177769,9 +177763,9 @@ vme
 dzu
 kcF
 soq
-soq
-soq
-soq
+abM
+abM
+abM
 abM
 abM
 abM
@@ -178025,8 +178019,8 @@ mWe
 mAf
 dzu
 nto
-uKv
-aLH
+hsR
+hsR
 hsR
 soq
 soq
@@ -178283,7 +178277,7 @@ muZ
 dzu
 doK
 uJH
-uJH
+iDc
 eQY
 nns
 soq

@@ -6493,12 +6493,6 @@
 /obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/bar)
-"bzD" = (
-/obj/structure/bodycontainer/morgue,
-/turf/open/floor/noslip{
-	icon_state = "textured_dark"
-	},
-/area/station/science/robotics/lab)
 "bzF" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/table/reinforced,
@@ -197680,10 +197674,10 @@ bnI
 aal
 aAK
 ybG
-aal
-aal
-aal
-aal
+trY
+trY
+trY
+trY
 trY
 cUN
 pnc
@@ -197938,8 +197932,8 @@ aal
 aal
 cJv
 aal
-bzD
-bzD
+aal
+aal
 aal
 vae
 aal

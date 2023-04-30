@@ -6826,7 +6826,6 @@
 /area/station/commons/lounge)
 "cCs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/belt/utility/full,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -44189,10 +44188,10 @@
 /area/space/nearstation)
 "qfl" = (
 /obj/structure/window/spawner/directional/west,
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
 /obj/effect/turf_decal/stripes/white/full,
+/obj/structure/table,
+/obj/item/storage/belt/utility/full,
+/obj/item/borg/upgrade/rename,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "qfp" = (
@@ -57436,10 +57435,6 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
-/obj/item/borg/upgrade/rename{
-	pixel_x = 3;
-	pixel_y = 18
-	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "uJm" = (
