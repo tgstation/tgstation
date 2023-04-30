@@ -45,6 +45,7 @@
 	gloves = /obj/item/clothing/gloves/latex
 	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	l_pocket = /obj/item/toy/crayon/white
 
 	box = /obj/item/storage/box/survival/medical
 	backpack_contents = list(

@@ -4894,6 +4894,7 @@
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\station_goals\vault_mutation.dm"
 #include "code\modules\surgery\amputation.dm"
+#include "code\modules\surgery\autopsy.dm"
 #include "code\modules\surgery\blood_filter.dm"
 #include "code\modules\surgery\bone_mending.dm"
 #include "code\modules\surgery\brain_surgery.dm"

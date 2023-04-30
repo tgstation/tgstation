@@ -13,32 +13,6 @@
 	custom_materials = list(/datum/material/iron = 200)
 	custom_price = PAYCHECK_COMMAND
 
-/obj/item/autopsy_scanner/attack(mob/living/carbon/scanned, mob/living/carbon/human/user)
-	if(!user.can_read(src) || user.is_blind() || !istype(scanned))
-		return
-	if(DOING_INTERACTION(user, scanned))
-		return
-
-
-	if(scanned.stat > DEAD)
-		balloon_alert(user, "target alive!")
-		return
-
-	user.visible_message(span_notice("[user] begins to scan [scanned] with \the [src]."))
-	balloon_alert(user, "performing autopsy...")
-
-	if(!do_after(user, (15 SECONDS / toolspeed), scanned))
-		return
-
-	balloon_alert(user, "printing paper...")
-	playsound(src, 'sound/machines/high_tech_confirm.ogg', 30, vary = FALSE)
-	if(!do_after(user, 3 SECONDS, scanned))
-		return
-
-	scan_cadaver(user, scanned)
-
-	add_fingerprint(user)
-
 /obj/item/autopsy_scanner/proc/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)
 	var/list/autopsy_information = list()
 	autopsy_information += "[scanned.name] - Species: [scanned.dna.species.name]"
