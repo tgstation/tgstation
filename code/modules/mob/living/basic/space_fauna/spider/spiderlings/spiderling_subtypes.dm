@@ -5,12 +5,12 @@
 	grow_as = /mob/living/basic/giant_spider
 
 	/// Will differentiate into the "ambush" giant spider.
-/mob/living/basic/spiderling/hunter
-	grow_as = /mob/living/basic/giant_spider/hunter
+/mob/living/basic/spiderling/ambush
+	grow_as = /mob/living/basic/giant_spider/ambush
 
 /// Will differentiate into the "scout" giant spider.
-/mob/living/basic/spiderling/hunter
-	grow_as = /mob/living/basic/giant_spider/hunter
+/mob/living/basic/spiderling/scout
+	grow_as = /mob/living/basic/giant_spider/scout
 
 /// Will differentiate into the "hunter" giant spider.
 /mob/living/basic/spiderling/hunter
@@ -21,8 +21,8 @@
 	grow_as = /mob/living/basic/giant_spider/nurse
 
 	/// Will differentiate into the "tangle" giant spider.
-/mob/living/basic/spiderling/hunter
-	grow_as = /mob/living/basic/giant_spider/hunter
+/mob/living/basic/spiderling/tangle
+	grow_as = /mob/living/basic/giant_spider/tangle
 
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/spiderling/midwife
