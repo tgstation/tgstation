@@ -31125,6 +31125,9 @@
 "iqS" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "irf" = (
@@ -55311,11 +55314,11 @@
 /area/station/maintenance/floor2/starboard/fore)
 "ozo" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light/cold/directional/west,
 /obj/structure/chair/comfy/teal{
 	dir = 4
 	},
 /obj/effect/landmark/start/paramedic,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ozr" = (
@@ -58933,9 +58936,6 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	req_access = list("secure_morgue");
 	name = "Coroner's Office"
-	},
-/obj/effect/turf_decal/delivery/white{
-	color = "#52B4E9"
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -68524,7 +68524,6 @@
 /area/station/science/lower)
 "shq" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/radio/intercom/directional/west,
 /obj/structure/table,
 /obj/item/book/fish_catalog,
 /obj/item/book/manual/wiki/ordnance{
@@ -68535,6 +68534,7 @@
 	pixel_x = 6;
 	pixel_y = 2
 	},
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "shu" = (
