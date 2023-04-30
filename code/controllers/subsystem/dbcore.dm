@@ -169,7 +169,6 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/Recover()
 	connection = SSdbcore.connection
 
-// mbtodo: close db daemon
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
@@ -465,7 +464,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if (!error_code)
 		return
 
-	// mbtodo: maybe check if disconnecting?
 	stack_trace("Failed to start DB daemon: [error_code]\n[result[3]]")
 
 /datum/controller/subsystem/dbcore/proc/stop_db_daemon()
