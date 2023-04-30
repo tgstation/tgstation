@@ -748,7 +748,7 @@
 	icon_state = "demonomicon"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
-	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
+	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite wisdom?", "Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
@@ -1299,20 +1299,42 @@
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/eldritch.dmi'
+	base_icon_state = "book"
 	icon_state = "book"
+	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
 	attack_verb_simple = list("sacrifice", "transmute", "grasp", "curse")
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
+	/// id for timer
+	var/timer_id
 
-/obj/item/toy/eldritch_book/attack_self(mob/user)
-	book_open = !book_open
-	update_appearance()
+/obj/item/toy/eldritch_book/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
 
-/obj/item/toy/eldritch_book/update_icon_state()
-	icon_state = book_open ? "book_open" : "book"
-	return ..()
+	if(book_open)
+		close_animation()
+	else
+		open_animation()
+
+/// Plays a little animation that shows the book opening and closing.
+/obj/item/toy/eldritch_book/proc/open_animation()
+	icon_state = "[base_icon_state]_open"
+	flick("[base_icon_state]_opening", src)
+	book_open = TRUE
+
+	timer_id = addtimer(CALLBACK(src, PROC_REF(close_animation)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+
+/// Plays a closing animation and resets the icon state.
+/obj/item/toy/eldritch_book/proc/close_animation()
+	icon_state = base_icon_state
+	flick("[base_icon_state]_closing", src)
+	book_open = FALSE
+
+	deltimer(timer_id)
 
 /*
  * Fake tear
