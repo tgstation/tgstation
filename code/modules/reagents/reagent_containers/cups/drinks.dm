@@ -91,7 +91,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -331,7 +331,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 30)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10

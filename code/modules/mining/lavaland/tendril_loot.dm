@@ -38,7 +38,7 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
+	materials = list(/datum/material/iron = 7000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 30, /datum/material/diamond = 4000)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater

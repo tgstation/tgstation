@@ -124,6 +124,6 @@
 	base_icon_state = "crossbowlarge"
 	no_charge_state = "crossbowlarge_empty"
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)

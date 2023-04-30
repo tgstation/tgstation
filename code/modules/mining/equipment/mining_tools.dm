@@ -131,7 +131,7 @@
 	toolspeed = 1
 	usesound = 'sound/effects/shovel_dig.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED

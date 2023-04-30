@@ -191,7 +191,7 @@
 	name = "Retractor"
 	id = "retractor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/retractor
 	category = list(
 		RND_CATEGORY_INITIAL,

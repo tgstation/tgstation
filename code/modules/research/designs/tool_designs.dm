@@ -91,7 +91,7 @@
 	desc = "A tool that can lay & destory floor tiles on the fly."
 	id = "rtd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 30000, /datum/material/glass = 2500)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300, /datum/material/glass = 2500)
 	build_path = /obj/item/construction/rtd/loaded
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
@@ -187,7 +187,7 @@
 	id = "gene_shears"
 	build_path = /obj/item/geneshears
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=4000, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40, /datum/material/uranium=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
 	)
@@ -219,7 +219,7 @@
 	name = "Biopsy Tool"
 	id = "biopsy_tool"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/biopsy_tool
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_XENOBIOLOGY

@@ -13,7 +13,7 @@
 	throwforce = 7
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 

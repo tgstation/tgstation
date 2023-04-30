@@ -6,7 +6,7 @@
 	name = "Health Analyzer"
 	id = "healthanalyzer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/healthanalyzer
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -18,7 +18,7 @@
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/plastic = 3000, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/plastic =SMALL_MATERIAL_AMOUNT * 30, /datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/bluespace =ROD_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -30,7 +30,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	id = "splitbeaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -41,7 +41,7 @@
 	name = "X-large Beaker"
 	id = "xlarge_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000)
+	materials = list(/datum/material/glass = 2500, /datum/material/plastic =SMALL_MATERIAL_AMOUNT * 30)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -52,7 +52,7 @@
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2500, /datum/material/plastic = 3000, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = 2500, /datum/material/plastic =SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold =ROD_MATERIAL_AMOUNT, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -87,7 +87,7 @@
 	desc = "Produce additional disks for storing genetic data."
 	id = "dna_disk"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/silver = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/disk/data
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GENETICS
@@ -111,7 +111,7 @@
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/bodybag/bluespace
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -135,7 +135,7 @@
 	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
 	id = "crewpinpointer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/pinpointer/crew
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
@@ -148,7 +148,7 @@
 	id = "defibrillator"
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver = 3000, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold =ROD_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -184,7 +184,7 @@
 	id = "defibrillator_compact"
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator/compact
-	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold = 3000)
+	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 30)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -267,7 +267,7 @@
 	id = "searingtool"
 	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 30, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 30)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -317,7 +317,7 @@
 	id = "portable_chem_mixer"
 	build_type = PROTOLATHE | AWAY_LATHE
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/iron = 10000, /datum/material/glass = 3000)
+	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/iron = 10000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/storage/portable_chem_mixer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY

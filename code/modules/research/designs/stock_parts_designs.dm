@@ -85,7 +85,7 @@
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_scanning"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/stock_parts/scanning_module
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
@@ -191,7 +191,7 @@
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_micro_laser"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/stock_parts/micro_laser
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
@@ -380,7 +380,7 @@
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
 	id = "c-reader"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=50, /datum/material/glass=10)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_MISC
@@ -392,7 +392,7 @@
 	desc = "A small hydrostatic reclaimer, it takes moisture out of the air and returns it back to the source."
 	id = "w-recycler"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron = 50)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/stock_parts/water_recycler
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_MISC

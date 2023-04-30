@@ -6,7 +6,7 @@
 	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -72,7 +72,7 @@
 	inhand_icon_state = "e_cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/plasma =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 30, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 30)
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7

@@ -181,7 +181,7 @@
 	desc = "The kit for an energy gun with an experimental miniaturized reactor."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium = 3000, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 30, /datum/material/titanium =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/weaponcrafting/gunkit/nuclear
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -245,7 +245,7 @@
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
 	id = "temp_gun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = 3000)
+	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/weaponcrafting/gunkit/temperature
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
@@ -270,7 +270,7 @@
 	desc = "A grenade that affects a larger area and use larger containers."
 	id = "large_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/grenade/chem_grenade/large
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -306,7 +306,7 @@
 	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
 	id = "adv_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -344,7 +344,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace = 3000)
+	materials = list(/datum/material/silver =MINERAL_MATERIAL_AMOUNT, /datum/material/iron =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/gun/energy/wormhole_projector
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -393,7 +393,7 @@
 	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity. Requires a gravitational anomaly core to function."
 	id = "gravitygun"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond = 3000, /datum/material/bluespace = 3000)
+	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 30, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/gun/energy/gravity_gun
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE

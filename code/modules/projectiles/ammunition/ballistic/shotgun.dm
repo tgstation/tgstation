@@ -6,7 +6,7 @@
 	icon_state = "blshell"
 	worn_icon_state = "shell"
 	caliber = CALIBER_SHOTGUN
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40)
 	projectile_type = /obj/projectile/bullet/shotgun_slug
 
 /obj/item/ammo_casing/shotgun/executioner
@@ -89,7 +89,7 @@
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
 	variance = 20
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40)
 
 /obj/item/ammo_casing/shotgun/incapacitate
 	name = "custom incapacitating shot"
@@ -98,7 +98,7 @@
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_incapacitate
 	pellets = 12//double the pellets, but half the stun power of each, which makes this best for just dumping right in someone's face.
 	variance = 25
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40)
 
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"

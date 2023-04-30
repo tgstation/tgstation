@@ -465,7 +465,7 @@
 	id = "mech_grenade_launcher_ammo"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
-	materials = list(/datum/material/iron=4000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -645,7 +645,7 @@
 	id = "mech_rcd"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
-	materials = list(/datum/material/iron=30000,/datum/material/gold=20000,/datum/material/plasma=25000,/datum/material/silver=20000)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 300,/datum/material/gold=20000,/datum/material/plasma=25000,/datum/material/silver=20000)
 	construction_time = 1200
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -675,7 +675,7 @@
 	id = "mech_thrusters"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas
-	materials = list(/datum/material/iron=25000,/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/silver=3000)
+	materials = list(/datum/material/iron=25000,/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 2.5,/datum/material/silver=SMALL_MATERIAL_AMOUNT * 30)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -923,7 +923,7 @@
 	id = "mech_lmg_ammo"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/lmg
-	materials = list(/datum/material/iron=4000)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -963,7 +963,7 @@
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
-	materials = list(/datum/material/iron=3000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 200
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT,
@@ -980,7 +980,7 @@
 	desc = "Equipment for medical exosuits. A mounted medical nanite projector which will treat patients with a focused beam."
 	id = "mech_medi_beam"
 	build_type = MECHFAB
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 30, /datum/material/gold = 8000, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list(

@@ -96,7 +96,7 @@
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
 	id = "weldingmask"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -108,7 +108,7 @@
 	desc = "By applying state of the art lighting technology to a fire helmet with industry standard photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
 	id = "bright_helmet"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plastic = 3000, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT * 30, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
@@ -494,7 +494,7 @@
 	desc = "A device to automatically replace lights. Refill with working light bulbs."
 	id = "light_replacer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/lightreplacer
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -506,7 +506,7 @@
 	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
 	id = "light_replacer_blue"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT * 3)
+	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver = 150, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 30, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/lightreplacer/blue
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -518,7 +518,7 @@
 	desc = "A floor buffer that can be attached to vehicular janicarts."
 	id = "buffer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/janicart_upgrade/buffer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JANITOR
@@ -530,7 +530,7 @@
 	desc = "A vacuum that can be attached to vehicular janicarts."
 	id = "vacuum"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/janicart_upgrade/vacuum
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JANITOR
@@ -555,7 +555,7 @@
 	desc = "A spray bottle, with an unscrewable top."
 	id = "spraybottle"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/spray
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
@@ -820,7 +820,7 @@
 	name = "Super Sticky Tape"
 	id = "super_sticky_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 3000)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/stack/sticky_tape/super
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -842,7 +842,7 @@
 	name = "Super Pointy Tape"
 	id = "super_pointy_tape"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sticky_tape/pointy/super
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE

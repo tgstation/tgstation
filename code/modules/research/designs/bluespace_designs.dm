@@ -20,7 +20,7 @@
 	desc = "A block of metal ready to be transformed into a bag of holding with a bluespace anomaly core."
 	id = "bag_holding"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/gold = 3000, /datum/material/diamond =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = 250, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/gold =SMALL_MATERIAL_AMOUNT * 30, /datum/material/diamond =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/uranium = 250, /datum/material/bluespace =MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/bag_of_holding_inert
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE

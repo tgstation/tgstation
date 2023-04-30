@@ -202,7 +202,7 @@
 	name = "Ammo Box (10mm) (Lethal)"
 	id = "c10mm"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c10mm
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -214,7 +214,7 @@
 	name = "Ammo Box (.45) (Lethal)"
 	id = "c45"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c45
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -226,7 +226,7 @@
 	name = "Ammo Box (9mm) (Lethal)"
 	id = "c9mm"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list(
 		RND_CATEGORY_HACKED,

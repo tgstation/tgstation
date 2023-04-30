@@ -24,7 +24,7 @@
 	var/charge = 0
 	///Maximum charge in cell units
 	var/maxcharge = 1000
-	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=700, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
 	var/rigged = FALSE
@@ -289,7 +289,7 @@
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
-	custom_materials = list(/datum/material/glass=50)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = 1000
 
 /obj/item/stock_parts/cell/upgraded/plus
@@ -357,7 +357,7 @@
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	custom_materials = list(/datum/material/glass=400)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = 3000
 
 /obj/item/stock_parts/cell/hyper/empty

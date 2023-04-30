@@ -50,7 +50,7 @@
 	name = "Camera"
 	id = "camera"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/camera
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -146,7 +146,7 @@
 	name = "Serving Tray"
 	id = "servingtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/storage/bag/tray
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -170,7 +170,7 @@
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -230,7 +230,7 @@
 	name = "Cultivator"
 	id = "cultivator"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron=50)
+	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/cultivator
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -254,7 +254,7 @@
 	name = "Shovel"
 	id = "shovel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/shovel
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -266,7 +266,7 @@
 	name = "Spade"
 	id = "spade"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/shovel/spade
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -350,7 +350,7 @@
 	name = "Cap Gun"
 	id = "toygun"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/toy/gun
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -471,7 +471,7 @@
 	name = "Hand Labeler Paper Roll"
 	id = "roll"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 25)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = 25)
 	build_path = /obj/item/hand_labeler_refill
 	category = list(
 		RND_CATEGORY_INITIAL,

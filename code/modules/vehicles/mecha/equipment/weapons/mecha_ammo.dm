@@ -93,7 +93,7 @@
 	name = "launchable flashbangs"
 	desc = "A box of smooth flashbangs, for use with a large exosuit launcher. Cannot be primed by hand."
 	icon_state = "flashbang"
-	custom_materials = list(/datum/material/iron=4000,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 40,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
 	ammo_type = MECHA_AMMO_FLASHBANG
 

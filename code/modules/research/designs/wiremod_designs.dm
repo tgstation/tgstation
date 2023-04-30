@@ -518,7 +518,7 @@
 	id = "money_bot_shell"
 	build_path = /obj/item/shell/money_bot
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 10000, /datum/material/gold = 50)
+	materials = list(/datum/material/glass =MINERAL_MATERIAL_AMOUNT, /datum/material/iron = 10000, /datum/material/gold =SMALL_MATERIAL_AMOUNT*0.5)
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)

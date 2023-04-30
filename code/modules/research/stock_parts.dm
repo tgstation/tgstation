@@ -261,13 +261,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module
 	name = "scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator
 	name = "micro-manipulator"
@@ -296,7 +296,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "adv_capacitor"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -304,7 +304,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "adv_scan_module"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/nano
 	name = "nano-manipulator"
@@ -338,7 +338,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "super_capacitor"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/phasic
 	name = "phasic scanning module"
@@ -346,7 +346,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "super_scan_module"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/pico
 	name = "pico-manipulator"
@@ -380,7 +380,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/triphasic
 	name = "triphasic scanning module"
@@ -388,7 +388,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "triphasic_scan_module"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/femto
 	name = "femto-manipulator"
@@ -450,13 +450,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
-	custom_materials = list(/datum/material/glass=50)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 
 // Misc. Parts
 
@@ -464,13 +464,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "card reader"
 	icon_state = "card_reader"
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=10)
 
 /obj/item/stock_parts/water_recycler
 	name = "water recycler"
 	icon_state = "water_recycler"
 	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
-	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron=50)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

@@ -7,7 +7,7 @@
 	desc = "A basic power cell that holds 1 MJ of energy."
 	id = "basic_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
-	materials = list(/datum/material/iron = 700, /datum/material/glass = 50)
+	materials = list(/datum/material/iron = 700, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list(
@@ -72,7 +72,7 @@
 	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
 	id = "inducer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30, /datum/material/glass =ROD_MATERIAL_AMOUNT)
 	build_path = /obj/item/inducer/sci
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING

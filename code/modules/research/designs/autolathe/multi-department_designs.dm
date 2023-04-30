@@ -2,7 +2,7 @@
 	name = "Flashlight"
 	id = "flashlight"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = 20)
 	build_path = /obj/item/flashlight
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -13,7 +13,7 @@
 	name = "Pocket Crowbar"
 	id = "crowbar"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/crowbar
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -25,7 +25,7 @@
 	name = "Multitool"
 	id = "multitool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 20)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = 20)
 	build_path = /obj/item/multitool
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -261,7 +261,7 @@
 	name = "Igniter"
 	id = "igniter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/igniter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -320,7 +320,7 @@
 	name = "Timer"
 	id = "timer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/timer
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -332,7 +332,7 @@
 	name = "Voice Analyzer"
 	id = "voice_analyzer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = 50)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/voice
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -505,7 +505,7 @@
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 30)
 	build_path = /obj/item/stack/conveyor
 	maxstack = 30
 	category = list(
