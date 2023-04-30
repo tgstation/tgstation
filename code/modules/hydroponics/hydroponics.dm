@@ -11,7 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
-	var/waterlevel = 100
+	var/waterlevel = 0
 	///The maximum amount of water in the tray
 	var/maxwater = 100
 	///How many units of nutrients will be drained in the tray.
@@ -59,7 +59,9 @@
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
-	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+	if(mapload)
+		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+		waterlevel = 100
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
@@ -1164,12 +1166,15 @@
 	balloon_alert(user, "clearing up soil...")
 	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
 		balloon_alert(user, "cleared")
-		qdel(src)
+		deconstruct(disassembled = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
 
+/obj/machinery/hydroponics/soil/deconstruct(disassembled)
+	new /obj/item/stack/ore/glass(drop_location(), 3)
+	return ..()
 
 ///The usb port circuit
 
