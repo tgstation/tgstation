@@ -45,8 +45,8 @@ export const MessageWriteTab = (props, context) => {
         <Stack.Item grow>
           <Button
             fluid
-            icon={'handshake-angle'}
-            content={'Request Assistance'}
+            icon="handshake-angle"
+            content="Request Assistance"
             selected={requestType === RequestType.ASSISTANCE}
             onClick={() => {
               setRecipient('');
@@ -57,8 +57,8 @@ export const MessageWriteTab = (props, context) => {
         <Stack.Item grow>
           <Button
             fluid
-            icon={'boxes-stacked'}
-            content={'Request Supplies'}
+            icon="boxes-stacked"
+            content="Request Supplies"
             selected={requestType === RequestType.SUPPLIES}
             onClick={() => {
               setRecipient('');
@@ -69,8 +69,8 @@ export const MessageWriteTab = (props, context) => {
         <Stack.Item grow>
           <Button
             fluid
-            icon={'upload'}
-            content={'Relay Information'}
+            icon="upload"
+            content="Relay Information"
             selected={requestType === RequestType.INFORMATION}
             onClick={() => {
               setRecipient('');
@@ -111,34 +111,31 @@ export const MessageWriteTab = (props, context) => {
       <Stack fill mt={2} mb={2}>
         <Stack.Item grow>
           <Button
-            icon={'envelope'}
+            icon="envelope"
+            content="Normal Priority"
             key={RequestPriority.NORMAL}
             fluid
             selected={priority === RequestPriority.NORMAL}
-            onClick={() => setPriority(RequestPriority.NORMAL)}>
-            Normal Priority
-          </Button>
+            onClick={() => setPriority(RequestPriority.NORMAL)}></Button>
         </Stack.Item>
         <Stack.Item grow>
           <Button
-            icon={'exclamation'}
+            icon="exclamation"
+            content="High Priority"
             key={RequestPriority.HIGH}
             fluid
             selected={priority === RequestPriority.HIGH}
-            onClick={() => setPriority(RequestPriority.HIGH)}>
-            High Priority
-          </Button>
+            onClick={() => setPriority(RequestPriority.HIGH)}></Button>
         </Stack.Item>
         {!!hack_state && (
           <Stack.Item grow>
             <Button
-              icon={'burst'}
+              icon="burst"
+              content="EXTREME PRIORITY"
               key={RequestPriority.EXTREME}
               fluid
               selected={priority === RequestPriority.EXTREME}
-              onClick={() => setPriority(RequestPriority.EXTREME)}>
-              EXTREME PRIORITY
-            </Button>
+              onClick={() => setPriority(RequestPriority.EXTREME)}></Button>
           </Stack.Item>
         )}
       </Stack>
@@ -156,7 +153,7 @@ export const MessageWriteTab = (props, context) => {
           <Stack.Item>
             <Button
               icon="paper-plane"
-              content={'Send message'}
+              content="Send message"
               disabled={!messageText || !recipient || !priority || !requestType}
               onClick={() => {
                 if (!messageText || !recipient || !priority || !requestType)
@@ -189,6 +186,13 @@ export const MessageWriteTab = (props, context) => {
             />
           </Stack.Item>
         </Stack>
+        <Button
+          icon="trash-can"
+          content="Discard message"
+          onClick={() => {
+            act('clear_authentication');
+            resetMessage();
+          }}></Button>
       </Section>
     </Section>
   );

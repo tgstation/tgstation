@@ -31,7 +31,7 @@ export const AnnouncementTab = (props, context) => {
             ) || !messageText
           }
           icon="bullhorn"
-          content={'Send announcement'}
+          content="Send announcement"
           onClick={() => {
             if (
               !(
@@ -45,6 +45,13 @@ export const AnnouncementTab = (props, context) => {
             setMessageText('');
           }}
         />
+        <Button
+          icon="trash-can"
+          content="Discard announcement"
+          onClick={() => {
+            act('clear_authentication');
+            setMessageText('');
+          }}></Button>
       </Section>
     </Section>
   );

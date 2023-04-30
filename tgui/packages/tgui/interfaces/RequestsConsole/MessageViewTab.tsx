@@ -65,7 +65,7 @@ export const MessageDisplay = (props, context) => {
           <Section>
             <Button
               icon="reply"
-              content={'Quick Reply'}
+              content="Quick Reply"
               onClick={() => {
                 act('quick_reply', {
                   reply_recipient: message.sender_department,
