@@ -920,6 +920,7 @@
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
+		qdel(linked_extract)
 	return ..()
 
 /datum/status_effect/stabilized/oil/get_examine_text()

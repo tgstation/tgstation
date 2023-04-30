@@ -5,6 +5,7 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
+	resistance_flags = FLAMMABLE
 	flags_1 = 0
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
@@ -66,6 +67,7 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-overlay"
 	custom_materials = list(/datum/material/wood = 2000)
+	resistance_flags = FLAMMABLE
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/del_id_on_destroy = FALSE
