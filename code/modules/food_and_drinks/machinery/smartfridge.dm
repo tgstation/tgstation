@@ -273,11 +273,18 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	has_emissive = FALSE
-	circuit = null
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
+
+	//remove all component parts inherited from smartfridge cause they were not required in crafting
+	var/obj/item/circuitboard/machine/smartfridge/board = locate(/obj/item/circuitboard/machine/smartfridge/) in component_parts
+	component_parts -= board
+	board.moveToNullspace()
+	qdel(board)
+	component_parts.Cut()
+
 	..()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
