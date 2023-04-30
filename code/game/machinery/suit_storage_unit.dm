@@ -227,17 +227,12 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()
 
-	if(!locked && !state_open && panel_open)
-		if(!card_reader_installed)
-			. += span_notice("A card reader can be installed for further control access.")
-		else
-			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
-
-	if(!locked && !state_open && card_reader_installed)
-		if(!access_locked && !panel_open)
-			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
-		if(panel_open)
-			. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel.")
+	if(card_reader_installed)
+		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
+		. += span_notice("Swipe your ID to change access levels.")
+		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel.")
+	else
+		. += span_notice("A card reader can be installed for further control access.")
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access(list/accesses)
