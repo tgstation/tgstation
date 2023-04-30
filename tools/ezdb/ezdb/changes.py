@@ -1,30 +1,30 @@
+import re
 from dataclasses import dataclass
-from .paths import get_updates_path
-import pathlib
+from .paths import get_changelog_path
+
+REGEX_CHANGE = r"-+\s*Version (?P<major>[0-9]+)\.(?P<minor>[0-9]+), .+?\`\`\`sql\s*(?P<sql>.+?)\s*\`\`\`.*?-{5}"
 
 @dataclass
 class Change:
     major_version: int
     minor_version: int
-    filepath: pathlib.Path
+    sql: str
 
 def get_changes() -> list[Change]:
-    changes_path = get_updates_path()
-    changes = []
+    with open(get_changelog_path(), "r") as file:
+        changelog = file.read()
+        changes = []
 
-    for path in changes_path.iterdir():
-        if path.is_file():
-            filename = path.name
-            if not filename.endswith(".sql"):
-                continue
+        for change_match in re.finditer(REGEX_CHANGE, changelog, re.MULTILINE | re.DOTALL):
+            changes.append(Change(
+                int(change_match.group("major")),
+                int(change_match.group("minor")),
+                change_match.group("sql")
+            ))
 
-            split_by_underscore = filename.split("_")
-            major_version, minor_version = int(split_by_underscore[0]), int(split_by_underscore[1])
-            changes.append(Change(int(major_version), int(minor_version), path))
+        changes.sort(key = lambda change: (change.major_version, change.minor_version), reverse = True)
 
-    changes.sort(key=lambda change: (change.major_version, change.minor_version), reverse = True)
-
-    return changes
+        return changes
 
 def get_current_version():
     changes = get_changes()

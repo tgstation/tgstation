@@ -31,9 +31,8 @@ class UpdateSchema(Step):
                     continue
 
                 if change.minor_version > minor_version:
-                    print(f"Running change {change.filepath.name}")
-                    with open(change.filepath, "r") as file:
-                        execute_sql(file.read() + ";" + insert_new_schema_query(change.major_version, change.minor_version))
+                    print(f"Running change {change.major_version}.{change.minor_version}")
+                    execute_sql(change.sql + ";" + insert_new_schema_query(change.major_version, change.minor_version))
                 else:
                     print("No updates necessary")
                     return

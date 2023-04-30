@@ -7,6 +7,6 @@ To run ezdb, go to `tools/ezdb`, and double-click on ezdb.bat. This will set up 
 
 If you wish to delete the ezdb database, delete the `db` folder as well as `config/ezdb.txt`.
 
-To update ezdb, run the script again. This will both look for any updates in `SQL/changes`, as well as update your schema revision.
+To update ezdb, run the script again. This will both look for any updates in the database changelog, as well as update your schema revision.
 
 Contact Mothblocks if you face any issues in this process.
