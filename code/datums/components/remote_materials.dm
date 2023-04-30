@@ -76,7 +76,7 @@ handles linking back and forth.
 	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, mat_container_flags, allowed_items=/obj/item/stack)
 
 /datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
-	if(!silo)
+	if(isnull(silo))
 		return
 
 	if(force_hold)
@@ -137,7 +137,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/check_z_level(obj/silo_to_check)
 	SIGNAL_HANDLER
 	if(!silo_to_check)
-		if(!silo)
+		if(isnull(silo))
 			return FALSE
 		silo_to_check = silo
 
