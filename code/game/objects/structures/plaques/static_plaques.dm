@@ -36,10 +36,6 @@
 /obj/structure/plaque/static_plaque/golden/commission/icebox
 	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
 
-// Metastation: added Mar 11, 2013 (best estimate, pre-git)
-/obj/structure/plaque/static_plaque/golden/commission/meta
-	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 11/03/2553\n'Theseus' Station'"
-
 // Deltastation: added Dec 17, 2016 (#22066)
 /obj/structure/plaque/static_plaque/golden/commission/delta
 	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
@@ -92,6 +88,10 @@
 // Efficiencystation: added Jan 28, 2016 (46f64266cfb8b40e35faa8a4d9a2d3aeec689943), removed Dec 20, 2016 (#22306)- 10 months, 22 days
 /obj/structure/plaque/static_plaque/golden/commission/efficiency
 	desc = "Spinward Sector Station SS-07\n'Efficiency' Class Outpost\nCommissioned 28/01/2556\nDecommissioned 20/12/2556\n'Work Smarter, Not Harder'"
+
+// Metastation: added Mar 11, 2013 (best estimate, pre-git)
+/obj/structure/plaque/static_plaque/golden/commission/meta
+	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 11/03/2553\n'Theseus' Station'"
 
 // Ministation: added Jan 29, 2014 (7a76e9456b782e6626bf81e27a912d8232c76b18), removed Dec 27, 2016 (#22453)- 2 years, 10 months, 28 days
 /obj/structure/plaque/static_plaque/golden/commission/mini
