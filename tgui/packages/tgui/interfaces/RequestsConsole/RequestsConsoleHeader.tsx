@@ -72,21 +72,19 @@ export const EmergencyBox = (props, context) => {
 };
 
 export const ErrorNoticeBox = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
-  const { new_message_priority } = data;
   return (
     <NoticeBox danger>{'Error occured while sending a message!'}</NoticeBox>
   );
 };
 
 export const MessageNoticeBox = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+  const { data } = useBackend<RequestsData>(context);
   const { new_message_priority } = data;
   return (
     <NoticeBox warning>
       {'You have new unread '}
-      {new_message_priority == RequestPriority.HIGH && 'PRIORITY '}
-      {new_message_priority == RequestPriority.EXTREME && 'EXTREME PRIORITY '}
+      {new_message_priority === RequestPriority.HIGH && 'PRIORITY '}
+      {new_message_priority === RequestPriority.EXTREME && 'EXTREME PRIORITY '}
       {'messages'}
     </NoticeBox>
   );

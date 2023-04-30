@@ -116,7 +116,8 @@ export const MessageWriteTab = (props, context) => {
             key={RequestPriority.NORMAL}
             fluid
             selected={priority === RequestPriority.NORMAL}
-            onClick={() => setPriority(RequestPriority.NORMAL)}></Button>
+            onClick={() => setPriority(RequestPriority.NORMAL)}
+          />
         </Stack.Item>
         <Stack.Item grow>
           <Button
@@ -125,7 +126,8 @@ export const MessageWriteTab = (props, context) => {
             key={RequestPriority.HIGH}
             fluid
             selected={priority === RequestPriority.HIGH}
-            onClick={() => setPriority(RequestPriority.HIGH)}></Button>
+            onClick={() => setPriority(RequestPriority.HIGH)}
+          />
         </Stack.Item>
         {!!hack_state && (
           <Stack.Item grow>
@@ -135,7 +137,8 @@ export const MessageWriteTab = (props, context) => {
               key={RequestPriority.EXTREME}
               fluid
               selected={priority === RequestPriority.EXTREME}
-              onClick={() => setPriority(RequestPriority.EXTREME)}></Button>
+              onClick={() => setPriority(RequestPriority.EXTREME)}
+            />
           </Stack.Item>
         )}
       </Stack>
@@ -156,8 +159,9 @@ export const MessageWriteTab = (props, context) => {
               content="Send message"
               disabled={!messageText || !recipient || !priority || !requestType}
               onClick={() => {
-                if (!messageText || !recipient || !priority || !requestType)
+                if (!messageText || !recipient || !priority || !requestType) {
                   return;
+                }
 
                 act('send_message', {
                   message: messageText,
@@ -192,7 +196,8 @@ export const MessageWriteTab = (props, context) => {
           onClick={() => {
             act('clear_authentication');
             resetMessage();
-          }}></Button>
+          }}
+        />
       </Section>
     </Section>
   );

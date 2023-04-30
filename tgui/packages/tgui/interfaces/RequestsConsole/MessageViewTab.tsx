@@ -11,7 +11,7 @@ export const MessageViewTab = (props, context) => {
       {!!messages.length && (
         <Stack vertical>
           {messages.map((message) => (
-            <MessageDisplay message={message} />
+            <MessageDisplay key={message.received_time} message={message} />
           ))}
         </Stack>
       )}
@@ -46,7 +46,7 @@ export const MessageDisplay = (props, context) => {
           {!!message.appended_list && !!append_list_keys.length && (
             <LabeledList>
               {append_list_keys.map((list_key) => (
-                <LabeledList.Item label={list_key}>
+                <LabeledList.Item key={list_key} label={list_key}>
                   {message.appended_list[list_key]}
                 </LabeledList.Item>
               ))}

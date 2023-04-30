@@ -39,8 +39,9 @@ export const AnnouncementTab = (props, context) => {
                 is_admin_ghost_ai
               ) ||
               !messageText
-            )
+            ) {
               return;
+            }
             act('send_announcement', { message: messageText });
             setMessageText('');
           }}
@@ -51,7 +52,8 @@ export const AnnouncementTab = (props, context) => {
           onClick={() => {
             act('clear_authentication');
             setMessageText('');
-          }}></Button>
+          }}
+        />
       </Section>
     </Section>
   );
