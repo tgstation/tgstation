@@ -256,6 +256,7 @@
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
+	. += "You can change its name & description with a pen."
 	if(welded)
 		. += span_notice("It's welded shut.")
 	else if(can_weld_shut)
@@ -271,23 +272,17 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-	if(!locked && (welded || !can_weld_shut))
+	if(can_install_electronics)
 		if(!secure)
-			if(!broken && can_install_electronics)
-				. += span_notice("You can install airlock electronics for access control.")
+			. += span_notice("You can install airlock electronics for access control.")
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
-			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics)
-				. += span_notice("You can install a card reader for furthur access control.")
-		if(card_reader_installed)
-			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 
-	if(!locked && !opened)
-		if(id_card)
-			. += "You can change its name & description with a pen."
-		if(secure && card_reader_installed && !broken)
-			if(!access_locked)
-				. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
+		if(!card_reader_installed && length(access_choices))
+			. += span_notice("You can install a card reader for furthur access control.")
+		else if(card_reader_installed)
+			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
+			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
 			. += span_notice("Use multitool to [access_locked ? "unlock" : "lock"] the access panel.")
 
 /obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -591,7 +586,19 @@
 
 		update_appearance()
 
-	else if(secure && !broken && !locked && can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
+	else if(can_install_electronics && length(access_choices) && !card_reader_installed && (welded || !can_weld_shut) && istype(W, /obj/item/stock_parts/card_reader))
+		if(broken)
+			balloon_alert(user, "its broken!")
+			return
+
+		if(!secure)
+			balloon_alert(user, "no electronics inside!")
+			return
+
+		if(locked)
+			balloon_alert(user, "unlock first!!")
+			return
+
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
@@ -643,7 +650,11 @@
 			msg = "set to [choice]"
 		balloon_alert(user, msg)
 
-	else if(card_reader_installed && !locked && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_CROWBAR)
+	else if(card_reader_installed && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_CROWBAR)
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
 		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
 			span_notice("You begin to pry the card reader out from [src]..."))
 		if(!W.use_tool(src, user, 4 SECONDS))
@@ -655,7 +666,15 @@
 		card_reader_installed = FALSE
 		balloon_alert(user, "card reader removed")
 
-	else if(!locked && !opened && !isnull(id_card) && istype(W, /obj/item/pen))
+	else if(!opened && istype(W, /obj/item/pen))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(isnull(id_card))
+			balloon_alert(user, "not yours to rename!")
+			return
+
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
@@ -717,7 +736,15 @@
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
 
-	else if (!secure && !broken && can_install_electronics && (welded || !can_weld_shut) && istype(W, /obj/item/electronics/airlock))
+	else if(can_install_electronics && (welded || !can_weld_shut) && istype(W, /obj/item/electronics/airlock))
+		if(broken)
+			balloon_alert(user, "its broken!")
+			return
+
+		if(locked)
+			balloon_alert(user, "unlock first!!")
+			return
+
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
 			span_notice("You start to install electronics into the [src]..."))
 		if (!do_after(user, 4 SECONDS, target = src))
@@ -731,7 +758,11 @@
 
 		update_appearance()
 
-	else if(secure && !locked && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_SCREWDRIVER)
+	else if(secure && (welded || !can_weld_shut) && W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
 		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
 			span_notice("You begin to remove the electronics from the [src]..."))
 		if (!W.use_tool(src, user, 40, volume=50))
