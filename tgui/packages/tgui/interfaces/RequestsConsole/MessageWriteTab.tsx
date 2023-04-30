@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
 import { sortBy } from 'common/collections';
-import { Button, Dropdown, Section, Stack, TextArea } from '../../components';
+import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
 import { RequestsData, RequestType, RequestPriority } from './Types';
 
 export const MessageWriteTab = (props, context) => {
@@ -41,44 +41,45 @@ export const MessageWriteTab = (props, context) => {
   const [recipient, setRecipient] = useLocalState(context, 'recipient', '');
   return (
     <Section>
-      <Section>
-        <Stack fill>
-          <Stack.Item grow>
-            <Button
-              icon={'handshake-angle'}
-              content={'Request Assistance'}
-              selected={requestType === RequestType.ASSISTANCE}
-              onClick={() => {
-                setRecipient('');
-                setRequestType(RequestType.ASSISTANCE);
-              }}
-            />
-          </Stack.Item>
-          <Stack.Item grow>
-            <Button
-              icon={'boxes-stacked'}
-              content={'Request Supplies'}
-              selected={requestType === RequestType.SUPPLIES}
-              onClick={() => {
-                setRecipient('');
-                setRequestType(RequestType.SUPPLIES);
-              }}
-            />
-          </Stack.Item>
-          <Stack.Item grow>
-            <Button
-              icon={'user-secret'}
-              content={'Relay Information'}
-              selected={requestType === RequestType.INFORMATION}
-              onClick={() => {
-                setRecipient('');
-                setRequestType(RequestType.INFORMATION);
-              }}
-            />
-          </Stack.Item>
-        </Stack>
-      </Section>
-      <Section>
+      <Stack fill mb={2}>
+        <Stack.Item grow>
+          <Button
+            fluid
+            icon={'handshake-angle'}
+            content={'Request Assistance'}
+            selected={requestType === RequestType.ASSISTANCE}
+            onClick={() => {
+              setRecipient('');
+              setRequestType(RequestType.ASSISTANCE);
+            }}
+          />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Button
+            fluid
+            icon={'boxes-stacked'}
+            content={'Request Supplies'}
+            selected={requestType === RequestType.SUPPLIES}
+            onClick={() => {
+              setRecipient('');
+              setRequestType(RequestType.SUPPLIES);
+            }}
+          />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Button
+            fluid
+            icon={'upload'}
+            content={'Relay Information'}
+            selected={requestType === RequestType.INFORMATION}
+            onClick={() => {
+              setRecipient('');
+              setRequestType(RequestType.INFORMATION);
+            }}
+          />
+        </Stack.Item>
+      </Stack>
+      <Box>
         {requestType === RequestType.ASSISTANCE && (
           <Dropdown
             width="100%"
@@ -106,40 +107,41 @@ export const MessageWriteTab = (props, context) => {
             onSelected={(value) => setRecipient(value)}
           />
         )}
-      </Section>
-      <Section>
-        <Stack fill>
+      </Box>
+      <Stack fill mt={2} mb={2}>
+        <Stack.Item grow>
+          <Button
+            icon={'envelope'}
+            key={RequestPriority.NORMAL}
+            fluid
+            selected={priority === RequestPriority.NORMAL}
+            onClick={() => setPriority(RequestPriority.NORMAL)}>
+            Normal Priority
+          </Button>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Button
+            icon={'exclamation'}
+            key={RequestPriority.HIGH}
+            fluid
+            selected={priority === RequestPriority.HIGH}
+            onClick={() => setPriority(RequestPriority.HIGH)}>
+            High Priority
+          </Button>
+        </Stack.Item>
+        {!!hack_state && (
           <Stack.Item grow>
-            <Button.Checkbox
-              key={RequestPriority.NORMAL}
+            <Button
+              icon={'burst'}
+              key={RequestPriority.EXTREME}
               fluid
-              checked={priority === RequestPriority.NORMAL}
-              onClick={() => setPriority(RequestPriority.NORMAL)}>
-              Normal Priority
-            </Button.Checkbox>
+              selected={priority === RequestPriority.EXTREME}
+              onClick={() => setPriority(RequestPriority.EXTREME)}>
+              EXTREME PRIORITY
+            </Button>
           </Stack.Item>
-          <Stack.Item grow>
-            <Button.Checkbox
-              key={RequestPriority.HIGH}
-              fluid
-              checked={priority === RequestPriority.HIGH}
-              onClick={() => setPriority(RequestPriority.HIGH)}>
-              High Priority
-            </Button.Checkbox>
-          </Stack.Item>
-          {!!hack_state && (
-            <Stack.Item grow>
-              <Button.Checkbox
-                key={RequestPriority.EXTREME}
-                fluid
-                checked={priority === RequestPriority.EXTREME}
-                onClick={() => setPriority(RequestPriority.EXTREME)}>
-                EXTREME PRIORITY
-              </Button.Checkbox>
-            </Stack.Item>
-          )}
-        </Stack>
-      </Section>
+        )}
+      </Stack>
       <TextArea
         fluid
         height={20}

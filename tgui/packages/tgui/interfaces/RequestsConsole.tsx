@@ -38,7 +38,6 @@ export const RequestsConsoleFooter = (props, context) => {
         checked={!silent}
         content={'Speaker'}
         onClick={() => {
-          alert('silent toggled');
           act('toggle_silent');
         }}
       />

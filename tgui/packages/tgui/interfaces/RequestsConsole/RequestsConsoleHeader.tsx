@@ -6,7 +6,7 @@ export const RequestsConsoleHeader = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
   const { has_mail_send_error, new_message_priority } = data;
   return (
-    <Stack.Item>
+    <Stack.Item mb={1}>
       {!!has_mail_send_error && <ErrorNoticeBox />}
       {!!new_message_priority && <MessageNoticeBox />}
       <EmergencyBox />

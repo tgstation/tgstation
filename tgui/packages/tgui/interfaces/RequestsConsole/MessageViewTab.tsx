@@ -1,5 +1,6 @@
 import { useBackend } from '../../backend';
 import { BlockQuote, Button, LabeledList, NoticeBox, Section, Stack } from '../../components';
+import { decodeHtmlEntities } from 'common/string';
 import { RequestPriority, RequestsData, RequestType } from './Types';
 
 export const MessageViewTab = (props, context) => {
@@ -41,7 +42,7 @@ export const MessageDisplay = (props, context) => {
           <NoticeBox bad>!!!Extreme Priority!!!</NoticeBox>
         )}
         <BlockQuote>
-          {message.content}
+          {decodeHtmlEntities(message.content)}
           {!!message.appended_list && !!append_list_keys.length && (
             <LabeledList>
               {append_list_keys.map((list_key) => (
@@ -63,7 +64,7 @@ export const MessageDisplay = (props, context) => {
         {message.request_type !== RequestType.ORE_UPDATE && (
           <Section>
             <Button
-              icon="paper-plane"
+              icon="reply"
               content={'Quick Reply'}
               onClick={() => {
                 act('quick_reply', {
