@@ -182,7 +182,7 @@
 	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
 	spawn_list.Add(/mob/living/basic/bear/russian)
 	if(prob(75))
-		spawn_list.Add(/mob/living/simple_animal/hostile/russian)
+		spawn_list.Add(/mob/living/basic/syndicate/russian)
 	if(prob(50))
 		spawn_list.Add(/mob/living/basic/bear/russian)
 
