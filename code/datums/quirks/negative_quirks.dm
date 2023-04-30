@@ -563,6 +563,7 @@
 /datum/quirk/prosthetic_limb/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(old_limb)
+	old_limb = null
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
