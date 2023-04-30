@@ -236,13 +236,13 @@
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access(list/accesses)
-	var/obj/item/electronics/airlock/electronics = locate(/obj/item/electronics/airlock/) in component_parts
+	var/obj/item/electronics/airlock/electronics = locate() in component_parts
 	if(QDELETED(electronics))
 		return
 
 	if(!isnull(accesses))
 		electronics.accesses = accesses
-	if (electronics.one_access)
+	if(electronics.one_access)
 		req_one_access = electronics.accesses
 		req_access = null
 	else
@@ -282,20 +282,19 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/proc/access_check(mob/living/user)
-	var/obj/item/card/id/id = id_card?.resolve()
-
-	if(!id) // reset to defaults
-		name = initial(name)
-		desc = initial(desc)
-		id_card = null
-		req_access = list()
-		req_one_access = null
-		set_access(list())
-		return TRUE
-
-	if(user.get_idcard() != id)
-		balloon_alert(user, "not your unit!")
-		return FALSE
+	if(!isnull(id_card))
+		var/obj/item/card/id/id = id_card?.resolve()
+		if(!id) // reset to defaults
+			name = initial(name)
+			desc = initial(desc)
+			id_card = null
+			req_access = list()
+			req_one_access = null
+			set_access(list())
+			return TRUE
+		if(user.get_idcard() != id)
+			balloon_alert(user, "not your unit!")
+			return FALSE
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied!")

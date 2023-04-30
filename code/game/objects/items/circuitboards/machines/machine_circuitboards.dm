@@ -53,7 +53,8 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 5,
-		/datum/stock_part/capacitor = 1)
+		/datum/stock_part/capacitor = 1,
+		/obj/item/electronics/airlock = 1)
 
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
