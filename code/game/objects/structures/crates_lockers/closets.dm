@@ -976,7 +976,7 @@
 		var/error_msg = ""
 		if(!isnull(id_card))
 			var/obj/item/card/id/advanced/prisoner/registered_id = id_card.resolve()
-			if(QDELETED(registered_id)) //id was deleted at some point. make this closet public access again
+			if(!registered_id) //id was deleted at some point. make this closet public access again
 				name = initial(name)
 				desc = initial(desc)
 				id_card = null
