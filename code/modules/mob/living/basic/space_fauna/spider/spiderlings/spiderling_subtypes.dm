@@ -4,6 +4,14 @@
 /mob/living/basic/spiderling/guard
 	grow_as = /mob/living/basic/giant_spider
 
+	/// Will differentiate into the "ambush" giant spider.
+/mob/living/basic/spiderling/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
+
+/// Will differentiate into the "scout" giant spider.
+/mob/living/basic/spiderling/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
+
 /// Will differentiate into the "hunter" giant spider.
 /mob/living/basic/spiderling/hunter
 	grow_as = /mob/living/basic/giant_spider/hunter
@@ -11,6 +19,10 @@
 /// Will differentiate into the "nurse" giant spider.
 /mob/living/basic/spiderling/nurse
 	grow_as = /mob/living/basic/giant_spider/nurse
+
+	/// Will differentiate into the "tangle" giant spider.
+/mob/living/basic/spiderling/hunter
+	grow_as = /mob/living/basic/giant_spider/hunter
 
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/spiderling/midwife

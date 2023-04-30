@@ -24,7 +24,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 
-	health = 5 // very low.
+	health = 5 // very low, so true besti
 	maxHealth = 5
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
@@ -124,7 +124,7 @@
 		if(prob(3))
 			grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
 		else
-			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/ambush, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/scout, /mob/living/basic/giant_spider/nurse, /mob/living/basic/giant_spider/tangle)
 
 	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
