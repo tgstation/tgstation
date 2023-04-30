@@ -230,26 +230,24 @@
 	if(card_reader_installed)
 		. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 		. += span_notice("Swipe your ID to change access levels.")
-		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel.")
+		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel after opening panel.")
 	else
-		. += span_notice("A card reader can be installed for further control access.")
+		. += span_notice("A card reader can be installed for further control access by opening its panel.")
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access(list/accesses)
-	for(var/obj/item/electronics/airlock/electronics in component_parts)
-		if(QDELETED(electronics))
-			return
-
-		if(!isnull(accesses))
-			electronics.accesses = accesses
-		if (electronics.one_access)
-			req_one_access = electronics.accesses
-			req_access = null
-		else
-			req_access = electronics.accesses
-			req_one_access = null
-
+	var/obj/item/electronics/airlock/electronics = locate(/obj/item/electronics/airlock/) in component_parts
+	if(QDELETED(electronics))
 		return
+
+	if(!isnull(accesses))
+		electronics.accesses = accesses
+	if (electronics.one_access)
+		req_one_access = electronics.accesses
+		req_access = null
+	else
+		req_access = electronics.accesses
+		req_one_access = null
 
 /obj/machinery/suit_storage_unit/RefreshParts()
 	. = ..()
@@ -588,8 +586,12 @@
 		open_machine()
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
-	if(locked || state_open || !card_reader_installed || !panel_open)
+	if(state_open || !card_reader_installed || !panel_open)
 		return TRUE
+
+	if(locked)
+		balloon_alert("unlock first!")
+		return
 
 	access_locked = !access_locked
 	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
@@ -598,12 +600,18 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(!locked && !state_open && panel_open && is_operational && !card_reader_installed && istype(I, /obj/item/stock_parts/card_reader))
+	if(panel_open && !state_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
+		if(card_reader_installed)
+			balloon_alert(user, "already installed!")
+			return
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
-
 		if(!(!locked && !state_open && panel_open && is_operational && !card_reader_installed) || !user.transferItemToLoc(I, src))
 			return
 
@@ -613,7 +621,15 @@
 
 		balloon_alert(user, "card reader installed")
 
-	else if(!locked && !state_open && !panel_open && !isnull(id_card) && istype(I, /obj/item/pen))
+	else if(!state_open && istype(I, /obj/item/pen))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(isnull(id_card))
+			balloon_alert(user, "not yours to rename!")
+			return
+
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
@@ -635,7 +651,15 @@
 		if(bit_flag != NONE)
 			update_appearance(bit_flag)
 
-	else if(!locked && !state_open && !panel_open && !access_locked && is_operational && card_reader_installed && !isnull((id = I.GetID())))
+	else if(!state_open && is_operational && card_reader_installed && !isnull((id = I.GetID())))
+		if(locked)
+			balloon_alert(user, "unlock first!")
+			return
+
+		if(access_locked)
+			balloon_alert(user, "access panel locked!")
+			return
+
 		//change the access type
 		var/static/list/choices = list(
 			"Personal",
