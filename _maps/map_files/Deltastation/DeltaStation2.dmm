@@ -14580,7 +14580,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "dDk" = (
 /obj/machinery/door/firedoor,

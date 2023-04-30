@@ -46524,6 +46524,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
+"qWC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "qWF" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/fore)
@@ -92767,7 +92773,7 @@ iWM
 hZV
 sNd
 nYI
-wXZ
+qWC
 gOl
 cuR
 dMP

@@ -38,7 +38,7 @@
 
 	id_trim = /datum/id_trim/job/coroner
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat/coroner
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/medical
 	mask = /obj/item/clothing/mask/surgical
