@@ -35,17 +35,7 @@
 /datum/outfit/job/coroner
 	name = "Coroner"
 	jobtype = /datum/job/coroner
-
 	id_trim = /datum/id_trim/job/coroner
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
-	suit = /obj/item/clothing/suit/toggle/labcoat/coroner
-	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/medical
-	mask = /obj/item/clothing/mask/surgical
-	gloves = /obj/item/clothing/gloves/latex
-	ears = /obj/item/radio/headset/headset_med
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_pocket = /obj/item/toy/crayon/white
 
 	box = /obj/item/storage/box/survival/medical
 	backpack_contents = list(
@@ -54,4 +44,15 @@
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
 		/obj/item/reagent_containers/dropper = 1,
 	)
+
+	belt = /obj/item/modular_computer/pda/medical
+	ears = /obj/item/radio/headset/headset_med
+	gloves = /obj/item/clothing/gloves/latex
+	l_pocket = /obj/item/toy/crayon/white
+	mask = /obj/item/clothing/mask/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/toggle/labcoat/coroner
+	suit_store = /obj/item/flashlight/pen
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/coroner
+
 	skillchips = list(/obj/item/skillchip/entrails_reader)
