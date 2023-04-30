@@ -600,10 +600,7 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(panel_open && !state_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
-		if(card_reader_installed)
-			balloon_alert(user, "already installed!")
-			return
+	if(!card_reader_installed && panel_open && !state_open && is_operational && istype(I, /obj/item/stock_parts/card_reader))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
