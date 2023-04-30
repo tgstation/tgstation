@@ -21,20 +21,16 @@
 
 /datum/ai_planning_subtree/simple_find_target/sleeping/Setup(datum/ai_controller/controller, wakeup_sound_effect)
 	..()
-	RegisterSignal(controller.pawn, COMSIG_BASIC_AI_WAKE_UP, .proc/wake_up)
+	RegisterSignal(controller.pawn, COMSIG_BASIC_AI_WAKE_UP, PROC_REF(wake_up), controller)
 
-/datum/ai_planning_subtree/simple_find_target/sleeping/proc/wake_up()
+/datum/ai_planning_subtree/simple_find_target/sleeping/proc/wake_up(datum/source, datum/ai_controller/controller)
 	if(!is_awake)
 		is_awake = TRUE
-	controller.blackboard[BB_VISION_RANGE] = controller.blackboard[BB_VISION_RANGE_AGGRO]
+	controller.set_blackboard_key(BB_VISION_RANGE, controller.blackboard[BB_VISION_RANGE_AGGRO])
 	if(controller.blackboard[BB_AGGRO_SOUND_FILE])
 		playsound(controller.pawn, controller.blackboard[BB_AGGRO_SOUND_FILE], 50, FALSE)
 
-/datum/ai_planning_subtree/simple_find_target/sleeping/proc/go_sleep()
+/datum/ai_planning_subtree/simple_find_target/sleeping/proc/go_sleep(datum/ai_controller/controller)
 	is_awake = FALSE
-	controller.blackboard[BB
-	controller.blackboard[BB_VISION_RANGE] = controller.blackboard[BB_VISION_RANGE_SLEEP]
+	controller.set_blackboard_key(BB_VISION_RANGE, controller.blackboard[BB_VISION_RANGE_SLEEP])
 	controller.pawn.icon_state = "[initial(controller.pawn.icon_state)]_sleeping"
-
-/datum/ai_planning_subtree/simple_find_target/sleeping/ghoul
-	wakeup_sound = 'mojave/sound/ms13npc/ghoul_death1.ogg'
