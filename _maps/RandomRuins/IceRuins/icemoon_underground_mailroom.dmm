@@ -106,7 +106,7 @@
 "jm" = (
 /obj/structure/closet/crate/mail/open{
 	icon_state = "mailopen"
-},
+	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -167,7 +167,7 @@
 "oU" = (
 /obj/structure/closet/crate/mail/open{
 	icon_state = "mailopen"
-},
+	},
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -319,7 +319,7 @@
 "Jd" = (
 /obj/structure/closet/crate/mail/open{
 	icon_state = "mailopen"
-},
+	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
@@ -415,7 +415,7 @@
 "Qb" = (
 /obj/structure/closet/crate/mail/open{
 	icon_state = "mailopen"
-},
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -496,7 +496,7 @@
 "Wr" = (
 /obj/structure/closet/crate/mail/open{
 	icon_state = "mailopen"
-},
+	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
