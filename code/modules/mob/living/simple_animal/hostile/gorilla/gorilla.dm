@@ -1,4 +1,3 @@
-#define GORILLA_HANDS_LAYER 1
 #define GORILLA_TOTAL_LAYERS 1
 
 /mob/living/simple_animal/hostile/gorilla
@@ -32,7 +31,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list("monkey", "jungle")
+	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270
@@ -57,7 +56,7 @@
 	for(var/obj/item/bodypart/part as anything in carbon_target.bodyparts)
 		if(part.body_part == HEAD || part.body_part == CHEST)
 			continue
-		if(!part.dismemberable)
+		if(part.bodypart_flags & BODYPART_UNREMOVABLE)
 			continue
 		parts += part
 	return parts
@@ -122,7 +121,7 @@
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_NEUTRAL, "monkey", "jungle")
+	faction = list(FACTION_NEUTRAL, FACTION_MONKEY, FACTION_JUNGLE)
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over
@@ -183,3 +182,5 @@
 	name = "cargorilla ID"
 	desc = "A card used to provide ID and determine access across the station. A gorilla-sized ID for a gorilla-sized cargo technician."
 	trim = /datum/id_trim/job/cargo_technician
+
+#undef GORILLA_TOTAL_LAYERS

@@ -57,6 +57,16 @@
 	time = 20 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/freezer_cabinat
+	name = "Freezer Cabinet"
+	result = /obj/structure/closet/secure_closet/freezer/empty
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/assembly/igniter/condenser = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/trapdoor_kit
 	name = "Trapdoor Construction Kit"
 	result = /obj/item/trapdoor_kit
@@ -130,6 +140,17 @@
 		/obj/item/stack/sheet/sinew = 1,
 	)
 	result = /obj/item/ore_sensor
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/material_sniffer
+	name = "Material Sniffer"
+	time = 3 SECONDS
+	reqs = list(
+		/obj/item/analyzer = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/pinpointer/material_sniffer
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/pressureplate

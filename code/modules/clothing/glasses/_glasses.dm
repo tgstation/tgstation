@@ -13,13 +13,22 @@
 	custom_materials = list(/datum/material/glass = 250)
 	gender = PLURAL
 	var/vision_flags = 0
-	var/darkness_view = 2 // Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
 	var/invis_override = 0
-	var/lighting_alpha
+	/// A percentage of how much rgb to "max" on the lighting plane
+	/// This lets us brighten darkness without washing out bright color
+	var/lighting_cutoff = null
+	/// Similar to lighting_cutoff, except it has individual r g and b components in the same 0-100 scale
+	var/list/color_cutoffs = null
 	/// The current hud icons
 	var/list/icon/current = list()
+// Potentially replace glass_color_type with a setup that colors lighting by dropping segments of different componets
+// Like the current idea, but applied without the mass cutoff (maybe? somehow?)
+// That or just a light color to the lighting plane, that'd work too
+// Enough to make it visible but not so much that it's a pain
+
+// That, or just make stuff that uses lighting_cutoff have colored offsets and all, like you were planning
 	/// Colors your vision when worn
 	var/glass_colour_type
 	/// Whether or not vision coloring is forcing
@@ -38,8 +47,6 @@
 	..()
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
 		vision_flags ^= initial(vision_flags)
-	if(visor_vars_to_toggle & VISOR_DARKNESSVIEW)
-		darkness_view ^= initial(darkness_view)
 	if(visor_vars_to_toggle & VISOR_INVISVIEW)
 		invis_view ^= initial(invis_view)
 
@@ -56,14 +63,14 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 		if(!H.is_blind())
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
 				H.adjust_temp_blindness(6 SECONDS)
 				H.set_eye_blur_if_lower(10 SECONDS)
-				eyes.applyOrganDamage(5)
+				eyes.apply_organ_damage(5)
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && !forced_glass_color && ishuman(user))
@@ -106,9 +113,9 @@
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
-	darkness_view = 2
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Mesons get to be lightly green
+	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
@@ -120,9 +127,9 @@
 	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Night vision mesons get the same but more intense
+	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -165,9 +172,9 @@
 	name = "night vision science goggles"
 	desc = "Lets the user see in the dark and recognize chemical compounds at a glance."
 	icon_state = "scihudnight"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Real vivid purple
+	color_cutoffs = list(50, 10, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night
@@ -175,9 +182,9 @@
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	inhand_icon_state = "glasses"
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	// Dark green
+	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -192,6 +199,35 @@
 	. = ..()
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
+
+/obj/item/clothing/glasses/eyepatch/medical
+	name = "medical eyepatch"
+	desc = "Used by space weeaboos to pretend their eye isn't there, and crewmembers who actually lost their eye to pretend their eye is there."
+	icon_state = "eyepatch_medical"
+	base_icon_state = "eyepatch_medical"
+	inhand_icon_state = null
+
+/// wizard version
+/obj/item/clothing/glasses/eyepatch/medical/chuuni
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = CASTING_CLOTHES
+
+/obj/item/clothing/glasses/eyepatch/medical/chuuni/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_EYES)
+		ADD_TRAIT(src, TRAIT_NODROP, type)
+
+/obj/item/clothing/glasses/eyepatch/medical/chuuni/Initialize(mapload)
+	. = ..()
+	var/static/list/chuuni_backstories
+	if(!chuuni_backstories)
+		chuuni_backstories = list(
+			"This eyepatch is a seal that contains the power of the demon king. If I remove it, I will unleash a cataclysmic destruction upon the world.",
+			"This eyepatch is a gift from the angel of light. It allows me to see the true nature of things and protect the innocent from harm.",
+			"This eyepatch is a mark of my contract with the dragon god. It grants me access to his ancient wisdom and fiery breath.",
+			"This eyepatch is a symbol of my sacrifice for the sake of love. It hides the scar that I received from saving my beloved from a fatal attack.",
+		)
+	desc = pick(chuuni_backstories)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -214,7 +250,6 @@
 	desc = "Used by miners to detect ores deep within the rock."
 	icon_state = "material"
 	inhand_icon_state = "glasses"
-	darkness_view = 0
 
 /obj/item/clothing/glasses/material/mining/gar
 	name = "gar material scanner"
@@ -256,13 +291,13 @@
 	if(isliving(movable))
 		var/mob/living/crusher = movable
 		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
-			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
+			playsound(src, 'sound/effects/footstep/glass_step.ogg', 30, TRUE)
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
 /obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
-	clothing_traits -= TRAIT_NEARSIGHTED_CORRECTED
+	detach_clothing_traits(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -278,7 +313,7 @@
 
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
-	clothing_traits |= TRAIT_NEARSIGHTED_CORRECTED
+	attach_clothing_traits(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/regular/thin
 	name = "thin prescription glasses"
@@ -310,7 +345,6 @@
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks flashes."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray
@@ -390,7 +424,6 @@
 	inhand_icon_state = "blindfold"
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY // You WILL Be blind, no matter what
-	darkness_view = 1
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/trickblindfold
@@ -440,7 +473,8 @@
 	icon_state = "thermal"
 	inhand_icon_state = "glasses"
 	vision_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	// Going for an orange color here
+	color_cutoffs = list(25, 8, 5)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
@@ -558,9 +592,8 @@
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
 	flags_cover = GLASSESCOVERSEYES
-	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_WELDER
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
@@ -575,16 +608,13 @@
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.show_to(user)
-		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		user.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD), GLASSES_TRAIT)
 		if(xray)
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	user.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_XRAY_VISION), GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]

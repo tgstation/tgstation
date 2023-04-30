@@ -40,10 +40,12 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
+#ifndef EXPERIMENT_515_DONT_CACHE_REF
 	/// A cached version of our \ref
 	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
 	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
 	var/cached_ref
+#endif
 
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
@@ -105,12 +107,13 @@
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null //ensure prompt GCing of weakref.
 
-	var/list/timers = active_timers
-	active_timers = null
-	for(var/datum/timedevent/timer as anything in timers)
-		if (timer.spent && !(timer.flags & TIMER_DELETE_ME))
-			continue
-		qdel(timer)
+	if(active_timers)
+		var/list/timers = active_timers
+		active_timers = null
+		for(var/datum/timedevent/timer as anything in timers)
+			if (timer.spent && !(timer.flags & TIMER_DELETE_ME))
+				continue
+			qdel(timer)
 
 	#ifdef REFERENCE_TRACKING
 	#ifdef REFERENCE_TRACKING_DEBUG
@@ -347,6 +350,8 @@
 	var/filter = get_filter(name)
 	if(!filter)
 		return
+	// This can get injected by the filter procs, we want to support them so bye byeeeee
+	new_params -= "type"
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 

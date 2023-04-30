@@ -9,7 +9,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("oinks","squees")
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab/pig = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -59,11 +58,6 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/pig,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/pig,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/pig
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/pig
-
-/datum/ai_behavior/basic_melee_attack/pig
-	action_cooldown = 2 SECONDS

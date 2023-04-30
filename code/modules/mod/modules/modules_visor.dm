@@ -21,8 +21,8 @@
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.show_to(mod.wearer)
-	for(var/trait in visor_traits)
-		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
+	if(length(visor_traits))
+		mod.wearer.add_traits(visor_traits, MOD_TRAIT)
 	mod.wearer.update_sight()
 
 /obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -32,8 +32,8 @@
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.hide_from(mod.wearer)
-	for(var/trait in visor_traits)
-		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
+	if(length(visor_traits))
+		mod.wearer.remove_traits(visor_traits, MOD_TRAIT)
 	mod.wearer.update_sight()
 
 //Medical Visor - Gives you a medical HUD.

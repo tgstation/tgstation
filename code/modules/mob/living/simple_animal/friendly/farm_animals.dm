@@ -11,7 +11,6 @@
 	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -41,14 +40,14 @@
 	AddComponent(/datum/component/udder)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && DT_PROB(0.5, delta_time))
+		if(!enemies.len && SPT_PROB(0.5, seconds_per_tick))
 			Retaliate()
 
-		if(enemies.len && DT_PROB(5, delta_time))
+		if(enemies.len && SPT_PROB(5, seconds_per_tick))
 			enemies.Cut()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
@@ -166,20 +165,22 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
+		amount_grown += rand(0.5 * seconds_per_tick, 1 * seconds_per_tick)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/holo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 
+/// Counter for number of chicken mobs in the universe. Chickens will not lay fertile eggs if it exceeds the MAX_CHICKENS define.
+GLOBAL_VAR_INIT(chicken_count, 0)
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -211,14 +212,12 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	footstep_type = FOOTSTEP_MOB_CLAW
-	///counter for how many chickens are in existence to stop too many chickens from lagging shit up
-	var/static/chicken_count = 0
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
-	var/process_eggs = TRUE
+	var/fertile = TRUE
 
 /mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
-	chicken_count++
+	GLOB.chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
 	AddComponent(/datum/component/egg_layer,\
@@ -237,52 +236,17 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
-	chicken_count--
+	GLOB.chicken_count--
 	return ..()
 
 /mob/living/simple_animal/chicken/proc/egg_laid(obj/item/egg)
-	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
-		START_PROCESSING(SSobj, egg)
-
-/obj/item/food/egg/var/amount_grown = 0
-
-/obj/item/food/egg/process(delta_time)
-	if(isturf(loc))
-		amount_grown += rand(1,2) * delta_time
-		if(amount_grown >= 200)
-			visible_message(span_notice("[src] hatches with a quiet cracking sound."))
-			new /mob/living/simple_animal/chick(get_turf(src))
-			STOP_PROCESSING(SSobj, src)
-			qdel(src)
-	else
-		STOP_PROCESSING(SSobj, src)
-
-/mob/living/simple_animal/deer
-	name = "doe"
-	desc = "A gentle, peaceful forest animal. How did this get into space?"
-	icon_state = "deer-doe"
-	icon_living = "deer-doe"
-	icon_dead = "deer-doe-dead"
-	gender = FEMALE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speak = list("Weeeeeeee?","Weeee","WEOOOOOOOOOO")
-	speak_emote = list("grunts","grunts lowly")
-	emote_hear = list("brays.")
-	emote_see = list("shakes her head.")
-	speak_chance = 1
-	turns_per_move = 5
-	see_in_dark = 6
-	butcher_results = list(/obj/item/food/meat/slab = 3)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently nudges"
-	response_disarm_simple = "gently nudges aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "bucks"
-	attack_verb_simple = "buck"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	health = 75
-	maxHealth = 75
-	blood_volume = BLOOD_VOLUME_NORMAL
-	footstep_type = FOOTSTEP_MOB_SHOE
+	if(GLOB.chicken_count <= MAX_CHICKENS && fertile && prob(25))
+		egg.AddComponent(/datum/component/fertile_egg,\
+			embryo_type = /mob/living/simple_animal/chick,\
+			minimum_growth_rate = 1,\
+			maximum_growth_rate = 2,\
+			total_growth_required = 200,\
+			current_growth = 0,\
+			location_allowlist = typecacheof(list(/turf)),\
+			spoilable = TRUE,\
+		)

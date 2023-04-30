@@ -52,6 +52,14 @@
 		else if(A.type == datum_type)
 			return A
 
+/// Returns true if mind has any antag datum from a list of types
+/datum/mind/proc/has_antag_datum_in_list(list/antag_types)
+	for(var/antag_datum in antag_datums)
+		var/datum/antagonist/check_datum = antag_datum
+		if(is_type_in_list(check_datum, antag_types))
+			return TRUE
+	return FALSE
+
 /*
 	Removes antag type's references from a mind.
 	objectives, uplinks, powers etc are all handled.
@@ -193,7 +201,7 @@
 
 	else if(IS_REVOLUTIONARY(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
-		converter.add_revolutionary(src,FALSE)
+		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 
 	else if(IS_NUKE_OP(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -203,10 +211,13 @@
 		add_antag_datum(N,converter.nuke_team)
 
 
-	enslaved_to = creator
+	enslaved_to = WEAKREF(creator)
 
 	current.faction |= creator.faction
 	creator.faction |= current.faction
+
+	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
+	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")
 
 	if(creator.mind?.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")

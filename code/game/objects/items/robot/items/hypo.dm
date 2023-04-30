@@ -129,8 +129,8 @@
 	return ..()
 
 /// Every [recharge_time] seconds, recharge some reagents for the cyborg
-/obj/item/reagent_containers/borghypo/process(delta_time)
-	charge_timer += delta_time
+/obj/item/reagent_containers/borghypo/process(seconds_per_tick)
+	charge_timer += seconds_per_tick
 	if(charge_timer >= recharge_time)
 		regenerate_reagents(default_reagent_types)
 		if(upgraded)
@@ -178,7 +178,7 @@
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	else
-		balloon_alert(user, "[user.zone_selected] is blocked!")
+		balloon_alert(user, "[parse_zone(user.zone_selected)] is blocked!")
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

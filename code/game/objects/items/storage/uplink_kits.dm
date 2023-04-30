@@ -126,7 +126,10 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
 			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
-			new /obj/item/toy/spinningtoy(src) //lol
+			if(prob(70))
+				new /obj/item/toy/spinningtoy(src) //lol
+			else
+				new /obj/item/toy/spinningtoy/dark_matter(src) //edgy lol
 
 		if(KIT_SABOTAGE)
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
@@ -138,7 +141,7 @@
 			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
 
 		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
+			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
 			new /obj/item/clothing/gloves/latex/nitrile(src) // ~ 1 tc for outfit
@@ -570,6 +573,16 @@
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 
+/// Surplus Ammo Box
+
+/obj/item/storage/box/syndie_kit/surplus
+	name = "surplus .50 BMG magazine box"
+	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
+
+/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
+
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 
@@ -606,6 +619,28 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+
+/obj/item/storage/box/syndie_kit/stickers
+	name = "sticker kit"
+
+/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+
+/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+	var/list/types = subtypesof(/obj/item/sticker/syndicate)
+	for(var/i in 1 to atom_storage.max_slots)
+		var/type = pick(types)
+		new type(src)
+
+/obj/item/storage/box/syndie_kit/pinata
+	name = "weapons grade pinata kit"
+	desc = "Contains a weapons grade pinata and 2 belts for carrying its contents."
+
+/obj/item/storage/box/syndie_kit/pinata/PopulateContents()
+	new /obj/item/pinata/syndie(src)
+	new /obj/item/storage/belt/grenade(src)
+	new /obj/item/storage/belt/military/snack(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

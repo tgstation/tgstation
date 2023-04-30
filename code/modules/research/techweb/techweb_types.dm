@@ -29,25 +29,6 @@
 	hidden_nodes = list()
 
 /**
- * Techweb made through BEPIS machine
- * Should only contain 1 BEPIS tech at random.
- */
-/datum/techweb/bepis
-	id = "EXPERIMENTAL"
-	organization = "Nanotrasen R&D"
-
-/datum/techweb/bepis/New(remove_tech = TRUE)
-	. = ..()
-	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
-	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
-	hidden_nodes -= BN.id //Has to be removed from hidden nodes
-	research_node(BN, TRUE, FALSE, FALSE)
-	update_node_status(BN)
-	if(remove_tech)
-		SSresearch.techweb_nodes_experimental -= bepis_id
-		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
-
-/**
  * Techweb made through tech disks
  * Contains nothing, subtype mostly meant to make it easy for admins to see.
  */

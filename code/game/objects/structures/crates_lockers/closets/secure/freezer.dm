@@ -24,6 +24,7 @@
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
 	if(..()) //if we actually closed the locker
 		toggle_organ_decay(src)
+		return TRUE
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
@@ -31,8 +32,29 @@
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
+/obj/structure/closet/secure_closet/freezer/atom_destruction(damage_flag)
+	new /obj/item/stack/sheet/iron(drop_location(), 1)
+	new /obj/item/assembly/igniter/condenser(drop_location())
+	return ..()
+
+/obj/structure/closet/secure_closet/freezer/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(!opened)
+		balloon_alert(user, "open it first!")
+		return TRUE
+
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return TRUE
+
+	new /obj/item/stack/sheet/iron(drop_location(), 2)
+	new /obj/item/assembly/igniter/condenser(drop_location())
+	qdel(src)
+
+	return TRUE
+
 /obj/structure/closet/secure_closet/freezer/empty
-	name = "empty freezer"
+	name = "freezer"
 
 /obj/structure/closet/secure_closet/freezer/empty/open
 	req_access = null

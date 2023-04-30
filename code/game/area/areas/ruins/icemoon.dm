@@ -44,3 +44,22 @@
 
 /area/ruin/planetengi
 	name = "\improper Engineering Outpost"
+
+/area/ruin/smoking_room/house
+	name = "\improper Tobacco House"
+	sound_environment = SOUND_ENVIRONMENT_CITY
+	mood_bonus = -1
+	mood_message = "Good lord, this place REEKS of cigarettes."
+
+/area/ruin/smoking_room/room
+	name = "\improper Smoking Room"
+	sound_environment = SOUND_ENVIRONMENT_DIZZY
+	mood_bonus = -8
+	mood_message = "I can feel my lifespan shortening with every breath."
+
+/area/ruin/powered/icemoon_phone_booth
+	name = "\improper Phonebooth"
+
+/area/ruin/powered/hermit
+	name = "\improper Hermit's Cabin"
+

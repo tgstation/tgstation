@@ -100,36 +100,24 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
-	greyscale_colors = "#00CCFF"
+	greyscale_colors = "#af7d28"
 
 /obj/structure/chair/sofa/bench/left
 	icon_state = "bench_left"
 	greyscale_config = /datum/greyscale_config/bench_left
-	greyscale_colors = "#00CCFF"
 
 /obj/structure/chair/sofa/bench/right
 	icon_state = "bench_right"
 	greyscale_config = /datum/greyscale_config/bench_right
-	greyscale_colors = "#00CCFF"
 
 /obj/structure/chair/sofa/bench/corner
 	icon_state = "bench_corner"
 	greyscale_config = /datum/greyscale_config/bench_corner
-	greyscale_colors = "#00CCFF"
 
 /obj/structure/chair/sofa/bench/solo
 	icon_state = "bench_solo"
 	greyscale_config = /datum/greyscale_config/bench_solo
-	greyscale_colors = "#00CCFF"
 
-/obj/structure/chair/sofa/bench/post_buckle_mob(mob/living/Mob)
-	if(src.dir == EAST || WEST)
-		Mob.pixel_y += 6
-	.=..()
-
-/obj/structure/chair/sofa/bench/post_unbuckle_mob(mob/living/Mob)
-	if(src.dir == EAST || WEST)
-		Mob.pixel_y -= 6
 
 // Bamboo benches
 /obj/structure/chair/sofa/bamboo

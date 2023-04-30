@@ -44,6 +44,11 @@
 	return sanitize(STRIP_HTML_SIMPLE(text, limit))
 
 
+/// Runs STRIP_HTML_FULL and sanitize.
+/proc/strip_html_full(text, limit = MAX_MESSAGE_LEN)
+	return sanitize(STRIP_HTML_FULL(text, limit))
+
+
 /// Runs STRIP_HTML_SIMPLE and byond's sanitization proc.
 /proc/adminscrub(text, limit = MAX_MESSAGE_LEN)
 	return html_encode(STRIP_HTML_SIMPLE(text, limit))

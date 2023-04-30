@@ -240,7 +240,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(
@@ -497,12 +497,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			new /obj/item/stock_parts/water_recycler(drop_location())
 	..()
 
-/obj/structure/sink/process(delta_time)
+/obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
 	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
 		return PROCESS_KILL
 
-	reagents.add_reagent(dispensedreagent, reclaim_rate * delta_time)
+	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
 
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)

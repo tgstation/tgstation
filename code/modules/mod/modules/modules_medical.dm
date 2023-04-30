@@ -164,7 +164,6 @@
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
 	/// A reference to the organ we "are".
@@ -202,7 +201,7 @@
 			succeed = TRUE
 			break
 	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.getorganslot(organ.slot)
+		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
 		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
 			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
 				continue
@@ -334,7 +333,7 @@
 			ripped_clothing[clothing] = shared_flags
 			clothing.body_parts_covered &= ~shared_flags
 
-/obj/item/mod/module/thread_ripper/on_process(delta_time)
+/obj/item/mod/module/thread_ripper/on_process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

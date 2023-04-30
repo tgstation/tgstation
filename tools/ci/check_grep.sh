@@ -79,7 +79,12 @@ fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
@@ -128,6 +133,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	st=1
 fi;
 
+part "can_perform_action argument check"
+if $grep 'can_perform_action\(\s*\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found a can_perform_action() proc with improper arguments.${NC}"
+	st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
@@ -157,6 +169,11 @@ fi;
 if $grep -ni 'nanotransen' $code_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 part "map json naming"
@@ -198,6 +215,12 @@ fi;
 
 if [ "$pcre2_support" -eq 1 ]; then
 	section "regexes requiring PCRE2"
+	part "empty variable values"
+	if $grep -PU '{\n\t},' $map_files; then
+		echo
+		echo -e "${RED}ERROR: Empty variable value list detected in map file. Please remove the curly brackets entirely.${NC}"
+		st=1
+	fi;
 	part "to_chat sanity"
 	if $grep -P 'to_chat\((?!.*,).*\)' $code_files; then
 		echo

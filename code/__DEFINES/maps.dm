@@ -172,6 +172,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
 
 ///Map generation defines
+#define DEFAULT_SPACE_RUIN_LEVELS 7
+#define DEFAULT_SPACE_EMPTY_LEVELS 1
+
 #define PERLIN_LAYER_HEIGHT "perlin_height"
 #define PERLIN_LAYER_HUMIDITY "perlin_humidity"
 #define PERLIN_LAYER_HEAT "perlin_heat"
@@ -197,3 +200,28 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 /// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
+
+/// A map key that corresponds to being one exclusively for Space.
+#define SPACE_KEY "space"
+
+//clusterCheckFlags defines
+//All based on clusterMin and clusterMax as guides
+
+//Individual defines
+#define CLUSTER_CHECK_NONE 0 //!No checks are done, cluster as much as possible
+#define CLUSTER_CHECK_DIFFERENT_TURFS (1<<1)  //!Don't let turfs of DIFFERENT types cluster
+#define CLUSTER_CHECK_DIFFERENT_ATOMS (1<<2)  //!Don't let atoms of DIFFERENT types cluster
+#define CLUSTER_CHECK_SAME_TURFS (1<<3)  //!Don't let turfs of the SAME type cluster
+#define CLUSTER_CHECK_SAME_ATOMS (1<<4) //!Don't let atoms of the SAME type cluster
+
+//Combined defines
+#define CLUSTER_CHECK_SAMES 24 //!Don't let any of the same type cluster
+#define CLUSTER_CHECK_DIFFERENTS 6  //!Don't let any of different types cluster
+#define CLUSTER_CHECK_ALL_TURFS 10 //!Don't let ANY turfs cluster same and different types
+#define CLUSTER_CHECK_ALL_ATOMS 20 //!Don't let ANY atoms cluster same and different types
+
+//All
+#define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
+
+/// Checks the job changes in the map config for the passed change key.
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.config.job_changes?[job]?[change]

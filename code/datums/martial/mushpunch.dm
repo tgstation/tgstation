@@ -5,7 +5,7 @@
 /datum/martial_art/mushpunch/harm_act(mob/living/A, mob/living/D)
 	var/atk_verb
 	to_chat(A, span_spider("You begin to wind up an attack..."))
-	if(!do_after(A, 25, target = D))
+	if(!do_after(A, 2.5 SECONDS, target = D))
 		to_chat(A, span_spider("<b>Your attack was interrupted!</b>"))
 		return TRUE //martial art code was a mistake
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -17,7 +17,7 @@
 	playsound(D, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
-	D.Paralyze(20)
+	D.Paralyze(2 SECONDS)
 	if(atk_verb)
 		log_combat(A, D, "[atk_verb] (Mushroom Punch)")
 	return TRUE

@@ -15,10 +15,10 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/Initialize()
 	for(var/type in typesof(/datum/round_event_control))
-		var/datum/round_event_control/E = new type()
-		if(!E.typepath)
+		var/datum/round_event_control/event = new type()
+		if(!event.typepath || !event.valid_for_map())
 			continue //don't want this one! leave it for the garbage collector
-		control += E //add it to the list of all events (controls)
+		control += event //add it to the list of all events (controls)
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(events)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. == EVENT_READY)
-		E.runEvent(random = TRUE)
+		E.run_event(random = TRUE)
 
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()

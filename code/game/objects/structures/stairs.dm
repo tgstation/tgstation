@@ -251,3 +251,7 @@
 	if(custom_materials)
 		new_stairs.set_custom_materials(custom_materials)
 	qdel(src)
+
+#undef STAIR_TERMINATOR_AUTOMATIC
+#undef STAIR_TERMINATOR_NO
+#undef STAIR_TERMINATOR_YES

@@ -57,8 +57,8 @@
 	if(!json_config)
 		stack_trace("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
 	string_json_config = "[json_config]"
-	if(findtext(string_json_config, "code/datums/greyscale/json_configs/") != 1)
-		stack_trace("All greyscale json configuration files should be located within 'code/datums/greyscale/json_configs/'")
+	if(findtext(string_json_config, "greyscale/json_configs/") == 0)
+		stack_trace("All greyscale json configuration files should be located within '/greyscale/json_configs/'")
 	if(!icon_file)
 		stack_trace("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"
@@ -70,7 +70,7 @@
 		return QDEL_HINT_LETMELIVE
 	return ..()
 
-/datum/greyscale_config/process(delta_time)
+/datum/greyscale_config/process(seconds_per_tick)
 	if(!Refresh(loadFromDisk=TRUE))
 		return
 	if(!live_edit_types)

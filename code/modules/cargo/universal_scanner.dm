@@ -117,7 +117,7 @@
 			to_chat(user, span_warning("You must be holding \the [src] to continue!"))
 			return
 		var/chosen_price = tgui_input_number(user, "Set price", "Price", new_custom_price)
-		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
+		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 			return
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))

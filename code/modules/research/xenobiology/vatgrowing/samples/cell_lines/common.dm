@@ -419,7 +419,7 @@
 	suppressive_reagents = list(/datum/reagent/toxin/plantbgone = -8)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/hostile/tree = 1)
+	resulting_atoms = list(/mob/living/basic/tree = 1)
 
 /datum/micro_organism/cell_line/vat_beast
 	desc = "Hypergenic xenocytes"
@@ -471,10 +471,10 @@
 		/datum/reagent/consumable/liquidgibs = -2)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/netherworld = 1)
+	resulting_atoms = list()
 
 /datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
-	var/random_result = pick(typesof(/mob/living/simple_animal/hostile/netherworld) - /mob/living/simple_animal/hostile/netherworld/statue) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
+	var/random_result = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
 	resulting_atoms = list()
 	resulting_atoms[random_result] = 1
 	return ..()
@@ -504,7 +504,7 @@
 		/datum/reagent/plantnutriment/robustharvestnutriment = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/toxin/plantbgone = -4,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/nothing = -2,
@@ -529,7 +529,7 @@
 		/datum/reagent/consumable/space_cola = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/ethanol/fernet = -3,
@@ -553,7 +553,7 @@
 		/datum/reagent/nitrous_oxide = 2)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/ethanol/beepsky_smash = -3,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/toxin/mutetoxin = -3,

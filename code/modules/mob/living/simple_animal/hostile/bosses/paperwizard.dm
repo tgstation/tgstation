@@ -4,7 +4,7 @@
 	desc = "A wizard with a taste for the arts."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
-	faction = list("hostile","stickman")
+	faction = list(FACTION_HOSTILE,FACTION_STICKMAN)
 	del_on_death = TRUE
 	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_icon(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
 	QDEL_LIST(copies)

@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
 	var/mob/headset_user = usr
-	if((headset_user == over) && headset_user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if((headset_user == over) && headset_user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return attack_self(headset_user)
 	return ..()
 

@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/pointed/projectile/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
-	button_icon_state = "spellcard0"
+	button_icon_state = "spellcard"
 	click_cd_override = 1
 
 	school = SCHOOL_EVOCATION
@@ -29,7 +29,7 @@
 	/// The location spread of the spell cards when fired.
 	var/projectile_location_spread_amount = 12
 	/// A ref to our lockon component, which is created and destroyed on activation and deactivation.
-	var/datum/component/lockon_aiming/lockon_component
+	var/datum/component/lock_on_cursor/lockon_component
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/Destroy()
 	QDEL_NULL(lockon_component)
@@ -42,11 +42,12 @@
 
 	QDEL_NULL(lockon_component)
 	lockon_component = owner.AddComponent( \
-		/datum/component/lockon_aiming, \
-		range = 5, \
-		typecache = GLOB.typecache_living, \
-		amount = 1, \
-		when_locked = CALLBACK(src, PROC_REF(on_lockon_component)))
+		/datum/component/lock_on_cursor, \
+		lock_cursor_range = 5, \
+		target_typecache = GLOB.typecache_living, \
+		lock_amount = 1, \
+		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)), \
+	)
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
 	if(!length(locked_weakrefs))

@@ -64,6 +64,7 @@
 #define COLOR_PALE_GREEN "#20e28e"
 
 #define COLOR_CYAN "#00FFFF"
+#define COLOR_HEALING_CYAN "#80F5FF"
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
 #define COLOR_BLUE "#0000FF"
@@ -82,6 +83,7 @@
 #define COLOR_LIGHT_PINK "#FF3CC8"
 #define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
+#define COLOR_ADMIN_PINK "#D100D1"
 #define COLOR_BLUSH_PINK "#DE5D83"
 #define COLOR_FADED_PINK "#ff80d5"
 #define COLOR_MAGENTA "#FF00FF"
@@ -111,14 +113,6 @@
 #define COLOR_DRIED_TAN "#ad7257"
 #define COLOR_LIGHT_BROWN "#996666"
 #define COLOR_BROWNER_BROWN "#663300"
-
-//Color defines used by the soapstone (based on readability against grey tiles)
-#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
-#define COLOR_SOAPSTONE_IRON "#b2b2b2"
-#define COLOR_SOAPSTONE_BRONZE "#FE8001"
-#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
-#define COLOR_SOAPSTONE_GOLD "#FFD900"
-#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
 
 #define COLOR_GREEN_GRAY "#99BB76"
 #define COLOR_RED_GRAY "#B4696A"
@@ -170,6 +164,7 @@
 #define COLOR_THEME_GLASS "#75A4C4"
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 #define COLOR_THEME_TRASENKNOX "#3ce375"
+#define COLOR_THEME_DETECTIVE "#c7b08b"
 
 ///Colors for eigenstates
 #define COLOR_PERIWINKLEE "#9999FF"
@@ -183,14 +178,20 @@
  */
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
+/// Vivid, slightly blue green. rgb(60, 240, 70)
+#define LIGHT_COLOR_VIVID_GREEN "#3CF046"
 /// Electric green. rgb(0, 255, 0)
 #define LIGHT_COLOR_ELECTRIC_GREEN "#00FF00"
 /// Cold, diluted blue. rgb(100, 150, 250)
 #define LIGHT_COLOR_BLUE "#6496FA"
+/// Faint white blue. rgb(222, 239, 255)
+#define LIGHT_COLOR_FAINT_BLUE "#DEEFFF"
 /// Light blueish green. rgb(125, 225, 175)
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)
 #define LIGHT_COLOR_CYAN "#7DE1E1"
+/// Baby Blue rgb(0, 170, 220)
+#define LIGHT_COLOR_BABY_BLUE "#00AADC"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
 /// More-saturated cyan. rgb(64, 206, 255)
@@ -200,7 +201,9 @@
 /// Diluted, mid-warmth pink. rgb(225, 125, 225)
 #define LIGHT_COLOR_PINK "#E17DE1"
 /// Dimmed yellow, leaning kaki. rgb(225, 225, 125)
-#define LIGHT_COLOR_YELLOW "#E1E17D"
+#define LIGHT_COLOR_DIM_YELLOW "#E1E17D"
+/// Bright yellow. rgb(255, 255, 150)
+#define LIGHT_COLOR_BRIGHT_YELLOW "#FFFF99"
 /// Clear brown, mostly dim. rgb(150, 100, 50)
 #define LIGHT_COLOR_BROWN "#966432"
 /// Mostly pure orange. rgb(250, 150, 50)
@@ -221,10 +224,12 @@
 #define LIGHT_COLOR_LAVA "#C48A18"
 /// Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_FLARE "#FA644B"
+/// Vivid red. Leans a bit darker to accentuate red colors and leave other channels a bit dry.  rgb(200, 25, 25)
+#define LIGHT_COLOR_INTENSE_RED "#C81919"
 /// Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B"
-/// Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
-#define LIGHT_COLOR_TUNGSTEN "#FAE1AF"
+/// Extremely diluted yellow, close to skin color (for some reason). rgb(255, 214, 170)
+#define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
 

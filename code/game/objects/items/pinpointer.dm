@@ -216,3 +216,38 @@
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
 	. = ..()
+
+///list of all sheets with sniffable = TRUE for the sniffer to locate
+GLOBAL_LIST_EMPTY(sniffable_sheets)
+
+/obj/item/pinpointer/material_sniffer
+	name = "material sniffer"
+	desc = "A handheld tracking device that locates sheets of glass and iron."
+	icon_state = "pinpointer_sniffer"
+	worn_icon_state = "pinpointer_black"
+
+/obj/item/pinpointer/material_sniffer/scan_for_target()
+	if(target)
+		return
+	var/obj/item/stack/sheet/new_sheet_target
+	var/closest_distance = INFINITY
+	for(var/obj/item/stack/sheet/potential_sheet as anything in GLOB.sniffable_sheets)
+		// not enough for lag reasons, and shouldn't even be on this
+		if(potential_sheet.amount < 10)
+			GLOB.sniffable_sheets -= potential_sheet
+			continue
+		//held by someone
+		if(isliving(potential_sheet.loc))
+			continue
+		//not on scanner's z
+		if(potential_sheet.z != z)
+			continue
+		var/distance_from_sniffer = get_dist(src, potential_sheet)
+		if(distance_from_sniffer < closest_distance)
+			closest_distance = distance_from_sniffer
+			new_sheet_target = potential_sheet
+	if(!new_sheet_target)
+		target = null
+		return
+	say("Located [new_sheet_target.amount] [new_sheet_target.singular_name]s!")
+	target = new_sheet_target

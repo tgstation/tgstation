@@ -241,7 +241,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
 		if(is_convertable)
-			do_convert(L, invokers)
+			do_convert(L, invokers, Cult_team)
 	else
 		invocation = "Barhah hra zar'garis!"
 		..()
@@ -251,41 +251,60 @@ structure_check() searches for nearby cultist structures required for the invoca
 	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
 
-/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
+/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers, datum/team/cult/cult_team)
+	ASSERT(convertee.mind)
+
 	if(length(invokers) < 2)
 		for(var/M in invokers)
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
 		log_game("Offer rune with [convertee] on it failed - tried conversion with one invoker.")
 		return FALSE
+
 	if(convertee.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
 		log_game("Offer rune with [convertee] on it failed - convertee had anti-magic.")
 		return FALSE
+
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
 		convertee.adjustBruteLoss(-(brutedamage * 0.75))
 		convertee.adjustFireLoss(-(burndamage * 0.75))
-	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
-	span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"))
-	convertee.mind?.add_antag_datum(/datum/antagonist/cult)
-	convertee.Unconscious(100)
+
+	convertee.visible_message(
+		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
+			? "even as [convertee.p_their()] wounds heal and close" \
+			: "as the markings below [convertee.p_them()] glow a bloody red"]!"),
+		span_cultlarge("<i>AAAAAAAAAAAAAA-</i>"),
+	)
+
+	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
+	var/mob/living/carbon/human/human_convertee = convertee
+
+	if(check_holidays(APRIL_FOOLS) && prob(10))
+		convertee.Paralyze(10 SECONDS)
+		if(istype(human_convertee))
+			human_convertee.force_say()
+		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+
+	else
+		convertee.Unconscious(10 SECONDS)
+
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
-	</b></span>")
-	if(ishuman(convertee))
-		var/mob/living/carbon/human/H = convertee
-		H.uncuff()
-		H.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		H.remove_status_effect(/datum/status_effect/speech/stutter)
+	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
-		if(prob(1) || check_holidays(APRIL_FOOLS))
-			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+	to_chat(convertee, span_cultitalic("<b>Your blood pulses. Your head throbs. The world goes red. \
+		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+		and something evil takes root.</b>"))
+	to_chat(convertee, span_cultitalic("<b>Assist your new compatriots in their dark dealings. \
+		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
+
+	if(istype(human_convertee))
+		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name
@@ -345,7 +364,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
-	if(sacrificial.mind && !sacrificial.suiciding)
+	if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 		stone.capture_soul(sacrificial, first_invoker, TRUE)
 
 	if(sacrificial)
@@ -555,6 +574,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/rune_turf = get_turf(src)
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		cult_team.true_cultists += cult_mind
 	sleep(4 SECONDS)
 	if(src)
 		color = RUNE_COLOR_RED
@@ -929,7 +950,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	no_brain = TRUE
 	. = ..()
 
-/mob/living/carbon/human/cult_ghost/getorganszone(zone, include_children)
+/mob/living/carbon/human/cult_ghost/get_organs_for_zone(zone, include_children)
 	. = ..()
 	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
@@ -1018,52 +1039,37 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)
-				var/datum/round_event_control/disease_outbreak/covid_2562_event = locate() in SSevents.control
-				INVOKE_ASYNC(covid_2562_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-				var/datum/round_event_control/mice_migration/stuart_big_event = locate() in SSevents.control
-				INVOKE_ASYNC(stuart_big_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-
+				force_event_async(/datum/round_event_control/disease_outbreak, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/mice_migration, "an apocalypse rune")
 			if(11 to 20)
-				var/datum/round_event_control/radiation_storm/my_skin_feels_funny_event = locate() in SSevents.control
-				INVOKE_ASYNC(my_skin_feels_funny_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/radiation_storm, "an apocalypse rune")
 
 			if(21 to 30)
-				var/datum/round_event_control/brand_intelligence/product_placement_gone_rogue_event = locate() in SSevents.control
-				INVOKE_ASYNC(product_placement_gone_rogue_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/brand_intelligence, "an apocalypse rune")
 
 			if(31 to 40)
-				var/datum/round_event_control/immovable_rod/huge_rod_event = locate() in SSevents.control //you've
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //got
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //a
-				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //huge...
+				force_event_async(/datum/round_event_control/immovable_rod, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/immovable_rod, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/immovable_rod, "an apocalypse rune")
 
 			if(41 to 50)
-				var/datum/round_event_control/meteor_wave/dinosaur_purge_event = locate() in SSevents.control
-				INVOKE_ASYNC(dinosaur_purge_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/meteor_wave, "an apocalypse rune")
 
 			if(51 to 60)
-				var/datum/round_event_control/spider_infestation/creepy_crawly_event = locate() in SSevents.control
-				INVOKE_ASYNC(creepy_crawly_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/spider_infestation, "an apocalypse rune")
 
 			if(61 to 70)
-				var/datum/round_event_control/anomaly/anomaly_flux/flux_event = locate() in SSevents.control
-				INVOKE_ASYNC(flux_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-				var/datum/round_event_control/anomaly/anomaly_grav/grav_event = locate() in SSevents.control
-				INVOKE_ASYNC(grav_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-				var/datum/round_event_control/anomaly/anomaly_pyro/pyro_event = locate() in SSevents.control
-				INVOKE_ASYNC(pyro_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-				var/datum/round_event_control/anomaly/anomaly_vortex/vortex_event = locate() in SSevents.control
-				INVOKE_ASYNC(vortex_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/anomaly/anomaly_flux, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/anomaly/anomaly_grav, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/anomaly/anomaly_pyro, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/anomaly/anomaly_vortex, "an apocalypse rune")
 
 			if(71 to 80)
-				var/datum/round_event_control/spacevine/ivy_event = locate() in SSevents.control
-				INVOKE_ASYNC(ivy_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
-				var/datum/round_event_control/grey_tide/grey_tide_nation_wide = locate() in SSevents.control
-				INVOKE_ASYNC(grey_tide_nation_wide, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/spacevine, "an apocalypse rune")
+				force_event_async(/datum/round_event_control/grey_tide, "an apocalypse rune")
 
 			if(81 to 100)
-				var/datum/round_event_control/portal_storm_narsie/total_not_a_xen_storm_event = locate() in SSevents.control
-				INVOKE_ASYNC(total_not_a_xen_storm_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				force_event_async(/datum/round_event_control/portal_storm_narsie, "an apocalypse rune")
 
 	qdel(src)
 

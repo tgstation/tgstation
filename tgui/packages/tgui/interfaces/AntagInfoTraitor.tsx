@@ -35,6 +35,8 @@ type Info = {
   intro: string;
   code: string;
   failsafe_code: string;
+  replacement_code: string;
+  replacement_frequency: string;
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
@@ -120,15 +122,34 @@ const EmployerSection = (props, context) => {
 
 const UplinkSection = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { has_uplink, uplink_intro, uplink_unlock_info, code, failsafe_code } =
-    data;
+  const {
+    has_uplink,
+    uplink_intro,
+    uplink_unlock_info,
+    code,
+    failsafe_code,
+    replacement_code,
+    replacement_frequency,
+  } = data;
   return (
     <Section title="Uplink" mb={!has_uplink && -1}>
       <Stack fill>
         {(!has_uplink && (
           <Dimmer>
-            <Stack.Item fontSize="18px">
-              You were not supplied with an uplink.
+            <Stack.Item fontSize="16px">
+              <Section textAlign="Center">
+                Your uplink is missing or destroyed. <br />
+                Craft a Syndicate Uplink Beacon and then speak
+                <br />
+                <span style={goalstyle}>
+                  <b>{replacement_code}</b>
+                </span>{' '}
+                on frequency{' '}
+                <span style={goalstyle}>
+                  <b>{replacement_frequency}</b>
+                </span>{' '}
+                after synchronizing with the beacon.
+              </Section>
             </Stack.Item>
           </Dimmer>
         )) || (
@@ -149,6 +170,27 @@ const UplinkSection = (props, context) => {
           </>
         )}
       </Stack>
+      <br />
+      {(has_uplink && (
+        <Section textAlign="Center">
+          If you lose your uplink, you can craft a Syndicate Uplink Beacon and
+          then speak{' '}
+          <span style={goalstyle}>
+            <b>{replacement_code}</b>
+          </span>{' '}
+          on radio frequency{' '}
+          <span style={goalstyle}>
+            <b>{replacement_frequency}</b>
+          </span>{' '}
+          after synchronizing with the beacon.
+        </Section>
+      )) || (
+        <Section>
+          {' '}
+          <br />
+          <br />
+        </Section>
+      )}
     </Section>
   );
 };

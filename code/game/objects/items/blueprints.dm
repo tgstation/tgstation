@@ -1,11 +1,6 @@
-#define AREA_ERRNONE 0
-#define AREA_STATION 1
-#define AREA_SPACE 2
-#define AREA_SPECIAL 3
-
 /obj/item/areaeditor
 	name = "area modification item"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "blueprints"
 	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
@@ -29,7 +24,7 @@
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
 		return TRUE
-	if(!usr.canUseTopic(src) || usr != loc)
+	if(!usr.can_perform_action(src) || usr != loc)
 		usr << browse(null, "window=blueprints")
 		return TRUE
 	if(href_list["create_area"])
@@ -48,7 +43,7 @@
 /obj/item/areaeditor/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -211,7 +206,7 @@
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
 
@@ -220,6 +215,8 @@
 	var/prevname = "[A.name]"
 	set_area_machinery_title(A, new_name, prevname)
 	A.name = new_name
+	require_area_resort() //area renamed so resort the names
+
 	if(A.firedoors)
 		for(var/D in A.firedoors)
 			var/obj/machinery/door/firedoor/FD = D
@@ -231,16 +228,19 @@
 /proc/set_area_machinery_title(area/area, title, oldtitle)
 	if(!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/obj/machinery/airalarm/airpanel in area)
-		airpanel.name = replacetext(airpanel.name,oldtitle,title)
-	for(var/obj/machinery/power/apc/apcpanel in area)
-		apcpanel.name = replacetext(apcpanel.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in area)
-		scrubber.name = replacetext(scrubber.name,oldtitle,title)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in area)
-		vent.name = replacetext(vent.name,oldtitle,title)
-	for(var/obj/machinery/door/door in area)
-		door.name = replacetext(door.name,oldtitle,title)
-	for(var/obj/machinery/firealarm/firepanel in area)
-		firepanel.name = replacetext(firepanel.name,oldtitle,title)
+
+	//stuff tied to the area to rename
+	var/list/to_rename = list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+	)
+
+	for(var/obj/machine as anything in area)
+		if(is_type_in_list(machine, to_rename))
+			machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

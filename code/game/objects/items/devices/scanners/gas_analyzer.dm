@@ -46,7 +46,7 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src))
+	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))
 		return
 
 	if(cooldown)

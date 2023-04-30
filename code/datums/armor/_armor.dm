@@ -126,11 +126,11 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 			new_armor.vars[mod] = value_all
 		return new_armor
 
-	for(var/value in values)
-		if(value in all_keys)
-			new_armor.vars[value] = values[value]
+	for(var/armor_rating in all_keys)
+		if(armor_rating in values)
+			new_armor.vars[armor_rating] = values[armor_rating]
 		else
-			stack_trace("Attempt to call generate_new_with_specific with illegal value '[value]'! Ignoring it")
+			new_armor.vars[armor_rating] = vars[armor_rating]
 	return new_armor
 
 /datum/armor/immune/generate_new_with_specific(list/values)

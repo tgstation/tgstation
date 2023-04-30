@@ -9,7 +9,7 @@ import { MedicalRecord, MedicalRecordData } from './types';
 /** Displays all found records. */
 export const MedicalRecordTabs = (props, context) => {
   const { act, data } = useBackend<MedicalRecordData>(context);
-  const { records = [] } = data;
+  const { records = [], station_z } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
@@ -50,7 +50,7 @@ export const MedicalRecordTabs = (props, context) => {
             <Button
               disabled
               icon="plus"
-              tooltip="Add new records by inserting a photo into the terminal. You do not need this screen open.">
+              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open.">
               Create
             </Button>
           </Stack.Item>
@@ -58,6 +58,7 @@ export const MedicalRecordTabs = (props, context) => {
             <Button.Confirm
               content="Purge"
               icon="trash"
+              disabled={!station_z}
               onClick={() => act('purge_records')}
               tooltip="Wipe all record data."
             />

@@ -53,7 +53,9 @@
 
 				current_record["bloodtype"] = person.blood_type
 				current_record["ma_dis"] = person.major_disabilities_desc
-				current_record["minor_disabilities"] = person.minor_disabilities_desc
+				current_record["mi_dis"] = person.minor_disabilities_desc
+				current_record["physical_status"] = person.physical_status
+				current_record["mental_status"] = person.mental_status
 				current_record["name"] = person.name
 				current_record["notes"] = person.medical_notes
 
@@ -61,10 +63,8 @@
 
 	return all_records
 
-
-
-/datum/computer_file/program/records/ui_data(mob/user)
-	var/list/data = get_header_data()
+/datum/computer_file/program/records/ui_static_data(mob/user)
+	var/list/data = list()
 	data["records"] = GetRecordsReadable()
 	data["mode"] = mode
 	return data

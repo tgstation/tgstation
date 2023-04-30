@@ -16,7 +16,7 @@
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.")
 	miner_fluff_string = span_holoparasite("You encounter... Gibtonite, an explosive fighter.")
 	creator_name = "Explosive"
-	creator_desc = "High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay."
+	creator_desc = "High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay."
 	creator_icon = "explosive"
 	/// Static list of signals that activate the boom.
 	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
@@ -45,7 +45,7 @@
 	to_chat(src, span_bolddanger("Success! Bomb armed!"))
 	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)
 	RegisterSignal(planting_on, COMSIG_PARENT_EXAMINE, PROC_REF(display_examine))
-	RegisterSignal(planting_on, boom_signals, PROC_REF(kaboom))
+	RegisterSignals(planting_on, boom_signals, PROC_REF(kaboom))
 	addtimer(CALLBACK(src, PROC_REF(disable), planting_on), decay_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /mob/living/simple_animal/hostile/guardian/explosive/proc/kaboom(atom/source, mob/living/explodee)

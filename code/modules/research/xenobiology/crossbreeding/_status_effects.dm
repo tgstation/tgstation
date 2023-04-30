@@ -258,7 +258,7 @@
 	duration = 100
 
 /datum/status_effect/watercookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 	return ..()
 
 /datum/status_effect/watercookie/tick()
@@ -266,7 +266,7 @@
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -439,38 +439,26 @@
 	id = "stabilizedbase"
 	duration = -1
 	alert_type = null
+	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
+	/// Colour of the extract providing the buff
 	var/colour = "null"
 
-/datum/status_effect/stabilized/proc/location_check()
-	if(linked_extract.loc == owner)
-		return TRUE
-	if(linked_extract.loc.loc == owner)
-		return TRUE
-	for(var/atom/storage_loc as anything in get_storage_locs(linked_extract))
-		if(storage_loc == owner)
-			return TRUE
-		if(storage_loc.loc == owner)
-			return TRUE
-		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
-			if(storage_loc_storage_loc == owner)
-				return TRUE
-	for(var/atom/loc_storage_loc as anything in get_storage_locs(linked_extract.loc))
-		if(loc_storage_loc == owner)
-			return TRUE
-	return FALSE
+/datum/status_effect/stabilized/on_creation(mob/living/new_owner, obj/item/slimecross/stabilized/linked_extract)
+	src.linked_extract = linked_extract
+	return ..()
 
 /datum/status_effect/stabilized/tick()
-	if(!linked_extract || !linked_extract.loc) //Sanity checking
+	if(isnull(linked_extract))
 		qdel(src)
 		return
-	if(linked_extract && !location_check())
+	if(linked_extract.get_held_mob() == owner)
+		return
+	owner.balloon_alert(owner, "[colour] extract faded!")
+	if(!QDELETED(linked_extract))
 		linked_extract.linked_effect = null
-		if(!QDELETED(linked_extract))
-			linked_extract.owner = null
-			START_PROCESSING(SSobj,linked_extract)
-		qdel(src)
-	return ..()
+		START_PROCESSING(SSobj,linked_extract)
+	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
@@ -493,11 +481,20 @@
 	colour = "orange"
 
 /datum/status_effect/stabilized/orange/tick()
-	var/body_temperature_difference = owner.get_body_temp_normal(apply_change=FALSE) - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5, body_temperature_difference))
+	var/body_temp_target = owner.get_body_temp_normal(apply_change = FALSE)
+
+	var/body_temp_actual = owner.bodytemperature
+	var/body_temp_offset = body_temp_target - body_temp_actual
+	body_temp_offset = clamp(body_temp_offset, -5, 5)
+	owner.adjust_bodytemperature(body_temp_offset)
+
 	if(ishuman(owner))
-		var/mob/living/carbon/human/humi = owner
-		humi.adjust_coretemperature(min(5, humi.get_body_temp_normal(apply_change=FALSE) - humi.coretemperature))
+		var/mob/living/carbon/human/human = owner
+		var/core_temp_actual = human.coretemperature
+		var/core_temp_offset = body_temp_target - core_temp_actual
+		core_temp_offset = clamp(core_temp_offset, -5, 5)
+		human.adjust_coretemperature(core_temp_offset)
+
 	return ..()
 
 /datum/status_effect/stabilized/purple
@@ -539,11 +536,11 @@
 	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
-	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/blue/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -847,48 +844,74 @@
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
 	colour = "pink"
+	/// List of weakrefs to mobs we have pacified
 	var/list/mobs = list()
-	var/faction_name
+	/// Name of our faction
+	var/faction_name = ""
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = REF(owner)
+	faction_name = FACTION_PINK_EXTRACT(owner)
+	owner.faction |= faction_name
+	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()
-	for(var/mob/living/simple_animal/M in view(7,get_turf(owner)))
-		if(!(M in mobs))
-			mobs += M
-			M.apply_status_effect(/datum/status_effect/pinkdamagetracker)
-			M.faction |= faction_name
-	for(var/mob/living/simple_animal/M in mobs)
-		if(!(M in view(7,get_turf(owner))))
-			M.faction -= faction_name
-			M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-			mobs -= M
-		var/datum/status_effect/pinkdamagetracker/C = M.has_status_effect(/datum/status_effect/pinkdamagetracker)
-		if(istype(C) && C.damage > 0)
-			C.damage = 0
-			owner.apply_status_effect(/datum/status_effect/brokenpeace)
-	var/HasFaction = FALSE
-	for(var/i in owner.faction)
-		if(i == faction_name)
-			HasFaction = TRUE
+	update_nearby_mobs()
+	var/has_faction = FALSE
+	for (var/check_faction in owner.faction)
+		if(check_faction != faction_name)
+			continue
+		has_faction = TRUE
+		break
 
-	if(HasFaction && owner.has_status_effect(/datum/status_effect/brokenpeace))
-		owner.faction -= faction_name
-		to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
-	if(!HasFaction && !owner.has_status_effect(/datum/status_effect/brokenpeace))
+	if(has_faction)
+		if(owner.has_status_effect(/datum/status_effect/brokenpeace))
+			owner.faction -= faction_name
+			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
+	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
 		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 		owner.faction |= faction_name
 	return ..()
 
+/// Pacifies mobs you can see and unpacifies mobs you no longer can
+/datum/status_effect/stabilized/pink/proc/update_nearby_mobs()
+	var/list/visible_things = view(7, get_turf(owner))
+	// Unpacify far away or offended mobs
+	for(var/datum/weakref/weak_mob as anything in mobs)
+		var/mob/living/beast = weak_mob.resolve()
+		if(isnull(beast))
+			mobs -= weak_mob
+			continue
+		var/datum/status_effect/pinkdamagetracker/damage_tracker = beast.has_status_effect(/datum/status_effect/pinkdamagetracker)
+		if(istype(damage_tracker) && damage_tracker.damage > 0)
+			damage_tracker.damage = 0
+			owner.apply_status_effect(/datum/status_effect/brokenpeace)
+			return // No point continuing from here if we're going to end the effect
+		if(beast in visible_things)
+			continue
+		beast.faction -= faction_name
+		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+		mobs -= weak_mob
+
+	// Pacify nearby mobs
+	for(var/mob/living/beast in visible_things)
+		if(!isanimal_or_basicmob(beast))
+			continue
+		var/datum/weakref/weak_mob = WEAKREF(beast)
+		if(weak_mob in mobs)
+			continue
+		mobs += weak_mob
+		beast.apply_status_effect(/datum/status_effect/pinkdamagetracker)
+		beast.faction |= faction_name
+
 /datum/status_effect/stabilized/pink/on_remove()
-	for(var/mob/living/simple_animal/M in mobs)
-		M.faction -= faction_name
-		M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-	for(var/i in owner.faction)
-		if(i == faction_name)
-			owner.faction -= faction_name
+	for(var/datum/weakref/weak_mob as anything in mobs)
+		var/mob/living/beast = weak_mob.resolve()
+		if(isnull(beast))
+			continue
+		beast.faction -= faction_name
+		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+	owner.faction -= faction_name
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
@@ -897,6 +920,7 @@
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
+		qdel(linked_extract)
 	return ..()
 
 /datum/status_effect/stabilized/oil/get_examine_text()
@@ -1011,7 +1035,12 @@
 	if(QDELETED(familiar))
 		familiar = new linked.mob_type(get_turf(owner.loc))
 		familiar.name = linked.mob_name
-		familiar.del_on_death = TRUE
+		if(isanimal(familiar))
+			familiar.del_on_death = TRUE
+		else //we are a basicmob otherwise
+			var/mob/living/basic/basic_familiar = familiar
+			basic_familiar.basic_mob_flags |= DEL_ON_DEATH
+		familiar.befriend(owner)
 		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)

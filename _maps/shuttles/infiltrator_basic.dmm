@@ -305,25 +305,17 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
 "bt" = (
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 2;
-	pixel_y = 8
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer{
+	pixel_y = 10
+	},
+/obj/item/healthanalyzer{
+	pixel_y = 10
 	},
 /turf/open/floor/iron/edge,
 /area/shuttle/syndicate/medical)
@@ -504,11 +496,11 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/cell/high,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cf" = (
@@ -544,9 +536,7 @@
 "cr" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cs" = (
@@ -556,9 +546,7 @@
 "cu" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cv" = (
@@ -579,9 +567,7 @@
 "cy" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cz" = (
@@ -650,9 +636,7 @@
 "fk" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -684,9 +668,7 @@
 /area/shuttle/syndicate/airlock)
 "jf" = (
 /obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
@@ -814,14 +796,14 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/item/clothing/head/hats/hos/syndicate,
+/obj/item/clothing/head/hats/hos/cap/syndicate,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
@@ -890,7 +872,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/med_data/syndie{
+/obj/machinery/computer/records/medical/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -943,10 +925,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/red,
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "Ed" = (
@@ -1010,11 +992,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "KB" = (
-/obj/effect/turf_decal/tile/red/half{
-	dir = 4
-	},
 /obj/structure/chair/office/tactical{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -1046,7 +1028,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
 "Nr" = (
-/obj/machinery/computer/secure_data/laptop/syndie,
+/obj/machinery/computer/records/security/laptop/syndie,
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
