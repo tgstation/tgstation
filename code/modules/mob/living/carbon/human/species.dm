@@ -1433,7 +1433,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
-			H.AdjustAllImmobility(damage_amount * -1/2 SECONDS)
+			H.AdjustAllImmobility(damage_amount * -0.5 SECONDS)
 			if(H.getStaminaLoss()>=100)
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, adjustStaminaLoss), -INFINITY), 2 SECONDS, TIMER_UNIQUE)
 			if(BP)
