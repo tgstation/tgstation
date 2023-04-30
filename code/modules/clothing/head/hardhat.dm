@@ -86,7 +86,7 @@
 	inhand_icon_state = null
 	light_range = 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"
 
 /obj/item/clothing/head/utility/hardhat/white

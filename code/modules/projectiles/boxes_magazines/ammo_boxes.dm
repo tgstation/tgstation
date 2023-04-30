@@ -21,7 +21,7 @@
 	max_ammo = 6
 	caliber = CALIBER_38
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*10)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
 
@@ -116,4 +116,4 @@
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)

@@ -25,7 +25,7 @@
 	name = "advanced watering can"
 	icon_state = "adv_watering_can"
 	inhand_icon_state = "adv_watering_can"
-	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	list_reagents = list(/datum/reagent/water = 100)
 	///Refill rate for the watering can
 	var/refill_rate = 5

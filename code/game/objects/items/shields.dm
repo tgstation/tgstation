@@ -77,7 +77,7 @@
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
 	inhand_icon_state = "buckler"
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	max_integrity = 55
@@ -88,7 +88,7 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	inhand_icon_state = "roman_shield"
-	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 4.25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.25)
 	max_integrity = 65
 	shield_break_sound = 'sound/effects/grillehit.ogg'
 	shield_break_leftover = /obj/item/stack/sheet/iron
@@ -104,7 +104,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
-	custom_materials = list(/datum/material/glass= MINERAL_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glassbr3.ogg'

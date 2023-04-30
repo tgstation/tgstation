@@ -38,7 +38,7 @@
 	name = "Push Broom"
 	id = "pushbroom"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/pushbroom
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -146,7 +146,7 @@
 	name = "Serving Tray"
 	id = "servingtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -170,7 +170,7 @@
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =MINERAL_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray/cafeteria
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -386,7 +386,7 @@
 	name = "Plastic Armblade"
 	id = "toy_armblade"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic =MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/foamblade
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -533,7 +533,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/bar
 	category = list(
@@ -548,7 +548,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = 10000,
-		/datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/entertainment
 	category = list(

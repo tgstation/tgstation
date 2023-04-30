@@ -7,7 +7,7 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5) //hardcore
+	materials = list(/datum/material/iron = 10000, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5) //hardcore
 	build_path = /obj/item/storage/part_replacer
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS
@@ -19,7 +19,7 @@
 	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
 	id = "bs_rped"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 15000, /datum/material/glass =MINERAL_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500) //hardcore
+	materials = list(/datum/material/iron = 15000, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = 2500) //hardcore
 	build_path = /obj/item/storage/part_replacer/bluespace
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS
