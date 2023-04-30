@@ -43797,6 +43797,9 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/paper/guides/jobs/medical/morgue,
 /obj/machinery/newscaster/directional/north,
+/obj/item/storage/box/bodybags{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "lGH" = (
@@ -56044,8 +56047,7 @@
 /area/station/maintenance/floor2/starboard/aft)
 "oIU" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/table/reinforced/rglass,
-/obj/item/storage/box/bodybags,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "oJk" = (
