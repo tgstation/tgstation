@@ -16,6 +16,7 @@
 	speak_emote = list("hisses")
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	mob_size = MOB_SIZE_TINY
+	var/menu_description = "Normal spiderling."
 
 	unique_name = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
@@ -61,7 +62,7 @@
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 10 MINUTES,\
+		growth_time = 2 MINUTES,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\

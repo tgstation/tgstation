@@ -75,13 +75,12 @@
 	var/obj/structure/spider/eggcluster/egg
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
-		/mob/living/basic/giant_spider/nurse,
-		/mob/living/basic/giant_spider/hunter,
-		/mob/living/basic/giant_spider/ambush,
-		/mob/living/basic/giant_spider/tangle,
-		/mob/living/basic/giant_spider/hunter,
-		/mob/living/basic/giant_spider,
-		/mob/living/basic/giant_spider/scout,
+		/mob/living/basic/spiderling/nurse,
+		/mob/living/basic/spiderling/hunter,
+		/mob/living/basic/spiderling/ambush,
+		/mob/living/basic/spiderling/tangle,
+		/mob/living/basic/spiderling/guard,
+		/mob/living/basic/spiderling/scout,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
@@ -97,7 +96,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/spider/process(seconds_per_tick)
-	amount_grown += rand(0, 1) * seconds_per_tick
+	amount_grown += rand(0, 10) * seconds_per_tick
 	if(amount_grown >= 100 && !ready)
 		ready = TRUE
 		notify_ghosts("[src] is ready to hatch!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
@@ -134,9 +133,9 @@
 	you_are_text = "You are an enriched spider."
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
-		/mob/living/basic/giant_spider/tarantula,
-		/mob/living/basic/giant_spider/viper,
-		/mob/living/basic/giant_spider/midwife,
+		/mob/living/basic/spiderling/tarantula,
+		/mob/living/basic/spiderling/viper,
+		/mob/living/basic/spiderling/midwife,
 	)
 
 /obj/effect/mob_spawn/ghost_role/spider/bloody
