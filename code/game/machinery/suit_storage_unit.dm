@@ -284,20 +284,22 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/proc/access_check(mob/living/user)
-	if(!isnull(id_card))
-		var/obj/item/card/id/id = id_card.resolve()
-		if(QDELETED(id))
-			name = initial(name)
-			desc = initial(desc)
-			id_card = null
-			req_access = list()
-			req_one_access = null
-			set_access(list())
-			return TRUE
-		if(id_card && (user.get_idcard() != id))
-			balloon_alert(user, "not your unit!")
-			return FALSE
-	else if(!allowed(user))
+	var/obj/item/card/id/id = id_card?.resolve()
+
+	if(!id) // reset to defaults
+		name = initial(name)
+		desc = initial(desc)
+		id_card = null
+		req_access = list()
+		req_one_access = null
+		set_access(list())
+		return TRUE
+
+	if(user.get_idcard() != id)
+		balloon_alert(user, "not your unit!")
+		return FALSE
+
+	if(!allowed(user))
 		balloon_alert(user, "access denied!")
 		return FALSE
 
