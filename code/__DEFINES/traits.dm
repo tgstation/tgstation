@@ -1002,6 +1002,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
 #define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"
 
+/// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
+#define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
+
 // Traits to heal for
 
 /// This mob heals from carp rifts.

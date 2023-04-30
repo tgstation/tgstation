@@ -1,0 +1,4 @@
+author: "NoselessCanine"
+delete-after: True
+changes:
+  - bugfix: "Bloody Mary flavor is now accurate to its description."

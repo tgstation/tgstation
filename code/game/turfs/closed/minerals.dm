@@ -132,7 +132,9 @@
 	if(user.Adjacent(src))
 		attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
+/turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
@@ -670,7 +672,7 @@
 	var/previous_stage = stage
 	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
 		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
-		defuse()
+		defuse(user)
 	..()
 	if(istype(attacking_item, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
 		user.Immobilize(0.5 SECONDS)
@@ -709,7 +711,7 @@
 			stage = GIBTONITE_DETONATE
 			explosion(bombturf, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, adminlog = notify_admins, explosion_cause = src)
 
-/turf/closed/mineral/gibtonite/proc/defuse()
+/turf/closed/mineral/gibtonite/proc/defuse(mob/living/defuser)
 	if(stage == GIBTONITE_ACTIVE)
 		cut_overlay(activated_overlay)
 		activated_overlay.icon_state = "rock_Gibtonite_inactive"
@@ -719,8 +721,13 @@
 		if(det_time < 0)
 			det_time = 0
 		visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
+		if(defuser)
+			SEND_SIGNAL(defuser, COMSIG_LIVING_DEFUSED_GIBTONITE, det_time)
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user)
@@ -790,6 +797,9 @@
 
 
 /turf/closed/mineral/strong/gets_drilled(mob/user, give_exp = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user
