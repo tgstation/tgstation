@@ -204,7 +204,7 @@ There are several things that need to be remembered:
 	remove_overlay(GLASSES_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head) //decapitated
+	if(isnull(my_head)) //decapitated
 		return
 
 	if(client && hud_used)
@@ -230,7 +230,7 @@ There are several things that need to be remembered:
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head) //decapitated
+	if(isnull(my_head)) //decapitated
 		return
 
 	if(client && hud_used)
@@ -300,7 +300,7 @@ There are several things that need to be remembered:
 		var/feature_y_offset = 0
 		for (var/body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			var/obj/item/bodypart/leg/my_leg = get_bodypart(body_zone)
-			if(!my_leg)
+			if(isnull(my_leg))
 				continue
 			var/list/foot_offset = my_leg.worn_foot_offset?.get_offset()
 			if (foot_offset && foot_offset["y"] > feature_y_offset)
@@ -427,7 +427,7 @@ There are several things that need to be remembered:
 	remove_overlay(FACEMASK_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head) //Decapitated
+	if(isnull(my_head)) //Decapitated
 		return
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1])
