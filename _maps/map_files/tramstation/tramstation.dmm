@@ -10356,6 +10356,7 @@
 /area/station/cargo/office)
 "ccw" = (
 /obj/structure/bed/roller,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ccx" = (

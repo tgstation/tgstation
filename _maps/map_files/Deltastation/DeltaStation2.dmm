@@ -13022,6 +13022,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"dhJ" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/station/medical/morgue)
 "dhM" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -28068,15 +28077,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "gXr" = (
-/obj/effect/mapping_helpers/dead_body_placer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /obj/machinery/duct,
-/obj/effect/mapping_helpers/dead_body_placer,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/morgue)
 "gXu" = (
@@ -48183,6 +48191,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lVK" = (
+/obj/effect/turf_decal/trimline/neutral/warning,
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/station/medical/morgue)
 "lWi" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/radio/intercom/directional/north,
@@ -136806,7 +136821,7 @@ qYL
 uAV
 aiF
 hIk
-wUD
+dhJ
 irq
 bhw
 igt
@@ -137061,7 +137076,7 @@ uOu
 tzn
 qYL
 uwZ
-aiF
+lVK
 vdq
 wUD
 gHF
