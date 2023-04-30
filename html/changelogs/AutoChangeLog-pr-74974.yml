@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "[Mafia] Players get a popup when a player is voted to the stand."
-  - qol: "[Mafia] Players now have the name of who they voted for displayed over their heads during voting period."
-  - balance: "[Mafia] Deadchat can no longer see Mafia chat."
-  - balance: "[Mafia] HoP can now solo-win."
