@@ -6204,7 +6204,7 @@
 /area/station/service/chapel)
 "bWB" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/computer/operating,
+/obj/structure/table/optable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bWK" = (
@@ -31161,6 +31161,10 @@
 /obj/structure/mirror/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/medical/break_room)
+"jYD" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "jYH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 9
@@ -32526,9 +32530,10 @@
 /area/station/hallway/secondary/service)
 "ksM" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
-/obj/structure/table/optable,
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ksO" = (
@@ -39698,10 +39703,9 @@
 "mLx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/computer/records/medical/laptop{
-	dir = 4
+/obj/structure/mannequin/skeleton{
+	dir = 1
 	},
-/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mLJ" = (
@@ -50838,6 +50842,10 @@
 /mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
+"qhh" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "qhy" = (
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -51645,7 +51653,6 @@
 /area/station/maintenance/port/aft)
 "qvt" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qvQ" = (
@@ -57423,6 +57430,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"snf" = (
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "sng" = (
 /obj/structure/table,
 /obj/item/wrench,
@@ -72819,7 +72829,10 @@
 "xhr" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 8;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xht" = (
@@ -180441,7 +180454,7 @@ fwB
 fwB
 fwB
 fwB
-fwB
+btU
 btU
 bAU
 olO
@@ -180698,8 +180711,8 @@ dbb
 fwB
 fwB
 fwB
-fwB
 btU
+jYD
 qvt
 vae
 mLx
@@ -180955,9 +180968,9 @@ hun
 fwB
 fwB
 fwB
-fwB
 btU
 pKf
+snf
 vSH
 dlc
 aGS
@@ -181212,8 +181225,8 @@ ksK
 fwB
 fwB
 fwB
-fwB
 btU
+qhh
 bWB
 ksM
 xhr

@@ -58321,12 +58321,14 @@
 "oEX" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/secure_closet/personal/patient,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
+/obj/structure/mannequin/skeleton{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},

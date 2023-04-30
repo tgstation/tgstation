@@ -7089,6 +7089,12 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"bIB" = (
+/obj/structure/mannequin/skeleton{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/morgue)
 "bID" = (
 /obj/machinery/light/directional/west,
 /obj/structure/chair/sofa/bench/left{
@@ -193299,7 +193305,7 @@ vrA
 kTR
 iqS
 lsq
-fJU
+bIB
 sRg
 fJU
 vrA

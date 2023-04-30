@@ -1,5 +1,6 @@
 #define MANNEQUIN_WOOD "wood"
 #define MANNEQUIN_PLASTIC "plastic"
+#define MANNEQUIN_SKELETON "skeleton"
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
@@ -50,7 +51,7 @@
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
-		material = pick("wood", "plastic")
+		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
@@ -176,6 +177,11 @@
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
 
+/obj/structure/mannequin/skeleton
+	name = "skeleton model"
+	material = MANNEQUIN_SKELETON
+	anchored = TRUE
+
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
 	/datum/strippable_item/mannequin_slot/eyes,
@@ -274,3 +280,4 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 
 #undef MANNEQUIN_WOOD
 #undef MANNEQUIN_PLASTIC
+#undef MANNEQUIN_SKELETON

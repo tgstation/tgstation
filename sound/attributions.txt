@@ -51,3 +51,5 @@ https://freesound.org/s/431740/ (CC 0)
 chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
 https://freesound.org/people/kyles/sounds/453256/
 
+clock.mp3 is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
+https://freesound.org/people/Tetrisrocker/sounds/458627/

@@ -1917,6 +1917,7 @@
 #include "code\game\objects\items\devices\sensor_device.dm"
 #include "code\game\objects\items\devices\spyglasses.dm"
 #include "code\game\objects\items\devices\swapper.dm"
+#include "code\game\objects\items\devices\table_clock.dm"
 #include "code\game\objects\items\devices\taperecorder.dm"
 #include "code\game\objects\items\devices\traitordevices.dm"
 #include "code\game\objects\items\devices\transfer_valve.dm"

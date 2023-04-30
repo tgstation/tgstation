@@ -959,12 +959,7 @@
 /area/station/maintenance/port/aft)
 "auK" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/siding/white{
-	dir = 4
-	},
-/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/iv_drip,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "avc" = (
@@ -9212,8 +9207,8 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 1
+/obj/structure/mannequin/skeleton{
+	dir = 4
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -20578,9 +20573,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/siding/thinplating_new/corner{
-	dir = 4
-	},
 /obj/effect/landmark/start/coroner,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -25984,6 +25976,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"jFY" = (
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/small,
+/area/station/medical/morgue)
 "jGc" = (
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/showroomfloor,
@@ -31806,9 +31806,6 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/white{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/newscaster/directional/east,
@@ -35976,10 +35973,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 2
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "nhU" = (
@@ -42213,6 +42213,11 @@
 "pwN" = (
 /turf/open/floor/iron/dark/small,
 /area/station/service/chapel/storage)
+"pxg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "pxj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50537,6 +50542,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"scI" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/small,
+/area/station/medical/morgue)
 "sdf" = (
 /obj/item/kirbyplants/fullysynthetic,
 /obj/machinery/light_switch/directional/east,
@@ -56952,10 +56964,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
-"ugO" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "ugX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57604,6 +57612,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
+"ure" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "urh" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -106506,8 +106520,8 @@ ssz
 pJr
 xYE
 ldq
-wNE
-ldq
+scI
+jFY
 lIi
 mPw
 wTw
@@ -106761,9 +106775,9 @@ blb
 dDB
 ldq
 xQI
-kUF
-kdn
-uQo
+ure
+ldq
+wNE
 ldq
 ldq
 ldq
@@ -107017,10 +107031,10 @@ blb
 blb
 blb
 ldq
-bRN
-ldq
-ldq
-roz
+xQI
+kUF
+kdn
+uQo
 roz
 qRO
 vuA
@@ -107274,9 +107288,9 @@ dDB
 blb
 dDB
 ldq
-uME
-gUy
 bRN
+ldq
+ldq
 xQI
 xQI
 xGw
@@ -107531,11 +107545,11 @@ blb
 blb
 blb
 ldq
-esx
-vXn
+uME
+gUy
 bRN
 lTg
-xQI
+dAr
 hDz
 ldq
 qVn
@@ -107788,9 +107802,9 @@ dDB
 blb
 dDB
 ldq
-ldq
-vgz
-ldq
+esx
+vXn
+bRN
 ldq
 ldq
 xGw
@@ -108045,9 +108059,9 @@ yfQ
 ldq
 yfQ
 ldq
-dAr
-xQI
-ugO
+ldq
+vgz
+ldq
 vid
 ldq
 xGw
@@ -108565,7 +108579,7 @@ lmb
 ssz
 ssz
 nIp
-xGw
+pxg
 xQI
 ldq
 uLj
