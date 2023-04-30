@@ -212,7 +212,7 @@
 			qdel(external_organ) // It handles removing its references to this limb on its own.
 
 		external_organs = list()
-	QDEL_LIST(feature_offsets)
+	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
 
