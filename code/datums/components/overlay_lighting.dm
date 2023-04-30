@@ -358,13 +358,15 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.icon = light_overlays["[pixel_bounds]"]
-	if(pixel_bounds == 32 && !directional)
-		visible_mask.transform = null
-		return
-	var/offset = (pixel_bounds - 32) * 0.5
-	var/matrix/transform = new
-	transform.Translate(-offset, -offset)
-	visible_mask.transform = transform
+	if(pixel_bounds == 32)
+		if(!directional) // it's important that we make it to the end of this function if we are a directional light
+			visible_mask.transform = null
+			return
+	else
+		var/offset = (pixel_bounds - 32) * 0.5
+		var/matrix/transform = new
+		transform.Translate(-offset, -offset)
+		visible_mask.transform = transform
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 	if(directional)
