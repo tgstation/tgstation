@@ -40,6 +40,13 @@
 
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
+	QDEL_NULL(worn_uniform_offset)
+	QDEL_NULL(worn_id_offset)
+	QDEL_NULL(worn_suit_storage_offset)
+	QDEL_NULL(worn_belt_offset)
+	QDEL_NULL(worn_back_offset)
+	QDEL_NULL(worn_suit_offset)
+	QDEL_NULL(worn_neck_offset)
 	return ..()
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
@@ -106,6 +113,11 @@
 	var/datum/worn_feature_offset/worn_glove_offset
 	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
 	var/datum/worn_feature_offset/held_hand_offset
+
+/obj/item/bodypart/arm/Destroy()
+	QDEL_NULL(worn_glove_offset)
+	QDEL_NULL(held_hand_offset)
+	return ..()
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
@@ -331,6 +343,10 @@
 	unarmed_stun_threshold = 10
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
+
+/obj/item/bodypart/leg/Destroy()
+	QDEL_NULL(worn_foot_offset)
+	return ..()
 
 /obj/item/bodypart/leg/left
 	name = "left leg"
