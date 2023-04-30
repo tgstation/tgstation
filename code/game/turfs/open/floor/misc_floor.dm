@@ -145,18 +145,25 @@
 	floor_tile = /obj/item/stack/tile/noslip
 	slowdown = -0.3
 
+/turf/open/floor/noslip/tram
+	name = "high-traction platform"
+	icon_state = "noslip_tram"
+	base_icon_state = "noslip_tram"
+	floor_tile = /obj/item/stack/tile/noslip/tram
+
 /turf/open/floor/noslip/tram_plate
 	name = "linear induction plate"
 	desc = "The linear induction plate that powers the tram."
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
+	floor_tile = /obj/item/stack/tile/noslip/tram_plate
 	slowdown = 0
 
 /turf/open/floor/noslip/tram_platform
 	name = "tram platform"
-	desc = "A sturdy looking tram platform."
 	icon_state = "tram_platform"
 	base_icon_state = "tram_platform"
+	floor_tile = /obj/item/stack/tile/noslip/tram_platform
 	slowdown = 0
 
 /turf/open/floor/noslip/broken_states()
@@ -179,6 +186,17 @@
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
+
+/turf/open/floor/noslip/tram/Initialize(mapload)
+	if(check_holidays(PRIDE_WEEK))
+		color = pride_recolor(src)
+	else
+		color = "#EFB341"
+	return ..()
+
+/turf/open/floor/noslip/tram/proc/pride_recolor(atom/atom)
+	var/turf/turf = get_turf(atom)
+	return GLOB.rainbow_colors[(turf.x % GLOB.rainbow_colors.len) + 1]
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
