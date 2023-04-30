@@ -73,7 +73,9 @@
 
 		var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 		if(program)
-			program.force_full_update()
+			var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)
+			if(active_ui)
+				active_ui.send_full_update()
 
 	picturesync()
 
