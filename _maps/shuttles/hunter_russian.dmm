@@ -435,9 +435,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "Gh" = (

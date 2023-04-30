@@ -424,9 +424,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/machinery/light/directional/south,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,

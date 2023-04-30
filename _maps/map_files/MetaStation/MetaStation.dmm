@@ -2236,9 +2236,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aPk" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aPm" = (
@@ -2500,9 +2500,9 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai)
 "aUj" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap{
 	pixel_y = 2
@@ -5646,9 +5646,9 @@
 /area/station/commons/dorms)
 "cfv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -16836,9 +16836,9 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/item/wrench,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -43695,9 +43695,9 @@
 "pVi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pVM" = (
@@ -57290,9 +57290,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "uHa" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},

@@ -146,9 +146,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter1)
 "lD" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter1)

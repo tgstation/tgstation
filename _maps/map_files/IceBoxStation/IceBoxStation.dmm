@@ -35462,9 +35462,9 @@
 	},
 /area/station/service/chapel)
 "lnx" = (
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "lnC" = (
@@ -55858,9 +55858,9 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 8
@@ -68272,9 +68272,9 @@
 /area/icemoon/underground/explored)
 "vNT" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/machinery/light/small/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -73764,9 +73764,9 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/closet/crate{
-	opened = 1
-	},
+/obj/structure/closet/crate/open{
+	icon_state = "crateopen"
+},
 /obj/machinery/light/directional/south,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth,

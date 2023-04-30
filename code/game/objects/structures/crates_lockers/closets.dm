@@ -1087,4 +1087,7 @@
 	locked = FALSE
 	INVOKE_ASYNC(src, PROC_REF(open))
 
+/obj/structure/closet/open
+	opened = 1
+
 #undef LOCKER_FULL

@@ -45,6 +45,7 @@
 /obj/structure/closet/secure_closet/freezer/empty/open
 	req_access = null
 	locked = FALSE
+	opened = 1
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"

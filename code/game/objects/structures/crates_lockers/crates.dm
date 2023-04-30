@@ -113,6 +113,12 @@
 	manifest = null
 	update_appearance()
 
+/obj/structure/closet/crate/open
+	opened = 1
+
+/obj/structure/closet/crate/mail/open
+	opened = 1
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
