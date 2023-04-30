@@ -8603,8 +8603,8 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "cGY" = (
-/obj/machinery/computer/shuttle/mining,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cGZ" = (
