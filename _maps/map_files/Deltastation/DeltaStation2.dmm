@@ -29413,15 +29413,13 @@
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
 "hpe" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 8
 	},
+/obj/structure/bed/roller,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -40909,15 +40907,14 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "keC" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
 	},
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -89848,8 +89845,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
 "wtv" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light/cold/directional/east,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{

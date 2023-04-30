@@ -52,9 +52,6 @@
 		for(var/datum/symptom/symptom as anything in advanced_disease.symptoms)
 			autopsy_information += "[symptom.name] - [symptom.desc]<br>"
 
-	if(!autopsy_information.len)
-		return FALSE
-
 	var/obj/item/paper/autopsy_report = new(user.loc)
 	autopsy_report.name = "Autopsy Report ([scanned.name])"
 	autopsy_report.add_raw_text(autopsy_information.Join("\n"))
