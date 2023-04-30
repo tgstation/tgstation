@@ -8,6 +8,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(
+		/obj/item/autopsy_scanner,
 		/obj/item/analyzer,
 		/obj/item/biopsy_tool,
 		/obj/item/dnainjector,

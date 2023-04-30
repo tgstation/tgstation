@@ -286,7 +286,7 @@
 /datum/quirk/glass_jaw/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
 
-/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
 		return

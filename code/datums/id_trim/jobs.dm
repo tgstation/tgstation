@@ -395,6 +395,29 @@
 	assignment = "Chef"
 	sechud_icon_state = SECHUD_CHEF
 
+/datum/id_trim/job/coroner
+	assignment = "Coroner"
+	trim_state = "trim_coroner"
+	department_color = COLOR_MEDICAL_BLUE
+	subdepartment_color = COLOR_MEDICAL_BLUE
+	sechud_icon_state = SECHUD_CORONER
+	minimal_access = list(
+		ACCESS_MEDICAL,
+		ACCESS_MORGUE,
+		ACCESS_SURGERY,
+		ACCESS_MINERAL_STOREROOM,
+		)
+	extra_access = list(
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_PHARMACY,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_CMO,
+		)
+	job = /datum/job/coroner
+
 /datum/id_trim/job/curator
 	assignment = "Curator"
 	trim_state = "trim_curator"
