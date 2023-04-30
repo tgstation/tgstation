@@ -59,15 +59,14 @@
 			to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! \
 				You are generally a peaceful group unless provoked.")
 			try_keep_home(new_spawn)
+		new_spawn.log_message("possessed a free golem shell.", LOG_GAME)
+		log_admin("[key_name(new_spawn)] possessed a free golem shell.")
 
 	else if(new_spawn.mind)
 		new_spawn.mind.enslave_mind_to_creator(real_owner)
 
 	else
 		stack_trace("[type] created a golem without a mind.")
-
-	new_spawn.log_message("possessed a golem shell[real_owner ? " enslaved to [key_name(real_owner)]" : ""].", LOG_GAME)
-	log_admin("[key_name(new_spawn)] possessed a golem shell[real_owner ? " enslaved to [key_name(real_owner)]" : ""].")
 
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/human_spawn = new_spawn
