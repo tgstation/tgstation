@@ -590,7 +590,7 @@
 		return TRUE
 
 	if(locked)
-		balloon_alert("unlock first!")
+		balloon_alert(user, "unlock first!")
 		return
 
 	access_locked = !access_locked
