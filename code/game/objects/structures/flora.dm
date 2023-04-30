@@ -44,6 +44,9 @@
 	var/delete_on_harvest = FALSE
 	var/harvested = FALSE
 
+	/// If flora was destroyed or rather not, so you don't get as much product_types as if you harvested it.
+	var/destroyed = FALSE
+
 	/// Variables for determining the low/high ends of how long it takes for the flora takes to grow.
 	var/regrowth_time_low = 8 MINUTES
 	/// Stops the flora from regrowing if this is set to 0
@@ -137,6 +140,8 @@
 	var/list/product_list = list()
 
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
+	if(!destroyed)
+		harvest_amount = rand(harvest_amount_low, harvest_amount_high)*0.6
 	for(var/iteration in 1 to harvest_amount)
 		var/chosen_product = pick_weight(product_types)
 		if(!product_list[chosen_product])
@@ -266,6 +271,7 @@
 /obj/structure/flora/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		harvest()
+		destroyed = TRUE
 	qdel(src)
 
 /*********
