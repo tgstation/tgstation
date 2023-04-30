@@ -86,9 +86,6 @@
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()
 					new /obj/effect/decal/cleanable/plasma(affected_mob.loc)
-					var/time_delta = world.time
-					if(world.time > time_delta + 2)
-						return
 					affected_mob.visible_message(span_warning("[affected_mob] is erased from the timeline!"), span_userdanger("You are ripped from the timeline!"))
 					qdel(affected_mob)
 				if(3)
