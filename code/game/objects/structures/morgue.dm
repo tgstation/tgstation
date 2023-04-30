@@ -55,22 +55,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 	update_appearance(UPDATE_ICON)
 
-/obj/structure/bodycontainer/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!istype(arrived, /obj/structure/closet/body_bag))
-		return
-	var/obj/structure/closet/body_bag/arrived_bag = arrived
-	if(!arrived_bag.tagged)
-		return
-	name = arrived_bag.name
-	update_appearance(UPDATE_ICON)
-
-/obj/structure/bodycontainer/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /obj/structure/closet/body_bag))
-		name = initial(name)
-	update_appearance(UPDATE_ICON)
-
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
 		return
@@ -181,6 +165,22 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/beeper_off
 	beeper = FALSE
+
+/obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/structure/closet/body_bag))
+		return
+	var/obj/structure/closet/body_bag/arrived_bag = arrived
+	if(!arrived_bag.tagged)
+		return
+	name = arrived_bag.name
+	update_appearance(UPDATE_ICON)
+
+/obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/structure/closet/body_bag))
+		name = initial(name)
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
