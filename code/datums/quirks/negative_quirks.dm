@@ -530,6 +530,7 @@
 	icon = "tg-prosthetic-leg"
 	value = -3
 	var/slot_string = "limb"
+	/// the original limb from before the prosthetic was applied
 	var/obj/item/bodypart/old_limb
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
 	hardcore_value = 3
