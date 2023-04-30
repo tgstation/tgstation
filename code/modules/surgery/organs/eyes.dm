@@ -135,11 +135,10 @@
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
 
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	if(my_head?.worn_face_offset)
 		for(var/mutable_appearance/overlay in overlays)
-			overlay.pixel_x += offset[OFFSET_X]
-			overlay.pixel_y += offset[OFFSET_Y]
+			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 

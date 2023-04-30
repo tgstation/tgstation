@@ -67,6 +67,17 @@
 	var/lip_style
 	var/lip_color = "white"
 
+	/// Offset to apply to equipment worn on the ears
+	var/datum/worn_feature_offset/worn_ears_offset
+	/// Offset to apply to equipment worn on the eyes
+	var/datum/worn_feature_offset/worn_glasses_offset
+	/// Offset to apply to equipment worn on the mouth
+	var/datum/worn_feature_offset/worn_mask_offset
+	/// Offset to apply to equipment worn on the head
+	var/datum/worn_feature_offset/worn_head_offset
+	/// Offset to apply to overlays placed on the face
+	var/datum/worn_feature_offset/worn_face_offset
+
 	var/stored_lipstick_trait
 	///The image for hair
 	var/mutable_appearance/hair_overlay
@@ -76,7 +87,6 @@
 	var/mutable_appearance/facial_overlay
 	///The image for facial hair gradient
 	var/mutable_appearance/facial_gradient_overlay
-
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below

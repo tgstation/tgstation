@@ -324,6 +324,7 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
