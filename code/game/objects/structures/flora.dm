@@ -263,6 +263,11 @@
 	var/matrix/M = matrix(transform)
 	transform = M.Turn(-previous_rotation)
 
+/obj/structure/flora/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		harvest()
+	qdel(src)
+
 /*********
  * Trees *
  *********/
