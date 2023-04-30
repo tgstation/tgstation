@@ -148,7 +148,7 @@
 "lD" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter1)

@@ -426,7 +426,7 @@
 "bn" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/machinery/light/directional/south,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,

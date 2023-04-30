@@ -625,7 +625,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
 "ch" = (
@@ -787,7 +787,7 @@
 "cD" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
@@ -1969,7 +1969,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/crowbar,
 /obj/item/crowbar,
 /obj/item/pickaxe/mini,
@@ -2291,7 +2291,7 @@
 	},
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
 /turf/open/floor/plating,
@@ -3494,7 +3494,7 @@
 	},
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/tank/internals/plasma,
 /obj/item/tank/internals/plasma,
 /turf/open/floor/plating,
@@ -9723,7 +9723,7 @@
 "IX" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
@@ -9817,7 +9817,7 @@
 "Jp" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -9832,7 +9832,7 @@
 "Jt" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
@@ -9906,7 +9906,7 @@
 "JE" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/plating,
@@ -9960,7 +9960,7 @@
 "JN" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,

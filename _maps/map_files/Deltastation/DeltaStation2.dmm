@@ -2516,7 +2516,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aDt" = (
@@ -17185,7 +17185,7 @@
 	},
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
@@ -17684,7 +17684,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -23874,7 +23874,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -59938,7 +59938,7 @@
 "pdF" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
@@ -72684,7 +72684,7 @@
 "sji" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot,
 /obj/item/electronics/apc,

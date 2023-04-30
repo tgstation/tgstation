@@ -2069,7 +2069,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
@@ -2078,7 +2078,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)

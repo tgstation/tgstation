@@ -663,7 +663,7 @@
 "kA" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
@@ -1131,7 +1131,7 @@
 /obj/effect/turf_decal/bot/left,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -1150,7 +1150,7 @@
 	},
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -1762,7 +1762,7 @@
 /obj/structure/railing/corner,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,

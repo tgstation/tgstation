@@ -437,7 +437,7 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "Gh" = (

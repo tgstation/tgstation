@@ -3868,7 +3868,7 @@
 "Re" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)

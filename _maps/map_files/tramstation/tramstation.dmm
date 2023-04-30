@@ -4464,7 +4464,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "axJ" = (
@@ -4557,7 +4557,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/sheet/cardboard{
 	amount = 23
 	},
@@ -25106,7 +25106,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stock_parts/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -29441,7 +29441,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -50973,7 +50973,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

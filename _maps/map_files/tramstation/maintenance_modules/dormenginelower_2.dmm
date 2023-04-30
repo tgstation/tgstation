@@ -51,7 +51,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)

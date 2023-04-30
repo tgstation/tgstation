@@ -244,7 +244,7 @@
 	},
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},

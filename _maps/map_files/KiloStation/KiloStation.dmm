@@ -2839,7 +2839,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -8934,7 +8934,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -17691,7 +17691,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -25437,7 +25437,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -33200,7 +33200,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/plating,
@@ -35652,7 +35652,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
@@ -40395,7 +40395,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ngF" = (
@@ -52208,7 +52208,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/plating,
@@ -56581,7 +56581,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -60793,7 +60793,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 4
 	},
@@ -72516,7 +72516,7 @@
 "xCP" = (
 /obj/structure/closet/crate/open{
 	icon_state = "crateopen"
-},
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "xCY" = (
