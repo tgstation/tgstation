@@ -79,7 +79,12 @@ fi;
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
-    echo -e "${RED}ERROR: Misspelling of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in maps, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 if $grep -i'centcomm' $map_files; then
@@ -164,6 +169,11 @@ fi;
 if $grep -ni 'nanotransen' $code_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep 'NanoTrasen' $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
     st=1
 fi;
 part "map json naming"
