@@ -49,4 +49,4 @@
 		user.visible_message(span_notice("[user] deploys [loaded]."), balloon_alert(user, "you deploy the [loaded]."))
 		loaded = null
 	else
-		balloon_alert(user, "The dock is Empty!")
+		balloon_alert(user, "the dock is Empty!")
