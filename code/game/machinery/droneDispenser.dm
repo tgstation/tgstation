@@ -21,8 +21,8 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/iron_cost =ROD_MATERIAL_AMOUNT
-	var/glass_cost =ROD_MATERIAL_AMOUNT
+	var/iron_cost =HALF_SHEET_MATERIAL_AMOUNT
+	var/glass_cost =HALF_SHEET_MATERIAL_AMOUNT
 	var/power_used = 1000
 
 	var/mode = DRONE_READY

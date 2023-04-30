@@ -378,7 +378,7 @@
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
-	custom_materials = list(/datum/material/glass=ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
 	chargerate = INFINITY
 	ratingdesc = FALSE
 

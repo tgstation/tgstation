@@ -2,7 +2,7 @@
 	name = "Solar Panel Frame"
 	id = "solar_panel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3500, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = 3500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/solar_assembly
 	category = list(
 		RND_CATEGORY_INITIAL,

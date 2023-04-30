@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
@@ -456,37 +456,37 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return
 
 /obj/item/coin/gold
-	custom_materials = list(/datum/material/gold = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/silver
-	custom_materials = list(/datum/material/silver = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/diamond
-	custom_materials = list(/datum/material/diamond = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/plasma
-	custom_materials = list(/datum/material/plasma = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/uranium
-	custom_materials = list(/datum/material/uranium = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/titanium
-	custom_materials = list(/datum/material/titanium = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/bananium
-	custom_materials = list(/datum/material/bananium = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/adamantine
-	custom_materials = list(/datum/material/adamantine = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/adamantine = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/mythril
-	custom_materials = list(/datum/material/mythril = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/mythril = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/plastic
-	custom_materials = list(/datum/material/plastic = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/runite
-	custom_materials = list(/datum/material/runite = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/runite = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -496,7 +496,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	icon_state = "coin_valid"
-	custom_materials = list(/datum/material/plastic = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 	sideslist = list("valid", "salad")
 	heads_name = "valid"
 	material_flags = NONE
@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/iron
 
 /obj/item/coin/gold/debug
-	custom_materials = list(/datum/material/gold = ROD_MATERIAL_AMOUNT*0.4)
+	custom_materials = list(/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*0.4)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "Everytime it lands it bolts or opens doors, except for you."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond =ROD_MATERIAL_AMOUNT, /datum/material/plasma =ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE

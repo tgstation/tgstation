@@ -104,7 +104,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
-	custom_materials = list(/datum/material/glass= MINERAL_MATERIAL_AMOUNT * 3.75, /datum/material/iron= ROD_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass= MINERAL_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
@@ -287,7 +287,7 @@
 	icon_state = "teleriot"
 	inhand_icon_state = "teleriot"
 	worn_icon_state = "teleriot"
-	custom_materials = list(/datum/material/iron = ROD_MATERIAL_AMOUNT * 3.6, /datum/material/glass = ROD_MATERIAL_AMOUNT * 3.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2.7, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 1.8)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2.7, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 1.8)
 	slot_flags = null
 	force = 3
 	throwforce = 3

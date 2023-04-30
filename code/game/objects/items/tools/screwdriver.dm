@@ -65,7 +65,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver_a"
 	inhand_icon_state = "screwdriver_nuke"
-	custom_materials = list(/datum/material/iron=ROD_MATERIAL_AMOUNT*5, /datum/material/silver=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =ROD_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver=MINERAL_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =MINERAL_MATERIAL_AMOUNT, /datum/material/diamond =MINERAL_MATERIAL_AMOUNT)
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
@@ -84,7 +84,7 @@
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*1.75, /datum/material/silver=ROD_MATERIAL_AMOUNT * 1.5, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT*1.25) //what research value?
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*1.75, /datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium=MINERAL_MATERIAL_AMOUNT*1.25) //what research value?
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
 	throw_speed = 2

@@ -77,9 +77,9 @@
 ///The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 2000 Units.
 #define MINERAL_MATERIAL_AMOUNT 2000
 ///The amount of materials you get from half a sheet. Used in standard object quantities. 1000 units.
-#define ROD_MATERIAL_AMOUNT (MINERAL_MATERIAL_AMOUNT/2)
+#define HALF_SHEET_MATERIAL_AMOUNT (MINERAL_MATERIAL_AMOUNT/2)
 ///The amount of materials used in the smallest of objects, like pens and screwdrivers. 100 units.
-#define SMALL_MATERIAL_AMOUNT (ROD_MATERIAL_AMOUNT/10)
+#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/10)
 
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50

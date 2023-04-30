@@ -15,7 +15,7 @@
 	name = "Stethoscope"
 	id = "stethoscope"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/neck/stethoscope
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -78,7 +78,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-		/datum/material/glass =ROD_MATERIAL_AMOUNT * 5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/wallframe/telescreen/research
 	category = list(
@@ -93,7 +93,7 @@
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 5,
-		/datum/material/glass =ROD_MATERIAL_AMOUNT * 5,
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 5,
 	)
 	build_path = /obj/item/wallframe/telescreen/ordnance
 	category = list(
@@ -131,7 +131,7 @@
 	name = "Blood Filter"
 	id = "blood_filter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2, /datum/material/glass =ROD_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/blood_filter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -143,7 +143,7 @@
 	name = "Scalpel"
 	id = "scalpel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2, /datum/material/glass =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/scalpel
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -167,7 +167,7 @@
 	name = "Bonesetter"
 	id = "bonesetter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 5,  /datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1.25)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5,  /datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1.25)
 	build_path = /obj/item/bonesetter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -215,7 +215,7 @@
 	name = "Hemostat"
 	id = "hemostat"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT * 5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1.25)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT * 1.25)
 	build_path = /obj/item/hemostat
 	category = list(
 		RND_CATEGORY_INITIAL,

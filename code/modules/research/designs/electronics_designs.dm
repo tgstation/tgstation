@@ -8,7 +8,7 @@
 	desc = "Allows for the construction of an intellicard."
 	id = "intellicard"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass =ROD_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/aicard
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_MISC

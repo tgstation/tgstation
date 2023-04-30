@@ -14,7 +14,7 @@
 	name = "Iron Rod"
 	id = "rods"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -38,7 +38,7 @@
 	name = "Reinforced Glass"
 	id = "rglass"
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =ROD_MATERIAL_AMOUNT, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list(
 		RND_CATEGORY_INITIAL,

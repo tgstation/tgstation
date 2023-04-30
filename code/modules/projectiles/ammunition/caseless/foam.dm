@@ -61,4 +61,4 @@
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
-	custom_materials = list(/datum/material/iron = ROD_MATERIAL_AMOUNT* 1.125)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)
