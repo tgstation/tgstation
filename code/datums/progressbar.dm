@@ -307,6 +307,9 @@
 /obj/effect/world_progressbar/Destroy()
 	owner = null
 	bar_loc?:vis_contents -= src
+	bar_loc?:vis_contents -= bar
+	bar_loc?:vis_contents -= border_accessory
+	bar_loc?:vis_contents -= additional_image
 	qdel(bar)
 	qdel(border_accessory)
 	qdel(additional_image)
