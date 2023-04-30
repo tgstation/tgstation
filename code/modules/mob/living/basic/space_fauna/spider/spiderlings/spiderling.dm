@@ -9,11 +9,12 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
+	icon_dead = "spiderling_dead"
 	faction = list(FACTION_SPIDER)
 	speed = 1
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
 	speak_emote = list("hisses")
-	basic_mob_flags = FLAMMABLE_MOB
+	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	mob_size = MOB_SIZE_TINY
 
 	unique_name = TRUE
@@ -80,23 +81,17 @@
 	return ..()
 
 /mob/living/basic/spiderling/death(gibbed)
-	// If we're actually player-controlled, don't drop a body.
-	if(mind)
-		return ..()
-
-	. = ..(gibbed = TRUE) // we're going to get rid of the body, so we must invoke parent with gibbed as TRUE.
-
-	// alright, after we've done the parent stuff, and we weren't *actually* gibbed (per the arguments of THIS proc), we should spawn our corpse because it's food. yummy
-	if(!gibbed)
-		var/obj/item/food/spiderling/dead_spider = new(loc)
+	if(isturf(get_turf(loc)) && (basic_mob_flags & DEL_ON_DEATH || gibbed))
+		var/obj/item/food/spiderling/dead_spider = new(loc) // mmm yummy
 		dead_spider.name = name
 
-	qdel(src)
+	return ..()
 
 /mob/living/basic/spiderling/Login() // this is only really here for admins dragging and dropping players into spiderlings, player control of spiderlings is otherwise unimplemented
 	. = ..()
 	if(!. || isnull(client))
 		return FALSE
+	basic_mob_flags &= ~DEL_ON_DEATH // we don't want to be deleted if we die while player controlled in case there's some revive schenanigans going on that can bring us back
 	GLOB.spidermobs[src] = TRUE
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = -2) // let's pick up the tempo, we are meant to be fast after all
 	if (apply_spider_antag)
