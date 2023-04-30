@@ -1,4 +1,3 @@
-#define ORE_UPDATE_REQUEST "Ore Update"
 
 /datum/request_message
 	/// The r5tname of the department request console that sent the message
@@ -54,5 +53,3 @@
 	ui_data["appended_list"] = appended_list
 
 	return ui_data
-
-#undef ORE_UPDATE_REQUEST

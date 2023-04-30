@@ -222,6 +222,18 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			COOLDOWN_START(src, announcement_cooldown, ANNOUNCEMENT_COOLDOWN_TIME)
 			announcement_authenticated = FALSE
 			return TRUE
+		if("quick_reply")
+			var/recipient = params["reply_recipient"]
+
+			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"))
+
+			if(!reply_message)
+				has_mail_send_error = TRUE
+				playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+				return TRUE
+
+			send_message(recipient, reply_message, REQ_NORMAL_MESSAGE_PRIORITY, REPLY_REQUEST)
+			return TRUE
 		if("send_message")
 			var/recipient = params["recipient"]
 			if(!recipient)
@@ -237,45 +249,48 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/request_type = params["request_type"]
 			if(!request_type)
 				return
-
-			var/radio_freq
-			switch(ckey(recipient))
-				if("bridge")
-					radio_freq = FREQ_COMMAND
-				if("medbay")
-					radio_freq = FREQ_MEDICAL
-				if("science")
-					radio_freq = FREQ_SCIENCE
-				if("engineering")
-					radio_freq = FREQ_ENGINEERING
-				if("security")
-					radio_freq = FREQ_SECURITY
-				if("cargobay", "mining")
-					radio_freq = FREQ_SUPPLY
-
-			var/datum/signal/subspace/messaging/rc/signal = new(src, list(
-				"sender_department" = department,
-				"recipient_department" = recipient,
-				"message" = message,
-				"verified" = message_verified_by,
-				"stamped" = message_stamped_by,
-				"priority" = priority,
-				"notify_freq" = radio_freq,
-				"request_type" = request_type,
-			))
-			signal.send_to_receivers()
-
-			has_mail_send_error = !signal.data["done"]
-
-			if(!silent)
-				if(has_mail_send_error)
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
-				else
-					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
-
-			message_stamped_by = ""
-			message_verified_by = ""
+			send_message(recipient, message, priority, request_type)
 			return TRUE
+
+///Sends the message from the request console
+/obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
+	var/radio_freq
+	switch(ckey(recipient))
+		if("bridge")
+			radio_freq = FREQ_COMMAND
+		if("medbay")
+			radio_freq = FREQ_MEDICAL
+		if("science")
+			radio_freq = FREQ_SCIENCE
+		if("engineering")
+			radio_freq = FREQ_ENGINEERING
+		if("security")
+			radio_freq = FREQ_SECURITY
+		if("cargobay", "mining")
+			radio_freq = FREQ_SUPPLY
+
+	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
+		"sender_department" = department,
+		"recipient_department" = recipient,
+		"message" = message,
+		"verified" = message_verified_by,
+		"stamped" = message_stamped_by,
+		"priority" = priority,
+		"notify_freq" = radio_freq,
+		"request_type" = request_type,
+	))
+	signal.send_to_receivers()
+
+	has_mail_send_error = !signal.data["done"]
+
+	if(!silent)
+		if(has_mail_send_error)
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		else
+			playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+
+	message_stamped_by = ""
+	message_verified_by = ""
 
 /obj/machinery/requests_console/ui_data(mob/user)
 	var/list/data = list()

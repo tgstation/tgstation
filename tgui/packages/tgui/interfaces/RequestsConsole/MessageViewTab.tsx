@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
-import { BlockQuote, Box, LabeledList, NoticeBox, Section, Stack } from '../../components';
-import { RequestPriority, RequestsData } from './Types';
+import { BlockQuote, Button, LabeledList, NoticeBox, Section, Stack } from '../../components';
+import { RequestPriority, RequestsData, RequestType } from './Types';
 
 export const MessageViewTab = (props, context) => {
   const { act, data } = useBackend<RequestsData>(context);
@@ -19,6 +19,7 @@ export const MessageViewTab = (props, context) => {
 };
 
 export const MessageDisplay = (props, context) => {
+  const { act } = useBackend(context);
   const { message } = props;
   const append_list_keys = message.appended_list
     ? Object.keys(message.appended_list)
@@ -59,6 +60,19 @@ export const MessageDisplay = (props, context) => {
             {message.message_stamped_by || 'Not Stamped'}
           </LabeledList.Item>
         </LabeledList>
+        {message.request_type !== RequestType.ORE_UPDATE && (
+          <Section>
+            <Button
+              icon="paper-plane"
+              content={'Quick Reply'}
+              onClick={() => {
+                act('quick_reply', {
+                  reply_recipient: message.sender_department,
+                });
+              }}
+            />
+          </Section>
+        )}
       </Section>
     </Stack.Item>
   );

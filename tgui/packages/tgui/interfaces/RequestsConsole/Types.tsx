@@ -37,8 +37,9 @@ export enum RequestType {
   NONE = '',
   ASSISTANCE = 'Assistance Request',
   SUPPLIES = 'Supplies Request',
-  INFORMATION = 'Anonymous Information',
+  INFORMATION = 'Relay Information',
   ORE_UPDATE = 'Ore Update',
+  REPLY = 'Reply',
 }
 
 export enum RequestPriority {
