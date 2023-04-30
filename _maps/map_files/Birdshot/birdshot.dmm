@@ -37556,15 +37556,6 @@
 "nNt" = (
 /obj/effect/turf_decal/siding/wood,
 /mob/living/basic/syndicate/russian/ranged/lootless,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/wood,
-/mob/living/simple_animal/hostile/russian/ranged{
-	loot = list()
-	},
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "nNB" = (
@@ -58411,15 +58402,6 @@
 "uEZ" = (
 /obj/structure/chair/stool/directional/west,
 /mob/living/basic/syndicate/russian/ranged/lootless,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/chair/stool/directional/west,
-/mob/living/simple_animal/hostile/russian/ranged{
-	loot = list()
-	},
 /turf/open/floor/carpet/orange,
 /area/station/service/abandoned_gambling_den)
 "uFk" = (
