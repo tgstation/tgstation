@@ -48436,6 +48436,7 @@
 "qkh" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/optable,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qkr" = (
@@ -59269,6 +59270,9 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/paper/guides/jobs/medical/morgue,
+/obj/item/storage/box/bodybags{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ubd" = (

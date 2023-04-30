@@ -9243,9 +9243,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "cjC" = (
-/obj/machinery/status_display/ai/directional/north,
 /obj/structure/table/optable,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -15714,6 +15714,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "dSj" = (
@@ -43194,7 +43195,6 @@
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
-/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -70119,12 +70119,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
-"rBo" = (
-/obj/structure/table/optable,
-/obj/machinery/status_display/ai/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/medical/surgery/theatre)
 "rBB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -137844,7 +137838,7 @@ tOS
 czq
 jqJ
 jqJ
-rBo
+czq
 qYL
 cjC
 wWY

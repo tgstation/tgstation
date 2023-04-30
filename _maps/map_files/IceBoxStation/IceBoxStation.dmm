@@ -10556,6 +10556,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags,
 /obj/item/paper/guides/jobs/medical/morgue,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -32524,9 +32525,10 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "ksM" = (
-/obj/machinery/light/dim/directional/east,
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/structure/table/optable,
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ksO" = (

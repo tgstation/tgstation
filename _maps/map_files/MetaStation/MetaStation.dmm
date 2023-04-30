@@ -32494,12 +32494,16 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "lQk" = (
-/obj/item/pushbroom,
 /obj/structure/closet{
 	name = "janitorial supplies"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/south,
+/obj/item/storage/box/bodybags{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "lQm" = (
@@ -38071,6 +38075,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/optable,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nPf" = (

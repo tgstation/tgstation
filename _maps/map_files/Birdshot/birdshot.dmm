@@ -31811,6 +31811,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "lIn" = (
@@ -65949,6 +65950,7 @@
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/paper/guides/jobs/medical/morgue,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "wTH" = (
