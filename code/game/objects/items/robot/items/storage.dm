@@ -303,10 +303,11 @@
 
 /obj/item/borg/apparatus/service
 	name = "Service apparatus"
-	desc = "A special apparatus for carrying food and oven trays"
+	desc = "A special apparatus for carrying food, oven trays and paper"
 	icon_state = "borg_service_apparatus"
-	storable = list(/obj/item/plate/oven_tray,
-				/obj/item/food)
+	storable = list(/obj/item/food,
+				/obj/item/paper,
+				/obj/item/plate/oven_tray)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)
 	update_appearance()
@@ -330,4 +331,4 @@
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently secured item.")
+	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")

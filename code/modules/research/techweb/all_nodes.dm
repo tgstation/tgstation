@@ -950,10 +950,10 @@
 	description = "Service upgrades for cyborgs."
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
-		"borg_upgrade_rollingtable",
-		"borg_upgrade_condimentsynthesizer",
-		"borg_upgrade_siliconknife",
-		"borg_upgrade_serviceapparatus",
+		"borg_upgrade_rolling_table",
+		"borg_upgrade_condiment_synthesizer",
+		"borg_upgrade_silicon_knife",
+		"borg_upgrade_service_apparatus",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 

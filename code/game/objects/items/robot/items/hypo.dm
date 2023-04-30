@@ -69,11 +69,20 @@
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
 		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
 	)
-#define EXPANDED_SERVICE_REAGENTS list (/datum/reagent/consumable/flour, /datum/reagent/consumable/rice, /datum/reagent/consumable/salt,\
-		/datum/reagent/consumable/blackpepper, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco, /datum/reagent/consumable/vanilla,\
-		/datum/reagent/consumable/cornmeal, /datum/reagent/consumable/corn_starch, /datum/reagent/consumable/cornoil, /datum/reagent/consumable/eggwhite,\
-		/datum/reagent/consumable/eggyolk\
-	)
+#define EXPANDED_SERVICE_REAGENTS list(\
+	/datum/reagent/consumable/blackpepper,\
+	/datum/reagent/consumable/coco,\
+	/datum/reagent/consumable/cornmeal,\
+	/datum/reagent/consumable/cornoil,\
+	/datum/reagent/consumable/corn_starch,\
+	/datum/reagent/consumable/eggwhite,\
+	/datum/reagent/consumable/eggyolk,\
+	/datum/reagent/consumable/flour,\
+	/datum/reagent/consumable/rice,\
+	/datum/reagent/consumable/sugar,\
+	/datum/reagent/consumable/salt,\
+	/datum/reagent/consumable/vanilla,\
+)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
 		/datum/reagent/consumable/ethanol/fernet\
@@ -375,7 +384,7 @@
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return .
 	
-/obj/item/reagent_containers/borghypo/condimentsynthesizer // Solids! Condiments! The borger uprising!
+/obj/item/reagent_containers/borghypo/condiment_synthesizer // Solids! Condiments! The borger uprising!
 	name = "Condiment Synthesizer"
 	desc = "An advanced condiment synthesizer"
 	icon = 'icons/obj/food/containers.dmi'
@@ -387,19 +396,20 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP 
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
 
-/obj/item/reagent_containers/borghypo/condimentsynthesizer/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BorgHypo", name)
 		ui.open()
 
-/obj/item/reagent_containers/borghypo/condimentsynthesizer/ui_data(mob/user)
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
 	var/list/condiments = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
 		if(reagent)
 			condiments.Add(list(list(
 				"name" = reagent.name,
 				"volume" = round(reagent.volume, 0.01) - 1,
+				"description" = reagent.description,
 			))) // list in a list because Byond merges the first list...
 
 	var/data = list()
@@ -410,10 +420,10 @@
 	data["selectedReagent"] = selected_reagent?.name
 	return data
 		
-/obj/item/reagent_containers/borghypo/condimentbag/attack(mob/M, mob/user)
-	return //Can't inject stuff with a shaker, can we? //not with that attitude
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/M, mob/user)
+	return 
 
-/obj/item/reagent_containers/borghypo/condimentsynthesizer/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return .
@@ -421,22 +431,22 @@
 		balloon_alert(user, "no reagent selected!")
 		return .
 	. |= AFTERATTACK_PROCESSED_ITEM
-	if(target.is_refillable())
-		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
-			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return .
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			balloon_alert(user, "[target] is full!")
-			return .
-
-		// This is the in-between where we're storing the reagent we're going to pour into the container
-		// because we cannot specify a singular reagent to transfer in trans_to
-		var/datum/reagents/shaker = new()
-		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
-		shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
-	return .
+	if(!target.is_refillable())
+		return .
+	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
+		balloon_alert(user, "not enough [selected_reagent.name]!")
+		return .
+	if(target.reagents.total_volume >= target.reagents.maximum_volume)
+		balloon_alert(user, "[target] is full!")
+		return .
+	// This is the in-between where we're storing the reagent we're going to pour into the container
+	// because we cannot specify a singular reagent to transfer in trans_to
+	var/datum/reagents/shaker = new()
+	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
+	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+	shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"

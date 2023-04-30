@@ -103,8 +103,8 @@
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/knife/kitchen/silicon
-	name= "Kitchen Toolset"
-	icon_state = "SiliKnife"	
+	name = "Kitchen Toolset"
+	icon_state = "sili_knife"	
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
@@ -117,14 +117,14 @@
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour == TOOL_KNIFE ? "knife" : "rolling pin"] head."
+	. += " It's fitted with a [tool_behaviour] head."
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour != TOOL_ROLLINGPIN)
 		tool_behaviour = TOOL_ROLLINGPIN
 		to_chat(user, span_notice("You attach the rolling pin bit to the [src]."))
-		icon_state = "SiliRollingpin"
+		icon_state = "sili_rolling_pin"
 		force = 8
 		sharpness = NONE
 		hitsound = SFX_SWING_HIT
@@ -134,7 +134,7 @@
 	else
 		tool_behaviour = TOOL_KNIFE
 		to_chat(user, span_notice("You attach the knife bit to the [src]."))
-		icon_state = "SiliKnife"
+		icon_state = "sili_knife"
 		force = 0
 		sharpness = SHARP_EDGED
 		hitsound = 'sound/weapons/bladeslice.ogg'
