@@ -26,7 +26,7 @@
 "hG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/structure/closet/secure_closet/freezer/fridge/open{
-	opened = 1
+	opened = 1;
 	icon_state = "freezeropen"
 	},
 /obj/item/food/burger/mime,
