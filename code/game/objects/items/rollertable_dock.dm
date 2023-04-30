@@ -23,7 +23,7 @@
 	else
 		rable.loaded = src
 		forceMove(rable)
-		user.visible_message(span_notice("[user] collects [src]."), balloon_alert(user, "You collect the [src]."))
+		user.visible_message(span_notice("[user] collects [src]."), balloon_alert(user, "you collect the [src]."))
 	return TRUE
 
 /obj/item/rolling_table_dock/afterattack(obj/target, mob/user , proximity)
@@ -46,7 +46,7 @@
 /obj/item/rolling_table_dock/deploy_rolling_table(mob/user, atom/location)
 	if(loaded)
 		loaded.forceMove(location)
-		user.visible_message(span_notice("[user] deploys [loaded]."), balloon_alert(user, "You deploy the [loaded]."))
+		user.visible_message(span_notice("[user] deploys [loaded]."), balloon_alert(user, "you deploy the [loaded]."))
 		loaded = null
 	else
 		balloon_alert(user, "The dock is Empty!")
