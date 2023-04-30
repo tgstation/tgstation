@@ -76,7 +76,7 @@
 /// Access to the Morgue.
 #define ACCESS_MORGUE "morgue"
 /// Access to the secure morgue area.
-#define ACCESS_SECURE_MORGUE "secure_morgue"
+#define ACCESS_MORGUE_SECURE "morgue_secure"
 /// Access to the Pharmacy, or the smaller room in medical with the multiple chem dispensers and pill pressers. The Chemist's main position.
 #define ACCESS_PHARMACY "pharmacy"
 /// Access to the surgery rooms.
@@ -306,6 +306,7 @@
 	ACCESS_MINERAL_STOREROOM, \
 	ACCESS_MINING, \
 	ACCESS_MINING_STATION, \
+	ACCESS_MORGUE_SECURE, \
 	ACCESS_MORGUE, \
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
@@ -442,6 +443,7 @@
 	ACCESS_MECH_MEDICAL, \
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
+	ACCESS_MORGUE_SECURE, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
